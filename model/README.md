@@ -66,7 +66,6 @@ Final CPU parse: 9,720,524-byte GLB,424 meshes,308578 vertices,one decoded JPEG;
 User requested retaining section1 (forecourt/banner) as start/reset and removing
 section2 (raised exterior platform) and section3 (exterior stairs). This branch
 removes exactly43 exterior objects and the associated raised walk surfaces;
-the existing flat forecourt remains. Entrance canopy, doors/banner, background
-non-walkable railway, all24 umbrellas and seven INTERIOR yellow steps are kept.
+the existing flat forecourt remains. A follow-up removes34 orphanrailway/edgefence objects after uservisualfeedback. Entrance canopy, doors/banner, all24 umbrellas and seven INTERIOR yellow steps are kept.
 Review IDs1,4–20 stay unchanged;2/3 are omitted, not reassigned. This candidate
 was based on livev16 and does NOT include unpublishedv17 Android AR changes.

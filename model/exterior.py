@@ -57,12 +57,7 @@ def build_exterior(layout):
  # Sections2/3 removed by user; entrance canopy and forecourt remain.
  r=box('roof entrance canopy',(0,-33.7,5.2),(14,3.8,.13),dark);r.name='roof_exterior_canopy'
  for x in [-6,6]:rod('canopy brace',(x,-32,3.8),(x,-35.3,5.1),.08,dark)
- # Tracks are background only, separated by guard rail and excluded navigation.
- box('railway gravel',(-11,-41,-1.55),(4,25,.25),concrete)
- for y in range(-53,-28):box('track sleeper',(-11,y,-1.38),(2.9,.18,.12),wood)
- for x in [-11.72,-10.28]:box('railway rail',(x,-41,-1.27),(.07,25,.13),gray)
- for y in [-33,-35,-37,-39]:box('forecourt barrier post',(-8.05,y,-.48),(.14,.14,1.15),wood)
- for h in [-.2,-.65]:box('forecourt barrier',(-8.05,-36,h),(.14,8,.14),wood)
+ # Orphan railway/forecourt edge rails removed after exterior2/3 cleanup.
  layout['walkable'] += [rect(-8,7,32,40)]
  layout['surfaces'] += [surface(rect(-8,7,32,40),-1.05)]
  layout['bounds'].update(maxZ=40)
