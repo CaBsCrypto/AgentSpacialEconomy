@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{canUseWebGL2}from'../dist/gpu-support.mjs';import fs from'node:fs';
+test('GPU unavailable/throw returns false without bypass',()=>{assert.equal(canUseWebGL2(()=>({getContext:()=>null})),false);assert.equal(canUseWebGL2(()=>({getContext(){throw Error('disabled')}})),false)});
+test('supported probe frees only its own temporary context',()=>{let released=0;assert.equal(canUseWebGL2(()=>({getContext:name=>{assert.equal(name,'webgl2');return{getExtension:()=>({loseContext:()=>released++})}}})),true);assert.equal(released,1)});
+test('Passport rejects unsupported inline GPU before import and retains poster',()=>{const s=fs.readFileSync(new URL('../dist/passport.mjs',import.meta.url),'utf8');assert.ok(s.indexOf('if(!canUseWebGL2())')<s.indexOf("import('./vendor/model-viewer"));assert.match(s,/if\(!canUseWebGL2\(\)\)\{poster.hidden=false;host.hidden=true/)});

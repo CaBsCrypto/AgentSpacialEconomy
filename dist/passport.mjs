@@ -1,9 +1,12 @@
+import { canUseWebGL2 } from './gpu-support.mjs?v=1';
 import { bindQuickLook } from './quicklook.mjs?v=1';
 import { withTimeout } from './load-timeout.mjs?v=8';
 const button=document.getElementById('load3d'),host=document.getElementById('modelHost'),poster=document.getElementById('poster'),status=document.getElementById('status');
 let busy=false,loaded=false;
 button.addEventListener('click',async()=>{
- if(busy||loaded)return;busy=true;button.disabled=true;status.textContent='Preparando el visor del Passport… La imagen y los enlaces AR siguen disponibles.';
+ if(busy||loaded)return;
+ if(!canUseWebGL2()){poster.hidden=false;host.hidden=true;status.textContent='Este navegador no permite el visor WebGL 2. La imagen sigue disponible; puedes probar los botones de AR nativa de Android o iPhone en un dispositivo compatible.';button.textContent='Reintentar visor 3D';return;}
+ busy=true;button.disabled=true;status.textContent='Preparando el visor del Passport… La imagen y los enlaces AR siguen disponibles.';
  try{
   await withTimeout(import('./vendor/model-viewer/model-viewer.min.js'),15000,'El visor tardó demasiado');
   const viewer=document.createElement('model-viewer');viewer.setAttribute('alt','Passport azul y dorado: portada original, reverso aproximado');viewer.setAttribute('src','./assets/passport.glb');viewer.setAttribute('poster','./assets/passport-preview.jpg?v=1');viewer.setAttribute('camera-controls','');viewer.setAttribute('camera-orbit','0deg 25deg auto');viewer.setAttribute('touch-action','pan-y');viewer.setAttribute('ar','');viewer.setAttribute('ar-modes','scene-viewer webxr quick-look');viewer.setAttribute('shadow-intensity','1');viewer.setAttribute('exposure','1');
