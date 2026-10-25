@@ -63,9 +63,10 @@ Judges review asynchronously and use the product like beta testers. Give them on
   "budgetUsdc": "0.50",
   "perCallCapUsdc": "0.10",
   "allocations": { "stage-agent": "0.20" },
-  "allowedServices": ["venue-feed", "screen-card"],
+  "allowedServices": ["venue-feed", "screen-card", "premium-render"],
   "requiresApprovalAboveUsdc": "0.10"
 }
+// premium-render (0.25) is allowed on purpose: the per-call cap, not the allow-list, is what refuses it in the demo.
 ```
 
 ```jsonc

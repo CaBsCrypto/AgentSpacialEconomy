@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic Spatial Economy · Operator</title>
+<style>
+  :root {
+    --ase-night: #07121f; --ase-deep: #102742; --ase-zone: #17485b; --ase-line: #498095;
+    --ase-signal: #72e3df; --ase-budget: #e3bd79; --ase-text: #eef4f7; --ase-muted: #90a8bb;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ase-night); color: var(--ase-text);
+         font: 16px/1.5 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 28px 16px 64px; }
+  header { display: flex; gap: 14px; align-items: center; margin-bottom: 6px; }
+  .mark { width: 40px; height: 40px; flex: none; }
+  h1 { font-size: 1.35rem; margin: 0; letter-spacing: .01em; }
+  .tagline { color: var(--ase-muted); margin: 0 0 24px; font-size: 1.05rem; }
+  .tagline strong { color: var(--ase-text); font-weight: 700; }
+  .badge { display: inline-block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+           border: 1px solid var(--ase-line); color: var(--ase-muted); border-radius: 999px; padding: 2px 10px; }
+  section { background: var(--ase-deep); border: 1px solid var(--ase-zone); border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ase-muted); margin: 0 0 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .kv dt { color: var(--ase-muted); font-size: .85rem; } .kv dd { margin: 2px 0 0; }
+  .money { color: var(--ase-budget); font-family: var(--mono); }
+  .bar { margin: 10px 0 16px; }
+  .bar-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: .95rem; }
+  .track { height: 12px; background: var(--ase-night); border: 1px solid var(--ase-zone); border-radius: 999px; overflow: hidden; display: flex; margin-top: 6px; }
+  .track span { display: block; height: 100%; }
+  .seg-spent { background: var(--ase-budget); } .seg-delegated { background: var(--ase-line); } .seg-reserved { background: var(--ase-signal); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; color: var(--ase-muted); font-size: .8rem; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+  th { text-align: left; color: var(--ase-muted); font-weight: 400; border-bottom: 1px solid var(--ase-zone); padding: 6px 8px; }
+  td { border-bottom: 1px solid var(--ase-zone); padding: 8px; vertical-align: top; }
+  .status { font-weight: 700; white-space: nowrap; }
+  .status.settled { color: var(--ase-signal); } .status.blocked { color: var(--ase-budget); }
+  .status.failed, .status.needs-reconciliation { color: var(--ase-text); }
+  a { color: var(--ase-signal); } code, .hash { font-family: var(--mono); font-size: .85rem; }
+  .blocked-card { border: 1px solid var(--ase-budget); border-radius: 12px; padding: 14px; margin-top: 12px; }
+  .blocked-card h3 { margin: 0 0 6px; font-size: 1rem; color: var(--ase-budget); }
+  .blocked-card .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  button { font: inherit; border-radius: 8px; padding: 6px 14px; border: 1px solid var(--ase-line); background: transparent; color: var(--ase-text); }
+  button[disabled] { opacity: .55; }
+  .card-preview { background: var(--ase-night); border: 1px solid var(--ase-line); border-radius: 12px; padding: 18px; }
+  .card-preview .label { color: var(--ase-signal); font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; }
+  .card-preview .title { font-size: 1.5rem; font-weight: 700; margin: 4px 0; }
+  .empty { color: var(--ase-muted); }
+  .scroll { overflow-x: auto; }
+  footer { color: var(--ase-muted); font-size: .8rem; margin-top: 24px; }
+  @media (max-width: 560px) { .hide-sm { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18" fill="none" stroke="#e3bd79" stroke-width="2"/>
+      <path d="M20 9 L31 20 L20 31 L9 20 Z" fill="none" stroke="#e3bd79" stroke-width="2"/>
+      <circle cx="20" cy="20" r="3" fill="#e3bd79"/>
+    </svg>
+    <h1>Agentic Spatial Economy</h1>
+  </header>
+  <p class="tagline"><strong>Your venue's AI operator, on a capped USDC budget.</strong> <span class="badge" id="run-badge">loading</span></p>
+
+  <section aria-labelledby="mandate-h">
+    <h2 id="mandate-h">Mandate</h2>
+    <dl class="grid kv" id="mandate"><div class="empty">Loading…</div></dl>
+  </section>
+
+  <section aria-labelledby="budget-h">
+    <h2 id="budget-h">Budget</h2>
+    <div id="budget"></div>
+    <div class="legend"><span><i class="seg-spent"></i>spent</span><span><i class="seg-delegated"></i>delegated to sub-agents</span><span><i class="seg-reserved"></i>reserved</span><span>empty = available</span></div>
+  </section>
+
+  <section aria-labelledby="ledger-h">
+    <h2 id="ledger-h">Ledger · every attempt</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>Agent</th><th>Service</th><th>Price</th><th>Status</th><th class="hide-sm">Proof</th></tr></thead>
+      <tbody id="rows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
+    </table></div>
+    <div id="blocked"></div>
+  </section>
+
+  <section aria-labelledby="screen-h">
+    <h2 id="screen-h">On the stage screen</h2>
+    <div id="screen" class="empty">Loading…</div>
+    <p><a href="./">Walk the venue →</a></p>
+  </section>
+
+  <footer>
+    Stellar testnet only — no real money. Independent prototype; not affiliated with Stellar, HackMeridian or ONE16.
+  </footer>
+</main>
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const usdc = (v) => `<span class="money">${esc(v)} USDC</span>`;
+const pct = (part, whole) => (Number(whole) > 0 ? Math.max(0, Math.min(100, (Number(part) / Number(whole)) * 100)) : 0);
+
+async function getJSON(url) {
+  try { const r = await fetch(url, { cache: "no-store" }); return r.ok ? await r.json() : null; } catch { return null; }
+}
+
+const [ledger, stage] = await Promise.all([getJSON("./state/ledger.json"), getJSON("./state/stage.json")]);
+
+if (!ledger) {
+  $("run-badge").textContent = "no run yet";
+  $("mandate").innerHTML = `<div class="empty">No recorded run yet. In <code>agent/</code> run <code>npm run services</code> and <code>npm run loop</code>, then commit <code>dist/state/</code>.</div>`;
+  $("budget").innerHTML = "";
+  $("rows").innerHTML = `<tr><td colspan="5" class="empty">Nothing paid yet.</td></tr>`;
+  $("screen").textContent = "The stage screen shows its default content until a card is bought.";
+} else {
+  const m = ledger.mandate;
+  $("run-badge").textContent = `recorded run · ${new Date(ledger.runId).toLocaleString("en-GB", { timeZone: "Europe/Lisbon" })} Lisbon`;
+  $("mandate").innerHTML = [
+    ["Objective", esc(m.objective)],
+    ["Total budget", usdc(m.budgetUsdc)],
+    ["Per-call cap", usdc(m.perCallCapUsdc)],
+    ["Approval above", usdc(m.requiresApprovalAboveUsdc ?? m.perCallCapUsdc)],
+    ["Allowed services", esc(m.allowedServices.join(", "))],
+    ["Network", esc(ledger.network)],
+  ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+  $("budget").innerHTML = Object.entries(ledger.totals).map(([name, t]) => `
+    <div class="bar">
+      <div class="bar-head"><strong>${esc(name)}</strong>
+        <span>${usdc(t.spent)} spent of ${usdc(t.allocated)} · ${usdc(t.available)} available</span></div>
+      <div class="track" role="img" aria-label="${esc(name)}: ${esc(t.spent)} spent, ${esc(t.delegated)} delegated, ${esc(t.reserved)} reserved of ${esc(t.allocated)}">
+        <span class="seg-spent" style="width:${pct(t.spent, t.allocated)}%"></span>
+        <span class="seg-delegated" style="width:${pct(t.delegated, t.allocated)}%"></span>
+        <span class="seg-reserved" style="width:${pct(t.reserved, t.allocated)}%"></span>
+      </div>
+    </div>`).join("");
+
+  const payments = ledger.rows.filter((r) => r.type !== "allocation");
+  $("rows").innerHTML = payments.map((r) => `
+    <tr>
+      <td>${esc(r.agent)}</td>
+      <td>${esc(r.service)}</td>
+      <td>${usdc(r.priceUsdc)}</td>
+      <td><span class="status ${esc(r.status)}">${r.status === "settled" ? "✓ " : r.status === "blocked" ? "⛔ " : "• "}${esc(r.status)}</span>${r.reason ? `<br><small>${esc(r.reason)}</small>` : ""}</td>
+      <td class="hide-sm">${r.explorer ? `<a href="${esc(r.explorer)}" target="_blank" rel="noopener">tx <span class="hash">${esc(r.tx.slice(0, 8))}…</span></a>` : "—"}</td>
+    </tr>`).join("") || `<tr><td colspan="5" class="empty">No payments in this run.</td></tr>`;
+
+  $("blocked").innerHTML = payments.filter((r) => r.status === "blocked").map((r) => `
+    <div class="blocked-card">
+      <h3>Needs operator approval</h3>
+      <div>${esc(r.agent)} wanted <strong>${esc(r.service)}</strong> for ${usdc(r.priceUsdc)}.</div>
+      <div>Refused before anything was signed: ${esc(r.reason)}.</div>
+      <div class="actions"><button disabled title="Approvals are not part of this MVP">Approve</button><button disabled>Decline</button></div>
+    </div>`).join("");
+}
+
+if (stage?.card) {
+  const c = stage.card;
+  const when = c.start ? new Date(c.start).toLocaleString("en-GB", { timeZone: "Europe/Lisbon", weekday: "short", hour: "2-digit", minute: "2-digit" }) : "";
+  $("screen").className = "";
+  $("screen").innerHTML = `<div class="card-preview">
+      <div class="label">${esc(c.label)}</div>
+      <div class="title">${esc(c.title)}</div>
+      <div>${esc(when)} · ${esc(c.location)}</div>
+      ${stage.explorer ? `<p><small>Paid for: <a href="${esc(stage.explorer)}" target="_blank" rel="noopener">see the transaction</a></small></p>` : ""}
+    </div>`;
+} else if (ledger) {
+  $("screen").textContent = "No card was bought in this run, so the stage keeps its default content.";
+}
+</script>
+</body>
+</html>

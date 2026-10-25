@@ -1,0 +1,23 @@
+{
+  "source": "https://www.hackmeridian.com/schedule",
+  "note": "Public HackMeridian 2026 schedule, Lisbon time (WET = UTC on these dates). Sessions only; meals omitted.",
+  "items": [
+    { "start": "2026-10-25T11:00:00Z", "title": "Opening ceremony", "location": "Main stage" },
+    { "start": "2026-10-25T11:15:00Z", "title": "Partner showcase", "location": "Main stage" },
+    { "start": "2026-10-25T11:45:00Z", "title": "Team formation and track orientation", "location": "Main stage" },
+    { "start": "2026-10-25T13:30:00Z", "title": "Level up your AI", "location": "Main stage" },
+    { "start": "2026-10-25T14:00:00Z", "title": "Raven 101", "location": "Main stage" },
+    { "start": "2026-10-25T14:30:00Z", "title": "Speedrun: win a hackathon in 20 min", "location": "Main stage" },
+    { "start": "2026-10-25T15:00:00Z", "title": "How to prepare to go live on Mainnet", "location": "Main stage" },
+    { "start": "2026-10-25T15:30:00Z", "title": "Confidentiality on Stellar", "location": "Main stage" },
+    { "start": "2026-10-25T16:10:00Z", "title": "From build to earn on Soroban", "location": "Main stage" },
+    { "start": "2026-10-25T16:35:00Z", "title": "Scaffold. Registry.", "location": "Main stage" },
+    { "start": "2026-10-25T17:00:00Z", "title": "The hardest part isn't building anymore", "location": "Main stage" },
+    { "start": "2026-10-26T09:00:00Z", "title": "Morning briefing", "location": "Main stage" },
+    { "start": "2026-10-26T09:15:00Z", "title": "Final build sprint", "location": "Hacking area" },
+    { "start": "2026-10-26T12:00:00Z", "title": "Submissions close", "location": "Online" },
+    { "start": "2026-10-26T12:05:00Z", "title": "Pathways post hackathon", "location": "Main stage" },
+    { "start": "2026-10-26T13:00:00Z", "title": "Judging begins", "location": "Main stage" },
+    { "start": "2026-10-26T15:30:00Z", "title": "Closing ceremony", "location": "Main stage" }
+  ]
+}

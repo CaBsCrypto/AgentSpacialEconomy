@@ -1,0 +1,10 @@
+{
+  "id": "main-stage-hackmeridian",
+  "objective": "Show the live agenda and the next session on the main stage screen",
+  "network": "stellar:testnet",
+  "budgetUsdc": "0.50",
+  "perCallCapUsdc": "0.10",
+  "requiresApprovalAboveUsdc": "0.10",
+  "allocations": { "stage-agent": "0.20" },
+  "allowedServices": ["venue-feed", "screen-card", "premium-render"]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "agentic-spatial-economy-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "setup:testnet": "node setup-testnet.mjs",
+    "check:facilitator": "node check-facilitator.mjs",
+    "services": "node services.mjs",
+    "loop": "node run.mjs --mandate mandates/main-stage.json",
+    "loop:dry": "node run.mjs --mandate mandates/main-stage.json --dry"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "latest",
+    "@x402/core": "^2.20.0",
+    "@x402/express": "^2.20.0",
+    "@x402/fetch": "^2.20.0",
+    "@x402/stellar": "^2.20.0",
+    "dotenv": "^16.4.0",
+    "express": "^5.1.0"
+  }
+}
