@@ -1,4 +1,4 @@
-import { fetchModel } from './model-transfer.mjs?v=6';
+import { fetchModel } from './model-transfer.mjs?v=7';
 let THREE,GLTFLoader,OrbitControls,enginePromise;
 function loadEngine(){return enginePromise??=Promise.all([import('three'),import('./vendor/three/examples/jsm/loaders/GLTFLoader.js'),import('./vendor/three/examples/jsm/controls/OrbitControls.js')]).then(([three,loader,controls])=>{THREE=three;GLTFLoader=loader.GLTFLoader;OrbitControls=controls.OrbitControls}).catch(e=>{enginePromise=null;throw e})}
 import { walk,turn,roomAt,changeMode,floorHeight } from './navigation.mjs?v=2';

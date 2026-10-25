@@ -14,7 +14,7 @@ test('browser without gzip streaming support uses original GLB once',async()=>{
  assert.deepEqual(Buffer.from(result),raw);assert.equal(requests,1);
 });
 test('HTTP model errors are explicit and do not trigger duplicate downloads',async()=>{
- let n=0;await assert.rejects(fetchModel({fetcher:async()=>{n++;return new Response('',{status:503})}}),/HTTP 503/);assert.equal(n,1);
+ let n=0;await assert.rejects(fetchModel({decompressor:null,fetcher:async()=>{n++;return new Response('',{status:503})}}),/HTTP 503/);assert.equal(n,1);
 });
 test('landing viewer defers heavy engine imports until initialization',async()=>{
  const src=await readFile(new URL('../dist/viewer.js',import.meta.url),'utf8');
@@ -22,4 +22,11 @@ test('landing viewer defers heavy engine imports until initialization',async()=>
 });
 test('host-level gzip decoding is not decompressed twice',async()=>{
  const result=await fetchModel({fetcher:async()=>new Response(raw,{headers:{'content-encoding':'gzip'}})});assert.deepEqual(Buffer.from(result),raw);
+});
+for(const failure of ['network','HTTP','corrupt'])test(`gzip ${failure} failure falls back once to exact original GLB`,async()=>{
+ const urls=[];const result=await fetchModel({fetcher:async url=>{urls.push(url);if(url.includes('.gz')){if(failure==='network')throw new TypeError('Failed to fetch');if(failure==='HTTP')return new Response('',{status:404});return new Response(new Uint8Array([31,139,0,0]));}return new Response(raw)}});
+ assert.deepEqual(Buffer.from(result),raw);assert.equal(urls.length,2);assert.match(urls[0],/\.gz/);assert.doesNotMatch(urls[1],/\.gz/);
+});
+test('both transfer paths failing terminates after two requests',async()=>{
+ let n=0;await assert.rejects(fetchModel({fetcher:async()=>{n++;return new Response('',{status:503})}}),/HTTP 503/);assert.equal(n,2);
 });
