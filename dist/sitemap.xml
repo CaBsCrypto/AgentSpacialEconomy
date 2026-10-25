@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Host = the current public demo. If the site moves, update these URLs and robots.txt. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site/</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site/dashboard.html</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site/passport.html</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site/llms.txt</loc><lastmod>2026-10-25</lastmod></url>
+</urlset>

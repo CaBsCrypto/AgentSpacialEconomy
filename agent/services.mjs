@@ -81,7 +81,7 @@ if (PAY_TO) {
     PAID_ROUTES,
     facilitator,
     [{ network: NETWORK, server: new ExactStellarScheme() }],
-    { appName: "Agentic Spatial Economy — venue services", testnet: true },
+    { appName: "Spatial Agents · Operating System — venue services", testnet: true },
   );
 } else {
   console.warn("SERVICE_RECIPIENT missing or invalid — every /paid route answers 503.");

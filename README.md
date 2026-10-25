@@ -1,14 +1,111 @@
-# Agentic Spatial Economy
+# Spatial Agents · Operating System
 
-![Agentic Spatial Economy — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
+![Concept art (made under the earlier working name "Agentic Spatial Economy") — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
 
 **Your venue's AI operator, on a capped USDC budget.**
 
-Agentic Spatial Economy explores how human administrators can delegate the operation of physical spaces to agents with explicit authority, spending limits and measurable objectives. Its first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
+Spatial Agents · Operating System lets human administrators delegate the operation of physical spaces to agents with explicit authority, spending limits and measurable objectives. Its first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
 
-**[Open the public ONE16 demo](https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site)**
+**[Open the public ONE16 demo](https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site)** · operator dashboard: `dist/dashboard.html` <!-- TEAM: replace with the live dashboard URL after redeploying dist/ -->
 
-> This repository currently implements the spatial frontend—not a deployed autonomous economy. The agent, budget and payment architecture below is the intended next layer.
+> Built at HackMeridian 2026 (Genesis · Stellar Composed). The repository implements the spatial frontend **and one bounded paid loop on Stellar testnet**: a venue agent delegates a budget to a stage agent, which pays for data and content over x402 in testnet USDC, under a per-call cap. It is not a deployed autonomous economy and moves no real money. Repo slug `AgentSpacialEconomy` is the earlier working name.
+
+## Summary
+
+An operator sets an objective, a budget and rules for a place. A **venue agent** splits the budget across zones; a **stage agent** buys what the stage screen needs — the live schedule, then a screen card — paying per call over **x402** in **USDC on Stellar testnet**. Every attempt lands in a ledger the operator can audit: settled payments link to their transaction; anything above the cap is refused **before it is signed** and shown as "needs operator approval". The purchased card appears on the stage of the ONE16 digital twin.
+
+## Problem
+
+A venue's screens, signage and activations are programmed by hand across several vendors and data sources. During a live event the schedule changes faster than anyone can update the stage screen, and the money spent on content, data and compute is scattered across invoices with no link to what was actually shown. Operators will only delegate that spend to an agent if every payment is capped, logged, tied to an objective and visible. See [THESIS.md](THESIS.md).
+
+## How Stellar is used (architecture)
+
+```text
+Operator mandate (objective, budget, per-call cap, allowed services)
+  └─ venue-agent ── allocates 0.20 USDC ──> stage-agent
+                                              │  ledger check before signing (cap, allow-list, budget)
+                                              ▼
+            paid services (Express + @x402/express, routes under /paid)
+              ← 402 PAYMENT-REQUIRED (exact scheme, USDC SAC, payTo = service wallet)
+              → PAYMENT-SIGNATURE (agent signs Soroban auth entries only)
+                         │
+                         ▼
+            x402 facilitator /verify + /settle  ──>  Stellar testnet (SAC transfer, fees sponsored)
+                         │
+              ← 200 + PAYMENT-RESPONSE (transaction hash)
+  ledger.json / stage.json ──> operator dashboard + stage screen in the ONE16 twin
+```
+
+| Piece | Value |
+| --- | --- |
+| Network | Stellar **testnet** (`stellar:testnet`) |
+| Asset | USDC (Circle, testnet). Classic issuer `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5`; Stellar Asset Contract (SEP-41) `CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA` |
+| Payments | x402 v2, `exact` scheme, via `@x402/express`, `@x402/fetch`, `@x402/stellar` |
+| Facilitator | `https://x402.org/facilitator` (testnet, fee-sponsored); OpenZeppelin Channels as fallback |
+| Wallets | Agent wallet (payer, server-side Ed25519 signer, never in the browser) and service wallet (payee). Both need a USDC trustline |
+| APIs | Horizon testnet (accounts, trustlines, DEX path payment used to fund the agent with testnet USDC), Friendbot, Soroban RPC (x402 client), facilitator `/supported`, `/verify`, `/settle` |
+| Contracts | No custom contracts; payments invoke the USDC SAC. On-chain spending limits (OpenZeppelin smart-account policy) are in the backlog |
+| Spend control | `agent/ledger.mjs`: allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
+
+## On-chain evidence (Stellar testnet)
+
+Recorded run, 25 Oct 2026 23:22 UTC ([Actions run 40244382971](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40244382971)):
+
+| What | Transaction |
+| --- | --- |
+| Agent wallet funded with testnet USDC (DEX path payment XLM → USDC) | [99ef830d…](https://stellar.expert/explorer/testnet/tx/99ef830d2d4db61a4774b0292710231adbe03f6d1d673c92d0d7c23eb12114b6) |
+| `venue-feed`, 0.01 USDC over x402 | [da696463…](https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8) |
+| `screen-card`, 0.05 USDC over x402 | [3b65769c…](https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9) |
+| `premium-render`, 0.25 USDC | refused before signing (above the 0.10 per-call cap) |
+
+Agent account [GB4UYQ…NOGI6](https://stellar.expert/explorer/testnet/account/GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6) · service account [GAZ7J3…7ECH](https://stellar.expert/explorer/testnet/account/GAZ7J3C6SGNAFEWI6U3YXT2ZWC5CNZTNLXRCRM7T5BBSZWDVMCHF7ECH) (received exactly 0.06 USDC). Fees were paid by the facilitator.
+
+## Setup, installation and environment variables
+
+Requirements: Node.js 20+ (22 used in CI), npm; Python 3 only for the example static server.
+
+```bash
+# 3D venue + dashboard (static)
+npm ci && node scripts/vendor.mjs && npm test
+python3 -m http.server 8000 --directory dist      # open /  and  /dashboard.html
+
+# paid loop on Stellar testnet
+cd agent && npm install && npm test
+npm run setup:testnet        # 2 testnet accounts + USDC trustlines → ../.env (secrets never printed)
+#   by hand: https://faucet.circle.com → Stellar testnet → USDC to the agent wallet it printed
+npm run check:facilitator
+npm run services             # terminal 1
+npm run loop                 # terminal 2 → writes dist/state/ledger.json and dist/state/stage.json
+```
+
+No keys or faucet: `node agent/ci-run.mjs` does everything with throwaway accounts (it buys a little testnet USDC on the DEX), or push to `ci/testnet-run` to run it in GitHub Actions. `npm run loop:dry` walks the plan without signing.
+
+| Variable (`.env` at the repo root, git-ignored) | Purpose |
+| --- | --- |
+| `STELLAR_NETWORK` | Must be `stellar:testnet` |
+| `FACILITATOR_URL` | x402 facilitator (default `https://x402.org/facilitator`) |
+| `OZ_API_KEY` | Only for the OpenZeppelin Channels facilitator |
+| `SERVICE_RECIPIENT` | Public `G…` key that receives USDC (needs a USDC trustline) |
+| `AGENT_SECRET_KEY` | Secret `S…` key of the agent wallet (USDC trustline + testnet USDC). Never commit |
+| `SERVICES_URL`, `SERVICES_PORT` | Where the paid services run (default `http://localhost:3001`) |
+
+## Demo instructions
+
+1. Open the operator dashboard (`dashboard.html`): mandate, budget per agent, every attempt with its transaction, and the refused call as an approval card.
+2. Open the ONE16 twin, select **Vive la experiencia** and walk to the main stage: the screen shows the card the stage agent paid for.
+3. Reproduce the payments: run the loop locally (above) or re-run the **Testnet loop** workflow; new transactions appear in `dist/state/ledger.json`.
+
+## Prior work and what was built at HackMeridian
+
+The first commit in this repository is from **Sun 25 Oct 2026, 10:30 WET**, after hacking opened at 09:00; the full history is in git. Built during the event: the ONE16 3D reconstruction and viewer, the Passport AR display, the planning docs, the x402 paid services, the budget ledger, the agent loop, the operator dashboard, the stage screen and the CI testnet runner. <!-- TEAM: list anything prepared before 09:00 Sun (concept, sketches, the supplied Passport front image, Blender sources) — the submission form asks for it. -->
+
+Third-party software: Three.js, model-viewer, Express, the x402 packages and the Stellar JavaScript SDK, each under its own license.
+
+## AI tooling
+
+AI-assisted development, as the event rules allow: OpenAI Codex (venue reconstruction, viewer and site source — commits authored "Codex") and Claude by Anthropic (planning docs, x402 services, ledger, agent loop, dashboard, stage screen, CI runner). <!-- TEAM: confirm and add any other tools -->
+
+## Project docs
 
 ## Project docs
 
@@ -16,7 +113,7 @@ Agentic Spatial Economy explores how human administrators can delegate the opera
 - [SPEC.md](SPEC.md) — the HackMeridian MVP: demo path, ledger rules, done criteria.
 - [DESIGN.md](DESIGN.md) — name, colors, type and screens.
 - [AGENTS.md](AGENTS.md) — rules and tools for coding agents (Raven MCP, Stellar skills).
-- [PLAN.md](PLAN.md) · [ISSUES.md](ISSUES.md) · [DEMO.md](DEMO.md) — schedule to submission, tasks, demo script.
+- [PLAN.md](PLAN.md) · [ISSUES.md](ISSUES.md) · [DEMO.md](DEMO.md) · [SUBMISSION.md](SUBMISSION.md) — schedule to submission, tasks, demo script, portal answers.
 - [agent/README.md](agent/README.md) — run the paid loop on Stellar testnet in about 5 minutes. The operator view is `dist/dashboard.html`.
 
 ## The idea
@@ -62,7 +159,8 @@ The Passport interaction belongs inside the ONE16 experience. The standalone Pas
 | Physical AR | **Not yet verified on the target phone.** The user reported that the camera did not open. A native 3D viewer is not proof of AR. |
 | AR anchoring | No image-marker recognition, venue georeferencing, persistent anchors or shared spatial registration. |
 | Activation totem | Informational Stellar Testnet guide; no operational wallet connection, faucet claim or asset transfer. |
-| Agents and economy | Planned: scoped agents, mandates, budget ledger, x402 service payments and administrator dashboard. No real payments are implemented. |
+| Agents and economy | **Implemented on Stellar testnet (one bounded loop):** mandate, venue agent → stage agent allocation, budget ledger with per-call cap, x402 payments in testnet USDC, operator dashboard. Planned: more zones and agents, operator approvals, on-chain spending limits. No real money. |
+| Stage screen | Implemented: the card bought by the stage agent is drawn on the stage backdrop; no change if no run is published. Placement in WebGL still to be checked on devices. |
 | Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
 
 ### Integrated source snapshot — 25 October 2026

@@ -4,7 +4,7 @@
 
 ## Mission
 
-Agentic Spatial Economy: an operator gives a venue a budget and an objective; a venue agent delegates to a stage agent, which pays for data and content over x402 on **Stellar testnet** and puts the result on the stage screen of the ONE16 twin. Demo-ready before **Mon 26 Oct, 11:00 Lisbon** (submission closes at 12:00).
+Spatial Agents · Operating System: an operator gives a venue a budget and an objective; a venue agent delegates to a stage agent, which pays for data and content over x402 on **Stellar testnet** and puts the result on the stage screen of the ONE16 twin. Demo-ready before **Mon 26 Oct, 11:00 Lisbon** (submission closes at 12:00).
 
 ## Ground rules
 

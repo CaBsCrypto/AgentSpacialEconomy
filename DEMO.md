@@ -4,17 +4,19 @@ Judges score the demo, not the idea. Rehearse with a timer at least twice before
 
 Judging is asynchronous: they review the **demo video, pitch deck, GitHub repo and submission answers**, and they use the product like beta testers. After technical execution, presentation and UX matter most. If a judge cannot open it and see it work, it does not count.
 
-## Rubric self-check (do it Monday 07:00 with Raven, fix the weakest first)
+## Rubric self-check (official portal rubric: each criterion rated 1–10, weighted to a total out of 100)
 
-| Criterion (weight) | Question to answer in one sentence, with evidence |
-| --- | --- |
-| Track alignment (20%) | Which two or more ecosystem tools do we compose, and where in the demo does each one appear? |
-| User value & problem (20%) | Who asked for this? Which operator, which pain, what does it cost them today? |
-| Technical execution (15%) | Can a judge trigger or verify a real testnet payment and see the cap refuse an overspend? |
-| Innovation (15%) | What does this do that Wadzzo, IRL, Stellar Passport or an agent wallet kit alone does not? |
-| Hackathon progress (10%) | What exactly was built between Sun 09:00 and Mon 12:00? Does the git history show it? |
-| Market & ecosystem potential (10%) | Who pays after the event, how often, and what is the next step (SCF, pilot venue)? |
-| Product design & UX (10%) | Can a stranger understand the dashboard in 10 seconds, on a phone? |
+Scale: 1–2 poor · 3–4 below expectations · 5–6 meets expectations with clear evidence · 7–8 strong, minor gaps · 9–10 exceptional, compelling evidence. Judges weigh what the team shows by the end of HackMeridian against its starting point.
+
+| Criterion (weight) | Portal question | Our evidence — aim for 9–10 |
+| --- | --- | --- |
+| Thematic alignment (20%) | How effectively does the project deliver on its selected Stellar theme (Stellar Composed)? | An agent with a wallet and a spending cap pays APIs in USDC over x402 — the track's own example. Show the 402 → signature → settlement chain and the cap refusing a call. |
+| User value & problem (20%) | How clearly does it address a real problem for its intended users? | One named operator, one pain, one sentence of first-hand evidence; the dashboard answers "what did we pay for, and why" in 10 seconds. |
+| Technical execution (15%) | How reliably does the demonstrated implementation work? | Real testnet transactions in the README, a CI run anyone on the team can repeat, 19 ledger tests, fail-closed services. |
+| Innovation (15%) | How original and useful is the approach? | Budgets and accountability for the digital layer of physical space; preflight price check before signing. |
+| Hackathon progress (10%) | How much meaningful new work during HackMeridian? | First commit Sun 10:30 WET; everything in git was built at the event. Say it plainly in the prior-work field. |
+| Market & ecosystem potential (10%) | How credible are adoption and the contribution to Stellar? | Venues, campuses, museums run all year; every screen update is a stablecoin micropayment on Stellar; next step SCF + a pilot venue. |
+| Product design & UX (10%) | How clear and usable for its intended users? | One look (DESIGN.md), labels not just colors, works on a phone, the twin shows the result where the audience would see it. |
 
 Ask Raven: "Given these judging criteria, what is weakest in this project?" and paste THESIS.md. Then take the answer to a mentor.
 

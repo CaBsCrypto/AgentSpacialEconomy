@@ -1,0 +1,21 @@
+# Spatial Agents · Operating System
+
+> Your venue's AI operator, on a capped USDC budget. Built at HackMeridian 2026 (Genesis · Stellar Composed). A venue agent delegates a budget to a stage agent, which pays for data and content per call over x402 in USDC on Stellar testnet; a ledger refuses anything above the per-call cap before signing. The result appears on the stage of a 3D digital twin of ONE16, the HackMeridian venue. Testnet only, no real money.
+
+## Pages
+
+- [Operator dashboard](dashboard.html): mandate, budget per agent, every payment attempt with its Stellar testnet transaction, refused calls
+- [ONE16 digital twin](index.html): walkable 3D venue; the main stage screen shows the card the stage agent paid for
+- [Stellar Passport AR display](passport.html): 3D asset and native AR launch paths (AR not verified on devices)
+
+## Data
+
+- [Recorded run ledger](state/ledger.json): mandate, allocations, rows (settled / blocked) with transaction hashes and explorer links
+- [Stage screen state](state/stage.json): the purchased card and its transaction
+
+## Source and docs
+
+- [Repository](https://github.com/CaBsCrypto/AgentSpacialEconomy): README with architecture, setup, environment variables and on-chain evidence
+- [Thesis](https://github.com/CaBsCrypto/AgentSpacialEconomy/blob/main/THESIS.md): user, problem, why Stellar
+- [Spec](https://github.com/CaBsCrypto/AgentSpacialEconomy/blob/main/SPEC.md): demo path and ledger rules
+- [Agent loop](https://github.com/CaBsCrypto/AgentSpacialEconomy/tree/main/agent): x402 services, ledger, agent run, testnet runner

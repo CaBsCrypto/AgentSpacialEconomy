@@ -1,4 +1,4 @@
-# THESIS — Agentic Spatial Economy
+# THESIS — Spatial Agents · Operating System
 
 > Single source of truth. Change the idea **here first**, then update `SPEC.md`, `DESIGN.md`, the README, the landing hero and the pitch.
 
@@ -64,9 +64,11 @@ A venue's screens, signage, AR activations and sponsor slots are programmed by h
 
 ## How this maps to the judging rubric
 
+Judges rate each criterion 1–10 and weight it into a total out of 100 (HackMeridian portal). Detailed self-check in [DEMO.md](DEMO.md).
+
 | Criterion (weight) | Our answer |
 | --- | --- |
-| Track alignment (20%) | Agent with a wallet and a spending cap paying APIs in USDC over x402. |
+| Thematic alignment (20%) | Agent with a wallet and a spending cap paying APIs in USDC over x402. |
 | User value & problem (20%) | Operators get one budget, one log and a visible result per payment. |
 | Technical execution (15%) | Real testnet settlements, enforced cap, idempotent retries, tests. |
 | Innovation (15%) | Budgets and accountability for the digital layer of physical space. |
