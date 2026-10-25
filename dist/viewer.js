@@ -1,6 +1,6 @@
 import { bindWorldPassport, isPassportObject } from './world-passport.mjs?v=1';
 import { withTimeout } from './load-timeout.mjs?v=8';
-import { fetchModel } from './model-transfer.mjs?v=10';
+import { fetchModel } from './model-transfer.mjs?v=13';
 let THREE,GLTFLoader,OrbitControls,enginePromise;
 function loadEngine(){return enginePromise??=Promise.all([import('three'),import('./vendor/three/examples/jsm/loaders/GLTFLoader.js'),import('./vendor/three/examples/jsm/controls/OrbitControls.js')]).then(([three,loader,controls])=>{THREE=three;GLTFLoader=loader.GLTFLoader;OrbitControls=controls.OrbitControls}).catch(e=>{enginePromise=null;throw e})}
 import { walk,turn,roomAt,changeMode,floorHeight } from './navigation.mjs?v=2';

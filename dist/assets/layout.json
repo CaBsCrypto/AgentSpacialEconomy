@@ -1181,6 +1181,78 @@
       "maxX": 9.025,
       "minZ": -3.325,
       "maxZ": -2.675
+    },
+    {
+      "minX": -4.5,
+      "maxX": -1.9000000000000001,
+      "minZ": -27.88,
+      "maxZ": -27.720000000000002
+    },
+    {
+      "minX": -4.225,
+      "maxX": -2.1750000000000003,
+      "minZ": -27.05,
+      "maxZ": -26.150000000000002
+    },
+    {
+      "minX": -4.025,
+      "maxX": -3.475,
+      "minZ": -27.5,
+      "maxZ": -27.0
+    },
+    {
+      "minX": -4.5,
+      "maxX": -1.9000000000000001,
+      "minZ": -31.38,
+      "maxZ": -31.220000000000002
+    },
+    {
+      "minX": -4.225,
+      "maxX": -2.1750000000000003,
+      "minZ": -30.55,
+      "maxZ": -29.650000000000002
+    },
+    {
+      "minX": -4.025,
+      "maxX": -3.475,
+      "minZ": -31.0,
+      "maxZ": -30.5
+    },
+    {
+      "minX": 1.9000000000000001,
+      "maxX": 4.5,
+      "minZ": -27.88,
+      "maxZ": -27.720000000000002
+    },
+    {
+      "minX": 2.1750000000000003,
+      "maxX": 4.225,
+      "minZ": -27.05,
+      "maxZ": -26.150000000000002
+    },
+    {
+      "minX": 2.3750000000000004,
+      "maxX": 2.9250000000000003,
+      "minZ": -27.5,
+      "maxZ": -27.0
+    },
+    {
+      "minX": 1.9000000000000001,
+      "maxX": 4.5,
+      "minZ": -31.38,
+      "maxZ": -31.220000000000002
+    },
+    {
+      "minX": 2.1750000000000003,
+      "maxX": 4.225,
+      "minZ": -30.55,
+      "maxZ": -29.650000000000002
+    },
+    {
+      "minX": 2.3750000000000004,
+      "maxX": 2.9250000000000003,
+      "minZ": -31.0,
+      "maxZ": -30.5
     }
   ],
   "bounds": {
@@ -1426,30 +1498,30 @@
         ],
         [
           5.0,
-          -28.0
+          -31.7
         ],
         [
           -5.0,
-          -28.0
+          -31.7
         ]
       ],
       "view": {
         "x": 0,
-        "z": -29,
+        "z": -33,
         "yaw": 0
       }
     },
     {
       "id": "cafe",
-      "label": "Zona social",
+      "label": "Zona central \u00b7 mesas / builders",
       "polygon": [
         [
           -6.0,
-          -27.5
+          -25
         ],
         [
           6.0,
-          -27.5
+          -25
         ],
         [
           6.0,
@@ -1475,11 +1547,11 @@
           -6.5
         ],
         [
-          9,
+          8,
           -6.5
         ],
         [
-          9,
+          8,
           -0.8
         ],
         [
@@ -1577,6 +1649,34 @@
         "pitch": -0.2
       },
       "status": "Proposed AR demonstration; not an observed installation or account."
+    },
+    {
+      "id": "stands",
+      "label": "Stands \u00b7 corredor hacia el escenario",
+      "polygon": [
+        [
+          -4.7,
+          -31.6
+        ],
+        [
+          4.7,
+          -31.6
+        ],
+        [
+          4.7,
+          -25
+        ],
+        [
+          -4.7,
+          -25
+        ]
+      ],
+      "view": {
+        "x": 0,
+        "z": -25.3,
+        "yaw": 0
+      },
+      "evidence": "Narrated video: paired black booths between central builders/social area and auditorium. Geometry estimated; GUAVA, Trustless Work/Grantfox and THE AHA COMPANY visually legible. Far right booth left unbranded."
     }
   ],
   "exteriorRoute": [
@@ -1603,6 +1703,36 @@
     {
       "x": 0,
       "z": 28
+    }
+  ],
+  "standsRoute": [
+    {
+      "x": 3,
+      "z": -7
+    },
+    {
+      "x": 5.8,
+      "z": -14
+    },
+    {
+      "x": 5.8,
+      "z": -23
+    },
+    {
+      "x": 0,
+      "z": -23
+    },
+    {
+      "x": 0,
+      "z": -25
+    },
+    {
+      "x": 0,
+      "z": -31
+    },
+    {
+      "x": 0,
+      "z": -39
     }
   ]
 }

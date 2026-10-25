@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import{walk,canStand,roomAt}from'../src/navigation.mjs';
+const l=JSON.parse(fs.readFileSync(new URL('../dist/assets/layout.json',import.meta.url)));
+test('central approach through paired stands reaches auditorium and stage and reverses',()=>{let p={x:0,z:-25,yaw:0,pitch:0};assert.ok(canStand(p.x,p.z,l));for(let i=0;i<250;i++)p=walk(p,{forward:1},.025,l);assert.ok(p.z<-38);for(let i=0;i<250;i++)p=walk(p,{forward:-1},.025,l);assert.ok(Math.abs(p.z+25)<1e-7)});
+test('stand and auditorium viewpoints are distinct, clear, and correctly labeled',()=>{const s=l.zones.find(z=>z.id==='stands'),a=l.zones.find(z=>z.id==='auditorium');assert.ok(s);assert.ok(canStand(s.view.x,s.view.z,l));assert.equal(roomAt(s.view,l.zones),'stands');assert.equal(roomAt(a.view,l.zones),'auditorium');assert.ok(a.view.z<s.view.z)});
+test('Passport remains explicitly provisional and is not relabeled as a verified brand stand',()=>{const p=l.zones.find(z=>z.id==='passport');assert.equal(p.view.x,8.7);assert.equal(p.view.z,-1.6);assert.match(p.status,/Proposed|provisional/i)});

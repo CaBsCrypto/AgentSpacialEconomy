@@ -1,4 +1,6 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {canStand,walk} from '../src/navigation.mjs';
+import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {canStand,walk,roomAt} from '../src/navigation.mjs';
 const layout=JSON.parse(fs.readFileSync(new URL('../dist/assets/layout.json',import.meta.url)));
 test('all actual zone views and arrival are clear of real model collision',()=>{for(const p of [layout.spawn,...layout.zones.map(z=>z.view)])assert.ok(canStand(p.x,p.z,layout),JSON.stringify(p));});
 test('all view points connected on actual walking plane',()=>{const step=.25,round=x=>Math.round(x/step),start=[round(layout.spawn.x),round(layout.spawn.z)],todo=[start],seen=new Set([start.join(',')]);for(let k=0;k<todo.length;k++){const [x,z]=todo[k];for(const [dx,dz]of [[1,0],[-1,0],[0,1],[0,-1]]){const a=x+dx,b=z+dz,key=`${a},${b}`;if(!seen.has(key)&&canStand(a*step,b*step,layout)){seen.add(key);todo.push([a,b]);}}}for(const z of layout.zones)assert.ok(seen.has([round(z.view.x),round(z.view.z)].join(',')),z.id);});
+
+test('every selected zone reports its own room state',()=>{for(const z of layout.zones)assert.equal(roomAt(z.view,layout.zones),z.id,z.id)});
