@@ -1,0 +1,5 @@
+import fs from 'node:fs';import path from 'node:path';
+const source=path.resolve('node_modules/three'),target=path.resolve('dist/vendor/three');const seen=new Set;
+function visit(rel){if(seen.has(rel))return;seen.add(rel);const from=path.join(source,rel),to=path.join(target,rel);let s=fs.readFileSync(from,'utf8');fs.mkdirSync(path.dirname(to),{recursive:true});fs.writeFileSync(to,s);for(const m of s.replace(/\/\*[\s\S]*?\*\//g,'').matchAll(/(?:^|\n)\s*(?:import|export)\s+(?:[\s\S]*?\sfrom\s*)?['"]([^'"]+)['"]/g)){const spec=m[1];if(spec.startsWith('.'))visit(path.posix.normalize(path.posix.join(path.posix.dirname(rel),spec)));else if(spec.startsWith('three/addons/'))visit(spec.replace('three/addons/','examples/jsm/'));else if(spec!=='three')throw Error(`Unresolved ${spec}`);}}
+for(const rel of ['build/three.module.js','examples/jsm/loaders/GLTFLoader.js','examples/jsm/controls/OrbitControls.js','examples/jsm/utils/SkeletonUtils.js'])visit(rel);
+fs.copyFileSync(path.join(source,'LICENSE'),path.join(target,'LICENSE'));console.log(JSON.stringify({version:JSON.parse(fs.readFileSync(path.join(source,'package.json'))).version,files:[...seen]},null,2));

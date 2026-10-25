@@ -1,0 +1,11 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {walk,canStand,roomAt,changeMode,turn} from '../src/navigation.mjs';
+const layout={walkable:[[[-5,-5],[5,-5],[5,5],[-5,5]]],obstacles:[{minX:1,maxX:2,minZ:-2,maxZ:2}]};
+const state={x:0,z:0,yaw:0,pitch:0,mode:'walk'};
+test('forward is camera negative Z; right is positive X',()=>{assert.ok(walk(state,{forward:1},.05,layout).z<0);assert.ok(walk(state,{right:1},.05,layout).x>0);});
+test('forward follows yaw at all four cardinal directions',()=>{for(const yaw of [0,Math.PI/2,Math.PI,Math.PI*1.5]){let a=walk({...state,yaw},{forward:1},.05,layout);assert.ok(Math.abs(a.x+Math.sin(yaw)*.11)<1e-9);assert.ok(Math.abs(a.z+Math.cos(yaw)*.11)<1e-9);}});
+test('diagonal motion is normalized',()=>{const a=walk(state,{forward:1,right:1},.05,layout);assert.ok(Math.abs(Math.hypot(a.x,a.z)-.11)<1e-9);});
+test('walk cannot cross obstacle or boundary after repeated input',()=>{let a=state;for(let i=0;i<1000;i++)a=walk(a,{right:1},.05,layout);assert.ok(a.x<.77);a=state;for(let i=0;i<1000;i++)a=walk(a,{forward:1},.05,layout);assert.ok(a.z> -4.77);assert.ok(canStand(a.x,a.z,layout));});
+test('long frame stalls cannot teleport through geometry',()=>{assert.ok(Math.abs(walk(state,{forward:1},500,layout).z+.11)<1e-9);});
+test('mode retries preserve first-person pose and room state',()=>{let a={...state,x:-2,z:1};for(let i=0;i<50;i++)for(const mode of ['plan','overview','walk'])a=changeMode(a,mode);assert.equal(a.x,-2);assert.equal(a.z,1);assert.equal(roomAt(a,[{id:'test-zone',polygon:layout.walkable[0]}]),'test-zone');});
+test('drag pitch is clamped, including orientation transitions',()=>{assert.equal(turn(state,0,-10000).pitch,1.25);assert.equal(turn(state,0,10000).pitch,-1.25);});
+test('no invented floor means walking unavailable',()=>{assert.equal(canStand(0,0,{}),false);assert.deepEqual(walk(state,{forward:1},.05,{}),state);});

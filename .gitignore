@@ -1,0 +1,5 @@
+node_modules/
+*.log
+model/*.blend1
+model/stage-preview.png
+model/*preview*.py
