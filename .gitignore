@@ -3,3 +3,10 @@ node_modules/
 model/*.blend1
 model/stage-preview.png
 model/*preview*.py
+
+model/*-preview.jpg
+model/*-check.jpg
+model/*framing*.py
+model/correct-sign-and-preview.py
+model/*-check.jpg
+model/*-preview.jpg

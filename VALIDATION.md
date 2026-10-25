@@ -13,3 +13,10 @@
 - Physical mobile touch/orientation behavior not runtime-tested; responsive CSS and movement/state logic reviewed.
 - Local cloud-browser preview was unavailable (separate host, loopback connection refused). Public URL QA follows native deployment.
 - Hardware WebGL performance cannot be inferred from offline GLB parsing or Blender renders.
+
+## Revision v2 — entrance / merch
+- Actual decoded references sampled across both additional clips, with full-resolution stair/landing/merch frames inspected privately.
+- 16 tests pass. Added real-layout traversal from spawn through the long corridor and all seven .15m estimated risers, then exactly reversing to the original spawn; eight distinct floor-height levels observed. Merch view lies left of arrival axis and faces left. Camera now tracks floor elevation; >.25m instantaneous drops are blocked.
+- Revised full GLB: 8,124,988 bytes, 239 meshes, 270,252 vertices, parsed with actual GLTFLoader.
+- Ten safe zone viewpoints and continuous walking-plane connectivity verified; independent elevation-aware review passed: every stair tread raycast matches floorHeight and 26,755 reachable real-movement nodes connect all ten zones.
+- Earlier cloud-browser WebGL limitation remains; no assertion of hardware/mobile rendering tests.

@@ -13,6 +13,10 @@ export function canStand(x,z,{walkable=[],obstacles=[]},radius=.24){
  return samples.every(([dx,dz])=>walkable.some(p=>insidePolygon(x+dx,z+dz,p))) &&
   !obstacles.some(b=>x+radius>b.minX&&x-radius<b.maxX&&z+radius>b.minZ&&z-radius<b.maxZ);
 }
+export function floorHeight(x,z,layout){
+ const s=(layout.surfaces||[]).find(s=>insidePolygon(x,z,s.polygon));
+ return s ? (s.baseY||0)+(x-(s.originX||0))*(s.slopeX||0)+(z-(s.originZ||0))*(s.slopeZ||0) : 0;
+}
 export function walk(state,input,dt,layout,speed=2.2){
  const d=Math.min(Math.max(dt,0),.05)*speed;
  let f=Math.max(-1,Math.min(1,input.forward||0)),s=Math.max(-1,Math.min(1,input.right||0));
@@ -21,8 +25,8 @@ export function walk(state,input,dt,layout,speed=2.2){
  const dx=(-Math.sin(state.yaw)*f+Math.cos(state.yaw)*s)*d;
  const dz=(-Math.cos(state.yaw)*f-Math.sin(state.yaw)*s)*d;
  let x=state.x,z=state.z;
- if(canStand(x+dx,z,layout))x+=dx;
- if(canStand(x,z+dz,layout))z+=dz;
+ if(canStand(x+dx,z,layout)&&Math.abs(floorHeight(x+dx,z,layout)-floorHeight(x,z,layout))<=.25)x+=dx;
+ if(canStand(x,z+dz,layout)&&Math.abs(floorHeight(x,z+dz,layout)-floorHeight(x,z,layout))<=.25)z+=dz;
  return {...state,x,z};
 }
 export function turn(state,dx,dy){return {...state,yaw:state.yaw-dx*.004,pitch:Math.max(-1.25,Math.min(1.25,state.pitch-dy*.004))};}
