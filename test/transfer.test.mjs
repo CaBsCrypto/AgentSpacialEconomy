@@ -18,7 +18,7 @@ test('HTTP model errors are explicit and do not trigger duplicate downloads',asy
 });
 test('landing viewer defers heavy engine imports until initialization',async()=>{
  const src=await readFile(new URL('../dist/viewer.js',import.meta.url),'utf8');
- assert.doesNotMatch(src,/^import .*from ['"]three['"]/m);assert.match(src,/await loadEngine\(\)/);assert.match(src,/fetchModel\(/);
+ assert.doesNotMatch(src,/^import .*from ['"]three['"]/m);assert.match(src,/withTimeout\(loadEngine\(\)/);assert.match(src,/fetchModel\(/);
 });
 test('host-level gzip decoding is not decompressed twice',async()=>{
  const result=await fetchModel({fetcher:async()=>new Response(raw,{headers:{'content-encoding':'gzip'}})});assert.deepEqual(Buffer.from(result),raw);
