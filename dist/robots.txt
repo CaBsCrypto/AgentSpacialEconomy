@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site/sitemap.xml

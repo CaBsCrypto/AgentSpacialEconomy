@@ -14,11 +14,11 @@
 
 One name in the repo, the app title, the deck, the video and the submission form.
 
-<!-- TEAM: pick ONE before 01:00 and replace everywhere.
-     Today there are four: "Agentic Spatial Economy" (README), "SpatialOS" (working name),
-     "AgentSpacialEconomy" (repo slug, note the typo) and "one16-lisbon-immersive" (package.json);
-     the app <title> says "Hack Meridian 2026 · ONE16".
-     Check "SpatialOS" first: it is also the name of an existing simulation platform by Improbable. -->
+**Spatial Agents · Operating System** — decided 25 Oct. Use it exactly like that in the README, the dashboard, the deck, the video and the submission form.
+
+- Repo slug stays `AgentSpacialEconomy` (renaming needs the repo owner); the README says so in one line.
+- The cover artwork in `docs/assets/` still reads "Agentic Spatial Economy". Treat it as concept art or re-export it with the new name.
+- "SpatialOS" alone is also the name of an existing platform by Improbable, so always write the full name.
 
 ## Colors
 
