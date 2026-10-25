@@ -1,0 +1,69 @@
+name: Testnet loop
+
+# Runs the full paid loop on Stellar testnet with throwaway accounts and publishes
+# dist/state/*.json plus the run log to the `ci/testnet-results` branch.
+# Trigger: push to `ci/testnet-run`, or "Run workflow" once this file is on main.
+on:
+  push:
+    branches: [ci/testnet-run]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: testnet-loop
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      STELLAR_NETWORK: stellar:testnet
+      FACILITATOR_URL: ${{ vars.FACILITATOR_URL || 'https://x402.org/facilitator' }}
+      # Optional: a faucet-funded agent wallet. Without it, an ephemeral wallet buys testnet USDC on the DEX.
+      AGENT_SECRET_KEY: ${{ secrets.AGENT_SECRET_KEY }}
+      OZ_API_KEY: ${{ secrets.OZ_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install agent dependencies
+        working-directory: agent
+        run: npm install --no-audit --no-fund
+
+      - name: Unit tests
+        working-directory: agent
+        run: npm test
+
+      - name: Run the loop on Stellar testnet
+        working-directory: agent
+        run: |
+          mkdir -p out
+          set -o pipefail
+          node ci-run.mjs 2>&1 | tee out/ci-log.txt
+
+      - name: Secret scan of everything that will be published
+        id: scan
+        if: always()
+        run: |
+          mkdir -p ci-results
+          cp agent/out/ci-log.txt ci-results/ 2>/dev/null || true
+          if grep -rEn '\bS[A-Z2-7]{55}\b' dist/state ci-results 2>/dev/null; then
+            echo "A secret key would be published. Aborting."
+            exit 1
+          fi
+
+      - name: Publish results to ci/testnet-results
+        if: always() && steps.scan.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B ci/testnet-results
+          git add -f ci-results dist/state 2>/dev/null || git add -f ci-results
+          git commit -m "ci: testnet run ${{ github.run_id }} [skip ci]" || echo "nothing to commit"
+          git push -f origin ci/testnet-results

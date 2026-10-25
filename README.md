@@ -17,6 +17,7 @@ Agentic Spatial Economy explores how human administrators can delegate the opera
 - [DESIGN.md](DESIGN.md) — name, colors, type and screens.
 - [AGENTS.md](AGENTS.md) — rules and tools for coding agents (Raven MCP, Stellar skills).
 - [PLAN.md](PLAN.md) · [ISSUES.md](ISSUES.md) · [DEMO.md](DEMO.md) — schedule to submission, tasks, demo script.
+- [agent/README.md](agent/README.md) — run the paid loop on Stellar testnet in about 5 minutes. The operator view is `dist/dashboard.html`.
 
 ## The idea
 

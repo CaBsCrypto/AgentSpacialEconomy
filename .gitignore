@@ -15,3 +15,6 @@ model/*-preview.jpg
 .env
 .env.*
 !.env.example
+
+# Agent run outputs (per-run ledgers and results)
+agent/out/
