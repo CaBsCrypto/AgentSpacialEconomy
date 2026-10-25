@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {overviewPreset,clampOverview} from '../dist/overview-controls.mjs';import {Vector3} from 'three';
+const b={minX:-15,maxX:15,minZ:-50,maxZ:50};
+test('overview top-down preset frames full venue on phone and PC',()=>{for(const aspect of [.49,1.6,2.1]){const p=overviewPreset(b,aspect);assert.equal(p.x,0);assert.equal(p.z,0);assert.ok(p.height>100&&p.height<160)}});
+test('overview clamp bounds pan while preserving camera offset',()=>{const orbit={target:new Vector3(90,8,-120)},camera={position:new Vector3(100,110,-110)},offset=camera.position.clone().sub(orbit.target);clampOverview(camera,orbit,b);assert.deepEqual(orbit.target.toArray(),[18,0,-53]);assert.deepEqual(camera.position.clone().sub(orbit.target).toArray(),offset.toArray())});

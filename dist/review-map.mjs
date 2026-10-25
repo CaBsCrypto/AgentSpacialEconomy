@@ -1,0 +1,46 @@
+/** Temporary review coordinates, not a measured venue survey. Informational pins only. */
+const sections = [
+ [1,'Exterior · cartel',0,38],[2,'Andén cubierto',-6,46],[3,'Escalera exterior',-6,38.6],
+ [4,'Puerta de entrada',0,32],[5,'Pasillo amarillo',0,19],[6,'Lounge inferior',0,4.5],
+ [7,'Escalera amarilla',0,1.2],[8,'Check-in',0,-6.1],[9,'Merch',-9,-5],
+ [10,'Tótem · propuesta',7,-4],[11,'Passport · PROVISIONAL',8.7,-3],
+ [12,'Comida / buffet',0,-10],[13,'Centro · mesas / builders',0,-21],
+ [14,'Mesas builders · izquierda',-10,-28],[15,'Stands · izquierda',-3.2,-28.8],
+ [16,'Stands · derecha',3.2,-28.8],[17,'Auditorio',0,-35],[18,'Escenario',0,-43],
+ [19,'Photo lounge',10,-38],[20,'Sala acristalada · río',12.4,-19]
+];
+export const REVIEW_SECTIONS=Object.freeze(sections.map(([id,label,x,z])=>Object.freeze({id,label,x,z,...(id===11?{provisional:true}:{})})));
+const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const finite=n=>typeof n==='number'&&Number.isFinite(n);
+const fmt=n=>Number(n.toFixed(2));
+// Screen offsets affect the badge only; every displaced badge has an anchored leader.
+const offsets={1:[38,0],3:[-38,0],6:[-30,0],7:[30,0],9:[-27,0],10:[36,-22],11:[64,14],15:[-18,0],16:[18,0]};
+export function buildReviewSvg(layout={}, {pose,compact=false,showNumbers=true}={}) {
+ const polys=(Array.isArray(layout.walkable)?layout.walkable:[]).filter(p=>Array.isArray(p)&&p.length>=3&&p.every(v=>Array.isArray(v)&&finite(v[0])&&finite(v[1])));
+ const all=[...REVIEW_SECTIONS.map(s=>[s.x,s.z]),...polys.flat()];
+ const minX=Math.min(...all.map(p=>p[0]))-2,maxX=Math.max(...all.map(p=>p[0]))+2;
+ const minZ=Math.min(...all.map(p=>p[1]))-3,maxZ=Math.max(...all.map(p=>p[1]))+3;
+ const width=800,height=1200,scale=Math.min(600/(maxX-minX),1040/(maxZ-minZ));
+ const project=(x,z)=>[fmt(width/2+(x-(minX+maxX)/2)*scale),fmt(80+(z-minZ)*scale)];
+ const polygon=p=>p.map(([x,z])=>project(x,z).join(',')).join(' ');
+ const floor=polys.map(p=>`<polygon points="${polygon(p)}" fill="#263a48" stroke="#8ca4b3" stroke-width="1.4"/>`).join('');
+ const obstacles=(Array.isArray(layout.obstacles)?layout.obstacles:[]).filter(b=>b&&['minX','maxX','minZ','maxZ'].every(k=>finite(b[k]))&&b.maxX>=b.minX&&b.maxZ>=b.minZ).map(b=>{
+  const [x,y]=project(b.minX,b.minZ);return `<rect x="${x}" y="${y}" width="${fmt((b.maxX-b.minX)*scale)}" height="${fmt((b.maxZ-b.minZ)*scale)}" rx="1" fill="#73838b" opacity=".65"/>`;
+ }).join('');
+ const posePoint=pose&&finite(pose.x)&&finite(pose.z)&&finite(pose.yaw)?project(pose.x,pose.z):null;
+ const pins=REVIEW_SECTIONS.map(s=>{
+  const [ax,ay]=project(s.x,s.z);let [dx,dy]=offsets[s.id]||[0,0];
+  if(posePoint&&Math.hypot(ax+dx-posePoint[0],ay+dy-posePoint[1])<34)dx+=38;
+  const x=ax+dx,y=ay+dy;
+  const leader=dx||dy?`<path d="M${ax} ${ay} L${x} ${y}" stroke="#f5da72" stroke-width="1.6"/><circle cx="${ax}" cy="${ay}" r="2.7" fill="#f5da72"/>`:'';
+  return `<g data-review-number="${s.id}" data-review-id="${s.id}" data-world-x="${s.x}" data-world-z="${s.z}" aria-label="${esc(`${s.id}. ${s.label}`)}"><title>${esc(`${s.id}. ${s.label}`)}</title>${leader}<circle cx="${x}" cy="${y}" r="14" fill="${s.provisional?'#242e40':'#f5da72'}" stroke="${s.provisional?'#f5da72':'#141e27'}" stroke-width="2"${s.provisional?' stroke-dasharray="3 2"':''}/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="750" fill="${s.provisional?'#f5da72':'#111b25'}">${s.id}</text></g>`;
+ }).join('');
+ let location='';
+ if(pose&&finite(pose.x)&&finite(pose.z)&&finite(pose.yaw)){
+  const [x,y]=project(pose.x,pose.z),angle=fmt(-pose.yaw*180/Math.PI);
+  location=`<g data-review-pose="true" transform="translate(${x} ${y})" aria-label="Tu posición y orientación"><circle r="19" fill="#0b1823" opacity=".80"/><g transform="rotate(${angle})"><path d="M0 -16 L9 10 L0 6 L-9 10 Z" fill="#5ce6eb" stroke="#ffffff" stroke-width="1.5"/></g><circle r="2" fill="#ffffff"/></g>`;
+ }
+ const localCenter=posePoint||project(0,19);
+ const viewBox=compact?`${fmt(localCenter[0]-12*scale)} ${fmt(localCenter[1]-16*scale)} ${fmt(24*scale)} ${fmt(32*scale)}`:`0 0 ${width} ${height}`;
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-label="Mapa de revisión: veinte referencias aproximadas" data-review-map="${compact?'compact':'full'}" style="display:block;width:100%;height:auto;overflow:hidden"><title>ONE16 · mapa de revisión numerado</title><desc>Posiciones aproximadas para revisar el recorrido. Números informativos; Passport 11 es provisional. La flecha cian indica posición y orientación cuando están disponibles.</desc><rect width="800" height="1200" rx="18" fill="#101d29"/>${compact?'':`<text x="400" y="34" text-anchor="middle" fill="#e9eef1" font-family="system-ui,sans-serif" font-size="18" font-weight="700">ONE16 · 20 referencias para revisar</text>`}${floor}${obstacles}${showNumbers?pins:''}${location}${compact?'':`<text x="400" y="1155" text-anchor="middle" fill="#c0cdd5" font-family="system-ui,sans-serif" font-size="${compact?15:16}">Distribución estimada · 11 Passport provisional</text><text x="400" y="1180" text-anchor="middle" fill="#8ca4b3" font-family="system-ui,sans-serif" font-size="13">Números de revisión, no nuevas ubicaciones verificadas</text>`}</svg>`;
+}
