@@ -33,7 +33,7 @@ Keep the recorded backup of the full run ready. If the live run stalls, cut to t
 
 ## Deck outline (7 slides)
 
-1. **Name + one-liner.** Same words as the README.
+1. **Brand line + name + one-liner.** `AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES` small above *Spatial Agents · Operating System*, then the one-liner. Same words as the README.
 2. **Problem.** One operator, one venue, scattered spend. One sentence of first-hand evidence.
 3. **What it does.** Mandate → venue agent → stage agent → paid services → visible result.
 4. **Demo screenshots.** Ledger with a real testnet tx hash, the stage screen, the blocked card.

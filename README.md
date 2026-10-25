@@ -1,5 +1,7 @@
 # Spatial Agents · Operating System
 
+AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES
+
 ![Concept art (made under the earlier working name "Agentic Spatial Economy") — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
 
 **Your venue's AI operator, on a capped USDC budget.**
