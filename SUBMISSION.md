@@ -60,7 +60,9 @@ https://github.com/CaBsCrypto/AgentSpacialEconomy
 
 ## Project website link
 
-<!-- TEAM: live URL after redeploying dist/ — e.g. https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site (dashboard at /dashboard.html). dist/ now ships llms.txt, robots.txt and sitemap.xml as the form suggests. -->
+https://agenticreality.space
+
+Operator dashboard: https://agenticreality.space/dashboard.html · `llms.txt`, `robots.txt` and `sitemap.xml` are served from the site root, as the form suggests.
 
 ## Demo video link * (YouTube or Vimeo)
 
