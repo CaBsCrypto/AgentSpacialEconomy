@@ -18,6 +18,7 @@ Generated from `docs/issues.json`. Create them with `node scripts/create-issues.
 | 12 | P1 | Submission form answers | story |
 | 13 | P2 | Stretch: on-chain cap with an OpenZeppelin spending-limit policy | payments |
 | 14 | P2 | Stretch: LLM planner proposes the plan from the objective | agent |
+| 15 | P1 | Judges can trigger or verify a live testnet run without our laptop | deploy, dashboard |
 
 ## 1. Testnet accounts, trustlines and USDC for agent and services
 
@@ -191,3 +192,17 @@ Only if every P0 is merged before 08:00.
 
 - The LLM proposes steps and prices; the ledger still decides.
 - Keep the deterministic plan as the demo default.
+
+## 15. Judges can trigger or verify a live testnet run without our laptop
+
+Labels: P1, deploy, dashboard
+
+Owner: B. Start only after every P0 is merged.
+
+Judges review asynchronously and use the product like beta testers.
+
+- Preferred: host `services.mjs` plus a rate-limited 'Run on testnet' endpoint (server-held agent key, tiny allocation, one run per minute). The dashboard calls it and appends the new ledger rows.
+- Minimum: label the committed run as 'recorded run' and add a 5-minute README path a judge can follow with their own testnet keys.
+- Put the link in the submission answers.
+
+**Done when** someone outside the team, logged out, on a phone, sees a payment with a working explorer link.

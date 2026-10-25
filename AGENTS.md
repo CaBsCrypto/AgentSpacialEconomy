@@ -13,7 +13,8 @@ Agentic Spatial Economy: an operator gives a venue a budget and an objective; a 
 - Testnet only. Never point anything at `stellar:pubnet`.
 - Every Stellar fact needs a source: Raven, the Stellar docs or the official skills. Cite it in the PR description.
 - Do not edit generated assets in `dist/assets/` or the vendored `dist/vendor/` by hand.
-- Keep the README's rights and non-affiliation section intact.
+- Keep the README's rights and non-affiliation section intact. Submissions must be original or properly licensed (event terms).
+- Mon 26 Oct 12:00–15:30 is judging: no pushes to `main`, no redeploys.
 
 ## Scope
 

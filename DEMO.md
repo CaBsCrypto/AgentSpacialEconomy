@@ -2,6 +2,22 @@
 
 Judges score the demo, not the idea. Rehearse with a timer at least twice before recording.
 
+Judging is asynchronous: they review the **demo video, pitch deck, GitHub repo and submission answers**, and they use the product like beta testers. After technical execution, presentation and UX matter most. If a judge cannot open it and see it work, it does not count.
+
+## Rubric self-check (do it Monday 07:00 with Raven, fix the weakest first)
+
+| Criterion (weight) | Question to answer in one sentence, with evidence |
+| --- | --- |
+| Track alignment (20%) | Which two or more ecosystem tools do we compose, and where in the demo does each one appear? |
+| User value & problem (20%) | Who asked for this? Which operator, which pain, what does it cost them today? |
+| Technical execution (15%) | Can a judge trigger or verify a real testnet payment and see the cap refuse an overspend? |
+| Innovation (15%) | What does this do that Wadzzo, IRL, Stellar Passport or an agent wallet kit alone does not? |
+| Hackathon progress (10%) | What exactly was built between Sun 09:00 and Mon 12:00? Does the git history show it? |
+| Market & ecosystem potential (10%) | Who pays after the event, how often, and what is the next step (SCF, pilot venue)? |
+| Product design & UX (10%) | Can a stranger understand the dashboard in 10 seconds, on a phone? |
+
+Ask Raven: "Given these judging criteria, what is weakest in this project?" and paste THESIS.md. Then take the answer to a mentor.
+
 ## Video script (3:00)
 
 | Time | Block | On screen | Say (paraphrase, keep it short) |
@@ -35,4 +51,5 @@ Keep the recorded backup of the full run ready. If the live run stalls, cut to t
 | Video | <!-- link, works logged out --> |
 | Deck | <!-- PDF link --> |
 | Stellar integration (one sentence) | A budget-capped agent pays for data and content per call in testnet USDC over x402; every payment is logged with its transaction hash. |
-| Built during the event | Agent, paid services, ledger, dashboard, stage-screen integration, docs. Pre-existing: the ONE16 3D twin and Passport viewer. <!-- TEAM: be exact; judges reward honesty about what is new --> |
+| Built during the event | Agent, paid services, ledger, dashboard, stage-screen integration, docs. <!-- TEAM: list exactly what existed before Sun 25 Oct 09:00 and what was built here; judges check git history and value a sharp scope over a long feature list. If the twin was started earlier, say so and say what changed at the event. --> |
+| Test it yourself | <!-- link to the judge-testable run (#15) or the 5-minute README path --> |

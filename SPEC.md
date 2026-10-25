@@ -15,6 +15,13 @@
 
 Everything else is decoration. If time runs short, protect steps 3, 5 and 7.
 
+## Judges can test it (P1, after every P0)
+
+Judges review asynchronously and use the product like beta testers. Give them one way to see a **live** testnet payment without our laptop:
+
+- **Preferred:** host `services.mjs` and a rate-limited "Run on testnet" endpoint (server-held agent key, tiny allocation, one run per minute). The dashboard calls it and shows the new rows.
+- **Minimum:** the committed real run, clearly labelled "recorded run", plus a README path a judge can follow in 5 minutes with their own testnet keys.
+
 ## Components
 
 | Path | What it is | Notes |
@@ -99,4 +106,3 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
-- Hosted services (today the services run locally and the public site shows a committed real run).

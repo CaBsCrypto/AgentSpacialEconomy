@@ -70,6 +70,6 @@ A venue's screens, signage, AR activations and sponsor slots are programmed by h
 | User value & problem (20%) | Operators get one budget, one log and a visible result per payment. |
 | Technical execution (15%) | Real testnet settlements, enforced cap, idempotent retries, tests. |
 | Innovation (15%) | Budgets and accountability for the digital layer of physical space. |
-| Hackathon progress (10%) | Docs, issues, PRs and the payment loop are all built during the event. |
+| Hackathon progress (10%) | Docs, issues, PRs and the payment loop are built during the event; the submission states exactly what existed before. |
 | Market & ecosystem potential (10%) | Venues, campuses and museums run continuously, not just during events. |
 | Product design & UX (10%) | One story and one look across the venue, the dashboard, the deck and the video. |
