@@ -10,3 +10,8 @@ model/*framing*.py
 model/correct-sign-and-preview.py
 model/*-check.jpg
 model/*-preview.jpg
+
+# Secrets (Stellar keys, API keys)
+.env
+.env.*
+!.env.example

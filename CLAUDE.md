@@ -1,0 +1,4 @@
+@AGENTS.md
+@THESIS.md
+@SPEC.md
+@DESIGN.md
