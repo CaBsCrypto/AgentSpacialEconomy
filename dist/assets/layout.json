@@ -1,6 +1,206 @@
 {
-  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m\u00b2 venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates.",
+  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m\u00b2 venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates. Exterior platform, banner, forecourt and step dimensions/count are estimated; route topology and sign text observed in private exterior video.",
   "surfaces": [
+    {
+      "polygon": [
+        [
+          -7.8,
+          39.650000000000006
+        ],
+        [
+          -4.2,
+          39.650000000000006
+        ],
+        [
+          -4.2,
+          40.00000000000001
+        ],
+        [
+          -7.8,
+          40.00000000000001
+        ]
+      ],
+      "baseY": 0.1499999999999999,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          39.300000000000004
+        ],
+        [
+          -4.2,
+          39.300000000000004
+        ],
+        [
+          -4.2,
+          39.650000000000006
+        ],
+        [
+          -7.8,
+          39.650000000000006
+        ]
+      ],
+      "baseY": 0.0,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          38.95
+        ],
+        [
+          -4.2,
+          38.95
+        ],
+        [
+          -4.2,
+          39.300000000000004
+        ],
+        [
+          -7.8,
+          39.300000000000004
+        ]
+      ],
+      "baseY": -0.15000000000000013,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          38.6
+        ],
+        [
+          -4.2,
+          38.6
+        ],
+        [
+          -4.2,
+          38.95
+        ],
+        [
+          -7.8,
+          38.95
+        ]
+      ],
+      "baseY": -0.30000000000000004,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          38.25
+        ],
+        [
+          -4.2,
+          38.25
+        ],
+        [
+          -4.2,
+          38.6
+        ],
+        [
+          -7.8,
+          38.6
+        ]
+      ],
+      "baseY": -0.45000000000000007,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          37.900000000000006
+        ],
+        [
+          -4.2,
+          37.900000000000006
+        ],
+        [
+          -4.2,
+          38.25000000000001
+        ],
+        [
+          -7.8,
+          38.25000000000001
+        ]
+      ],
+      "baseY": -0.6000000000000001,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          37.550000000000004
+        ],
+        [
+          -4.2,
+          37.550000000000004
+        ],
+        [
+          -4.2,
+          37.900000000000006
+        ],
+        [
+          -7.8,
+          37.900000000000006
+        ]
+      ],
+      "baseY": -0.75,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -7.8,
+          37.2
+        ],
+        [
+          -4.2,
+          37.2
+        ],
+        [
+          -4.2,
+          37.550000000000004
+        ],
+        [
+          -7.8,
+          37.550000000000004
+        ]
+      ],
+      "baseY": -0.9,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
     {
       "polygon": [
         [
@@ -225,6 +425,56 @@
       "originZ": 0,
       "slopeX": 0,
       "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -8,
+          40
+        ],
+        [
+          -4,
+          40
+        ],
+        [
+          -4,
+          50
+        ],
+        [
+          -8,
+          50
+        ]
+      ],
+      "baseY": 0.15,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
+    },
+    {
+      "polygon": [
+        [
+          -8,
+          32
+        ],
+        [
+          7,
+          32
+        ],
+        [
+          7,
+          40
+        ],
+        [
+          -8,
+          40
+        ]
+      ],
+      "baseY": -1.05,
+      "originX": 0,
+      "originZ": 0,
+      "slopeX": 0,
+      "slopeZ": 0
     }
   ],
   "walkable": [
@@ -280,6 +530,42 @@
       [
         -2.2,
         32
+      ]
+    ],
+    [
+      [
+        -8,
+        32
+      ],
+      [
+        7,
+        32
+      ],
+      [
+        7,
+        40
+      ],
+      [
+        -8,
+        40
+      ]
+    ],
+    [
+      [
+        -8,
+        40
+      ],
+      [
+        -4,
+        40
+      ],
+      [
+        -4,
+        50
+      ],
+      [
+        -8,
+        50
       ]
     ]
   ],
@@ -865,19 +1151,43 @@
       "maxX": 7.6,
       "minZ": -4.6,
       "maxZ": -3.4
+    },
+    {
+      "minX": -3.88,
+      "maxX": -2.1799999999999997,
+      "minZ": 32.15,
+      "maxZ": 33.4
+    },
+    {
+      "minX": 2.1799999999999997,
+      "maxX": 3.88,
+      "minZ": 32.15,
+      "maxZ": 33.4
+    },
+    {
+      "minX": -8.0,
+      "maxX": -7.800000000000001,
+      "minZ": 37.2,
+      "maxZ": 40
+    },
+    {
+      "minX": -4.199999999999999,
+      "maxX": -3.9999999999999996,
+      "minZ": 37.2,
+      "maxZ": 40
     }
   ],
   "bounds": {
     "minX": -15,
     "maxX": 15,
     "minZ": -50,
-    "maxZ": 32
+    "maxZ": 50
   },
   "spawn": {
     "x": 0,
-    "z": 28,
+    "z": 38,
     "yaw": 0,
-    "pitch": 0
+    "pitch": 0.14
   },
   "zones": [
     {
@@ -1177,6 +1487,87 @@
         "yaw": -0.418
       },
       "status": "Proposed Testnet concept; not installed"
+    },
+    {
+      "id": "exterior",
+      "label": "Exterior \u00b7 Welcome, Builders.",
+      "polygon": [
+        [
+          -8,
+          32
+        ],
+        [
+          7,
+          32
+        ],
+        [
+          7,
+          40
+        ],
+        [
+          -8,
+          40
+        ]
+      ],
+      "view": {
+        "x": 0,
+        "z": 38,
+        "yaw": 0,
+        "pitch": 0.14
+      }
+    },
+    {
+      "id": "platform",
+      "label": "And\u00e9n cubierto \u00b7 acceso exterior",
+      "polygon": [
+        [
+          -8,
+          40
+        ],
+        [
+          -4,
+          40
+        ],
+        [
+          -4,
+          50
+        ],
+        [
+          -8,
+          50
+        ]
+      ],
+      "view": {
+        "x": -6,
+        "z": 46,
+        "yaw": 0
+      }
+    }
+  ],
+  "exteriorRoute": [
+    {
+      "x": -6,
+      "z": 46
+    },
+    {
+      "x": -6,
+      "z": 40.2
+    },
+    {
+      "x": -6,
+      "z": 36.8
+    },
+    {
+      "x": 0,
+      "z": 36.8
+    },
+    {
+      "x": 0,
+      "z": 31
+    },
+    {
+      "x": 0,
+      "z": 28
     }
   ]
 }

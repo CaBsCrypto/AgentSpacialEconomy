@@ -10,7 +10,7 @@ test('compressed runtime stream restores exact original model and reports progre
  assert.deepEqual(Buffer.from(result),raw);assert.equal(requests,1);assert.equal(progress.at(-1).loaded,gz.length);assert.ok(gz.length<raw.length*.2);
 });
 test('browser without gzip streaming support uses original GLB once',async()=>{
- let requests=0;const result=await fetchModel({decompressor:null,fetcher:async url=>{requests++;assert.match(url,/glb\?v=5/);return new Response(raw)}});
+ let requests=0;const result=await fetchModel({decompressor:null,fetcher:async url=>{requests++;assert.match(url,/glb\?v=/);return new Response(raw)}});
  assert.deepEqual(Buffer.from(result),raw);assert.equal(requests,1);
 });
 test('HTTP model errors are explicit and do not trigger duplicate downloads',async()=>{

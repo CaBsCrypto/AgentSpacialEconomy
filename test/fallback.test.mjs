@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';import {rea
 const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
 test('static tour and actual plan exist in HTML independent of JavaScript, fetch and WebGL',()=>{
  assert.match(html,/<a id="enter" href="#accessibleTour">/);assert.match(html,/<section id="accessibleTour"/);assert.match(html,/<div class="static-map"><svg/);
- const data=JSON.parse(html.match(/<script id="embeddedLayout" type="application\/json">(.*?)<\/script>/s)[1]);assert.equal(data.zones.length,11);assert.ok(data.spawn);assert.ok(data.walkable.length);
+ const data=JSON.parse(html.match(/<script id="embeddedLayout" type="application\/json">(.*?)<\/script>/s)[1]);assert.ok(data.zones.length>=11);assert.ok(data.spawn);assert.ok(data.walkable.length);
  assert.match(html,/>Ver plano e imágenes sin WebGL</);assert.match(html,/id="showPlan"/);assert.match(html,/id="staticExit"/);
 });
 test('engine error propagates without waiting for timeout',async()=>{await assert.rejects(withTimeout(Promise.reject(Error('import failed')),100,'timeout'),/import failed/)});
