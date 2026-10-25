@@ -54,27 +54,7 @@ def build_exterior(layout):
  rod('flag pole',(4.2,-33,-1.0),(4.2,-33,2.5),.018,black)
  poly('check in feather',[(4.2,-33.01,-.2),(4.85,-33.01,.0),(5.03,-33.01,1.9),(4.8,-33.01,2.42),(4.2,-33.01,2.0)],yellow)
  text('Check In',4.6,-33.04,1.14,.14);text('Area',4.6,-33.04,.94,.14);text('←',4.6,-33.04,.49,.31)
- # Raised exterior platform and estimated descending concrete steps.
- box('raised platform',(-6,-45,.04),(4,10,.22),concrete)
- for k in range(8):
-  z0=37.2+k*.35;h=-1.05+(k+1)*.15
-  box('estimated exterior step %02d'%k,(-6,-(z0+.175),(-1.16+h)/2),(3.6,.35,h+1.16),concrete)
-  layout['surfaces'].insert(0,surface(rect(-7.8,-4.2,z0,z0+.35),h))
- # Platform wall, shelter, exposed posts and wood guards. Forecourt remains open toward tracks.
- box('platform wall',(-3.9,-45,2.2),(.20,10,4.5),white)
- for y in [-41,-45,-49]:
-  box('closed loading door',(-4.015,y,1.55),(.035,2.4,2.8),gray)
-  for x in [-8,-4]:
-   box('shelter post',(x,y,2.6),(.17,.17,5.0),dark)
-   rod('diagonal brace',(x,y,3.5),(x,y+1.2,4.9),.07,wood)
-  box('shelter tie',(-6,y,4.9),(4.4,.17,.17),dark)
- for y in [-40.2,-43,-46,-49.7]:box('guard post',(-8,y,.72),(.14,.14,1.2),wood)
- for h in [.6,1.15]:box('platform wood guard',(-8,-45,h),(.14,10,.15),wood)
- for x in [-7.9,-4.1]:
-  for z in [37.2,38.6,40]:
-   h=-1.05+(z-37.2)/2.8*1.2;box('stair guard post',(x,-z,h+.55),(.12,.12,1.1),wood)
-  rod('stair handrail',(x,-37.2,.05),(x,-40,1.25),.065,wood)
- r=box('roof shelter',(-6,-45,5.02),(4.6,10.4,.12),dark);r.name='roof_exterior_platform'
+ # Sections2/3 removed by user; entrance canopy and forecourt remain.
  r=box('roof entrance canopy',(0,-33.7,5.2),(14,3.8,.13),dark);r.name='roof_exterior_canopy'
  for x in [-6,6]:rod('canopy brace',(x,-32,3.8),(x,-35.3,5.1),.08,dark)
  # Tracks are background only, separated by guard rail and excluded navigation.
@@ -83,13 +63,11 @@ def build_exterior(layout):
  for x in [-11.72,-10.28]:box('railway rail',(x,-41,-1.27),(.07,25,.13),gray)
  for y in [-33,-35,-37,-39]:box('forecourt barrier post',(-8.05,y,-.48),(.14,.14,1.15),wood)
  for h in [-.2,-.65]:box('forecourt barrier',(-8.05,-36,h),(.14,8,.14),wood)
- for x in [-7.9,-4.1]:
-  layout['obstacles'].append({'minX':x-.10,'maxX':x+.10,'minZ':37.2,'maxZ':40})
- layout['walkable'] += [rect(-8,7,32,40),rect(-8,-4,40,50)]
- layout['surfaces'] += [surface(rect(-8,-4,40,50),.15),surface(rect(-8,7,32,40),-1.05)]
- layout['bounds'].update(maxZ=50)
+ layout['walkable'] += [rect(-8,7,32,40)]
+ layout['surfaces'] += [surface(rect(-8,7,32,40),-1.05)]
+ layout['bounds'].update(maxZ=40)
  layout['spawn']={'x':0,'z':38,'yaw':0,'pitch':.14}
- layout['zones'] += [{'id':'exterior','label':'Exterior · Welcome, Builders.','polygon':rect(-8,7,32,40),'view':{'x':0,'z':38,'yaw':0,'pitch':.14}},{'id':'platform','label':'Andén cubierto · acceso exterior','polygon':rect(-8,-4,40,50),'view':{'x':-6,'z':46,'yaw':0}}]
- layout['exteriorRoute']=[{'x':-6,'z':46},{'x':-6,'z':40.2},{'x':-6,'z':36.8},{'x':0,'z':36.8},{'x':0,'z':31},{'x':0,'z':28}]
- layout['scaleStatus']+=' Exterior platform, banner, forecourt and step dimensions/count are estimated; route topology and sign text observed in private exterior video.'
+ layout['zones'] += [{'id':'exterior','label':'Exterior · Welcome, Builders.','polygon':rect(-8,7,32,40),'view':{'x':0,'z':38,'yaw':0,'pitch':.14}}]
+ layout['exteriorRoute']=[{'x':0,'z':38},{'x':0,'z':31},{'x':0,'z':28}]
+ layout['scaleStatus']+=' Exterior banner and forecourt dimensions are estimated; sign text observed in private exterior video. Sections2/3 platform/exteriorstairs removed by user; interiorstairs unchanged.'
  return layout

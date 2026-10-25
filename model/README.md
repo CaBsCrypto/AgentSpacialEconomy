@@ -61,3 +61,12 @@ Default start/reset is the forecourt facing the sign. Exterior dimensions, globa
 `stands.py` reconstructs four black demo backdrops with white/timber-leg tables, neutral screens and yellow lamps, paired on both sides of the center aisle between central builder tables and the auditorium. Private narrated video+frames support food → central builders/social area → brand stands on both sides → auditorium/main stage; local dimensions/spacing remain estimated. Only clearly legible GUAVA, Trustless Work/Grantfox, THE AHA COMPANY labels are reproduced; uncertain far-right brand and tiny sponsor marks omitted. No people or private screen content is published.
 The existing Passport/totem proposals remain unchanged; the new video does not identify or locate a Passport stand. The central cafe stable zone ID now labels 'Zona central · mesas / builders'. Logical zone bounds avoid overlaps, without reordering existing IDs. `standsRoute` records a collision-tested reversible approach; all fifteen viewpoints are standable and classify as their own zone.
 Final CPU parse: 9,720,524-byte GLB,424 meshes,308578 vertices,one decoded JPEG; GPU/device rendering remains separate QA.
+
+## Prepared layout revision: sections 2 and 3 removed
+User requested retaining section1 (forecourt/banner) as start/reset and removing
+section2 (raised exterior platform) and section3 (exterior stairs). This branch
+removes exactly43 exterior objects and the associated raised walk surfaces;
+the existing flat forecourt remains. Entrance canopy, doors/banner, background
+non-walkable railway, all24 umbrellas and seven INTERIOR yellow steps are kept.
+Review IDs1,4–20 stay unchanged;2/3 are omitted, not reassigned. This candidate
+was based on livev16 and does NOT include unpublishedv17 Android AR changes.
