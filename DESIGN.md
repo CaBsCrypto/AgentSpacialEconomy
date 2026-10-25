@@ -20,6 +20,8 @@ One name in the repo, the app title, the deck, the video and the submission form
 - The cover artwork in `docs/assets/` still reads "Agentic Spatial Economy". Treat it as concept art or re-export it with the new name.
 - "SpatialOS" alone is also the name of an existing platform by Improbable, so always write the full name.
 
+**Brand line:** `AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES` — set small, letter-spaced, with the gold rule, above the name (dashboard header, README, deck title slide, video title card). It is the mood, not the explanation: the portal tagline and every place where a reader must learn what the product does keep the one-liner from THESIS.md. Physical AR is not verified yet, so the brand line never stands alone as a claim in the demo or the submission.
+
 ## Colors
 
 | Token | Hex | Use |

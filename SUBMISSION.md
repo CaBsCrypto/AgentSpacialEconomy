@@ -14,6 +14,8 @@ Spatial Agents · Operating System
 
 Your venue's AI operator, on a capped USDC budget.
 
+<!-- The brand line "AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES" goes on the deck and video title cards, not here: judges read the tagline to learn what the product does. -->
+
 ## Description * (Markdown, max 8000 characters)
 
 **Spatial Agents · Operating System** lets the people who run a physical venue hand its digital layer — stage screens, signage, activations — to accountable agents. The operator sets an objective, a budget and rules. Agents spend it per call, in USDC on Stellar, and every payment is capped, logged and visible.
