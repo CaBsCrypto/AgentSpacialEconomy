@@ -1,5 +1,5 @@
 import { canUseWebGL2 } from './gpu-support.mjs?v=1';
-import { bindQuickLook } from './quicklook.mjs?v=1';
+import { bindQuickLook } from './quicklook.mjs?v=2';
 import { withTimeout } from './load-timeout.mjs?v=8';
 const button=document.getElementById('load3d'),host=document.getElementById('modelHost'),poster=document.getElementById('poster'),status=document.getElementById('status');
 let busy=false,loaded=false;

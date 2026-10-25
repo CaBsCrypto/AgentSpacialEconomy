@@ -1,6 +1,6 @@
 export const HOTSPOTS=[
- {id:'passport',mark:'P',label:'Passport AR',status:'available',detail:'Demo disponible · ubicación provisional'},
- {id:'stage',mark:'E',label:'Escenario',status:'soon',detail:'Próximamente · contenido AR por definir'},
+ {id:'passport',mark:'P',label:'Passport AR',status:'available',detail:'Sponsor · demo disponible · ubicación provisional'},
+ {id:'stage',mark:'E',label:'Escenario',status:'soon',detail:'Host del evento · próximamente · contenido AR por definir'},
  {id:'merch',mark:'M',label:'Merch',status:'soon',detail:'Próximamente · contenido AR por definir'},
  {id:'stands',mark:'S',label:'Stands',status:'soon',detail:'Próximamente · experiencias de marca por definir'}
 ];
