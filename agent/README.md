@@ -17,6 +17,20 @@ npm run loop               # terminal 2: the demo run
 
 Without keys or USDC yet: `npm run loop:dry` walks the whole plan and stops before signing anything.
 
+## Or run it in GitHub Actions (no setup, no faucet)
+
+`node ci-run.mjs` does everything in one go: throwaway testnet accounts, USDC trustlines, a little testnet USDC bought with XLM on the testnet DEX, the services, the facilitator check and the loop. The workflow `.github/workflows/testnet-loop.yml` runs it on every push to `ci/testnet-run` (or "Run workflow" from the Actions tab once it is on `main`) and publishes `dist/state/*.json` plus the log to the `ci/testnet-results` branch.
+
+Recorded run, 25 Oct 2026 23:22 UTC (Stellar testnet, x402.org facilitator):
+
+| Step | Price | Result |
+| --- | --- | --- |
+| `venue-feed` | 0.01 USDC | settled · [tx da69…8da8](https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8) |
+| `screen-card` | 0.05 USDC | settled · [tx 3b65…b9d9](https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9) |
+| `premium-render` | 0.25 USDC | blocked before signing — above the 0.10 per-call cap |
+
+Fees were paid by the facilitator, not the agent; the service wallet received exactly 0.06 USDC.
+
 ## What the run does
 
 1. `venue-agent` gives `stage-agent` its allocation from the mandate (`mandates/main-stage.json`).

@@ -1,0 +1,18 @@
+{
+  "runId": "2026-10-25T23:22:03.198Z",
+  "card": {
+    "label": "Next on the main stage",
+    "title": "Morning briefing",
+    "start": "2026-10-26T09:00:00Z",
+    "location": "Main stage",
+    "issuedAt": "2026-10-25T23:22:12.775Z",
+    "theme": {
+      "background": "#07121f",
+      "text": "#eef4f7",
+      "accent": "#72e3df",
+      "money": "#e3bd79"
+    }
+  },
+  "tx": "3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9",
+  "explorer": "https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9"
+}

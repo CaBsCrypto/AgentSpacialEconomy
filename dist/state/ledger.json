@@ -1,0 +1,84 @@
+{
+  "runId": "2026-10-25T23:22:03.198Z",
+  "network": "stellar:testnet",
+  "mandate": {
+    "id": "main-stage-hackmeridian",
+    "objective": "Show the live agenda and the next session on the main stage screen",
+    "network": "stellar:testnet",
+    "budgetUsdc": "0.50",
+    "perCallCapUsdc": "0.10",
+    "requiresApprovalAboveUsdc": "0.10",
+    "allocations": {
+      "stage-agent": "0.20"
+    },
+    "allowedServices": [
+      "venue-feed",
+      "screen-card",
+      "premium-render"
+    ]
+  },
+  "rows": [
+    {
+      "type": "allocation",
+      "from": "venue-agent",
+      "agent": "stage-agent",
+      "priceUsdc": "0.2",
+      "status": "allocated",
+      "at": "2026-10-25T23:22:03.402Z"
+    },
+    {
+      "type": "payment",
+      "key": "2026-10-25T23:22:03.198Z#1:venue-feed",
+      "agent": "stage-agent",
+      "service": "venue-feed",
+      "priceUsdc": "0.01",
+      "status": "settled",
+      "at": "2026-10-25T23:22:03.403Z",
+      "tx": "da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8",
+      "payer": "GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6",
+      "settledAt": "2026-10-25T23:22:12.351Z"
+    },
+    {
+      "type": "payment",
+      "key": "2026-10-25T23:22:03.198Z#2:screen-card",
+      "agent": "stage-agent",
+      "service": "screen-card",
+      "priceUsdc": "0.05",
+      "status": "settled",
+      "at": "2026-10-25T23:22:12.363Z",
+      "tx": "3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9",
+      "payer": "GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6",
+      "settledAt": "2026-10-25T23:22:17.177Z"
+    },
+    {
+      "type": "payment",
+      "key": "2026-10-25T23:22:03.198Z#3:premium-render",
+      "agent": "stage-agent",
+      "service": "premium-render",
+      "priceUsdc": "0.25",
+      "status": "blocked",
+      "reason": "price above the per-call cap",
+      "needsApproval": true,
+      "at": "2026-10-25T23:22:17.177Z"
+    }
+  ],
+  "totals": {
+    "venue-agent": {
+      "allocated": "0.5",
+      "delegated": "0.2",
+      "reserved": "0",
+      "spent": "0",
+      "available": "0.3"
+    },
+    "stage-agent": {
+      "allocated": "0.2",
+      "delegated": "0",
+      "reserved": "0",
+      "spent": "0.06",
+      "available": "0.14"
+    }
+  },
+  "generatedAt": "2026-10-25T23:22:17.179Z"
+}
