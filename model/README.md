@@ -34,3 +34,13 @@ New local scale remains estimated: corridor length 26 m and width 4.4 m; seven r
 
 Rebuild geometry: `blender -b -t 6 --python model/build_venue.py`.
 Render final v2 `hero.jpg`, `stairs.jpg`, `merch.jpg` and `overview.jpg`: `blender -b -t 6 --python model/render-v2.py`.
+
+## Proposed activation kiosk (A)
+
+A user-requested visual concept has been added at the right of arrival, opposite merch: Blender `(7,4,0)` / Three `(7,0,-4)`. It is explicitly marked `PROPUESTA`, `CONCEPTO TESTNET`, `XLM de prueba`, `USDC de prueba` and `SIN VALOR REAL`. There are no live wallet addresses, QR destinations, credentials, faucet calls, transactions or mainnet functionality in this model.
+
+`model/totem.py` builds the kiosk as a separate parented component; the original architecture and event furniture remain unchanged. Approximate dimensions: 0.80 × 0.65 m base, 1.93 m height. Its conservative collision rectangle is x=[6.4,7.6], z=[−4.6,−3.4]. Zone `activation` has a clear approach viewpoint x=5.8,z=−1.4. Placement requires on-site validation before any physical installation.
+
+Full current GLB was parsed by the actual Three.js GLTFLoader: 8,700,920 bytes, 256 meshes, 285,161 vertices. All 11 zone viewpoints are standable and connected from the entrance on a 0.25 m collision/elevation grid (20,726 reachable samples). Forward and reverse stair traversal remain valid.
+
+The kiosk screen is informational only: the earlier mock action button was removed and replaced by plain “Flujo por definir” text. No claim-ready controls or QR codes are present.

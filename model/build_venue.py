@@ -2,6 +2,7 @@ import bpy,math,random,json,os,sys
 from mathutils import Vector, Matrix
 sys.path.insert(0,os.path.dirname(__file__))
 from stage import build_stage
+from totem import build_totem
 random.seed(16)
 ROOT=os.path.dirname(os.path.dirname(__file__)); OUT=ROOT+'/dist/assets';os.makedirs(OUT,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -268,6 +269,8 @@ for y in [32,33.1,34.2,35.3,36.4,37.5,38.6]:
  for x in [-3.5,-2.75,-2,2,2.75,3.5]:chair(x,y,math.pi)
 for x in [-2.75,2.75]:block(x,35.3,2.4,7.5)
 stage=build_stage(origin=(0,43,0),width=8,depth=3.4);block(0,44.7,9,3.8);block(-4.65,43.8,1,1.8)
+# Proposed activation kiosk: visual Testnet concept, not an existing installation.
+build_totem(origin=(7,4,0));block(7,4,1.2,1.2)
 # Casual return area with timber-topped cafe tables / four slender chairs.
 for x,y in [(3,17),(0,21),(3,25),(-2,17)]:
  furn.box((x,y,.74),(1.2,1.2,.07),wood[4]);block(x,y,1.8,1.8)
@@ -296,6 +299,7 @@ for k in range(7):
 surfaces.append({'polygon':[[-6,0],[6,0],[6,6],[-6,6]],'baseY':-1.05,'originX':0,'originZ':0,'slopeX':0,'slopeZ':0})
 surfaces.append({'polygon':[[-2.2,6],[2.2,6],[2.2,32],[-2.2,32]],'baseY':-1.05,'originX':0,'originZ':0,'slopeX':0,'slopeZ':0})
 layout={'scaleStatus':'All local dimensions and inter-zone distances are estimated from imagery; official 3200 m² venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates.','surfaces':surfaces,'walkable':[[[-14.8,-49.8],[14.8,-49.8],[14.8,0],[-14.8,0]],[[-6,0],[6,0],[6,6],[-6,6]],[[-2.2,6],[2.2,6],[2.2,32],[-2.2,32]]],'obstacles':obstacles,'bounds':{'minX':-15,'maxX':15,'minZ':-50,'maxZ':32},'spawn':{'x':0,'z':28,'yaw':0,'pitch':0},'zones':[zone('entrance','Pasillo amarillo · paraguas',0,-19,4.4,26,0,-28,0),zone('arrival','Escalera · check-in',0,-1,5,10,0,-4,0),zone('merch','Merch · a la izquierda',-9,5,8,8,-5.3,3.5,1.5708),zone('buffet','Buffet · encuentro',0,10,10,10,3,7,.6),zone('river','Ventanas · sala acristalada',12.4,19,5,24,12,10,0),zone('photo','Photo lounge · encuentro',10,38,9,13,7,33,-.5),zone('stage','Escenario · HackMeridian',0,43,11,12,0,39,0),zone('hack','Mesas de trabajo',-10,28,9,23,-6,19,.5),zone('auditorium','Auditorio',0,34,10,12,0,29,0),zone('cafe','Zona social',0,21,12,13,5,18,.8)]}
+layout['zones'].append({'id': 'activation', 'label': 'Activación Stellar · concepto Testnet', 'polygon': [[5, -6.5], [9, -6.5], [9, -0.8], [5, -0.8]], 'view': {'x': 5.8, 'z': -1.4, 'yaw': -0.418}, 'status': 'Proposed Testnet concept; not installed'})
 open(OUT+'/layout.json','w').write(json.dumps(layout,indent=2))
 # Lighting and cameras. Render only non-sensitive reconstructed geometry.
 world=bpy.data.worlds.new('Lisbon daylight');bpy.context.scene.world=world;world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.55,.65,.72,1);world.node_tree.nodes['Background'].inputs[1].default_value=.35
