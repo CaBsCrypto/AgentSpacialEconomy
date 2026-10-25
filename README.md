@@ -1,33 +1,122 @@
-# ONE16 · HackMeridian spatial reconstruction
+# Agentic Spatial Economy
 
-Independent user-requested Site, created 25 October 2026. Original event footage and inspection screenshots are private and deliberately excluded from this checkout and all published assets.
+![Agentic Spatial Economy — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
 
-## Evidence
+**Give a place objectives and a budget. Let accountable agents coordinate its digital experiences.**
 
-- Venue technical sheet: https://static1.squarespace.com/static/68416d6a7f541b46db5db34b/t/68416eeeee8b0741ea84a074/1749118704205/ONE16%2B(Armaz%C3%A9m%2B16)_Ficha%2BT%C3%A9cnica%2B2025.pdf
-- Venue: https://www.oneyourfirststop.com/eventos
-- Event: https://www.hackmeridian.com/
+Agentic Spatial Economy explores how human administrators can delegate the operation of physical spaces to agents with explicit authority, spending limits and measurable objectives. Its first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
 
-The official published venue facts are 3,200m² open space, ceiling height 4.5–7m, and 36 river-facing windows on a 50m frontage. They are NOT an exact model footprint. Do not divide area by frontage to invent building depth.
+**[Open the public ONE16 demo](https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site)**
 
-The private 2:52 walkthrough was visually inspected at samples across its full duration. Observed features: yellow entrance route, lower lounge and seven-step ascent (corrected in v2); blue lounge chairs and mustard ottomans; timber floors and dark/grey braced warehouse frame; black-clothed buffet; river-facing windows and framed glazed room; yellow/black photo wall; low black stage, yellow backdrop, silver lighting truss; black-curtained workshop zone; white hack tables and dark chairs; auditorium central aisle and casual dining zone.
+> This repository currently implements the spatial frontend—not a deployed autonomous economy. The agent, budget and payment architecture below is the intended next layer.
 
-Local geometry scale, spacing, room connections, furniture counts and placement are interpretive estimates. The model reconstructs the observed route, not a surveyed full building. Hidden spaces are not claimed to be verified. No people, personal badges, private screens or raw video are included.
+## The idea
 
-## Rebuild
+```text
+Human administrator
+  └─ objectives · budget · permitted spaces · content rights · approval rules
+      └─ venue administrator agent
+          ├─ sponsor / stand agent
+          ├─ main-stage agent
+          └─ other subspace agents
+              └─ authorized services and paid API exchanges through x402
+                  └─ mobile, 3D and AR experiences for visitors
 
-- Three.js is pinned to 0.180.0. Run Sites dependency helper for install, then `node scripts/vendor.mjs` to copy recursive browser dependency graph.
-- `npm test` validates camera-relative movement, diagonal normalization, collision bounds, long-frame clamp, repeated mode changes, and absence of fabricated walkable floor.
-- `blender -b --python model/build_venue.py` generates model assets (see script for local output directory).
-- `node scripts/validate-glb.mjs dist/assets/one16.glb` runs the real GLTFLoader parser against the complete asset.
-- Static hosting directory: `dist`.
+Decisions, expenditure and outcomes → administrator dashboard
+```
 
-## Viewer
+The person remains in control of the mandate. Agents would coordinate services and allocate approved resources; visitors would experience the results through familiar mobile interfaces, the venue's digital twin and AR—not only through an open camera.
 
-Desktop WASD/arrows + drag; touchscreen buttons + drag; overview orbit/pinch; top-down interpretive plan; direct zone viewpoints; return preserves position. The 3D path requires WebGL. A clear error and real layout plan replace unavailable rendering; no simulated walking is claimed.
+x402 is proposed for paid service/API exchanges. It is not an agent identity system, a permission model or a replacement for budgeting and settlement controls. Not every agent interaction needs a payment.
 
-## Entrance / merch revision (v2)
+The event is the initial use case. The longer-term opportunity is continuously operated spaces such as museums, universities and shopping centres, where subspaces have different operators, objectives and rights.
 
-Two additional private clips (40.76s entrance and 11.78s arrival/merch) were decoded and visually sampled across their durations, with full-resolution stair/landing/merch inspection. They correct the first version's entrance topology: the yellow route is a long, low-level masonry corridor with rusty sliding doors and suspended black/yellow umbrellas, leading through a lower lounge to exactly seven visible yellow steps. Check-in is ahead after ascent; merch is on the arrival-relative left. The old in-hall yellow pier is removed. Lengths, widths and riser heights remain estimates, not measured facts.
+## What you can try today
 
-The viewer now supports explicit height surfaces and physical stair transitions in both directions; arbitrary drops exceeding a normal step are blocked. Elevation is interpolated visually for a comfortable camera, without replacing the stair mesh with a flat floor. New source footage remains private and is not part of the Site checkout.
+1. Open ONE16 and select **Vive la experiencia**.
+2. Explore the reconstructed entrance, yellow corridor, stairs, check-in, merchandise area, stands and main stage.
+3. Use the overview and numbered review map to locate sections; return to the entrance without restarting the visit.
+4. Open the **Stellar Passport** display from inside the venue to inspect the 3D asset and attempt its native AR launch on a compatible device.
+
+**Desktop:** WASD / arrow keys and drag to look. **Mobile:** left-thumb virtual joystick and independent right-side touch look. Overview controls support inspection of the layout. The temporary numbered map supports spatial feedback and can be hidden.
+
+The Passport interaction belongs inside the ONE16 experience. The standalone Passport page is a fallback, not the main journey. Its present placement near the activation totem is provisional, not a verified location of the real stand.
+
+## Implementation status
+
+| Layer | Current state |
+| --- | --- |
+| Venue viewer | Implemented: Three.js scene, walking, stair transitions, overview, reset, numbered map and mobile joystick. |
+| Loading | Implemented: background preload, shared model loading, compressed-model transfer and fallback handling. |
+| No-WebGL fallback | Static layout/imagery and an explicit fallback—not simulated 3D walking. |
+| Passport | 3D asset and in-world inspection panel; Android/iOS native AR launch paths. |
+| Physical AR | **Not yet verified on the target phone.** The user reported that the camera did not open. A native 3D viewer is not proof of AR. |
+| AR anchoring | No image-marker recognition, venue georeferencing, persistent anchors or shared spatial registration. |
+| Activation totem | Informational Stellar Testnet guide; no operational wallet connection, faucet claim or asset transfer. |
+| Agents and economy | Planned: scoped agents, mandates, budget ledger, x402 service payments and administrator dashboard. No real payments are implemented. |
+| Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
+
+### Release snapshot — 25 October 2026 · v18
+
+- **Public demo: v18**, source commit `fad1ddfc32e2ea65b64ab3e173b2b8690b5f7185` (exact source on `release/site-v18`).
+- Removes exterior platform and exterior staircase (temporary review sections **2 and 3**); keeps section **1** as start/reset. Other numbered sections retain their IDs. The interior yellow stairs and umbrellas remain.
+- Based on the v16 runtime. **Does not include the pending v17 Android AR diagnostic implementation**, even though the Git history preserves that work through an explicit merge.
+- The separate `feature/ar-android-diagnostics` and current `main` preserve the pending v17 implementation and earlier documentation. This branch is not a merge into main.
+- **78 automated tests pass** for this layout/runtime. Physical Android AR remains unverified.
+
+This branch adds project documentation to the published v18 source without changing its runtime. Source version history is retained; a GitHub branch is not an automatic deployment.
+
+## Run locally
+
+Requirements: Node.js with npm; Python 3 for the example static server. Three.js is pinned to **0.180.0**.
+
+```bash
+npm ci
+node scripts/vendor.mjs
+npm test
+python3 -m http.server 8000 --directory dist
+```
+
+Open `http://localhost:8000`. The deployable static directory is **`dist/`**. There is no `npm run build` or `npm start` script in this prototype.
+
+For mobile AR tests, use an HTTPS deployment opened directly in a compatible browser. A desktop localhost preview or embedded browser does not establish mobile AR compatibility. Native AR requires supported device software and an explicit user action; do not assume camera activation succeeded.
+
+### Optional model regeneration
+
+Blender is required to regenerate the venue; it is not required to view the committed assets.
+
+```bash
+blender -b --python model/build_venue.py
+python3 scripts/prepare-model.py
+node scripts/validate-glb.mjs dist/assets/one16.glb
+npm test
+```
+
+The generation script writes into `dist/assets/`; transfer preparation updates the compressed asset and its loading metadata. Review generated changes before committing. The GLB validator uses the real Three.js loader.
+
+## Repository guide
+
+- `dist/` — static application, navigation, loading, review-map and AR-launch modules.
+- `dist/assets/` — venue and Passport assets.
+- `model/` — procedural Blender model source and venue sections.
+- `scripts/` — dependency vendoring, model preparation and asset validation.
+- `test/` — Node test suite for navigation, input, fallback, loading, overview and Passport flows.
+- `docs/assets/` — project presentation artwork.
+
+## Next proof points
+
+1. **Verify the Passport demo on a physical Android/Chrome device:** launch camera-based AR, place the asset, exit and resume the venue without losing position. If unavailable, show an honest 3D fallback.
+2. **Implement one bounded operational loop:** a human mandate → one venue agent → one subspace agent → one authorized service → a visible result.
+3. **Add budget enforcement before real spending:** separate available, reserved and spent funds; enforce limits, approvals, idempotency and reconciliation. Start with clearly labelled test transactions.
+4. **Demonstrate accountability:** distinguish agent actions, successful service calls, financial settlement and actual visitor interactions in the dashboard.
+5. **Expand carefully:** sponsor experiences, host-controlled stage content and opt-in builder profiles. Advertising inventory must respect existing contracts and content rights.
+
+Inputs such as event schedules, social content or camera-derived signals require an appropriate permission and privacy model. The demo does not currently implement autonomous monitoring or personal-data ingestion.
+
+## Fidelity, attribution and rights
+
+This is an interpretive reconstruction, not a measured architectural survey. Geometry, spacing and furniture placement include estimates; unobserved areas are not claimed to be accurate. Venue references include [ONE16](https://www.oneyourfirststop.com/eventos) and the [HackMeridian event](https://www.hackmeridian.com/).
+
+This is an independent prototype. Use of Stellar, Stellar Passport, HackMeridian and venue names or visual references does **not** imply official sponsorship, endorsement or affiliation. “Sponsor” describes a proposed experience category, not a confirmed commercial relationship.
+
+Third-party names, artwork and assets retain their respective rights. Three.js includes its license in `dist/vendor/three/LICENSE` after vendoring. Public source availability does not itself grant a blanket license to project code or third-party assets; check applicable licenses and obtain permission before reuse. Raw reference recordings, personal information and credentials do not belong in public commits.
