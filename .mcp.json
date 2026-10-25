@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "stellar-raven": {
+      "type": "http",
+      "url": "https://raven.stellar.org/mcp"
+    },
+    "stellar-docs": {
+      "type": "http",
+      "url": "https://developers.stellar.org/mcp"
+    }
+  }
+}

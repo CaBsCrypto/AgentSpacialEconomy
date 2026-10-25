@@ -2,13 +2,21 @@
 
 ![Agentic Spatial Economy — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
 
-**Give a place objectives and a budget. Let accountable agents coordinate its digital experiences.**
+**Your venue's AI operator, on a capped USDC budget.**
 
 Agentic Spatial Economy explores how human administrators can delegate the operation of physical spaces to agents with explicit authority, spending limits and measurable objectives. Its first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
 
 **[Open the public ONE16 demo](https://one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site)**
 
 > This repository currently implements the spatial frontend—not a deployed autonomous economy. The agent, budget and payment architecture below is the intended next layer.
+
+## Project docs
+
+- [THESIS.md](THESIS.md) — who it is for, the problem, why Stellar. The source of truth.
+- [SPEC.md](SPEC.md) — the HackMeridian MVP: demo path, ledger rules, done criteria.
+- [DESIGN.md](DESIGN.md) — name, colors, type and screens.
+- [AGENTS.md](AGENTS.md) — rules and tools for coding agents (Raven MCP, Stellar skills).
+- [PLAN.md](PLAN.md) · [ISSUES.md](ISSUES.md) · [DEMO.md](DEMO.md) — schedule to submission, tasks, demo script.
 
 ## The idea
 

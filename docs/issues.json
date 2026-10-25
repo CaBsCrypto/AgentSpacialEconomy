@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Testnet accounts, trustlines and USDC for agent and services",
+    "labels": ["P0", "payments", "setup"],
+    "body": "Owner: A (faucet step: C).\n\n- Create two testnet accounts: venue agent (payer) and services (recipient).\n- Fund both with friendbot XLM; add a USDC trustline to both.\n- Get testnet USDC for the agent wallet from the Circle faucet (web captcha, manual).\n- Put the values in `.env` only (see `.env.example`).\n- Confirm `GET $FACILITATOR_URL/supported` lists `stellar:testnet`.\n\nReference: `agentic-payments` skill, testnet setup and the two USDC addresses.\n\n**Done when** both accounts show a USDC balance line and the facilitator check passes."
+  },
+  {
+    "title": "Paid services: venue-feed and screen-card over x402",
+    "labels": ["P0", "payments"],
+    "body": "Owner: A.\n\n- `agent/services.mjs`: Express server, x402 middleware mounted under `/paid`.\n- `GET /paid/venue-feed` (~0.01 USDC) returns `agent/fixtures/schedule.json`.\n- `POST /paid/screen-card` (~0.05 USDC) returns a card `{title, subtitle, time, theme}` built from the posted session.\n- Fail closed: missing or invalid `SERVICE_RECIPIENT` → every `/paid` route returns 503.\n\n**Done when** an unpaid request gets 402 and a paid request from the buyer client gets 200 with a settled testnet tx hash."
+  },
+  {
+    "title": "Budget ledger with per-call cap, allocations and idempotency",
+    "labels": ["P0", "payments", "tests"],
+    "body": "Owner: A.\n\n- `agent/ledger.mjs`: pure functions, no network.\n- Per agent: allocated, reserved, spent, available.\n- Check before pay: service allowed, price ≤ per-call cap, price ≤ available. Otherwise `blocked`, no signature.\n- Reserve → settle (with tx hash) or release on failure.\n- Idempotency key `(runId, step)`: a retry never pays twice.\n- Append-only JSON output.\n\n**Done when** unit tests cover allow, block by cap, block by allocation, release on failure and idempotent retry."
+  },
+  {
+    "title": "Agent run: venue agent → stage agent → two paid calls + one blocked",
+    "labels": ["P0", "payments", "agent"],
+    "body": "Owner: A.\n\n- `agent/run.mjs --mandate agent/mandates/main-stage.json`.\n- Venue agent allocates to stage agent; stage agent buys venue-feed, then screen-card.\n- Third attempt above the cap is refused and logged.\n- Writes `dist/state/ledger.json` and `dist/state/stage.json`.\n- Deterministic plan for the demo.\n\n**Done when** one command prints two settled tx hashes and one blocked row, and both state files are written."
+  },
+  {
+    "title": "Stage screen in the ONE16 twin shows the purchased card",
+    "labels": ["P0", "venue"],
+    "body": "Owner: B.\n\n- On load, fetch `state/stage.json`; render the card on the stage screen surface.\n- If the file is missing or invalid, keep today's default and log once.\n- Add a test for the fallback.\n\n**Done when** the committed state file appears on the stage screen locally and on the deployed site."
+  },
+  {
+    "title": "Operator dashboard: mandate, budget bars, ledger with explorer links",
+    "labels": ["P0", "dashboard"],
+    "body": "Owner: B.\n\n- `dist/dashboard.html` reads `state/ledger.json` and the mandate.\n- Shows objective, total budget, per-call cap; one bar per agent (allocated / spent / available); one row per attempt with status and a stellar.expert testnet link.\n- Blocked row rendered as a card with the reason. Labels, not color alone.\n- Uses DESIGN.md tokens.\n\n**Done when** a stranger can tell what was paid, for what and what was refused, in under 10 seconds."
+  },
+  {
+    "title": "Deploy the static site with a committed real run",
+    "labels": ["P0", "deploy"],
+    "body": "Owner: B.\n\n- After the final testnet run, commit `dist/state/*.json`.\n- Deploy `dist/` (current host) and check the twin and dashboard on a phone.\n- Link the dashboard from the twin and the README.\n\n**Done when** the public URL shows the real run and every explorer link resolves."
+  },
+  {
+    "title": "README: one-liner first, how it works, how to run the loop",
+    "labels": ["P1", "story"],
+    "body": "Owner: C.\n\n- Tagline under the title = the THESIS one-liner.\n- Short 'How it works' (mandate → agents → x402 → ledger → screen) with links to THESIS, SPEC, DESIGN, AGENTS.\n- Run instructions for `agent/`.\n- Update the implementation status table honestly.\n\n**Done when** a judge can run the loop from the README alone."
+  },
+  {
+    "title": "Landing hero with the one-liner",
+    "labels": ["P1", "story", "design"],
+    "body": "Owner: C (+B).\n\n- Top of the dashboard or a small landing section: name, one-liner, 'See the run' and 'Walk the venue' buttons.\n- Same words as README and deck.\n\n**Done when** the hero, README line and deck slide 1 match exactly."
+  },
+  {
+    "title": "Demo video (3 minutes) + backup recording",
+    "labels": ["P1", "story"],
+    "body": "Owner: C.\n\n- Follow DEMO.md: problem 0:30, live demo 1:30, how 0:30, next 0:30.\n- Real testnet run, real tx hashes on screen.\n- Record a full backup run at 09:00 regardless.\n\n**Done when** the video is uploaded and its link works logged out."
+  },
+  {
+    "title": "Pitch deck",
+    "labels": ["P1", "story"],
+    "body": "Owner: C.\n\n- Outline in DEMO.md. Real screenshots, one tx hash, the rubric-facing slide on Stellar integration.\n- Export to PDF.\n\n**Done when** the deck opens from the submission link."
+  },
+  {
+    "title": "Submission form answers",
+    "labels": ["P1", "story"],
+    "body": "Owner: C.\n\n- Name, one-liner, path/track (Genesis · Stellar Composed), repo, demo URL, video, deck.\n- Submit at 11:00, not 11:59.\n\n**Done when** the confirmation is received."
+  },
+  {
+    "title": "Stretch: on-chain cap with an OpenZeppelin spending-limit policy",
+    "labels": ["P2", "payments"],
+    "body": "Only if every P0 is merged before 08:00.\n\n- Agent wallet as an OpenZeppelin smart account with a spending-limit policy (cumulative cap over a rolling ledger window).\n- Show that a transfer above the window cap fails on-chain.\n\nReference: OpenZeppelin Stellar contracts, accounts → policies."
+  },
+  {
+    "title": "Stretch: LLM planner proposes the plan from the objective",
+    "labels": ["P2", "agent"],
+    "body": "Only if every P0 is merged before 08:00.\n\n- The LLM proposes steps and prices; the ledger still decides.\n- Keep the deterministic plan as the demo default."
+  }
+]
