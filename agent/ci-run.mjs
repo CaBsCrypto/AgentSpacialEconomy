@@ -92,26 +92,29 @@ console.log(`Agent account: https://stellar.expert/explorer/testnet/account/${ag
 
 // ---- environment for services.mjs and run.mjs ----
 const facilitator = process.env.FACILITATOR_URL || "https://x402.org/facilitator";
+const runEnv = {
+  STELLAR_NETWORK: "stellar:testnet",
+  FACILITATOR_URL: facilitator,
+  OZ_API_KEY: process.env.OZ_API_KEY || "",
+  SERVICE_RECIPIENT: service.publicKey(),
+  AGENT_SECRET_KEY: agent.secret(),
+  SERVICES_URL: "http://localhost:3001",
+  SERVICES_PORT: "3001",
+};
 await writeFile(
   fileURLToPath(new URL("../.env", import.meta.url)),
-  [
-    "STELLAR_NETWORK=stellar:testnet",
-    `FACILITATOR_URL=${facilitator}`,
-    `OZ_API_KEY=${process.env.OZ_API_KEY || ""}`,
-    `SERVICE_RECIPIENT=${service.publicKey()}`,
-    `AGENT_SECRET_KEY=${agent.secret()}`,
-    "SERVICES_URL=http://localhost:3001",
-    "SERVICES_PORT=3001",
-    "",
-  ].join("\n"),
+  Object.entries(runEnv).map(([k, v]) => `${k}=${v}`).join("\n") + "\n",
   { mode: 0o600 },
 );
+// Pass the values explicitly too: dotenv never overrides a variable that already exists, and CI
+// defines AGENT_SECRET_KEY as an empty string when the repo secret is not set.
+const childEnv = { ...process.env, ...runEnv };
 
 // ---- run ----
-const check = spawnSync(process.execPath, ["check-facilitator.mjs"], { cwd: agentDir, stdio: "inherit" });
+const check = spawnSync(process.execPath, ["check-facilitator.mjs"], { cwd: agentDir, stdio: "inherit", env: childEnv });
 if (check.status !== 0) console.warn("Facilitator check failed; trying the run anyway to capture the exact error.");
 
-const services = spawn(process.execPath, ["services.mjs"], { cwd: agentDir, stdio: ["ignore", "pipe", "pipe"] });
+const services = spawn(process.execPath, ["services.mjs"], { cwd: agentDir, stdio: ["ignore", "pipe", "pipe"], env: childEnv });
 services.stdout.on("data", (d) => process.stdout.write(`[services] ${d}`));
 services.stderr.on("data", (d) => process.stdout.write(`[services] ${d}`));
 
@@ -130,6 +133,7 @@ const runId = new Date().toISOString();
 const run = spawnSync(process.execPath, ["run.mjs", "--mandate", "mandates/main-stage.json", "--run-id", runId], {
   cwd: agentDir,
   stdio: "inherit",
+  env: childEnv,
 });
 services.kill();
 process.exit(run.status ?? 1);
