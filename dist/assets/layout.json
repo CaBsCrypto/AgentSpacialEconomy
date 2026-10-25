@@ -1175,6 +1175,12 @@
       "maxX": -3.9999999999999996,
       "minZ": 37.2,
       "maxZ": 40
+    },
+    {
+      "minX": 8.375,
+      "maxX": 9.025,
+      "minZ": -3.325,
+      "maxZ": -2.675
     }
   ],
   "bounds": {
@@ -1542,6 +1548,35 @@
         "z": 46,
         "yaw": 0
       }
+    },
+    {
+      "id": "passport",
+      "label": "Passport \u00b7 demostraci\u00f3n AR",
+      "polygon": [
+        [
+          8,
+          -3.8
+        ],
+        [
+          9.5,
+          -3.8
+        ],
+        [
+          9.5,
+          -1.0
+        ],
+        [
+          8,
+          -1.0
+        ]
+      ],
+      "view": {
+        "x": 8.7,
+        "z": -1.6,
+        "yaw": 0,
+        "pitch": -0.2
+      },
+      "status": "Proposed AR demonstration; not an observed installation or account."
     }
   ],
   "exteriorRoute": [
