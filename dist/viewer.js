@@ -1,3 +1,4 @@
+import { bindAndroidLaunch, checkPassportAsset } from './android-launch.mjs?v=1';
 import { bindWalkInput } from './walk-input.mjs?v=1';
 import { bindQuickLook } from './quicklook.mjs?v=2';
 import { REVIEW_SECTIONS, buildReviewSvg } from './review-map.mjs?v=1';
@@ -81,7 +82,7 @@ let passportTap;
 canvas.addEventListener('pointerdown',e=>{passportTap={id:e.pointerId,x:e.clientX,y:e.clientY}});
 canvas.addEventListener('pointerup',e=>{const tap=passportTap;passportTap=null;if(!tap||tap.id!==e.pointerId||Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>8||!model||!renderer||mode==='plan')return;const rect=canvas.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1),camera);const hit=ray.intersectObject(model,true)[0];if(hit&&isPassportObject(hit.object))worldPassport.open()});
 canvas.addEventListener('pointercancel',()=>passportTap=null);
-$('passportDialog').addEventListener('click',e=>{if(e.target.closest?.('#androidAR,#iosAR,[slot="ar-button"]')){try{sessionStorage.setItem('one16-ar-return',JSON.stringify({pose,mode,expires:Date.now()+600000}))}catch{}}},{capture:true});
+$('passportDialog').addEventListener('click',e=>{if(e.target.closest?.('#androidCamera,#androidAR,#iosAR,[slot="ar-button"]')){try{sessionStorage.setItem('one16-ar-return',JSON.stringify({pose,mode,expires:Date.now()+600000}))}catch{}}},{capture:true});
 try{const saved=JSON.parse(sessionStorage.getItem('one16-ar-return')||'null');if(location.hash==='#recorrido'&&saved?.expires>Date.now()){sessionStorage.removeItem('one16-ar-return');enter().then(()=>{if(layout){pose=saved.pose;chooseMode(model&&!contextFailed?saved.mode:'plan');worldPassport.open()}})}}catch{}
 
 $('passportFromActivation').addEventListener('click',()=>{if($('activationDialog').open)$('activationDialog').close()});
@@ -104,3 +105,7 @@ $('reviewToggle').addEventListener('click',()=>{reviewEnabled=!reviewEnabled;$('
 $('overviewTop').addEventListener('click',overhead);$('overviewCenter').addEventListener('click',recenter);$('miniMapFull').addEventListener('click',()=>chooseMode('plan'));
 
 $('toggleZones').addEventListener('click',()=>{const open=view.classList.toggle('zones-open');$('toggleZones').setAttribute('aria-expanded',String(open));clearInput()});
+
+bindAndroidLaunch({links:[$('androidCamera'),$('androidAR')],status:$('androidLaunchStatus'),fallbackNotice:$('androidFallbackNotice'),search:location.search,eventRoot:document,documentRef:document});
+$('checkArAsset').addEventListener('click',async()=>{$('checkArAsset').disabled=true;$('assetCheckStatus').textContent='Comprobando el archivo público…';try{const r=await checkPassportAsset();$('assetCheckStatus').textContent=`GLB completo: ${r.bytes.toLocaleString()} bytes · ${r.type}. Archivo accesible; esto no verifica la cámara ni ARCore.`}catch(e){$('assetCheckStatus').textContent='No se pudo descargar el modelo: '+e.message}finally{$('checkArAsset').disabled=false}});
+if(new URLSearchParams(location.search).get('ar_fallback')==='1')worldPassport.open();
