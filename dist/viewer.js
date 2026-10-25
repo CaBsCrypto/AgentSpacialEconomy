@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import { GLTFLoader } from './vendor/three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from './vendor/three/examples/jsm/controls/OrbitControls.js';
+import { fetchModel } from './model-transfer.mjs?v=6';
+let THREE,GLTFLoader,OrbitControls,enginePromise;
+function loadEngine(){return enginePromise??=Promise.all([import('three'),import('./vendor/three/examples/jsm/loaders/GLTFLoader.js'),import('./vendor/three/examples/jsm/controls/OrbitControls.js')]).then(([three,loader,controls])=>{THREE=three;GLTFLoader=loader.GLTFLoader;OrbitControls=controls.OrbitControls}).catch(e=>{enginePromise=null;throw e})}
 import { walk,turn,roomAt,changeMode,floorHeight } from './navigation.mjs?v=2';
 import { bindEntranceReset } from './reset-controller.mjs?v=4';
 const $=id=>document.getElementById(id), canvas=$('scene'),view=$('viewer');
@@ -19,12 +19,13 @@ async function initialize(){
  loading=(async()=>{
   $('fallback').hidden=true;message('Cargando el espacio…');
   layout??=await fetch('./assets/layout.json?v=5').then(r=>{if(!r.ok)throw Error('No se pudo cargar el plano');return r.json()});pose??={...layout.spawn,mode};$('restart').disabled=false;
-  buildZones();
+  buildZones();drawPlan();$('plan').hidden=false;canvas.hidden=true;message('Preparando motor 3D… El plano ya está disponible.');
+  await loadEngine();
   try{renderer??=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});}catch(e){showFallback('WebGL no está disponible en este navegador. Puedes consultar el plano interpretativo.');throw e;}
-  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,matchMedia('(pointer: coarse)').matches?1.25:1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
   scene=new THREE.Scene();scene.background=new THREE.Color('#d7dcdd');scene.add(new THREE.HemisphereLight(0xe7efff,0x7e6a4a,2.4));const sun=new THREE.DirectionalLight(0xfff2d2,2.6);sun.position.set(-20,22,8);scene.add(sun);const fill=new THREE.DirectionalLight(0xffffff,1.2);fill.position.set(15,14,-30);scene.add(fill);
   camera=new THREE.PerspectiveCamera(65,1,.06,200);makeOrbit();
-  const gltf=await new GLTFLoader().loadAsync('./assets/one16.glb?v=5');model=gltf.scene;scene.add(model);$('zones').querySelectorAll('button').forEach(b=>b.disabled=false);model.traverse(o=>{if(o.isMesh){o.frustumCulled=true;}});fit();chooseMode('walk');$('fallback').hidden=true;
+  const bytes=await fetchModel({onProgress:({loaded,total})=>message(`Descargando espacio: ${Math.min(100,Math.round(loaded/total*100))}% · ${(loaded/1000000).toFixed(1)} MB`)});message('Preparando geometría 3D…');await new Promise(resolve=>requestAnimationFrame(resolve));const gltf=await new GLTFLoader().parseAsync(bytes,'./assets/');model=gltf.scene;scene.add(model);$('zones').querySelectorAll('button').forEach(b=>b.disabled=false);model.traverse(o=>{if(o.isMesh){o.frustumCulled=true;}});fit();chooseMode('walk');$('fallback').hidden=true;
  })().catch(e=>{showFallback('No se pudo iniciar el recorrido 3D. El plano sigue disponible; puedes reintentar sin salir.');console.error('ONE16 initialization',e);throw e}).finally(()=>loading=null);return loading;
 }
 function showFallback(text){$('zones').querySelectorAll('button').forEach(b=>b.disabled=!b.dataset.info);$('fallback').hidden=false;$('fallbackMessage').textContent=text;message('3D no disponible · no se simula movimiento');if(layout){drawPlan();$('plan').hidden=false;canvas.hidden=true;}$('retry').disabled=false;}
