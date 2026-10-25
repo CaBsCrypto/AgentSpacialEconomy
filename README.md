@@ -56,13 +56,13 @@ The Passport interaction belongs inside the ONE16 experience. The standalone Pas
 | Agents and economy | Planned: scoped agents, mandates, budget ledger, x402 service payments and administrator dashboard. No real payments are implemented. |
 | Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
 
-### Release snapshot — 25 October 2026
+### Integrated source snapshot — 25 October 2026
 
-- **Public demo: v16**, source commit `d1a3425f71e8b7cf17b7c45af9759e20cb89bb8a`.
-- **Saved source: v17**, commit `951b84d7e599592026e25fa9d906182c4b8d696c`, **not published in this snapshot**. It adds a stricter Android AR-only launch path, clearer failure handling and a separate 3D option.
-- The v17 checkout passes **82 automated tests**. These validate code behaviour and integration contracts; they do not establish physical-device AR, visual fidelity or real-world tracking.
-
-The live demo and repository source may therefore differ. Keep this snapshot updated when publishing a later version. Existing source commits retain their original history and messages; version labels do not imply fabricated release commits.
+- **This branch integrates** the published v19 exterior layout with the Android AR diagnostics previously prepared as v17. Exterior sections **2 and 3** and 34 orphaned railway/fence objects are removed; section **1**, the interior yellow stairs, umbrellas and remaining review IDs are retained.
+- **Public demo remains v19**, source `8afc88f46c405d4d6e4bd12d271c5a7d6f8dc87b`, preserved on `release/site-v19`. This integration is a GitHub change, **not a Sites deployment**.
+- Android's primary action requests **AR-only**; an explicitly labelled alternative may open 3D without a camera. Fallback and asset diagnostics are preserved. Physical-device AR remains unverified.
+- The integrated checkout passes **83 automated tests**, plus real GLB parsing. Automated tests do not establish physical-device tracking or camera access.
+- Source history and previous release branches are retained. No force push or production overwrite is required.
 
 ## Run locally
 
