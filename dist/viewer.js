@@ -2,10 +2,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from './vendor/three/examples/jsm/controls/OrbitControls.js';
 import { walk,turn,roomAt,changeMode,floorHeight } from './navigation.mjs?v=2';
+import { bindEntranceReset } from './reset-controller.mjs?v=4';
 const $=id=>document.getElementById(id), canvas=$('scene'),view=$('viewer');
 let scene,camera,renderer,orbit,model,layout,pose,mode='walk',active=false,loading=null,last=0,drag=null,pinch=0,frame=0,contextFailed=false;
-const keys=new Set(),touch=new Set();
-function clearInput(){keys.clear();touch.clear();drag=null;pinch=0;}
+const keys=new Set(),touch=new Set(),heldPointers=new Map(),blockedKeys=new Set();
+function clearInput(){for(const key of keys)blockedKeys.add(key);keys.clear();touch.clear();drag=null;pinch=0;for(const [id,element] of heldPointers){try{if(element.hasPointerCapture?.(id))element.releasePointerCapture(id)}catch{}}heldPointers.clear();}
+function makeOrbit(){orbit?.dispose();orbit=new OrbitControls(camera,canvas);orbit.enableDamping=true;orbit.minDistance=4;orbit.maxDistance=100;orbit.maxPolarAngle=Math.PI*.48;}
 function message(s){$('room').textContent=s;}
 function fit(){if(!renderer)return;const w=view.clientWidth,h=view.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();clearInput();}
 function setPose(smooth=false,dt=.016){const eye=floorHeight(pose.x,pose.z,layout)+1.65;camera.position.set(pose.x,smooth?THREE.MathUtils.damp(camera.position.y,eye,16,Math.min(dt,.05)):eye,pose.z);camera.rotation.order='YXZ';camera.rotation.set(pose.pitch,pose.yaw,0);}
@@ -16,12 +18,12 @@ async function initialize(){
  if(loading)return loading;
  loading=(async()=>{
   $('fallback').hidden=true;message('Cargando el espacio…');
-  layout??=await fetch('./assets/layout.json?v=2').then(r=>{if(!r.ok)throw Error('No se pudo cargar el plano');return r.json()});pose??={...layout.spawn,mode};
+  layout??=await fetch('./assets/layout.json?v=2').then(r=>{if(!r.ok)throw Error('No se pudo cargar el plano');return r.json()});pose??={...layout.spawn,mode};$('restart').disabled=false;
   buildZones();
   try{renderer??=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});}catch(e){showFallback('WebGL no está disponible en este navegador. Puedes consultar el plano interpretativo.');throw e;}
   renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
   scene=new THREE.Scene();scene.background=new THREE.Color('#d7dcdd');scene.add(new THREE.HemisphereLight(0xe7efff,0x7e6a4a,2.4));const sun=new THREE.DirectionalLight(0xfff2d2,2.6);sun.position.set(-20,22,8);scene.add(sun);const fill=new THREE.DirectionalLight(0xffffff,1.2);fill.position.set(15,14,-30);scene.add(fill);
-  orbit?.dispose();camera=new THREE.PerspectiveCamera(65,1,.06,200);orbit=new OrbitControls(camera,canvas);orbit.enableDamping=true;orbit.minDistance=4;orbit.maxDistance=100;orbit.maxPolarAngle=Math.PI*.48;
+  camera=new THREE.PerspectiveCamera(65,1,.06,200);makeOrbit();
   const gltf=await new GLTFLoader().loadAsync('./assets/one16.glb?v=2');model=gltf.scene;scene.add(model);$('zones').querySelectorAll('button').forEach(b=>b.disabled=false);model.traverse(o=>{if(o.isMesh){o.frustumCulled=true;}});fit();chooseMode('walk');$('fallback').hidden=true;
  })().catch(e=>{showFallback('No se pudo iniciar el recorrido 3D. El plano sigue disponible; puedes reintentar sin salir.');console.error('ONE16 initialization',e);throw e}).finally(()=>loading=null);return loading;
 }
@@ -30,12 +32,14 @@ function buildZones(){if($('zones').children.length)return;layout.zones.forEach(
 async function enter(){active=true;view.hidden=false;document.body.style.overflow='hidden';history.replaceState(null,'','#recorrido');$('return').focus();try{await initialize();}catch{}if(!active)return;fit();if(!frame){last=performance.now();frame=requestAnimationFrame(loop);}}
 function leave(){active=false;clearInput();view.hidden=true;document.body.style.overflow='';history.replaceState(null,'',location.pathname);$('enter').focus();if(frame)cancelAnimationFrame(frame);frame=0;}
 function loop(now){frame=0;if(!active)return;let dt=(now-last)/1000;last=now;if(model&&renderer&&!renderer.getContext().isContextLost()){if(mode==='walk'){const f=Number(keys.has('w')||keys.has('arrowup')||touch.has('forward'))-Number(keys.has('s')||keys.has('arrowdown')||touch.has('back')),r=Number(keys.has('d')||keys.has('arrowright')||touch.has('right'))-Number(keys.has('a')||keys.has('arrowleft')||touch.has('left'));pose=walk(pose,{forward:f,right:r},dt,layout);setPose(true,dt);if(f||r){const id=roomAt(pose,layout.zones),z=layout.zones.find(z=>z.id===id);message(z?.label??'Circulación');}}else if(mode==='overview')orbit.update();if(mode!=='plan')renderer.render(scene,camera);}frame=requestAnimationFrame(loop);}
+const entranceReset=bindEntranceReset($('restart'),{getLayout:()=>layout,isWalkReady:()=>!!model&&!!renderer&&!contextFailed&&!renderer.getContext().isContextLost(),clearInput,closeHelp:()=>{$('helpPanel').hidden=true},setPose:p=>{pose=p;last=performance.now()},resetOrbit:makeOrbit,setMode:chooseMode,announce:message});
 $('enter').addEventListener('click',enter);$('return').addEventListener('click',leave);$('retry').addEventListener('click',async()=>{if(loading)return;$('retry').disabled=true;try{if(contextFailed||renderer?.getContext().isContextLost()){renderer.dispose();renderer=null;model=null;contextFailed=false;}await initialize();$('fallback').hidden=true;$('zones').querySelectorAll('button').forEach(b=>b.disabled=false);chooseMode('walk');}catch{}});
 document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(!layout)return;if((!model||contextFailed)&&b.dataset.mode!=='plan'){showFallback('El modo 3D necesita WebGL. Puedes reintentar o consultar el plano.');return;}chooseMode(b.dataset.mode)}));
 $('help').addEventListener('click',()=>{$('helpPanel').hidden=!$('helpPanel').hidden;clearInput()});$('closeHelp').addEventListener('click',()=>{$('helpPanel').hidden=true});
-window.addEventListener('keydown',e=>{if(!active)return;if(!$('helpPanel').hidden&&e.key!=='Escape')return;if(e.key==='Escape'){leave();return;}if(/^(w|a|s|d|arrowup|arrowdown|arrowleft|arrowright)$/i.test(e.key)){e.preventDefault();keys.add(e.key.toLowerCase())}});window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',clearInput);document.addEventListener('visibilitychange',clearInput);window.addEventListener('resize',fit);window.addEventListener('orientationchange',()=>{clearInput();setTimeout(fit,120)});
+window.addEventListener('keydown',e=>{if(!active)return;if(!$('helpPanel').hidden&&e.key!=='Escape')return;if(e.key==='Escape'){leave();return;}if(/^(w|a|s|d|arrowup|arrowdown|arrowleft|arrowright)$/i.test(e.key)){e.preventDefault();if(!e.repeat)blockedKeys.delete(e.key.toLowerCase());if(!blockedKeys.has(e.key.toLowerCase()))keys.add(e.key.toLowerCase())}});window.addEventListener('keyup',e=>{keys.delete(e.key.toLowerCase());blockedKeys.delete(e.key.toLowerCase())});window.addEventListener('blur',clearInput);document.addEventListener('visibilitychange',clearInput);window.addEventListener('resize',fit);window.addEventListener('orientationchange',()=>{clearInput();setTimeout(fit,120)});
 canvas.addEventListener('pointerdown',e=>{if(mode!=='walk')return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(mode!=='walk'||!drag||drag.id!==e.pointerId)return;pose=turn(pose,e.clientX-drag.x,e.clientY-drag.y);drag.x=e.clientX;drag.y=e.clientY});for(const event of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(event,()=>drag=null);
 canvas.addEventListener('wheel',e=>{if(mode!=='walk'||!camera)return;e.preventDefault();camera.fov=THREE.MathUtils.clamp(camera.fov+Math.sign(e.deltaY)*3,40,85);camera.updateProjectionMatrix()},{passive:false});
 for(const b of document.querySelectorAll('[data-move]')){b.addEventListener('pointerdown',e=>{e.preventDefault();touch.add(b.dataset.move);b.setPointerCapture(e.pointerId)});for(const event of ['pointerup','pointercancel','lostpointercapture'])b.addEventListener(event,()=>touch.delete(b.dataset.move));}
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();contextFailed=true;clearInput();showFallback('Se interrumpió WebGL. Consulta el plano o reintenta el recorrido.');});
-window.__one16={get state(){return {active,mode,pose,loaded:!!model,webgl:!!renderer,zones:layout?.zones.length}},enter,leave,chooseMode};
+document.addEventListener('pointerdown',e=>{if(active&&view.contains(e.target))heldPointers.set(e.pointerId,e.target)},{capture:true});for(const type of ['pointerup','pointercancel'])document.addEventListener(type,e=>heldPointers.delete(e.pointerId),{capture:true});
+window.__one16={get state(){return {active,mode,pose,loaded:!!model,webgl:!!renderer,zones:layout?.zones.length}},enter,leave,chooseMode,resetToEntrance:entranceReset.reset};
