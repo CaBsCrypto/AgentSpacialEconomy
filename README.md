@@ -56,15 +56,16 @@ The Passport interaction belongs inside the ONE16 experience. The standalone Pas
 | Agents and economy | Planned: scoped agents, mandates, budget ledger, x402 service payments and administrator dashboard. No real payments are implemented. |
 | Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
 
-### Release snapshot — 25 October 2026 · v18
+### Release snapshot — 25 October 2026 · v19
 
-- **Public demo: v18**, source commit `fad1ddfc32e2ea65b64ab3e173b2b8690b5f7185` (exact source on `release/site-v18`).
+- **Public demo: v19**, commit `8afc88f46c405d4d6e4bd12d271c5a7d6f8dc87b` (exact source on `release/site-v19`). Sites publication confirmed on 25 October 2026 at 20:19 UTC; `release/site-v18` preserves the preceding version.
+- Cleans up 34 orphaned exterior railway/fence objects remaining after the prior removal. Entrance section 1 and interior content are preserved.
 - Removes exterior platform and exterior staircase (temporary review sections **2 and 3**); keeps section **1** as start/reset. Other numbered sections retain their IDs. The interior yellow stairs and umbrellas remain.
 - Based on the v16 runtime. **Does not include the pending v17 Android AR diagnostic implementation**, even though the Git history preserves that work through an explicit merge.
 - The separate `feature/ar-android-diagnostics` and current `main` preserve the pending v17 implementation and earlier documentation. This branch is not a merge into main.
-- **78 automated tests pass** for this layout/runtime. Physical Android AR remains unverified.
+- **79 automated tests pass** for this layout/runtime. Physical Android AR remains unverified.
 
-This branch adds project documentation to the published v18 source without changing its runtime. Source version history is retained; a GitHub branch is not an automatic deployment.
+This branch adds project documentation to the v19 source without changing its runtime. Source version history is retained; a GitHub branch is not an automatic deployment.
 
 ## Run locally
 
