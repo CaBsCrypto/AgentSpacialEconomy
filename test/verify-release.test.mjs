@@ -10,7 +10,7 @@ function fixture(override = () => null) {
     const pathname = new URL(url).pathname;
     const custom = await override(pathname);
     if (custom) return custom;
-    if (pathname === '/') return new Response(`<h1>Spatial Agents · Operating System</h1><p>AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES</p><p>Your venue's AI operator, on a capped USDC budget.</p><a href="/dashboard.html">See the live testnet run</a><a href="https://github.com/CaBsCrypto/AgentSpacialEconomy">GitHub</a>`, { headers: { 'content-type': 'text/html' } });
+    if (pathname === '/') return new Response(`<h1>Agentic Realities · Spatial AI for Venues and Events</h1><p>AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES</p><p>Your venue's AI operator automating your event AR layer with x402 on a capped USDC budget.</p><a href="/dashboard.html">See the testnet evidence</a><a href="https://github.com/CaBsCrypto/AgentSpacialEconomy">GitHub</a>`, { headers: { 'content-type': 'text/html' } });
     if (pathname === '/one16') return new Response('<script type="module" src="/entry.mjs"></script>', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/dashboard.html') return new Response('On-chain budget ceiling · recorded run', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/sitemap.xml') return new Response('<urlset><url>https://agenticreality.space/one16</url><url>https://agenticreality.space/dashboard.html</url></urlset>', { headers: { 'content-type': 'application/xml' } });
