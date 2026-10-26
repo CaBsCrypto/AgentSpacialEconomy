@@ -518,7 +518,7 @@ def pbr(name, color, rough, metal=0.0, emissive=None, strength=None, tex=None, e
 
 
 # ---------------------------------------------------------------- build
-def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
+def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95, pedestal_scale=0.875, fruit_scale=1.08):
     if logo_path:
         logo = Image.open(logo_path).convert('RGBA'); source = os.path.basename(logo_path)
     else:
@@ -587,11 +587,14 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
         'status': 'Proposed activation concept; not an observed installation.',
         'logo': 'Node palta_logo_slot shows ' + source + '. Supply the partner\'s official file.',
         'animations': 'open (play once, reverse to close); idle (loop, child nodes only)',
-        'units': 'metres, Y up, front +Z'})
-    g.node('palta_pedestal', root, m_ped)
-    k = fruit_height
+        'units': 'metres, Y up, front +Z',
+        'proportions': {'pedestalScale': pedestal_scale, 'fruitScale': fruit_scale,
+                        'nominalPedestalHeight': pedestal_height, 'nominalFruitHeight': fruit_height,
+                        'pedestalHeight': pedestal_height * pedestal_scale, 'fruitHeight': fruit_height * fruit_scale}})
+    g.node('palta_pedestal', root, m_ped, s=(pedestal_scale,) * 3)
+    k = fruit_height * fruit_scale
     # The turntable is never animated: the viewer module turns it to face the visitor.
-    turn = g.node('palta_turntable', root, t=(0, pedestal_height, 0))
+    turn = g.node('palta_turntable', root, t=(0, pedestal_height * pedestal_scale, 0))
     fruit = g.node('palta_fruit', turn, s=(k, k, k))
     n_right = g.node('palta_half_right', fruit, m_right, t=(0, 0, HINGE_Z))
     n_left = g.node('palta_half_left', fruit, m_left, t=(0, 0, HINGE_Z))
@@ -608,8 +611,9 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
                                   extras={'brand': official['brand'], 'source': official['source'],
                                           'aspect': official['aspect'], 'projection': 'cavity-sphere'})
     n_seed = g.node('palta_seed', fruit, m_seed, t=(0, SEED_Y, 0))
-    # At the default scale, the center is 2.105 m high and the whole glow ring clears
-    # the open halves by 10.74 cm (including the ring tube radius of 0.008 fruit units).
+    # The authored pedestal and animated fruit have independent proportions.
+    # Both the initial fruit node and every open-clip scale sample use k, so the
+    # eight-percent increase persists through opening, reversing and reduced motion.
     medal_rest = np.array([0, 1.54, 0.12])
     n_medal = g.node('palta_medallion', fruit, t=(0, SEED_Y, 0), s=(0.001,) * 3)
     n_float = g.node('palta_medallion_float', n_medal)

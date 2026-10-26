@@ -30,7 +30,7 @@ def build_stands(layout):
     wood = mat('natural timber legs', (.48,.34,.20))
     yellow = mat('yellow painted desk lamps', (.95,.72,.025), rough=.5)
     screen = mat('neutral demonstration screen', (.09,.13,.16), rough=.35, emit=.15)
-    lettering = mat('white lettering', (.83,.85,.83))
+    lettering = mat('white lettering', (.83,.85,.83));lettering.use_backface_culling=True
     metal = mat('dark metal chair frames', (.07,.08,.08), metal=.45, rough=.42)
     def box(name, center, size, material):
         bpy.ops.mesh.primitive_cube_add(size=1, location=center)
@@ -50,7 +50,7 @@ def build_stands(layout):
         obj.data.materials.append(material)
         solids.append(obj)
         return obj
-    def text(body, center, size, reverse=False, vertical=False, name=None):
+    def text(body, center, size, reverse=False, name=None, max_width=3.10):
         curve=bpy.data.curves.new(body,'FONT')
         curve.body=body;curve.size=size;curve.align_x='CENTER';curve.align_y='CENTER'
         curve.extrude=.001;curve.resolution_u=2
@@ -58,9 +58,14 @@ def build_stands(layout):
         bpy.context.collection.objects.link(obj);obj.location=center
         rotation=Matrix.Rotation(math.pi/2,4,'X')
         if reverse:rotation=Matrix.Rotation(math.pi,4,'Z')@rotation
-        if vertical:rotation=rotation@Matrix.Rotation(-math.pi/2,4,'Z')
         obj.rotation_euler=rotation.to_euler()
         curve.materials.append(lettering)
+        bpy.context.view_layer.update()
+        if obj.dimensions.x>max_width:
+            curve.size*=max_width/obj.dimensions.x
+            bpy.context.view_layer.update()
+        obj['role']='stand-header';obj['text']=body
+        obj['face']='stage' if reverse else 'arrival';obj['readingDirection']='left-to-right'
         return obj
     def obstacle(x,y,w,d):
         layout['obstacles'].append({'minX':round(x-w/2,3),'maxX':round(x+w/2,3),'minZ':round(-y-d/2,3),'maxZ':round(-y+d/2,3)})
@@ -84,14 +89,15 @@ def build_stands(layout):
                 facing='+Y' if reverse else '-Y'
                 direction=1 if reverse else -1
                 ty=([29.0,33.6] if reverse else [26.5,30.8])[row]
-                # Narrow vertical brand at the aisle-side edge and event footer.
+                # Horizontal headings live above the repeated event marks.
                 graphic_plane('Stands repeated event footer '+key,'booth-footer',(x,py+direction*.057,.95),3.5,1.60,facing)
-                sx=x-side*1.58
-                text(label,(sx,py+direction*.066,1.82),.13 if len(label)<16 else .095,reverse,True)
-                if side==1 and row==0 and not reverse:
-                    # Keep the stable Passport-test nodes above the repeated-logo field.
-                    text('Trustless Work',(x,py-.064,2.24),.14,name='Stands label Trustless Work')
-                    text('Grantfox',(x,py-.064,2.02),.14,name='Stands label Grantfox')
+                lines=label.split(' / ');headers=[]
+                header_x=3.5 if key=='booth-passport' else x
+                for index,line in enumerate(lines):
+                    height=2.48 if index==0 else 2.10
+                    stable_name='Stands label '+line
+                    heading=text(line,(header_x,py+direction*.066,height),.30 if len(lines)>1 else .36,reverse,name=stable_name)
+                    headers.append({'text':line,'node':heading.name,'x':header_x,'height':height,'fontSize':heading.data.size,'face':'stage' if reverse else 'arrival','readingDirection':'left-to-right'})
                 box('white demonstration desk '+key,(x,ty,.76),(1.95,.75,.06),white)
                 for dx in [-.83,.83]:
                     for dy in [-.27,.27]:
@@ -121,7 +127,7 @@ def build_stands(layout):
                 build_chair('Stands staff chair '+key,(cx,cy,0),black,metal,angle=math.pi if reverse else 0)
                 obstacle(cx,cy,.54,.62)
                 vx=side*1.1;vz=-ty+(-1 if reverse else 1)
-                positions.append({'brand':label,'graphic':key,'side':'left' if side<0 else 'right','row':row+1,'face':'stage' if reverse else 'arrival','table':{'x':x,'z':-ty,'width':1.95,'depth':.75,'top':.79},'hardware':key not in {'booth-defindex-soroswap','booth-passport'},'chair':{'x':cx,'z':-cy,'width':.54,'depth':.62},'visitorView':{'x':vx,'z':vz,'yaw':math.atan2(-(x-vx),-(-ty-vz)),'pitch':-math.atan2(1.65-.793,math.hypot(x-vx,-ty-vz))}})
+                positions.append({'brand':label,'graphic':key,'side':'left' if side<0 else 'right','row':row+1,'face':'stage' if reverse else 'arrival','table':{'x':x,'z':-ty,'width':1.95,'depth':.75,'top':.79},'headers':headers,'hardware':key not in {'booth-defindex-soroswap','booth-passport'},'chair':{'x':cx,'z':-cy,'width':.54,'depth':.62},'visitorView':{'x':vx,'z':vz,'yaw':math.atan2(-(x-vx),-(-ty-vz)),'pitch':-math.atan2(1.65-1.35,math.hypot(x-vx,-ty-vz))}})
     # Keep draw calls bounded by joining opaque solids by shared material.
     material_groups=[(material,[obj for obj in solids if obj.data.materials[0]==material]) for material in [black,white,wood,yellow,screen,metal]]
     for material,group in material_groups:

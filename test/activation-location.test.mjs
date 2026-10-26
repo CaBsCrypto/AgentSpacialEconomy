@@ -43,8 +43,8 @@ function checkRoute(layout,route){
 }
 
 test('relocated activation approach is free and independent of buffet, skills and the optional tabletop Palta',()=>{
- assert.deepEqual(raw.activation.position,{x:2.9,y:0,z:-9.2});
- assert.deepEqual(raw.activation.approach,{x:2.9,z:-7.9,yaw:0,pitch:-.12});
+ assert.deepEqual(raw.activation.position,{x:2.6,y:0,z:-5.6});
+ assert.deepEqual(raw.activation.approach,{x:2.6,z:-4.3,yaw:0,pitch:-.12});
  assert.equal(PALTA_DEFAULTS.tableId,'booth-defindex-soroswap');
  assert.equal(PALTA_DEFAULTS.floorCollision,false);
  for(const source of [raw,shortenLayout(raw)]){

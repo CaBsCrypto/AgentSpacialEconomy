@@ -318,7 +318,7 @@ build_hack_seating()
 build_auditorium_seating()
 stage=build_stage(origin=(0,43,0),width=8,depth=3.4);block(0,44.7,9,3.8);block(-4.65,43.8,1,1.8)
 # Proposed activation kiosk: visual Testnet concept, not an existing installation.
-build_totem(origin=(2.9,9.2,0),angle=0);block(2.9,9.2,1.2,1.2)
+build_totem(origin=(2.6,5.6,0),angle=0);block(2.6,5.6,1.2,1.2)
 # Casual return area with timber-topped cafe tables / four slender chairs.
 build_cafe_seating()
 for g in [floor,shell,roof,furn,entrance]:g.finish()
@@ -346,13 +346,23 @@ layout={'scaleStatus':'All local dimensions and inter-zone distances are estimat
 layout['seating']=seating
 # Visible floor finishes differ slightly from the navigable slab elevation.
 layout['floorFinishes']=[{'polygon':[[-.9,2.45],[.9,2.45],[.9,32],[-.9,32]],'topY':-1.02,'name':'yellow corridor runner'},{'polygon':[[-1.1,-2.2],[1.1,-2.2],[1.1,0],[-1.1,0]],'topY':.024,'name':'upper landing runner'},{'polygon':[[-1.7,-6.05],[1.7,-6.05],[1.7,-3.95],[-1.7,-3.95]],'topY':.028,'name':'check-in runner'}]
-layout['zones'].append({'id': 'activation', 'label': 'Tótem · wallet y USDC de prueba', 'polygon': [[1.55,-11.8],[3.5,-11.8],[3.5,-7.8],[1.55,-7.8]], 'view': {'x':2.9,'z':-7.9,'yaw':0,'pitch':-.12}, 'status': 'Proposed Testnet concept; not installed'})
+layout['zones'].append({'id': 'activation', 'label': 'Tótem · wallet y USDC de prueba', 'polygon': [[1.85,-6.5],[3.5,-6.5],[3.5,-4.05],[1.85,-4.05]], 'view': {'x':2.6,'z':-4.3,'yaw':0,'pitch':-.12}, 'status': 'Proposed Testnet concept; not installed'})
 build_exterior(layout)
-layout['activation']={'position':{'x':2.9,'y':0,'z':-9.2},'approach':{'x':2.9,'z':-7.9,'yaw':0,'pitch':-.12},'reviewReference':10,'nearReference':12,'triggerRadius':2.2,'purpose':'Existing Testnet wallet and test USDC flow; no automatic redemption.'}
-layout['activationRoute']=[{'x':layout['spawn']['x'],'z':layout['spawn']['z']},{'x':0,'z':32},{'x':0,'z':6},{'x':0,'z':2.45},{'x':0,'z':0},{'x':0,'z':-1},{'x':2.4,'z':-3.6},{'x':2.9,'z':-5.8},{'x':2.9,'z':-7.9}]
+layout['activation']={'position':{'x':2.6,'y':0,'z':-5.6},'approach':{'x':2.6,'z':-4.3,'yaw':0,'pitch':-.12},'reviewReference':10,'nearReference':12,'triggerRadius':2.2,'purpose':'Existing Testnet wallet and test USDC flow; no automatic redemption.'}
+layout['activationRoute']=[{'x':layout['spawn']['x'],'z':layout['spawn']['z']},{'x':0,'z':32},{'x':0,'z':6},{'x':0,'z':2.45},{'x':0,'z':0},{'x':0,'z':-1},{'x':2.4,'z':-3.6},{'x':2.6,'z':-4.3}]
 build_stands(layout)
 build_passport_display(layout)
 build_experience_zones(layout,Geo,M,mat,graphic_plane,{'black':black,'white':white,'yellow':yellow,'blue':blue,'steel':steel,'wood':wood[4]})
+# Authored company paths branch from the same clear central-aisle fork.
+layout['companyRoutes']={
+ 'trunk':[{'x':2.6,'z':-4.3},{'x':4.2,'z':-4.3},{'x':4.2,'z':-12.8},{'x':5.8,'z':-12.8},{'x':5.8,'z':-23},{'x':0,'z':-23},{'x':0,'z':-29.9}],
+ 'branches':[
+  {'id':'passport','label':'Stellar Passport','points':[{'x':0,'z':-29.9},{'x':4.1,'z':-29.9}],
+   'approach':{'x':4.1,'z':-29.9,'yaw':math.pi,'pitch':-.2}},
+  {'id':'palta','label':'DeFindex · Soroswap','points':[{'x':0,'z':-29.9},{'x':-4,'z':-29.9}],
+   'approach':{'x':-4,'z':-29.9,'yaw':.514,'pitch':-.2}}
+ ]}
+
 graphic_plane('Check-in overhead observed sign','checkin-sign',(0,2.265,3.65),3.4,.7)
 graphic_plane('Check-in Made to Move branded backdrop','checkin-backdrop',(0,6.639,1.55),3.4,3.1)
 apply_appearance()

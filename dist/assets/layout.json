@@ -1596,10 +1596,10 @@
       "maxZ": -42.9
     },
     {
-      "minX": 2.3,
-      "maxX": 3.5,
-      "minZ": -9.8,
-      "maxZ": -8.6
+      "minX": 2.0,
+      "maxX": 3.2,
+      "minZ": -6.2,
+      "maxZ": -5.0
     },
     {
       "minX": -2.9,
@@ -2130,22 +2130,6 @@
         ],
         [
           3.3,
-          -11.8
-        ],
-        [
-          1.55,
-          -11.8
-        ],
-        [
-          1.55,
-          -7.8
-        ],
-        [
-          3.3,
-          -7.8
-        ],
-        [
-          3.3,
           -6.5
         ],
         [
@@ -2328,25 +2312,25 @@
       "label": "Tótem · wallet y USDC de prueba",
       "polygon": [
         [
-          1.55,
-          -11.8
+          1.85,
+          -6.5
         ],
         [
           3.5,
-          -11.8
+          -6.5
         ],
         [
           3.5,
-          -7.8
+          -4.05
         ],
         [
-          1.55,
-          -7.8
+          1.85,
+          -4.05
         ]
       ],
       "view": {
-        "x": 2.9,
-        "z": -7.9,
+        "x": 2.6,
+        "z": -4.3,
         "yaw": 0,
         "pitch": -0.12
       },
@@ -7536,13 +7520,13 @@
   ],
   "activation": {
     "position": {
-      "x": 2.9,
+      "x": 2.6,
       "y": 0,
-      "z": -9.2
+      "z": -5.6
     },
     "approach": {
-      "x": 2.9,
-      "z": -7.9,
+      "x": 2.6,
+      "z": -4.3,
       "yaw": 0,
       "pitch": -0.12
     },
@@ -7581,12 +7565,8 @@
       "z": -3.6
     },
     {
-      "x": 2.9,
-      "z": -5.8
-    },
-    {
-      "x": 2.9,
-      "z": -7.9
+      "x": 2.6,
+      "z": -4.3
     }
   ],
   "exhibition": {
@@ -7611,6 +7591,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "DRIPS",
+            "node": "Stands label DRIPS",
+            "x": -4.0,
+            "height": 2.48,
+            "fontSize": 0.36000001430511475,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": -4.55,
@@ -7622,7 +7613,7 @@
           "x": -1.1,
           "z": -25.5,
           "yaw": 1.2387368592520112,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7638,6 +7629,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "GUAVA",
+            "node": "Stands label GUAVA",
+            "x": -4.0,
+            "height": 2.48,
+            "fontSize": 0.36000001430511475,
+            "face": "stage",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": -4.55,
@@ -7649,7 +7651,7 @@
           "x": -1.1,
           "z": -30.0,
           "yaw": 1.9028557943377822,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7665,6 +7667,26 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "DeFindex",
+            "node": "Stands label DeFindex",
+            "x": -4.0,
+            "height": 2.48,
+            "fontSize": 0.30000001192092896,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          },
+          {
+            "text": "Soroswap",
+            "node": "Stands label Soroswap",
+            "x": -4.0,
+            "height": 2.1,
+            "fontSize": 0.30000001192092896,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": false,
         "chair": {
           "x": -4.55,
@@ -7676,7 +7698,7 @@
           "x": -1.1,
           "z": -29.8,
           "yaw": 1.2387368592520112,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7692,6 +7714,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "THE AHA COMPANY",
+            "node": "Stands label THE AHA COMPANY",
+            "x": -4.0,
+            "height": 2.48,
+            "fontSize": 0.3330110013484955,
+            "face": "stage",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": -4.55,
@@ -7703,7 +7736,7 @@
           "x": -1.1,
           "z": -34.6,
           "yaw": 1.9028557943377822,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7719,6 +7752,26 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "Trustless Work",
+            "node": "Stands label Trustless Work",
+            "x": 4.0,
+            "height": 2.48,
+            "fontSize": 0.30000001192092896,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          },
+          {
+            "text": "Grantfox",
+            "node": "Stands label Grantfox",
+            "x": 4.0,
+            "height": 2.1,
+            "fontSize": 0.30000001192092896,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": 4.55,
@@ -7730,7 +7783,7 @@
           "x": 1.1,
           "z": -25.5,
           "yaw": -1.2387368592520112,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7746,6 +7799,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "Stellar Passport",
+            "node": "Stands label Stellar Passport",
+            "x": 3.5,
+            "height": 2.48,
+            "fontSize": 0.36000001430511475,
+            "face": "stage",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": false,
         "chair": {
           "x": 4.55,
@@ -7757,7 +7821,7 @@
           "x": 1.1,
           "z": -30.0,
           "yaw": -1.9028557943377822,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7773,6 +7837,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "57BLOCKS",
+            "node": "Stands label 57BLOCKS",
+            "x": 4.0,
+            "height": 2.48,
+            "fontSize": 0.36000001430511475,
+            "face": "arrival",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": 4.55,
@@ -7784,7 +7859,7 @@
           "x": 1.1,
           "z": -29.8,
           "yaw": -1.2387368592520112,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       },
       {
@@ -7800,6 +7875,17 @@
           "depth": 0.75,
           "top": 0.79
         },
+        "headers": [
+          {
+            "text": "OpenZeppelin",
+            "node": "Stands label OpenZeppelin",
+            "x": 4.0,
+            "height": 2.48,
+            "fontSize": 0.36000001430511475,
+            "face": "stage",
+            "readingDirection": "left-to-right"
+          }
+        ],
         "hardware": true,
         "chair": {
           "x": 4.55,
@@ -7811,7 +7897,7 @@
           "x": 1.1,
           "z": -34.6,
           "yaw": -1.9028557943377822,
-          "pitch": -0.2724281336462304
+          "pitch": -0.09748719502546903
         }
       }
     ],
@@ -8363,6 +8449,80 @@
         "x": 12.9,
         "y": 2.75,
         "z": -16.3
+      }
+    ]
+  },
+  "companyRoutes": {
+    "trunk": [
+      {
+        "x": 2.6,
+        "z": -4.3
+      },
+      {
+        "x": 4.2,
+        "z": -4.3
+      },
+      {
+        "x": 4.2,
+        "z": -12.8
+      },
+      {
+        "x": 5.8,
+        "z": -12.8
+      },
+      {
+        "x": 5.8,
+        "z": -23
+      },
+      {
+        "x": 0,
+        "z": -23
+      },
+      {
+        "x": 0,
+        "z": -29.9
+      }
+    ],
+    "branches": [
+      {
+        "id": "passport",
+        "label": "Stellar Passport",
+        "points": [
+          {
+            "x": 0,
+            "z": -29.9
+          },
+          {
+            "x": 4.1,
+            "z": -29.9
+          }
+        ],
+        "approach": {
+          "x": 4.1,
+          "z": -29.9,
+          "yaw": 3.141592653589793,
+          "pitch": -0.2
+        }
+      },
+      {
+        "id": "palta",
+        "label": "DeFindex · Soroswap",
+        "points": [
+          {
+            "x": 0,
+            "z": -29.9
+          },
+          {
+            "x": -4,
+            "z": -29.9
+          }
+        ],
+        "approach": {
+          "x": -4,
+          "z": -29.9,
+          "yaw": 0.514,
+          "pitch": -0.2
+        }
       }
     ]
   }

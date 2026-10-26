@@ -90,9 +90,7 @@ def build_experience_zones(layout, Geo, materials, make_material, graphic_plane,
             z['polygon']=rect(*bounds)
             if view:z['view']=view
             if label:z['label']=label
-    # Keep the wallet approach distinct from the buffet and skills board.
-    buffet=next(z for z in layout['zones'] if z['id']=='buffet')
-    buffet['polygon']=[[-4.8,-14.2],[3.3,-14.2],[3.3,-11.8],[1.55,-11.8],[1.55,-7.8],[3.3,-7.8],[3.3,-6.5],[-4.8,-6.5]]
+    # The wallet now sits before the buffet, so the rectangular buffet region stays whole.
     layout['scaleStatus']+=' October 26 games, skills, Energy Corner, photobooth, photocall and Content Hub reconstructed from narrated clips; placements and dimensions estimated.'
     for g in groups:
         obj=g.finish()

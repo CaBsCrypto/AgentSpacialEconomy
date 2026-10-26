@@ -4,7 +4,7 @@ Blender Z-up, local front is -Y. Approximate dimensions: 0.8 x 0.65 x 1.93 m.
 import bpy,math
 from mathutils import Vector
 
-def build_totem(origin=(2.9,9.2,0),angle=0):
+def build_totem(origin=(2.6,5.6,0),angle=0):
  before=set(bpy.data.objects)
  def mat(name,c,metal=0,rough=.6,emit=0):
   m=bpy.data.materials.get(name)
@@ -42,5 +42,5 @@ def build_totem(origin=(2.9,9.2,0),angle=0):
  root=bpy.data.objects.new('ActivationTotem • Activación Stellar / propuesta Testnet',None);bpy.context.collection.objects.link(root)
  for o in set(bpy.data.objects)-before:
   if o!=root:o.parent=root
- root.location=origin;root.rotation_euler.z=angle;root['status']='Proposed kiosk, not an existing physical installation';root['network']='Testnet wallet UI; no automatic transaction';root['approximate_dimensions_m']='0.80 x 0.65 base; 1.93 height';root['placement']='Beside buffet near review reference 12; front faces the arrival route'
+ root.location=origin;root.rotation_euler.z=angle;root['status']='Proposed kiosk, not an existing physical installation';root['network']='Testnet wallet UI; no automatic transaction';root['approximate_dimensions_m']='0.80 x 0.65 base; 1.93 height';root['placement']='Arrival right, before the buffet; front faces the authored walking approach'
  return root
