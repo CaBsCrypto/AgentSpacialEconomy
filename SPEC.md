@@ -111,3 +111,9 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
+
+## Authorized advertising extension — PRD v0.2
+
+The revenue-side backlog entry is superseded for this feature branch by docs/ads/PRD-v0.2.md and docs/ads/README.md. Implement the advertiser journey on Stellar Testnet only, with separate payment, queue, audit, scheduling, delivery and remedy states. PostgreSQL and an outbox are the source of truth. New purchases remain disabled until all commercial configuration and wallet/facilitator integration gates pass. The legacy recorded agent run is not evidence for this new flow.
+
+Default main-stage content: the user-supplied HackMeridian Day 1 presentation, converted from GIF to a 10-second silent looping MP4. A paid audited scheduled advertisement temporarily replaces the loop; payment alone never publishes it.

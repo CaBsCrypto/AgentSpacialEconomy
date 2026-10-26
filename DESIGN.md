@@ -64,3 +64,7 @@ The diamond-in-a-circle mark from the cover (the "administrator agent" node), go
 ## Video
 
 Record the real testnet evidence and keep a visible "Recorded testnet run" label with the run date whenever showing saved state. Add two title cards (one-liner at the start, repo link at the end) in the colors above. Keep a recorded backup of the full run in case the live demo fails.
+
+## Advertising extension
+
+The advertiser and exception-management page reuses the existing palette and DM Sans. Creative output is static raster with accessible mobile cards. Use provisional 4:1 banner and 16:9 main-stage ratios; exact banner position is configured, not invented. The main screen's default presentation loops silently and reappears when no audited current advertisement is valid. Keep payment, queue progress and attested delivery visibly separate.

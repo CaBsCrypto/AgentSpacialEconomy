@@ -234,3 +234,7 @@ This is an interpretive reconstruction, not a measured architectural survey. Geo
 This is an independent prototype. Use of Stellar, Stellar Passport, HackMeridian and venue names or visual references does **not** imply official sponsorship, endorsement or affiliation. “Sponsor” describes a proposed experience category, not a confirmed commercial relationship.
 
 Third-party names, artwork and assets retain their respective rights. Three.js includes its license in `dist/vendor/three/LICENSE` after vendoring. Public source availability does not itself grant a blanket license to project code or third-party assets; check applicable licenses and obtain permission before reuse. Raw reference recordings, personal information and credentials do not belong in public commits.
+
+## Advertising MVP (local branch)
+
+The advertiser workflow is implemented locally under /ads: independent TIME, PASSES and EXCLUSIVE plans, durable x402 settlement/queue recovery, automatic audit, spatial playlists and refund remedies. Purchases stay disabled until explicit configuration and integration gates pass. The main stage defaults to the supplied 10-second looping presentation and returns to it whenever no valid ad is active. See [setup, limitations and evidence](docs/ads/README.md) and [PRD v0.2](docs/ads/PRD-v0.2.md). No new advertising payments or deployments are claimed by this change.
