@@ -1,0 +1,1 @@
+CREATE TABLE ads_generation_attempts(order_id uuid PRIMARY KEY REFERENCES ads_orders(id),state text NOT NULL CHECK(state IN ('RUNNING','COMPLETED','QUARANTINED')),job_id uuid NOT NULL REFERENCES ads_outbox(id),started_at timestamptz NOT NULL DEFAULT now());
