@@ -153,7 +153,7 @@ export const SPANISH_COPY = Object.freeze({
   pilotTitle: 'Acceso a wallet en Stellar Testnet',
   pilotBody: 'Se están validando wallets con passkey, continuidad de sesión y fondeo con USDC de prueba. Los activos de prueba no tienen valor real.',
   advertisingTitle: 'Publicidad programable',
-  advertisingBody: "Un piloto controlado separado en testnet completó una compra con passkey y cinco pases de pantalla de un minuto. Este sitio enlaza evidencia registrada de pagos; el pago público y ese sistema de reproducción no forman parte de esta versión.",
+  advertisingBody: "Un piloto controlado separado en testnet completó una compra con passkey y cinco pases de pantalla de un minuto. Las compras públicas aún no están disponibles. Revisa la evidencia registrada en testnet.",
   agentsTitle: 'Servicios autorizados de agentes',
   agentsBody: 'La demo registrada compra datos del venue y una tarjeta para el escenario mediante x402, dentro de un presupuesto definido por personas. Abre el dashboard para revisar cada pago de testnet.',
   foundationEyebrow: 'La plataforma que lo conecta',

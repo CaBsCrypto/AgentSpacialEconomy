@@ -125,7 +125,7 @@ The owner approved the separate codex/render-textures-ui revision from sponsor r
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
-- Landing as a sales, contact and quote channel under the name "Agentic Realities · Spatial AI for Venues and Events" (`feature/landing-agentic-realities`): space types, services with their status, engagement scopes, B2C and B2B demo entry points and a quote request drafted on the visitor's device. Confirm the contact address before deploying.
+- Email delivery for quote requests, after a working contact channel is configured.
 
 
 ## Second venue review authorized on 26 Oct
@@ -145,3 +145,8 @@ Continue codex/render-textures-ui from 349175e. Advance the USDC kiosk to Three 
 ## Landing cleanup authorized on 26 Oct
 
 Remove the Spatial Agents submission-proof card and its dashboard/GitHub buttons from the public landing hero, as explicitly requested by the owner. Keep the Agentic Reality Space landing, ONE16 entry and the directly accessible dashboard.
+
+
+## Official landing and README authorized on 26 Oct
+
+The owner approved integrating the landing and README from PR #34 into main and publishing them as the official public presentation, under Agentic Realities · Spatial AI for Venues and Events. Apply only the two presentation commits, preserve the current venue and recorded dashboard, and distinguish the separate advertising pilot from public availability. The owner confirmed the proposed mailbox does not exist: quote requests are prepared and copied locally, with no email destination or form submission. Keep the rights and non-affiliation text intact and preserve historical submission names. This new owner authorization supersedes the earlier judging-time release freeze for this presentation-only release.

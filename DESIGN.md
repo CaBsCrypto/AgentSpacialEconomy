@@ -12,9 +12,9 @@
 
 ## Name
 
-One name in the repo, the app title, the deck, the video and the submission form.
+**Agentic Realities · Spatial AI for Venues and Events** is the official public name for the landing and README, approved on 26 Oct 2026. Use the one-liner from THESIS.md with it.
 
-**Spatial Agents · Operating System** — decided 25 Oct. Use it exactly like that in the README, the dashboard, the deck, the video and the submission form.
+The recorded HackMeridian demo, dashboard, deck and submission materials retain the event-time name **Spatial Agents · Operating System** as historical evidence. Updating those artifacts is a separate release.
 
 - Repo slug stays `AgentSpacialEconomy` (renaming needs the repo owner); the README says so in one line.
 - The cover artwork in `docs/assets/` still reads "Agentic Spatial Economy". Treat it as concept art or re-export it with the new name.
