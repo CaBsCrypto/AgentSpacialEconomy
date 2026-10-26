@@ -40,6 +40,21 @@ const VERIFICATION_REASONS=new Set([
  'invalid_exact_stellar_payload_wrong_recipient',
  'invalid_exact_stellar_signature_expiration_too_far',
  'invalid_network',
+ 'invalid_exact_payload_malformed',
+ 'unsupported_network',
+ 'invalid_scheme',
+ 'unsupported_asset',
+ 'verify_network_mismatch',
+ 'invalid_exact_stellar_payload_wrong_function_args',
+ 'invalid_exact_stellar_payload_unsafe_from_address',
+ 'invalid_exact_stellar_payload_unexpected_balance_changes',
+ 'invalid_exact_stellar_payload_has_envelope_signatures',
+ 'invalid_exact_stellar_payload_missing_auth_entries',
+ 'invalid_exact_stellar_payload_missing_payer_auth',
+ 'invalid_exact_stellar_payload_unsigned_auth_entry',
+ 'invalid_exact_stellar_payload_auth_expiration_too_far',
+ 'invalid_exact_stellar_payload_auth_already_expired',
+ 'invalid_exact_stellar_payload_fee_below_minimum',
  'invalid_x402_version',
  'network_mismatch',
  'unexpected_verify_error',
@@ -51,7 +66,7 @@ function publicResult(row){
  const e=row.expected,prefixed=typeof row.error_code==='string'&&row.error_code.startsWith(REJECTION_PREFIX);
  const reason=prefixed?safeVerificationReason(row.error_code.slice(REJECTION_PREFIX.length)):null;
  return {id:row.id,status:row.state,isValid:row.state==='VERIFIED'?true:row.state==='REJECTED'?false:null,
-  payer:row.payer,expiresAt:iso(row.expires_at),gateChanged:false,errorCode:prefixed?'facilitator_rejected':row.error_code||null,...(reason?{verificationReason:reason}:{}),
+  payer:row.payer,expiresAt:iso(row.expires_at),verificationStarted:!!row.verify_key,gateChanged:false,errorCode:prefixed?'facilitator_rejected':row.error_code||null,...(reason?{verificationReason:reason}:{}),
   evidence:{payloadHash:row.payload_hash||null,authHash:row.auth_hash||null,requirementsHash:sha256(row.requirements),
    verificationHash:row.verification_hash||null,expiresLedger:row.expires_ledger==null?null:Number(row.expires_ledger),
    startLedger:row.start_ledger==null?null:Number(row.start_ledger),network:e.network,asset:e.asset,amountUnits:e.amountUnits,payTo:e.payTo,resourceUrl:e.resourceUrl},
@@ -76,12 +91,29 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
   return sha256({origin:config.origin,network:NETWORK,asset:ASSET,issuer:ISSUER,payTo:config.payTo,facilitatorUrl:facilitator.href});
  };
  const key=value=>assert(typeof value==='string'&&KEY.test(value),400,'idempotency_required','Provide an Idempotency-Key of 8 to 160 characters.');
+ const walletLock=(tx,ownerId)=>tx.query('SELECT pg_advisory_xact_lock(hashtext($1))',['ads-compatibility:'+ownerId]);
+ async function quotaFor(tx,ownerId,clock=now()){
+  const row=(await tx.query('SELECT count(*)::int AS used,min(verification_started_at) AS oldest FROM ads_compatibility WHERE owner_id=$1 AND verify_key IS NOT NULL AND verification_started_at>$2',[ownerId,new Date(clock-3600000)])).rows[0];
+  const used=Number(row.used);return{limit:COMPATIBILITY_LIMIT,used,remaining:Math.max(0,COMPATIBILITY_LIMIT-used),retryAt:used>=COMPATIBILITY_LIMIT?iso(+new Date(row.oldest)+3600000):null};
+ }
+ async function requireQuota(tx,who){const serverTime=iso(now()),quota=await quotaFor(tx,who.ownerId);if(!quota.remaining)throw new AdsError(429,'compatibility_quota','At most three signed verification admissions per wallet per hour.',{serverTime,quota,retryAt:quota.retryAt,verificationStarted:false});return quota;}
+ const draft=(row,clock)=>({id:row.id,challenge:row.challenge,expected:row.expected,expiresAt:iso(row.expires_at),serverTime:iso(clock)});
+ async function reusable(tx,who,configurationHash,clock){return(await tx.query("SELECT * FROM ads_compatibility WHERE owner_id=$1 AND configuration_hash=$2 AND state='PENDING' AND verify_key IS NULL AND expires_at>$3 ORDER BY created_at DESC,id DESC LIMIT 1",[who.ownerId,configurationHash,new Date(clock)])).rows[0]||null;}
+ async function status(who,{attemptId}={}){
+  identity(who);if(attemptId!==undefined)identifier(attemptId);const configurationHash=configured(),clock=now();
+  const row=(await db.query('SELECT * FROM ads_compatibility WHERE owner_id=$1'+(attemptId?' AND id=$2':' ORDER BY created_at DESC,id DESC LIMIT 1'),attemptId?[who.ownerId,attemptId]:[who.ownerId])).rows[0]||null;
+  if(attemptId)assert(row&&row.payer===who.address,404,'compatibility_unavailable','Compatibility proof unavailable.');
+  const quota=await quotaFor(db,who.ownerId,clock),pending=await reusable(db,who,configurationHash,clock);
+  const attempt=row?{...publicResult(row),status:row.state==='PENDING'&&!row.verify_key&&+new Date(row.expires_at)<=clock?'EXPIRED':row.state,configurationMatches:row.configuration_hash===configurationHash}:null;
+  return{serverTime:iso(clock),quota,attempt,challenge:pending?draft(pending,clock):null};
+ }
  const exactPayload=(payload,row)=>{
   assert(object(payload)&&Object.keys(payload).every(k=>['x402Version','resource','accepted','payload'].includes(k))&&payload.x402Version===2,422,'compatibility_payload_invalid','Provide the exact x402 v2 authorization.');
   assert(canonical(payload.resource)===canonical(row.challenge.resource)&&canonical(payload.accepted)===canonical(row.requirements),422,'compatibility_challenge_mismatch','The signed payload does not match the saved compatibility challenge.');
   assert(object(payload.payload)&&Object.keys(payload.payload).length===1&&typeof payload.payload.transaction==='string',422,'compatibility_payload_invalid','Provide only the signed transaction payload.');
  };
  async function bind(tx,who,id,requestKey,payloadHash,configurationHash){
+  await walletLock(tx,who.ownerId);
   const fingerprint=sha256({action:'compatibility-verify',id,payloadHash});
   await tx.query("INSERT INTO ads_idempotency(owner_id,key,action,fingerprint) VALUES($1,$2,'compatibility-verify',$3) ON CONFLICT(owner_id,key) DO NOTHING",[who.ownerId,requestKey,fingerprint]);
   const idem=(await tx.query('SELECT * FROM ads_idempotency WHERE owner_id=$1 AND key=$2 FOR UPDATE',[who.ownerId,requestKey])).rows[0];
@@ -100,7 +132,11 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
   return {row,cached:false};
  }
  async function finish(id,requestKey,payloadHash,state,{verificationHash=null,errorCode=null}={}){
+  const owner=(await db.query('SELECT owner_id FROM ads_compatibility WHERE id=$1',[id])).rows[0];
+  assert(owner,404,'compatibility_unavailable','Compatibility proof unavailable.');
   return db.transaction(async tx=>{
+   await walletLock(tx,owner.owner_id);
+   await tx.query('SELECT owner_id FROM ads_idempotency WHERE owner_id=$1 AND key=$2 FOR UPDATE',[owner.owner_id,requestKey]);
    const row=(await tx.query('SELECT * FROM ads_compatibility WHERE id=$1 FOR UPDATE',[id])).rows[0];
    if(row.state!=='VERIFYING'||row.verify_key!==requestKey||row.payload_hash!==payloadHash)return publicResult(row);
    const updated=(await tx.query('UPDATE ads_compatibility SET state=$2,verification_hash=$3,error_code=$4,verified_at=$5,updated_at=$6 WHERE id=$1 RETURNING *',[id,state,verificationHash,errorCode,state==='VERIFIED'?new Date(now()):null,new Date(now())])).rows[0];
@@ -112,19 +148,22 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
  async function challenge(who,body,requestKey){
   identity(who);key(requestKey);const configurationHash=configured();
   assert(object(body)&&Object.keys(body).length===0,400,'compatibility_request_invalid','The server fixes all compatibility requirements.');
-  return db.transaction(tx=>idempotent(tx,{ownerId:who.ownerId,key:requestKey,action:'compatibility-challenge',payload:body},async()=>{
-   await tx.query('SELECT pg_advisory_xact_lock(hashtext($1))',['ads-compatibility:'+who.ownerId]);
-   const count=(await tx.query('SELECT count(*)::int AS count FROM ads_compatibility WHERE owner_id=$1 AND created_at>$2',[who.ownerId,new Date(now()-3600000)])).rows[0];
-   assert(Number(count.count)<COMPATIBILITY_LIMIT,429,'compatibility_quota','At most three compatibility challenges per wallet per hour.');
-   const id=uuid(),expiresAt=iso(now()+COMPATIBILITY_TTL_MS),resourceUrl=new URL('/api/ads/compatibility/'+id+'/verify',config.origin).href;
-   const requirements={scheme:'exact',network:NETWORK,asset:ASSET,amount:AMOUNT,payTo:config.payTo,maxTimeoutSeconds:60,extra:{areFeesSponsored:true}};
-   const expected={network:NETWORK,asset:ASSET,issuer:ISSUER,amountUnits:AMOUNT,payTo:config.payTo,payer:who.address,resourceUrl};
-   const paymentChallenge={x402Version:2,resource:{url:resourceUrl,description:'Verify-only compatibility authorization; this endpoint never settles a payment.',mimeType:'application/json'},accepts:[requirements]};
-   await tx.query("INSERT INTO ads_compatibility(id,owner_id,payer,challenge_key,challenge,expected,requirements,configuration_hash,state,expires_at,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,'PENDING',$9,$10,$10)",[id,who.ownerId,who.address,requestKey,paymentChallenge,expected,requirements,configurationHash,new Date(expiresAt),new Date(now())]);
-   return {id,challenge:paymentChallenge,expected,expiresAt};
-  }));
+  return db.transaction(async tx=>{
+   await walletLock(tx,who.ownerId);
+   return idempotent(tx,{ownerId:who.ownerId,key:requestKey,action:'compatibility-challenge',payload:body},async()=>{
+    const quota=await requireQuota(tx,who),clock=now(),existing=await reusable(tx,who,configurationHash,clock);
+    if(existing)return{...draft(existing,clock),quota,verificationStarted:false};
+    const id=uuid(),expiresAt=iso(clock+COMPATIBILITY_TTL_MS),resourceUrl=new URL('/api/ads/compatibility/'+id+'/verify',config.origin).href;
+    const requirements={scheme:'exact',network:NETWORK,asset:ASSET,amount:AMOUNT,payTo:config.payTo,maxTimeoutSeconds:60,extra:{areFeesSponsored:true}};
+    const expected={network:NETWORK,asset:ASSET,issuer:ISSUER,amountUnits:AMOUNT,payTo:config.payTo,payer:who.address,resourceUrl};
+    const paymentChallenge={x402Version:2,resource:{url:resourceUrl,description:'Verify-only compatibility authorization; this endpoint never settles a payment.',mimeType:'application/json'},accepts:[requirements]};
+    await tx.query("INSERT INTO ads_compatibility(id,owner_id,payer,challenge_key,challenge,expected,requirements,configuration_hash,state,expires_at,created_at,updated_at) VALUES($1,$2,$3,$4,$5,$6,$7,$8,'PENDING',$9,$10,$10)",[id,who.ownerId,who.address,requestKey,paymentChallenge,expected,requirements,configurationHash,new Date(expiresAt),new Date(clock)]);
+    return{id,challenge:paymentChallenge,expected,expiresAt,serverTime:iso(clock),quota,verificationStarted:false};
+   });
+  });
  }
  async function verify(who,id,body,requestKey){
+  try{
   identity(who);identifier(id);key(requestKey);const configurationHash=configured();
   assert(object(body)&&Object.keys(body).length===1&&Object.hasOwn(body,'payload')&&object(body.payload),400,'compatibility_request_invalid','Provide only the signed payload.');
   let serialized;
@@ -146,6 +185,7 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
   let claim;
   try{claim=await db.transaction(async tx=>{
    const current=await bind(tx,who,id,requestKey,payloadHash,configurationHash);if(current.cached)return {...current,execute:false};
+   await requireQuota(tx,who);
    const reused=await tx.query('SELECT id FROM ads_payment_attempts WHERE auth_hash=$1 OR (payer=$2 AND auth_nonce=$3) LIMIT 1',[decoded.authHash,who.address,nonce]);
    assert(!reused.rowCount,409,'compatibility_authorization_reused','The authorization is already associated with a payment attempt.');
    const row=(await tx.query("UPDATE ads_compatibility SET state='VERIFYING',verify_key=$2,payload_hash=$3,signed_payload=$4,auth_hash=$5,auth_nonce=$6,expires_ledger=$7,start_ledger=$8,verification_started_at=$9,verification_deadline=$10,updated_at=$9 WHERE id=$1 RETURNING *",[id,requestKey,payloadHash,payload,decoded.authHash,nonce,Number(decoded.expiresLedger),ledger,new Date(now()),new Date(now()+verifyTimeoutMs+5000)])).rows[0];
@@ -155,10 +195,11 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
   try{
    const verdict=await boundedVerify(payload,claim.row.requirements);
    if(!object(verdict)||typeof verdict.isValid!=='boolean')throw Error('invalid_verification_response');
-   if(now()>=+new Date(claim.row.expires_at))return await finish(id,requestKey,payloadHash,'RECONCILIATION_REQUIRED',{errorCode:'verification_expired'});
+   if(now()>=+new Date(claim.row.verification_deadline))return await finish(id,requestKey,payloadHash,'RECONCILIATION_REQUIRED',{errorCode:'verification_expired'});
    const valid=verdict.isValid===true&&verdict.payer===who.address;
    return await finish(id,requestKey,payloadHash,valid?'VERIFIED':'REJECTED',{verificationHash:sha256(verdict),errorCode:valid?null:verdict.isValid?'verification_payer_mismatch':rejectionCode(verdict.invalidReason)});
   }catch{return await finish(id,requestKey,payloadHash,'RECONCILIATION_REQUIRED',{errorCode:'facilitator_verification_unavailable'});}
+  }catch(error){if(error instanceof AdsError&&[400,410,422,429].includes(error.status))error.details={...error.details,verificationStarted:false};throw error;}
  }
- return Object.freeze({challenge,verify});
+ return Object.freeze({challenge,verify,status});
 }

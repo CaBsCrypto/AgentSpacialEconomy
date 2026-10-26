@@ -78,15 +78,13 @@ test('explicit local verify-only proof persists intent before facilitator verify
  assert.equal(f.config.walletCompatibilityVerified,false);assert.equal(f.config.enabled,false);await f.assertNoFinancialWork();
 });
 
-test('server challenge requirements are immutable and issuance is limited to three per wallet per hour',async t=>{
+test('server challenge requirements are immutable and unsigned requests reuse one active draft',async t=>{
  const f=await fixture(t);
  await assert.rejects(f.service.challenge(identity,{amountUnits:'1'},'tampered-challenge-key'),error=>error.code==='compatibility_request_invalid');
  await assert.rejects(f.service.challenge({ownerId:f.config.payTo,address:f.config.payTo,role:'operator'},{},'invalid-g-login-key'),error=>error.code==='compatibility_identity_required');
- const first=await f.challenge('quota-challenge-0001');await f.challenge('quota-challenge-0002');await f.challenge('quota-challenge-0003');
- await assert.rejects(f.challenge('quota-challenge-0004'),error=>error.code==='compatibility_quota');
- assert.deepEqual(await f.challenge('quota-challenge-0001'),first);
- f.clock.value+=3600001;await f.challenge('quota-challenge-0005');
- assert.equal(f.calls.verify,0);await f.assertNoFinancialWork();
+ const first=await f.challenge('quota-challenge-0001');const second=await f.challenge('quota-challenge-0002');assert.equal(first.id,second.id);assert.deepEqual(await f.challenge('quota-challenge-0001'),first);
+ assert.equal(Number((await f.db.query('SELECT count(*) AS count FROM ads_compatibility')).rows[0].count),1);assert.equal((await f.service.status(identity)).quota.used,0);
+ f.clock.value=Date.parse(first.expiresAt)+1;const third=await f.challenge('quota-challenge-0003');assert.notEqual(third.id,first.id);assert.equal((await f.service.status(identity)).quota.used,0);assert.equal(f.calls.verify,0);await f.assertNoFinancialWork();
 });
 
 test('another owner, stale challenge or changed receiver cannot reach decoding or external verification',async t=>{
@@ -123,7 +121,7 @@ test('resource, requirements and actual XDR tampering fail before any ledger or 
 
 test('authorization ledger expiry cannot exceed the declared sixty-second window or predate the current ledger',async t=>{
  const f=await fixture(t),challenge=await f.challenge();
- for(const expiresLedger of [99,113])await assert.rejects(f.service.verify(identity,challenge.id,{payload:authorization(challenge,{expiresLedger})},'ledger-bound-'+expiresLedger),error=>error.code==='compatibility_authorization_expired');
+ for(const expiresLedger of [99,113])await assert.rejects(f.service.verify(identity,challenge.id,{payload:authorization(challenge,{expiresLedger})},'ledger-bound-'+expiresLedger),error=>error.code==='compatibility_authorization_expired'&&error.details.verificationStarted===false);
  assert.equal(f.calls.verify,0);await f.assertNoFinancialWork();
 });
 
@@ -175,8 +173,8 @@ test('a recovered interrupted intent remains pending until its durable verificat
 });
 
 test('one authorization nonce and hash cannot verify two independently issued challenges',async t=>{
- const f=await fixture(t),first=await f.challenge('first-nonce-challenge'),second=await f.challenge('second-nonce-challenge');
- await f.service.verify(identity,first.id,{payload:authorization(first,{nonce:'777'})},'first-nonce-verify');
+ const f=await fixture(t),first=await f.challenge('first-nonce-challenge');
+ await f.service.verify(identity,first.id,{payload:authorization(first,{nonce:'777'})},'first-nonce-verify');const second=await f.challenge('second-nonce-challenge');
  await assert.rejects(f.service.verify(identity,second.id,{payload:authorization(second,{nonce:'777'})},'second-nonce-verify'),error=>error.code==='compatibility_authorization_reused');
  assert.equal(f.calls.verify,1);await f.assertNoFinancialWork();
 });
@@ -229,4 +227,53 @@ test('unknown or payload-bearing reason cannot enter durable or private diagnost
  const f=await fixture(t,{verifyMode:()=>({isValid:false,payer,invalidReason:'invalid_exact_stellar_payload_fee_exceeds_maximum\nPRIVATE_XDR_FIXTURE',invalidMessage:'PRIVATE_DETAIL'})}),challenge=await f.challenge(),payload=authorization(challenge);
  const result=await f.service.verify(identity,challenge.id,{payload},'unsafe-diagnostic-verify'),row=(await f.db.query('SELECT error_code FROM ads_compatibility WHERE id=$1',[challenge.id])).rows[0];
  assert.equal(result.errorCode,'facilitator_rejected');assert(!Object.hasOwn(result,'verificationReason'));assert.equal(row.error_code,'facilitator_rejected');assert.doesNotMatch(JSON.stringify({result,row}),/PRIVATE_XDR_FIXTURE|PRIVATE_DETAIL/);await f.assertNoFinancialWork();
+});
+
+
+test('status restores one reusable unsigned challenge across keys and derives expiry without changing history',async t=>{
+ const f=await fixture(t),empty=await f.service.status(identity);assert.equal(empty.quota.used,0);assert.equal(empty.attempt,null);assert.equal(empty.challenge,null);
+ const [a,b]=await Promise.all([f.challenge('reusable-draft-key-1'),f.challenge('reusable-draft-key-2')]);assert.equal(a.id,b.id);assert.equal(a.verificationStarted,false);
+ const active=await f.service.status(identity,{attemptId:a.id});assert.equal(active.attempt.verificationStarted,false);assert.equal(active.challenge.id,a.id);assert.equal(active.quota.remaining,3);
+ f.clock.value=Date.parse(a.expiresAt)+1;const before=(await f.db.query('SELECT * FROM ads_compatibility ORDER BY id')).rows;
+ const expired=await f.service.status(identity,{attemptId:a.id});assert.equal(expired.attempt.status,'EXPIRED');assert.equal(expired.challenge,null);assert.equal(expired.quota.used,0);assert.deepEqual((await f.db.query('SELECT * FROM ads_compatibility ORDER BY id')).rows,before);
+ const replacement=await f.challenge('replacement-draft-key');assert.notEqual(replacement.id,a.id);assert.equal((await f.service.status(identity)).quota.used,0);
+ await assert.rejects(f.service.status(otherIdentity,{attemptId:a.id}),error=>error.code==='compatibility_unavailable');assert.equal(f.calls.verify,0);assert.equal(f.calls.ledger,0);await f.assertNoFinancialWork();
+});
+
+test('four concurrent signed admissions share three hourly slots atomically across configurations',async t=>{
+ const f=await fixture(t),issued=[];
+ for(let index=0;index<4;index++){issued.push(await f.challenge('legacy-independent-draft-'+index));f.clock.value+=60001;}
+ // Explicit local fixture for independent old-tab drafts: all are still admissible together.
+ await f.db.query('UPDATE ads_compatibility SET expires_at=$1',[new Date(f.clock.value+60000)]);
+ const outcomes=await Promise.allSettled(issued.map((c,index)=>f.service.verify(identity,c.id,{payload:authorization(c)},'concurrent-admission-'+index)));
+ assert.equal(outcomes.filter(result=>result.status==='fulfilled').length,3);const denied=outcomes.find(result=>result.status==='rejected').reason;assert.equal(denied.code,'compatibility_quota');assert.equal(denied.details.verificationStarted,false);assert.equal(denied.details.quota.used,3);assert.equal(denied.details.quota.remaining,0);assert.equal(denied.details.retryAt,new Date(f.clock.value+3600000).toISOString());assert.equal(f.calls.verify,3);
+ f.config.facilitatorUrl='https://channels.openzeppelin.com/x402/testnet';const status=await f.service.status(identity);assert.equal(status.quota.used,3);assert.equal(status.quota.remaining,0);assert.equal(status.attempt.configurationMatches,false);assert.equal(status.challenge,null);await f.assertNoFinancialWork();
+});
+
+test('an admitted verdict after draft expiry stays definitive until its separate verification deadline',async t=>{
+ const f=await fixture(t),challenge=await f.challenge();f.clock.value=Date.parse(challenge.expiresAt)-5;
+ f.setMode(()=>{f.clock.value+=10;return{isValid:false,payer,invalidReason:'invalid_exact_stellar_payload_fee_below_minimum'};});
+ const result=await f.service.verify(identity,challenge.id,{payload:authorization(challenge)},'late-admitted-verdict');assert.equal(result.status,'REJECTED');assert.equal(result.verificationStarted,true);assert.equal(result.verificationReason,'invalid_exact_stellar_payload_fee_below_minimum');assert.equal((await f.service.status(identity)).quota.used,1);await f.assertNoFinancialWork();
+});
+
+test('a lost verify response is recoverable by private read without another authorization or facilitator call',async t=>{
+ const f=await fixture(t),challenge=await f.challenge(),payload=authorization(challenge);let release;const held=new Promise(resolve=>{release=resolve;});f.setMode(()=>held);
+ const running=f.service.verify(identity,challenge.id,{payload},'lost-response-original');while(f.calls.verify===0)await new Promise(resolve=>setImmediate(resolve));
+ const restarted=createCompatibilityService({db:f.db,config:f.config,runtime:f.runtime,now:()=>f.clock.value});
+ try{const status=await restarted.status(identity,{attemptId:challenge.id});assert.equal(status.attempt.status,'VERIFYING');assert.equal(status.attempt.verificationStarted,true);assert.equal(status.quota.used,1);assert.equal(status.challenge,null);assert.doesNotMatch(JSON.stringify(status),/signed_payload|transaction|auth_nonce|verify_key|nonce/);assert(!JSON.stringify(status).includes(payload.payload.transaction));assert.equal(f.calls.verify,1);}
+ finally{release({isValid:true,payer});await running;}
+ f.config.facilitatorUrl='https://channels.openzeppelin.com/x402/testnet';const status=await restarted.status(identity,{attemptId:challenge.id});assert.equal(status.attempt.status,'VERIFIED');assert.equal(status.attempt.configurationMatches,false);assert.equal(f.calls.verify,1);await f.assertNoFinancialWork();
+});
+
+
+test('rejected and uncertain admissions retain their hourly slots measured from admission rather than draft creation',async t=>{
+ const f=await fixture(t),firstStarted=f.clock.value;
+ for(const [index,mode] of ['reject','throw','allow'].entries()){
+  f.setMode(mode);const challenge=await f.challenge('mixed-admission-challenge-'+index);
+  if(index===0)await f.db.query('UPDATE ads_compatibility SET created_at=$2 WHERE id=$1',[challenge.id,new Date(f.clock.value-7200000)]);
+  const result=await f.service.verify(identity,challenge.id,{payload:authorization(challenge)},'mixed-admission-verify-'+index);assert.equal(result.verificationStarted,true);f.clock.value+=1000;
+ }
+ const status=await f.service.status(identity);assert.equal(status.quota.used,3);assert.equal(status.quota.remaining,0);assert.equal(status.quota.retryAt,new Date(firstStarted+3600000).toISOString());
+ await assert.rejects(f.challenge('mixed-admission-limit'),error=>error.code==='compatibility_quota'&&error.details.verificationStarted===false&&error.details.quota.used===3);assert.equal(f.calls.verify,3);
+ f.clock.value=firstStarted+3600000;assert.equal((await f.service.status(identity)).quota.used,2);assert.equal((await f.service.status(identity)).quota.remaining,1);await f.assertNoFinancialWork();
 });

@@ -36,6 +36,12 @@ export function createAdsHandler({config,db,auth,service,refunds,corrections,com
    await db.query("INSERT INTO ads_rate_limits(key,count,expires_at) VALUES($1,1,now()+interval '1 minute') ON CONFLICT(key) DO UPDATE SET count=CASE WHEN ads_rate_limits.expires_at<now() THEN 1 ELSE ads_rate_limits.count+1 END,expires_at=CASE WHEN ads_rate_limits.expires_at<now() THEN EXCLUDED.expires_at ELSE ads_rate_limits.expires_at END",[rateKey]);
    const rate=(await db.query('SELECT count FROM ads_rate_limits WHERE key=$1',[rateKey])).rows[0];assert(rate.count<=(request.method==='GET'?240:60),429,'rate_limited','Wait before making another request.');
    if(parts[0]==='auth'&&parts[1]==='me'&&request.method==='GET')return json({identity,purchaseEligibility:purchaseEligibility(config,identity)});
+   if(parts[0]==='compatibility'&&parts.length===2&&parts[1]==='status'&&request.method==='GET'){
+    assert(compatibility,503,'compatibility_unconfigured','Compatibility verification is unavailable.');
+    const ids=url.searchParams.getAll('attemptId');
+    assert(ids.length<=1&&[...url.searchParams.keys()].every(name=>name==='attemptId'),400,'compatibility_request_invalid','Select at most one compatibility attempt.');
+    return json(await compatibility.status(identity,{...(ids.length?{attemptId:identifier(ids[0])}:{})}));
+   }
    if(parts[0]==='compatibility'&&request.method==='POST'){
     assert(compatibility,503,'compatibility_unconfigured','Compatibility verification is unavailable.');
     if(parts.length===2&&parts[1]==='challenge')return json(await compatibility.challenge(identity,await readJson(request,4096),key),201);
@@ -99,7 +105,9 @@ export function createAdsHandler({config,db,auth,service,refunds,corrections,com
   }catch(error){
    if(['23P01','40001','40P01'].includes(error.code))return json({error:{code:'capacity_conflict',message:'Capacity changed concurrently. Request another quote.'}},409);
    const known=error instanceof AdsError;
-   return json({error:{code:known?error.code:'service_unavailable',message:known?error.message:'The operation could not be completed. Existing payment attempts remain protected.',...(known&&error.details?{details:error.details}:{})}},known?error.status:503);
+   const retryAt=known&&error.status===429&&error.code==='compatibility_quota'?Date.parse(error.details?.retryAt):NaN;
+   const serverTime=Date.parse(error.details?.serverTime),delay=Number.isFinite(retryAt)?Math.max(1,Math.ceil((retryAt-(Number.isFinite(serverTime)?serverTime:Date.now()))/1000)):null;
+   return json({error:{code:known?error.code:'service_unavailable',message:known?error.message:'The operation could not be completed. Existing payment attempts remain protected.',...(known&&error.details?{details:error.details}:{})}},known?error.status:503,delay!==null?{'Retry-After':String(delay)}:{});
   }
  };
 }
