@@ -29,6 +29,60 @@ const safeError = e => String(e?.message??e).replace(/\bS[A-Z2-7]{55}\b/g,'[REDA
 const freePort = () => new Promise((ok,fail)=>{
  const s=createServer();s.once('error',fail);s.listen(0,'127.0.0.1',()=>{const port=s.address().port;s.close(()=>ok(port));});
 });
+/** Wait for the isolated service before creating accounts or paying anything. */
+export async function waitForServices(child,{
+ url,network="stellar:testnet",timeoutMs=120000,pollIntervalMs=500,requestTimeoutMs=1000,
+ now=Date.now,sleepImpl=sleep,fetchImpl=fetch,log=message=>console.log(message),
+}={}) {
+ if(!Number.isSafeInteger(timeoutMs)||timeoutMs<=0)throw Error("Service startup timeout must be positive.");
+ const started=now(),deadline=started+timeoutMs,controller=new AbortController();
+ let terminal=null,lastHealth="not requested",attempts=0,stopped;
+ const interruption=new Promise(resolve=>{stopped=resolve;});
+ const stop=reason=>{terminal=reason;controller.abort();stopped();};
+ const onSpawn=()=>log("[services] spawn pid="+(child.pid??"unknown"));
+ const onError=error=>{const detail=safeError(error);log("[services] error "+detail);stop("process error: "+detail);};
+ const onExit=(code,signal)=>{const detail="code="+String(code)+" signal="+String(signal??"none");log("[services] exit "+detail);stop("process exited ("+detail+")");};
+ child.on("spawn",onSpawn);child.on("error",onError);child.on("exit",onExit);
+ const fail=reason=>Error("Isolated services "+reason+"; last health: "+lastHealth);
+ const checkProcess=()=>{if(terminal)throw fail(terminal);};
+ try {
+  log("[services] waiting for health; pid="+(child.pid??"pending")+" timeoutMs="+timeoutMs);
+  if(child.exitCode!=null||child.signalCode!=null)onExit(child.exitCode,child.signalCode);
+  while(true){
+   checkProcess();
+   const remaining=deadline-now();
+   if(remaining<=0)throw fail("startup timed out after "+timeoutMs+" ms");
+   let health=null,response;
+   attempts++;
+   try {
+    const request=(async()=>{
+     const value=await fetchImpl(url.replace(/\/$/,"")+"/health",{
+      signal:AbortSignal.any([controller.signal,AbortSignal.timeout(Math.min(requestTimeoutMs,remaining))]),
+     });
+     lastHealth="HTTP "+value.status;
+     if(value.ok){const body=await value.json();return {response:value,health:body};}
+     return {response:value,health:null};
+    })();
+    const result=await Promise.race([request,interruption]);
+    if(result){response=result.response;health=result.health;}
+   }catch(error){lastHealth="request error: "+safeError(error);}
+   checkProcess();
+   if(now()>=deadline)throw fail("startup timed out after "+timeoutMs+" ms");
+   if(response?.ok){
+    lastHealth="HTTP "+response.status+" network="+safeError(health?.network??"missing");
+    if(health?.network!==network)throw fail("health network mismatch (expected "+network+")");
+    const elapsedMs=now()-started;
+    log("[services] ready after "+elapsedMs+" ms; "+lastHealth);
+    return {elapsedMs,attempts,lastHealth};
+   }
+   await Promise.race([sleepImpl(Math.min(pollIntervalMs,deadline-now())),interruption]);
+  }
+ }finally{
+  controller.abort();
+  child.off("spawn",onSpawn);child.off("error",onError);child.off("exit",onExit);
+ }
+}
+
 export function requireBudget(slot,plan=SCREEN_PLAN) {
  if(plan.length!==6||toUnits(slot.priceUsdc)!==50000000n||slot.durationMs!==300000)throw Error('Only six exact 5-USDC / 300000-ms Testnet section orders are authorized.');
  return 300000000n;
@@ -90,6 +144,12 @@ export async function runScreen({outputDir,runId=new Date().toISOString()}={}) {
   const capabilities=await supported.json();
   if(!capabilities.kinds?.some(k=>k.network===net.id&&k.scheme==='exact'&&k.x402Version===2))throw Error('Facilitator does not advertise exact x402 v2 on Testnet.');
   state.facilitator=facilitator;await save();
+  const port=await freePort();
+  const childEnv={...process.env,STELLAR_NETWORK:net.id,FACILITATOR_URL:facilitator,SERVICE_RECIPIENT:service.publicKey(),TREASURY_PUBLIC_KEY:treasury.publicKey(),SERVICES_URL:'http://127.0.0.1:'+port,SERVICES_PORT:String(port)};
+  services=spawn(process.execPath,['services.mjs'],{cwd:agentDir,windowsHide:true,stdio:['ignore','pipe','pipe'],env:childEnv});
+  services.stdout.on('data',d=>process.stdout.write('[services] '+String(d).replace(/\bS[A-Z2-7]{55}\b/g,'[REDACTED]')));
+  services.stderr.on('data',d=>process.stderr.write('[services] '+String(d).replace(/\bS[A-Z2-7]{55}\b/g,'[REDACTED]')));
+  state.services=await waitForServices(services,{url:childEnv.SERVICES_URL,network:net.id});await save();
   for(const kp of [treasury,funder,...buyers])await friendbot(kp.publicKey());
   for(const kp of [treasury,funder,...buyers])await submit(kp,[Operation.changeTrust({asset:USDC})]);
   const each=51000000n,min=each*6n+5000000n;
@@ -107,17 +167,6 @@ export async function runScreen({outputDir,runId=new Date().toISOString()}={}) {
   const funding=await submit(funder,buyers.map(kp=>Operation.payment({destination:kp.publicKey(),asset:USDC,amount:fromUnits(each)})));
   state.funding.distributionTx=funding.hash;
   state.treasury.usdcBefore=await usdc(treasury.publicKey());await save();
-  const port=await freePort();
-  const childEnv={...process.env,STELLAR_NETWORK:net.id,FACILITATOR_URL:facilitator,SERVICE_RECIPIENT:service.publicKey(),TREASURY_PUBLIC_KEY:treasury.publicKey(),SERVICES_URL:'http://127.0.0.1:'+port,SERVICES_PORT:String(port)};
-  services=spawn(process.execPath,['services.mjs'],{cwd:agentDir,windowsHide:true,stdio:['ignore','pipe','pipe'],env:childEnv});
-  services.stdout.on('data',d=>process.stdout.write('[services] '+String(d).replace(/\bS[A-Z2-7]{55}\b/g,'[REDACTED]')));
-  services.stderr.on('data',d=>process.stderr.write('[services] '+String(d).replace(/\bS[A-Z2-7]{55}\b/g,'[REDACTED]')));
-  let up=false;
-  for(let i=0;i<40&&!up;i++){
-   await sleep(500);if(services.exitCode!==null)break;
-   try{const response=await fetch(childEnv.SERVICES_URL+'/health',{signal:AbortSignal.timeout(1000)});const health=await response.json();up=response.ok&&health.network===net.id;}catch{}
-  }
-  if(!up)throw Error('Isolated services did not start.');
   for(const [i,p] of SCREEN_PLAN.entries()){
    const out=join(dir,'order-'+(i+1)+'.json'),orderRun=runId+'#'+(i+1);
    state.attempts.push({id:orderRun,section:p.section,payer:buyers[i].publicKey(),maximumUnits:'50000000',status:'STARTED'});
