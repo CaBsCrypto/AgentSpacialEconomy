@@ -17,7 +17,7 @@ import { networkConfig, explorerTx } from "./config/networks.mjs";
 import { paymentRequiredFrom, settlementFrom, settlementTx } from "./lib/x402-headers.mjs";
 import { sponsorPreflight } from "./lib/income.mjs";
 import { AD_TYPE, adKey } from "./lib/ads.mjs";
-import { toUnits } from "./lib/money.mjs";
+import { toUnits, toDollarPrice } from "./lib/money.mjs";
 
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
 
@@ -87,7 +87,12 @@ const { wrapFetchWithPaymentFromConfig } = await import("@x402/fetch");
 const { createEd25519Signer } = await import("@x402/stellar");
 const { ExactStellarScheme } = await import("@x402/stellar/exact/client");
 const signer = createEd25519Signer(process.env.ADVERTISER_SECRET_KEY, NETWORK);
-const payFetch = wrapFetchWithPaymentFromConfig(fetch, { schemes: [{ network: NETWORK, client: new ExactStellarScheme(signer) }] });
+// The x402 client caps each payment at $1 by default; raise it to exactly the advertiser's maximum
+// (spendControls.maxAmountPerPayment, https://docs.x402.org/getting-started/quickstart-for-buyers).
+const payFetch = wrapFetchWithPaymentFromConfig(fetch, {
+  schemes: [{ network: NETWORK, client: new ExactStellarScheme(signer) }],
+  spendControls: { maxAmountPerPayment: toDollarPrice(args.max) },
+});
 
 let res;
 try {
