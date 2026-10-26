@@ -1,0 +1,78 @@
+name: Main-stage screen in four sections (testnet)
+
+# Six ephemeral advertisers each pay the venue treasury 5 testnet USDC over x402 for five minutes of
+# one quarter of the main-stage screen; orders in the same quarter rotate. The treasury commits every
+# order to an AdsRegistry instance on Soroban. Publishes dist/state/screen.json and the log to
+# `ci/screen-results`.
+# Trigger: push to `ci/screen-run`, or "Run workflow" once this file is on main.
+on:
+  push:
+    branches: [ci/screen-run]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: screen-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      STELLAR_NETWORK: stellar:testnet
+      FACILITATOR_URL: ${{ vars.FACILITATOR_URL || 'https://x402.org/facilitator' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install agent dependencies
+        working-directory: agent
+        run: |
+          npm install --no-audit --no-fund
+          echo "::notice::stellar-sdk $(node -p "require('@stellar/stellar-sdk/package.json').version")"
+
+      - name: Unit tests
+        working-directory: agent
+        run: |
+          set +e
+          npm test > test-out.txt 2>&1; code=$?
+          cat test-out.txt
+          if [ $code -ne 0 ]; then
+            grep -nE "not ok|error:|Error|expected|actual|operator" test-out.txt | head -40 | while IFS= read -r l; do echo "::error::$l"; done
+          fi
+          exit $code
+
+      - name: Four-section screen on Stellar testnet
+        working-directory: agent
+        run: |
+          mkdir -p out
+          set -o pipefail
+          node screen-ci.mjs 2>&1 | tee out/screen-log.txt
+
+      - name: Secret scan of everything that will be published
+        id: scan
+        if: always()
+        run: |
+          mkdir -p screen-results
+          cp agent/out/screen-log.txt screen-results/ 2>/dev/null || true
+          cp dist/state/screen.json screen-results/ 2>/dev/null || true
+          if grep -rEn '\bS[A-Z2-7]{55}\b' screen-results 2>/dev/null; then
+            echo "A secret key would be published. Aborting."
+            exit 1
+          fi
+
+      - name: Publish results to ci/screen-results
+        if: always() && steps.scan.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B ci/screen-results
+          git add -f screen-results
+          git commit -m "ci: four-section screen run ${{ github.run_id }} [skip ci]" || echo "nothing to commit"
+          git push -f origin ci/screen-results

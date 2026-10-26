@@ -27,12 +27,14 @@ const { values: args } = parseArgs({
     name: { type: "string", default: "Demo Advertiser (testnet)" },
     headline: { type: "string", default: "Five minutes on the main stage, paid in testnet USDC" },
     max: { type: "string", default: "5.00" },
+    section: { type: "string" }, // A–D: which quarter of the main-stage screen; empty = any free one
+    out: { type: "string" }, // where to write the order (default dist/state/ads.json)
   },
 });
 
 const NETWORK = networkConfig().id; // throws for anything but testnet
 const SERVICES_URL = (process.env.SERVICES_URL || "http://localhost:3001").replace(/\/$/, "");
-const file = fileURLToPath(new URL("../dist/state/ads.json", import.meta.url));
+const file = args.out ? args.out : fileURLToPath(new URL("../dist/state/ads.json", import.meta.url));
 const fail = (msg) => { console.error(msg); process.exit(1); };
 
 if (!process.env.ADVERTISER_SECRET_KEY) fail("ADVERTISER_SECRET_KEY is missing. Use a separate testnet wallet that holds testnet USDC.");
@@ -70,7 +72,7 @@ const record = async (status, extra) => {
 };
 
 const url = `${SERVICES_URL}/paid${slot.path}`;
-const init = { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ advertiser: args.name, headline: args.headline }) };
+const init = { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ advertiser: args.name, headline: args.headline, ...(args.section ? { section: args.section } : {}) }) };
 
 // Preflight: what does the server really ask for, and who would receive it?
 const pre = await fetch(url, init);
@@ -107,6 +109,6 @@ if (!res.ok || success === false || !tx) {
   fail(`Ad payment FAILED — HTTP ${res.status} ${errorReason ?? ""}`);
 }
 const bought = await res.json();
-state.advertiser = { account: advertiser, name: bought.advertiser, headline: bought.headline };
+state.advertiser = { account: advertiser, name: bought.advertiser, headline: bought.headline, section: bought.section ?? null };
 await record("settled", { tx, explorer: explorerTx(NETWORK, tx) });
 console.log(`Advertiser "${bought.advertiser}" paid ${slot.priceUsdc} USDC to the venue treasury for ${slot.durationMs / 60000} min of ${slot.placement}: SETTLED ${explorerTx(NETWORK, tx)}`);
