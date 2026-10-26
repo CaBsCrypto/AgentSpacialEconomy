@@ -29,6 +29,13 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/render-requirements.txt
+      - name: Install locked graphics test dependencies
+        run: python -m pip install -r scripts/render-requirements.txt
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npm test
