@@ -1,0 +1,37 @@
+name: Frontend check (temporary)
+on:
+  push:
+    branches: [ci/frontend-check]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Branch tests
+        shell: bash
+        run: |
+          npm ci --no-audit --no-fund && node scripts/vendor.mjs
+          npm test > /tmp/branch.txt 2>&1 || true
+          echo "=== BRANCH FAILURES ==="; grep -nE -A30 "^not ok" /tmp/branch.txt || echo "none"
+          grep -E "^# (tests|pass|fail)" /tmp/branch.txt
+          echo "::notice title=branch summary::$(grep -E '^# (tests|pass|fail)' /tmp/branch.txt | tr '\n' ' ')"
+          grep -E "^not ok" /tmp/branch.txt | while read -r l; do echo "::warning title=branch failure::$l"; done
+          grep -E -A12 "^not ok" /tmp/branch.txt | grep -E "error:|expected|actual|location" | head -12 | while read -r l; do echo "::warning title=branch detail::$l"; done
+      - name: Baseline tests on origin/main
+        shell: bash
+        run: |
+          git worktree add /tmp/base origin/main
+          cd /tmp/base && npm ci --no-audit --no-fund && node scripts/vendor.mjs
+          npm test > /tmp/base.txt 2>&1 || true
+          echo "=== MAIN FAILURES ==="; grep -nE -A30 "^not ok" /tmp/base.txt || echo "none"
+          grep -E "^# (tests|pass|fail)" /tmp/base.txt
+          echo "::notice title=main summary::$(grep -E '^# (tests|pass|fail)' /tmp/base.txt | tr '\n' ' ')"
+          grep -E "^not ok" /tmp/base.txt | while read -r l; do echo "::warning title=main failure::$l"; done
