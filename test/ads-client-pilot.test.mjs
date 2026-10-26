@@ -71,3 +71,7 @@ test('historical TIME orders display their frozen duration and preserve their or
  assert.equal(fulfillmentRemaining({quote:historical,payment:{status:'SETTLED'}},catalogue),false,'a new catalogue cannot rewrite an old paid order');
  assert.equal(validatePilotQuote(historical,null),historical);
 });
+
+test('new pilot offer freezes a minute between campaign plays while historical quotes remain readable',async()=>{
+ const {PILOT_OFFER,applyPilotConfig}=await import('../server/ads/offers.mjs');assert.equal(PILOT_OFFER.minCampaignGapMs,60000);assert.equal(applyPilotConfig({}).minCampaignGapMs,60000);const spacedOffer={...offer,minCampaignGapMs:60000},spacedQuote={...quote,minCampaignGapMs:60000};assert.equal(validatePilotQuote(spacedQuote,spacedOffer),spacedQuote);assert.equal(validatePilotQuote(quote,spacedOffer),quote);assert.throws(()=>validatePilotQuote({...spacedQuote,minCampaignGapMs:1},spacedOffer),/cotiz/);assert.match(quoteUnitsDescription(spacedQuote),/anfitri/);assert.doesNotMatch(quoteUnitsDescription(quote),/anfitri/);
+});

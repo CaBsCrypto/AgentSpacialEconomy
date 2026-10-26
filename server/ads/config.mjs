@@ -32,7 +32,7 @@ export function validateAdsConfig(c){
   const p=c.placements?.[id];need('placements.'+id+'.transform',p?.position?.length===3&&p.position.every(Number.isFinite)&&Number.isFinite(p.width)&&p.width>0&&Number.isFinite(p.height)&&p.height>0);
   for(const plan of pilot?['PASSES']:PLANS){const p=c.pricing?.[id]?.[plan];need('pricing.'+id+'.'+plan,money(p?.unitAmount)&&BigInt(p.unitAmount)>0n&&money(p?.designAmount));}
  }
- if(pilot){need('pilot.offer',c.passMs===PILOT_OFFER.passMs&&c.maxUnits===5&&c.pricing?.main_stage_screen?.PASSES?.unitAmount===PILOT_OFFER.unitAmount&&c.pricing?.main_stage_screen?.PASSES?.designAmount==='0');}
+ if(pilot){need('pilot.offer',c.passMs===PILOT_OFFER.passMs&&c.minCampaignGapMs===PILOT_OFFER.minCampaignGapMs&&c.maxUnits===5&&c.pricing?.main_stage_screen?.PASSES?.unitAmount===PILOT_OFFER.unitAmount&&c.pricing?.main_stage_screen?.PASSES?.designAmount==='0');}
  const publicAuthority=a=>typeof a==='string'&&(StrKey.isValidContract(a)||StrKey.isValidEd25519PublicKey(a));
  need('operators',Array.isArray(c.operators)&&c.operators.length>0&&c.operators.every(publicAuthority));need('disputeAuthority',publicAuthority(c.disputeAuthority)&&Array.isArray(c.operators)&&c.operators.includes(c.disputeAuthority));
  need('walletCompatibilityVerified',c.walletCompatibilityVerified===true);need('accountWasmHash',/^[a-f0-9]{64}$/i.test(c.accountWasmHash||''));need('webauthnVerifier',StrKey.isValidContract(c.webauthnVerifier||''));

@@ -62,20 +62,33 @@ export async function recoverFulfillment(tx,{config,now=Date.now()}={}){
  }
  const reservations=(await tx.query("SELECT * FROM ads_reservations WHERE placement_id='main_stage_screen' AND state IN ('HELD','COMMITTED') AND ends_at>$1 AND (state='COMMITTED' OR expires_at>$1) ORDER BY starts_at",[new Date(now)])).rows;
  const blocks=[...reservations.map(s=>({start:+new Date(s.starts_at),end:+new Date(s.ends_at)})),...(config.hostWindows||[]).filter(w=>w.placementId==='main_stage_screen').map(w=>({start:Date.parse(w.startsAt),end:Date.parse(w.endsAt)}))];
+ const history=(await tx.query("SELECT s.starts_at,s.ends_at,r.campaign_id,o.quote FROM ads_reservations s JOIN ads_orders o ON o.id=s.order_id JOIN ads_revisions r ON r.id=o.revision_id WHERE s.placement_id='main_stage_screen' AND ((s.starts_at<=$1 AND EXISTS(SELECT 1 FROM ads_payment_attempts a WHERE a.order_id=o.id AND a.state='SETTLED')) OR (s.starts_at>$1 AND s.state IN ('HELD','COMMITTED') AND (s.state='COMMITTED' OR s.expires_at>$1)))",[new Date(now)])).rows.map(h=>({start:+new Date(h.starts_at),end:+new Date(h.ends_at),campaignId:h.campaign_id,minCampaignGapMs:h.quote.minCampaignGapMs||0}));
  const groups=new Map();
  for(const b of batches){if(+new Date(b.ends_at)<=now||b.suspended||!['QUEUED','LIVE'].includes(b.order_state)||b.queue_state!=='SCHEDULED'||b.revision_state!=='AUDITED')continue;
   if(!(await tx.query("SELECT 1 FROM ads_payment_attempts WHERE order_id=$1 AND state='SETTLED'",[b.order_id])).rowCount)continue;
   const units=(await tx.query('SELECT * FROM ads_fulfillment_units WHERE assigned_batch_id=$1 AND completed_at IS NULL ORDER BY number',[b.id])).rows.filter(u=>!reservations.some(s=>s.order_id===b.order_id&&s.unit_number===u.number&&s.batch_id===b.id));
   const key=b.campaign_id||b.order_id;if(!groups.has(key))groups.set(key,[]);for(const u of units)groups.get(key).push({batch:b,unit:u});
  }
- let progress=true;const changed=new Set();
- while(progress){progress=false;for(const group of groups.values()){
-  const next=group[0];if(!next)continue;const {batch:b,unit:u}=next,duration=(b.quote.passMs||60000)+(b.quote.renderLeadMs??config.renderLeadMs??0);
-  blocks.sort((a,b)=>a.start-b.start);const start=gap(Math.max(now+1,+new Date(b.starts_at)),duration,+new Date(b.ends_at),blocks);
-  if(start===null){group.shift();progress=true;continue;}
-  await tx.query("INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,pass_id,delivery_units,batch_id,unit_number) VALUES($1,$2,'main_stage_screen',$3,$4,$5,'COMMITTED',$6,1,$7,$8)",[uuid(),b.order_id,new Date(start),new Date(start+duration),new Date(b.ends_at),uuid(),b.id,u.number]);
-  blocks.push({start,end:start+duration});group.shift();progress=true;recovered++;changed.add(b.order_id);
- }}
+ const changed=new Set(),spaced=batches.some(b=>(b.quote.minCampaignGapMs||0)>0)||history.some(h=>(h.minCampaignGapMs||0)>0&&h.end+h.minCampaignGapMs>now);
+ while([...groups.values()].some(group=>group.length)){
+  const round=[...groups.values()].filter(group=>group.length);
+  while(round.length){
+   const candidates=round.map((group,index)=>{
+    const {batch:b,unit:u}=group[0],duration=(b.quote.passMs||60000)+(b.quote.renderLeadMs??config.renderLeadMs??0),campaignId=b.campaign_id||b.order_id,spacing=b.quote.minCampaignGapMs||0;
+    const personal=history.filter(h=>h.campaignId===campaignId).map(h=>{const pad=Math.max(spacing,h.minCampaignGapMs);return{start:h.start-pad,end:h.end+pad};});
+    const occupied=[...blocks,...personal].sort((a,b)=>a.start-b.start),start=gap(Math.max(now+1,+new Date(b.starts_at)),duration,+new Date(b.ends_at),occupied);
+    return{group,index,b,u,duration,campaignId,spacing,start};
+   });
+   // An impossible unit remains owed. Process the remaining campaigns without
+   // booking a later turn ahead of an eligible campaign that can fill its gap.
+   const impossible=candidates.find(candidate=>candidate.start===null);
+   if(impossible){impossible.group.shift();round.splice(impossible.index,1);continue;}
+   const chosen=spaced?candidates.sort((a,b)=>a.start-b.start||a.index-b.index)[0]:candidates[0];
+   const {group,index,b,u,duration,campaignId,spacing,start}=chosen;
+   await tx.query("INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,pass_id,delivery_units,batch_id,unit_number) VALUES($1,$2,'main_stage_screen',$3,$4,$5,'COMMITTED',$6,1,$7,$8)",[uuid(),b.order_id,new Date(start),new Date(start+duration),new Date(b.ends_at),uuid(),b.id,u.number]);
+   history.push({start,end:start+duration,campaignId,minCampaignGapMs:spacing});blocks.push({start,end:start+duration});group.shift();round.splice(index,1);recovered++;changed.add(b.order_id);
+  }
+ }
  for(const id of changed){await tx.query('UPDATE ads_orders SET fulfillment_version=fulfillment_version+1 WHERE id=$1',[id]);await event(tx,id,'scheduler','PASS_RECOVERY_SCHEDULED',{withoutAdditionalCharge:true});}
  if(changed.size||closed)await tx.query("UPDATE ads_inventory SET schedule_version=schedule_version+1 WHERE id='main_stage_screen'");
  return{recovered,closed};

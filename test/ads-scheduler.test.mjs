@@ -39,3 +39,29 @@ test('frozen pass render lead wins over a larger new default without changing si
  }
  assert.equal(legacy.passMs,60000);assert.equal(legacy.units,5);assert.equal(legacy.renderLeadMs,2000);
 });
+
+
+test('new campaign spacing separates five passes while legacy and another campaign retain their capacity',()=>{
+ const config={maxUnits:5,maxWindowMs:3600000,maxCampaignSharePercent:100,passMs:60000,renderLeadMs:10000,rotationMs:60000};
+ const order={id:'a',campaignId:'campaign-a',plan:'PASSES',units:5,startsAt:0,endsAt:3600000,committedAt:0,passMs:60000,renderLeadMs:10000,minCampaignGapMs:60000};
+ const spaced=planRotations([order],[],config);for(let i=1;i<spaced.length;i++)assert(spaced[i].start-spaced[i-1].end>=60000);
+ const legacy=planRotations([{...order,minCampaignGapMs:0}],[],config);assert.equal(legacy[1].start,legacy[0].end);
+ const mixed=planRotations([order,{...order,id:'b',campaignId:'campaign-b',committedAt:1}],[],config);assert.equal(mixed[1].orderId,'b');assert.equal(mixed[1].start,mixed[0].end);
+ const retry=planRotations([{...order,units:1,startsAt:100000}],[],{...config,campaignHistory:[{campaignId:'campaign-a',end:90000,minCampaignGapMs:60000}]});assert.equal(retry[0].start,150000);
+});
+
+
+test('a campaign waiting for its interval cannot advance the clock past another eligible campaign',()=>{
+ const config={maxUnits:5,maxWindowMs:1000000,maxCampaignSharePercent:100,passMs:60000,renderLeadMs:10000,rotationMs:60000,campaignHistory:[{campaignId:'a',end:0,minCampaignGapMs:60000}]};
+ const base={plan:'PASSES',units:1,startsAt:0,passMs:60000,renderLeadMs:10000,minCampaignGapMs:60000};
+ const slots=planRotations([{...base,id:'a',campaignId:'a',endsAt:140000,committedAt:0},{...base,id:'b',campaignId:'b',endsAt:70000,committedAt:1}],[],config);
+ assert.deepEqual(slots.map(s=>s.orderId),['b','a']);assert.deepEqual(slots.map(s=>s.start),[0,70000]);
+});
+
+test('eligible scheduling preserves one complete pass per campaign per round without starvation',()=>{
+ const config={maxUnits:5,maxWindowMs:3600000,maxCampaignSharePercent:100,passMs:60000,renderLeadMs:10000,rotationMs:60000,campaignHistory:[{campaignId:'a',end:0,minCampaignGapMs:60000}]};
+ const base={plan:'PASSES',units:5,startsAt:0,endsAt:3600000,passMs:60000,renderLeadMs:10000,minCampaignGapMs:60000};
+ const slots=planRotations(['a','b','c'].map((id,i)=>({...base,id,campaignId:id,committedAt:i})),[],config);
+ for(let round=0;round<5;round++)assert.deepEqual(new Set(slots.slice(round*3,round*3+3).map(s=>s.campaignId)),new Set(['a','b','c']));
+ for(const id of ['a','b','c']){const campaign=slots.filter(s=>s.campaignId===id);assert.equal(campaign.length,5);for(let i=1;i<5;i++)assert(campaign[i].start-campaign[i-1].end>=60000);}
+});

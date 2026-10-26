@@ -4,12 +4,12 @@ import {createTestDatabase} from './helpers/ads-db.mjs';
 import {uuid,sha256} from '../server/ads/common.mjs';
 import {ensureFulfillment,recoverFulfillment,fulfillmentStatus,reprogramFulfillment,playbackStatus} from '../server/ads/fulfillment.mjs';
 const owner='stellar:testnet:C'+'A'.repeat(55);
-async function fixture(t){const db=await createTestDatabase();t.after(()=>db.close());const clock={value:Date.UTC(2026,9,26,10)},now=()=>clock.value;const config={passMs:60000,renderLeadMs:10000,heartbeatMs:1000,manifestMs:2000,processingMs:1000,maxWindowMs:86400000,hostWindows:[],registryContract:'',maxUnits:5,rotationMs:60000,maxCampaignSharePercent:100};
- const campaign=uuid(),upload=uuid(),revision=uuid(),quoteId=uuid(),id=uuid(),start=now()+1000,end=now()+600000;
+async function fixture(t,{sharedDb,minCampaignGapMs,windowMs=600000}={}){const db=sharedDb||await createTestDatabase();if(!sharedDb)t.after(()=>db.close());const clock={value:Date.UTC(2026,9,26,10)},now=()=>clock.value;const config={passMs:60000,renderLeadMs:10000,heartbeatMs:1000,manifestMs:2000,processingMs:1000,maxWindowMs:86400000,hostWindows:[],registryContract:'',maxUnits:5,rotationMs:60000,maxCampaignSharePercent:100};
+ const campaign=uuid(),upload=uuid(),revision=uuid(),quoteId=uuid(),id=uuid(),start=now()+1000,end=now()+windowMs;
  await db.query('INSERT INTO ads_uploads(id,owner_id,storage_key,hash,mime,width,height,size) VALUES($1,$2,$3,$4,$5,1,1,1)',[upload,owner,'logo.png','a'.repeat(64),'image/png']);
  await db.query('INSERT INTO ads_campaigns(id,owner_id,brief,current_revision) VALUES($1,$2,$3,$4)',[campaign,owner,{},revision]);
  await db.query("INSERT INTO ads_revisions(id,campaign_id,brief,logo_id,content_hash,state,manifest,manifest_hash) VALUES($1,$2,$3,$4,$5,'AUDITED',$6,$7)",[revision,campaign,{},upload,'a'.repeat(64),{artifacts:[]},'b'.repeat(64)]);
- const quote={offerId:'main-stage-test-5m',offerVersion:2,plan:'PASSES',placements:['main_stage_screen'],requiredUnits:5,passMs:60000,renderLeadMs:10000,units:5,campaignId:campaign,startsAt:new Date(start).toISOString(),endsAt:new Date(end).toISOString(),expiresAt:new Date(end).toISOString(),terms:{refundPolicy:'FULFILL_REMAINING'}};
+ const quote={...(minCampaignGapMs===undefined?{}:{minCampaignGapMs}),offerId:'main-stage-test-5m',offerVersion:2,plan:'PASSES',placements:['main_stage_screen'],requiredUnits:5,passMs:60000,renderLeadMs:10000,units:5,campaignId:campaign,startsAt:new Date(start).toISOString(),endsAt:new Date(end).toISOString(),expiresAt:new Date(end).toISOString(),terms:{refundPolicy:'FULFILL_REMAINING'}};
  await db.query('INSERT INTO ads_quotes(id,owner_id,campaign_id,revision_id,snapshot,terms_hash,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7)',[quoteId,owner,campaign,revision,quote,sha256(quote),new Date(end)]);
  await db.query("INSERT INTO ads_orders(id,owner_id,quote_id,revision_id,amount,pay_to,terms_hash,quote,state,queue_state) VALUES($1,$2,$3,$4,50000000,$5,$6,$7,'QUEUED','SCHEDULED')",[id,owner,quoteId,revision,'G'+'A'.repeat(55),sha256(quote),quote]);
  await db.query("INSERT INTO ads_placements(order_id,placement_id,required_units,unit,state) VALUES($1,'main_stage_screen',5,'PASSES','SCHEDULED')",[id]);
@@ -54,4 +54,36 @@ test('stale, expired and cross-attempt playback cannot show a running paid minut
 test('an unpaid expired quote never becomes a purchased delivery debt',async t=>{
  const f=await fixture(t);await f.db.query('DELETE FROM ads_payment_attempts WHERE order_id=$1',[f.order.id]);f.clock.value=f.end+1;
  await f.db.transaction(tx=>recoverFulfillment(tx,{config:f.config,now:f.now()}));const value=await fulfillmentStatus(f.db,f.order,{config:f.config,now:f.now()});assert(value.units.every(u=>u.status==='PENDING'));assert.equal((await f.db.query('SELECT state FROM ads_orders WHERE id=$1',[f.order.id])).rows[0].state,'QUEUED');assert.equal((await f.db.query("SELECT count(*)::int AS n FROM ads_outbox WHERE topic='registry'")).rows[0].n,0);
+});
+
+
+async function interruptedReservation(f,{start=f.start,end=f.start+70000}={}){
+ const id=uuid(),passId=uuid();await f.db.query("INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,pass_id,delivery_units,batch_id,unit_number) VALUES($1,$2,'main_stage_screen',$3,$4,$5,'RELEASED',$6,1,$2,1)",[id,f.order.id,new Date(start),new Date(end),new Date(f.end),passId]);return{id,passId,start,end};
+}
+
+test('interrupted pass and worker restart preserve the durable campaign interval inside the paid window',async t=>{
+ const f=await fixture(t,{minCampaignGapMs:60000,windowMs:1200000}),prior=await interruptedReservation(f);f.clock.value=prior.end+1000;
+ // No complete delivery or ACK survives the interrupted renderer process.
+ assert.equal((await f.db.query('SELECT * FROM ads_delivery')).rowCount,0);assert.equal((await f.db.query('SELECT * FROM ads_publisher_acks')).rowCount,0);
+ const first=await f.db.transaction(tx=>recoverFulfillment(tx,{config:f.config,now:f.now()}));assert.equal(first.recovered,5);
+ const slots=(await f.db.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND state='COMMITTED' ORDER BY starts_at",[f.order.id])).rows;
+ assert.equal(slots.length,5);assert(+new Date(slots[0].starts_at)>=prior.end+60000);for(let i=1;i<slots.length;i++)assert(+new Date(slots[i].starts_at)-+new Date(slots[i-1].ends_at)>=60000);
+ assert(slots.every(s=>+new Date(s.ends_at)<=f.end&&s.pass_id!==prior.passId));const ids=slots.map(s=>s.id);
+ const restarted=await f.db.transaction(tx=>recoverFulfillment(tx,{config:f.config,now:f.now()}));assert.equal(restarted.recovered,0);assert.deepEqual((await f.db.query("SELECT id FROM ads_reservations WHERE order_id=$1 AND state='COMMITTED' ORDER BY starts_at",[f.order.id])).rows.map(s=>s.id),ids);
+ const order=(await f.db.query('SELECT * FROM ads_orders WHERE id=$1',[f.order.id])).rows[0];assert.deepEqual(order.quote,f.order.quote);assert.equal(order.terms_hash,f.order.terms_hash);assert.equal((await f.db.query('SELECT * FROM ads_payment_attempts')).rowCount,1);assert.equal((await f.db.query('SELECT * FROM ads_delivery')).rowCount,0);
+});
+
+test('recovery fills a waiting campaign interval with another campaign and gives both five turns',async t=>{
+ const a=await fixture(t,{minCampaignGapMs:60000,windowMs:1200000}),b=await fixture(t,{sharedDb:a.db,minCampaignGapMs:60000,windowMs:1200000});
+ await interruptedReservation(a,{start:a.now()-69000,end:a.now()+1000});
+ const result=await a.db.transaction(tx=>recoverFulfillment(tx,{config:a.config,now:a.now()}));assert.equal(result.recovered,10);
+ const slots=(await a.db.query("SELECT * FROM ads_reservations WHERE state='COMMITTED' ORDER BY starts_at")).rows;assert.equal(slots[0].order_id,b.order.id);assert.equal(+new Date(slots[0].starts_at),b.start);
+ for(const order of [a.order,b.order]){const own=slots.filter(s=>s.order_id===order.id);assert.equal(own.length,5);for(let i=1;i<own.length;i++)assert(+new Date(own[i].starts_at)-+new Date(own[i-1].ends_at)>=60000);}
+ for(let round=0;round<5;round++)assert.deepEqual(new Set(slots.slice(round*2,round*2+2).map(s=>s.order_id)),new Set([a.order.id,b.order.id]));
+});
+
+test('legacy recovery without a frozen interval remains contiguous after an interrupted reservation',async t=>{
+ const f=await fixture(t),prior=await interruptedReservation(f);f.clock.value=prior.end+1000;
+ await f.db.transaction(tx=>recoverFulfillment(tx,{config:{...f.config,minCampaignGapMs:60000},now:f.now()}));const slots=(await f.db.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND state='COMMITTED' ORDER BY starts_at",[f.order.id])).rows;
+ assert.equal(+new Date(slots[0].starts_at),f.now()+1);for(let i=1;i<slots.length;i++)assert.equal(+new Date(slots[i].starts_at),+new Date(slots[i-1].ends_at));assert.equal(f.order.quote.minCampaignGapMs,undefined);
 });

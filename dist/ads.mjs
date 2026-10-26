@@ -5,7 +5,7 @@ export function configuredPilotOffer(config) {
   if (!config.profile) return null;
   if (config.profile !== PILOT_PROFILE) throw Error('El catálogo de este piloto no está disponible.');
   const offer = config.offers?.find(item => item.id === PILOT_PROFILE);
-  if (!offer || config.offers.length !== 1 || config.plans?.length !== 1 || config.plans[0] !== 'PASSES' || config.units?.passMs !== 60000 || offer.offerVersion !== 2 || offer.placementId !== 'main_stage_screen' || offer.plan !== 'PASSES' || offer.units !== 5 || offer.requiredUnits !== 5 || offer.passMs !== 60000 || offer.durationMs !== 300000 || offer.unitAmount !== '10000000' || offer.amountUnits !== '50000000' || offer.designAmount !== '0') throw Error('La oferta no coincide con los 5 USDC de prueba por 5 entregas completas de 1 minuto.');
+  if (!offer || config.offers.length !== 1 || config.plans?.length !== 1 || config.plans[0] !== 'PASSES' || config.units?.passMs !== 60000 || offer.offerVersion !== 2 || offer.placementId !== 'main_stage_screen' || offer.plan !== 'PASSES' || offer.units !== 5 || offer.requiredUnits !== 5 || offer.passMs !== 60000 || offer.durationMs !== 300000 || offer.unitAmount !== '10000000' || offer.amountUnits !== '50000000' || offer.designAmount !== '0' || offer.minCampaignGapMs !== undefined && offer.minCampaignGapMs !== 60000) throw Error('La oferta no coincide con los 5 USDC de prueba por 5 entregas completas de 1 minuto. Entre entregas, al menos 1 minuto para el anfitrión; otros anuncios pueden ocupar ese intervalo.');
   return offer;
 }
 export function advertisementQuotePayload(config, input) {
@@ -19,7 +19,7 @@ export function advertisementQuotePayload(config, input) {
 export function validatePilotQuote(quote, offer) {
   if (!offer) return quote;
   const line = quote?.lines?.[0];
-  if (quote?.offerId !== offer.id || quote.offerVersion !== offer.offerVersion || quote.amountUnits !== offer.amountUnits || quote.plan !== offer.plan || quote.units !== offer.units || quote.requiredUnits !== offer.requiredUnits || quote.unit !== 'PASSES' || quote.passMs !== offer.passMs || quote.placements?.length !== 1 || quote.placements[0] !== offer.placementId || quote.lines?.length !== 1 || line.placementId !== offer.placementId || line.plan !== offer.plan || line.units !== offer.units || line.unitAmount !== offer.unitAmount || line.designAmount !== '0' || line.deliveryAmount !== offer.amountUnits || line.amountUnits !== offer.amountUnits || quote.terms?.refundPolicy !== 'FULFILL_REMAINING') throw Error('La cotización no corresponde a 5 entregas completas de 1 minuto por 5 USDC de prueba.');
+  if (quote?.offerId !== offer.id || quote.offerVersion !== offer.offerVersion || quote.amountUnits !== offer.amountUnits || quote.plan !== offer.plan || quote.units !== offer.units || quote.requiredUnits !== offer.requiredUnits || quote.unit !== 'PASSES' || quote.passMs !== offer.passMs || quote.placements?.length !== 1 || quote.placements[0] !== offer.placementId || quote.lines?.length !== 1 || line.placementId !== offer.placementId || line.plan !== offer.plan || line.units !== offer.units || line.unitAmount !== offer.unitAmount || line.designAmount !== '0' || line.deliveryAmount !== offer.amountUnits || line.amountUnits !== offer.amountUnits || quote.terms?.refundPolicy !== 'FULFILL_REMAINING' || quote.minCampaignGapMs !== undefined && quote.minCampaignGapMs !== 60000) throw Error('La cotización no corresponde a 5 entregas completas de 1 minuto por 5 USDC de prueba.');
   return quote;
 }
 export async function requestPaymentAuthorization({ api, wallet, path, amountUnits, config, idempotencyKey }) {
@@ -86,7 +86,7 @@ export function consentedReprogramPayload(order, startsAt, endsAt, accept) {
 const localDateInput=value=>{const d=new Date(value),pad=v=>String(v).padStart(2,'0');return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+'.'+String(d.getMilliseconds()).padStart(3,'0');};
 export function quoteUnitsDescription(quote, config = {}) {
   if (quote.plan === 'TIME') return quote.units + ' unidad(es) de ' + ((quote.timeUnitMs ?? config.units?.timeMs) / 1000) + ' segundos de actividad acumulada.';
-  if (quote.plan === 'PASSES') return quote.units + ' entregas completas de ' + ((quote.passMs ?? config.units?.passMs) / 1000) + ' segundos. Una entrega interrumpida no cuenta y sigue pendiente.';
+  if (quote.plan === 'PASSES') return quote.units + ' entregas completas de ' + ((quote.passMs ?? config.units?.passMs) / 1000) + ' segundos. Una entrega interrumpida no cuenta y sigue pendiente.' + (quote.minCampaignGapMs === 60000 ? ' Entre entregas de tu campaña hay al menos 1 minuto para el anfitrión; otros anuncios pueden ocupar ese intervalo.' : '');
   return 'Ventana exclusiva: ' + new Date(quote.startsAt).toLocaleString() + ' → ' + new Date(quote.endsAt).toLocaleString();
 }
 export function orderProgress(order) {
@@ -258,7 +258,7 @@ export async function initAdsPage(documentRef = document) {
     const logo = form.elements.logo.files[0];
     if (!logo || !['image/png', 'image/jpeg', 'image/webp'].includes(logo.type)) throw Error('Selecciona un logo PNG, JPEG o WebP.');
     const upload = await api('/uploads', { method: 'POST', body: logo, raw: true, idempotencyKey: await requestKey('upload', logo) });
-    const campaignPayload = { brief: { name: form.elements.name.value.trim(), description: form.elements.description.value.trim(), xUrl: form.elements.xUrl.value, websiteUrl: form.elements.websiteUrl.value, rightsAccepted: form.elements.rightsAccepted.checked }, logoId: upload.id };
+    const campaignPayload = { brief: { name: form.elements.name.value.trim(), description: form.elements.description.value.trim(), ...(form.elements.xUrl.value ? { xUrl: form.elements.xUrl.value } : {}), websiteUrl: form.elements.websiteUrl.value, rightsAccepted: form.elements.rightsAccepted.checked }, logoId: upload.id };
     campaign = null; const draft = await api('/campaigns', { method: 'POST', body: campaignPayload, idempotencyKey: await requestKey('campaign', campaignPayload) });
     const audit = await api('/campaigns/' + encodeURIComponent(draft.id) + '/preaudit', { method: 'POST', body: {}, idempotencyKey: await requestKey('preaudit', { campaignId: draft.id, revisionId: draft.revisionId }) });
     const verdict = audit.verdict || audit;
@@ -345,7 +345,7 @@ export async function initAdsPage(documentRef = document) {
   $('correctionButton').addEventListener('click', () => action(async () => {
     requireSession(); await updateOrder();
     if (!form.reportValidity()) { $('brief').scrollIntoView({behavior:'smooth',block:'start'}); throw Error('Completa el brief, los enlaces, el logo y la autorización de marca en el formulario para enviar la corrección.'); }
-    const brief = { name: form.elements.name.value.trim(), description: form.elements.description.value.trim(), xUrl: form.elements.xUrl.value, websiteUrl: form.elements.websiteUrl.value, rightsAccepted: form.elements.rightsAccepted.checked };
+    const brief = { name: form.elements.name.value.trim(), description: form.elements.description.value.trim(), ...(form.elements.xUrl.value ? { xUrl: form.elements.xUrl.value } : {}), websiteUrl: form.elements.websiteUrl.value, rightsAccepted: form.elements.rightsAccepted.checked };
     await submitIncludedCorrection({ api, order, brief, logo: form.elements.logo.files[0], keyFor: requestKey });
     message('Corrección incluida enviada. Se conserva el pago original; el nuevo creativo pasa generación y auditoría antes de programarse.'); await updateOrder();
   }));
@@ -402,7 +402,7 @@ export async function initAdsPage(documentRef = document) {
     $('pilotOffer').hidden = !pilotOffer; $('legacyPlans').hidden = !!pilotOffer; $('unitsLabel').hidden = !!pilotOffer;
     if (pilotOffer) {
       documentRef.querySelector('[data-placement="venue_center_banner"]').hidden=true;documentRef.querySelector('.space-grid').classList.add('single-placement');
-      $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 entregas completas de 1 minuto.';
+      $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 entregas completas de 1 minuto. Entre entregas, al menos 1 minuto para el anfitrión; otros anuncios pueden ocupar ese intervalo.';
       $('spacesTitle').textContent = 'Tu anuncio, en el main stage.';
       $('offerPrice').textContent = formatAdsAmount(pilotOffer.amountUnits) + ' USDC de prueba · 5 entregas de 1 minuto';
       form.elements.plan.value = pilotOffer.plan; form.elements.units.value = String(pilotOffer.units); form.elements.units.disabled = true;

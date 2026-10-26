@@ -81,3 +81,17 @@ test('worst-case cost and input budgets are reserved before invoking any model',
   const audited = await normal.creative.preaudit({ brief, logo: normal.logo });
   assert.deepEqual(audited.budget, { calls: 1, reservedMicrousd: '4', maxCostMicrousd: 20 });
 });
+
+test('website-only briefs are preaudited and generated with one real website CTA and no invented X profile',async()=>{
+ const inspected=[],audits=[],f=await setup({urlInspector:async url=>{inspected.push(url);return{url};},model:{audit:async input=>{audits.push(input);return{decision:'ALLOW',reasons:[],reviewedHash:input.manifestHash};}}});const websiteOnly={...brief};delete websiteOnly.xUrl;
+ const pre=await f.creative.preaudit({brief:websiteOnly,logo:f.logo});assert.equal(pre.allowed,true,JSON.stringify(pre));assert.deepEqual(pre.cta,[{kind:'website',url:brief.websiteUrl,domain:'example.com'}]);
+ const result=await f.creative.generate({brief:websiteOnly,logo:f.logo,revisionId:'website-only',placements:['main_stage_screen']});assert.equal(result.verdict.allowed,true,JSON.stringify(result.verdict));assert.equal(result.manifest.cta.length,1);assert.equal(result.manifest.cta[0].kind,'website');assert(inspected.every(url=>url===brief.websiteUrl));assert(audits.every(input=>input.manifest.cta.length===1&&!Object.hasOwn(input.brief,'xUrl')));
+});
+test('an optional X URL remains strict when supplied, including failed inspection or a redirect outside x.com',async()=>{
+ const f=await setup();for(const xUrl of ['https://example.com/profile','https://evil.example/profile','http://x.com/profile','https://127.0.0.1/profile','   '])assert.equal((await f.creative.preaudit({brief:{...brief,xUrl},logo:f.logo})).allowed,false);
+ const redirected=await setup({urlInspector:async url=>({url:url.startsWith('https://x.com/')?'https://example.com/redirected':url})});assert.equal((await redirected.creative.preaudit({brief,logo:redirected.logo})).reasons[0].code,'X_REDIRECT_REJECTED');
+ const unavailable=await setup({urlInspector:async url=>{if(url.startsWith('https://x.com/'))throw Error('X unavailable');return{url};}});assert.equal((await unavailable.creative.preaudit({brief,logo:unavailable.logo})).allowed,false);
+});
+test('website and ownership declaration remain mandatory when X is omitted or empty',async()=>{
+ const f=await setup();for(const fields of [{xUrl:'',websiteUrl:''},{xUrl:undefined,websiteUrl:undefined},{xUrl:'',rightsConfirmed:false}])assert.equal((await f.creative.preaudit({brief:{...brief,...fields},logo:f.logo})).allowed,false);const allowed=await f.creative.preaudit({brief:{...brief,xUrl:''},logo:f.logo});assert.equal(allowed.allowed,true,JSON.stringify(allowed));assert.equal(allowed.cta.length,1);
+});

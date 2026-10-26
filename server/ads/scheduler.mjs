@@ -26,7 +26,7 @@ export function quotePrice(placements,plan,units,config){
 export function planRotations(orders,hostBlocks,config){
  const sorted=[...orders].sort((a,b)=>time(a.committedAt)-time(b.committedAt)||a.id.localeCompare(b.id));
  const fixed=hostBlocks.map(b=>({start:time(b.start??b.startsAt),end:time(b.end??b.endsAt)}));
- const slots=[],rotating=[];
+ const slots=[],rotating=[],campaignHistory=[...(config.campaignHistory||[])];
  for(const order of sorted){
   const demand=buildDemand(order,config),start=time(order.startsAt),end=time(order.endsAt);
   if(order.plan==='EXCLUSIVE'){
@@ -40,16 +40,23 @@ export function planRotations(orders,hostBlocks,config){
  let rounds=0;
  while([...groups.values()].some(g=>g.some(o=>o.remaining>0))){
   if(++rounds>100000)throw new AdsError(400,'schedule_too_large','Reduce units or increase rotation duration.');
-  let progressed=false;
-  for(const group of groups.values()){
-   const o=group.find(x=>x.remaining>0);if(!o)continue;
-   const duration=Math.min(o.turnMs,o.remaining),occupiedDuration=duration+(o.plan==='TIME'?(o.renderLeadMs??config.renderLeadMs??0):0);let start=Math.max(cursor,o.start);
-   for(const block of fixed){if(start>=block.end)continue;if(start+occupiedDuration<=block.start)break;start=block.end;}
-   const end=start+occupiedDuration;if(end>o.end)throw capacity();
+  const round=[...groups.values()].filter(group=>group.some(o=>o.remaining>0));
+  const spaced=rotating.some(o=>(o.minCampaignGapMs||0)>0)||campaignHistory.some(h=>(h.minCampaignGapMs||0)>0&&h.end+h.minCampaignGapMs>cursor&&groups.has(h.campaignId));
+  while(round.length){
+   const candidates=round.map((group,index)=>{
+    const o=group.find(x=>x.remaining>0),campaign=o.campaignId||o.id,duration=Math.min(o.turnMs,o.remaining),occupiedDuration=duration+(o.plan==='TIME'?(o.renderLeadMs??config.renderLeadMs??0):0);
+    let start=Math.max(cursor,o.start);
+    for(const prior of campaignHistory)if(prior.campaignId===campaign)start=Math.max(start,prior.end+Math.max(o.minCampaignGapMs||0,prior.minCampaignGapMs||0));
+    for(const block of fixed){if(start>=block.end)continue;if(start+occupiedDuration<=block.start)break;start=block.end;}
+    return{index,o,campaign,duration,start,end:start+occupiedDuration};
+   });
+   // One turn per campaign per round. A campaign in cooldown cannot skip
+   // another campaign's ready turn by advancing the shared clock first.
+   const chosen=spaced?candidates.sort((a,b)=>a.start-b.start||a.index-b.index)[0]:candidates[0];
+   const {o,campaign,duration,start,end,index}=chosen;if(end>o.end)throw capacity();
    slots.push({orderId:o.id,campaignId:o.campaignId,start,end,plan:o.plan,passIndex:o.plan==='PASSES'?o.passIndex++:null,deliveryUnits:o.plan==='PASSES'?1:duration});
-   o.remaining-=duration;cursor=end;progressed=true;
+   campaignHistory.push({campaignId:campaign,end,minCampaignGapMs:o.minCampaignGapMs||0});o.remaining-=duration;cursor=end;round.splice(index,1);
   }
-  if(!progressed)throw capacity();
  }
  for(const o of rotating){
   const campaignOrders=new Set(rotating.filter(x=>(x.campaignId||x.id)===(o.campaignId||o.id)).map(x=>x.id));
@@ -87,9 +94,10 @@ export async function reserveSchedule(tx,newOrder,config,now=Date.now()){
    }
    if(remaining<=0)continue;
    const units=q.plan==='TIME'?remaining:q.plan==='PASSES'?remaining:q.units;
-   movable.push({timeUnitMs:1,rotationMs:q.rotationMs||config.rotationMs,passMs:q.passMs||config.passMs,renderLeadMs:q.renderLeadMs??config.renderLeadMs,exclusiveUnitMs:q.exclusiveUnitMs||config.exclusiveUnitMs,id:order.id,campaignId:order.campaign_id||q.campaignId,plan:q.plan,units,startsAt:Math.max(time(q.startsAt),now+1),endsAt:q.endsAt,committedAt:order.created_at||now});
+   movable.push({minCampaignGapMs:q.minCampaignGapMs||0,timeUnitMs:1,rotationMs:q.rotationMs||config.rotationMs,passMs:q.passMs||config.passMs,renderLeadMs:q.renderLeadMs??config.renderLeadMs,exclusiveUnitMs:q.exclusiveUnitMs||config.exclusiveUnitMs,id:order.id,campaignId:order.campaign_id||q.campaignId,plan:q.plan,units,startsAt:Math.max(time(q.startsAt),now+1),endsAt:q.endsAt,committedAt:order.created_at||now});
   }
-  const slots=planRotations(movable,blocks,{...config,timeUnitMs:1,maxUnits:Number.MAX_SAFE_INTEGER});
+  const history=(await tx.query("SELECT s.ends_at,r.campaign_id,o.quote FROM ads_reservations s JOIN ads_orders o ON o.id=s.order_id JOIN ads_revisions r ON r.id=o.revision_id WHERE s.placement_id=$1 AND s.starts_at<=$2 AND EXISTS(SELECT 1 FROM ads_payment_attempts a WHERE a.order_id=o.id AND a.state='SETTLED')",[placementId,new Date(now)])).rows;
+  const slots=planRotations(movable,blocks,{...config,timeUnitMs:1,maxUnits:Number.MAX_SAFE_INTEGER,campaignHistory:history.map(h=>({campaignId:h.campaign_id,end:+new Date(h.ends_at),minCampaignGapMs:h.quote.minCampaignGapMs||0}))});
   const ids=movable.map(o=>o.id);
   if(ids.length)await tx.query("DELETE FROM ads_reservations WHERE placement_id=$1 AND order_id=ANY($2::uuid[]) AND starts_at>$3 AND state IN ('HELD','COMMITTED')",[placementId,ids,new Date(now)]);
   for(const s of slots){
