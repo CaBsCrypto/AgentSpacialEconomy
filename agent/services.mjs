@@ -17,9 +17,10 @@ import { paymentMiddlewareFromConfig } from "@x402/express";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { ExactStellarScheme } from "@x402/stellar/exact/server";
 import { StrKey } from "@stellar/stellar-sdk";
-import { CATALOG, SPONSOR_SLOT, AD_SLOT } from "./catalog.mjs";
+import { CATALOG, SPONSOR_SLOT, AD_SLOT, AD_SECTION_SLOT } from "./catalog.mjs";
 import { sponsorSlot } from "./lib/income.mjs";
 import { adCreative } from "./lib/ads.mjs";
+import { validateSectionRequest } from "./lib/ad-section.mjs";
 import { toDollarPrice } from "./lib/money.mjs";
 import { networkConfig } from "./config/networks.mjs";
 
@@ -71,7 +72,7 @@ const route = (s, payTo) => [
 ];
 const PAID_ROUTES = Object.fromEntries([
   ...CATALOG.map((s) => route(s, PAY_TO)),
-  ...(TREASURY ? [route(SPONSOR_SLOT, TREASURY), route(AD_SLOT, TREASURY)] : []),
+  ...(TREASURY ? [route(SPONSOR_SLOT, TREASURY), route(AD_SLOT, TREASURY), route(AD_SECTION_SLOT, TREASURY)] : []),
 ]);
 
 const schedule = JSON.parse(await readFile(new URL("./fixtures/schedule.json", import.meta.url), "utf8"));
@@ -82,11 +83,11 @@ app.use(express.json({ limit: "16kb" }));
 app.get("/health", (_req, res) =>
   res.json({ ok: true, network: NETWORK, paidRoutes: Boolean(PAY_TO), sponsorSlot: Boolean(PAY_TO && TREASURY) }));
 app.get("/catalog", (_req, res) =>
-  res.json({ network: NETWORK, services: CATALOG, income: PAY_TO && TREASURY ? [SPONSOR_SLOT, AD_SLOT] : [] }));
+  res.json({ network: NETWORK, services: CATALOG, income: PAY_TO && TREASURY ? [SPONSOR_SLOT, AD_SLOT, AD_SECTION_SLOT] : [] }));
 
 // Fail closed: without a venue treasury the income routes are not in the payment config, so they
 // must never fall through to their handlers for free.
-for (const slot of [SPONSOR_SLOT, AD_SLOT]) {
+for (const slot of [SPONSOR_SLOT, AD_SLOT, AD_SECTION_SLOT]) {
   app.use(`/paid${slot.path}`, (_req, res, next) =>
     TREASURY ? next() : res.status(503).json({ error: "venue treasury not configured" }));
 }
@@ -103,6 +104,7 @@ if (PAY_TO) {
   console.warn("SERVICE_RECIPIENT missing or invalid — every /paid route answers 503.");
   paymentGate = (_req, res) => res.status(503).json({ error: "payments not configured" });
 }
+app.post("/paid/ad-section", validateSectionRequest);
 app.use("/paid", paymentGate);
 
 app.get("/paid/venue-feed", (_req, res) => res.json(schedule));
@@ -145,6 +147,10 @@ app.post(`/paid${AD_SLOT.path}`, (req, res) => {
     ...creative, offerId: AD_SLOT.offerId, placement: AD_SLOT.placement, durationMs: AD_SLOT.durationMs,
     priceUsdc: AD_SLOT.priceUsdc, payTo: TREASURY, issuedAt: new Date().toISOString(),
   });
+});
+
+app.post("/paid/ad-section", (req, res) => {
+  res.json({ ...req.sectionCreative, offerId: AD_SECTION_SLOT.offerId, placement: AD_SECTION_SLOT.placement, durationMs: AD_SECTION_SLOT.durationMs, priceUsdc: AD_SECTION_SLOT.priceUsdc, payTo: TREASURY, issuedAt: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {

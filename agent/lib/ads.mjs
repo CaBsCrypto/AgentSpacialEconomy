@@ -41,10 +41,11 @@ export function adCreative(body) {
 }
 
 /** The terms both sides agreed to; their hash goes on chain. */
-export function adTerms({ slot, payTo, network }) {
+export function adTerms({ slot, payTo, network, section = null }) {
   return {
     offer: slot.offerId,
     placement: slot.placement,
+    ...(section ? { section } : {}),
     plan: "Time",
     durationMs: slot.durationMs,
     priceUsdc: slot.priceUsdc,
@@ -102,11 +103,21 @@ export function registryCommitArgs(c, s) {
 
 const hex = (v) => (v == null ? "" : typeof v === "string" ? v.toLowerCase() : Buffer.from(v).toString("hex"));
 
-/** Compare what `get(order)` returned with what we committed. */
-export function readBack(record, c) {
-  const state = Array.isArray(record?.state) ? String(record.state[0]) : String(record?.state ?? "");
-  const delivered = record?.delivered?.[0] ?? null;
-  const verified = Boolean(record) && state === "Queued" && hex(record.commitment?.payment) === c.payment &&
-    hex(record.commitment?.order) === c.order && delivered !== null && BigInt(delivered) === 0n;
-  return { verified, state: state || null, deliveredMs: delivered === null ? null : String(delivered), requiredMs: String(c.placements[0].units) };
+/** Compare the complete commitment, including the section-bound terms and delivery obligations. */
+export function readBack(record,c) {
+ const state=Array.isArray(record?.state)?String(record.state[0]):String(record?.state??"");
+ let verified=false, deliveredMs=null;
+ try {
+  const actual=record?.commitment;
+  const normalize=p=>({slot:String(p.slot),plan:Array.isArray(p.plan)?String(p.plan[0]):String(p.plan),units:String(BigInt(p.units)),pass_ms:String(BigInt(p.pass_ms??0)),start:String(BigInt(p.start)),end:String(BigInt(p.end))});
+  const delivered=record?.delivered;
+  deliveredMs=delivered?.[0]===undefined?null:String(BigInt(delivered[0]));
+  verified=Boolean(actual)&&state==="Queued"&&
+   ["order","revision","terms","manifest","payment"].every(k=>hex(actual[k])===hex(c[k]))&&
+   actual.claimant===c.claimant&&BigInt(actual.deadline)===BigInt(c.deadline)&&
+   Array.isArray(actual.placements)&&actual.placements.length===c.placements.length&&
+   actual.placements.every((p,i)=>canonical(normalize(p))===canonical(normalize(c.placements[i])))&&
+   Array.isArray(delivered)&&delivered.length===c.placements.length&&delivered.every(v=>BigInt(v)===0n);
+ } catch { verified=false; }
+ return {verified,state:state||null,deliveredMs,requiredMs:String(c.placements[0].units)};
 }

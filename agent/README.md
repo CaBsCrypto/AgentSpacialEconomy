@@ -55,6 +55,24 @@ node ads-ci.mjs                                                # or everything w
 
 `advertiser.mjs` checks the 402 before signing (price ≤ `--max`, testnet, payTo = treasury), raises the x402 client's per-payment cap to exactly that maximum, and writes `dist/state/ads.json`. `ads-ci.mjs` then has the treasury deploy an AdsRegistry instance from the WASM already on testnet (`registry.mjs`), commit the order with the settlement hash as `payment` (`lib/ads.mjs` builds and checks the commitment) and read it back with `get`. Nothing is delivered, so the order stays `Queued`. In GitHub Actions: push to `ci/ads-run` (workflow **Paid screen time (testnet)**); results land on `ci/ads-results`.
 
+### Isolated four-section screen experiment
+
+The original `POST /paid/ad-slot` and `AD_SLOT` remain whole-screen offers. Explicit `advertiser.mjs --section A|B|C|D` uses the separate `POST /paid/ad-section` offer `main-stage-section-test-5m`: exactly 5 Testnet USDC for 300000 ms of one section. Invalid section requests are rejected before the payment gate. This experiment does not enable the passkey pilot or credit delivered passes.
+
+```bash
+node advertiser.mjs --run-id <unique-id> --section B --out out/order-b.json
+node screen-ci.mjs --out out/<fresh-directory>
+node verify-screen.mjs --input out/<fresh-directory>/screen.json --out out/<fresh-directory>/audit.json
+# Audit the original PR recording without changing its historical terms:
+node verify-screen.mjs --input ../dist/state/screen.json --out out/historical-audit.json --legacy-offer
+```
+
+The paid runner requires committed, clean source and claims a new output directory atomically. It makes at most six purchases, for at most 30 Testnet USDC. A journal keyed by run ID prevents a different `--out` from authorizing another attempt. Unknown outcomes stop the run for read-only reconciliation; never delete the journal to retry. Keys remain in process memory.
+
+Success requires six unique exact payment receipts, a 30-USDC treasury balance change, the expected registry WASM and six complete `Queued` commitments. `verify-screen.mjs` independently rereads all payments, the deployment, six commits and each full contract record. It never signs or submits. New results are written under `agent/out/`, never over the recorded fixture. CI is manual and uploads run-specific artifacts, including explicit partial-failure diagnostics; it does not push branches.
+
+The stage preview is opt-in at `/one16?sections`. It is a labelled recording, isolated from publishing and delivery acknowledgements. The dashboard shows its separate treasury and the date of its saved verification; playback never earns income or proves delivery.
+
 ## What the run does
 
 1. `venue-agent` gives `stage-agent` its allocation from the mandate (`mandates/main-stage.json`).

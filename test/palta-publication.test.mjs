@@ -192,18 +192,23 @@ test('cache revisions reach the optional activation through the existing entry c
   assert.ok(paltaVersion);
   assert.equal(paltaVersion, previewVersion, 'both viewers load the same activation module');
   assert.ok(viewer.indexOf('palta?.update(dt);') < viewer.indexOf('venueLoading.renderFrame('));
-  assert.match(viewer, /import \{ applyStageCard \} from '\.\/stage-screen\.mjs\?v=2'/);
+  assert.match(viewer, /import \{ applyStageCard, mountStageSections \} from '\.\/stage-screen\.mjs\?v=3'/);
 });
 
 
-function stageIntegrationHarness({ hostLoop = null } = {}) {
-  const pending = deferred(), adsPending = deferred(), draws = [], mounts = [], fetches = [], cardCalls = [], adsMounts = [];
+function stageIntegrationHarness({ hostLoop = null, sectionsPreview = false } = {}) {
+  const pending = deferred(), adsPending = deferred(), sectionsPending = deferred(), draws = [], mounts = [], fetches = [], cardCalls = [], adsMounts = [], sectionMounts = [], hostCalls = [];
   const prepared = { name: 'prepared venue' }, controller = fakeController(), frameAcks = [];
   const context = {
-    THREE, gltf: { scene: { name: 'raw venue' } }, model: null, defaultStage: null, adsSpatial: null, mainStageSign:null, createMainStageSign:()=>null,
+    THREE, gltf: { scene: { name: 'raw venue' } }, model: null, defaultStage: null, adsSpatial: null, stageSections: null, sectionsPreview, active: true, document: { visibilityState: 'visible' }, mainStageSign:null, createMainStageSign:()=>null,
     scene: { add: model => draws.push(model) },
     prepareVenueModel: () => prepared,
-    createDefaultStageLoop: (_three, model) => { assert.equal(model, prepared); return hostLoop; },
+    createDefaultStageLoop: (_three, model) => { assert.equal(model, prepared); hostCalls.push(model); return hostLoop; },
+    mountStageSections: async (_three, model, options) => {
+      assert.equal(model, prepared); sectionMounts.push({ model, options });
+      await options.fetchImpl("./state/screen.json", { cache: "no-store" });
+      return sectionsPending.promise;
+    },
     controller: new AbortController(), AbortSignal, attempt: 1,
     fetch: async (url, options) => { fetches.push({ url, options }); return { ok: true }; },
     applyStageCard: async (_three, model, options) => {
@@ -221,7 +226,7 @@ function stageIntegrationHarness({ hostLoop = null } = {}) {
   const end = viewer.indexOf("venueLoading.progress(attempt,'textures');", begin);
   assert.ok(begin > 0 && end > begin);
   const work = vm.runInNewContext(`(async () => {const attempt = 1;${viewer.slice(begin, end)}})()`, context);
-  return { context, pending, adsPending, draws, mounts, fetches, cardCalls, adsMounts, prepared, controller, frameAcks, work };
+  return { context, pending, adsPending, sectionsPending, draws, mounts, fetches, cardCalls, adsMounts, sectionMounts, hostCalls, prepared, controller, frameAcks, work };
 }
 
 test('the recorded card remains an awaited fallback before Palta when there is no host loop', async () => {
@@ -280,15 +285,15 @@ test('an advertising mount resolving after its model is discarded releases its o
   assert.equal(harness.context.adsSpatial, null);assert.equal(harness.controller.disposed, 1);
 });
 
-test('discarding the venue releases advertising, the host loop and Palta before scene resources', () => {
+test('discarding the venue releases preview, advertising, the host loop and Palta before scene resources', () => {
   const events = [], resource = name => ({ dispose: () => events.push(name) });
-  const context = { mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, walkFloorNumbers:{}, resourcesPrepared:true,
+  const context = { stageSections:resource('sections'), mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, walkFloorNumbers:{}, resourcesPrepared:true,
     discardPalta:() => events.push('palta'), disposeVenueObject:object => { assert.equal(object,context.scene);events.push('scene'); } };
   const begin = viewer.indexOf('function discardVenueScene()'), end = viewer.indexOf('function applyInitialIntent()',begin);
   assert.ok(begin > 0 && end > begin);
   const discard = vm.runInNewContext(viewer.slice(begin,end)+';discardVenueScene',context);discard();
-  assert.deepEqual(events,['sign','ads','host','palta','orbit','scene','renderer']);
-  for(const key of ['mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','walkFloorNumbers'])assert.equal(context[key],null,key);
+  assert.deepEqual(events,['sections','sign','ads','host','palta','orbit','scene','renderer']);
+  for(const key of ['stageSections','mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','walkFloorNumbers'])assert.equal(context[key],null,key);
   assert.equal(context.resourcesPrepared,false);
 });
 
@@ -303,4 +308,78 @@ test('Palta and advertising update before render and the publisher acknowledgeme
   const loopSource = viewer.match(/^function loop\(now\).*$/m)?.[0];assert.ok(loopSource);
   const loop = vm.runInNewContext(loopSource+';loop',context);loop(1000);
   assert.deepEqual(events,['palta','ads','sign-time','render','ack','wallet-frame']);
+});
+
+test('the recorded sections preview owns its surface without acquiring live advertising or replacing Palta', async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true, hostLoop: {} });
+  await turn();
+  assert.equal(harness.sectionMounts.length, 1);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.mounts, []);
+  assert.equal(harness.fetches[0].url, './state/screen.json');
+  assert.equal(harness.fetches[0].options.cache, 'no-store');
+  const preview = { ...fakeController(), suspend() { throw Error('Visible preview should remain active'); } };
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(harness.context.stageSections, preview);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.cardCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.frameAcks, []);
+  assert.deepEqual(harness.mounts, [1], 'Palta still mounts in the prepared scene');
+});
+
+test('missing recorded sections restore the host loop while the preview stays excluded from advertising', async () => {
+  const hostLoop = {}, harness = stageIntegrationHarness({ sectionsPreview: true, hostLoop });
+  harness.sectionsPending.resolve(null); await harness.work;
+  assert.equal(harness.context.defaultStage, hostLoop);
+  assert.equal(harness.context.stageSections, null);
+  assert.deepEqual(harness.hostCalls, [harness.prepared]);
+  assert.deepEqual(harness.cardCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, [1]);
+});
+
+test('an obsolete preview mount releases its controller before it can acquire scene ownership', async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true }), preview = fakeController();
+  await turn();
+  harness.context.attempt = 2; harness.context.controller.abort();
+  assert.equal(harness.fetches[0].options.signal.aborted, true);
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(preview.disposed, 1);
+  assert.equal(harness.context.stageSections, null);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, []);
+});
+
+for (const hiddenBy of ['leave', 'hidden tab']) test(`a preview finishing after ${hiddenBy} remains suspended in the cached scene`, async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true });
+  const preview = { ...fakeController(), suspended: 0, suspend() { this.suspended++; } };
+  await turn();
+  if (hiddenBy === 'leave') harness.context.active = false;
+  else harness.context.document.visibilityState = 'hidden';
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(harness.context.stageSections, preview);
+  assert.equal(preview.suspended, 1);
+  assert.equal(preview.disposed, 0);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, [1]);
+});
+
+test('publisher acknowledgements remain available normally and are suppressed in the sections preview', async () => {
+  const received = [], source = viewer.match(/^function attestAdsFrame\(ack\).*$/m)?.[0];
+  assert.ok(source);
+  const context = {
+    sectionsPreview: true, URLSearchParams, location: { search: '?sections&publisher=1' },
+    document: { visibilityState: 'visible' }, performance: { now: () => 1000 }, adsAckTimes: new Map(),
+    window: { __adsPublisherAck: ack => received.push(ack) },
+  };
+  const attest = vm.runInNewContext(source + ';attestAdsFrame', context);
+  const ack = { placementId: 'main_stage_screen', version: 1, revisionId: 'r1', manifestHash: 'manifest', imageHash: 'image' };
+  attest(ack); await turn();
+  assert.deepEqual(received, []);
+  assert.equal(context.adsAckTimes.size, 0, 'preview cannot even reserve an acknowledgement timestamp');
+  context.sectionsPreview = false; context.location.search = '?publisher=1';
+  attest(ack); await turn();
+  assert.deepEqual(received, [ack]);
 });
