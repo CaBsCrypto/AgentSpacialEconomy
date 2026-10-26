@@ -29,7 +29,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from './vendor/three/examples/jsm/controls/OrbitControls.js';
-import { mountPaltaReveal } from './palta-reveal.mjs?v=1';
+import { mountPaltaReveal } from './palta-reveal.mjs?v=5';
 
 const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -44,9 +44,9 @@ const floor = new THREE.Mesh(new THREE.CircleGeometry(4, 64), new THREE.MeshStan
 floor.rotation.x = -Math.PI / 2; scene.add(floor);
 
 const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 50);
-camera.position.set(0, 1.5, 3.2);
+camera.position.set(0, 1.55, 4.3);
 const orbit = new OrbitControls(camera, canvas);
-orbit.target.set(0, 1.25, 0); orbit.enableDamping = true; orbit.minDistance = 1.2; orbit.maxDistance = 6; orbit.maxPolarAngle = Math.PI * 0.55; orbit.update();
+orbit.target.set(0, 1.2, 0); orbit.enableDamping = true; orbit.minDistance = 1.2; orbit.maxDistance = 6; orbit.maxPolarAngle = Math.PI * 0.55; orbit.update();
 
 // No auto-open here and no camera-facing: the buttons drive it.
 const palta = await mountPaltaReveal(THREE, scene, { GLTFLoader, position: [0, 0, 0], yaw: 0, autoOpenDistance: 0, faceCamera: false, camera, canvas, logoUrl: './assets/palta-reveal/logo.png' });

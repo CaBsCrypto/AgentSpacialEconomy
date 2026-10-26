@@ -9,7 +9,8 @@ no photo textures, Three.js coordinates (Y up, front = +Z, metres).
 
 Only numpy, scipy and Pillow are needed (no Blender). The logo is never drawn here: the slot
 shows a neutral placeholder unless the official file is passed with --logo, or the viewer module
-swaps the texture at runtime (dist/palta-reveal.mjs).
+swaps the texture at runtime (dist/palta-reveal.mjs). Official Soroswap and DeFindex PNGs
+in dist/assets/palta-reveal/partners/ are embedded unchanged inside the two seed cavities.
 
 Node names use only letters and underscores, because three.js GLTFLoader rewrites spaces and
 removes "/" ":" "." "[" "]" (PropertyBinding.sanitizeNodeName) before getObjectByName sees them.
@@ -103,7 +104,7 @@ class Part:
     def __init__(self, v, f, mat, color=None, uv=None, normals=None):
         self.v = np.asarray(v, np.float32); self.f = np.asarray(f, np.uint32)
         self.n = np.asarray(normals if normals is not None else vertex_normals(self.v, self.f), np.float32)
-        self.mat = mat; self.color = color; self.uv = uv
+        self.mat = mat; self.color = color; self.uv = np.asarray(uv, np.float32) if uv is not None else None
 
 
 def lerp_colors(t, stops):
@@ -263,6 +264,52 @@ def logo_plane(aspect, z):
     return Part(v, f, 'logo', uv=uv, normals=np.tile([0, 0, 1], (4, 1)))
 
 
+def interior_text_plane(material, width=0.40, height=0.11):
+    """A front-facing text quad; the half-node rotation lays it onto its cut face."""
+    v = np.array([[-width / 2, -height / 2, 0], [width / 2, -height / 2, 0],
+                  [width / 2, height / 2, 0], [-width / 2, height / 2, 0]], np.float32)
+    f = np.array([[0, 1, 2], [0, 2, 3]], np.uint32)
+    uv = np.array([[0, 1], [1, 1], [1, 0], [0, 0]], np.float32)
+    return Part(v, f, material, uv=uv, normals=np.tile([0, 0, 1], (4, 1)))
+
+
+def cavity_point(u, v, inset=0.0, depth=0.10):
+    """Project onto the seed bowl and offset toward its air space along the true normal."""
+    u, v = np.asarray(u), np.asarray(v)
+    if np.any(u * u + v * v >= CAVITY_R ** 2):
+        raise ValueError('Cavity patch must stay inside the seed opening')
+    h = np.sqrt(CAVITY_R ** 2 - u * u - v * v)
+    normal = np.stack([-u, -v, h], -1) / CAVITY_R
+    position = np.stack([u, v, np.full_like(h, depth) - h], -1) + inset * normal
+    return position, normal
+
+
+def cavity_patch(material, radius_=0.155, inset=0.0015, rings=12, segments=64):
+    radii = np.linspace(radius_ / rings, radius_, rings)
+    angles = np.linspace(0, 2 * np.pi, segments, endpoint=False)
+    R, A = np.meshgrid(radii, angles, indexing='ij')
+    v, n = cavity_point(R * np.cos(A), R * np.sin(A), inset)
+    center_v, center_n = cavity_point(np.array(0.0), np.array(0.0), inset)
+    v = np.vstack([center_v, v.reshape(-1, 3)])
+    n = np.vstack([center_n, n.reshape(-1, 3)])
+    fan = np.array([(0, 1 + j, 1 + (j + 1) % segments) for j in range(segments)], np.uint32)
+    # Existing grid_faces walks angle before radius, so reverse its winding for +Z-facing bowls.
+    f = np.vstack([fan, grid_faces(rings, segments, wrap=True)[:, ::-1] + 1])
+    return Part(v, f, material, normals=n)
+
+
+def cavity_logo(material, aspect, radius_=0.13, inset=0.003, segments=24):
+    """Keep the PNG's frontal aspect and UVs while cupping the whole mark into the bowl."""
+    width = 2 * radius_ * aspect / math.hypot(1, aspect)
+    height = 2 * radius_ / math.hypot(1, aspect)
+    U, V = np.meshgrid(np.linspace(-width / 2, width / 2, segments + 1),
+                       np.linspace(-height / 2, height / 2, segments + 1))
+    v, n = cavity_point(U, V, inset)
+    uv = np.stack([U / width + 0.5, 0.5 - V / height], -1)
+    f = grid_faces(segments + 1, segments + 1)
+    return Part(v.reshape(-1, 3), f, material, uv=uv.reshape(-1, 2), normals=n.reshape(-1, 3))
+
+
 def glow_ring():
     v, f, n = torus(MEDAL_R * 1.22, 0.008, rows=128, cols=12)
     return [Part(v, f, 'glow', normals=n)]
@@ -291,16 +338,42 @@ def rounded_box(size, radius_, center, n=10):
     return v, f, nrm
 
 
+def text_font(size, bold=False):
+    """Use scalable fonts on Linux and Windows, including when rebuilding the old plaque."""
+    inter = 'Inter-Bold.otf' if bold else 'Inter-Medium.otf'
+    arial = 'arialbd.ttf' if bold else 'arial.ttf'
+    dejavu = 'DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf'
+    candidates = [os.path.join('/usr/share/fonts/opentype/inter', inter),
+                  os.path.join(os.environ.get('WINDIR', r'C:\Windows'), 'Fonts', arial),
+                  os.path.join('/usr/share/fonts/truetype/dejavu', dejavu), dejavu]
+    for font_path in candidates:
+        try:
+            return ImageFont.truetype(font_path, size)
+        except OSError:
+            pass
+    return ImageFont.load_default(size=size)
+
+
+def interior_text_texture(label):
+    """Dark, centered text on transparency; words are typeset rather than drawn brand logos."""
+    W, H = 1200, 330
+    im = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    for size in range(236, 7, -1):
+        font = text_font(size, bold=True)
+        left, top, right, bottom = d.textbbox((0, 0), label, font=font)
+        if right - left <= W - 80 and bottom - top <= H - 64:
+            break
+    origin = ((W - (right - left)) / 2 - left, (H - (bottom - top)) / 2 - top)
+    d.text(origin, label, fill=(7, 18, 31, 255), font=font)
+    return im
+
+
 def plaque_texture():
     W, H = 512, 160
     im = Image.new('RGBA', (W, H), (102, 194, 219, 255))
     d = ImageDraw.Draw(im)
-    bold = '/usr/share/fonts/opentype/inter/Inter-Bold.otf'
-    reg = '/usr/share/fonts/opentype/inter/Inter-Medium.otf'
-    try:
-        f1 = ImageFont.truetype(bold, 58); f2 = ImageFont.truetype(reg, 30)
-    except OSError:
-        f1 = f2 = ImageFont.load_default()
+    f1 = text_font(58, bold=True); f2 = text_font(30)
     d.text((W / 2, 62), 'PROPUESTA', fill=(4, 10, 18, 255), font=f1, anchor='mm')
     d.text((W / 2, 122), 'Activación · concepto', fill=(4, 10, 18, 255), font=f2, anchor='mm')
     return im
@@ -314,11 +387,7 @@ def placeholder_logo():
     c, R = S / 2, S * 0.40
     for k in range(48):
         a0 = k * 360 / 48; d.arc([c - R, c - R, c + R, c + R], a0, a0 + 4.2, fill=(120, 132, 120, 255), width=14)
-    try:
-        font = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-Bold.otf', 150)
-        small = ImageFont.truetype('/usr/share/fonts/opentype/inter/Inter-Medium.otf', 56)
-    except OSError:
-        font = small = ImageFont.load_default()
+    font = text_font(150, bold=True); small = text_font(56)
     d.text((c, c - 30), 'LOGO', fill=(110, 122, 110, 255), font=font, anchor='mm')
     d.text((c, c + 95), 'archivo oficial', fill=(140, 150, 140, 255), font=small, anchor='mm')
     return im
@@ -387,6 +456,17 @@ class GLB:
     def image(self, pil, name):
         buf = io.BytesIO(); pil.save(buf, 'PNG')
         view = self._view(buf.getvalue())
+        self.g['images'].append({'name': name, 'bufferView': view, 'mimeType': 'image/png'})
+        self.g['textures'].append({'sampler': 0, 'source': len(self.g['images']) - 1, 'name': name})
+        return len(self.g['textures']) - 1
+
+    def image_png(self, path, name):
+        """Embed an official PNG byte-for-byte, preserving the supplied artwork."""
+        with open(path, 'rb') as fh:
+            data = fh.read()
+        if not data.startswith(b'\x89PNG\r\n\x1a\n'):
+            raise ValueError('Official cavity logo must be a PNG: ' + path)
+        view = self._view(data)
         self.g['images'].append({'name': name, 'bufferView': view, 'mimeType': 'image/png'})
         self.g['textures'].append({'sampler': 0, 'source': len(self.g['images']) - 1, 'name': name})
         return len(self.g['textures']) - 1
@@ -472,6 +552,18 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     g = GLB()
     tex_logo = g.image(logo, 'Palta reveal logo slot')
     tex_plaque = g.image(plaque_texture(), 'Palta reveal proposal plaque')
+    tex_soroswap = g.image(interior_text_texture('SoroSwap'), 'SoroSwap interior label')
+    tex_defindex = g.image(interior_text_texture('DeFindex'), 'DeFindex interior label')
+    partner_logos = {}
+    for key, brand in [('soroswap', 'SoroSwap'), ('defindex', 'DeFindex')]:
+        logo_file = os.path.join(ROOT, 'dist', 'assets', 'palta-reveal', 'partners', key + '.png')
+        with Image.open(logo_file) as official:
+            logo_aspect = official.width / official.height
+        partner_logos[key] = {
+            'brand': brand, 'aspect': logo_aspect,
+            'source': 'https://links.paltalabs.io/' + key + '.svg',
+            'texture': g.image_png(logo_file, brand + ' official cavity logo'),
+        }
     g.material('skin', pbr('Avocado skin • deep green pebbled', (1, 1, 1), 0.52, 0.0))
     g.material('flesh', pbr('Avocado flesh • butter to green', (1, 1, 1), 0.38, 0.0))
     g.material('seed', pbr('Avocado seed • polished brown', (1, 1, 1), 0.28, 0.0))
@@ -486,6 +578,16 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     g.material('seam', pbr('Palta pedestal lime seam', (0.55, 0.78, 0.22), 0.4, 0.0,
                            emissive=(0.55, 0.78, 0.22), strength=0.9))
     g.material('plaque', pbr('Palta proposal plaque', (1, 1, 1), 0.5, 0.0, tex=tex_plaque))
+    g.material('soroswap_text', pbr('SoroSwap interior text', (1, 1, 1), 0.8,
+                                    tex=tex_soroswap, alpha='BLEND'))
+    g.material('defindex_text', pbr('DeFindex interior text', (1, 1, 1), 0.8,
+                                    tex=tex_defindex, alpha='BLEND'))
+    g.material('cavity_backing', pbr('Seed cavity logo support navy',
+                                      tuple(srgb([7 / 255, 18 / 255, 31 / 255])), 0.65))
+    for key, official in partner_logos.items():
+        g.material(key + '_logo', pbr(official['brand'] + ' official cavity logo', (1, 1, 1), 0.65,
+                                     tex=official['texture'], alpha='BLEND',
+                                     emissive=(1, 1, 1), emissive_tex=official['texture'], strength=0.60))
 
     # meshes
     right, left = avocado_half(+1), avocado_half(-1)
@@ -497,6 +599,13 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     m_medal = g.mesh('Medallion', medallion_parts(aspect))
     m_logo = g.mesh('Logo slot', [logo_plane(aspect, 0.03 / 2 + 0.002)])
     m_glow = g.mesh('Glow ring', glow_ring())
+    m_soroswap = g.mesh('SoroSwap interior label', [interior_text_plane('soroswap_text')])
+    m_defindex = g.mesh('DeFindex interior label', [interior_text_plane('defindex_text')])
+    # Both the dark support and official mark follow the original concavity; its flesh rim stays visible.
+    m_cavity_backing = g.mesh('Seed cavity logo support', [cavity_patch('cavity_backing')])
+    for key, official in partner_logos.items():
+        official['mesh'] = g.mesh(official['brand'] + ' official cavity logo',
+                                  [cavity_logo(key + '_logo', official['aspect'])])
     pv, pf, pn = rounded_box((0.6, pedestal_height, 0.6), 0.025, (0, pedestal_height / 2, 0))
     seam_v, seam_f, seam_n = rounded_box((0.035, pedestal_height * 0.50, 0.012), 0.004,
                                          (0, pedestal_height * 0.64, 0.301))
@@ -518,8 +627,26 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     fruit = g.node('palta_fruit', turn, s=(k, k, k))
     n_right = g.node('palta_half_right', fruit, m_right, t=(0, 0, HINGE_Z))
     n_left = g.node('palta_half_left', fruit, m_left, t=(0, 0, HINGE_Z))
+    # Inward normals are +/-X when closed, then face +Z as the halves open by 62 degrees.
+    g.node('palta_label_soroswap', n_left, m_soroswap,
+           t=(0.008, 0.66, -HINGE_Z), r=quat_y(np.pi / 2), extras={'text': 'SoroSwap'})
+    g.node('palta_label_defindex', n_right, m_defindex,
+           t=(-0.008, 0.66, -HINGE_Z), r=quat_y(-np.pi / 2), extras={'text': 'DeFindex'})
+    for key, half, side in [('soroswap', n_left, -1), ('defindex', n_right, 1)]:
+        official = partner_logos[key]
+        # Curved vertices use this group's depth=0.10 frame; normals point into the air space.
+        # Logo starts outside, then the open clip settles it onto the curved dark backing.
+        cavity = g.node('palta_cavity_' + key, half,
+                        t=(side * 0.10, SEED_Y, -HINGE_Z), r=quat_y(-side * np.pi / 2))
+        g.node('palta_cavity_' + key + '_backing', cavity, m_cavity_backing)
+        official['node'] = g.node('palta_logo_' + key, cavity, official['mesh'],
+                                  t=(0, 0, 0.25), s=(0.001,) * 3,
+                                  extras={'brand': official['brand'], 'source': official['source'],
+                                          'aspect': official['aspect'], 'projection': 'cavity-sphere'})
     n_seed = g.node('palta_seed', fruit, m_seed, t=(0, SEED_Y, 0))
-    medal_rest = np.array([0, SEED_Y + 0.17, 0.24])
+    # At the default scale, the center is 2.105 m high and the whole glow ring clears
+    # the open halves by 10.74 cm (including the ring tube radius of 0.008 fruit units).
+    medal_rest = np.array([0, 1.54, 0.12])
     n_medal = g.node('palta_medallion', fruit, t=(0, SEED_Y, 0), s=(0.001,) * 3)
     n_float = g.node('palta_medallion_float', n_medal)
     g.node('palta_medallion_body', n_float, m_medal)
@@ -541,11 +668,21 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     seed_y = SEED_Y + 0.10 * seed_rise
     seed_scale = (1 + 0.12 * seed_rise) * (1 - seed_shrink) + 0.001
     m_grow = ease_out_back(phase(T, 1.45, 2.3), 1.7)
-    m_move = ease_out(phase(T, 1.45, 2.2))
+    flight = phase(T, 1.45, 2.5)
+    m_move = ease_in_out(flight)
     medal_t = np.array([0, SEED_Y + 0.10, 0])[None] * (1 - m_move[:, None]) + medal_rest[None] * m_move[:, None]
+    medal_t[:, 2] += 0.10 * np.sin(np.pi * flight)  # a small forward arc, centered on X throughout
     medal_rot = quat_y(-np.pi * (1 - ease_out(phase(T, 1.45, 2.4))))
     medal_s = np.maximum(m_grow, 0.001)
     glow_s = np.maximum(ease_out(phase(T, 1.9, 2.6)), 0.001)
+    # Let the center medallion rise first, then bring both curved marks from outside into their bowls.
+    logo_grow = 0.001 + 0.999 * ease_in_out(phase(T, 1.85, 2.05))
+    logo_entry = 0.25 * (1 - ease_in_out(phase(T, 2.05, 2.5)))
+    logo_t = np.stack([np.zeros_like(T), np.zeros_like(T), logo_entry], -1)
+    logo_tracks = []
+    for official in partner_logos.values():
+        logo_tracks += [(official['node'], 'translation', logo_t),
+                        (official['node'], 'scale', np.repeat(logo_grow[:, None], 3, 1))]
     g.animation('open', [
         (fruit, 'rotation', fruit_r), (fruit, 'scale', fruit_s),
         (n_right, 'rotation', quat_y(ang)), (n_right, 'translation', right_t),
@@ -554,8 +691,9 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
         (n_seed, 'scale', np.repeat(seed_scale[:, None], 3, 1)),
         (n_medal, 'translation', medal_t), (n_medal, 'rotation', medal_rot),
         (n_medal, 'scale', np.repeat(medal_s[:, None], 3, 1)),
+        (n_glow, 'translation', medal_t - [0, 0, 0.03]),
         (n_glow, 'scale', np.repeat(glow_s[:, None], 3, 1)),
-    ], T)
+    ] + logo_tracks, T)
 
     # ---- "idle" (3.2 s loop)
     I = np.arange(0, 3.2 + 1e-9, 1 / FPS); w = 2 * np.pi * I / 3.2
