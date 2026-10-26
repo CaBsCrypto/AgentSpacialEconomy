@@ -99,6 +99,20 @@ export function createPaymentService({db,config,runtime=createStellarPaymentRunt
   if(attempt.recovered)return reconcile(attempt.id);
   let verified;try{verified=await runtime.verify(payload,requirements);}catch{return uncertain(attempt.id,'verification_unavailable');}
   if(!verified?.isValid||verified.payer!==attempt.payer){await db.transaction(async tx=>{await tx.query("UPDATE ads_payment_attempts SET state='FAILED',verification=$2::jsonb,error_code='verification_rejected',updated_at=now() WHERE id=$1",[attempt.id,json(verified??{})]);await event(tx,orderId,'payment_verification_rejected',{attemptId:attempt.id});});fail(422,'payment_verification_rejected','Autorización rechazada antes de transmitir un pago.');}
+  const checkoutUntil=Date.parse(config.checkoutUntil||'');
+  if(Number.isFinite(checkoutUntil)&&now()>=checkoutUntil){
+   const existingReceipt=await db.transaction(async tx=>{
+    const currentOrder=await lockOrderInventory(tx,orderId,ownerId);
+    const current=(await tx.query('SELECT * FROM ads_payment_attempts WHERE id=$1 FOR UPDATE',[attempt.id])).rows[0];
+    // A submitted envelope remains recoverable even after new purchases close.
+    if(current.state==='SETTLED'||current.settlement_tx)return receipt(currentOrder,current);
+    await tx.query("UPDATE ads_payment_attempts SET state='FAILED',verification=$2::jsonb,error_code='checkout_window_closed',updated_at=now() WHERE id=$1",[attempt.id,json(verified)]);
+    await event(tx,orderId,'payment_not_submitted_checkout_closed',{attemptId:attempt.id,submitted:false});
+    return null;
+   });
+   if(existingReceipt)return existingReceipt;
+   fail(503,'checkout_window_closed','El plazo de compra cerró antes de enviar la transferencia; este intento no se liquidó.');
+  }
   await db.query("UPDATE ads_payment_attempts SET state='SETTLING',verification=$2::jsonb,updated_at=now() WHERE id=$1",[attempt.id,json(verified)]);
   let settled;try{settled=await runtime.settle(payload,requirements);}catch{return uncertain(attempt.id,'settlement_timeout');}
   await db.query('UPDATE ads_payment_attempts SET settlement=$2::jsonb,settlement_tx=$3,updated_at=now() WHERE id=$1',[attempt.id,json(settled??{}),settled?.transaction||null]);

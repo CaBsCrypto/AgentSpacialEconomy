@@ -76,3 +76,22 @@ test('a missing independent placement reservation refuses payment before transmi
  const db=await createTestDatabase();t.after(()=>db.close());const f=await fixture(db),runtime=runtimeFor();const order=(await db.query('SELECT * FROM ads_orders WHERE id=$1',[f.id])).rows[0];order.quote.placements.push('venue_center_banner');await db.query('UPDATE ads_orders SET quote=$2 WHERE id=$1',[f.id,order.quote]);
  await assert.rejects(createPaymentService({db,config,runtime,onSettled:queue}).pay(f.request),e=>e.code==='reservation_incomplete');assert.equal(runtime.count,0);assert.equal((await db.query('SELECT * FROM ads_payment_attempts')).rows.length,0);
 });
+
+
+test('checkout closing during verification prevents the first settlement while preserving the durable attempt',async t=>{
+ const db=await createTestDatabase({env:{}});t.after(()=>db.close());const f=await fixture(db),base=Date.now();let clock=base;
+ const runtime=runtimeFor();runtime.verify=async()=>{clock=base+1000;return{isValid:true,payer:address};};
+ const service=createPaymentService({db,config:{...config,checkoutUntil:new Date(base+500).toISOString()},runtime,onSettled:queue,now:()=>clock});
+ await assert.rejects(service.pay(f.request),error=>error.status===503&&error.code==='checkout_window_closed');assert.equal(runtime.count,0);
+ const attempt=(await db.query('SELECT * FROM ads_payment_attempts WHERE order_id=$1',[f.id])).rows[0];assert.equal(attempt.state,'FAILED');assert.equal(attempt.error_code,'checkout_window_closed');assert.equal(attempt.settlement_tx,null);assert.equal(sha256(attempt.signed_payload),sha256(f.request.payload));
+ assert.equal((await db.query("SELECT * FROM ads_outbox WHERE topic='creative'")).rowCount,0);assert.notEqual((await db.query('SELECT state FROM ads_orders WHERE id=$1',[f.id])).rows[0].state,'QUEUED');
+ const event=(await db.query("SELECT * FROM ads_events WHERE aggregate_id=$1 AND event='payment_not_submitted_checkout_closed'",[f.id])).rows[0];assert(event);assert.equal(event.data.submitted,false);assert.equal((await service.reconcile(attempt.id)).paymentState,'FAILED');assert.equal(runtime.count,0);
+});
+
+test('a payment already submitted before cutoff still reconciles and queues after cutoff without a second charge',async t=>{
+ const db=await createTestDatabase({env:{}});t.after(()=>db.close());const f=await fixture(db),base=Date.now();let clock=base,proved=false;
+ const runtime=runtimeFor();runtime.confirm=async a=>proved?{state:'CONFIRMED',txHash:a.settlement_tx,payer:address,ledger:102}:{state:'UNKNOWN'};
+ const service=createPaymentService({db,config:{...config,checkoutUntil:new Date(base+500).toISOString()},runtime,onSettled:queue,now:()=>clock});
+ const pending=await service.pay(f.request);assert.equal(pending.paymentState,'RECONCILIATION_REQUIRED');assert.equal(runtime.count,1);clock=base+1000;proved=true;
+ const settled=await service.reconcile(pending.attemptId);assert.equal(settled.paymentState,'SETTLED');assert.equal(runtime.count,1);assert.equal((await db.query("SELECT * FROM ads_outbox WHERE topic='creative'")).rowCount,1);
+});
