@@ -5,8 +5,6 @@ import { realpathSync } from 'node:fs';
 
 const HASH = /^[a-f0-9]{64}$/i;
 const TESTNET_PASSPHRASE = 'Test SDF Network ; September 2015';
-const EXPECTED_TAGLINE = "Your venue's AI operator, on a capped USDC budget.";
-const REPO_URL = 'https://github.com/CaBsCrypto/AgentSpacialEconomy';
 const ROUTES = [
   ['/', /text\/html/i], ['/one16', /text\/html/i], ['/dashboard.html', /text\/html/i],
   ['/state/ledger.json', /application\/json/i], ['/state/stage.json', /application\/json/i],
@@ -72,10 +70,14 @@ export async function verifyRelease(baseURL, { fetchImpl = fetch, integrationOnl
   const landing = pages.get('/')?.body || '', dashboard = pages.get('/dashboard.html')?.body || '';
   const text = plain(landing);
   if (!integrationOnly) {
-  add('Landing preserves project name, brand line and tagline', text.includes('Spatial Agents · Operating System') && text.includes('AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES') && text.includes(EXPECTED_TAGLINE));
-  const links = [...landing.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)].map(match => ({ href: attribute(match[0], 'href'), text: plain(match[0]) }));
-  add('Landing links to live testnet dashboard', links.some(link => link.href && new URL(link.href, base).pathname === '/dashboard.html' && link.text.includes('See the live testnet run')));
-  add('Landing links to public repository', links.some(link => link.href === REPO_URL));
+    const hero = [...landing.matchAll(/<h1\b[^>]*>[\s\S]*?<\/h1>/gi)].find(match => attribute(match[0], 'id') === 'hero-title')?.[0] || '';
+    add('Landing preserves Agentic Reality Space identity and hero', text.includes('Agentic Reality Space') && plain(hero).includes('Make your event a place to explore'));
+    const links = [...landing.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)].map(match => ({ href: attribute(match[0], 'href'), text: plain(match[0]) }));
+    add('Landing links to the ONE16 experience', links.some(link => {
+      if (!link.href || !/ONE16/i.test(link.text)) return false;
+      const destination = new URL(link.href, base);
+      return destination.origin === base.origin && destination.pathname === '/one16';
+    }));
   }
   add('Dashboard contains on-chain ceiling and recorded-run label', /On-chain budget ceiling/i.test(plain(dashboard)) && /recorded run/i.test(dashboard));
   if (!integrationOnly) add('Sitemap includes twin and dashboard', ['/one16', '/dashboard.html'].every(route => pages.get('/sitemap.xml')?.body.includes(`https://agenticreality.space${route}`)));

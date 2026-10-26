@@ -36,20 +36,3 @@ body.ars-platform .preview-gesture-controls button{min-width:44px;min-height:44p
 @media(max-width:600px){.site-header{min-height:83px}.hero{padding-top:33px;gap:20px;padding-bottom:36px}.hero h1{font-size:clamp(49px,12.5vw,69px);letter-spacing:-.065em;margin-block:22px}.hero-lede{font-size:14px;line-height:1.85}.hero-actions{gap:22px;margin-top:26px}.hero-actions .button{padding:14px 18px;gap:28px}.hero-note{font-size:9px}.system-topline{margin:8px 0 0;font-size:9px}.platform-scene{width:calc(100% + 24px);margin:0 -12px;height:330px}.scene-view-controls{gap:6px}body.ars-platform .scene-view-controls button{font-size:12px;padding-inline:3px;min-height:60px}.scene-view-caption{font-size:14px;margin-top:14px;min-height:4.8em}.hero-system figcaption{font-size:9px;gap:12px}.scene-principle{font-size:7px;letter-spacing:.03em}.why-section,.evolution-section{padding-block:57px}.audience-rows article{padding-block:22px}.one16-preview-stage{height:340px}.one16-preview-tools{align-items:stretch;flex-direction:column;gap:12px}.preview-gesture-controls{gap:6px}body.ars-platform .preview-gesture-controls button{font-size:11px;padding-inline:11px}.preview-full-link{min-height:48px;padding:14px 18px}.preview-status{font-size:12px}.venue-preview figcaption{font-size:9px}.button{min-height:50px}}
 @media(max-width:360px){.platform-scene{height:300px}.scene-view-controls{gap:3px}.one16-preview-stage{height:300px}}
 @media(prefers-reduced-motion:reduce){.scene-view-controls button{transition:none}}
-
-
-/* submission-proof */
-@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/fonts/DMSans-Regular.ttf') format('truetype')}
-@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url('/assets/fonts/DMSans-Bold.ttf') format('truetype')}
-body.ars-platform .submission-proof{min-width:0;max-width:100%;margin:0 0 28px;padding:24px;border:1px solid #498095;border-radius:16px;background:#07121f;color:#eef4f7;font-family:'DM Sans',system-ui,sans-serif;overflow-wrap:anywhere}
-body.ars-platform .submission-proof-brand{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:10px;line-height:1.7;letter-spacing:.13em;color:#90a8bb}
-body.ars-platform .submission-proof-brand:before{content:'';width:28px;height:2px;flex:none;background:#e3bd79}
-body.ars-platform .submission-proof h2{margin:0 0 10px;color:#eef4f7;font-size:clamp(22px,2.4vw,31px);line-height:1.15;letter-spacing:-.02em;font-weight:700}
-body.ars-platform .submission-proof-tagline{margin:0;color:#eef4f7;font-size:16px;line-height:1.55}
-body.ars-platform .submission-proof-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-body.ars-platform .submission-proof-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;max-width:100%;padding:11px 14px;border:1px solid #498095;border-radius:8px;color:#72e3df;text-decoration:none;font-size:13px;font-weight:700;line-height:1.4;text-align:center}
-body.ars-platform .submission-proof-actions .submission-proof-primary{border-color:#72e3df;background:#72e3df;color:#07121f}
-body.ars-platform .submission-proof-actions a:hover{border-color:#e3bd79}
-body.ars-platform .submission-proof-actions a:focus-visible{outline:3px solid #e3bd79;outline-offset:4px}
-body.ars-platform .submission-proof-note{margin:13px 0 0;color:#90a8bb;font-size:11px;line-height:1.6}
-@media(max-width:560px){body.ars-platform .submission-proof{padding:18px;margin-bottom:24px}body.ars-platform .submission-proof-actions{display:grid;grid-template-columns:minmax(0,1fr)}body.ars-platform .submission-proof-actions a{width:100%}body.ars-platform .submission-proof h2{font-size:24px}}
