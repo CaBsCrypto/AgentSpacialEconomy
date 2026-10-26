@@ -1,2 +1,3 @@
 *.pdf binary
 dist/vendor/** -diff -text
+dist/assets/fonts/OFL.txt -whitespace
