@@ -1,0 +1,532 @@
+{
+  "file": "VID_20261026_022007525.mp4",
+  "driveId": "1YqRr_ZnRK4L86yZunMWAOQ5M8Q3gqE_9",
+  "url": "https://drive.google.com/file/d/1YqRr_ZnRK4L86yZunMWAOQ5M8Q3gqE_9/view",
+  "durationSeconds": 23.063667,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "medium",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [
+    "Owner clarified: visual recording set with seats, tables and a light; no interactive content panel."
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.52,
+      "text": " Después tenemos aquí la sección del Content Hub, que es como este edificio que tenemos en el costado derecho",
+      "avg_logprob": -0.3467392467317127,
+      "no_speech_prob": 0.055249571800231934
+    },
+    {
+      "start": 4.52,
+      "end": 9.72,
+      "text": " y desde aquí tenemos que... puta, ingresamos en el Content Hub, vamos a agregar",
+      "avg_logprob": -0.3467392467317127,
+      "no_speech_prob": 0.055249571800231934
+    },
+    {
+      "start": 10.66,
+      "end": 15.0,
+      "text": " en un sillón, aunque no haya un foco, agregamos un foco como de contenido",
+      "avg_logprob": -0.3467392467317127,
+      "no_speech_prob": 0.055249571800231934
+    },
+    {
+      "start": 16.14,
+      "end": 18.080000000000002,
+      "text": " como el que teníamos en todos los proyectos",
+      "avg_logprob": -0.3467392467317127,
+      "no_speech_prob": 0.055249571800231934
+    },
+    {
+      "start": 18.96,
+      "end": 22.68,
+      "text": " aquí tenemos todo el edificio y después... puta, viene, sigue el edificio",
+      "avg_logprob": -0.3467392467317127,
+      "no_speech_prob": 0.055249571800231934
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_022007525.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 22.9546875,
+      "elapsed": 6.75,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.36,
+          "text": " Después tenemos aquí la sección del content hub, que es como este edificio que tenemos en el costado derecho",
+          "avg_logprob": -0.3650522676224892,
+          "no_speech_prob": 0.10777933895587921,
+          "words": [
+            {
+              "start": 0.0,
+              "end": 0.44,
+              "word": " Después",
+              "probability": 0.5385127663612366
+            },
+            {
+              "start": 0.44,
+              "end": 0.74,
+              "word": " tenemos",
+              "probability": 0.9831679463386536
+            },
+            {
+              "start": 0.74,
+              "end": 0.92,
+              "word": " aquí",
+              "probability": 0.80075603723526
+            },
+            {
+              "start": 0.92,
+              "end": 1.02,
+              "word": " la",
+              "probability": 0.9844661951065063
+            },
+            {
+              "start": 1.02,
+              "end": 1.34,
+              "word": " sección",
+              "probability": 0.9926506578922272
+            },
+            {
+              "start": 1.34,
+              "end": 1.5,
+              "word": " del",
+              "probability": 0.9200144410133362
+            },
+            {
+              "start": 1.5,
+              "end": 1.84,
+              "word": " content",
+              "probability": 0.40898561477661133
+            },
+            {
+              "start": 1.84,
+              "end": 2.16,
+              "word": " hub,",
+              "probability": 0.29695525765419006
+            },
+            {
+              "start": 2.18,
+              "end": 2.32,
+              "word": " que",
+              "probability": 0.9438695907592773
+            },
+            {
+              "start": 2.32,
+              "end": 2.4,
+              "word": " es",
+              "probability": 0.9954401254653931
+            },
+            {
+              "start": 2.4,
+              "end": 2.54,
+              "word": " como",
+              "probability": 0.9672370553016663
+            },
+            {
+              "start": 2.54,
+              "end": 2.74,
+              "word": " este",
+              "probability": 0.8950349688529968
+            },
+            {
+              "start": 2.74,
+              "end": 3.18,
+              "word": " edificio",
+              "probability": 0.9964715639750162
+            },
+            {
+              "start": 3.18,
+              "end": 3.24,
+              "word": " que",
+              "probability": 0.9637651443481445
+            },
+            {
+              "start": 3.24,
+              "end": 3.48,
+              "word": " tenemos",
+              "probability": 0.9928045868873596
+            },
+            {
+              "start": 3.48,
+              "end": 3.56,
+              "word": " en",
+              "probability": 0.9090833067893982
+            },
+            {
+              "start": 3.56,
+              "end": 3.64,
+              "word": " el",
+              "probability": 0.9976565837860107
+            },
+            {
+              "start": 3.64,
+              "end": 4.0,
+              "word": " costado",
+              "probability": 0.9837899208068848
+            },
+            {
+              "start": 4.0,
+              "end": 4.36,
+              "word": " derecho",
+              "probability": 0.9286606907844543
+            }
+          ]
+        },
+        {
+          "start": 4.36,
+          "end": 14.64,
+          "text": " y desde aquí tenemos que, puta, ingresamos en el content hub, vamos a agregar el inusilione, aunque no haya un foco, agregamos un foco como de contenido",
+          "avg_logprob": -0.3650522676224892,
+          "no_speech_prob": 0.10777933895587921,
+          "words": [
+            {
+              "start": 4.36,
+              "end": 5.22,
+              "word": " y",
+              "probability": 0.4601798355579376
+            },
+            {
+              "start": 5.22,
+              "end": 5.36,
+              "word": " desde",
+              "probability": 0.80255126953125
+            },
+            {
+              "start": 5.36,
+              "end": 5.5,
+              "word": " aquí",
+              "probability": 0.9731504917144775
+            },
+            {
+              "start": 5.5,
+              "end": 5.78,
+              "word": " tenemos",
+              "probability": 0.9905107617378235
+            },
+            {
+              "start": 5.78,
+              "end": 6.04,
+              "word": " que,",
+              "probability": 0.9692604541778564
+            },
+            {
+              "start": 6.2,
+              "end": 6.48,
+              "word": " puta,",
+              "probability": 0.5440524220466614
+            },
+            {
+              "start": 7.12,
+              "end": 7.62,
+              "word": " ingresamos",
+              "probability": 0.9341116348902384
+            },
+            {
+              "start": 7.62,
+              "end": 7.74,
+              "word": " en",
+              "probability": 0.5635895133018494
+            },
+            {
+              "start": 7.74,
+              "end": 7.8,
+              "word": " el",
+              "probability": 0.9810360670089722
+            },
+            {
+              "start": 7.8,
+              "end": 8.12,
+              "word": " content",
+              "probability": 0.9511003494262695
+            },
+            {
+              "start": 8.12,
+              "end": 8.62,
+              "word": " hub,",
+              "probability": 0.9903144240379333
+            },
+            {
+              "start": 8.9,
+              "end": 9.34,
+              "word": " vamos",
+              "probability": 0.9811922311782837
+            },
+            {
+              "start": 9.34,
+              "end": 9.52,
+              "word": " a",
+              "probability": 0.9663249850273132
+            },
+            {
+              "start": 9.52,
+              "end": 10.46,
+              "word": " agregar",
+              "probability": 0.9943417310714722
+            },
+            {
+              "start": 10.46,
+              "end": 10.72,
+              "word": " el",
+              "probability": 0.12313070148229599
+            },
+            {
+              "start": 10.72,
+              "end": 11.46,
+              "word": " inusilione,",
+              "probability": 0.41852403059601784
+            },
+            {
+              "start": 12.0,
+              "end": 12.28,
+              "word": " aunque",
+              "probability": 0.9932663440704346
+            },
+            {
+              "start": 12.28,
+              "end": 12.46,
+              "word": " no",
+              "probability": 0.9968335032463074
+            },
+            {
+              "start": 12.46,
+              "end": 12.56,
+              "word": " haya",
+              "probability": 0.9717298150062561
+            },
+            {
+              "start": 12.56,
+              "end": 12.68,
+              "word": " un",
+              "probability": 0.9705340266227722
+            },
+            {
+              "start": 12.68,
+              "end": 12.94,
+              "word": " foco,",
+              "probability": 0.9488466084003448
+            },
+            {
+              "start": 12.98,
+              "end": 13.32,
+              "word": " agregamos",
+              "probability": 0.8280001282691956
+            },
+            {
+              "start": 13.32,
+              "end": 13.46,
+              "word": " un",
+              "probability": 0.9820012450218201
+            },
+            {
+              "start": 13.46,
+              "end": 13.82,
+              "word": " foco",
+              "probability": 0.9946735799312592
+            },
+            {
+              "start": 13.82,
+              "end": 13.98,
+              "word": " como",
+              "probability": 0.8981931805610657
+            },
+            {
+              "start": 13.98,
+              "end": 14.12,
+              "word": " de",
+              "probability": 0.5544331073760986
+            },
+            {
+              "start": 14.12,
+              "end": 14.64,
+              "word": " contenido",
+              "probability": 0.9955893754959106
+            }
+          ]
+        },
+        {
+          "start": 16.06,
+          "end": 22.5,
+          "text": " como el que teníamos en otro de los proyectos, aquí tenemos todo el edificio y después, puta, bien, sigue el edificio",
+          "avg_logprob": -0.3650522676224892,
+          "no_speech_prob": 0.10777933895587921,
+          "words": [
+            {
+              "start": 16.06,
+              "end": 16.54,
+              "word": " como",
+              "probability": 0.28729116916656494
+            },
+            {
+              "start": 16.54,
+              "end": 16.64,
+              "word": " el",
+              "probability": 0.9636657238006592
+            },
+            {
+              "start": 16.64,
+              "end": 16.72,
+              "word": " que",
+              "probability": 0.9967261552810669
+            },
+            {
+              "start": 16.72,
+              "end": 17.06,
+              "word": " teníamos",
+              "probability": 0.9897509217262268
+            },
+            {
+              "start": 17.06,
+              "end": 17.3,
+              "word": " en",
+              "probability": 0.9420040249824524
+            },
+            {
+              "start": 17.3,
+              "end": 17.46,
+              "word": " otro",
+              "probability": 0.47350725531578064
+            },
+            {
+              "start": 17.46,
+              "end": 17.58,
+              "word": " de",
+              "probability": 0.9449393153190613
+            },
+            {
+              "start": 17.58,
+              "end": 17.7,
+              "word": " los",
+              "probability": 0.9945501685142517
+            },
+            {
+              "start": 17.7,
+              "end": 18.6,
+              "word": " proyectos,",
+              "probability": 0.99788036942482
+            },
+            {
+              "start": 18.92,
+              "end": 19.2,
+              "word": " aquí",
+              "probability": 0.8667445182800293
+            },
+            {
+              "start": 19.2,
+              "end": 19.44,
+              "word": " tenemos",
+              "probability": 0.9942983984947205
+            },
+            {
+              "start": 19.44,
+              "end": 19.66,
+              "word": " todo",
+              "probability": 0.9574440717697144
+            },
+            {
+              "start": 19.66,
+              "end": 19.8,
+              "word": " el",
+              "probability": 0.9715851545333862
+            },
+            {
+              "start": 19.8,
+              "end": 20.26,
+              "word": " edificio",
+              "probability": 0.9995289246241251
+            },
+            {
+              "start": 20.26,
+              "end": 20.32,
+              "word": " y",
+              "probability": 0.5845444202423096
+            },
+            {
+              "start": 20.32,
+              "end": 20.46,
+              "word": " después,",
+              "probability": 0.9421518445014954
+            },
+            {
+              "start": 20.66,
+              "end": 20.78,
+              "word": " puta,",
+              "probability": 0.8374986052513123
+            },
+            {
+              "start": 21.22,
+              "end": 21.38,
+              "word": " bien,",
+              "probability": 0.7130153775215149
+            },
+            {
+              "start": 21.72,
+              "end": 21.96,
+              "word": " sigue",
+              "probability": 0.9623156189918518
+            },
+            {
+              "start": 21.96,
+              "end": 22.08,
+              "word": " el",
+              "probability": 0.9441114664077759
+            },
+            {
+              "start": 22.08,
+              "end": 22.5,
+              "word": " edificio",
+              "probability": 0.9995178580284119
+            }
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "video": "VID_20261026_022007525.mp4",
+      "model": "medium",
+      "duration": 22.9546875,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 4.52,
+          "text": " Después tenemos aquí la sección del Content Hub, que es como este edificio que tenemos en el costado derecho",
+          "avg_logprob": -0.3467392467317127,
+          "no_speech_prob": 0.055249571800231934
+        },
+        {
+          "start": 4.52,
+          "end": 9.72,
+          "text": " y desde aquí tenemos que... puta, ingresamos en el Content Hub, vamos a agregar",
+          "avg_logprob": -0.3467392467317127,
+          "no_speech_prob": 0.055249571800231934
+        },
+        {
+          "start": 10.66,
+          "end": 15.0,
+          "text": " en un sillón, aunque no haya un foco, agregamos un foco como de contenido",
+          "avg_logprob": -0.3467392467317127,
+          "no_speech_prob": 0.055249571800231934
+        },
+        {
+          "start": 16.14,
+          "end": 18.080000000000002,
+          "text": " como el que teníamos en todos los proyectos",
+          "avg_logprob": -0.3467392467317127,
+          "no_speech_prob": 0.055249571800231934
+        },
+        {
+          "start": 18.96,
+          "end": 22.68,
+          "text": " aquí tenemos todo el edificio y después... puta, viene, sigue el edificio",
+          "avg_logprob": -0.3467392467317127,
+          "no_speech_prob": 0.055249571800231934
+        }
+      ]
+    }
+  }
+}

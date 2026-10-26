@@ -1,0 +1,1140 @@
+{
+  "file": "VID_20261026_021339259.mp4",
+  "driveId": "1iUUzred-QCoMsZu27e6yZc5TJVcqEcss",
+  "url": "https://drive.google.com/file/d/1iUUzred-QCoMsZu27e6yZc5TJVcqEcss/view",
+  "durationSeconds": 30.563,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [],
+  "segments": [
+    {
+      "start": 1.6,
+      "end": 6.36,
+      "text": " tenemos la sección de los juegos, tenemos aquí la mesa con colores y aquí por el",
+      "avg_logprob": -0.31341942554374913,
+      "no_speech_prob": 0.46627917885780334,
+      "words": [
+        {
+          "start": 1.6,
+          "end": 2.08,
+          "word": " tenemos",
+          "probability": 0.32330870628356934
+        },
+        {
+          "start": 2.08,
+          "end": 2.26,
+          "word": " la",
+          "probability": 0.9025663733482361
+        },
+        {
+          "start": 2.26,
+          "end": 2.5,
+          "word": " sección",
+          "probability": 0.9889138638973236
+        },
+        {
+          "start": 2.5,
+          "end": 2.6,
+          "word": " de",
+          "probability": 0.9741598963737488
+        },
+        {
+          "start": 2.6,
+          "end": 2.7,
+          "word": " los",
+          "probability": 0.9793503880500793
+        },
+        {
+          "start": 2.7,
+          "end": 2.98,
+          "word": " juegos,",
+          "probability": 0.939269483089447
+        },
+        {
+          "start": 3.64,
+          "end": 4.36,
+          "word": " tenemos",
+          "probability": 0.899696946144104
+        },
+        {
+          "start": 4.36,
+          "end": 4.5,
+          "word": " aquí",
+          "probability": 0.9455158114433289
+        },
+        {
+          "start": 4.5,
+          "end": 4.62,
+          "word": " la",
+          "probability": 0.9634081721305847
+        },
+        {
+          "start": 4.62,
+          "end": 4.84,
+          "word": " mesa",
+          "probability": 0.9968011379241943
+        },
+        {
+          "start": 4.84,
+          "end": 5.52,
+          "word": " con",
+          "probability": 0.8993687033653259
+        },
+        {
+          "start": 5.52,
+          "end": 5.92,
+          "word": " colores",
+          "probability": 0.9942638576030731
+        },
+        {
+          "start": 5.92,
+          "end": 6.06,
+          "word": " y",
+          "probability": 0.7311112880706787
+        },
+        {
+          "start": 6.06,
+          "end": 6.14,
+          "word": " aquí",
+          "probability": 0.4127390682697296
+        },
+        {
+          "start": 6.14,
+          "end": 6.24,
+          "word": " por",
+          "probability": 0.29914888739585876
+        },
+        {
+          "start": 6.24,
+          "end": 6.36,
+          "word": " el",
+          "probability": 0.9060382843017578
+        }
+      ]
+    },
+    {
+      "start": 6.36,
+      "end": 12.46,
+      "text": " pierlo, ver las diferentes proporciones y analízalo, después por aquí tenemos la",
+      "avg_logprob": -0.31341942554374913,
+      "no_speech_prob": 0.46627917885780334,
+      "words": [
+        {
+          "start": 6.36,
+          "end": 6.8,
+          "word": " pierlo,",
+          "probability": 0.60647352039814
+        },
+        {
+          "start": 7.1,
+          "end": 7.72,
+          "word": " ver",
+          "probability": 0.6183083057403564
+        },
+        {
+          "start": 7.72,
+          "end": 7.82,
+          "word": " las",
+          "probability": 0.5897482633590698
+        },
+        {
+          "start": 7.82,
+          "end": 8.2,
+          "word": " diferentes",
+          "probability": 0.9945587515830994
+        },
+        {
+          "start": 8.2,
+          "end": 9.04,
+          "word": " proporciones",
+          "probability": 0.9926457405090332
+        },
+        {
+          "start": 9.04,
+          "end": 9.86,
+          "word": " y",
+          "probability": 0.9151171445846558
+        },
+        {
+          "start": 9.86,
+          "end": 10.34,
+          "word": " analízalo,",
+          "probability": 0.866292417049408
+        },
+        {
+          "start": 10.88,
+          "end": 11.66,
+          "word": " después",
+          "probability": 0.8775607943534851
+        },
+        {
+          "start": 11.66,
+          "end": 11.88,
+          "word": " por",
+          "probability": 0.911790668964386
+        },
+        {
+          "start": 11.88,
+          "end": 12.0,
+          "word": " aquí",
+          "probability": 0.9527607560157776
+        },
+        {
+          "start": 12.0,
+          "end": 12.28,
+          "word": " tenemos",
+          "probability": 0.969535231590271
+        },
+        {
+          "start": 12.28,
+          "end": 12.46,
+          "word": " la",
+          "probability": 0.6593018770217896
+        }
+      ]
+    },
+    {
+      "start": 12.46,
+      "end": 18.12,
+      "text": " como chilsón, un caputa entre cuadros y otro juego, estáis 100% seguro y por aquí",
+      "avg_logprob": -0.31341942554374913,
+      "no_speech_prob": 0.46627917885780334,
+      "words": [
+        {
+          "start": 12.46,
+          "end": 12.72,
+          "word": " como",
+          "probability": 0.4782259464263916
+        },
+        {
+          "start": 12.72,
+          "end": 13.3,
+          "word": " chilsón,",
+          "probability": 0.32674265404542285
+        },
+        {
+          "start": 13.74,
+          "end": 13.9,
+          "word": " un",
+          "probability": 0.21266846358776093
+        },
+        {
+          "start": 13.9,
+          "end": 14.26,
+          "word": " caputa",
+          "probability": 0.6552267372608185
+        },
+        {
+          "start": 14.26,
+          "end": 14.82,
+          "word": " entre",
+          "probability": 0.6004570126533508
+        },
+        {
+          "start": 14.82,
+          "end": 15.2,
+          "word": " cuadros",
+          "probability": 0.971110612154007
+        },
+        {
+          "start": 15.2,
+          "end": 15.32,
+          "word": " y",
+          "probability": 0.986376941204071
+        },
+        {
+          "start": 15.32,
+          "end": 15.44,
+          "word": " otro",
+          "probability": 0.7490673661231995
+        },
+        {
+          "start": 15.44,
+          "end": 15.68,
+          "word": " juego,",
+          "probability": 0.9941192865371704
+        },
+        {
+          "start": 15.78,
+          "end": 16.0,
+          "word": " estáis",
+          "probability": 0.5759430676698685
+        },
+        {
+          "start": 16.0,
+          "end": 16.16,
+          "word": " 100",
+          "probability": 0.8682777881622314
+        },
+        {
+          "start": 16.16,
+          "end": 16.4,
+          "word": "%",
+          "probability": 0.9198795557022095
+        },
+        {
+          "start": 16.4,
+          "end": 16.74,
+          "word": " seguro",
+          "probability": 0.8819342851638794
+        },
+        {
+          "start": 16.74,
+          "end": 17.88,
+          "word": " y",
+          "probability": 0.6347832679748535
+        },
+        {
+          "start": 17.88,
+          "end": 17.98,
+          "word": " por",
+          "probability": 0.9892884492874146
+        },
+        {
+          "start": 17.98,
+          "end": 18.12,
+          "word": " aquí",
+          "probability": 0.987064003944397
+        }
+      ]
+    },
+    {
+      "start": 18.12,
+      "end": 22.18,
+      "text": " tenemos la sección final, que tenemos una súper pantalla y después tenemos este",
+      "avg_logprob": -0.31341942554374913,
+      "no_speech_prob": 0.46627917885780334,
+      "words": [
+        {
+          "start": 18.12,
+          "end": 18.42,
+          "word": " tenemos",
+          "probability": 0.9926137924194336
+        },
+        {
+          "start": 18.42,
+          "end": 18.84,
+          "word": " la",
+          "probability": 0.9840375185012817
+        },
+        {
+          "start": 18.84,
+          "end": 19.14,
+          "word": " sección",
+          "probability": 0.9983323812484741
+        },
+        {
+          "start": 19.14,
+          "end": 19.48,
+          "word": " final,",
+          "probability": 0.9905343055725098
+        },
+        {
+          "start": 19.66,
+          "end": 19.8,
+          "word": " que",
+          "probability": 0.8287535905838013
+        },
+        {
+          "start": 19.8,
+          "end": 20.02,
+          "word": " tenemos",
+          "probability": 0.9946645498275757
+        },
+        {
+          "start": 20.02,
+          "end": 20.2,
+          "word": " una",
+          "probability": 0.9696040749549866
+        },
+        {
+          "start": 20.2,
+          "end": 20.38,
+          "word": " súper",
+          "probability": 0.4845859408378601
+        },
+        {
+          "start": 20.38,
+          "end": 20.84,
+          "word": " pantalla",
+          "probability": 0.9977753758430481
+        },
+        {
+          "start": 20.84,
+          "end": 21.16,
+          "word": " y",
+          "probability": 0.9231746196746826
+        },
+        {
+          "start": 21.16,
+          "end": 21.38,
+          "word": " después",
+          "probability": 0.9638370275497437
+        },
+        {
+          "start": 21.38,
+          "end": 21.7,
+          "word": " tenemos",
+          "probability": 0.987442672252655
+        },
+        {
+          "start": 21.7,
+          "end": 22.18,
+          "word": " este",
+          "probability": 0.9613927006721497
+        }
+      ]
+    },
+    {
+      "start": 22.18,
+      "end": 26.26,
+      "text": " teclado que está brutal, así que hay que hacerlo pero es bastante grande, son como",
+      "avg_logprob": -0.31341942554374913,
+      "no_speech_prob": 0.46627917885780334,
+      "words": [
+        {
+          "start": 22.18,
+          "end": 22.6,
+          "word": " teclado",
+          "probability": 0.8794458309809366
+        },
+        {
+          "start": 22.6,
+          "end": 23.34,
+          "word": " que",
+          "probability": 0.7549590468406677
+        },
+        {
+          "start": 23.34,
+          "end": 23.52,
+          "word": " está",
+          "probability": 0.9597299695014954
+        },
+        {
+          "start": 23.52,
+          "end": 23.84,
+          "word": " brutal,",
+          "probability": 0.9965946078300476
+        },
+        {
+          "start": 24.18,
+          "end": 24.4,
+          "word": " así",
+          "probability": 0.9560973644256592
+        },
+        {
+          "start": 24.4,
+          "end": 24.52,
+          "word": " que",
+          "probability": 0.9850271940231323
+        },
+        {
+          "start": 24.52,
+          "end": 24.58,
+          "word": " hay",
+          "probability": 0.9959190487861633
+        },
+        {
+          "start": 24.58,
+          "end": 24.64,
+          "word": " que",
+          "probability": 0.9987026453018188
+        },
+        {
+          "start": 24.64,
+          "end": 24.94,
+          "word": " hacerlo",
+          "probability": 0.996852695941925
+        },
+        {
+          "start": 24.94,
+          "end": 25.14,
+          "word": " pero",
+          "probability": 0.6349802613258362
+        },
+        {
+          "start": 25.14,
+          "end": 25.26,
+          "word": " es",
+          "probability": 0.7884530425071716
+        },
+        {
+          "start": 25.26,
+          "end": 25.44,
+          "word": " bastante",
+          "probability": 0.9960458874702454
+        },
+        {
+          "start": 25.44,
+          "end": 25.76,
+          "word": " grande,",
+          "probability": 0.9921548962593079
+        },
+        {
+          "start": 25.76,
+          "end": 26.0,
+          "word": " son",
+          "probability": 0.9731748700141907
+        },
+        {
+          "start": 26.0,
+          "end": 26.26,
+          "word": " como",
+          "probability": 0.9386819005012512
+        }
+      ]
+    },
+    {
+      "start": 26.26,
+      "end": 29.3,
+      "text": " 3 o 4 pasos, así que tenemos que ocupar el espacio suficiente.",
+      "avg_logprob": -0.38934796421151413,
+      "no_speech_prob": 0.10996866971254349,
+      "words": [
+        {
+          "start": 26.26,
+          "end": 26.44,
+          "word": " 3",
+          "probability": 0.0650380551815033
+        },
+        {
+          "start": 26.44,
+          "end": 26.54,
+          "word": " o",
+          "probability": 0.6483134627342224
+        },
+        {
+          "start": 26.54,
+          "end": 26.72,
+          "word": " 4",
+          "probability": 0.988666296005249
+        },
+        {
+          "start": 26.72,
+          "end": 27.66,
+          "word": " pasos,",
+          "probability": 0.932986855506897
+        },
+        {
+          "start": 27.66,
+          "end": 27.84,
+          "word": " así",
+          "probability": 0.8835370540618896
+        },
+        {
+          "start": 27.84,
+          "end": 27.96,
+          "word": " que",
+          "probability": 0.9849971532821655
+        },
+        {
+          "start": 27.96,
+          "end": 28.18,
+          "word": " tenemos",
+          "probability": 0.9828447103500366
+        },
+        {
+          "start": 28.18,
+          "end": 28.34,
+          "word": " que",
+          "probability": 0.9947598576545715
+        },
+        {
+          "start": 28.34,
+          "end": 28.6,
+          "word": " ocupar",
+          "probability": 0.9777503311634064
+        },
+        {
+          "start": 28.6,
+          "end": 28.68,
+          "word": " el",
+          "probability": 0.9890779852867126
+        },
+        {
+          "start": 28.68,
+          "end": 28.92,
+          "word": " espacio",
+          "probability": 0.9990987777709961
+        },
+        {
+          "start": 28.92,
+          "end": 29.3,
+          "word": " suficiente.",
+          "probability": 0.9516924023628235
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021339259.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 30.464,
+      "elapsed": 10.98399999999674,
+      "segments": [
+        {
+          "start": 1.6,
+          "end": 6.36,
+          "text": " tenemos la sección de los juegos, tenemos aquí la mesa con colores y aquí por el",
+          "avg_logprob": -0.31341942554374913,
+          "no_speech_prob": 0.46627917885780334,
+          "words": [
+            {
+              "start": 1.6,
+              "end": 2.08,
+              "word": " tenemos",
+              "probability": 0.32330870628356934
+            },
+            {
+              "start": 2.08,
+              "end": 2.26,
+              "word": " la",
+              "probability": 0.9025663733482361
+            },
+            {
+              "start": 2.26,
+              "end": 2.5,
+              "word": " sección",
+              "probability": 0.9889138638973236
+            },
+            {
+              "start": 2.5,
+              "end": 2.6,
+              "word": " de",
+              "probability": 0.9741598963737488
+            },
+            {
+              "start": 2.6,
+              "end": 2.7,
+              "word": " los",
+              "probability": 0.9793503880500793
+            },
+            {
+              "start": 2.7,
+              "end": 2.98,
+              "word": " juegos,",
+              "probability": 0.939269483089447
+            },
+            {
+              "start": 3.64,
+              "end": 4.36,
+              "word": " tenemos",
+              "probability": 0.899696946144104
+            },
+            {
+              "start": 4.36,
+              "end": 4.5,
+              "word": " aquí",
+              "probability": 0.9455158114433289
+            },
+            {
+              "start": 4.5,
+              "end": 4.62,
+              "word": " la",
+              "probability": 0.9634081721305847
+            },
+            {
+              "start": 4.62,
+              "end": 4.84,
+              "word": " mesa",
+              "probability": 0.9968011379241943
+            },
+            {
+              "start": 4.84,
+              "end": 5.52,
+              "word": " con",
+              "probability": 0.8993687033653259
+            },
+            {
+              "start": 5.52,
+              "end": 5.92,
+              "word": " colores",
+              "probability": 0.9942638576030731
+            },
+            {
+              "start": 5.92,
+              "end": 6.06,
+              "word": " y",
+              "probability": 0.7311112880706787
+            },
+            {
+              "start": 6.06,
+              "end": 6.14,
+              "word": " aquí",
+              "probability": 0.4127390682697296
+            },
+            {
+              "start": 6.14,
+              "end": 6.24,
+              "word": " por",
+              "probability": 0.29914888739585876
+            },
+            {
+              "start": 6.24,
+              "end": 6.36,
+              "word": " el",
+              "probability": 0.9060382843017578
+            }
+          ]
+        },
+        {
+          "start": 6.36,
+          "end": 12.46,
+          "text": " pierlo, ver las diferentes proporciones y analízalo, después por aquí tenemos la",
+          "avg_logprob": -0.31341942554374913,
+          "no_speech_prob": 0.46627917885780334,
+          "words": [
+            {
+              "start": 6.36,
+              "end": 6.8,
+              "word": " pierlo,",
+              "probability": 0.60647352039814
+            },
+            {
+              "start": 7.1,
+              "end": 7.72,
+              "word": " ver",
+              "probability": 0.6183083057403564
+            },
+            {
+              "start": 7.72,
+              "end": 7.82,
+              "word": " las",
+              "probability": 0.5897482633590698
+            },
+            {
+              "start": 7.82,
+              "end": 8.2,
+              "word": " diferentes",
+              "probability": 0.9945587515830994
+            },
+            {
+              "start": 8.2,
+              "end": 9.04,
+              "word": " proporciones",
+              "probability": 0.9926457405090332
+            },
+            {
+              "start": 9.04,
+              "end": 9.86,
+              "word": " y",
+              "probability": 0.9151171445846558
+            },
+            {
+              "start": 9.86,
+              "end": 10.34,
+              "word": " analízalo,",
+              "probability": 0.866292417049408
+            },
+            {
+              "start": 10.88,
+              "end": 11.66,
+              "word": " después",
+              "probability": 0.8775607943534851
+            },
+            {
+              "start": 11.66,
+              "end": 11.88,
+              "word": " por",
+              "probability": 0.911790668964386
+            },
+            {
+              "start": 11.88,
+              "end": 12.0,
+              "word": " aquí",
+              "probability": 0.9527607560157776
+            },
+            {
+              "start": 12.0,
+              "end": 12.28,
+              "word": " tenemos",
+              "probability": 0.969535231590271
+            },
+            {
+              "start": 12.28,
+              "end": 12.46,
+              "word": " la",
+              "probability": 0.6593018770217896
+            }
+          ]
+        },
+        {
+          "start": 12.46,
+          "end": 18.12,
+          "text": " como chilsón, un caputa entre cuadros y otro juego, estáis 100% seguro y por aquí",
+          "avg_logprob": -0.31341942554374913,
+          "no_speech_prob": 0.46627917885780334,
+          "words": [
+            {
+              "start": 12.46,
+              "end": 12.72,
+              "word": " como",
+              "probability": 0.4782259464263916
+            },
+            {
+              "start": 12.72,
+              "end": 13.3,
+              "word": " chilsón,",
+              "probability": 0.32674265404542285
+            },
+            {
+              "start": 13.74,
+              "end": 13.9,
+              "word": " un",
+              "probability": 0.21266846358776093
+            },
+            {
+              "start": 13.9,
+              "end": 14.26,
+              "word": " caputa",
+              "probability": 0.6552267372608185
+            },
+            {
+              "start": 14.26,
+              "end": 14.82,
+              "word": " entre",
+              "probability": 0.6004570126533508
+            },
+            {
+              "start": 14.82,
+              "end": 15.2,
+              "word": " cuadros",
+              "probability": 0.971110612154007
+            },
+            {
+              "start": 15.2,
+              "end": 15.32,
+              "word": " y",
+              "probability": 0.986376941204071
+            },
+            {
+              "start": 15.32,
+              "end": 15.44,
+              "word": " otro",
+              "probability": 0.7490673661231995
+            },
+            {
+              "start": 15.44,
+              "end": 15.68,
+              "word": " juego,",
+              "probability": 0.9941192865371704
+            },
+            {
+              "start": 15.78,
+              "end": 16.0,
+              "word": " estáis",
+              "probability": 0.5759430676698685
+            },
+            {
+              "start": 16.0,
+              "end": 16.16,
+              "word": " 100",
+              "probability": 0.8682777881622314
+            },
+            {
+              "start": 16.16,
+              "end": 16.4,
+              "word": "%",
+              "probability": 0.9198795557022095
+            },
+            {
+              "start": 16.4,
+              "end": 16.74,
+              "word": " seguro",
+              "probability": 0.8819342851638794
+            },
+            {
+              "start": 16.74,
+              "end": 17.88,
+              "word": " y",
+              "probability": 0.6347832679748535
+            },
+            {
+              "start": 17.88,
+              "end": 17.98,
+              "word": " por",
+              "probability": 0.9892884492874146
+            },
+            {
+              "start": 17.98,
+              "end": 18.12,
+              "word": " aquí",
+              "probability": 0.987064003944397
+            }
+          ]
+        },
+        {
+          "start": 18.12,
+          "end": 22.18,
+          "text": " tenemos la sección final, que tenemos una súper pantalla y después tenemos este",
+          "avg_logprob": -0.31341942554374913,
+          "no_speech_prob": 0.46627917885780334,
+          "words": [
+            {
+              "start": 18.12,
+              "end": 18.42,
+              "word": " tenemos",
+              "probability": 0.9926137924194336
+            },
+            {
+              "start": 18.42,
+              "end": 18.84,
+              "word": " la",
+              "probability": 0.9840375185012817
+            },
+            {
+              "start": 18.84,
+              "end": 19.14,
+              "word": " sección",
+              "probability": 0.9983323812484741
+            },
+            {
+              "start": 19.14,
+              "end": 19.48,
+              "word": " final,",
+              "probability": 0.9905343055725098
+            },
+            {
+              "start": 19.66,
+              "end": 19.8,
+              "word": " que",
+              "probability": 0.8287535905838013
+            },
+            {
+              "start": 19.8,
+              "end": 20.02,
+              "word": " tenemos",
+              "probability": 0.9946645498275757
+            },
+            {
+              "start": 20.02,
+              "end": 20.2,
+              "word": " una",
+              "probability": 0.9696040749549866
+            },
+            {
+              "start": 20.2,
+              "end": 20.38,
+              "word": " súper",
+              "probability": 0.4845859408378601
+            },
+            {
+              "start": 20.38,
+              "end": 20.84,
+              "word": " pantalla",
+              "probability": 0.9977753758430481
+            },
+            {
+              "start": 20.84,
+              "end": 21.16,
+              "word": " y",
+              "probability": 0.9231746196746826
+            },
+            {
+              "start": 21.16,
+              "end": 21.38,
+              "word": " después",
+              "probability": 0.9638370275497437
+            },
+            {
+              "start": 21.38,
+              "end": 21.7,
+              "word": " tenemos",
+              "probability": 0.987442672252655
+            },
+            {
+              "start": 21.7,
+              "end": 22.18,
+              "word": " este",
+              "probability": 0.9613927006721497
+            }
+          ]
+        },
+        {
+          "start": 22.18,
+          "end": 26.26,
+          "text": " teclado que está brutal, así que hay que hacerlo pero es bastante grande, son como",
+          "avg_logprob": -0.31341942554374913,
+          "no_speech_prob": 0.46627917885780334,
+          "words": [
+            {
+              "start": 22.18,
+              "end": 22.6,
+              "word": " teclado",
+              "probability": 0.8794458309809366
+            },
+            {
+              "start": 22.6,
+              "end": 23.34,
+              "word": " que",
+              "probability": 0.7549590468406677
+            },
+            {
+              "start": 23.34,
+              "end": 23.52,
+              "word": " está",
+              "probability": 0.9597299695014954
+            },
+            {
+              "start": 23.52,
+              "end": 23.84,
+              "word": " brutal,",
+              "probability": 0.9965946078300476
+            },
+            {
+              "start": 24.18,
+              "end": 24.4,
+              "word": " así",
+              "probability": 0.9560973644256592
+            },
+            {
+              "start": 24.4,
+              "end": 24.52,
+              "word": " que",
+              "probability": 0.9850271940231323
+            },
+            {
+              "start": 24.52,
+              "end": 24.58,
+              "word": " hay",
+              "probability": 0.9959190487861633
+            },
+            {
+              "start": 24.58,
+              "end": 24.64,
+              "word": " que",
+              "probability": 0.9987026453018188
+            },
+            {
+              "start": 24.64,
+              "end": 24.94,
+              "word": " hacerlo",
+              "probability": 0.996852695941925
+            },
+            {
+              "start": 24.94,
+              "end": 25.14,
+              "word": " pero",
+              "probability": 0.6349802613258362
+            },
+            {
+              "start": 25.14,
+              "end": 25.26,
+              "word": " es",
+              "probability": 0.7884530425071716
+            },
+            {
+              "start": 25.26,
+              "end": 25.44,
+              "word": " bastante",
+              "probability": 0.9960458874702454
+            },
+            {
+              "start": 25.44,
+              "end": 25.76,
+              "word": " grande,",
+              "probability": 0.9921548962593079
+            },
+            {
+              "start": 25.76,
+              "end": 26.0,
+              "word": " son",
+              "probability": 0.9731748700141907
+            },
+            {
+              "start": 26.0,
+              "end": 26.26,
+              "word": " como",
+              "probability": 0.9386819005012512
+            }
+          ]
+        },
+        {
+          "start": 26.26,
+          "end": 29.3,
+          "text": " 3 o 4 pasos, así que tenemos que ocupar el espacio suficiente.",
+          "avg_logprob": -0.38934796421151413,
+          "no_speech_prob": 0.10996866971254349,
+          "words": [
+            {
+              "start": 26.26,
+              "end": 26.44,
+              "word": " 3",
+              "probability": 0.0650380551815033
+            },
+            {
+              "start": 26.44,
+              "end": 26.54,
+              "word": " o",
+              "probability": 0.6483134627342224
+            },
+            {
+              "start": 26.54,
+              "end": 26.72,
+              "word": " 4",
+              "probability": 0.988666296005249
+            },
+            {
+              "start": 26.72,
+              "end": 27.66,
+              "word": " pasos,",
+              "probability": 0.932986855506897
+            },
+            {
+              "start": 27.66,
+              "end": 27.84,
+              "word": " así",
+              "probability": 0.8835370540618896
+            },
+            {
+              "start": 27.84,
+              "end": 27.96,
+              "word": " que",
+              "probability": 0.9849971532821655
+            },
+            {
+              "start": 27.96,
+              "end": 28.18,
+              "word": " tenemos",
+              "probability": 0.9828447103500366
+            },
+            {
+              "start": 28.18,
+              "end": 28.34,
+              "word": " que",
+              "probability": 0.9947598576545715
+            },
+            {
+              "start": 28.34,
+              "end": 28.6,
+              "word": " ocupar",
+              "probability": 0.9777503311634064
+            },
+            {
+              "start": 28.6,
+              "end": 28.68,
+              "word": " el",
+              "probability": 0.9890779852867126
+            },
+            {
+              "start": 28.68,
+              "end": 28.92,
+              "word": " espacio",
+              "probability": 0.9990987777709961
+            },
+            {
+              "start": 28.92,
+              "end": 29.3,
+              "word": " suficiente.",
+              "probability": 0.9516924023628235
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

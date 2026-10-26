@@ -6,8 +6,12 @@ from totem import build_totem
 from exterior import build_exterior
 from passport import build_passport_display
 from stands import build_stands
+from experience_zones import build_experience_zones
+from furniture import build_lower_lounge
+from chairs import build_chair
+from appearance import apply_appearance, graphic_plane
 random.seed(16)
-ROOT=os.path.dirname(os.path.dirname(__file__)); OUT=ROOT+'/dist/assets';os.makedirs(OUT,exist_ok=True)
+ROOT=os.path.dirname(os.path.dirname(__file__)); OUT=os.environ.get('ONE16_BUILD_DIR',ROOT+'/dist/assets');os.makedirs(OUT,exist_ok=True)
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 M=[]
 def mat(name,c,metal=0,rough=.75,emit=0):
@@ -82,23 +86,83 @@ for x in [-10,0,10]:
     roof.face((n,n+1,n+2,n+3),mi);roof.face((n+3,n+2,n+1,n),mi)
   for k in range(1,5):shell.rod((x+side*k,0,6.87-k*.406),(x+side*k,50,6.87-k*.406),.065,structure)
 # Glazed room beside river, partial opening at near end.
-for y in [12+i*1.1 for i in range(12)]:
+for y in [12+i*1.1 for i in range(6)]:
+ # Two missing bays form the observed walk-in Content Hub doorway.
+ if 12.8<y<14.4:continue
  shell.box((10,y,2.0),(.075,1.06,3.5),glass);shell.box((9.94,y,.5),(.13,1.1,1),structure)
  for z in [1.1,1.8,2.5,3.2,3.75]:shell.box((9.9,y,z),(.12,1.1,.055),structure)
  shell.box((9.9,y-.54,2),(.13,.055,3.6),structure)
-block(10,18.05,.2,13.3)
+block(10,12,.2,1.1);block(10,16.4,.2,3.3)
+# End glazing closes the shortened two-body room without changing its doorway.
+shell.box((12.4,18.05,2),(4.85,.075,3.5),glass)
+for xx in [10,11.2,12.4,13.6,14.8]:shell.box((xx,18.05,2),(.055,.13,3.6),structure)
+for zz in [1.1,1.8,2.5,3.2,3.75]:shell.box((12.4,18.05,zz),(4.85,.12,.055),structure)
+block(12.4,18.05,4.85,.20)
+roof.box((12.4,14.75,3.86),(4.85,6.6,.10),structure)
 # Small utility functions for identifiable furniture, not box substitutes.
-def chair(x,y,angle=0,color=black):
- def p(a,b,z):return (x+a*math.cos(angle)-b*math.sin(angle),y+a*math.sin(angle)+b*math.cos(angle),z)
- furn.ellipsoid(p(0,0,.48),(.25,.24,.045),color);furn.ellipsoid(p(0,.20,.77),(.24,.055,.22),color)
- for a in [-.2,.2]:
-  for b in [-.18,.18]:furn.rod(p(a,b,.05),p(a,b,.48),.021,steel)
-  furn.rod(p(a,.2,.48),p(a,.22,.88),.019,steel)
-def table(x,y,w=2.4,d=.85):
- furn.box((x,y,.76),(w,d,.055),white)
+seating={'coordinateSystem':'Three.js X/Y/Z; dimensions in metres',
+         'dimensionsStatus':'Estimated placement; chair geometry bounded by shared helper',
+         'tables':[],'chairs':[]}
+
+def seating_bounds(x,y,width,depth,angle=0):
+ # Rotate local XY extents before converting Blender Y to viewer -Z.
+ c,s=abs(math.cos(angle)),abs(math.sin(angle))
+ hx,hy=(c*width+s*depth)/2,(s*width+c*depth)/2
+ return {'minX':round(x-hx,4),'maxX':round(x+hx,4),
+         'minZ':round(-y-hy,4),'maxZ':round(-y+hy,4)}
+
+def seating_proximity(bounds,padding=.24):
+ return {'minX':round(bounds['minX']-padding,4),'maxX':round(bounds['maxX']+padding,4),
+         'minZ':round(bounds['minZ']-padding,4),'maxZ':round(bounds['maxZ']+padding,4)}
+
+def chair(x,y,angle=0,color=black,area='main',table_id=None):
+ chair_id=area+'-chair-'+str(len(seating['chairs'])+1).zfill(3)
+ obj=build_chair('Seating '+chair_id,center=(x,y,0),material=M[color],frame_material=M[steel],angle=angle)
+ obj['seatingId']=chair_id;obj['seatingArea']=area
+ if table_id:obj['tableId']=table_id
+ collision=seating_bounds(x,y,.54,.62,angle)
+ obstacles.append(dict(collision,seatingId=chair_id,seatingKind='chair'))
+ envelope=dict(seating_bounds(x,y,.52,.60,angle),minY=0,maxY=.88)
+ seating['chairs'].append({'id':chair_id,'area':area,'tableId':table_id,
+   'center':{'x':x,'y':0,'z':-y},'angle':angle,'front':{'x':math.sin(angle),'z':math.cos(angle)},
+   'seatHeight':.46,'envelope':envelope,'collider':collision,'proximityBounds':seating_proximity(collision)})
+ if table_id:
+  next(table for table in seating['tables'] if table['id']==table_id)['chairIds'].append(chair_id)
+ return chair_id
+
+def table(x,y,w=2.4,d=.85,area='hack',height=.76,top_material=white):
+ table_id=area+'-table-'+str(len(seating['tables'])+1).zfill(2)
+ furn.box((x,y,height),(w,d,.055),top_material)
  for a in [-w/2+.12,w/2-.12]:
-  for b in [-d/2+.08,d/2-.08]:furn.rod((x+a,y+b,.03),(x+a,y+b,.73),.025,silver)
- block(x,y,w,d)
+  for b in [-d/2+.08,d/2-.08]:furn.rod((x+a,y+b,.03),(x+a,y+b,height-.0275),.025,silver)
+ collision=seating_bounds(x,y,w,d)
+ obstacles.append(dict(collision,seatingId=table_id,seatingKind='table'))
+ seating['tables'].append({'id':table_id,'area':area,'center':{'x':x,'y':0,'z':-y},
+   'width':w,'depth':d,'topCenterHeight':height,'topHeight':height+.0275,'undersideHeight':height-.0275,
+   'envelope':dict(collision,minY=0,maxY=height+.0275),
+   'collider':collision,'proximityBounds':seating_proximity(collision),'chairIds':[]})
+ return table_id
+
+def build_hack_seating():
+ for x in [-12,-8]:
+  for y in [20,24,28,32,36]:
+   table_id=table(x,y,2.4,1,area='hack')
+   for dx in [-.8,0,.8]:
+    chair(x+dx,y-1.04,math.pi,area='hack',table_id=table_id)
+    chair(x+dx,y+1.04,0,area='hack',table_id=table_id)
+
+def build_auditorium_seating():
+ # Individual occupied footprints retain the central aisle and row gaps.
+ for y in [35+i*1.1 for i in range(7)]:
+  for x in [-3.5,-2.75,-2,2,2.75,3.5]:chair(x,y,math.pi,area='auditorium')
+
+def build_cafe_seating():
+ # Keep the y=23 stand-route crossing and the central x=0 passage open.
+ for x,y in [(-2.3,17.2),(2.4,17.2),(-.8,21.3),(1.8,24.75)]:
+  table_id=table(x,y,1.2,1.2,area='cafe',height=.74,top_material=wood[4])
+  for dx,dy,angle in [(0,-1.10,math.pi),(0,1.10,0),(-1.10,0,math.pi/2),(1.10,0,-math.pi/2)]:
+   chair(x+dx,y+dy,angle,cream,area='cafe',table_id=table_id)
+
 def stool(x,y,color=cream):furn.rod((x,y,.03),(x,y,.48),.28,color,20);block(x,y,.58,.58)
 def bean(x,y,color=yellow):furn.ellipsoid((x,y,.39),(.56,.6,.42),color);furn.ellipsoid((x,y+.21,.62),(.43,.4,.45),color);block(x,y,1.12,1.2)
 def loungechair(x,y):
@@ -164,13 +228,7 @@ for yy in [-6,-3,0]:
  entrance.rod((-6,yy,4.45),(6,yy,4.45),.10,structure)
  for xx in [-5.9,5.9]:entrance.rod((xx,yy,2.7),(xx,yy,4.45),.09,structure)
 # Low lounge is OUTSIDE the original main slab; upper hall edge is guarded.
-for xx in [-4.4,4.4]:
- for yy in [-4.7,-2.5]:
-  # Rebuild lounge chair at low level, including distinct arms/back.
-  entrance.ellipsoid((xx,yy,low+.36),(.48,.45,.18),blue);entrance.ellipsoid((xx,yy+.35,low+.63),(.49,.15,.43),blue)
-  for dx in [-.42,.42]:entrance.ellipsoid((xx+dx,yy,low+.58),(.11,.48,.19),blue)
-  block(xx,yy,1,.95)
-  entrance.rod((xx-.9,yy+.5,low+.03),(xx-.9,yy+.5,low+.48),.28,yellow,20);block(xx-.9,yy+.5,.58,.58)
+build_lower_lounge(block,M[blue],M[yellow],low)
 for side in [-1,1]:
  # Guarding upper level left/right of stair aperture. Lower lounge not a fallthrough.
  entrance.box((side*3.55,0,-.52),(4.9,.14,1.05),black);block(side*3.55,0,4.9,.2)
@@ -209,15 +267,17 @@ for xx in [-.85,.85]:entrance.box((xx,6.7,1.55),(1.7,.1,3.1),black if xx<0 else 
 entrance.box((0,2.3,3.65),(3.4,.05,.7),runner)
 # LEFT-of-arrival merch: pale garments on wheeled black racks, dark apparel,
 # mirrored/patterned backdrop, folded stock and tall black/yellow Merch banner.
+# Keep the source panel at y8.6: merch-backdrop.mjs relocates this exact
+# geometry and collision to the arrival guardrail at runtime, once only.
 for k in range(6):
  xx=-6.7-k*1.12
- entrance.box((xx,.45,1.5),(1.10,.12,3.0),merchlime if k%2 else mirror)
+ entrance.box((xx,8.6,1.5),(1.10,.12,3.0),merchlime if k%2 else mirror)
  if k%2:
   for row in range(5):
    for col in range(3):
     x=xx-.35+col*.35;z=.3+row*.55
-    entrance.rod((x-.10,.525,z+.10),(x,.525,z),.025,black,5);entrance.rod((x,.525,z),(x+.10,.525,z+.10),.025,black,5)
-block(-9.5,.45,6.9,.2)
+    entrance.rod((x-.10,8.525,z+.10),(x,8.525,z),.025,black,5);entrance.rod((x,8.525,z),(x+.10,8.525,z+.10),.025,black,5)
+block(-9.5,8.6,6.9,.2)
 def garment(x,y,color):
  # T-shirt silhouette, safe generic apparel without copying illegible marks.
  outline=[(-.12,1.65),(-.28,1.60),(-.47,1.40),(-.32,1.26),(-.23,1.38),(-.23,.80),(.23,.80),(.23,1.38),(.32,1.26),(.47,1.40),(.28,1.60),(.12,1.65)]
@@ -249,47 +309,28 @@ for y in [9,13]:
 # Blue counter and yellow flag near window side
 furn.box((11.6,7,.52),(2.2,.8,1.04),blue);furn.box((11.6,7,1.06),(2.3,.9,.06),white);block(11.6,7,2.3,.9)
 furn.rod((13.4,7,0),(13.4,7,3.1),.025,steel);furn.ellipsoid((13.65,7,2.25),(.34,.035,.95),yellow)
-# Window-side standing tables
-for y in [28,31,34]:table(13.1,y,1.8,.7)
-# Photo backdrop with observed checkerboard color rhythm, safe simplified lettering.
-for ix in range(5):
- for iz in range(4):furn.box((9.5+(ix-2)*.62,37, .38+(iz+.5)*.62),(.62,.12,.62),yellow if (ix+iz)%2 else gray)
-block(9.5,37,3.3,.2)
-for x,y in [(8,34.7),(10,34.5),(12,35.5)]:stool(x,y)
-for x,y,c in [(8,40,yellow),(10,40.5,black),(12,40,yellow),(11,43,gray)]:bean(x,y,c)
+# The narrated games, Energy Corner, photo booth and photocall are built
+# as separate recognizable groups after the shared architecture.
 # Hack tables in parallel strips left bay, with open aisle down their side.
-for x in [-12,-8]:
- for y in [20,24,28,32,36]:
-  table(x,y,2.4,1)
-  for dx in [-.8,0,.8]:
-   chair(x+dx,y-.8,math.pi);chair(x+dx,y+.8,0)
-  block(x,y,2.7,2.25)
-# Curtain screen: partial screen does not close an invented room.
-for k in range(46):furn.rod((-5.6,30+k*.17,.02),(-5.6,30+k*.17,3.35),.115,black,8)
-block(-5.6,33.8,.35,8)
+build_hack_seating()
+# The owner removed the black curtain between hack tables and brand stands.
 # Auditorium, both banks leave a broad central aisle.
-for y in [32,33.1,34.2,35.3,36.4,37.5,38.6]:
- for x in [-3.5,-2.75,-2,2,2.75,3.5]:chair(x,y,math.pi)
-for x in [-2.75,2.75]:block(x,35.3,2.4,7.5)
+build_auditorium_seating()
 stage=build_stage(origin=(0,43,0),width=8,depth=3.4);block(0,44.7,9,3.8);block(-4.65,43.8,1,1.8)
 # Proposed activation kiosk: visual Testnet concept, not an existing installation.
-build_totem(origin=(7,4,0));block(7,4,1.2,1.2)
+build_totem(origin=(2.6,5.6,0),angle=0);block(2.6,5.6,1.2,1.2)
 # Casual return area with timber-topped cafe tables / four slender chairs.
-for x,y in [(3,17),(0,21),(3,25),(-2,17)]:
- furn.box((x,y,.74),(1.2,1.2,.07),wood[4]);block(x,y,1.8,1.8)
- for dx,dy,a in [(0,-.85,math.pi),(0,.85,0),(-.85,0,-math.pi/2),(.85,0,math.pi/2)]:chair(x+dx,y+dy,a,cream)
+build_cafe_seating()
 for g in [floor,shell,roof,furn,entrance]:g.finish()
 # Labels are reconstructed lettering, not video screenshots.
 def text(body,loc,size=.25,rot=(math.pi/2,0,0),color=yellow):
  c=bpy.data.curves.new(body,'FONT');c.body=body;c.size=size;c.align_x='CENTER';c.extrude=.001;c.resolution_u=3;o=bpy.data.objects.new(body,c);bpy.context.collection.objects.link(o);o.location=loc;o.rotation_euler=rot;o.data.materials.append(M[color]);return o
-text('Check-in & Info Desk',(0,2.26,3.64),.24,color=black)
-text('Mentors & Judges       Hackers',(0,2.25,3.35),.11,color=black)
 text('Merch',(-5.6,5.25,1.7),.56,color=runner).rotation_euler=(Matrix.Rotation(math.pi/2,4,'X') @ Matrix.Rotation(-math.pi/2,4,'Z')).to_euler()
 text('Hack Meridian',(-5.6,5.25,3.05),.10,color=runner)
 for k,label in enumerate(['Main Stage','Luggage Storage','Rest Area','Merch Area  <','Scale Area','Restrooms','Genesis Area']):
  yy=-2.45+k*.35-.008;top=-1.05+(k+1)*.15
  text(label,(0,yy,top-.10),.095,color=black)
-text('HACKMERIDIAN',(11.6,6.58,.55),.18,color=white);text('BUILD / CONNECT / MOVE',(9.5,36.92,1.75),.18,color=white)
+text('HACKMERIDIAN',(11.6,6.58,.55),.18,color=white)
 # Model semantics / public-safe evidence metadata.
 bpy.context.scene['scope']='Observed route reconstruction, approximate geometry; not a measured survey or full 3200 m² footprint.'
 bpy.context.scene['reference']='Private user video inspected through timestamped frames 00:00–02:51. No raw footage or personal imagery embedded.'
@@ -302,11 +343,30 @@ for k in range(7):
 surfaces.append({'polygon':[[-6,0],[6,0],[6,6],[-6,6]],'baseY':-1.05,'originX':0,'originZ':0,'slopeX':0,'slopeZ':0})
 surfaces.append({'polygon':[[-2.2,6],[2.2,6],[2.2,32],[-2.2,32]],'baseY':-1.05,'originX':0,'originZ':0,'slopeX':0,'slopeZ':0})
 layout={'scaleStatus':'All local dimensions and inter-zone distances are estimated from imagery; official 3200 m² venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates.','surfaces':surfaces,'walkable':[[[-14.8,-49.8],[14.8,-49.8],[14.8,0],[-14.8,0]],[[-6,0],[6,0],[6,6],[-6,6]],[[-2.2,6],[2.2,6],[2.2,32],[-2.2,32]]],'obstacles':obstacles,'bounds':{'minX':-15,'maxX':15,'minZ':-50,'maxZ':32},'spawn':{'x':0,'z':28,'yaw':0,'pitch':0},'zones':[zone('entrance','Pasillo amarillo · paraguas',0,-19,4.4,26,0,-28,0),zone('arrival','Escalera · check-in',0,-1,5,10,0,-4,0),zone('merch','Merch · a la izquierda',-9,5,8,8,-5.3,3.5,1.5708),zone('buffet','Buffet · encuentro',0,10,10,10,3,7,.6),zone('river','Ventanas · sala acristalada',12.4,19,5,24,12,10,0),zone('photo','Photo lounge · encuentro',10,38,9,13,7,33,-.5),zone('stage','Escenario · HackMeridian',0,43,11,12,0,39,0),zone('hack','Mesas de trabajo',-10,28,9,23,-6,19,.5),zone('auditorium','Auditorio',0,34,10,12,0,29,0),zone('cafe','Zona social',0,21,12,13,5,18,.8)]}
-layout['zones'].append({'id': 'activation', 'label': 'Activación Stellar · concepto Testnet', 'polygon': [[5, -6.5], [8, -6.5], [8, -0.8], [5, -0.8]], 'view': {'x': 5.8, 'z': -1.4, 'yaw': -0.418}, 'status': 'Proposed Testnet concept; not installed'})
+layout['seating']=seating
+# Visible floor finishes differ slightly from the navigable slab elevation.
+layout['floorFinishes']=[{'polygon':[[-.9,2.45],[.9,2.45],[.9,32],[-.9,32]],'topY':-1.02,'name':'yellow corridor runner'},{'polygon':[[-1.1,-2.2],[1.1,-2.2],[1.1,0],[-1.1,0]],'topY':.024,'name':'upper landing runner'},{'polygon':[[-1.7,-6.05],[1.7,-6.05],[1.7,-3.95],[-1.7,-3.95]],'topY':.028,'name':'check-in runner'}]
+layout['zones'].append({'id': 'activation', 'label': 'Tótem · wallet y USDC de prueba', 'polygon': [[1.85,-6.5],[3.5,-6.5],[3.5,-4.05],[1.85,-4.05]], 'view': {'x':2.6,'z':-4.3,'yaw':0,'pitch':-.12}, 'status': 'Proposed Testnet concept; not installed'})
 build_exterior(layout)
-build_passport_display(layout)
+layout['activation']={'position':{'x':2.6,'y':0,'z':-5.6},'approach':{'x':2.6,'z':-4.3,'yaw':0,'pitch':-.12},'reviewReference':10,'nearReference':12,'triggerRadius':2.2,'purpose':'Existing Testnet wallet and test USDC flow; no automatic redemption.'}
+layout['activationRoute']=[{'x':layout['spawn']['x'],'z':layout['spawn']['z']},{'x':0,'z':32},{'x':0,'z':6},{'x':0,'z':2.45},{'x':0,'z':0},{'x':0,'z':-1},{'x':2.4,'z':-3.6},{'x':2.6,'z':-4.3}]
 build_stands(layout)
-open(OUT+'/layout.json','w').write(json.dumps(layout,indent=2))
+build_passport_display(layout)
+build_experience_zones(layout,Geo,M,mat,graphic_plane,{'black':black,'white':white,'yellow':yellow,'blue':blue,'steel':steel,'wood':wood[4]})
+# Authored company paths branch from the same clear central-aisle fork.
+layout['companyRoutes']={
+ 'trunk':[{'x':2.6,'z':-4.3},{'x':4.2,'z':-4.3},{'x':4.2,'z':-12.8},{'x':5.8,'z':-12.8},{'x':5.8,'z':-23},{'x':0,'z':-23},{'x':0,'z':-29.9}],
+ 'branches':[
+  {'id':'passport','label':'Stellar Passport','points':[{'x':0,'z':-29.9},{'x':4.1,'z':-29.9}],
+   'approach':{'x':4.1,'z':-29.9,'yaw':math.pi,'pitch':-.2}},
+  {'id':'palta','label':'DeFindex · Soroswap','points':[{'x':0,'z':-29.9},{'x':-4,'z':-29.9}],
+   'approach':{'x':-4,'z':-29.9,'yaw':.514,'pitch':-.2}}
+ ]}
+
+graphic_plane('Check-in overhead observed sign','checkin-sign',(0,2.265,3.65),3.4,.7)
+graphic_plane('Check-in Made to Move branded backdrop','checkin-backdrop',(0,6.639,1.55),3.4,3.1)
+apply_appearance()
+open(OUT+'/layout.json','w',encoding='utf-8').write(json.dumps(layout,indent=2,ensure_ascii=False))
 # Lighting and cameras. Render only non-sensitive reconstructed geometry.
 world=bpy.data.worlds.new('Lisbon daylight');bpy.context.scene.world=world;world.use_nodes=True;world.node_tree.nodes['Background'].inputs[0].default_value=(.55,.65,.72,1);world.node_tree.nodes['Background'].inputs[1].default_value=.35
 for y in [8,24,40]:
@@ -322,6 +382,7 @@ camdata=bpy.data.cameras.new('Editorial camera');cam=bpy.data.objects.new('Edito
 def point(loc,target):cam.location=loc;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler()
 point((8.7,24,2.1),(1,42,2.7));camdata.lens=25
 # Apply modifiers and export; text retained as curves in .blend, converted by exporter.
-bpy.ops.wm.save_as_mainfile(filepath=ROOT+'/model/one16-editable.blend')
+bpy.context.preferences.filepaths.save_version=0
+bpy.ops.wm.save_as_mainfile(filepath=os.path.join(os.environ.get('ONE16_BUILD_DIR',ROOT+'/model'),'one16-editable.blend'),relative_remap=False)
 bpy.ops.export_scene.gltf(filepath=OUT+'/one16.glb',export_format='GLB',export_apply=True,export_cameras=False,export_lights=False,export_extras=True)
 print('ONE16 V2 MODEL READY',len(bpy.data.objects),os.path.getsize(OUT+'/one16.glb'))

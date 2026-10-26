@@ -42,3 +42,7 @@ model/*-preview.jpg
 .env
 .env.*
 !.env.example
+
+# Reproducible render tools: Python bytecode is local cache.
+__pycache__/
+*.py[cod]

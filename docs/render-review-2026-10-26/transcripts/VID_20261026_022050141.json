@@ -1,0 +1,978 @@
+{
+  "file": "VID_20261026_022050141.mp4",
+  "driveId": "1EK2QjwVJ0oiT8lT3pdD2u3dfdLWUt4gO",
+  "url": "https://drive.google.com/file/d/1EK2QjwVJ0oiT8lT3pdD2u3dfdLWUt4gO/view",
+  "durationSeconds": 31.442771,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 7.7,
+      "text": " Aquí estamos en el escenario principal, tenemos las cámaras que están transmitiendo directamente al escenario principal para las redes",
+      "avg_logprob": -0.2217989940959287,
+      "no_speech_prob": 0.30425119400024414,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.28,
+          "word": " Aquí",
+          "probability": 0.15179245173931122
+        },
+        {
+          "start": 0.28,
+          "end": 0.5,
+          "word": " estamos",
+          "probability": 0.9731798768043518
+        },
+        {
+          "start": 0.5,
+          "end": 0.62,
+          "word": " en",
+          "probability": 0.9175432324409485
+        },
+        {
+          "start": 0.62,
+          "end": 0.68,
+          "word": " el",
+          "probability": 0.993860125541687
+        },
+        {
+          "start": 0.68,
+          "end": 0.94,
+          "word": " escenario",
+          "probability": 0.988945484161377
+        },
+        {
+          "start": 0.94,
+          "end": 1.28,
+          "word": " principal,",
+          "probability": 0.9964864253997803
+        },
+        {
+          "start": 1.64,
+          "end": 1.84,
+          "word": " tenemos",
+          "probability": 0.9608042240142822
+        },
+        {
+          "start": 1.84,
+          "end": 2.08,
+          "word": " las",
+          "probability": 0.9846692681312561
+        },
+        {
+          "start": 2.08,
+          "end": 2.54,
+          "word": " cámaras",
+          "probability": 0.9888438979784647
+        },
+        {
+          "start": 2.54,
+          "end": 2.62,
+          "word": " que",
+          "probability": 0.9696558117866516
+        },
+        {
+          "start": 2.62,
+          "end": 2.82,
+          "word": " están",
+          "probability": 0.9525564312934875
+        },
+        {
+          "start": 2.82,
+          "end": 3.78,
+          "word": " transmitiendo",
+          "probability": 0.9630620181560516
+        },
+        {
+          "start": 3.78,
+          "end": 5.06,
+          "word": " directamente",
+          "probability": 0.7733754515647888
+        },
+        {
+          "start": 5.06,
+          "end": 6.2,
+          "word": " al",
+          "probability": 0.9282310605049133
+        },
+        {
+          "start": 6.2,
+          "end": 6.52,
+          "word": " escenario",
+          "probability": 0.9990455806255341
+        },
+        {
+          "start": 6.52,
+          "end": 7.04,
+          "word": " principal",
+          "probability": 0.9898115992546082
+        },
+        {
+          "start": 7.04,
+          "end": 7.28,
+          "word": " para",
+          "probability": 0.9435155391693115
+        },
+        {
+          "start": 7.28,
+          "end": 7.46,
+          "word": " las",
+          "probability": 0.9790109395980835
+        },
+        {
+          "start": 7.46,
+          "end": 7.7,
+          "word": " redes",
+          "probability": 0.9962396621704102
+        }
+      ]
+    },
+    {
+      "start": 7.7,
+      "end": 14.26,
+      "text": " y por aquí tenemos como el branding o el branding del main stage screen",
+      "avg_logprob": -0.2217989940959287,
+      "no_speech_prob": 0.30425119400024414,
+      "words": [
+        {
+          "start": 7.7,
+          "end": 8.64,
+          "word": " y",
+          "probability": 0.6767610311508179
+        },
+        {
+          "start": 8.64,
+          "end": 8.76,
+          "word": " por",
+          "probability": 0.9844984412193298
+        },
+        {
+          "start": 8.76,
+          "end": 8.96,
+          "word": " aquí",
+          "probability": 0.9831078052520752
+        },
+        {
+          "start": 8.96,
+          "end": 9.38,
+          "word": " tenemos",
+          "probability": 0.9817032217979431
+        },
+        {
+          "start": 9.38,
+          "end": 10.1,
+          "word": " como",
+          "probability": 0.7231951951980591
+        },
+        {
+          "start": 10.1,
+          "end": 10.26,
+          "word": " el",
+          "probability": 0.9654104709625244
+        },
+        {
+          "start": 10.26,
+          "end": 10.96,
+          "word": " branding",
+          "probability": 0.42931780219078064
+        },
+        {
+          "start": 10.96,
+          "end": 11.1,
+          "word": " o",
+          "probability": 0.4113074839115143
+        },
+        {
+          "start": 11.1,
+          "end": 11.2,
+          "word": " el",
+          "probability": 0.9252458214759827
+        },
+        {
+          "start": 11.2,
+          "end": 11.48,
+          "word": " branding",
+          "probability": 0.9624190330505371
+        },
+        {
+          "start": 11.48,
+          "end": 12.08,
+          "word": " del",
+          "probability": 0.3702908158302307
+        },
+        {
+          "start": 12.08,
+          "end": 13.22,
+          "word": " main",
+          "probability": 0.5343529582023621
+        },
+        {
+          "start": 13.22,
+          "end": 13.66,
+          "word": " stage",
+          "probability": 0.7758914232254028
+        },
+        {
+          "start": 13.66,
+          "end": 14.26,
+          "word": " screen",
+          "probability": 0.9556465148925781
+        }
+      ]
+    },
+    {
+      "start": 15.02,
+      "end": 24.56,
+      "text": " pero aquí lo podemos ver, analicemos las diferentes marcas, tenemos la sección por acá del diseño, el tren, el puente, el mar, etc.",
+      "avg_logprob": -0.2217989940959287,
+      "no_speech_prob": 0.30425119400024414,
+      "words": [
+        {
+          "start": 15.02,
+          "end": 15.5,
+          "word": " pero",
+          "probability": 0.6748747825622559
+        },
+        {
+          "start": 15.5,
+          "end": 15.64,
+          "word": " aquí",
+          "probability": 0.9760977029800415
+        },
+        {
+          "start": 15.64,
+          "end": 15.76,
+          "word": " lo",
+          "probability": 0.9635369777679443
+        },
+        {
+          "start": 15.76,
+          "end": 15.94,
+          "word": " podemos",
+          "probability": 0.994469165802002
+        },
+        {
+          "start": 15.94,
+          "end": 16.34,
+          "word": " ver,",
+          "probability": 0.9991912245750427
+        },
+        {
+          "start": 16.74,
+          "end": 17.28,
+          "word": " analicemos",
+          "probability": 0.9651616215705872
+        },
+        {
+          "start": 17.28,
+          "end": 17.46,
+          "word": " las",
+          "probability": 0.9598652720451355
+        },
+        {
+          "start": 17.46,
+          "end": 17.7,
+          "word": " diferentes",
+          "probability": 0.9961504936218262
+        },
+        {
+          "start": 17.7,
+          "end": 18.28,
+          "word": " marcas,",
+          "probability": 0.9934424161911011
+        },
+        {
+          "start": 18.32,
+          "end": 18.58,
+          "word": " tenemos",
+          "probability": 0.9900004863739014
+        },
+        {
+          "start": 18.58,
+          "end": 18.78,
+          "word": " la",
+          "probability": 0.9773390889167786
+        },
+        {
+          "start": 18.78,
+          "end": 19.14,
+          "word": " sección",
+          "probability": 0.9937791526317596
+        },
+        {
+          "start": 19.14,
+          "end": 19.36,
+          "word": " por",
+          "probability": 0.6030957102775574
+        },
+        {
+          "start": 19.36,
+          "end": 19.56,
+          "word": " acá",
+          "probability": 0.9670692086219788
+        },
+        {
+          "start": 19.56,
+          "end": 19.82,
+          "word": " del",
+          "probability": 0.5100653171539307
+        },
+        {
+          "start": 19.82,
+          "end": 21.78,
+          "word": " diseño,",
+          "probability": 0.9976985156536102
+        },
+        {
+          "start": 21.98,
+          "end": 22.16,
+          "word": " el",
+          "probability": 0.8546290397644043
+        },
+        {
+          "start": 22.16,
+          "end": 23.2,
+          "word": " tren,",
+          "probability": 0.8721758127212524
+        },
+        {
+          "start": 23.48,
+          "end": 23.52,
+          "word": " el",
+          "probability": 0.9637687802314758
+        },
+        {
+          "start": 23.52,
+          "end": 23.76,
+          "word": " puente,",
+          "probability": 0.9579634964466095
+        },
+        {
+          "start": 23.98,
+          "end": 24.02,
+          "word": " el",
+          "probability": 0.9794822335243225
+        },
+        {
+          "start": 24.02,
+          "end": 24.26,
+          "word": " mar,",
+          "probability": 0.9966493248939514
+        },
+        {
+          "start": 24.36,
+          "end": 24.56,
+          "word": " etc.",
+          "probability": 0.9174410700798035
+        }
+      ]
+    },
+    {
+      "start": 24.56,
+      "end": 28.96,
+      "text": " etcétera, etcétera. Y por aquí tenemos las diferentes marcas. Estamos aquí en el Main",
+      "avg_logprob": -0.34643012980620064,
+      "no_speech_prob": 0.22157150506973267,
+      "words": [
+        {
+          "start": 24.56,
+          "end": 24.8,
+          "word": " etcétera,",
+          "probability": 0.6970141728719076
+        },
+        {
+          "start": 24.84,
+          "end": 25.5,
+          "word": " etcétera.",
+          "probability": 0.9238267739613851
+        },
+        {
+          "start": 25.5,
+          "end": 25.7,
+          "word": " Y",
+          "probability": 0.7413414120674133
+        },
+        {
+          "start": 25.7,
+          "end": 25.84,
+          "word": " por",
+          "probability": 0.9694550037384033
+        },
+        {
+          "start": 25.84,
+          "end": 25.98,
+          "word": " aquí",
+          "probability": 0.9913559556007385
+        },
+        {
+          "start": 25.98,
+          "end": 26.2,
+          "word": " tenemos",
+          "probability": 0.9714339375495911
+        },
+        {
+          "start": 26.2,
+          "end": 26.36,
+          "word": " las",
+          "probability": 0.9809050559997559
+        },
+        {
+          "start": 26.36,
+          "end": 26.62,
+          "word": " diferentes",
+          "probability": 0.9969868063926697
+        },
+        {
+          "start": 26.62,
+          "end": 27.38,
+          "word": " marcas.",
+          "probability": 0.9895879328250885
+        },
+        {
+          "start": 27.92,
+          "end": 28.32,
+          "word": " Estamos",
+          "probability": 0.9815773367881775
+        },
+        {
+          "start": 28.32,
+          "end": 28.58,
+          "word": " aquí",
+          "probability": 0.9624047875404358
+        },
+        {
+          "start": 28.58,
+          "end": 28.7,
+          "word": " en",
+          "probability": 0.9264392256736755
+        },
+        {
+          "start": 28.7,
+          "end": 28.78,
+          "word": " el",
+          "probability": 0.9897457361221313
+        },
+        {
+          "start": 28.78,
+          "end": 28.96,
+          "word": " Main",
+          "probability": 0.7397312521934509
+        }
+      ]
+    },
+    {
+      "start": 28.96,
+      "end": 29.66,
+      "text": " Stage Screen.",
+      "avg_logprob": -0.34643012980620064,
+      "no_speech_prob": 0.22157150506973267,
+      "words": [
+        {
+          "start": 28.96,
+          "end": 29.24,
+          "word": " Stage",
+          "probability": 0.5885595679283142
+        },
+        {
+          "start": 29.24,
+          "end": 29.66,
+          "word": " Screen.",
+          "probability": 0.9019282460212708
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_022050141.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 31.3386875,
+      "elapsed": 14.219000000004598,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 7.7,
+          "text": " Aquí estamos en el escenario principal, tenemos las cámaras que están transmitiendo directamente al escenario principal para las redes",
+          "avg_logprob": -0.2217989940959287,
+          "no_speech_prob": 0.30425119400024414,
+          "words": [
+            {
+              "start": 0.0,
+              "end": 0.28,
+              "word": " Aquí",
+              "probability": 0.15179245173931122
+            },
+            {
+              "start": 0.28,
+              "end": 0.5,
+              "word": " estamos",
+              "probability": 0.9731798768043518
+            },
+            {
+              "start": 0.5,
+              "end": 0.62,
+              "word": " en",
+              "probability": 0.9175432324409485
+            },
+            {
+              "start": 0.62,
+              "end": 0.68,
+              "word": " el",
+              "probability": 0.993860125541687
+            },
+            {
+              "start": 0.68,
+              "end": 0.94,
+              "word": " escenario",
+              "probability": 0.988945484161377
+            },
+            {
+              "start": 0.94,
+              "end": 1.28,
+              "word": " principal,",
+              "probability": 0.9964864253997803
+            },
+            {
+              "start": 1.64,
+              "end": 1.84,
+              "word": " tenemos",
+              "probability": 0.9608042240142822
+            },
+            {
+              "start": 1.84,
+              "end": 2.08,
+              "word": " las",
+              "probability": 0.9846692681312561
+            },
+            {
+              "start": 2.08,
+              "end": 2.54,
+              "word": " cámaras",
+              "probability": 0.9888438979784647
+            },
+            {
+              "start": 2.54,
+              "end": 2.62,
+              "word": " que",
+              "probability": 0.9696558117866516
+            },
+            {
+              "start": 2.62,
+              "end": 2.82,
+              "word": " están",
+              "probability": 0.9525564312934875
+            },
+            {
+              "start": 2.82,
+              "end": 3.78,
+              "word": " transmitiendo",
+              "probability": 0.9630620181560516
+            },
+            {
+              "start": 3.78,
+              "end": 5.06,
+              "word": " directamente",
+              "probability": 0.7733754515647888
+            },
+            {
+              "start": 5.06,
+              "end": 6.2,
+              "word": " al",
+              "probability": 0.9282310605049133
+            },
+            {
+              "start": 6.2,
+              "end": 6.52,
+              "word": " escenario",
+              "probability": 0.9990455806255341
+            },
+            {
+              "start": 6.52,
+              "end": 7.04,
+              "word": " principal",
+              "probability": 0.9898115992546082
+            },
+            {
+              "start": 7.04,
+              "end": 7.28,
+              "word": " para",
+              "probability": 0.9435155391693115
+            },
+            {
+              "start": 7.28,
+              "end": 7.46,
+              "word": " las",
+              "probability": 0.9790109395980835
+            },
+            {
+              "start": 7.46,
+              "end": 7.7,
+              "word": " redes",
+              "probability": 0.9962396621704102
+            }
+          ]
+        },
+        {
+          "start": 7.7,
+          "end": 14.26,
+          "text": " y por aquí tenemos como el branding o el branding del main stage screen",
+          "avg_logprob": -0.2217989940959287,
+          "no_speech_prob": 0.30425119400024414,
+          "words": [
+            {
+              "start": 7.7,
+              "end": 8.64,
+              "word": " y",
+              "probability": 0.6767610311508179
+            },
+            {
+              "start": 8.64,
+              "end": 8.76,
+              "word": " por",
+              "probability": 0.9844984412193298
+            },
+            {
+              "start": 8.76,
+              "end": 8.96,
+              "word": " aquí",
+              "probability": 0.9831078052520752
+            },
+            {
+              "start": 8.96,
+              "end": 9.38,
+              "word": " tenemos",
+              "probability": 0.9817032217979431
+            },
+            {
+              "start": 9.38,
+              "end": 10.1,
+              "word": " como",
+              "probability": 0.7231951951980591
+            },
+            {
+              "start": 10.1,
+              "end": 10.26,
+              "word": " el",
+              "probability": 0.9654104709625244
+            },
+            {
+              "start": 10.26,
+              "end": 10.96,
+              "word": " branding",
+              "probability": 0.42931780219078064
+            },
+            {
+              "start": 10.96,
+              "end": 11.1,
+              "word": " o",
+              "probability": 0.4113074839115143
+            },
+            {
+              "start": 11.1,
+              "end": 11.2,
+              "word": " el",
+              "probability": 0.9252458214759827
+            },
+            {
+              "start": 11.2,
+              "end": 11.48,
+              "word": " branding",
+              "probability": 0.9624190330505371
+            },
+            {
+              "start": 11.48,
+              "end": 12.08,
+              "word": " del",
+              "probability": 0.3702908158302307
+            },
+            {
+              "start": 12.08,
+              "end": 13.22,
+              "word": " main",
+              "probability": 0.5343529582023621
+            },
+            {
+              "start": 13.22,
+              "end": 13.66,
+              "word": " stage",
+              "probability": 0.7758914232254028
+            },
+            {
+              "start": 13.66,
+              "end": 14.26,
+              "word": " screen",
+              "probability": 0.9556465148925781
+            }
+          ]
+        },
+        {
+          "start": 15.02,
+          "end": 24.56,
+          "text": " pero aquí lo podemos ver, analicemos las diferentes marcas, tenemos la sección por acá del diseño, el tren, el puente, el mar, etc.",
+          "avg_logprob": -0.2217989940959287,
+          "no_speech_prob": 0.30425119400024414,
+          "words": [
+            {
+              "start": 15.02,
+              "end": 15.5,
+              "word": " pero",
+              "probability": 0.6748747825622559
+            },
+            {
+              "start": 15.5,
+              "end": 15.64,
+              "word": " aquí",
+              "probability": 0.9760977029800415
+            },
+            {
+              "start": 15.64,
+              "end": 15.76,
+              "word": " lo",
+              "probability": 0.9635369777679443
+            },
+            {
+              "start": 15.76,
+              "end": 15.94,
+              "word": " podemos",
+              "probability": 0.994469165802002
+            },
+            {
+              "start": 15.94,
+              "end": 16.34,
+              "word": " ver,",
+              "probability": 0.9991912245750427
+            },
+            {
+              "start": 16.74,
+              "end": 17.28,
+              "word": " analicemos",
+              "probability": 0.9651616215705872
+            },
+            {
+              "start": 17.28,
+              "end": 17.46,
+              "word": " las",
+              "probability": 0.9598652720451355
+            },
+            {
+              "start": 17.46,
+              "end": 17.7,
+              "word": " diferentes",
+              "probability": 0.9961504936218262
+            },
+            {
+              "start": 17.7,
+              "end": 18.28,
+              "word": " marcas,",
+              "probability": 0.9934424161911011
+            },
+            {
+              "start": 18.32,
+              "end": 18.58,
+              "word": " tenemos",
+              "probability": 0.9900004863739014
+            },
+            {
+              "start": 18.58,
+              "end": 18.78,
+              "word": " la",
+              "probability": 0.9773390889167786
+            },
+            {
+              "start": 18.78,
+              "end": 19.14,
+              "word": " sección",
+              "probability": 0.9937791526317596
+            },
+            {
+              "start": 19.14,
+              "end": 19.36,
+              "word": " por",
+              "probability": 0.6030957102775574
+            },
+            {
+              "start": 19.36,
+              "end": 19.56,
+              "word": " acá",
+              "probability": 0.9670692086219788
+            },
+            {
+              "start": 19.56,
+              "end": 19.82,
+              "word": " del",
+              "probability": 0.5100653171539307
+            },
+            {
+              "start": 19.82,
+              "end": 21.78,
+              "word": " diseño,",
+              "probability": 0.9976985156536102
+            },
+            {
+              "start": 21.98,
+              "end": 22.16,
+              "word": " el",
+              "probability": 0.8546290397644043
+            },
+            {
+              "start": 22.16,
+              "end": 23.2,
+              "word": " tren,",
+              "probability": 0.8721758127212524
+            },
+            {
+              "start": 23.48,
+              "end": 23.52,
+              "word": " el",
+              "probability": 0.9637687802314758
+            },
+            {
+              "start": 23.52,
+              "end": 23.76,
+              "word": " puente,",
+              "probability": 0.9579634964466095
+            },
+            {
+              "start": 23.98,
+              "end": 24.02,
+              "word": " el",
+              "probability": 0.9794822335243225
+            },
+            {
+              "start": 24.02,
+              "end": 24.26,
+              "word": " mar,",
+              "probability": 0.9966493248939514
+            },
+            {
+              "start": 24.36,
+              "end": 24.56,
+              "word": " etc.",
+              "probability": 0.9174410700798035
+            }
+          ]
+        },
+        {
+          "start": 24.56,
+          "end": 28.96,
+          "text": " etcétera, etcétera. Y por aquí tenemos las diferentes marcas. Estamos aquí en el Main",
+          "avg_logprob": -0.34643012980620064,
+          "no_speech_prob": 0.22157150506973267,
+          "words": [
+            {
+              "start": 24.56,
+              "end": 24.8,
+              "word": " etcétera,",
+              "probability": 0.6970141728719076
+            },
+            {
+              "start": 24.84,
+              "end": 25.5,
+              "word": " etcétera.",
+              "probability": 0.9238267739613851
+            },
+            {
+              "start": 25.5,
+              "end": 25.7,
+              "word": " Y",
+              "probability": 0.7413414120674133
+            },
+            {
+              "start": 25.7,
+              "end": 25.84,
+              "word": " por",
+              "probability": 0.9694550037384033
+            },
+            {
+              "start": 25.84,
+              "end": 25.98,
+              "word": " aquí",
+              "probability": 0.9913559556007385
+            },
+            {
+              "start": 25.98,
+              "end": 26.2,
+              "word": " tenemos",
+              "probability": 0.9714339375495911
+            },
+            {
+              "start": 26.2,
+              "end": 26.36,
+              "word": " las",
+              "probability": 0.9809050559997559
+            },
+            {
+              "start": 26.36,
+              "end": 26.62,
+              "word": " diferentes",
+              "probability": 0.9969868063926697
+            },
+            {
+              "start": 26.62,
+              "end": 27.38,
+              "word": " marcas.",
+              "probability": 0.9895879328250885
+            },
+            {
+              "start": 27.92,
+              "end": 28.32,
+              "word": " Estamos",
+              "probability": 0.9815773367881775
+            },
+            {
+              "start": 28.32,
+              "end": 28.58,
+              "word": " aquí",
+              "probability": 0.9624047875404358
+            },
+            {
+              "start": 28.58,
+              "end": 28.7,
+              "word": " en",
+              "probability": 0.9264392256736755
+            },
+            {
+              "start": 28.7,
+              "end": 28.78,
+              "word": " el",
+              "probability": 0.9897457361221313
+            },
+            {
+              "start": 28.78,
+              "end": 28.96,
+              "word": " Main",
+              "probability": 0.7397312521934509
+            }
+          ]
+        },
+        {
+          "start": 28.96,
+          "end": 29.66,
+          "text": " Stage Screen.",
+          "avg_logprob": -0.34643012980620064,
+          "no_speech_prob": 0.22157150506973267,
+          "words": [
+            {
+              "start": 28.96,
+              "end": 29.24,
+              "word": " Stage",
+              "probability": 0.5885595679283142
+            },
+            {
+              "start": 29.24,
+              "end": 29.66,
+              "word": " Screen.",
+              "probability": 0.9019282460212708
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

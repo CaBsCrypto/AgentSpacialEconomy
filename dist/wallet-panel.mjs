@@ -14,7 +14,7 @@ const messages = {
   error: 'No se pudo completar la activación. Puedes continuar y volver a intentarlo.',
 };
 
-export function bindWalletPanel({ dialog, controller, documentRef = dialog.ownerDocument, onClose = () => {} } = {}) {
+export function bindWalletPanel({ dialog, controller, documentRef = dialog.ownerDocument, onClose = () => {}, onContinue = () => {} } = {}) {
   const doc = documentRef;
   if (!doc.getElementById('walletStyles')) {
     const stylesheet = doc.createElement('link');
@@ -120,6 +120,12 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
   const unsubscribe = controller.subscribe(update);
   const closePanel = () => { if (dialog.open) dialog.close(); };
   const onClosed = () => { clearCooldown(); onClose(); };
+  // Only this explicit button acknowledges continuation. Escape, x and close()
+  // preserve the wallet session without claiming that activation succeeded.
+  const onContinueClick = () => {
+    if (!dialog.open) return;
+    try { onContinue(controller.state); } finally { closePanel(); }
+  };
   const onCreate = () => { void controller.ensureWalletReady({ create: true }); };
   const onConnect = () => { void controller.connect(); };
   const onReceive = () => { void controller.ensureWalletReady({ create: false }); };
@@ -130,7 +136,7 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
     else void controller.refresh();
   };
   close.addEventListener('click', closePanel);
-  continueButton.addEventListener('click', closePanel);
+  continueButton.addEventListener('click', onContinueClick);
   create.addEventListener('click', onCreate);
   connect.addEventListener('click', onConnect);
   receive.addEventListener('click', onReceive);
@@ -143,7 +149,7 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
       clearCooldown();
       unsubscribe();
       close.removeEventListener('click', closePanel);
-      continueButton.removeEventListener('click', closePanel);
+      continueButton.removeEventListener('click', onContinueClick);
       create.removeEventListener('click', onCreate);
       connect.removeEventListener('click', onConnect);
       receive.removeEventListener('click', onReceive);

@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-26",
+  "base": "298fefa",
+  "branch": "codex/render-textures-ui",
+  "videosReviewed": 13,
+  "videoDurationSeconds": 311.142314,
+  "tests": {
+    "frontend": {
+      "passed": 368,
+      "skipped": 1,
+      "failed": 0,
+      "skipReason": "Preexisting opt-in live Smart Account Kit integration"
+    },
+    "agent": {
+      "passed": 34,
+      "failed": 0
+    },
+    "responsiveBrowser": {
+      "passed": 5,
+      "failed": 0
+    },
+    "interactiveFlows": {
+      "passed": 9,
+      "failed": 0
+    },
+    "webglFallback": {
+      "passed": true,
+      "details": "Initial WebGL failure, 2D with 23 references, repeated failure, successful recovery and focus restore",
+      "evidence": "ui-fallback.json"
+    }
+  },
+  "model": {
+    "bytes": 13411780,
+    "gzipBytes": 4085849,
+    "sha256": "cb45c38e2d09d1438c39d319b601db19b663d21fbd87221cda01a625b6a7502c",
+    "meshesBeforeRuntime": 414,
+    "vertices": 294780,
+    "imagesDecoded": 32,
+    "downloadBudgetBytes": 5242880
+  },
+  "render": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1440,
+      900
+    ],
+    "equivalentViewpoints": 14,
+    "firstFrameBeforeMs": 1080.4000000059605,
+    "firstFrameAfterMs": 1520.5999999940395,
+    "medianFrameMs": 16.699999999999818,
+    "p95FrameMs": 16.800000000000182,
+    "pageErrors": [],
+    "missingLocalAssets": []
+  },
+  "limits": [
+    "HTTP responses served from local fixtures; timings exclude real network latency.",
+    "Physical Android/iOS devices were not connected; mobile UI checked at the specified viewports.",
+    "Small illegible artwork is simplified; all dimensions and placement remain estimates.",
+    "Wallet configuration is explicitly disabled in the rendering fixture; no transactions initiated."
+  ]
+}

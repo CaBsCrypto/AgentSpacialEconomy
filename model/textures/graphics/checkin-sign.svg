@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="422" viewBox="0 0 2048 422">
+<rect width="100%" height="100%" fill="#f1d41b"/>
+<text x="55.5" y="211.58" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="157">Check-in &amp; Info Desk</text>
+<polygon points="1860.05,134.221 1918.55,123.887 1918.55,156.113 1860.05,145.779" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1855.33,157.162 1904,191.218 1881.22,214.005 1847.16,165.335" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1835.78,170.049 1846.11,228.546 1813.89,228.546 1824.22,170.049" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1812.84,165.335 1778.78,214.005 1756,191.218 1804.67,157.162" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1799.95,145.779 1741.45,156.113 1741.45,123.887 1799.95,134.221" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1804.67,122.838 1756,88.7819 1778.78,65.9952 1812.84,114.665" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1824.22,109.951 1813.89,51.4541 1846.11,51.4541 1835.78,109.951" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1847.16,114.665 1881.22,65.9952 1904,88.7819 1855.33,122.838" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1710,241 1732,253.76 1754,241 1754,249.36 1732,262.56 1710,249.36" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1710,253.76 1724.08,262.12 1710,271.36" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1754,253.76 1739.92,262.12 1754,271.36" fill="#171c1c" stroke="none" stroke-width="1"/>
+<text x="1762.25" y="254.728" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="23.1">Hack</text>
+<text x="1762.25" y="280.6" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="23.1">Meridian</text>
+<rect x="0" y="300" width="2048" height="122" fill="#171c1c" stroke="none" stroke-width="1"/>
+<text x="221.5" y="391.8" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="70">Mentors &amp; Judges</text>
+<polyline points="995,328 995,389" fill="none" stroke="#f1d41b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="972,366 995,389 1018,366" fill="none" stroke="#f1d41b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1398.5" y="391.8" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="70">Hackers</text>
+<polyline points="1875,328 1875,389" fill="none" stroke="#f1d41b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1852,366 1875,389 1898,366" fill="none" stroke="#f1d41b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

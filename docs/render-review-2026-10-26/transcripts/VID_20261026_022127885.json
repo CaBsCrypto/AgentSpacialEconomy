@@ -1,0 +1,372 @@
+{
+  "file": "VID_20261026_022127885.mp4",
+  "driveId": "1bdPxLGQ3kMWWNZECajyxNhjH45tyZ2z_",
+  "url": "https://drive.google.com/file/d/1bdPxLGQ3kMWWNZECajyxNhjH45tyZ2z_/view",
+  "durationSeconds": 10.483625,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [],
+  "segments": [
+    {
+      "start": 0.05,
+      "end": 5.21,
+      "text": " Y finalmente por aquí tenemos el Chillson que estaba en el costado derecho del mini stage",
+      "avg_logprob": -0.3745518828693189,
+      "no_speech_prob": 0.054937150329351425,
+      "words": [
+        {
+          "start": 0.05,
+          "end": 0.57,
+          "word": " Y",
+          "probability": 0.36142247915267944
+        },
+        {
+          "start": 0.57,
+          "end": 0.87,
+          "word": " finalmente",
+          "probability": 0.9661589860916138
+        },
+        {
+          "start": 0.87,
+          "end": 1.37,
+          "word": " por",
+          "probability": 0.8571926951408386
+        },
+        {
+          "start": 1.37,
+          "end": 1.49,
+          "word": " aquí",
+          "probability": 0.9755071997642517
+        },
+        {
+          "start": 1.49,
+          "end": 1.73,
+          "word": " tenemos",
+          "probability": 0.9625077247619629
+        },
+        {
+          "start": 1.73,
+          "end": 1.99,
+          "word": " el",
+          "probability": 0.977356493473053
+        },
+        {
+          "start": 1.99,
+          "end": 2.45,
+          "word": " Chillson",
+          "probability": 0.4200107455253601
+        },
+        {
+          "start": 2.45,
+          "end": 2.57,
+          "word": " que",
+          "probability": 0.7462321519851685
+        },
+        {
+          "start": 2.57,
+          "end": 2.85,
+          "word": " estaba",
+          "probability": 0.4108467698097229
+        },
+        {
+          "start": 2.85,
+          "end": 3.05,
+          "word": " en",
+          "probability": 0.7256413698196411
+        },
+        {
+          "start": 3.05,
+          "end": 3.31,
+          "word": " el",
+          "probability": 0.989021897315979
+        },
+        {
+          "start": 3.31,
+          "end": 4.01,
+          "word": " costado",
+          "probability": 0.9682473540306091
+        },
+        {
+          "start": 4.01,
+          "end": 4.35,
+          "word": " derecho",
+          "probability": 0.9661028385162354
+        },
+        {
+          "start": 4.35,
+          "end": 4.55,
+          "word": " del",
+          "probability": 0.9725148677825928
+        },
+        {
+          "start": 4.55,
+          "end": 4.77,
+          "word": " mini",
+          "probability": 0.5269945859909058
+        },
+        {
+          "start": 4.77,
+          "end": 5.21,
+          "word": " stage",
+          "probability": 0.5865728855133057
+        }
+      ]
+    },
+    {
+      "start": 5.21,
+      "end": 8.81,
+      "text": " que también tenemos que replicarle cada uno de los diseños.",
+      "avg_logprob": -0.3745518828693189,
+      "no_speech_prob": 0.054937150329351425,
+      "words": [
+        {
+          "start": 5.21,
+          "end": 5.89,
+          "word": " que",
+          "probability": 0.4576481878757477
+        },
+        {
+          "start": 5.89,
+          "end": 6.13,
+          "word": " también",
+          "probability": 0.9896348118782043
+        },
+        {
+          "start": 6.13,
+          "end": 6.47,
+          "word": " tenemos",
+          "probability": 0.9925179481506348
+        },
+        {
+          "start": 6.47,
+          "end": 6.67,
+          "word": " que",
+          "probability": 0.9962085485458374
+        },
+        {
+          "start": 6.67,
+          "end": 7.27,
+          "word": " replicarle",
+          "probability": 0.9657092094421387
+        },
+        {
+          "start": 7.27,
+          "end": 7.39,
+          "word": " cada",
+          "probability": 0.919031023979187
+        },
+        {
+          "start": 7.39,
+          "end": 7.65,
+          "word": " uno",
+          "probability": 0.9961363673210144
+        },
+        {
+          "start": 7.65,
+          "end": 7.79,
+          "word": " de",
+          "probability": 0.9990046620368958
+        },
+        {
+          "start": 7.79,
+          "end": 7.93,
+          "word": " los",
+          "probability": 0.9984143972396851
+        },
+        {
+          "start": 7.93,
+          "end": 8.81,
+          "word": " diseños.",
+          "probability": 0.9984556436538696
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_022127885.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 10.3893125,
+      "elapsed": 5.014999999999418,
+      "segments": [
+        {
+          "start": 0.05,
+          "end": 5.21,
+          "text": " Y finalmente por aquí tenemos el Chillson que estaba en el costado derecho del mini stage",
+          "avg_logprob": -0.3745518828693189,
+          "no_speech_prob": 0.054937150329351425,
+          "words": [
+            {
+              "start": 0.05,
+              "end": 0.57,
+              "word": " Y",
+              "probability": 0.36142247915267944
+            },
+            {
+              "start": 0.57,
+              "end": 0.87,
+              "word": " finalmente",
+              "probability": 0.9661589860916138
+            },
+            {
+              "start": 0.87,
+              "end": 1.37,
+              "word": " por",
+              "probability": 0.8571926951408386
+            },
+            {
+              "start": 1.37,
+              "end": 1.49,
+              "word": " aquí",
+              "probability": 0.9755071997642517
+            },
+            {
+              "start": 1.49,
+              "end": 1.73,
+              "word": " tenemos",
+              "probability": 0.9625077247619629
+            },
+            {
+              "start": 1.73,
+              "end": 1.99,
+              "word": " el",
+              "probability": 0.977356493473053
+            },
+            {
+              "start": 1.99,
+              "end": 2.45,
+              "word": " Chillson",
+              "probability": 0.4200107455253601
+            },
+            {
+              "start": 2.45,
+              "end": 2.57,
+              "word": " que",
+              "probability": 0.7462321519851685
+            },
+            {
+              "start": 2.57,
+              "end": 2.85,
+              "word": " estaba",
+              "probability": 0.4108467698097229
+            },
+            {
+              "start": 2.85,
+              "end": 3.05,
+              "word": " en",
+              "probability": 0.7256413698196411
+            },
+            {
+              "start": 3.05,
+              "end": 3.31,
+              "word": " el",
+              "probability": 0.989021897315979
+            },
+            {
+              "start": 3.31,
+              "end": 4.01,
+              "word": " costado",
+              "probability": 0.9682473540306091
+            },
+            {
+              "start": 4.01,
+              "end": 4.35,
+              "word": " derecho",
+              "probability": 0.9661028385162354
+            },
+            {
+              "start": 4.35,
+              "end": 4.55,
+              "word": " del",
+              "probability": 0.9725148677825928
+            },
+            {
+              "start": 4.55,
+              "end": 4.77,
+              "word": " mini",
+              "probability": 0.5269945859909058
+            },
+            {
+              "start": 4.77,
+              "end": 5.21,
+              "word": " stage",
+              "probability": 0.5865728855133057
+            }
+          ]
+        },
+        {
+          "start": 5.21,
+          "end": 8.81,
+          "text": " que también tenemos que replicarle cada uno de los diseños.",
+          "avg_logprob": -0.3745518828693189,
+          "no_speech_prob": 0.054937150329351425,
+          "words": [
+            {
+              "start": 5.21,
+              "end": 5.89,
+              "word": " que",
+              "probability": 0.4576481878757477
+            },
+            {
+              "start": 5.89,
+              "end": 6.13,
+              "word": " también",
+              "probability": 0.9896348118782043
+            },
+            {
+              "start": 6.13,
+              "end": 6.47,
+              "word": " tenemos",
+              "probability": 0.9925179481506348
+            },
+            {
+              "start": 6.47,
+              "end": 6.67,
+              "word": " que",
+              "probability": 0.9962085485458374
+            },
+            {
+              "start": 6.67,
+              "end": 7.27,
+              "word": " replicarle",
+              "probability": 0.9657092094421387
+            },
+            {
+              "start": 7.27,
+              "end": 7.39,
+              "word": " cada",
+              "probability": 0.919031023979187
+            },
+            {
+              "start": 7.39,
+              "end": 7.65,
+              "word": " uno",
+              "probability": 0.9961363673210144
+            },
+            {
+              "start": 7.65,
+              "end": 7.79,
+              "word": " de",
+              "probability": 0.9990046620368958
+            },
+            {
+              "start": 7.79,
+              "end": 7.93,
+              "word": " los",
+              "probability": 0.9984143972396851
+            },
+            {
+              "start": 7.93,
+              "end": 8.81,
+              "word": " diseños.",
+              "probability": 0.9984556436538696
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

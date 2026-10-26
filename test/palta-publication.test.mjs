@@ -43,8 +43,8 @@ function watchResources(root) {
 
 test('overlapping Palta mounts remove only their own collision object and dispose once', async () => {
   const scene = new THREE.Scene(), unrelated = { id: 'existing' }, layout = { obstacles: [unrelated] };
-  const first = await mount(scene, layout), firstObstacle = layout.obstacles[1];
-  const second = await mount(scene, layout), secondObstacle = layout.obstacles[2];
+  const first = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), firstObstacle = layout.obstacles[1];
+  const second = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), secondObstacle = layout.obstacles[2];
   const resources = watchResources(first.root);
   assert.notEqual(firstObstacle, secondObstacle);
   assert.equal(scene.children.length, 2);
@@ -158,8 +158,8 @@ test('the unified picker respects Palta occlusion and retains wallet selection b
   const calls = { palta: 0, wallet: 0 };
   let onPointerUp;
   const context = {
-    THREE, camera, model, renderer: {}, mode: 'walk',
-    palta: { root, toggle: () => calls.palta++ },
+    THREE, camera, model, renderer: {}, mode: 'walk', active:true, venueUI:null, football:null, tapPointers:new Set(), $:()=>({open:false}),
+    palta: { root, open: () => calls.palta++ },
     canvas: { addEventListener: (_type, handler) => { onPointerUp = handler; }, getBoundingClientRect: () => ({ left: 0, top: 0, width: 100, height: 100 }) },
     isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
   };

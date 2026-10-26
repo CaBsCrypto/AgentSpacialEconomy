@@ -1,0 +1,99 @@
+[
+  {
+    "name": "shell-d3d11",
+    "args": [
+      "--use-angle=d3d11",
+      "--use-gl=angle",
+      "--enable-gpu",
+      "--ignore-gpu-blocklist"
+    ],
+    "version": "153.0.8010.12",
+    "contexts": [
+      {
+        "strict": false,
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (NVIDIA)",
+        "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "contextLost": false,
+        "error": 0
+      },
+      {
+        "strict": true,
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (NVIDIA)",
+        "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "contextLost": false,
+        "error": 0
+      }
+    ]
+  },
+  {
+    "name": "shell-d3d11-hardware-only",
+    "args": [
+      "--use-angle=d3d11",
+      "--use-gl=angle",
+      "--enable-gpu",
+      "--ignore-gpu-blocklist",
+      "--disable-software-rasterizer"
+    ],
+    "version": "153.0.8010.12",
+    "contexts": [
+      {
+        "strict": false,
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (NVIDIA)",
+        "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "contextLost": false,
+        "error": 0
+      },
+      {
+        "strict": true,
+        "available": true,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (NVIDIA)",
+        "unmaskedRenderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "pixel": [
+          255,
+          0,
+          0,
+          255
+        ],
+        "contextLost": false,
+        "error": 0
+      }
+    ]
+  },
+  {
+    "name": "full-chromium-d3d11",
+    "error": "Error: browserType.launch: Failed to launch chromium because executable doesn't exist at C:\\Users\\cabs_\\AppData\\Local\\Packages\\sandbox.{7aa4f02e-a47a-472a-a513-862b9dfc361a}\\AC\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe"
+  }
+]

@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:07,700
+Aquí estamos en el escenario principal, tenemos las cámaras que están transmitiendo directamente al escenario principal para las redes
+
+2
+00:00:07,700 --> 00:00:14,260
+y por aquí tenemos como el branding o el branding del main stage screen
+
+3
+00:00:15,020 --> 00:00:24,560
+pero aquí lo podemos ver, analicemos las diferentes marcas, tenemos la sección por acá del diseño, el tren, el puente, el mar, etc.
+
+4
+00:00:24,560 --> 00:00:28,960
+etcétera, etcétera. Y por aquí tenemos las diferentes marcas. Estamos aquí en el Main
+
+5
+00:00:28,960 --> 00:00:29,660
+Stage Screen.

@@ -30,10 +30,9 @@
 
 .overview-ar-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;pointer-events:auto}.overview-ar-actions button{min-height:44px;padding:8px 10px;background:#eaf0dc;color:#172019;border:1px solid #b8c892;border-radius:5px;font-size:11px;cursor:pointer}.overview-ar-actions button:focus-visible{outline:3px solid #ffe06b;outline-offset:2px}#overviewArHint{max-width:calc(100% - 250px)}@media(max-width:800px){#overviewArHint{max-width:calc(100% - 20px)}.overview-ar-actions button{font-size:10px;padding:6px 8px}}
 /* Temporary review mapping: informational IDs do not change venue geometry. */
-#reviewNumbers{position:absolute;inset:0;pointer-events:none;z-index:14;overflow:hidden}#reviewNumbers span{position:absolute;pointer-events:none}.review-number{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#ffe26f;color:#101d29;border:1px solid #101d29;font:800 12px system-ui;transform:translate(-50%,-50%);box-shadow:0 1px 4px #0009}.review-number.provisional{border:2px dashed #ffe26f;background:#192735;color:#ffe26f}.review-number-leader{height:1px;background:#ffe26f;transform-origin:0 50%}.review-number-anchor{width:3px;height:3px;background:#ffe26f;border-radius:50%}
 #reviewTools{position:absolute;left:20px;top:90px;z-index:22;display:flex;gap:6px}#reviewTools button,#reviewToggle{min-height:44px}#reviewNames{position:absolute;left:20px;top:145px;z-index:21;max-width:245px}.review-legend{background:#10202ded;border:1px solid #6d8291;border-radius:10px;color:#edf5fa;padding:10px;font-size:12px}.review-legend summary{cursor:pointer;min-height:32px;display:flex;align-items:center}.review-legend ol{max-height:40vh;overflow:auto;padding-left:28px;line-height:1.8}.review-legend p{font-size:11px}.plan-hotspots>.review-legend{margin:10px 0}.plan-map-stage>svg{height:100%!important}
-#walkMinimap{position:absolute;right:12px;bottom:12px;z-index:18;width:150px;border:1px solid #7b94a3;background:#101d29;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px #0007}#miniMapImage{height:180px;overflow:hidden}#miniMapImage svg{height:180px!important}#miniMapFull{width:100%;min-height:44px;font-size:12px}.review-enabled #nearPassport{bottom:245px}#overviewArHint{max-width:430px;font-size:11px}#overviewArHint .overview-ar-actions{display:grid;grid-template-columns:1fr 1fr}#overviewArHint button{font-size:11px}
-@media(max-width:640px){#reviewTools{top:150px;left:10px;right:10px}#reviewTools button{font-size:11px;padding:6px 10px}#reviewNames{top:201px;left:10px;max-width:205px}#reviewNames details:not([open]){padding:2px 8px}#reviewNames details[open]{max-height:45vh;overflow:auto}#walkMinimap{width:126px;right:8px;bottom:10px}#miniMapImage,#miniMapImage svg{height:150px!important}.review-enabled #nearPassport{bottom:210px;right:8px;max-width:180px;font-size:12px}#overviewArHint{bottom:10px;left:10px;max-width:calc(100% - 20px)}.mode-controls button{padding:7px 10px}#reviewToggle{font-size:11px;padding:6px}}
+#walkMinimap{position:absolute;right:12px;bottom:12px;z-index:18;width:150px;border:1px solid #7b94a3;background:#101d29;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px #0007}#miniMapImage{height:180px;overflow:hidden}#miniMapImage svg{height:180px!important}#miniMapFull{width:100%;min-height:44px;font-size:12px}#overviewArHint{max-width:430px;font-size:11px}#overviewArHint .overview-ar-actions{display:grid;grid-template-columns:1fr 1fr}#overviewArHint button{font-size:11px}
+@media(max-width:640px){#reviewTools{top:150px;left:10px;right:10px}#reviewTools button{font-size:11px;padding:6px 10px}#reviewNames{top:201px;left:10px;max-width:205px}#reviewNames details:not([open]){padding:2px 8px}#reviewNames details[open]{max-height:45vh;overflow:auto}#walkMinimap{width:126px;right:8px;bottom:10px}#miniMapImage,#miniMapImage svg{height:150px!important}#overviewArHint{bottom:10px;left:10px;max-width:calc(100% - 20px)}.mode-controls button{padding:7px 10px}#reviewToggle{font-size:11px;padding:6px}}
 @media(max-height:500px){#reviewTools{top:85px}#reviewNames{top:135px}#overviewArHint{max-width:330px}#walkMinimap{width:105px}#miniMapImage,#miniMapImage svg{height:105px!important}}
 .ar-demo-heading{margin:24px 0 6px;color:#e3f8a1;font-size:24px}.ar-help{padding:12px;border:1px solid #819483;border-radius:10px;margin:16px 0}.ar-help summary{min-height:44px;cursor:pointer;display:flex;align-items:center}.ar-help li{margin:10px 0}.world-ar-button{display:flex;align-items:center;justify-content:center;min-height:54px}
 /* Walk touch input must not become Chrome scroll/pinch gestures. */
@@ -52,3 +51,83 @@
 /* Keep the immersive controls clear; the totem and map share the wallet panel. */
 .wallet-in-venue #walletQuickOpen{display:none!important}
 @media(max-width:640px){#viewer #nearActivation{bottom:calc(env(safe-area-inset-bottom,0px) + 216px);max-width:min(250px,calc(100% - 32px))}}
+
+/* Venue HUD: one measured flow, shared panels and clear walking controls. */
+#viewer.venue-ui{--venue-hud-bottom:160px;--venue-map-height:238px;--venue-edge:max(10px,env(safe-area-inset-right,0px))}
+.venue-ui #venueHud{position:absolute;z-index:35;top:max(10px,env(safe-area-inset-top,0px));left:max(10px,env(safe-area-inset-left,0px));right:var(--venue-edge);display:grid;gap:8px;pointer-events:none}
+.venue-ui #venueHud button,.venue-ui #room{pointer-events:auto}
+.venue-ui .toolbar{position:static;display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;grid-template-areas:none;gap:8px;width:auto;align-items:center}
+.venue-ui .toolbar .mode-controls{display:flex;gap:4px;width:auto;order:initial;min-width:0}
+.venue-ui .toolbar .mode-controls button{flex:1;white-space:nowrap}
+.venue-ui .toolbar button,.venue-ui #venueActions>button,.venue-ui #reviewTools button,.venue-ui #minimapToggle,.venue-ui #closePlaces{min-height:44px;min-width:44px;border:1px solid #8da0ac88;border-radius:9px;background:#10202eef;color:#f2f5ee;padding:10px 13px;font-size:13px;line-height:1.25}
+.venue-ui .toolbar #restart{background:#f3d64e;color:#172019}
+.venue-ui .toolbar button[aria-pressed=true],.venue-ui #toggleZones[aria-expanded=true]{background:#f3d64e;color:#172019}
+.venue-ui #venueActions>button[aria-pressed=true]{background:#f3d64e;color:#172019}
+.venue-ui #venueActions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;pointer-events:none}
+#viewer.venue-ui #toggleZones{display:block;position:static;font-size:13px;white-space:nowrap}
+#viewer.venue-ui.no-webgl #toggleZones,#viewer.venue-ui.venue-unavailable #toggleZones{display:none}
+.venue-ui #room,#viewer.venue-ui.no-webgl #room{position:static;flex:1;min-width:180px;max-width:none;width:auto;margin:0;border:1px solid #68809077;border-radius:9px;background:#10202ee8;color:#f2f5ee;padding:9px 12px;font-size:13px;line-height:1.4;overflow-wrap:anywhere;pointer-events:none}
+.venue-ui #venuePlacesPanel{position:absolute;z-index:34;right:var(--venue-edge);top:calc(var(--venue-hud-bottom) + 8px);width:min(340px,calc(100% - 20px));max-height:calc(100dvh - var(--venue-hud-bottom) - max(20px,env(safe-area-inset-bottom,0px)));overflow:auto;overscroll-behavior:contain;background:#10202ef5;color:#f2f5ee;border:1px solid #8da0ac88;border-radius:12px;padding:12px;box-shadow:0 12px 35px #0005}
+.venue-panel-heading{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.venue-panel-heading h2{font:600 17px/1.3 'DM Sans',sans-serif;letter-spacing:0;margin:0}
+#viewer.venue-ui #venuePlacesPanel #zones{position:static;display:flex;width:auto;max-height:none;overflow:visible;gap:6px}
+#viewer.venue-ui #zones button{min-height:44px;padding:11px 12px;font-size:13px;line-height:1.4;border-radius:7px;background:#1b3141;color:#f2f5ee}
+.venue-ui #overviewGuide{position:absolute;z-index:25;left:max(10px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));width:min(350px,calc(100% - 20px));max-height:calc(100dvh - var(--venue-hud-bottom) - 24px);overflow:auto;overscroll-behavior:contain;background:#10202ef2;color:#f2f5ee;border:1px solid #8da0ac88;border-radius:10px;box-shadow:0 6px 24px #0004}
+.venue-ui #overviewGuide>summary{min-height:44px;padding:12px 14px;cursor:pointer;font-size:13px;line-height:1.4}
+.venue-ui #overviewGuide[open]>summary{border-bottom:1px solid #8da0ac55}
+.venue-ui #overviewGuide #reviewTools{position:static;display:flex;flex-wrap:wrap;padding:10px 12px 0;gap:6px}
+.venue-ui #overviewGuide #reviewTools button{flex:1;font-size:12px;padding:9px}
+.venue-ui #overviewArHint{position:static;max-width:none;width:auto;border:0;padding:12px;background:transparent;pointer-events:auto;font-size:13px;line-height:1.5}
+.venue-ui #overviewArHint small{font-size:12px}
+.venue-ui #overviewArHint .overview-ar-actions button{font-size:12px;line-height:1.35;min-height:44px}
+.venue-ui #walkMinimap{right:var(--venue-edge);bottom:max(12px,env(safe-area-inset-bottom,0px));width:140px;border-radius:11px}
+.venue-ui #minimapToggle{display:block;width:100%;padding:10px 6px;border:0;border-radius:0;font-size:12px;text-align:center;background:#142c3c}
+.venue-ui #miniMapImage,.venue-ui #miniMapImage svg{height:150px!important}
+.venue-ui #miniMapFull{min-height:44px;font-size:12px;color:#f2f5ee;background:#142c3c;border:0;border-top:1px solid #8da0ac66;padding:8px 4px}
+#viewer.venue-ui .touch-controls{left:max(10px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
+.venue-ui .touch-controls .touch-hint{font-size:10px;line-height:1.35}
+.venue-ui.zones-open .touch-controls,.venue-ui.zones-open #walkMinimap,.venue-ui.zones-open #nearPassport,.venue-ui.zones-open #nearActivation{visibility:hidden}
+#viewer.venue-ui #nearPassport,#viewer.venue-ui #nearActivation{right:var(--venue-edge);bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + var(--venue-map-height) + 10px);max-width:min(270px,calc(100% - 20px));min-height:44px;font-size:13px;line-height:1.35}
+#viewer.venue-ui #plan,#viewer.venue-ui.no-webgl #plan{inset:calc(var(--venue-hud-bottom) + 8px) var(--venue-edge) max(12px,env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));padding:12px}
+.venue-ui #plan .plan-map-viewport{min-height:260px;height:min(600px,calc(100dvh - var(--venue-hud-bottom) - 58px))}
+.venue-ui #helpPanel{top:calc(var(--venue-hud-bottom) + 8px);right:var(--venue-edge);width:min(420px,calc(100% - 20px));max-height:calc(100dvh - var(--venue-hud-bottom) - 24px);z-index:40}
+.venue-ui button:focus-visible,.venue-ui summary:focus-visible{outline:3px solid #f5da72;outline-offset:3px}
+@media(max-width:800px){
+ .venue-ui .toolbar{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:'exit reset help' 'modes modes modes';gap:6px}
+ .venue-ui .toolbar #return{grid-area:exit}.venue-ui .toolbar #restart{grid-area:reset}.venue-ui .toolbar #help{grid-area:help}
+ .venue-ui .toolbar .mode-controls{grid-area:modes;width:100%}
+ .venue-ui .toolbar button{font-size:12px;padding:10px 8px}
+ .venue-ui #room{flex-basis:100%;font-size:12px;padding:8px 10px}
+ .venue-ui #walkMinimap{width:126px}
+ .venue-ui #venueActions>button{flex:1}
+}
+@media(max-height:500px){
+ .venue-ui #venueHud{top:max(6px,env(safe-area-inset-top,0px));gap:5px}
+ .venue-ui #room{flex-basis:0;min-width:160px;font-size:12px;padding:7px 10px}
+ .venue-ui #venueActions>button{flex:0 0 auto}
+ .venue-ui #walkMinimap{width:126px}
+ .venue-ui #miniMapImage,.venue-ui #miniMapImage svg{height:100px!important}
+ .venue-ui #venuePlacesPanel{width:min(340px,calc(100% - 20px))}
+ .venue-ui #overviewGuide{max-height:calc(100dvh - var(--venue-hud-bottom) - 20px)}
+}
+@media(max-width:350px){.venue-ui #walkMinimap{width:110px}.venue-ui #venueHud{gap:5px}.venue-ui .toolbar button{font-size:12px;padding:10px 6px}}
+
+/* The football action stays next to the existing nearby-experience controls. */
+#viewer.venue-ui #kickFootball{position:absolute;z-index:23;right:var(--venue-edge);bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + var(--venue-map-height) + 10px);min-height:44px;min-width:148px;padding:10px 16px;font-size:14px;border-radius:10px;background:#f5da72;color:#172019}
+.venue-ui.zones-open #kickFootball{visibility:hidden}
+#kickFootball:disabled{opacity:.65}
+
+/* Guided destinations stay separate from the map and nearby world actions. */
+#viewer.venue-ui #guidedTourStatus{position:absolute;z-index:24;top:calc(var(--venue-hud-bottom) + 8px);left:max(10px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:12px;width:min(420px,calc(100% - 20px));box-sizing:border-box;padding:10px 12px;border:1px solid #8da0ac88;border-radius:10px;background:#10202ef2;color:#f2f5ee}
+.venue-ui #guidedTourText{flex:1;min-width:0;margin:0;font-size:13px;line-height:1.4;overflow-wrap:anywhere}
+#viewer.venue-ui #guidedTourReset{flex:0 0 auto;min-width:44px;min-height:44px;padding:9px 10px;border:1px solid #8da0ac88;border-radius:8px;background:#193647;color:#f2f5ee;font-size:12px;line-height:1.25}
+#viewer.venue-ui #paltaNearButton{position:absolute;z-index:23;right:var(--venue-edge);bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + var(--venue-map-height) + 10px);min-width:120px;min-height:44px;max-width:min(270px,calc(100% - 20px));padding:10px 16px;border:1px solid #8da0ac88;border-radius:10px;background:#f5da72;color:#172019;font-size:14px;line-height:1.35}
+#guidedTourStatus[hidden],#paltaNearButton[hidden]{display:none!important}
+.venue-ui.zones-open #guidedTourStatus,.venue-ui.zones-open #paltaNearButton{visibility:hidden}
+@media(max-width:350px){
+ #viewer.venue-ui #guidedTourStatus{gap:8px;padding:8px 10px}
+ .venue-ui #guidedTourText{font-size:12px}
+ #viewer.venue-ui #guidedTourReset{max-width:100px;white-space:normal;padding:8px}
+ #viewer.venue-ui #nearPassport,#viewer.venue-ui #nearActivation,#viewer.venue-ui #paltaNearButton,#viewer.venue-ui #kickFootball{max-width:calc(100% - 168px);min-width:0;white-space:normal;font-size:12px}
+}
+@media(max-height:500px){#viewer.venue-ui #guidedTourStatus{width:min(420px,calc(100% - 184px));padding:8px 10px;gap:10px}.venue-ui #guidedTourText{font-size:12px}}

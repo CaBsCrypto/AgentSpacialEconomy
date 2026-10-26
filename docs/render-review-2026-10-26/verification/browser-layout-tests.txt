@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: venue controls fit desktop, portrait and landscape without overlapping the HUD
+    # Subtest: 390 × 844
+    ok 1 - 390 × 844
+      ---
+      duration_ms: 697.935
+      type: 'test'
+      ...
+    # Subtest: 844 × 390
+    ok 2 - 844 × 390
+      ---
+      duration_ms: 627.5672
+      type: 'test'
+      ...
+    # Subtest: 320 × 568
+    ok 3 - 320 × 568
+      ---
+      duration_ms: 553.474
+      type: 'test'
+      ...
+    # Subtest: 1440 × 900
+    ok 4 - 1440 × 900
+      ---
+      duration_ms: 606.501
+      type: 'test'
+      ...
+    1..4
+ok 1 - venue controls fit desktop, portrait and landscape without overlapping the HUD
+  ---
+  duration_ms: 2688.8117
+  type: 'test'
+  ...
+1..1
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3164.3566

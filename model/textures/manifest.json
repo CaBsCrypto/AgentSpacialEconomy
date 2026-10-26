@@ -1,0 +1,2432 @@
+{
+  "version": 1,
+  "generator": "scripts/generate-venue-appearance.py",
+  "seed": 16026,
+  "provenance": "Authored procedural reconstruction from the owner's narrated venue videos, 2026-10-26. No raw footage, attendee likenesses or workshop writing embedded. Observed venue marks identify signage; no affiliation implied.",
+  "graphicEvidence": {
+    "checkin": [
+      "VID_20261026_021823025.mp4"
+    ],
+    "energy": [
+      "VID_20261026_021930226.mp4"
+    ],
+    "stage": [
+      "VID_20261026_022050141.mp4"
+    ],
+    "photocall": [
+      "VID_20261026_022127885.mp4"
+    ],
+    "booths": [
+      "VID_20261025_210243989.mp4",
+      "VID_20261026_021119922.mp4"
+    ],
+    "skills": [
+      "VID_20261026_021853331.mp4"
+    ]
+  },
+  "graphics": {
+    "checkin-sign": {
+      "color": "graphics/checkin-sign.png",
+      "source": "graphics/checkin-sign.svg",
+      "width": 2048,
+      "height": 422,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "checkin-backdrop": {
+      "color": "graphics/checkin-backdrop.png",
+      "source": "graphics/checkin-backdrop.svg",
+      "width": 1536,
+      "height": 1400,
+      "alphaMode": "OPAQUE",
+      "layout": {
+        "reserved": [
+          {
+            "id": "made-to-move",
+            "box": [
+              30.72,
+              574.0,
+              737.28,
+              896.0
+            ],
+            "text": {
+              "text": "Made to\nMove",
+              "box": [
+                50.72,
+                590.0,
+                717.28,
+                880.0
+              ],
+              "bounds": [
+                75.49999999999997,
+                592.0,
+                692.5,
+                878.0
+              ],
+              "fontSize": 163.0,
+              "font": "arialbd.ttf"
+            }
+          },
+          {
+            "id": "event-identity",
+            "box": [
+              844.8000000000001,
+              602.0,
+              1489.92,
+              784.0000000000001
+            ]
+          },
+          {
+            "id": "event-date",
+            "box": [
+              1044.48,
+              784.0000000000001,
+              1443.84,
+              840.0
+            ]
+          }
+        ],
+        "repeatMarks": [
+          {
+            "kind": "year",
+            "box": [
+              53.760000000000005,
+              63.0,
+              261.12,
+              154.0
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              299.52,
+              63.0,
+              506.88,
+              154.0
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              545.28,
+              63.0,
+              752.64,
+              154.0
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              791.04,
+              63.0,
+              998.4,
+              154.0
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1036.8000000000002,
+              63.0,
+              1244.1600000000003,
+              154.0
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1282.5600000000002,
+              63.0,
+              1489.92,
+              154.0
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              53.760000000000005,
+              247.79999999999998,
+              261.12,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              299.52,
+              247.79999999999998,
+              506.88,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              545.28,
+              247.79999999999998,
+              752.64,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              791.04,
+              247.79999999999998,
+              998.4,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1036.8000000000002,
+              247.79999999999998,
+              1244.1600000000003,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1282.5600000000002,
+              247.79999999999998,
+              1489.92,
+              338.79999999999995
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              53.760000000000005,
+              432.6,
+              261.12,
+              523.6
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              299.52,
+              432.6,
+              506.88,
+              523.6
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              545.28,
+              432.6,
+              752.64,
+              523.6
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              791.04,
+              432.6,
+              998.4,
+              523.6
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1036.8000000000002,
+              432.6,
+              1244.1600000000003,
+              523.6
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1282.5600000000002,
+              432.6,
+              1489.92,
+              523.6
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              791.04,
+              802.2,
+              998.4,
+              893.2
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              53.760000000000005,
+              987.0000000000001,
+              261.12,
+              1078.0
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              299.52,
+              987.0000000000001,
+              506.88,
+              1078.0
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              545.28,
+              987.0000000000001,
+              752.64,
+              1078.0
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              791.04,
+              987.0000000000001,
+              998.4,
+              1078.0
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1036.8000000000002,
+              987.0000000000001,
+              1244.1600000000003,
+              1078.0
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1282.5600000000002,
+              987.0000000000001,
+              1489.92,
+              1078.0
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              53.760000000000005,
+              1171.8000000000002,
+              261.12,
+              1262.8000000000002
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              299.52,
+              1171.8000000000002,
+              506.88,
+              1262.8000000000002
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              545.28,
+              1171.8000000000002,
+              752.64,
+              1262.8000000000002
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              791.04,
+              1171.8000000000002,
+              998.4,
+              1262.8000000000002
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1036.8000000000002,
+              1171.8000000000002,
+              1244.1600000000003,
+              1262.8000000000002
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1282.5600000000002,
+              1171.8000000000002,
+              1489.92,
+              1262.8000000000002
+            ]
+          }
+        ],
+        "repeatClearancePx": 14
+      }
+    },
+    "energy-banner": {
+      "color": "graphics/energy-banner.png",
+      "source": "graphics/energy-banner.svg",
+      "width": 1536,
+      "height": 896,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "lisbon-mural": {
+      "color": "graphics/lisbon-mural.png",
+      "source": "graphics/lisbon-mural.svg",
+      "width": 1024,
+      "height": 960,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "photocall": {
+      "color": "graphics/photocall.png",
+      "source": "graphics/photocall.svg",
+      "width": 2048,
+      "height": 768,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "stage-backdrop": {
+      "color": "graphics/stage-backdrop.png",
+      "source": "graphics/stage-backdrop.svg",
+      "width": 2048,
+      "height": 1280,
+      "alphaMode": "OPAQUE",
+      "layout": {
+        "reserved": [],
+        "repeatMarks": [
+          {
+            "kind": "year",
+            "box": [
+              71.68,
+              57.599999999999994,
+              348.16,
+              140.8
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              399.36,
+              57.599999999999994,
+              675.84,
+              140.8
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              727.04,
+              57.599999999999994,
+              1003.52,
+              140.8
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1054.72,
+              57.599999999999994,
+              1331.2,
+              140.8
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1382.4,
+              57.599999999999994,
+              1658.88,
+              140.8
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1710.0800000000002,
+              57.599999999999994,
+              1986.5600000000002,
+              140.8
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              71.68,
+              230.39999999999998,
+              348.16,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              399.36,
+              230.39999999999998,
+              675.84,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              727.04,
+              230.39999999999998,
+              1003.52,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1054.72,
+              230.39999999999998,
+              1331.2,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1382.4,
+              230.39999999999998,
+              1658.88,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1710.0800000000002,
+              230.39999999999998,
+              1986.5600000000002,
+              313.59999999999997
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              71.68,
+              934.4,
+              348.16,
+              1017.6
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              399.36,
+              934.4,
+              675.84,
+              1017.6
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              727.04,
+              934.4,
+              1003.52,
+              1017.6
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1054.72,
+              934.4,
+              1331.2,
+              1017.6
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1382.4,
+              934.4,
+              1658.88,
+              1017.6
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1710.0800000000002,
+              934.4,
+              1986.5600000000002,
+              1017.6
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              71.68,
+              1107.2,
+              348.16,
+              1190.4
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              399.36,
+              1107.2,
+              675.84,
+              1190.4
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              727.04,
+              1107.2,
+              1003.52,
+              1190.4
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1054.72,
+              1107.2,
+              1331.2,
+              1190.4
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1382.4,
+              1107.2,
+              1658.88,
+              1190.4
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1710.0800000000002,
+              1107.2,
+              1986.5600000000002,
+              1190.4
+            ]
+          }
+        ],
+        "repeatClearancePx": 14
+      }
+    },
+    "stage-flank": {
+      "color": "graphics/stage-flank.png",
+      "source": "graphics/stage-flank.svg",
+      "width": 768,
+      "height": 1536,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "move-banner": {
+      "color": "graphics/move-banner.png",
+      "source": "graphics/move-banner.svg",
+      "width": 512,
+      "height": 2048,
+      "alphaMode": "OPAQUE",
+      "layout": {}
+    },
+    "skills-board": {
+      "color": "graphics/skills-board.png",
+      "source": "graphics/skills-board.svg",
+      "width": 1536,
+      "height": 1935,
+      "alphaMode": "OPAQUE",
+      "layout": {
+        "groupCount": 5,
+        "groups": [
+          {
+            "id": "looking-for-team",
+            "label": "LOOKING FOR TEAM",
+            "sheet": [
+              80,
+              90,
+              740,
+              720
+            ],
+            "normalizedSheet": [
+              0.052083333333333336,
+              0.046511627906976744,
+              0.4817708333333333,
+              0.37209302325581395
+            ],
+            "stickers": [
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  146.0,
+                  181.5,
+                  278.0,
+                  313.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    156.0,
+                    216.5,
+                    268.0,
+                    301.5
+                  ],
+                  "bounds": [
+                    158.0,
+                    227.5,
+                    266.0,
+                    290.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  278.0,
+                  181.5,
+                  410.0,
+                  313.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    288.0,
+                    216.5,
+                    400.0,
+                    301.5
+                  ],
+                  "bounds": [
+                    290.0,
+                    227.5,
+                    398.0,
+                    290.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  410.0,
+                  181.5,
+                  542.0,
+                  313.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    420.0,
+                    216.5,
+                    532.0,
+                    301.5
+                  ],
+                  "bounds": [
+                    422.0,
+                    227.5,
+                    530.0,
+                    290.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  542.0,
+                  181.5,
+                  674.0,
+                  313.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    552.0,
+                    216.5,
+                    664.0,
+                    301.5
+                  ],
+                  "bounds": [
+                    554.0,
+                    227.5,
+                    662.0,
+                    290.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  146.0,
+                  339.0,
+                  278.0,
+                  471.0
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    156.0,
+                    374.0,
+                    268.0,
+                    459.0
+                  ],
+                  "bounds": [
+                    158.0,
+                    385.0,
+                    266.0,
+                    448.0
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  278.0,
+                  339.0,
+                  410.0,
+                  471.0
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    288.0,
+                    374.0,
+                    400.0,
+                    459.0
+                  ],
+                  "bounds": [
+                    290.0,
+                    385.0,
+                    398.0,
+                    448.0
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  410.0,
+                  339.0,
+                  542.0,
+                  471.0
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    420.0,
+                    374.0,
+                    532.0,
+                    459.0
+                  ],
+                  "bounds": [
+                    422.0,
+                    385.0,
+                    530.0,
+                    448.0
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  542.0,
+                  339.0,
+                  674.0,
+                  471.0
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    552.0,
+                    374.0,
+                    664.0,
+                    459.0
+                  ],
+                  "bounds": [
+                    554.0,
+                    385.0,
+                    662.0,
+                    448.0
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  146.0,
+                  496.5,
+                  278.0,
+                  628.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    156.0,
+                    531.5,
+                    268.0,
+                    616.5
+                  ],
+                  "bounds": [
+                    158.0,
+                    542.5,
+                    266.0,
+                    605.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  278.0,
+                  496.5,
+                  410.0,
+                  628.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    288.0,
+                    531.5,
+                    400.0,
+                    616.5
+                  ],
+                  "bounds": [
+                    290.0,
+                    542.5,
+                    398.0,
+                    605.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  410.0,
+                  496.5,
+                  542.0,
+                  628.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    420.0,
+                    531.5,
+                    532.0,
+                    616.5
+                  ],
+                  "bounds": [
+                    422.0,
+                    542.5,
+                    530.0,
+                    605.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "LOOKING FOR TEAM",
+                "circle": [
+                  542.0,
+                  496.5,
+                  674.0,
+                  628.5
+                ],
+                "text": {
+                  "text": "LOOKING\nFOR\nTEAM",
+                  "box": [
+                    552.0,
+                    531.5,
+                    664.0,
+                    616.5
+                  ],
+                  "bounds": [
+                    554.0,
+                    542.5,
+                    662.0,
+                    605.5
+                  ],
+                  "fontSize": 23,
+                  "font": "arialbd.ttf"
+                }
+              }
+            ]
+          },
+          {
+            "id": "data",
+            "label": "DATA",
+            "sheet": [
+              796,
+              90,
+              1456,
+              720
+            ],
+            "normalizedSheet": [
+              0.5182291666666666,
+              0.046511627906976744,
+              0.9479166666666666,
+              0.37209302325581395
+            ],
+            "stickers": [
+              {
+                "label": "DATA",
+                "circle": [
+                  1060.0,
+                  339.0,
+                  1192.0,
+                  471.0
+                ],
+                "text": {
+                  "text": "DATA",
+                  "box": [
+                    1070.0,
+                    374.0,
+                    1182.0,
+                    459.0
+                  ],
+                  "bounds": [
+                    1078.0,
+                    404.0,
+                    1174.0,
+                    429.0
+                  ],
+                  "fontSize": 34,
+                  "font": "arialbd.ttf"
+                }
+              }
+            ]
+          },
+          {
+            "id": "design",
+            "label": "DESIGN",
+            "sheet": [
+              80,
+              775,
+              740,
+              1375
+            ],
+            "normalizedSheet": [
+              0.052083333333333336,
+              0.4005167958656331,
+              0.4817708333333333,
+              0.710594315245478
+            ],
+            "stickers": [
+              {
+                "label": "DESIGN",
+                "circle": [
+                  179.0,
+                  859.0,
+                  311.0,
+                  991.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    189.0,
+                    894.0,
+                    301.0,
+                    979.0
+                  ],
+                  "bounds": [
+                    191.0,
+                    926.5,
+                    299.0,
+                    946.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  344.0,
+                  859.0,
+                  476.0,
+                  991.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    354.0,
+                    894.0,
+                    466.0,
+                    979.0
+                  ],
+                  "bounds": [
+                    356.0,
+                    926.5,
+                    464.0,
+                    946.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  509.0,
+                  859.0,
+                  641.0,
+                  991.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    519.0,
+                    894.0,
+                    631.0,
+                    979.0
+                  ],
+                  "bounds": [
+                    521.0,
+                    926.5,
+                    629.0,
+                    946.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  179.0,
+                  1009.0,
+                  311.0,
+                  1141.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    189.0,
+                    1044.0,
+                    301.0,
+                    1129.0
+                  ],
+                  "bounds": [
+                    191.0,
+                    1076.5,
+                    299.0,
+                    1096.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  344.0,
+                  1009.0,
+                  476.0,
+                  1141.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    354.0,
+                    1044.0,
+                    466.0,
+                    1129.0
+                  ],
+                  "bounds": [
+                    356.0,
+                    1076.5,
+                    464.0,
+                    1096.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  509.0,
+                  1009.0,
+                  641.0,
+                  1141.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    519.0,
+                    1044.0,
+                    631.0,
+                    1129.0
+                  ],
+                  "bounds": [
+                    521.0,
+                    1076.5,
+                    629.0,
+                    1096.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  179.0,
+                  1159.0,
+                  311.0,
+                  1291.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    189.0,
+                    1194.0,
+                    301.0,
+                    1279.0
+                  ],
+                  "bounds": [
+                    191.0,
+                    1226.5,
+                    299.0,
+                    1246.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  344.0,
+                  1159.0,
+                  476.0,
+                  1291.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    354.0,
+                    1194.0,
+                    466.0,
+                    1279.0
+                  ],
+                  "bounds": [
+                    356.0,
+                    1226.5,
+                    464.0,
+                    1246.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "DESIGN",
+                "circle": [
+                  509.0,
+                  1159.0,
+                  641.0,
+                  1291.0
+                ],
+                "text": {
+                  "text": "DESIGN",
+                  "box": [
+                    519.0,
+                    1194.0,
+                    631.0,
+                    1279.0
+                  ],
+                  "bounds": [
+                    521.0,
+                    1226.5,
+                    629.0,
+                    1246.5
+                  ],
+                  "fontSize": 28,
+                  "font": "arialbd.ttf"
+                }
+              }
+            ]
+          },
+          {
+            "id": "front-end",
+            "label": "FRONT END",
+            "sheet": [
+              796,
+              775,
+              1456,
+              1375
+            ],
+            "normalizedSheet": [
+              0.5182291666666666,
+              0.4005167958656331,
+              0.9479166666666666,
+              0.710594315245478
+            ],
+            "stickers": [
+              {
+                "label": "FRONT END",
+                "circle": [
+                  895.0,
+                  909.0,
+                  1027.0,
+                  1041.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    905.0,
+                    944.0,
+                    1017.0,
+                    1029.0
+                  ],
+                  "bounds": [
+                    908.0,
+                    959.5,
+                    1014.0,
+                    1013.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "FRONT END",
+                "circle": [
+                  1060.0,
+                  909.0,
+                  1192.0,
+                  1041.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    1070.0,
+                    944.0,
+                    1182.0,
+                    1029.0
+                  ],
+                  "bounds": [
+                    1073.0,
+                    959.5,
+                    1179.0,
+                    1013.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "FRONT END",
+                "circle": [
+                  1225.0,
+                  909.0,
+                  1357.0,
+                  1041.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    1235.0,
+                    944.0,
+                    1347.0,
+                    1029.0
+                  ],
+                  "bounds": [
+                    1238.0,
+                    959.5,
+                    1344.0,
+                    1013.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "FRONT END",
+                "circle": [
+                  895.0,
+                  1109.0,
+                  1027.0,
+                  1241.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    905.0,
+                    1144.0,
+                    1017.0,
+                    1229.0
+                  ],
+                  "bounds": [
+                    908.0,
+                    1159.5,
+                    1014.0,
+                    1213.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "FRONT END",
+                "circle": [
+                  1060.0,
+                  1109.0,
+                  1192.0,
+                  1241.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    1070.0,
+                    1144.0,
+                    1182.0,
+                    1229.0
+                  ],
+                  "bounds": [
+                    1073.0,
+                    1159.5,
+                    1179.0,
+                    1213.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "FRONT END",
+                "circle": [
+                  1225.0,
+                  1109.0,
+                  1357.0,
+                  1241.0
+                ],
+                "text": {
+                  "text": "FRONT\nEND",
+                  "box": [
+                    1235.0,
+                    1144.0,
+                    1347.0,
+                    1229.0
+                  ],
+                  "bounds": [
+                    1238.0,
+                    1159.5,
+                    1344.0,
+                    1213.5
+                  ],
+                  "fontSize": 31,
+                  "font": "arialbd.ttf"
+                }
+              }
+            ]
+          },
+          {
+            "id": "back-end",
+            "label": "BACK END",
+            "sheet": [
+              440,
+              1430,
+              1100,
+              1860
+            ],
+            "normalizedSheet": [
+              0.2864583333333333,
+              0.7390180878552972,
+              0.7161458333333334,
+              0.9612403100775194
+            ],
+            "stickers": [
+              {
+                "label": "BACK END",
+                "circle": [
+                  545.0,
+                  1513.3333333333333,
+                  665.0,
+                  1633.3333333333333
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    555.0,
+                    1548.3333333333333,
+                    655.0,
+                    1621.3333333333333
+                  ],
+                  "bounds": [
+                    557.0,
+                    1556.3333333333333,
+                    653.0,
+                    1613.3333333333333
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "BACK END",
+                "circle": [
+                  710.0,
+                  1513.3333333333333,
+                  830.0,
+                  1633.3333333333333
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    720.0,
+                    1548.3333333333333,
+                    820.0,
+                    1621.3333333333333
+                  ],
+                  "bounds": [
+                    722.0,
+                    1556.3333333333333,
+                    818.0,
+                    1613.3333333333333
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "BACK END",
+                "circle": [
+                  875.0,
+                  1513.3333333333333,
+                  995.0,
+                  1633.3333333333333
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    885.0,
+                    1548.3333333333333,
+                    985.0,
+                    1621.3333333333333
+                  ],
+                  "bounds": [
+                    887.0,
+                    1556.3333333333333,
+                    983.0,
+                    1613.3333333333333
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "BACK END",
+                "circle": [
+                  545.0,
+                  1656.6666666666667,
+                  665.0,
+                  1776.6666666666667
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    555.0,
+                    1691.6666666666667,
+                    655.0,
+                    1764.6666666666667
+                  ],
+                  "bounds": [
+                    557.0,
+                    1699.6666666666667,
+                    653.0,
+                    1756.6666666666667
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "BACK END",
+                "circle": [
+                  710.0,
+                  1656.6666666666667,
+                  830.0,
+                  1776.6666666666667
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    720.0,
+                    1691.6666666666667,
+                    820.0,
+                    1764.6666666666667
+                  ],
+                  "bounds": [
+                    722.0,
+                    1699.6666666666667,
+                    818.0,
+                    1756.6666666666667
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              },
+              {
+                "label": "BACK END",
+                "circle": [
+                  875.0,
+                  1656.6666666666667,
+                  995.0,
+                  1776.6666666666667
+                ],
+                "text": {
+                  "text": "BACK\nEND",
+                  "box": [
+                    885.0,
+                    1691.6666666666667,
+                    985.0,
+                    1764.6666666666667
+                  ],
+                  "bounds": [
+                    887.0,
+                    1699.6666666666667,
+                    983.0,
+                    1756.6666666666667
+                  ],
+                  "fontSize": 33,
+                  "font": "arialbd.ttf"
+                }
+              }
+            ]
+          }
+        ],
+        "noPersonalData": true
+      }
+    },
+    "booth-grantfox-trustless": {
+      "color": "graphics/booth-grantfox-trustless.png",
+      "source": "graphics/booth-grantfox-trustless.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "Grantfox",
+            "box": [
+              100,
+              253,
+              1948,
+              455
+            ],
+            "text": {
+              "text": "Grantfox",
+              "box": [
+                100,
+                253,
+                1948,
+                455
+              ],
+              "bounds": [
+                544.0,
+                255.0,
+                1504.0,
+                453.0
+              ],
+              "fontSize": 223,
+              "font": "arialbd.ttf"
+            }
+          },
+          {
+            "label": "Trustless Work",
+            "box": [
+              100,
+              475,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "Trustless Work",
+              "box": [
+                100,
+                475,
+                1948,
+                680
+              ],
+              "bounds": [
+                170.5,
+                477.0,
+                1877.5,
+                678.0
+              ],
+              "fontSize": 232,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-drips": {
+      "color": "graphics/booth-drips.png",
+      "source": "graphics/booth-drips.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "DRIPS",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "DRIPS",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                245.0,
+                272.0,
+                1803.0,
+                678.0
+              ],
+              "fontSize": 498,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-guava": {
+      "color": "graphics/booth-guava.png",
+      "source": "graphics/booth-guava.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "GUAVA",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "GUAVA",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                107.0,
+                272.0,
+                1941.0,
+                678.0
+              ],
+              "fontSize": 498,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-passport": {
+      "color": "graphics/booth-passport.png",
+      "source": "graphics/booth-passport.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "Stellar Passport",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "Stellar Passport",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                103.0,
+                347.0,
+                1945.0,
+                603.0
+              ],
+              "fontSize": 237,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-57blocks": {
+      "color": "graphics/booth-57blocks.png",
+      "source": "graphics/booth-57blocks.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "57BLOCKS",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "57BLOCKS",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                105.0,
+                332.0,
+                1943.0,
+                618.0
+              ],
+              "fontSize": 338,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-defindex-soroswap": {
+      "color": "graphics/booth-defindex-soroswap.png",
+      "source": "graphics/booth-defindex-soroswap.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "DeFindex",
+            "box": [
+              100,
+              253,
+              1948,
+              455
+            ],
+            "text": {
+              "text": "DeFindex",
+              "box": [
+                100,
+                253,
+                1948,
+                455
+              ],
+              "bounds": [
+                495.0,
+                255.0,
+                1553.0,
+                453.0
+              ],
+              "fontSize": 228,
+              "font": "arialbd.ttf"
+            }
+          },
+          {
+            "label": "Soroswap",
+            "box": [
+              100,
+              475,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "Soroswap",
+              "box": [
+                100,
+                475,
+                1948,
+                680
+              ],
+              "bounds": [
+                570.5,
+                477.0,
+                1477.5,
+                678.0
+              ],
+              "fontSize": 183,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-aha": {
+      "color": "graphics/booth-aha.png",
+      "source": "graphics/booth-aha.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "THE AHA COMPANY",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "THE AHA COMPANY",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                106.5,
+                389.5,
+                1941.5,
+                560.5
+              ],
+              "fontSize": 183,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-openzeppelin": {
+      "color": "graphics/booth-openzeppelin.png",
+      "source": "graphics/booth-openzeppelin.svg",
+      "width": 2048,
+      "height": 712,
+      "alphaMode": "MASK",
+      "layout": {
+        "support": "tabletop",
+        "physicalSize": [
+          1.84,
+          0.64
+        ],
+        "readFrom": "visitor",
+        "hardwareReserved": [
+          0,
+          0,
+          2048,
+          235
+        ],
+        "wordmarks": [
+          {
+            "label": "OpenZeppelin",
+            "box": [
+              100,
+              270,
+              1948,
+              680
+            ],
+            "text": {
+              "text": "OpenZeppelin",
+              "box": [
+                100,
+                270,
+                1948,
+                680
+              ],
+              "bounds": [
+                106.0,
+                331.5,
+                1942.0,
+                618.5
+              ],
+              "fontSize": 270,
+              "font": "arialbd.ttf"
+            }
+          }
+        ],
+        "alphaMode": "MASK"
+      }
+    },
+    "booth-footer": {
+      "color": "graphics/booth-footer.png",
+      "source": "graphics/booth-footer.svg",
+      "width": 2048,
+      "height": 936,
+      "alphaMode": "OPAQUE",
+      "layout": {
+        "support": "divider",
+        "physicalSize": [
+          3.5,
+          1.6
+        ],
+        "repeatRows": 4,
+        "repeatColumns": 7,
+        "repeatMarks": [
+          {
+            "kind": "meridian",
+            "box": [
+              32.709122203098104,
+              52.35800344234079,
+              259.86230636833045,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              325.28055077452666,
+              52.35800344234079,
+              552.433734939759,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              617.8519793459552,
+              52.35800344234079,
+              845.0051635111876,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              910.4234079173838,
+              52.35800344234079,
+              1137.5765920826161,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1202.9948364888123,
+              52.35800344234079,
+              1430.1480206540446,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1495.566265060241,
+              52.35800344234079,
+              1722.7194492254735,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1788.1376936316694,
+              52.35800344234079,
+              2015.290877796902,
+              147.40791738382097
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              32.709122203098104,
+              273.8726333907057,
+              259.86230636833045,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              325.28055077452666,
+              273.8726333907057,
+              552.433734939759,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              617.8519793459552,
+              273.8726333907057,
+              845.0051635111876,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              910.4234079173838,
+              273.8726333907057,
+              1137.5765920826161,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1202.9948364888123,
+              273.8726333907057,
+              1430.1480206540446,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1495.566265060241,
+              273.8726333907057,
+              1722.7194492254735,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1788.1376936316694,
+              273.8726333907057,
+              2015.290877796902,
+              368.9225473321859
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              32.709122203098104,
+              495.38726333907056,
+              259.86230636833045,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              325.28055077452666,
+              495.38726333907056,
+              552.433734939759,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              617.8519793459552,
+              495.38726333907056,
+              845.0051635111876,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              910.4234079173838,
+              495.38726333907056,
+              1137.5765920826161,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1202.9948364888123,
+              495.38726333907056,
+              1430.1480206540446,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1495.566265060241,
+              495.38726333907056,
+              1722.7194492254735,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1788.1376936316694,
+              495.38726333907056,
+              2015.290877796902,
+              590.4371772805507
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              32.709122203098104,
+              716.9018932874354,
+              259.86230636833045,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              325.28055077452666,
+              716.9018932874354,
+              552.433734939759,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              617.8519793459552,
+              716.9018932874354,
+              845.0051635111876,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              910.4234079173838,
+              716.9018932874354,
+              1137.5765920826161,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "year",
+            "box": [
+              1202.9948364888123,
+              716.9018932874354,
+              1430.1480206540446,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "stellar",
+            "box": [
+              1495.566265060241,
+              716.9018932874354,
+              1722.7194492254735,
+              811.9518072289156
+            ]
+          },
+          {
+            "kind": "meridian",
+            "box": [
+              1788.1376936316694,
+              716.9018932874354,
+              2015.290877796902,
+              811.9518072289156
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "materials": {
+    "wood": {
+      "color": "materials/wood-color.jpg",
+      "roughness": "materials/wood-roughness.png",
+      "normal": "materials/wood-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "masonry": {
+      "color": "materials/masonry-color.jpg",
+      "roughness": "materials/masonry-roughness.png",
+      "normal": "materials/masonry-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "textile": {
+      "color": "materials/textile-color.jpg",
+      "roughness": "materials/textile-roughness.png",
+      "normal": "materials/textile-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "painted-metal": {
+      "color": "materials/painted-metal-color.jpg",
+      "roughness": "materials/painted-metal-roughness.png",
+      "normal": "materials/painted-metal-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    }
+  },
+  "sha256": {
+    "graphics/booth-57blocks.png": "ef4193b0872f0bda39c95343ea75425a6e979bda79c4ea8a3cf3a5e47f81f2fe",
+    "graphics/booth-aha.png": "2d8e6d58a5327c09e5a4386e67a2418ab65bac92525bca5479de40dc66824505",
+    "graphics/booth-defindex-soroswap.png": "023b1c266ffc60472d167dad09af7221eb778bf8e54dad951ca693a9d4e39bdc",
+    "graphics/booth-drips.png": "f0b9c19b84c58a1f4c72cc54c58a95c2d99ef9ea1a65dee4cf15f4572a098a53",
+    "graphics/booth-footer.png": "f8b13e8c096c60d8bedbbb2ab170d47d49331b457a153722153bfb553e94197c",
+    "graphics/booth-grantfox-trustless.png": "66aff30a0c63229d1d1f71cc9ee1900381c47184f139c5cdd5e10c833ef9bf7f",
+    "graphics/booth-guava.png": "c178ba6c3c5a3099b7bc37af98587140c9ee9951bcdc311914c0f875afad798d",
+    "graphics/booth-openzeppelin.png": "6fc1c407a43fcdc8a1aed35d5dd8b5168468ab65d0c4018f357f49acb069f807",
+    "graphics/booth-passport.png": "ac6e27057ad8ba47a613277ce3f581922208842cbd2025f9dfe8b98f588ddd85",
+    "graphics/checkin-backdrop.png": "1d92d3ad2648b19e409ae2224ae2d84f01a20ff6772b9da81c6395db00f9d085",
+    "graphics/checkin-sign.png": "ed4227262f5323fd293418118d4ec96a7163e5b26bc213ef5ce859919ef90e2d",
+    "graphics/energy-banner.png": "a5c00c3f0e5cd0a1d96bb25dcbb632c6175c239b9d4474dfcfa1c6838e1ae404",
+    "graphics/lisbon-mural.png": "aae0d8225f4e8d03ce9971006760a263dcf81ff0646197f56d7b6686fc05d456",
+    "graphics/move-banner.png": "112d0b943e23a10879130bbd669eaa9b86b81c6a6c2553d02cf8d0edeff6cdfb",
+    "graphics/photocall.png": "205b9b3fdc3c860bd503e09a529133589d69c584d5b185c24d85c3ebf479c08c",
+    "graphics/skills-board.png": "5192663d94560cdc4bdcf3856357c553c7072b97395987bcb23d0f4f79d746c6",
+    "graphics/stage-backdrop.png": "4fe5c9bd2cc2d7f384422c448db40c98bda415f8b6bb45dd2d60c76f6401c948",
+    "graphics/stage-flank.png": "99f3b22ed45d9a345813275f1cf9f8434e9adf42cfacbd6ae804ce961b1a4408",
+    "materials/masonry-normal.png": "0935dac677078ce28ffee2605c349e10e7f09f308bc894e4024465a1cb0a9343",
+    "materials/masonry-roughness.png": "b56a1c3e5f860a6791f5f4119a161a83f78f8573baf24f07d5ac5b98f9434a5c",
+    "materials/painted-metal-normal.png": "227ecd8fb7813471169f937cb284aea064c52ac135d0a7e8c77cb18973ebad66",
+    "materials/painted-metal-roughness.png": "8d94783b066574d3617b7124accb3b39584bc5ccbda229592330cf11d0ca1a2b",
+    "materials/textile-normal.png": "963e2fe6ba14250734e89e460824f2346dc0690f1a8e9b8b130eeb5a5c1353df",
+    "materials/textile-roughness.png": "9df45f042f6b35a2a5aba0367c08df94863ed9233eddb9cd247b2eaa6ca845ed",
+    "materials/wood-normal.png": "b49e9a07f9ab3b96093ec61a769be258a99de240d43ecbec1e8f5625bd1b2a4a",
+    "materials/wood-roughness.png": "6253e9b59a6fae8cc933cf00da5686375a61450ee4cc354d08ffd191f68f80c9",
+    "materials/masonry-color.jpg": "25600cec9aff8c8453874ec480f68b9789b07f502cf913978e66bc9b508b826b",
+    "materials/painted-metal-color.jpg": "cf60932a2977263c6c9518e3ff69680ac3844c5dc2bec0e2fb2ff3fa8f6a4689",
+    "materials/textile-color.jpg": "bf9ef9612102ba6732e023f6cbb76c4f43b3c385101482badf3417351682689b",
+    "materials/wood-color.jpg": "70e0aa23f758d6ec722930b0927f555d5f7a13d99ca4b406623948334aec3250",
+    "graphics/booth-57blocks.svg": "4f1732d244eb97373734bf0fef4e8099fb0cc362786bb3482f906040fc43cebf",
+    "graphics/booth-aha.svg": "0bfced278deff306428dbd0df983e4caed6c76f0ab635b535bd414f151a5ec11",
+    "graphics/booth-defindex-soroswap.svg": "c1cc1f12a0b5bee136a9e90f759fa41867106e3bfc912b00bc03dee864a9b7d9",
+    "graphics/booth-drips.svg": "036c5f7bd2cfa7f4e134b9db39888dfe50060fa64eff9eb6570994bdd8c98f47",
+    "graphics/booth-footer.svg": "33000ee536dc013b4395c761566b86c00f55b7006b2a127dd4e6f740069ba516",
+    "graphics/booth-grantfox-trustless.svg": "7d117d7b14c3eab1e60202dbf7b1de529991f02d5a2b5d132c7d100731596165",
+    "graphics/booth-guava.svg": "5fcb9a4595e4d2900179ffc040c2a7b846d4f2b017c32acc6fc97b223833aa48",
+    "graphics/booth-openzeppelin.svg": "168361dd7a81a23e072621fcf818607bbb8c825b714ee859f6784979d01bdbfe",
+    "graphics/booth-passport.svg": "02c429480dd846d057649a69a00b6cd8023a54aaf2a462e45e531971e4b1d302",
+    "graphics/checkin-backdrop.svg": "c03f7bcd42e23bfec888c73884da0400c798f229754c2d80bdea948228253419",
+    "graphics/checkin-sign.svg": "f0ab6d0ec5822c94250c41f8a2f91fa8745e08c51fdd92a286a89dc3f2fc1631",
+    "graphics/energy-banner.svg": "6f929b850b769af73243bfe15ab202986de2b0c49f05ceeb39bbd9e33dd7a343",
+    "graphics/lisbon-mural.svg": "8e5680f849d3288ccb1b9db24ab7285497c1b30b9f092122207842585ba56b79",
+    "graphics/move-banner.svg": "c170e9e9697681ea73d01171471545288eebebea1e228a211e7e007af81b0cc2",
+    "graphics/photocall.svg": "768bea4be36bdbd280ce59aa4d96a0503787074c24cb9b1d520c988d0e13f14a",
+    "graphics/skills-board.svg": "c0788653a45c3662163e763a6ab6657c292f48a6e428ec1c1c60a65c2700bccb",
+    "graphics/stage-backdrop.svg": "597b7e604140b08babb6dd035a09ac92034825055ba0a2eb99dad287e54e208b",
+    "graphics/stage-flank.svg": "26e29ff3ca6f7cc2fcf61f2b1199e4595e40eb352af02d0823a5d0ac04087a49"
+  }
+}
