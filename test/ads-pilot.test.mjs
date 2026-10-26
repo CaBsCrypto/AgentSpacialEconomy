@@ -164,12 +164,12 @@ async function startPublisher(f,quote){
 }
 
 test('five full minutes require five unique complete 60-second pass IDs; settlement and generation deliver zero',async t=>{
- const f=await setup(t),quote=await f.quote(await f.campaign()),{slots,complete,frame}=await startPublisher(f,quote);
+ const f=await setup(t),quote=await f.quote(await f.campaign()),{slots,complete,publisher}=await startPublisher(f,quote);
  assert.equal((await f.service.getOrder(quote.orderId,ownerId)).placements[0].delivered,0);
  for(let index=0;index<slots.length;index++){
   await complete(slots[index]);
   assert.equal((await f.service.getOrder(quote.orderId,ownerId)).placements[0].delivered,index+1);
-  if(index<slots.length-1)await frame(slots[index],passDuration+250);
+  if(index<slots.length-1){await publisher.schedule();assert.equal((await f.service.playlist('main_stage_screen',{publisher:true})).active,null,'a completed entitlement is removed from active publication');}
  }
  const state=await f.service.getOrder(quote.orderId,ownerId);
  assert.equal(state.status,'COMPLETED');assert.equal(state.placements[0].delivered,fullPasses);assert.equal(state.placements[0].deficit,0);
@@ -230,4 +230,44 @@ test('compatible campaigns rotate one complete minute per round; multiple orders
  assert.deepEqual(slots.slice(0,10).map(slot=>slot.orderId),Array.from({length:5},()=>['a-first','b']).flat());
  assert.deepEqual(slots.slice(10).map(slot=>slot.orderId),Array(fullPasses).fill('a-second'));
  for(const slot of slots){assert.equal(slot.deliveryUnits,1);assert.equal(slot.end-slot.start,passDuration+passSchedulerConfig.renderLeadMs);}
+});
+
+
+test('interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights',async t=>{
+ const f=await setup(t),quote=await f.quote(await f.campaign()),{slots,frame,complete}=await startPublisher(f,quote);
+ await frame(slots[0],0);await frame(slots[0],10000);await frame(slots[0],20000);await frame(slots[0],50000);await frame(slots[0],60000);
+ for(const slot of slots.slice(1))await complete(slot);
+ const retry=(await f.db.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND unit_number=1 AND id<>$2 AND state='COMMITTED' ORDER BY starts_at LIMIT 1",[quote.orderId,slots[0].id])).rows[0];
+ assert(retry,'lost minute gets a new complete slot');assert.notEqual(retry.pass_id,slots[0].pass_id);assert.equal(retry.batch_id,quote.orderId);
+ await complete(retry);
+ const state=await f.service.getOrder(quote.orderId,ownerId);assert.equal(state.status,'COMPLETED');assert.equal(state.fulfillment.units.filter(u=>u.status==='COMPLETED').length,5);assert.equal(f.settlements,1);
+ const rows=(await f.db.query('SELECT unit_number FROM ads_delivery WHERE order_id=$1 ORDER BY unit_number',[quote.orderId])).rows;
+ assert.deepEqual(rows.map(r=>r.unit_number),[1,2,3,4,5]);assert.equal(Number((await f.db.query('SELECT count(*) AS n FROM ads_orders')).rows[0].n),1);
+});
+
+test('consented partial recovery keeps the original paid order and completes only the missing pass with sales closed',async t=>{
+ const f=await setup(t),quote=await f.quote(await f.campaign()),{slots,frame,complete,publisher}=await startPublisher(f,quote);
+ await frame(slots[0],0);await frame(slots[0],10000);await frame(slots[0],20000);await frame(slots[0],50000);await frame(slots[0],60000);
+ for(const slot of slots.slice(1))await complete(slot);
+ f.clock.value=Date.parse(quote.endsAt);await publisher.lease();await publisher.schedule();
+ const owed=await f.service.getOrder(quote.orderId,ownerId);assert.equal(owed.fulfillment.units.filter(u=>u.status==='DEBT').length,1);assert.equal(owed.placements[0].delivered,4);
+ const original=(await f.db.query('SELECT quote,terms_hash,amount FROM ads_orders WHERE id=$1',[quote.orderId])).rows[0];
+ await f.db.query("INSERT INTO ads_registry_jobs(id,order_id,batch_id,operation,payload,payload_hash) VALUES($1,$2,$2,'commit',$3,$4)",[uuid(),quote.orderId,{original:'immutable-fixture'},sha256('pilot-child-original')]);
+ f.config.enabled=false;f.config.operationalReady=true;
+ const proposal={startsAt:new Date(f.now()+5000).toISOString(),endsAt:new Date(f.now()+605000).toISOString(),fulfillmentVersion:owed.fulfillment.version,accept:true};
+ const first=await f.service.reprogram(ownerId,quote.orderId,proposal,'pilot-consented-child'),repeat=await f.service.reprogram(ownerId,quote.orderId,proposal,'pilot-consented-child');assert.deepEqual(repeat,first);assert.equal(first.additionalCharge,false);
+ const replacement=(await f.db.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND state='COMMITTED'",[quote.orderId])).rows;assert.equal(replacement.length,1);assert.equal(replacement[0].unit_number,1);assert.notEqual(replacement[0].batch_id,quote.orderId);
+ await complete(replacement[0]);
+ const done=await f.service.getOrder(quote.orderId,ownerId);assert.equal(done.status,'COMPLETED');assert.equal(done.placements[0].delivered,5);assert.equal(f.settlements,1);
+ assert.deepEqual((await f.db.query('SELECT quote,terms_hash,amount FROM ads_orders WHERE id=$1',[quote.orderId])).rows[0],original);
+ const batches=(await f.db.query('SELECT state,required_units,delivered_units FROM ads_fulfillment_batches WHERE order_id=$1 ORDER BY sequence',[quote.orderId])).rows;
+ assert.deepEqual(batches,[{state:'CLOSED',required_units:5,delivered_units:4},{state:'COMPLETED',required_units:1,delivered_units:1}]);
+ assert.equal(Number((await f.db.query('SELECT count(*) AS n FROM ads_orders')).rows[0].n),1);assert.equal(Number((await f.db.query('SELECT count(*) AS n FROM ads_payment_attempts')).rows[0].n),1);
+});
+
+test('availability survives fifteen seconds of review before quote admission',async t=>{
+ const f=await setup(t),draft=await f.campaign();f.config.maxWindowMs=86400000;
+ const suggestion=await f.service.availability(ownerId,draft.id,{});assert.equal(Date.parse(suggestion.window.startsAt)%60000,0);assert(Date.parse(suggestion.window.startsAt)>=f.now()+f.config.processingMs+120000);
+ f.clock.value+=15000;
+ const quote=await f.service.quote(ownerId,{campaignId:draft.id,offerId:PILOT_PROFILE,...suggestion.window},'pilot-suggested-window-review');assert.equal(quote.requiredUnits,5);assert.equal(quote.startsAt,suggestion.window.startsAt);
 });

@@ -70,7 +70,7 @@ test('local PostgreSQL pipeline with explicit creative/payment adapters: confirm
   f.clock.value=+new Date(slot.starts_at);
   for(let step=0;step<=4;step++){
    f.clock.value=+new Date(slot.starts_at)+step*250;await pub.lease();await pub.schedule();
-   const playlist=await f.service.playlist('main_stage_screen',{publisher:true});assert(playlist.active);
+   const playlist=await f.service.playlist('main_stage_screen',{publisher:true});assert.equal(playlist.playback,null,'legacy TIME remains visible without the new pilot countdown');assert(playlist.active);
    const active=playlist.active,ack={placementId:'main_stage_screen',version:playlist.version,revisionId:active.revisionId,manifestHash:active.manifestHash,imageHash:active.imageHash,frameAt:f.now()};
    if(step===0){assert.equal(await pub.acknowledge({...ack,manifestHash:'0'.repeat(64)}),false);assert.equal(await pub.acknowledge({...ack,frameAt:f.now()-3000}),false);}
    assert.equal(await pub.acknowledge(ack),true);assert.equal(await pub.acknowledge(ack),false,'duplicate frame never counts');
@@ -127,8 +127,8 @@ test('included correction preserves payment and cannot bypass an operator hold',
  assert.equal(order.queue.state,'SCHEDULED');assert.equal(order.revisionId,accepted.revisionId);assert.equal(order.amountUnits,q.amountUnits);
 });
 test('x402 standard headers preserve the signed payload and only SETTLED returns a payment response',async()=>{
- const config={...readAdsConfig({}),origin:'https://ads.example'},payload={x402Version:2,payload:{transaction:'explicit-fixture'}},id=uuid();let received,calls=0;
- const handler=createAdsHandler({config,db:{query:async()=>({rows:[{count:1}]})},auth:{authenticate:async()=>({ownerId})},service:{pay:async(_owner,_id,_key,p)=>{received=p;calls++;return{paymentState:'SETTLED',transaction:'a'.repeat(64),payer};}},refunds:{}});
+ const config={...readAdsConfig({}),origin:'https://ads.example',enabled:true,operationalReady:true,checkoutMode:'PUBLIC',missing:[]},payload={x402Version:2,payload:{transaction:'explicit-fixture'}},id=uuid();let received,calls=0;
+ const handler=createAdsHandler({config,db:{query:async()=>({rows:[{count:1}]})},auth:{authenticate:async()=>({ownerId,address:payer})},service:{pay:async(_owner,_id,_key,p)=>{received=p;calls++;return{paymentState:'SETTLED',transaction:'a'.repeat(64),payer};}},refunds:{}});
  const headers={origin:config.origin,'payment-signature':Buffer.from(JSON.stringify(payload)).toString('base64'),'idempotency-key':'standard-header-local'};
  const response=await handler(new Request(config.origin+'/api/ads/orders/'+id+'/pay',{method:'POST',headers,body:'{}'}));
  assert.equal(response.status,200);assert.deepEqual(received,payload);assert.equal(JSON.parse(Buffer.from(response.headers.get('payment-response'),'base64').toString()).transaction,'a'.repeat(64));

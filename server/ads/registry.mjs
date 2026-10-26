@@ -6,16 +6,54 @@ const operations=new Set(['commit','record_delivery','complete','dispute','expir
 const fail=(code,message)=>{throw new AdsError(503,code,message);};
 
 /** Noncustodial registry outbox. Disabled means unrecorded, never a simulated on-chain receipt. */
-export function createRegistryService({db,config,runtime=createSorobanRegistryRuntime({config})}){
- async function recordWith(tx,{orderId,operation,payload}){
+export function createRegistryService({db,config,runtime=createSorobanRegistryRuntime({config}),now=Date.now,owner=uuid()}){
+ let flushing=false;
+ async function recordWith(tx,{orderId,operation,payload,batchId=null}){
   if(!operations.has(operation))throw new AdsError(400,'registry_operation_invalid','Operación de registro no permitida.');
   if(!config.registryContract)return {state:'DISABLED',reason:'registry_not_deployed'};
   registryArguments(operation,payload,await import('@stellar/stellar-sdk'));
+  if(!batchId&&payload.order===sha256(orderId))batchId=(await tx.query('SELECT id FROM ads_fulfillment_batches WHERE id=$1 AND order_id=$1',[orderId])).rows[0]?.id||null;
+  // Preserve existing fingerprints and on-chain identifiers; the payload already binds its batch.
   const payloadHash=sha256(canonical({orderId,operation,payload}));
-  const rows=(await tx.query("INSERT INTO ads_registry_jobs(id,order_id,operation,payload,payload_hash) VALUES($1,$2,$3,$4::jsonb,$5) ON CONFLICT(payload_hash) DO UPDATE SET payload_hash=EXCLUDED.payload_hash RETURNING *",[uuid(),orderId,operation,JSON.stringify(payload),payloadHash])).rows;
-  return rows[0];
+  return (await tx.query("INSERT INTO ads_registry_jobs(id,order_id,batch_id,operation,payload,payload_hash) VALUES($1,$2,$3,$4,$5::jsonb,$6) ON CONFLICT(payload_hash) DO UPDATE SET batch_id=COALESCE(ads_registry_jobs.batch_id,EXCLUDED.batch_id) RETURNING *",[uuid(),orderId,batchId,operation,JSON.stringify(payload),payloadHash])).rows[0];
  }
  const record=options=>recordWith(db,options);
+ async function syncScope(tx,root,revision,payment,batch){
+  const order=batch?{...root,id:batch.id,terms_hash:batch.terms_hash,quote:{...root.quote,startsAt:new Date(batch.starts_at).toISOString(),endsAt:new Date(batch.ends_at).toISOString(),requiredUnits:Number(batch.required_units)}}:root;
+  const batchId=batch?.id||null,orderId=root.id;
+  const existing=(await tx.query('SELECT * FROM ads_registry_jobs WHERE order_id=$1 AND batch_id IS NOT DISTINCT FROM $2::uuid ORDER BY sequence',[orderId,batchId])).rows;
+  const commitment=prepareRegistryCommit(order,revision,payment,config),prior=existing.find(j=>j.operation==='commit');
+  if(prior&&canonical(prior.payload)!==canonical(commitment))return {state:'RECONCILIATION_REQUIRED',reason:'registry_commitment_changed',batchId};
+  const jobs=[],save=(operation,payload)=>recordWith(tx,{orderId,batchId,operation,payload});
+  const disputes=(await tx.query('SELECT * FROM ads_disputes WHERE order_id=$1 ORDER BY created_at,id',[orderId])).rows;
+  const open=disputes.filter(d=>d.state==='OPEN');
+  if(open.length)await tx.query("UPDATE ads_registry_jobs SET state='CANCELLED',evidence=$3::jsonb,updated_at=now() WHERE order_id=$1 AND batch_id IS NOT DISTINCT FROM $2::uuid AND operation='complete' AND state='READY'",[orderId,batchId,JSON.stringify({reason:'disputed_before_submission'})]);
+  const lastDispute=[...existing].reverse().find(j=>j.operation==='dispute'),lastResolution=[...existing].reverse().find(j=>j.operation==='resolve_dispute');
+  const unresolved=lastDispute&&(!lastResolution||Number(lastDispute.sequence)>Number(lastResolution.sequence));
+  let resolutionHash=lastResolution?.payload?.remedy_hash;
+  if(unresolved){
+   if(open.length)return {state:'DISPUTED',jobs:[],batchId};
+   if(lastDispute.state!=='CONFIRMED')return {state:'WAITING',reason:'registry_dispute_not_confirmed',batchId};
+   resolutionHash=sha256(disputes.filter(d=>d.resolved_at).map(d=>({id:d.id,state:d.state,resolvedAt:new Date(d.resolved_at).toISOString(),resolution:d.resolution??null})));
+   jobs.push(await save('resolve_dispute',{order:commitment.order,remedy_hash:resolutionHash}));
+  }
+  if(!prior)jobs.push(await save('commit',commitment));
+  const registered=new Set(existing.filter(j=>j.operation==='record_delivery').map(j=>j.payload.segment));
+  const rows=(await tx.query('SELECT * FROM ads_delivery WHERE order_id=$1 AND batch_id IS NOT DISTINCT FROM $2::uuid ORDER BY starts_at,placement_id,id',[orderId,batchId])).rows;
+  const fresh=rows.filter(r=>!registered.has(sha256(r.id)));
+  const nonces=existing.filter(j=>j.operation==='record_delivery').map(j=>BigInt(j.payload.nonce));
+  const nonceStart=nonces.reduce((n,v)=>v>=n?v+1n:n,0n);
+  // Commercial order IDs remain on the ledger. The contract signs each batch's independent commitment.
+  const payloads=fresh.length?await prepareRegistryDelivery(order,batch?fresh.map(row=>({...row,order_id:batch.id})):fresh,{config,nonceStart}):[];
+  for(const payload of payloads)jobs.push(await save('record_delivery',payload));
+  if(open.length){jobs.push(await save('dispute',{order:commitment.order,disputeIds:open.map(d=>d.id)}));return {state:'DISPUTED',jobs:jobs.map(j=>j.id),batchId};}
+  let complete;
+  if(batch)complete=Number(batch.delivered_units)===Number(batch.required_units)&&rows.reduce((n,r)=>n+Number(r.units),0)===Number(batch.required_units);
+  else{const placements=(await tx.query('SELECT * FROM ads_placements WHERE order_id=$1',[orderId])).rows;complete=placements.length===commitment.placements.length&&placements.every(p=>BigInt(p.delivered_units)===BigInt(p.required_units));}
+  if(complete)jobs.push(await save('complete',{order:commitment.order,...(resolutionHash?{resolutionHash}:{})}));
+  else if(now()>commitment.deadline)jobs.push(await save('expire',{order:commitment.order}));
+  return {state:'PREPARED',jobs:jobs.map(j=>j.id),batchId};
+ }
  async function syncOrder(orderId){
   if(!config.registryContract)return {state:'DISABLED',reason:'registry_not_deployed'};
   return db.transaction(async tx=>{
@@ -25,34 +63,12 @@ export function createRegistryService({db,config,runtime=createSorobanRegistryRu
    if(revision?.state!=='AUDITED'||!revision.manifest_hash)return {state:'WAITING',reason:'manifest_not_audited'};
    const payment=(await tx.query("SELECT * FROM ads_payment_attempts WHERE order_id=$1 AND state='SETTLED'",[orderId])).rows[0];
    if(!payment)return {state:'WAITING',reason:'payment_not_confirmed'};
-   const existing=(await tx.query('SELECT * FROM ads_registry_jobs WHERE order_id=$1 ORDER BY sequence',[orderId])).rows;
-   const commitment=prepareRegistryCommit(order,revision,payment,config),prior=existing.find(j=>j.operation==='commit');
-   if(prior&&canonical(prior.payload)!==canonical(commitment))return {state:'RECONCILIATION_REQUIRED',reason:'registry_commitment_changed'};
-   const jobs=[];
-   const disputes=(await tx.query('SELECT * FROM ads_disputes WHERE order_id=$1 ORDER BY created_at,id',[orderId])).rows;
-   const open=disputes.filter(d=>d.state==='OPEN');
-   if(open.length)await tx.query("UPDATE ads_registry_jobs SET state='CANCELLED',evidence=$2::jsonb,updated_at=now() WHERE order_id=$1 AND operation='complete' AND state='READY'",[orderId,JSON.stringify({reason:'disputed_before_submission'})]);
-   const lastDispute=[...existing].reverse().find(j=>j.operation==='dispute'),lastResolution=[...existing].reverse().find(j=>j.operation==='resolve_dispute');
-   const unresolvedRegistry=lastDispute&&(!lastResolution||Number(lastDispute.sequence)>Number(lastResolution.sequence));
-   let resolutionHash=lastResolution?.payload?.remedy_hash;
-   if(unresolvedRegistry){
-    if(open.length)return {state:'DISPUTED',jobs:[]};
-    if(lastDispute.state!=='CONFIRMED')return {state:'WAITING',reason:'registry_dispute_not_confirmed'};
-    resolutionHash=sha256(disputes.filter(d=>d.resolved_at).map(d=>({id:d.id,state:d.state,resolvedAt:new Date(d.resolved_at).toISOString(),resolution:d.resolution??null})));
-    jobs.push(await recordWith(tx,{orderId,operation:'resolve_dispute',payload:{order:commitment.order,remedy_hash:resolutionHash}}));
-   }
-   if(!prior)jobs.push(await recordWith(tx,{orderId,operation:'commit',payload:commitment}));
-   const registered=new Set(existing.filter(j=>j.operation==='record_delivery').map(j=>j.payload.segment));
-   const rows=(await tx.query('SELECT * FROM ads_delivery WHERE order_id=$1 ORDER BY starts_at,placement_id,id',[orderId])).rows.filter(r=>!registered.has(sha256(r.id)));
-   const nonces=existing.filter(j=>j.operation==='record_delivery').map(j=>BigInt(j.payload.nonce));
-   const nonceStart=nonces.reduce((n,v)=>v>=n?v+1n:n,0n);
-   const payloads=rows.length?await prepareRegistryDelivery(order,rows,{config,nonceStart}):[];
-   for(const payload of payloads)jobs.push(await recordWith(tx,{orderId,operation:'record_delivery',payload}));
-   if(open.length){jobs.push(await recordWith(tx,{orderId,operation:'dispute',payload:{order:commitment.order,disputeIds:open.map(d=>d.id)}}));return {state:'DISPUTED',jobs:jobs.map(j=>j.id)};}
-   const placements=(await tx.query('SELECT * FROM ads_placements WHERE order_id=$1',[orderId])).rows;
-   if(placements.length===commitment.placements.length&&placements.every(p=>BigInt(p.delivered_units)===BigInt(p.required_units)))jobs.push(await recordWith(tx,{orderId,operation:'complete',payload:{order:commitment.order,...(resolutionHash?{resolutionHash}:{})}}));
-   else if(Date.now()>commitment.deadline)jobs.push(await recordWith(tx,{orderId,operation:'expire',payload:{order:commitment.order}}));
-   return {state:'PREPARED',jobs:jobs.map(j=>j.id)};
+   const batches=(await tx.query('SELECT * FROM ads_fulfillment_batches WHERE order_id=$1 ORDER BY sequence',[orderId])).rows;
+   if(!batches.length)return syncScope(tx,order,revision,payment,null);
+   const results=[];
+   for(const batch of batches)results.push(await syncScope(tx,order,revision,payment,batch));
+   const blocked=results.find(r=>['RECONCILIATION_REQUIRED','WAITING','DISPUTED'].includes(r.state));
+   return {state:blocked?.state||'PREPARED',...(blocked?.reason?{reason:blocked.reason}:{}),jobs:results.flatMap(r=>r.jobs||[]),batches:results};
   });
  }
  async function reconcile(jobId){
@@ -66,24 +82,53 @@ export function createRegistryService({db,config,runtime=createSorobanRegistryRu
  }
  async function flush({limit=10}={}){
   if(!config.registryContract)return {state:'DISABLED',processed:0};
-  const ids=(await db.query("SELECT j.id FROM ads_registry_jobs j WHERE j.state='READY' AND NOT EXISTS(SELECT 1 FROM ads_registry_jobs prior WHERE prior.order_id=j.order_id AND prior.sequence<j.sequence AND prior.state NOT IN ('CONFIRMED','CANCELLED')) ORDER BY j.sequence LIMIT $1",[Math.min(100,Math.max(1,limit))])).rows;
-  const results=[];
-  for(const {id} of ids){
-   const prepared=await db.transaction(async tx=>{
-    const job=(await tx.query('SELECT * FROM ads_registry_jobs WHERE id=$1 FOR UPDATE',[id])).rows[0];
-    if(job.state!=='READY')return null;
-    const signed=await runtime.prepare(job);
-    if(!signed?.txHash||!signed.signedXdr)fail('registry_signer_unavailable','No hay una transacción de registro firmada.');
-    await tx.query("UPDATE ads_registry_jobs SET state='SUBMITTED',transaction_hash=$2,signed_xdr=$3,updated_at=now() WHERE id=$1",[id,signed.txHash,signed.signedXdr]);
-    return {...job,state:'SUBMITTED',transaction_hash:signed.txHash,signed_xdr:signed.signedXdr};
-   });
-   if(!prepared)continue;
-   try{await runtime.submit(prepared);}catch{/* Preserve exact hash; no new signature on an uncertain submission. */}
-   const result=await reconcile(id);results.push(result);if(result.state==='CONFIRMED'&&['dispute','resolve_dispute'].includes(result.operation))await syncOrder(result.order_id);
+  if(flushing)return {state:'BUSY',processed:0};
+  flushing=true;
+  const name='registry-issuer:'+(config.registryIssuer||config.registryContract),leaseMs=config.registryLeaseMs||30000;
+  let fence=null,heartbeat=null,timer,lost=false;
+  const assertLease=async(tx,lock=false)=>{
+   const result=await tx.query("SELECT 1 FROM ads_leases WHERE name=$1 AND owner=$2 AND fence=$3 AND expires_at>$4"+(lock?' FOR UPDATE':''),[name,owner,fence,new Date(now())]);
+   if(lost||!result.rowCount)fail('registry_issuer_fenced','The restricted registry issuer lease expired.');
+  };
+  try{
+   const lease=(await db.query("INSERT INTO ads_leases(name,owner,fence,expires_at) VALUES($1,$2,1,$3) ON CONFLICT(name) DO UPDATE SET owner=EXCLUDED.owner,fence=ads_leases.fence+1,expires_at=EXCLUDED.expires_at WHERE ads_leases.expires_at<=$4 RETURNING *",[name,owner,new Date(now()+leaseMs),new Date(now())])).rows[0];
+   if(!lease)return {state:'BUSY',processed:0};fence=Number(lease.fence);
+   timer=setInterval(()=>{
+    if(heartbeat)return;
+    heartbeat=db.query('UPDATE ads_leases SET expires_at=$4 WHERE name=$1 AND owner=$2 AND fence=$3 AND expires_at>$5 RETURNING fence',[name,owner,fence,new Date(now()+leaseMs),new Date(now())]).then(r=>{if(!r.rowCount)lost=true;}).catch(()=>{lost=true;}).finally(()=>{heartbeat=null;});
+   },Math.max(10,Math.min(10000,Math.floor(leaseMs/3))));
+   // An uncertain envelope owns its source-account sequence until its original hash reconciles.
+   const pending=(await db.query("SELECT id FROM ads_registry_jobs WHERE state IN ('SUBMITTED','RECONCILIATION_REQUIRED') AND transaction_hash IS NOT NULL ORDER BY sequence")).rows;
+   for(const job of pending){await assertLease(db);const result=await reconcile(job.id);if(result.state!=='CONFIRMED')return {state:'RECONCILIATION_REQUIRED',processed:0,jobId:job.id};}
+   const ids=(await db.query("SELECT j.id FROM ads_registry_jobs j WHERE j.state='READY' AND NOT EXISTS(SELECT 1 FROM ads_registry_jobs prior WHERE prior.order_id=j.order_id AND prior.sequence<j.sequence AND prior.state NOT IN ('CONFIRMED','CANCELLED')) ORDER BY j.sequence LIMIT $1",[Math.min(100,Math.max(1,limit))])).rows;
+   const results=[];
+   for(const {id} of ids){
+    await assertLease(db);
+    const prepared=await db.transaction(async tx=>{
+     const job=(await tx.query('SELECT * FROM ads_registry_jobs WHERE id=$1 FOR UPDATE',[id])).rows[0];
+     if(job.state!=='READY')return null;
+     await assertLease(tx);
+     const signed=await runtime.prepare(job);
+     if(!signed?.txHash||!signed.signedXdr)fail('registry_signer_unavailable','No hay una transacción de registro firmada.');
+     await assertLease(tx,true);
+     await tx.query("UPDATE ads_registry_jobs SET state='SUBMITTED',transaction_hash=$2,signed_xdr=$3,updated_at=now() WHERE id=$1",[id,signed.txHash,signed.signedXdr]);
+     return {...job,state:'SUBMITTED',transaction_hash:signed.txHash,signed_xdr:signed.signedXdr};
+    });
+    if(!prepared)continue;
+    await assertLease(db);
+    try{await runtime.submit(prepared);}catch{/* The exact durable envelope is reconciled, never silently replaced. */}
+    const result=await reconcile(id);results.push(result);
+    if(result.state!=='CONFIRMED')break;
+    if(['dispute','resolve_dispute'].includes(result.operation))await syncOrder(result.order_id);
+   }
+   return {processed:results.length,results};
+  }finally{
+   clearInterval(timer);if(heartbeat)await heartbeat;
+   if(fence!==null)await db.query('UPDATE ads_leases SET expires_at=$4 WHERE name=$1 AND owner=$2 AND fence=$3',[name,owner,fence,new Date(now())]);
+   flushing=false;
   }
-  return {processed:results.length,results};
  }
- async function expire({orderId,orderHash}){return record({orderId,operation:'expire',payload:{order:orderHash}});}
+ async function expire({orderId,orderHash,batchId}){return record({orderId,batchId,operation:'expire',payload:{order:orderHash}});}
  return {record,syncOrder,flush,reconcile,expire,keeper:flush};
 }
 

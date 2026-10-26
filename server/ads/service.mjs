@@ -1,7 +1,8 @@
+import {ensureFulfillment,isPilotFulfillment,recoverFulfillment,reprogramFulfillment,fulfillmentStatus,placementPlayback} from './fulfillment.mjs';
 import {isPilotConfig,applyPilotConfig,resolveQuoteOffer} from './offers.mjs';
 import {AdsError,assert,identifier,integer,sha256,uuid,event,enqueue,idempotent,durableAction} from './common.mjs';
 import {PLACEMENTS,PLANS,requireCheckout} from './config.mjs';
-import {buildDemand,quotePrice,reserveSchedule,lockInventory,lockOrderInventory} from './scheduler.mjs';
+import {buildDemand,quotePrice,reserveSchedule,lockInventory,lockOrderInventory,planRotations} from './scheduler.mjs';
 const date=v=>new Date(v).toISOString();
 export function createAdsService({db,config,creative,storage,payments,refunds,registry,now=Date.now}){
  const owned=async(tx,id,ownerId,table='ads_campaigns')=>{
@@ -22,10 +23,10 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
    db.query('SELECT id,state,settlement_tx,payer,error_code FROM ads_payment_attempts WHERE order_id=$1 ORDER BY created_at DESC LIMIT 1',[id]),
    db.query('SELECT id,state,reason,created_at FROM ads_disputes WHERE order_id=$1',[id]),
    db.query('SELECT id,state,amount,transaction_hash,reason FROM ads_refunds WHERE order_id=$1',[id]),
-   db.query('SELECT operation,state,transaction_hash FROM ads_registry_jobs WHERE order_id=$1',[id])
+   db.query('SELECT operation,state,transaction_hash,batch_id FROM ads_registry_jobs WHERE order_id=$1',[id])
   ]);
-  const p=payment.rows[0];
-  return {id:order.id,status:order.state,suspended:order.suspended,design:{status:order.design_fulfilled?'AUDITED':'PENDING'},revisionId:order.revision_id,quote:order.quote,amountUnits:order.amount,reason:order.reason,
+  const p=payment.rows[0],fulfillment=await fulfillmentStatus(db,order,{config,now:now()});
+  return {...(fulfillment?{fulfillment,playback:fulfillment.playback}:{}),id:order.id,status:order.state,suspended:order.suspended,design:{status:order.design_fulfilled?'AUDITED':'PENDING'},revisionId:order.revision_id,quote:order.quote,amountUnits:order.amount,reason:order.reason,
    payment:{status:p?.state||'REQUIRED',attemptId:p?.id,transaction:p?.settlement_tx,payer:p?.payer},
    queue:{state:order.queue_state,reason:order.reason||p?.error_code||null},
    placements:placements.rows.map(p=>({placementId:p.placement_id,delivered:Number(p.delivered_units),required:Number(p.required_units),deficit:Number(p.required_units)-Number(p.delivered_units),unit:p.unit,status:p.state})),
@@ -34,6 +35,20 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
  }
  return {
   privateStorage:storage,
+  async maintainFulfillment(){return db.transaction(async tx=>{const orders=(await tx.query("SELECT * FROM ads_orders WHERE state IN ('QUEUED','LIVE') ORDER BY id")).rows.filter(isPilotFulfillment);await lockInventory(tx,['main_stage_screen']);for(const order of orders)await ensureFulfillment(tx,order,now());return recoverFulfillment(tx,{config,now:now()});});},
+  async availability(ownerId,campaignId,{startsAfter}={}){
+   const campaign=await owned(db,identifier(campaignId),ownerId),clock=now(),horizon=clock+config.maxWindowMs;
+   let start=Math.ceil(Math.max(clock+config.processingMs+120000,startsAfter===undefined?0:Date.parse(startsAfter))/60000)*60000;
+   assert(Number.isFinite(start),400,'invalid_window','Choose a valid start for the suggested window.');
+   const duration=3600000;
+   assert(duration>=5*(60000+(config.renderLeadMs||0)),409,'capacity_unavailable','The configured horizon cannot fit five complete passes.');
+   const occupied=(await db.query("SELECT starts_at,ends_at FROM ads_reservations WHERE placement_id='main_stage_screen' AND state IN ('HELD','COMMITTED') AND ends_at>$1 AND (state='COMMITTED' OR expires_at>$1) ORDER BY starts_at",[new Date(clock)])).rows;
+   const blocks=[...occupied.map(s=>({start:+new Date(s.starts_at),end:+new Date(s.ends_at)})),...(config.hostWindows||[]).filter(w=>w.placementId==='main_stage_screen').map(w=>({start:Date.parse(w.startsAt),end:Date.parse(w.endsAt)}))];
+   for(let attempts=0;attempts<1440&&start+duration<=horizon;attempts++,start+=60000){
+    try{const slots=planRotations([{id:'availability',campaignId:campaign.id,plan:'PASSES',units:5,startsAt:start,endsAt:start+duration,committedAt:clock,passMs:60000,renderLeadMs:config.renderLeadMs||0}],blocks,{...config,passMs:60000,maxUnits:5});return{serverTime:date(clock),window:{startsAt:date(start),endsAt:date(start+duration)},estimatedPasses:slots.map((s,i)=>({number:i+1,estimatedStartsAt:date(s.start+(config.renderLeadMs||0)),estimatedEndsAt:date(s.start+(config.renderLeadMs||0)+60000)})),estimated:true};}catch(error){if(error.code!=='capacity_unavailable')throw error;}
+   }
+   assert(false,409,'capacity_unavailable','No suitable window remains in the configured horizon.');
+  },
   async upload(ownerId,bytes,mime,key){
    const sanitized=await creative.sanitizeUpload(bytes,mime);
    return db.transaction(tx=>idempotent(tx,{ownerId,key,action:'upload',payload:{hash:sha256(bytes),mime}},async()=>{
@@ -111,6 +126,7 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
     await tx.query('INSERT INTO ads_quotes(id,owner_id,campaign_id,revision_id,snapshot,terms_hash,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7)',[id,ownerId,campaign.id,quotedRevisionId,snapshot,termsHash,new Date(expiresAt)]);
     await tx.query('INSERT INTO ads_orders(id,owner_id,quote_id,revision_id,amount,pay_to,terms_hash,quote) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',[orderId,ownerId,id,quotedRevisionId,price.amountUnits,config.payTo,termsHash,snapshot]);
     for(const placementId of payload.placements)await tx.query('INSERT INTO ads_placements(order_id,placement_id,required_units,unit) VALUES($1,$2,$3,$4)',[orderId,placementId,demand.requiredUnits,demand.unit]);
+    await ensureFulfillment(tx,{id:orderId,owner_id:ownerId,quote:snapshot,terms_hash:termsHash},now());
     await reserveSchedule(tx,{id:orderId,state:'RESERVED',campaign_id:campaign.id,quote:snapshot},saleConfig,now());
     await event(tx,orderId,ownerId,'RESERVED',{quoteId:id,termsHash});return {...snapshot,termsHash};
    }));
@@ -120,7 +136,7 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
   async evidence(ownerId,id,cursor){
    await owned(db,id,ownerId,'ads_orders');let afterDate=new Date(0),afterId='00000000-0000-0000-0000-000000000000';
    if(cursor){try{assert(cursor.length<=256,400,'invalid_cursor','Invalid evidence cursor.');const v=JSON.parse(Buffer.from(cursor,'base64url').toString('utf8'));afterDate=new Date(v.at);afterId=identifier(v.id);assert(Number.isFinite(+afterDate),400,'invalid_cursor','Invalid evidence cursor.');}catch{throw new AdsError(400,'invalid_cursor','Invalid evidence cursor.');}}
-   const rows=(await db.query('SELECT id,placement_id,revision_id,manifest_hash,starts_at,ends_at,units,pass_id,signature,publisher_key,evidence FROM ads_delivery WHERE order_id=$1 AND (ends_at,id)>($2,$3::uuid) ORDER BY ends_at,id LIMIT 101',[id,afterDate,afterId])).rows;
+   const rows=(await db.query('SELECT id,placement_id,revision_id,manifest_hash,starts_at,ends_at,units,pass_id,signature,publisher_key,evidence,batch_id,unit_number FROM ads_delivery WHERE order_id=$1 AND (ends_at,id)>($2,$3::uuid) ORDER BY ends_at,id LIMIT 101',[id,afterDate,afterId])).rows;
    const page=rows.slice(0,100),last=page.at(-1);
    return {orderId:id,evidence:page,nextCursor:rows.length>100?Buffer.from(JSON.stringify({at:last.ends_at,id:last.id})).toString('base64url'):null,meaning:'Signed operator canonical activity; not independent audience evidence.'};
   },
@@ -134,9 +150,10 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
    }));
   },
   async reprogram(ownerId,id,payload,key){
-   requireCheckout(config);
    return db.transaction(tx=>idempotent(tx,{ownerId,key,action:'reprogram',payload:{...payload,id}},async()=>{
     const order=await lockOrderInventory(tx,id,ownerId);
+    if(isPilotFulfillment(order)){assert(config.operationalReady??config.enabled,503,'operations_unconfigured','Paid obligations require configured operational services.');assert(!order.suspended&&!['COMPLETED','CANCELLED','BLOCKED','QUARANTINED'].includes(order.state),409,'order_closed','This order requires review before reprogramming.');return reprogramFulfillment(tx,order,payload,config,now());}
+    requireCheckout(config);
     assert(!['COMPLETED','CANCELLED','BLOCKED','QUARANTINED'].includes(order.state),409,'order_closed','This order is closed.');
     assert(!(await tx.query("SELECT 1 FROM ads_refunds WHERE order_id=$1 AND state<>'REJECTED'",[id])).rowCount,409,'refund_in_progress','Resolve the refund before reprogramming.');
     const {rows:[dispute]}=await tx.query("SELECT id FROM ads_disputes WHERE order_id=$1 AND state='OPEN' LIMIT 1",[id]);assert(!dispute,409,'dispute_open','Resolve the disputed obligation before reprogramming.');
@@ -173,19 +190,20 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
   },
   async playlist(placementId,{publisher=false}={}){
    assert(PLACEMENTS.includes(placementId),404,'unknown_placement','Unknown digital placement.');
-   const neutral={placementId,serverTime:date(now()),version:0,validUntil:date(now()+config.manifestMs),active:null};
+   const neutral={placementId,serverTime:date(now()),version:0,validUntil:date(now()+config.manifestMs),active:null,playback:{phase:'IDLE',passId:null,durationMs:60000,startedAt:null,confirmedThrough:null,remainingMs:null,validUntil:date(now()+config.manifestMs)}};
    if(!config.databaseUrl&&!db.testDatabase)return neutral;
-   const {rows:[row]}=await db.query(`SELECT p.*,o.suspended,o.state AS order_state,r.state AS revision_state FROM ads_playlist p LEFT JOIN ads_orders o ON o.id=p.order_id LEFT JOIN ads_revisions r ON r.id=p.revision_id WHERE p.placement_id=$1`,[placementId]);
+   const {rows:[row]}=await db.query(`SELECT p.*,o.suspended,o.state AS order_state,o.quote AS order_quote,r.state AS revision_state FROM ads_playlist p LEFT JOIN ads_orders o ON o.id=p.order_id LEFT JOIN ads_revisions r ON r.id=p.revision_id WHERE p.placement_id=$1`,[placementId]);
    if(!row)return neutral;
    const visible=row.active&&['QUEUED','LIVE'].includes(row.order_state)&&!row.suspended&&row.revision_state==='AUDITED'&&+new Date(row.valid_until)>now();
    let healthy=publisher;
    if(!publisher)healthy=(await db.query('SELECT 1 FROM ads_publisher_acks a JOIN ads_leases l ON l.name=$1 AND l.fence=a.fence WHERE a.placement_id=$2 AND a.version=$3 AND a.ack_at>$4 AND l.expires_at>$5',['publisher',placementId,row.version,new Date(now()-config.manifestMs),new Date(now())])).rowCount>0;
-   return {...neutral,version:Number(row.version),validUntil:date(row.valid_until),active:visible&&healthy?row.active:null};
+   return {...neutral,version:Number(row.version),validUntil:date(row.valid_until),active:visible&&healthy?row.active:null,playback:isPilotFulfillment({quote:row.order_quote})?await placementPlayback(db,placementId,{config,now:now()}):null};
   }
  };
 }
 export async function confirmPaidOrder(tx,order,receipt,{config,now=Date.now}){
  await lockInventory(tx,order.quote.placements);
+ await ensureFulfillment(tx,order,now());
  const {rows:slots}=await tx.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND state='HELD' FOR UPDATE",[order.id]);
  const conflict=slots.some(s=>(config.hostWindows||[]).some(w=>w.placementId===s.placement_id&&Date.parse(w.startsAt)<+new Date(s.ends_at)&&Date.parse(w.endsAt)>+new Date(s.starts_at)));
  const incomplete=order.quote.placements.some(p=>slots.filter(s=>s.placement_id===p).reduce((n,s)=>n+BigInt(s.delivery_units),0n)<BigInt(order.quote.requiredUnits));

@@ -39,7 +39,8 @@ export function createJobRunner({db,config,creative,payments,registry,now=Date.n
     await tx.query("UPDATE ads_generation_attempts SET state='QUARANTINED' WHERE order_id=$1 AND revision_id=$2",[order.id,order.revision_id]);await event(tx,order.id,'auditor',state,{verdict:output.verdict});return;
    }
    await tx.query("UPDATE ads_revisions SET state='AUDITED',manifest=$2,manifest_hash=$3,verdict=$4 WHERE id=$1 AND manifest IS NULL",[order.revision_id,output.manifest,output.manifestHash,output.verdict]);
-   const missed=Date.parse(order.quote.endsAt)<=now();
+   const activeBatch=(await tx.query("SELECT ends_at FROM ads_fulfillment_batches WHERE order_id=$1 AND state='OPEN'",[order.id])).rows[0];
+   const missed=+(new Date(activeBatch?.ends_at||order.quote.endsAt))<=now();
    await tx.query("UPDATE ads_orders SET queue_state=$2,reason=$3,design_fulfilled=true,state=CASE WHEN $2::text IS NULL THEN 'RECONCILIATION_REQUIRED' ELSE state END,updated_at=now() WHERE id=$1",[order.id,missed?null:'SCHEDULED',missed?'Generation completed after the delivery window; remedy required':null]);
    await tx.query("UPDATE ads_placements SET state=$2 WHERE order_id=$1",[order.id,missed?'FAILED':'SCHEDULED']);
    await tx.query("UPDATE ads_generation_attempts SET state='COMPLETED' WHERE order_id=$1 AND revision_id=$2",[order.id,order.revision_id]);await enqueue(tx,'registry',order.id,'registry:commit:'+order.id+':'+order.revision_id,{operation:'commit'});await event(tx,order.id,'auditor','AUDIT_PASSED',{manifestHash:output.manifestHash,missed});

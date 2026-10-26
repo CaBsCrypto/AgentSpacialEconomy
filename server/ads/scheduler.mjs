@@ -68,17 +68,19 @@ export async function reserveSchedule(tx,newOrder,config,now=Date.now()){
  const placements=newOrder.quote.placements;await lockInventory(tx,placements);
  await tx.query("UPDATE ads_reservations SET state='RELEASED' WHERE state='HELD' AND expires_at<=$1",[new Date(now)]);
  for(const placementId of [...placements].sort()){
-  const {rows:existing}=await tx.query(`SELECT o.*,r.campaign_id,p.required_units,p.delivered_units FROM ads_orders o JOIN ads_revisions r ON r.id=o.revision_id JOIN ads_placements p ON p.order_id=o.id WHERE p.placement_id=$1 AND o.id<>$2 AND o.state IN ('RESERVED','PAYMENT_PENDING','QUEUED','LIVE') AND p.delivered_units<p.required_units AND (o.quote->>'endsAt')::timestamptz>$3 AND (o.state NOT IN ('RESERVED','PAYMENT_PENDING') OR (o.quote->>'expiresAt')::timestamptz>$3) ORDER BY o.created_at,o.id`,[placementId,newOrder.id,new Date(now)]);
+  const {rows:existing}=await tx.query(`SELECT o.*,r.campaign_id,p.required_units,p.delivered_units FROM ads_orders o JOIN ads_revisions r ON r.id=o.revision_id JOIN ads_placements p ON p.order_id=o.id WHERE p.placement_id=$1 AND o.id<>$2 AND o.state IN ('RESERVED','PAYMENT_PENDING','QUEUED','LIVE') AND p.delivered_units<p.required_units AND COALESCE((SELECT b.ends_at FROM ads_fulfillment_batches b WHERE b.order_id=o.id AND b.state='OPEN' LIMIT 1),(o.quote->>'endsAt')::timestamptz)>$3 AND (o.state NOT IN ('RESERVED','PAYMENT_PENDING') OR (o.quote->>'expiresAt')::timestamptz>$3) ORDER BY o.created_at,o.id`,[placementId,newOrder.id,new Date(now)]);
   const {rows:fixedRows}=await tx.query("SELECT * FROM ads_reservations WHERE placement_id=$1 AND state IN ('HELD','COMMITTED') AND starts_at<=$2 AND ends_at>$2",[placementId,new Date(now)]);
   const blocks=[...(config.hostWindows||[]).filter(w=>w.placementId===placementId).map(w=>({start:time(w.startsAt),end:time(w.endsAt)})),...fixedRows.map(s=>({start:+new Date(s.starts_at),end:+new Date(s.ends_at)}))];
   const movable=[];
   for(const order of [...existing,newOrder]){
-   const q=order.quote;
+   let q=order.quote;
+   const batch=(await tx.query("SELECT * FROM ads_fulfillment_batches WHERE order_id=$1 AND state='OPEN'",[order.id])).rows[0];
+   if(batch)q={...q,startsAt:new Date(batch.starts_at).toISOString(),endsAt:new Date(batch.ends_at).toISOString(),requiredUnits:Number(batch.required_units),units:Number(batch.required_units)};
    const future=(await tx.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND placement_id=$2 AND state IN ('HELD','COMMITTED') AND starts_at>$3",[order.id,placementId,new Date(now)])).rows;
    if(order.id!==newOrder.id&&q.plan==='EXCLUSIVE'){
     blocks.push(...future.map(s=>({start:+new Date(s.starts_at),end:+new Date(s.ends_at)})));continue;
    }
-   let remaining=order.id===newOrder.id?q.requiredUnits:Number(order.required_units)-Number(order.delivered_units);
+   let remaining=batch?Number((await tx.query('SELECT count(*)::int AS count FROM ads_fulfillment_units WHERE assigned_batch_id=$1 AND completed_at IS NULL',[batch.id])).rows[0].count):order.id===newOrder.id?q.requiredUnits:Number(order.required_units)-Number(order.delivered_units);
    for(const slot of fixedRows.filter(s=>s.order_id===order.id)){
     const credited=(await tx.query('SELECT COALESCE(sum(units),0)::text AS units FROM ads_delivery WHERE order_id=$1 AND placement_id=$2 AND starts_at>=$3 AND ends_at<=$4',[order.id,placementId,slot.starts_at,slot.ends_at])).rows[0];
     remaining-=Math.max(0,Number(slot.delivery_units)-Number(credited.units));
@@ -93,8 +95,11 @@ export async function reserveSchedule(tx,newOrder,config,now=Date.now()){
   for(const s of slots){
    const order=s.orderId===newOrder.id?newOrder:existing.find(o=>o.id===s.orderId);
    const committed=!['RESERVED','PAYMENT_PENDING'].includes(order.state);
-   await tx.query('INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,pass_id,delivery_units) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)',[uuid(),s.orderId,placementId,new Date(s.start),new Date(s.end),new Date(order.quote.expiresAt),committed?'COMMITTED':'HELD',s.plan==='PASSES'?uuid():null,s.deliveryUnits]);
+   const batch=(await tx.query("SELECT id FROM ads_fulfillment_batches WHERE order_id=$1 AND state='OPEN'",[order.id])).rows[0];
+   await tx.query('INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,pass_id,delivery_units,batch_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',[uuid(),s.orderId,placementId,new Date(s.start),new Date(s.end),new Date(order.quote.expiresAt),committed?'COMMITTED':'HELD',s.plan==='PASSES'?uuid():null,s.deliveryUnits,batch?.id||null]);
   }
+  for(const id of ids){await assignFulfillmentReservations(tx,id,now);await tx.query('UPDATE ads_orders SET fulfillment_version=fulfillment_version+1 WHERE id=$1 AND EXISTS(SELECT 1 FROM ads_fulfillment_batches WHERE order_id=$1)',[id]);}
+  if(ids.length)await tx.query('UPDATE ads_inventory SET schedule_version=schedule_version+1 WHERE id=$1',[placementId]);
  }
 }
 
@@ -107,4 +112,14 @@ export async function lockOrderInventory(tx,id,ownerId){
  const locked=(await tx.query('SELECT * FROM ads_orders WHERE '+where+' FOR UPDATE',params)).rows[0];
  assert(locked,404,'order_not_found','Order unavailable.');
  return locked;
+}
+
+/** Assign stable, unfulfilled entitlements after replacing only movable reservations. */
+export async function assignFulfillmentReservations(tx,orderId,now=Date.now()){
+ const batch=(await tx.query("SELECT * FROM ads_fulfillment_batches WHERE order_id=$1 AND state='OPEN'",[orderId])).rows[0];if(!batch)return;
+ const units=(await tx.query('SELECT number FROM ads_fulfillment_units WHERE assigned_batch_id=$1 AND completed_at IS NULL ORDER BY number',[batch.id])).rows;
+ const slots=(await tx.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND state IN ('HELD','COMMITTED') AND ends_at>$2 ORDER BY starts_at,id",[orderId,new Date(now)])).rows;
+ const taken=new Set(slots.filter(s=>s.batch_id===batch.id&&s.unit_number!=null).map(s=>Number(s.unit_number)));
+ const free=units.map(u=>Number(u.number)).filter(n=>!taken.has(n));
+ for(const slot of slots){if(slot.unit_number!=null)continue;const number=free.shift();if(number===undefined)break;await tx.query('UPDATE ads_reservations SET batch_id=$2,unit_number=$3 WHERE id=$1',[slot.id,batch.id,number]);}
 }
