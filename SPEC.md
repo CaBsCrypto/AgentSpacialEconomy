@@ -15,6 +15,12 @@
 
 Everything else is decoration. If time runs short, protect steps 3, 5 and 7.
 
+## Extension built on 26 Oct (P2, after every P0 and P1)
+
+8. **Income.** A sponsor buys one line on the stage screen: `POST /paid/sponsor-slot`, 0.10 testnet USDC over x402, paid to the **venue treasury**. The sponsor checks the 402 before signing (price, testnet, payTo = treasury). The payment is an `income` row in the ledger; it never changes an agent's budget.
+9. **Recharge.** The treasury re-approves the venue agent what is left on the allowance plus the income (SEP-41 `approve` sets, it does not add) and reads it back. Recorded in run 3 (0.30 → 0.40 USDC).
+10. **Credit pool and live reads.** The dashboard shows the allowance as credits (1 credit = `mandate.creditUsdc`, default 0.01 USDC) and checks every recorded transaction and the treasury and agent balances on Horizon testnet when it loads, falling back to the recorded values.
+
 ## Judges can test it (P1, after every P0)
 
 Judges review asynchronously and use the product like beta testers. Give them the recorded real testnet evidence and a reproducible path to fresh payments without our laptop:
@@ -34,7 +40,9 @@ Judges review asynchronously and use the product like beta testers. Give them th
 | `agent/fixtures/schedule.json` | Data behind `venue-feed` | Public HackMeridian schedule only. |
 | `dist/state/ledger.json`, `dist/state/stage.json` | Output of a real run | Committed after the final testnet run so the static site can show it. |
 | `dist/dashboard.html` | Operator view | Mandate, allocations, ledger rows with explorer links, blocked attempt. |
-| Stage screen in the twin | Reads `state/stage.json` | Falls back to the current default if the file is missing. |
+| Stage screen in the twin | Reads `state/stage.json` | Falls back to the current default if the file is missing. Shows the sponsor line only for a settled sponsor payment. |
+| `agent/sponsor.mjs`, `agent/lib/income.mjs` | Income side (extension) | Sponsor payment to the treasury, recharge rules. Unit-tested. |
+| `dist/credits.mjs`, `dist/live-chain.mjs` | Dashboard helpers (extension) | Credit math and read-only Horizon checks. Unit-tested. |
 
 ## Payments
 
@@ -107,7 +115,7 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 - Per-day smart-account spending policies (OpenZeppelin policies or Nido session keys), beyond the implemented SEP-41 treasury allowance.
 - LLM planner that proposes the plan from the objective (still bounded by the ledger).
 - More zones and agents (sponsor stands, check-in, photo lounge).
-- Revenue side: charging third parties for screen or AR placement.
+- Revenue side beyond the sponsor slot: AR placement, pricing, several sponsors, a real sponsor-facing flow (the first sponsor slot is built, see Extension).
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.

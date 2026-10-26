@@ -51,7 +51,7 @@ The diamond-in-a-circle mark from the cover (the "administrator agent" node), go
 
 1. **Mandate** — objective, total budget, per-call cap, allowed services, approval threshold. The static dashboard displays a clearly labelled recorded run; fresh runs use GitHub Actions.
 2. **Run log** — venue agent → stage agent, each step with price, status and explorer link.
-3. **Budget** — allocated / reserved / spent / available per agent, as a single bar each.
+3. **Budget** — allocated / reserved / spent / available per agent, as a single bar each. The **credit pool** shows the treasury allowance in credits (1 credit = 0.01 USDC) with any sponsor deposit hatched in `--ase-signal`; live testnet checks appear in `--ase-muted` next to each proof link.
 4. **Blocked** — the refused call as a card: what it wanted, why it was refused, "Approve" and "Decline" (approve is out of scope; the button may be disabled with a note).
 5. **Venue** — the ONE16 twin with the stage screen showing the purchased card.
 

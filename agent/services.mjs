@@ -4,10 +4,11 @@
 //   GET  /paid/venue-feed     paid — public HackMeridian schedule
 //   POST /paid/screen-card    paid — a stage-screen card for one session
 //   POST /paid/premium-render paid — priced above the demo cap on purpose
+//   POST /paid/sponsor-slot   paid by a sponsor TO THE VENUE TREASURY — income that can recharge the agent
 //
 // Pattern follows the `agentic-payments` skill (stellar/stellar-dev-skill, x402.md): the payment gate
 // is mounted under /paid and fails closed — without a valid recipient every /paid route answers 503,
-// never a free 200.
+// never a free 200. The sponsor slot also needs TREASURY_PUBLIC_KEY, or it answers 503.
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
@@ -16,7 +17,8 @@ import { paymentMiddlewareFromConfig } from "@x402/express";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { ExactStellarScheme } from "@x402/stellar/exact/server";
 import { StrKey } from "@stellar/stellar-sdk";
-import { CATALOG } from "./catalog.mjs";
+import { CATALOG, SPONSOR_SLOT } from "./catalog.mjs";
+import { sponsorSlot } from "./lib/income.mjs";
 import { toDollarPrice } from "./lib/money.mjs";
 import { networkConfig } from "./config/networks.mjs";
 
@@ -34,15 +36,15 @@ const FACILITATOR_URL = process.env.FACILITATOR_URL || net.facilitatorUrl;
 const PORT = Number(process.env.SERVICES_PORT || 3001);
 
 
-function resolveRecipient() {
-  const raw = (process.env.SERVICE_RECIPIENT || "").trim().replace(/['"]/g, "");
+function resolvePublicKey(name, disables) {
+  const raw = (process.env[name] || "").trim().replace(/['"]/g, "");
   if (!raw) return "";
   if (raw.startsWith("S")) {
-    console.error("SERVICE_RECIPIENT looks like a SECRET key. Put the public G... key there. Paid routes disabled.");
+    console.error(`${name} looks like a SECRET key. Put the public G... key there. ${disables} disabled.`);
     return "";
   }
   if (!StrKey.isValidEd25519PublicKey(raw)) {
-    console.error(`SERVICE_RECIPIENT is not a valid public key (${raw.slice(0, 6)}...). Paid routes disabled.`);
+    console.error(`${name} is not a valid public key (${raw.slice(0, 6)}...). ${disables} disabled.`);
     return "";
   }
   return raw;
@@ -60,24 +62,31 @@ const facilitator = new HTTPFacilitatorClient({
   }),
 });
 
-const PAY_TO = resolveRecipient();
-const PAID_ROUTES = Object.fromEntries(
-  CATALOG.map((s) => [
-    `${s.method} ${s.path}`,
-    {
-      accepts: { scheme: "exact", price: toDollarPrice(s.priceUsdc), network: NETWORK, payTo: PAY_TO },
-      description: s.description,
-    },
-  ]),
-);
+const PAY_TO = resolvePublicKey("SERVICE_RECIPIENT", "Paid routes");
+const TREASURY = resolvePublicKey("TREASURY_PUBLIC_KEY", "The sponsor slot is");
+const route = (s, payTo) => [
+  `${s.method} ${s.path}`,
+  { accepts: { scheme: "exact", price: toDollarPrice(s.priceUsdc), network: NETWORK, payTo }, description: s.description },
+];
+const PAID_ROUTES = Object.fromEntries([
+  ...CATALOG.map((s) => route(s, PAY_TO)),
+  ...(TREASURY ? [route(SPONSOR_SLOT, TREASURY)] : []),
+]);
 
 const schedule = JSON.parse(await readFile(new URL("./fixtures/schedule.json", import.meta.url), "utf8"));
 
 const app = express();
 app.use(express.json({ limit: "16kb" }));
 
-app.get("/health", (_req, res) => res.json({ ok: true, network: NETWORK, paidRoutes: Boolean(PAY_TO) }));
-app.get("/catalog", (_req, res) => res.json({ network: NETWORK, services: CATALOG }));
+app.get("/health", (_req, res) =>
+  res.json({ ok: true, network: NETWORK, paidRoutes: Boolean(PAY_TO), sponsorSlot: Boolean(PAY_TO && TREASURY) }));
+app.get("/catalog", (_req, res) =>
+  res.json({ network: NETWORK, services: CATALOG, income: PAY_TO && TREASURY ? [SPONSOR_SLOT] : [] }));
+
+// Fail closed: without a venue treasury the sponsor route is not in the payment config, so it must
+// never fall through to its handler for free.
+app.use(`/paid${SPONSOR_SLOT.path}`, (_req, res, next) =>
+  TREASURY ? next() : res.status(503).json({ error: "venue treasury not configured" }));
 
 let paymentGate;
 if (PAY_TO) {
@@ -120,8 +129,15 @@ app.post("/paid/premium-render", (req, res) => {
   res.json({ ...c, animated: true });
 });
 
+app.post(`/paid${SPONSOR_SLOT.path}`, (req, res) => {
+  const slot = sponsorSlot(req.body);
+  if (!slot) return res.status(400).json({ error: "name is required" });
+  res.json({ ...slot, priceUsdc: SPONSOR_SLOT.priceUsdc, payTo: TREASURY, screen: "main-stage" });
+});
+
 app.listen(PORT, () => {
   console.log(`Venue services on http://localhost:${PORT} (${NETWORK})`);
   console.log(`Facilitator: ${FACILITATOR_URL}${sendsOzKey ? " (with OZ key)" : ""}`);
   console.log(PAY_TO ? `Paying to ${PAY_TO.slice(0, 6)}…${PAY_TO.slice(-4)}` : "Paid routes DISABLED");
+  console.log(PAY_TO && TREASURY ? `Sponsor slot pays the venue treasury ${TREASURY.slice(0, 6)}…${TREASURY.slice(-4)}` : "Sponsor slot DISABLED (no TREASURY_PUBLIC_KEY)");
 });
