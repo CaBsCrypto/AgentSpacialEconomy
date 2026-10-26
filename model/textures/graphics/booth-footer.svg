@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="936" viewBox="0 0 2048 936">
+<rect width="100%" height="100%" fill="#171c1c"/>
+<polygon points="32.7091,71.368 70.7291,93.4196 108.749,71.368 108.749,85.8156 70.7291,108.628 32.7091,85.8156" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="32.7091,93.4196 57.0419,107.867 32.7091,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="108.749,93.4196 84.4163,107.867 108.749,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="123.007" y="96.0524" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="123.007" y="131.804" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="356.172" cy="92.374" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="325.281,98.5523 387.063,77.5462" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="325.281,110.291 387.063,89.2849" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="389.914,75.17 419.855,92.5356 449.796,75.17 449.796,86.5475 419.855,104.512 389.914,86.5475" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="389.914,92.5356 409.077,103.913 389.914,116.488" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="449.796,92.5356 430.634,103.913 449.796,116.488" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="458.35" y="127.485" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="653.496" cy="98.4572" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="617.852,105.586 689.139,81.3482" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="617.852,119.131 689.139,94.8928" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="698.644" y="119.87" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="910.423,71.368 948.443,93.4196 986.463,71.368 986.463,85.8156 948.443,108.628 910.423,85.8156" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="910.423,93.4196 934.756,107.867 910.423,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="986.463,93.4196 962.131,107.867 986.463,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1000.72" y="96.0524" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1000.72" y="131.804" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="1233.89" cy="92.374" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="1202.99,98.5523 1264.78,77.5462" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1202.99,110.291 1264.78,89.2849" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1267.63,75.17 1297.57,92.5356 1327.51,75.17 1327.51,86.5475 1297.57,104.512 1267.63,86.5475" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1267.63,92.5356 1286.79,103.913 1267.63,116.488" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1327.51,92.5356 1308.35,103.913 1327.51,116.488" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1336.06" y="127.485" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="1531.21" cy="98.4572" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="1495.57,105.586 1566.85,81.3482" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1495.57,119.131 1566.85,94.8928" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1576.36" y="119.87" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="1788.14,71.368 1826.16,93.4196 1864.18,71.368 1864.18,85.8156 1826.16,108.628 1788.14,85.8156" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1788.14,93.4196 1812.47,107.867 1788.14,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1864.18,93.4196 1839.84,107.867 1864.18,123.836" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1878.44" y="96.0524" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1878.44" y="131.804" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="63.6003" cy="313.889" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="32.7091,320.067 94.4916,299.061" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="32.7091,331.806 94.4916,310.8" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="97.3431,296.685 127.284,314.05 157.225,296.685 157.225,308.062 127.284,326.027 97.3431,308.062" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="97.3431,314.05 116.505,325.428 97.3431,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="157.225,314.05 138.062,325.428 157.225,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="165.779" y="349" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="360.924" cy="319.972" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="325.281,327.101 396.568,302.863" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="325.281,340.645 396.568,316.407" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="406.073" y="341.385" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="617.852,292.883 655.872,314.934 693.892,292.883 693.892,307.33 655.872,330.142 617.852,307.33" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="617.852,314.934 642.185,329.382 617.852,345.35" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="693.892,314.934 669.559,329.382 693.892,345.35" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="708.149" y="317.567" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="708.149" y="353.319" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="941.315" cy="313.889" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="910.423,320.067 972.206,299.061" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="910.423,331.806 972.206,310.8" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="975.057,296.685 1005,314.05 1034.94,296.685 1034.94,308.062 1005,326.027 975.057,308.062" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="975.057,314.05 994.219,325.428 975.057,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1034.94,314.05 1015.78,325.428 1034.94,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1043.49" y="349" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="1238.64" cy="319.972" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="1202.99,327.101 1274.28,302.863" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1202.99,340.645 1274.28,316.407" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1283.79" y="341.385" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="1495.57,292.883 1533.59,314.934 1571.61,292.883 1571.61,307.33 1533.59,330.142 1495.57,307.33" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1495.57,314.934 1519.9,329.382 1495.57,345.35" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1571.61,314.934 1547.27,329.382 1571.61,345.35" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1585.86" y="317.567" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1585.86" y="353.319" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="1819.03" cy="313.889" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="1788.14,320.067 1849.92,299.061" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1788.14,331.806 1849.92,310.8" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1852.77,296.685 1882.71,314.05 1912.65,296.685 1912.65,308.062 1882.71,326.027 1852.77,308.062" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1852.77,314.05 1871.93,325.428 1852.77,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1912.65,314.05 1893.49,325.428 1912.65,338.003" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1921.21" y="349" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="68.3528" cy="541.486" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="32.7091,548.615 103.997,524.377" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="32.7091,562.16 103.997,537.922" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="113.502" y="562.9" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="325.281,514.397 363.301,536.449 401.32,514.397 401.32,528.845 363.301,551.657 325.281,528.845" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="325.281,536.449 349.613,550.896 325.281,566.865" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="401.32,536.449 376.988,550.896 401.32,566.865" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="415.578" y="539.082" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="415.578" y="574.833" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="648.743" cy="535.403" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="617.852,541.582 679.634,520.575" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="617.852,553.32 679.634,532.314" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="682.486,518.199 712.427,535.565 742.367,518.199 742.367,529.577 712.427,547.541 682.486,529.577" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="682.486,535.565 701.648,546.942 682.486,559.517" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="742.367,535.565 723.205,546.942 742.367,559.517" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="750.922" y="570.515" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="946.067" cy="541.486" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="910.423,548.615 981.711,524.377" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="910.423,562.16 981.711,537.922" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="991.216" y="562.9" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="1202.99,514.397 1241.01,536.449 1279.03,514.397 1279.03,528.845 1241.01,551.657 1202.99,528.845" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1202.99,536.449 1227.33,550.896 1202.99,566.865" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1279.03,536.449 1254.7,550.896 1279.03,566.865" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1293.29" y="539.082" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1293.29" y="574.833" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="1526.46" cy="535.403" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="1495.57,541.582 1557.35,520.575" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1495.57,553.32 1557.35,532.314" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1560.2,518.199 1590.14,535.565 1620.08,518.199 1620.08,529.577 1590.14,547.541 1560.2,529.577" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1560.2,535.565 1579.36,546.942 1560.2,559.517" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1620.08,535.565 1600.92,546.942 1620.08,559.517" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1628.64" y="570.515" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="1823.78" cy="541.486" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="1788.14,548.615 1859.43,524.377" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1788.14,562.16 1859.43,537.922" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1868.93" y="562.9" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="32.7091,735.912 70.7291,757.963 108.749,735.912 108.749,750.359 70.7291,773.171 32.7091,750.359" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="32.7091,757.963 57.0419,772.411 32.7091,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="108.749,757.963 84.4163,772.411 108.749,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="123.007" y="760.596" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="123.007" y="796.348" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="356.172" cy="756.918" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="325.281,763.096 387.063,742.09" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="325.281,774.835 387.063,753.829" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="389.914,739.714 419.855,757.079 449.796,739.714 449.796,751.091 419.855,769.056 389.914,751.091" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="389.914,757.079 409.077,768.457 389.914,781.032" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="449.796,757.079 430.634,768.457 449.796,781.032" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="458.35" y="792.029" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="653.496" cy="763.001" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="617.852,770.13 689.139,745.892" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="617.852,783.674 689.139,759.437" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="698.644" y="784.414" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="910.423,735.912 948.443,757.963 986.463,735.912 986.463,750.359 948.443,773.171 910.423,750.359" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="910.423,757.963 934.756,772.411 910.423,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="986.463,757.963 962.131,772.411 986.463,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1000.72" y="760.596" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1000.72" y="796.348" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+<ellipse cx="1233.89" cy="756.918" rx="21.006" ry="21.006" fill="none" stroke="#f3f1df" stroke-width="3.39803"/>
+<polyline points="1202.99,763.096 1264.78,742.09" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1202.99,774.835 1264.78,753.829" fill="none" stroke="#f3f1df" stroke-width="4.63368" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1267.63,739.714 1297.57,757.079 1327.51,739.714 1327.51,751.091 1297.57,769.056 1267.63,751.091" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1267.63,757.079 1286.79,768.457 1267.63,781.032" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1327.51,757.079 1308.35,768.457 1327.51,781.032" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1336.06" y="792.029" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="62.7329">26</text>
+<ellipse cx="1531.21" cy="763.001" rx="24.2377" ry="24.2377" fill="none" stroke="#f3f1df" stroke-width="3.92081"/>
+<polyline points="1495.57,770.13 1566.85,745.892" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1495.57,783.674 1566.85,759.437" fill="none" stroke="#f3f1df" stroke-width="5.34656" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1576.36" y="784.414" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="45.426">Stellar</text>
+<polygon points="1788.14,735.912 1826.16,757.963 1864.18,735.912 1864.18,750.359 1826.16,773.171 1788.14,750.359" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1788.14,757.963 1812.47,772.411 1788.14,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="1864.18,757.963 1839.84,772.411 1864.18,788.379" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="1878.44" y="760.596" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Hack</text>
+<text x="1878.44" y="796.348" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="31.921">Meridian</text>
+</svg>

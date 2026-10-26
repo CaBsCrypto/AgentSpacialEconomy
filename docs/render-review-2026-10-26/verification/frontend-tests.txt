@@ -1,0 +1,2225 @@
+TAP version 13
+# Subtest: published QR and NFC metadata share the canonical domain and retain existing entry routes
+ok 1 - published QR and NFC metadata share the canonical domain and retain existing entry routes
+  ---
+  duration_ms: 3.1236
+  type: 'test'
+  ...
+# Subtest: published PNG and SVG retain the QR codes decoded for the canonical station URL
+ok 2 - published PNG and SVG retain the QR codes decoded for the canonical station URL
+  ---
+  duration_ms: 4.5025
+  type: 'test'
+  ...
+# Subtest: both legacy Android pages launch canonical assets and return to the canonical experience
+ok 3 - both legacy Android pages launch canonical assets and return to the canonical experience
+  ---
+  duration_ms: 7.4343
+  type: 'test'
+  ...
+# Subtest: activation approach remains arrival-right, walkable and independently labelled
+ok 4 - activation approach remains arrival-right, walkable and independently labelled
+  ---
+  duration_ms: 1.2715
+  type: 'test'
+  ...
+# Subtest: every exported totem name is recognized after the actual Three loader sanitization
+ok 5 - every exported totem name is recognized after the actual Three loader sanitization
+  ---
+  duration_ms: 9.3932
+  type: 'test'
+  ...
+# Subtest: a tap resolves any totem mesh through its model parent without accepting a Passport
+ok 6 - a tap resolves any totem mesh through its model parent without accepting a Passport
+  ---
+  duration_ms: 0.2172
+  type: 'test'
+  ...
+# Subtest: first-frame scheduling warms once without starting a wallet ceremony or a claim
+ok 7 - first-frame scheduling warms once without starting a wallet ceremony or a claim
+  ---
+  duration_ms: 2.5643
+  type: 'test'
+  ...
+# Subtest: closing during module preparation does not reopen the wallet over the experience
+ok 8 - closing during module preparation does not reopen the wallet over the experience
+  ---
+  duration_ms: 1.4666
+  type: 'test'
+  ...
+# Subtest: totem, map and NFC use the shared panel while modal navigation stays paused
+ok 9 - totem, map and NFC use the shared panel while modal navigation stays paused
+  ---
+  duration_ms: 1.5714
+  type: 'test'
+  ...
+# Subtest: strict AR uses correct ARCore package and explicit same-site failure marker
+ok 10 - strict AR uses correct ARCore package and explicit same-site failure marker
+  ---
+  duration_ms: 2.064
+  type: 'test'
+  ...
+# Subtest: actual launch handler remains synchronous without cancelling native navigation or claiming camera
+ok 11 - actual launch handler remains synchronous without cancelling native navigation or claiming camera
+  ---
+  duration_ms: 1.2186
+  type: 'test'
+  ...
+# Subtest: fallback reports unresolved native launch, never asserts incompatible hardware
+ok 12 - fallback reports unresolved native launch, never asserts incompatible hardware
+  ---
+  duration_ms: 0.3494
+  type: 'test'
+  ...
+# Subtest: asset diagnostic validates actual public response data and reports MIME without treating it as AR success
+ok 13 - asset diagnostic validates actual public response data and reports MIME without treating it as AR success
+  ---
+  duration_ms: 30.0234
+  type: 'test'
+  ...
+# Subtest: Android launch targets small public Passport and returns same ONE16 document
+ok 14 - Android launch targets small public Passport and returns same ONE16 document
+  ---
+  duration_ms: 1.5208
+  type: 'test'
+  ...
+# Subtest: iPhone has safe early href and immediate preparation binding before lazy panel
+ok 15 - iPhone has safe early href and immediate preparation binding before lazy panel
+  ---
+  duration_ms: 0.3984
+  type: 'test'
+  ...
+# Subtest: isolated AR runtime files match pinned distribution hashes and resolve local imports
+ok 16 - isolated AR runtime files match pinned distribution hashes and resolve local imports
+  ---
+  duration_ms: 34.8491
+  type: 'test'
+  ...
+# Subtest: compiled Passport target is bound to exact source image and contains real extraction output
+ok 17 - compiled Passport target is bound to exact source image and contains real extraction output
+  ---
+  duration_ms: 3.6968
+  type: 'test'
+  ...
+# Subtest: AR reports tracking only after an active camera session and actual target events
+ok 18 - AR reports tracking only after an active camera session and actual target events
+  ---
+  duration_ms: 2.8597
+  type: 'test'
+  ...
+# Subtest: stopping while camera permission is pending cleans up again after the request resolves
+ok 19 - stopping while camera permission is pending cleans up again after the request resolves
+  ---
+  duration_ms: 4.5676
+  type: 'test'
+  ...
+# Subtest: stopping while libraries load prevents a later camera start
+ok 20 - stopping while libraries load prevents a later camera start
+  ---
+  duration_ms: 2.7382
+  type: 'test'
+  ...
+# Subtest: denied camera is recoverable and cleans the failed adapter
+ok 21 - denied camera is recoverable and cleans the failed adapter
+  ---
+  duration_ms: 0.6283
+  type: 'test'
+  ...
+# Subtest: duplicate starts share a request; lost tracking does not reset user transformations
+ok 22 - duplicate starts share a request; lost tracking does not reset user transformations
+  ---
+  duration_ms: 0.561
+  type: 'test'
+  ...
+# Subtest: gesture scale and pitch stay bounded, invalid pinch values cannot corrupt state, reset is exact
+ok 23 - gesture scale and pitch stay bounded, invalid pinch values cannot corrupt state, reset is exact
+  ---
+  duration_ms: 0.3794
+  type: 'test'
+  ...
+# Subtest: camera shutdown stops every track and clears the video stream
+ok 24 - camera shutdown stops every track and clears the video stream
+  ---
+  duration_ms: 0.3956
+  type: 'test'
+  ...
+# Subtest: stop immediately releases busy; a late canceled permission cannot clear a restarted session
+ok 25 - stop immediately releases busy; a late canceled permission cannot clear a restarted session
+  ---
+  duration_ms: 2.9694
+  type: 'test'
+  ...
+# Subtest: cancel before the startup microtask never begins preparation or changes paused state
+ok 26 - cancel before the startup microtask never begins preparation or changes paused state
+  ---
+  duration_ms: 0.6891
+  type: 'test'
+  ...
+# Subtest: target prefetch aborts on exit and clears its timeout
+ok 27 - target prefetch aborts on exit and clears its timeout
+  ---
+  duration_ms: 1.7227
+  type: 'test'
+  ...
+# Subtest: target prefetch timeout also covers a stalled response body
+ok 28 - target prefetch timeout also covers a stalled response body
+  ---
+  duration_ms: 0.5364
+  type: 'test'
+  ...
+# Subtest: camera preview becomes ready as soon as video plays, without recognition events or marker files
+ok 29 - camera preview becomes ready as soon as video plays, without recognition events or marker files
+  ---
+  duration_ms: 3.5539
+  type: 'test'
+  ...
+# Subtest: pending permission can be canceled and a late old grant cannot replace the current video
+ok 30 - pending permission can be canceled and a late old grant cannot replace the current video
+  ---
+  duration_ms: 1.2603
+  type: 'test'
+  ...
+# Subtest: permission denial stays truthful and a retry can succeed
+ok 31 - permission denial stays truthful and a retry can succeed
+  ---
+  duration_ms: 0.7428
+  type: 'test'
+  ...
+# Subtest: canceling after video is attached clears the stream and resolves promptly
+ok 32 - canceling after video is attached clears the stream and resolves promptly
+  ---
+  duration_ms: 0.8766
+  type: 'test'
+  ...
+# Subtest: main viewer no longer imports MindAR or waits for a target before displaying the object
+ok 33 - main viewer no longer imports MindAR or waits for a target before displaying the object
+  ---
+  duration_ms: 2.257
+  type: 'test'
+  ...
+# Subtest: credits: 1 credit = 0.01 USDC by default, exact and never floating point
+ok 34 - credits: 1 credit = 0.01 USDC by default, exact and never floating point
+  ---
+  duration_ms: 2.7973
+  type: 'test'
+  ...
+# Subtest: credit pool reads the allowance, the draw, the spend and a sponsor deposit
+ok 35 - credit pool reads the allowance, the draw, the spend and a sponsor deposit
+  ---
+  duration_ms: 2.8074
+  type: 'test'
+  ...
+# Subtest: live reads are testnet only and report each state without throwing
+ok 36 - live reads are testnet only and report each state without throwing
+  ---
+  duration_ms: 1.4147
+  type: 'test'
+  ...
+# Subtest: live USDC balance comes from the right trustline only
+ok 37 - live USDC balance comes from the right trustline only
+  ---
+  duration_ms: 1.0433
+  type: 'test'
+  ...
+# Subtest: every distinct recorded hash is checked once, and labels never claim more than Horizon said
+ok 38 - every distinct recorded hash is checked once, and labels never claim more than Horizon said
+  ---
+  duration_ms: 0.7172
+  type: 'test'
+  ...
+# Subtest: same-world panel mounts once, tears down on close, and remounts without changing visitor position
+ok 39 - same-world panel mounts once, tears down on close, and remounts without changing visitor position
+  ---
+  duration_ms: 4.4879
+  type: 'test'
+  ...
+# Subtest: the active same-origin frame can return to ONE16 while preserving the visitor pose
+ok 40 - the active same-origin frame can return to ONE16 while preserving the visitor pose
+  ---
+  duration_ms: 0.7982
+  type: 'test'
+  ...
+# Subtest: return messages reject incorrect origins, sources, message types and stale frames
+ok 41 - return messages reject incorrect origins, sources, message types and stale frames
+  ---
+  duration_ms: 0.7491
+  type: 'test'
+  ...
+# Subtest: mount and cleanup are idempotent and support an explicitly injected message target
+ok 42 - mount and cleanup are idempotent and support an explicitly injected message target
+  ---
+  duration_ms: 0.3293
+  type: 'test'
+  ...
+# Subtest: fullscreen camera, first-frame and failure messages are accepted only from the active same-origin frame
+ok 43 - fullscreen camera, first-frame and failure messages are accepted only from the active same-origin frame
+  ---
+  duration_ms: 0.5978
+  type: 'test'
+  ...
+# Subtest: spatial capability and reading page updates reject foreign or stale frames
+ok 44 - spatial capability and reading page updates reject foreign or stale frames
+  ---
+  duration_ms: 0.3641
+  type: 'test'
+  ...
+# Subtest: actual entrance traverses corridor and all seven steps to hall, then reverses exactly
+ok 45 - actual entrance traverses corridor and all seven steps to hall, then reverses exactly
+  ---
+  duration_ms: 28.0621
+  type: 'test'
+  ...
+# Subtest: merch is arrival-relative left and its camera looks left
+ok 46 - merch is arrival-relative left and its camera looks left
+  ---
+  duration_ms: 0.3276
+  type: 'test'
+  ...
+# Subtest: arrival stair state survives repeated mode-independent movement pauses
+ok 47 - arrival stair state survives repeated mode-independent movement pauses
+  ---
+  duration_ms: 13.0401
+  type: 'test'
+  ...
+# Subtest: the NFC URL imports only its Passport entry and never hydrates or starts the venue
+ok 48 - the NFC URL imports only its Passport entry and never hydrates or starts the venue
+  ---
+  duration_ms: 1.5785
+  type: 'test'
+  ...
+# Subtest: explicit return changes the route before lazy world import and holds the curtain until the venue ready event
+ok 49 - explicit return changes the route before lazy world import and holds the curtain until the venue ready event
+  ---
+  duration_ms: 2.0638
+  type: 'test'
+  ...
+# Subtest: a failed venue initialization reveals its normal fallback instead of leaving a loading curtain forever
+ok 50 - a failed venue initialization reveals its normal fallback instead of leaving a loading curtain forever
+  ---
+  duration_ms: 0.9046
+  type: 'test'
+  ...
+# Subtest: normal ONE16 entry restores deferred CSS and image sources without importing the Passport entry
+ok 51 - normal ONE16 entry restores deferred CSS and image sources without importing the Passport entry
+  ---
+  duration_ms: 1.0532
+  type: 'test'
+  ...
+# Subtest: loading keeps one exact-cover curtain, releases its background only for a real camera message, and fades once after the first frame
+ok 52 - loading keeps one exact-cover curtain, releases its background only for a real camera message, and fades once after the first frame
+  ---
+  duration_ms: 1.7908
+  type: 'test'
+  ...
+# Subtest: model loading failure preserves the cover and offers a real retry of the existing iframe
+ok 53 - model loading failure preserves the cover and offers a real retry of the existing iframe
+  ---
+  duration_ms: 1.6815
+  type: 'test'
+  ...
+# Subtest: HTML chooses the fast route before module loading and contains no eager venue image URLs
+ok 54 - HTML chooses the fast route before module loading and contains no eager venue image URLs
+  ---
+  duration_ms: 7.3234
+  type: 'test'
+  ...
+# Subtest: native placement waits for the model, follows page state, and never duplicates the final two-action screen
+ok 55 - native placement waits for the model, follows page state, and never duplicates the final two-action screen
+  ---
+  duration_ms: 0.8376
+  type: 'test'
+  ...
+# Subtest: all narrated additions have clear viewpoints and classify as their own zone
+ok 56 - all narrated additions have clear viewpoints and classify as their own zone
+  ---
+  duration_ms: 3.789
+  type: 'test'
+  ...
+# Subtest: new room interiors do not mask existing or neighboring room classifications
+ok 57 - new room interiors do not mask existing or neighboring room classifications
+  ---
+  duration_ms: 19.2718
+  type: 'test'
+  ...
+# Subtest: the multipane Content Hub has a reversible walking entrance
+ok 58 - the multipane Content Hub has a reversible walking entrance
+  ---
+  duration_ms: 4.2433
+  type: 'test'
+  ...
+# Subtest: physical games, skills board, goal, camera and sofas are collision obstacles
+ok 59 - physical games, skills board, goal, camera and sofas are collision obstacles
+  ---
+  duration_ms: 0.3541
+  type: 'test'
+  ...
+# Subtest: every zone remains connected to the entrance on a 0.25m collision and elevation grid
+ok 60 - every zone remains connected to the entrance on a 0.25m collision and elevation grid
+  ---
+  duration_ms: 258.0902
+  type: 'test'
+  ...
+# Subtest: export contains no orphan exterior railway, sleepers, fence, platform or stairs
+ok 61 - export contains no orphan exterior railway, sleepers, fence, platform or stairs
+  ---
+  duration_ms: 1.6448
+  type: 'test'
+  ...
+# Subtest: new default entrance starts outside, faces sign, and reaches yellow corridor reversibly
+ok 62 - new default entrance starts outside, faces sign, and reaches yellow corridor reversibly
+  ---
+  duration_ms: 69.2073
+  type: 'test'
+  ...
+# Subtest: removed exteriorplatform is not walkable; forecourt stays flat and interiorstairs remain
+ok 63 - removed exteriorplatform is not walkable; forecourt stays flat and interiorstairs remain
+  ---
+  duration_ms: 0.2752
+  type: 'test'
+  ...
+# Subtest: static tour and actual plan exist in HTML independent of JavaScript, fetch and WebGL
+ok 64 - static tour and actual plan exist in HTML independent of JavaScript, fetch and WebGL
+  ---
+  duration_ms: 1.5451
+  type: 'test'
+  ...
+# Subtest: engine error propagates without waiting for timeout
+ok 65 - engine error propagates without waiting for timeout
+  ---
+  duration_ms: 0.8295
+  type: 'test'
+  ...
+# Subtest: never-resolving engine settles with honest timeout error
+ok 66 - never-resolving engine settles with honest timeout error
+  ---
+  duration_ms: 5.1496
+  type: 'test'
+  ...
+# Subtest: working engine returns result
+ok 67 - working engine returns result
+  ---
+  duration_ms: 0.283
+  type: 'test'
+  ...
+# Subtest: GPU unavailable/throw returns false without bypass
+ok 68 - GPU unavailable/throw returns false without bypass
+  ---
+  duration_ms: 1.0192
+  type: 'test'
+  ...
+# Subtest: supported probe frees only its own temporary context
+ok 69 - supported probe frees only its own temporary context
+  ---
+  duration_ms: 0.198
+  type: 'test'
+  ...
+# Subtest: Passport rejects unsupported inline GPU before import and retains poster
+ok 70 - Passport rejects unsupported inline GPU before import and retains poster
+  ---
+  duration_ms: 2.6413
+  type: 'test'
+  ...
+# Subtest: wallet and Passport are available; other confirmed stations are upcoming
+ok 71 - wallet and Passport are available; other confirmed stations are upcoming
+  ---
+  duration_ms: 2.9901
+  type: 'test'
+  ...
+# Subtest: real Three camera projects stations consistently after orbit, zoom and resize
+ok 72 - real Three camera projects stations consistently after orbit, zoom and resize
+  ---
+  duration_ms: 2.2478
+  type: 'test'
+  ...
+# Subtest: projection hides targets behind camera instead of showing misleading screen pins
+ok 73 - projection hides targets behind camera instead of showing misleading screen pins
+  ---
+  duration_ms: 0.5497
+  type: 'test'
+  ...
+# Subtest: actual overview hotspot click handlers invoke correct same-world experience
+ok 74 - actual overview hotspot click handlers invoke correct same-world experience
+  ---
+  duration_ms: 1.0496
+  type: 'test'
+  ...
+# Subtest: minimum targets and reduced-motion styles are supplied, not decorative-only SVG pins
+ok 75 - minimum targets and reduced-motion styles are supplied, not decorative-only SVG pins
+  ---
+  duration_ms: 0.8095
+  type: 'test'
+  ...
+# Subtest: overview labels keep44px targets separate in desktop, portrait and landscape while retaining world anchors
+ok 76 - overview labels keep44px targets separate in desktop, portrait and landscape while retaining world anchors
+  ---
+  duration_ms: 1.1436
+  type: 'test'
+  ...
+# Subtest: clickable overview markers avoid the HUD and open panels
+ok 77 - clickable overview markers avoid the HUD and open panels
+  ---
+  duration_ms: 0.3432
+  type: 'test'
+  ...
+# Subtest: all actual zone views and arrival are clear of real model collision
+ok 78 - all actual zone views and arrival are clear of real model collision
+  ---
+  duration_ms: 1.8132
+  type: 'test'
+  ...
+# Subtest: all view points connected on actual walking plane
+ok 79 - all view points connected on actual walking plane
+  ---
+  duration_ms: 153.4251
+  type: 'test'
+  ...
+# Subtest: every selected zone reports its own room state
+ok 80 - every selected zone reports its own room state
+  ---
+  duration_ms: 0.699
+  type: 'test'
+  ...
+# Subtest: real venue moves only striped Merch backdrop, preserving clothes, counter and vertical sign
+ok 81 - real venue moves only striped Merch backdrop, preserving clothes, counter and vertical sign
+  ---
+  duration_ms: 319.4686
+  type: 'test'
+  ...
+# Subtest: backdrop collision follows moved panel; vertical sign and all other obstacles stay fixed
+ok 82 - backdrop collision follows moved panel; vertical sign and all other obstacles stay fixed
+  ---
+  duration_ms: 3.8627
+  type: 'test'
+  ...
+# Subtest: forward is camera negative Z; right is positive X
+ok 83 - forward is camera negative Z; right is positive X
+  ---
+  duration_ms: 3.6085
+  type: 'test'
+  ...
+# Subtest: forward follows yaw at all four cardinal directions
+ok 84 - forward follows yaw at all four cardinal directions
+  ---
+  duration_ms: 0.7018
+  type: 'test'
+  ...
+# Subtest: diagonal motion is normalized
+ok 85 - diagonal motion is normalized
+  ---
+  duration_ms: 0.3
+  type: 'test'
+  ...
+# Subtest: walk cannot cross obstacle or boundary after repeated input
+ok 86 - walk cannot cross obstacle or boundary after repeated input
+  ---
+  duration_ms: 20.7908
+  type: 'test'
+  ...
+# Subtest: long frame stalls cannot teleport through geometry
+ok 87 - long frame stalls cannot teleport through geometry
+  ---
+  duration_ms: 0.3301
+  type: 'test'
+  ...
+# Subtest: mode retries preserve first-person pose and room state
+ok 88 - mode retries preserve first-person pose and room state
+  ---
+  duration_ms: 0.5408
+  type: 'test'
+  ...
+# Subtest: drag pitch is clamped, including orientation transitions
+ok 89 - drag pitch is clamped, including orientation transitions
+  ---
+  duration_ms: 0.3288
+  type: 'test'
+  ...
+# Subtest: no invented floor means walking unavailable
+ok 90 - no invented floor means walking unavailable
+  ---
+  duration_ms: 1.538
+  type: 'test'
+  ...
+# Subtest: preparation changes the corridor once, returns the scene and rejects an incompatible guard
+ok 91 - preparation changes the corridor once, returns the scene and rejects an incompatible guard
+  ---
+  duration_ms: 6.3811
+  type: 'test'
+  ...
+# Subtest: a ready real scene hides roofs, preserves its poster until first render and stays idle between changes
+ok 92 - a ready real scene hides roofs, preserves its poster until first render and stays idle between changes
+  ---
+  duration_ms: 30.0248
+  type: 'test'
+  ...
+# Subtest: mobile activation connects gestures; Done, offscreen and document hiding restore native scrolling
+ok 93 - mobile activation connects gestures; Done, offscreen and document hiding restore native scrolling
+  ---
+  duration_ms: 2.4024
+  type: 'test'
+  ...
+# Subtest: failed loads retain the image and retry obtains a fresh independent scene
+ok 94 - failed loads retain the image and retry obtains a fresh independent scene
+  ---
+  duration_ms: 1.8864
+  type: 'test'
+  ...
+# Subtest: WebGL failure and context loss show a recoverable poster and dispose scene resources once
+ok 95 - WebGL failure and context loss show a recoverable poster and dispose scene resources once
+  ---
+  duration_ms: 5.306
+  type: 'test'
+  ...
+# Subtest: disposal aborts network work and a late parser result never reaches the GPU
+ok 96 - disposal aborts network work and a late parser result never reaches the GPU
+  ---
+  duration_ms: 9.3966
+  type: 'test'
+  ...
+# Subtest: a transfer timeout aborts the original signal and ignores its late response
+ok 97 - a transfer timeout aborts the original signal and ignores its late response
+  ---
+  duration_ms: 1.6965
+  type: 'test'
+  ...
+# Subtest: preview uses the current gzip transfer helper and cannot enter transaction, AR or camera runtimes
+ok 98 - preview uses the current gzip transfer helper and cannot enter transaction, AR or camera runtimes
+  ---
+  duration_ms: 1.6034
+  type: 'test'
+  ...
+# Subtest: native OrbitControls cancels a held mobile gesture before disconnecting and accepts the next gesture
+ok 99 - native OrbitControls cancels a held mobile gesture before disconnecting and accepts the next gesture
+  ---
+  duration_ms: 4.8367
+  type: 'test'
+  ...
+# Subtest: the perspective fit fills desktop and narrow stages without clipping and refits only on actual size changes
+ok 100 - the perspective fit fills desktop and narrow stages without clipping and refits only on actual size changes
+  ---
+  duration_ms: 2.7936
+  type: 'test'
+  ...
+# Subtest: the current venue GLB fills at least three quarters of the desktop preview height with the roof hidden
+ok 101 - the current venue GLB fills at least three quarters of the desktop preview height with the roof hidden
+  ---
+  duration_ms: 225.6491
+  type: 'test'
+  ...
+# Subtest: overview top-down preset frames full venue on phone and PC
+ok 102 - overview top-down preset frames full venue on phone and PC
+  ---
+  duration_ms: 0.9889
+  type: 'test'
+  ...
+# Subtest: overview clamp bounds pan while preserving camera offset
+ok 103 - overview clamp bounds pan while preserving camera offset
+  ---
+  duration_ms: 0.8104
+  type: 'test'
+  ...
+# Subtest: overlapping Palta mounts remove only their own collision object and dispose once
+ok 104 - overlapping Palta mounts remove only their own collision object and dispose once
+  ---
+  duration_ms: 35.266
+  type: 'test'
+  ...
+# Subtest: an optional logo never blocks mounting and a texture arriving after disposal is released
+ok 105 - an optional logo never blocks mounting and a texture arriving after disposal is released
+  ---
+  duration_ms: 17.5707
+  type: 'test'
+  ...
+# Subtest: disposal also frees replaced logo materials, the original placeholder and new textures
+ok 106 - disposal also frees replaced logo materials, the original placeholder and new textures
+  ---
+  duration_ms: 11.6664
+  type: 'test'
+  ...
+# Subtest: a discarded scene prevents even starting a delayed optional Palta import
+ok 107 - a discarded scene prevents even starting a delayed optional Palta import
+  ---
+  duration_ms: 1.0924
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner scene changes
+ok 108 - a late mount is disposed after its owner scene changes
+  ---
+  duration_ms: 2.2418
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner camera changes
+ok 109 - a late mount is disposed after its owner camera changes
+  ---
+  duration_ms: 1.2859
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner attempt changes
+ok 110 - a late mount is disposed after its owner attempt changes
+  ---
+  duration_ms: 1.137
+  type: 'test'
+  ...
+# Subtest: current Palta mounts share the cached venue lifetime and optional failures do not fail Welcome
+ok 111 - current Palta mounts share the cached venue lifetime and optional failures do not fail Welcome
+  ---
+  duration_ms: 1.7156
+  type: 'test'
+  ...
+# Subtest: the unified picker respects Palta occlusion and retains wallet selection behind it
+ok 112 - the unified picker respects Palta occlusion and retains wallet selection behind it
+  ---
+  duration_ms: 4.7377
+  type: 'test'
+  ...
+# Subtest: cache revisions reach the optional activation through the existing entry chain
+ok 113 - cache revisions reach the optional activation through the existing entry chain
+  ---
+  duration_ms: 3.1842
+  type: 'test'
+  ...
+# Subtest: the purchased card is awaited on the prepared model before the current Palta mount
+ok 114 - the purchased card is awaited on the prepared model before the current Palta mount
+  ---
+  duration_ms: 2.7671
+  type: 'test'
+  ...
+# Subtest: an obsolete attempt aborts the stage request and cannot start a Palta mount
+ok 115 - an obsolete attempt aborts the stage request and cannot start a Palta mount
+  ---
+  duration_ms: 1.2843
+  type: 'test'
+  ...
+# Subtest: asset URL tracks the GLB hash and both entrypoints load the same module revision
+ok 116 - asset URL tracks the GLB hash and both entrypoints load the same module revision
+  ---
+  duration_ms: 8.6019
+  type: 'test'
+  ...
+# Subtest: logo plane stays inside the medallion for square, wide and tall logos
+ok 117 - logo plane stays inside the medallion for square, wide and tall logos
+  ---
+  duration_ms: 0.8606
+  type: 'test'
+  ...
+# Subtest: yaw turns local +Z toward the visitor and angle deltas take the short way
+ok 118 - yaw turns local +Z toward the visitor and angle deltas take the short way
+  ---
+  duration_ms: 0.2489
+  type: 'test'
+  ...
+# Subtest: opens on approach, closes far away, and a manual close waits until the visitor leaves
+ok 119 - opens on approach, closes far away, and a manual close waits until the visitor leaves
+  ---
+  duration_ms: 0.2386
+  type: 'test'
+  ...
+# Subtest: collision square matches the venue's obstacle format
+ok 120 - collision square matches the venue's obstacle format
+  ---
+  duration_ms: 0.2115
+  type: 'test'
+  ...
+# Subtest: default spot is inside the activation area and clear of the kiosk and Passport
+ok 121 - default spot is inside the activation area and clear of the kiosk and Passport
+  ---
+  duration_ms: 1.3137
+  type: 'test'
+  ...
+# Subtest: GLB has the nodes and animations the module relies on
+ok 122 - GLB has the nodes and animations the module relies on
+  ---
+  duration_ms: 3.5376
+  type: 'test'
+  ...
+# Subtest: partner cavities show only official artwork without separate product-name labels
+ok 123 - partner cavities show only official artwork without separate product-name labels
+  ---
+  duration_ms: 2.2625
+  type: 'test'
+  ...
+# Subtest: official partner logos are embedded unchanged and retain the source PNG proportions
+ok 124 - official partner logos are embedded unchanged and retain the source PNG proportions
+  ---
+  duration_ms: 6.8308
+  type: 'test'
+  ...
+# Subtest: partner logos conform to their seed cavities and read upright without changing the source proportions
+ok 125 - partner logos conform to their seed cavities and read upright without changing the source proportions
+  ---
+  duration_ms: 33.2612
+  type: 'test'
+  ...
+# Subtest: partner logos appear outside, settle into the curved cavities, and reverse cleanly without touching the medallion
+ok 126 - partner logos appear outside, settle into the curved cavities, and reverse cleanly without touching the medallion
+  ---
+  duration_ms: 35.8537
+  type: 'test'
+  ...
+# Subtest: medallion and glow ring ascend together, finish centered above the halves, and keep 10 cm clearance through idle
+ok 127 - medallion and glow ring ascend together, finish centered above the halves, and keep 10 cm clearance through idle
+  ---
+  duration_ms: 105.319
+  type: 'test'
+  ...
+# minimum real-mesh clearance over the full idle loop: 10.74 cm
+# Subtest: reduced motion opens immediately, stays still, closes and reopens with the real GLB
+ok 128 - reduced motion opens immediately, stays still, closes and reopens with the real GLB
+  ---
+  duration_ms: 9.8006
+  type: 'test'
+  ...
+# Subtest: real GLB closes manually, rearms away, and opens on returning
+ok 129 - real GLB closes manually, rearms away, and opens on returning
+  ---
+  duration_ms: 7.1281
+  type: 'test'
+  ...
+# Subtest: setLogo fits a wide image and darkens only the medallion face after loading succeeds
+ok 130 - setLogo fits a wide image and darkens only the medallion face after loading succeeds
+  ---
+  duration_ms: 9.3216
+  type: 'test'
+  ...
+# Subtest: real supplied GLB remains centered, upright, normalized and unchanged when closed
+ok 131 - real supplied GLB remains centered, upright, normalized and unchanged when closed
+  ---
+  duration_ms: 51.5301
+  type: 'test'
+  ...
+# Subtest: cover rotates around the spine and turning a leaf reveals the second page
+ok 132 - cover rotates around the spine and turning a leaf reveals the second page
+  ---
+  duration_ms: 15.209
+  type: 'test'
+  ...
+# Subtest: reduced motion and immediate page changes settle without advancing frames
+ok 133 - reduced motion and immediate page changes settle without advancing frames
+  ---
+  duration_ms: 12.2265
+  type: 'test'
+  ...
+# Subtest: two legible page textures contain the supplied copy and dispose without touching GLB resources
+ok 134 - two legible page textures contain the supplied copy and dispose without touching GLB resources
+  ---
+  duration_ms: 7.7381
+  type: 'test'
+  ...
+# Subtest: the cover hides the copy until opened and each turn exposes the intended information page
+ok 135 - the cover hides the copy until opened and each turn exposes the intended information page
+  ---
+  duration_ms: 18.3919
+  type: 'test'
+  ...
+# Subtest: both information sheets use the original emblem at low opacity and restore full text opacity
+ok 136 - both information sheets use the original emblem at low opacity and restore full text opacity
+  ---
+  duration_ms: 8.7406
+  type: 'test'
+  ...
+# Subtest: watermark image loader resolves on load and treats missing or stalled artwork as optional
+ok 137 - watermark image loader resolves on load and treats missing or stalled artwork as optional
+  ---
+  duration_ms: 5.2283
+  type: 'test'
+  ...
+# Subtest: a late watermark updates only the existing page textures and is ignored after disposal
+ok 138 - a late watermark updates only the existing page textures and is ignored after disposal
+  ---
+  duration_ms: 4.2547
+  type: 'test'
+  ...
+# Subtest: primary Passport stand is reachable and appears in the actual embedded layout and map
+ok 139 - primary Passport stand is reachable and appears in the actual embedded layout and map
+  ---
+  duration_ms: 1.3322
+  type: 'test'
+  ...
+# Subtest: main dialog embeds the camera interaction without a primary page navigation
+ok 140 - main dialog embeds the camera interaction without a primary page navigation
+  ---
+  duration_ms: 0.5936
+  type: 'test'
+  ...
+# Subtest: preview stays until a real nonempty model frame has been submitted
+ok 141 - preview stays until a real nonempty model frame has been submitted
+  ---
+  duration_ms: 1.0686
+  type: 'test'
+  ...
+# Subtest: closing before the frame cancels reveal and a stale callback cannot affect a restarted view
+ok 142 - closing before the frame cancels reveal and a stale callback cannot affect a restarted view
+  ---
+  duration_ms: 0.2
+  type: 'test'
+  ...
+# Subtest: a single tap activates once and a subsequent lost capture does not activate again
+ok 143 - a single tap activates once and a subsequent lost capture does not activate again
+  ---
+  duration_ms: 3.0685
+  type: 'test'
+  ...
+# Subtest: dragging rotates and never opens the book even if the pointer returns to its start
+ok 144 - dragging rotates and never opens the book even if the pointer returns to its start
+  ---
+  duration_ms: 0.6161
+  type: 'test'
+  ...
+# Subtest: stationary two-finger gestures cannot become a tap when the last finger is lifted
+ok 145 - stationary two-finger gestures cannot become a tap when the last finger is lifted
+  ---
+  duration_ms: 0.3012
+  type: 'test'
+  ...
+# Subtest: pinching applies scale and lifting one finger never converts the remaining sequence into a tap
+ok 146 - pinching applies scale and lifting one finger never converts the remaining sequence into a tap
+  ---
+  duration_ms: 0.2092
+  type: 'test'
+  ...
+# Subtest: pointer cancellation and lost capture do not open the Passport
+ok 147 - pointer cancellation and lost capture do not open the Passport
+  ---
+  duration_ms: 0.3593
+  type: 'test'
+  ...
+# Subtest: tap classification includes release displacement when no move event was delivered
+ok 148 - tap classification includes release displacement when no move event was delivered
+  ---
+  duration_ms: 0.165
+  type: 'test'
+  ...
+# Subtest: paused interaction ignores starts and cancels a gesture that was already in progress
+ok 149 - paused interaction ignores starts and cancels a gesture that was already in progress
+  ---
+  duration_ms: 0.2354
+  type: 'test'
+  ...
+# Subtest: cleanup releases active pointers and removes all behavior, including repeated cleanup
+ok 150 - cleanup releases active pointers and removes all behavior, including repeated cleanup
+  ---
+  duration_ms: 0.2024
+  type: 'test'
+  ...
+# Subtest: a browser that refuses pointer capture still supports a tap without throwing
+ok 151 - a browser that refuses pointer capture still supports a tap without throwing
+  ---
+  duration_ms: 0.4208
+  type: 'test'
+  ...
+# Subtest: portrait mobile uses sixty percent width with the exact supplied cover aspect and center
+ok 152 - portrait mobile uses sixty percent width with the exact supplied cover aspect and center
+  ---
+  duration_ms: 1.067
+  type: 'test'
+  ...
+# Subtest: desktop cover caps at 280px and short landscape screens limit it by available height
+ok 153 - desktop cover caps at 280px and short landscape screens limit it by available height
+  ---
+  duration_ms: 0.2042
+  type: 'test'
+  ...
+# Subtest: collapsed or invalid viewport dimensions produce finite empty bounds
+ok 154 - collapsed or invalid viewport dimensions produce finite empty bounds
+  ---
+  duration_ms: 0.1876
+  type: 'test'
+  ...
+# Subtest: reading progresses through two pages to completion, clamps, goes back and closes
+ok 155 - reading progresses through two pages to completion, clamps, goes back and closes
+  ---
+  duration_ms: 2.3705
+  type: 'test'
+  ...
+# Subtest: subscribers receive the current page immediately and unsubscribe cleanly
+ok 156 - subscribers receive the current page immediately and unsubscribe cleanly
+  ---
+  duration_ms: 0.2588
+  type: 'test'
+  ...
+# Subtest: discreet accessible arrows handle cover and both pages without large page buttons
+ok 157 - discreet accessible arrows handle cover and both pages without large page buttons
+  ---
+  duration_ms: 0.8723
+  type: 'test'
+  ...
+# Subtest: after page two, completion offers exactly the external CTA and return to ONE16
+ok 158 - after page two, completion offers exactly the external CTA and return to ONE16
+  ---
+  duration_ms: 0.6517
+  type: 'test'
+  ...
+# Subtest: closing resets the accessible reader and disposing releases controls and subscription
+ok 159 - closing resets the accessible reader and disposing releases controls and subscription
+  ---
+  duration_ms: 0.3609
+  type: 'test'
+  ...
+# Subtest: configured pages identify a demo rather than authenticated account details
+ok 160 - configured pages identify a demo rather than authenticated account details
+  ---
+  duration_ms: 0.177
+  type: 'test'
+  ...
+# Subtest: actual immersive-ar support takes precedence over user-agent native fallbacks
+ok 161 - actual immersive-ar support takes precedence over user-agent native fallbacks
+  ---
+  duration_ms: 2.3046
+  type: 'test'
+  ...
+# Subtest: Quick Look requires an iOS device and an actual rel-ar feature declaration
+ok 162 - Quick Look requires an iOS device and an actual rel-ar feature declaration
+  ---
+  duration_ms: 0.4351
+  type: 'test'
+  ...
+# Subtest: Android without web AR offers an explicitly unverified native viewer rather than claiming installed ARCore
+ok 163 - Android without web AR offers an explicitly unverified native viewer rather than claiming installed ARCore
+  ---
+  duration_ms: 0.2606
+  type: 'test'
+  ...
+# Subtest: insecure contexts do not probe or offer camera-based placement
+ok 164 - insecure contexts do not probe or offer camera-based placement
+  ---
+  duration_ms: 0.2271
+  type: 'test'
+  ...
+# Subtest: Quick Look uses a same-origin spatial USDZ and precisely one image child on a real rel-ar link
+ok 165 - Quick Look uses a same-origin spatial USDZ and precisely one image child on a real rel-ar link
+  ---
+  duration_ms: 0.6812
+  type: 'test'
+  ...
+# Subtest: Scene Viewer intent uses ARCore ar_only, the spatial GLB, and the same NFC URL as fallback
+ok 166 - Scene Viewer intent uses ARCore ar_only, the spatial GLB, and the same NFC URL as fallback
+  ---
+  duration_ms: 0.3843
+  type: 'test'
+  ...
+# Subtest: native entry is hidden throughout the information pages and final two-action screen, and is cleaned up
+ok 167 - native entry is hidden throughout the information pages and final two-action screen, and is cleaned up
+  ---
+  duration_ms: 0.5485
+  type: 'test'
+  ...
+# Subtest: unsupported and webxr capability kinds do not add native buttons
+ok 168 - unsupported and webxr capability kinds do not add native buttons
+  ---
+  duration_ms: 0.2255
+  type: 'test'
+  ...
+# Subtest: native fallback explains an unresolved launch without claiming hardware incompatibility and hides with the native entry
+ok 169 - native fallback explains an unresolved launch without claiming hardware incompatibility and hides with the native entry
+  ---
+  duration_ms: 0.4266
+  type: 'test'
+  ...
+# Subtest: native spatial GLB wraps the existing roots without altering geometry, materials or source JPEG bytes
+ok 170 - native spatial GLB wraps the existing roots without altering geometry, materials or source JPEG bytes
+  ---
+  duration_ms: 2.9055
+  type: 'test'
+  ...
+# Subtest: native placement is upright, twenty centimetres wide, centered eighteen centimetres above the anchor
+ok 171 - native placement is upright, twenty centimetres wide, centered eighteen centimetres above the anchor
+  ---
+  duration_ms: 1.8964
+  type: 'test'
+  ...
+# Subtest: native USDZ preserves every source payload except the top scene transform and shares GLB orientation
+ok 172 - native USDZ preserves every source payload except the top scene transform and shares GLB orientation
+  ---
+  duration_ms: 33.7623
+  type: 'test'
+  ...
+# Subtest: the spatial builder is reproducible and does not modify the supplied source assets
+ok 173 - the spatial builder is reproducible and does not modify the supplied source assets
+  ---
+  duration_ms: 166.6298
+  type: 'test'
+  ...
+# Subtest: start requests the immersive session synchronously inside the initiating gesture
+ok 174 - start requests the immersive session synchronously inside the initiating gesture
+  ---
+  duration_ms: 6.9459
+  type: 'test'
+  ...
+# Subtest: placing produces an upright twenty-centimeter object fixed while the camera turns, walks and loses hits
+ok 175 - placing produces an upright twenty-centimeter object fixed while the camera turns, walks and loses hits
+  ---
+  duration_ms: 4.3447
+  type: 'test'
+  ...
+# Subtest: temporary tracking loss hides the object and restores the same pose without a new surface
+ok 176 - temporary tracking loss hides the object and restores the same pose without a new surface
+  ---
+  duration_ms: 1.5172
+  type: 'test'
+  ...
+# Subtest: reference reset rebases the book before rendering and preserves its physical camera-relative pose
+ok 177 - reference reset rebases the book before rendering and preserves its physical camera-relative pose
+  ---
+  duration_ms: 2.0446
+  type: 'test'
+  ...
+# Subtest: repositioning discards the old hit and requires a new tracked surface
+ok 178 - repositioning discards the old hit and requires a new tracked surface
+  ---
+  duration_ms: 1.333
+  type: 'test'
+  ...
+# Subtest: ending a session restores the exact preview transform and disposes surface resources once
+ok 179 - ending a session restores the exact preview transform and disposes surface resources once
+  ---
+  duration_ms: 1.704
+  type: 'test'
+  ...
+# Subtest: canceling a pending permission request ends a late grant without initializing XR or touching the preview
+ok 180 - canceling a pending permission request ends a late grant without initializing XR or touching the preview
+  ---
+  duration_ms: 0.4801
+  type: 'test'
+  ...
+# Subtest: XR selection opens information only when its ray intersects the placed book
+ok 181 - XR selection opens information only when its ray intersects the placed book
+  ---
+  duration_ms: 2.4995
+  type: 'test'
+  ...
+# Subtest: Passport target faces the reverse of Trustless/Grantfox and is clickable from the rear only
+ok 182 - Passport target faces the reverse of Trustless/Grantfox and is clickable from the rear only
+  ---
+  duration_ms: 4.7871
+  type: 'test'
+  ...
+# Subtest: adding stand graphic to real GLB leaves original brand and venue geometry unchanged
+ok 183 - adding stand graphic to real GLB leaves original brand and venue geometry unchanged
+  ---
+  duration_ms: 167.4505
+  type: 'test'
+  ...
+# Subtest: a regenerated source poster is reused without loading a book or duplicating the target
+ok 184 - a regenerated source poster is reused without loading a book or duplicating the target
+  ---
+  duration_ms: 0.4468
+  type: 'test'
+  ...
+# Subtest: entering stand16 loads only its poster until the Passport experience is activated
+ok 185 - entering stand16 loads only its poster until the Passport experience is activated
+  ---
+  duration_ms: 0.5816
+  type: 'test'
+  ...
+# Subtest: a failed poster texture keeps a clickable stand target without adding a book
+ok 186 - a failed poster texture keeps a clickable stand target without adding a book
+  ---
+  duration_ms: 0.6385
+  type: 'test'
+  ...
+# Subtest: placing on a tilted surface keeps the book upright and faces the initial viewer once
+ok 187 - placing on a tilted surface keeps the book upright and faces the initial viewer once
+  ---
+  duration_ms: 3.355
+  type: 'test'
+  ...
+# Subtest: the real Passport leaves the camera frustum when looking away and returns to the same world point
+ok 188 - the real Passport leaves the camera frustum when looking away and returns to the same world point
+  ---
+  duration_ms: 58.5165
+  type: 'test'
+  ...
+# Subtest: walking one meter creates real parallax while the cover retains its original heading
+ok 189 - walking one meter creates real parallax while the cover retains its original heading
+  ---
+  duration_ms: 7.5987
+  type: 'test'
+  ...
+# Subtest: hit and placement matrices are owned copies, including typed arrays and repeated calls
+ok 190 - hit and placement matrices are owned copies, including typed arrays and repeated calls
+  ---
+  duration_ms: 0.2688
+  type: 'test'
+  ...
+# Subtest: invalid hit, viewer and reset matrices cannot place a corrupt transform
+ok 191 - invalid hit, viewer and reset matrices cannot place a corrupt transform
+  ---
+  duration_ms: 0.4567
+  type: 'test'
+  ...
+# Subtest: reference-space reset preserves physical position and viewing direction using the inverse delta
+ok 192 - reference-space reset preserves physical position and viewing direction using the inverse delta
+  ---
+  duration_ms: 0.7267
+  type: 'test'
+  ...
+# Subtest: a reset rebases a pending hit before placement and missing transforms demand a new surface
+ok 193 - a reset rebases a pending hit before placement and missing transforms demand a new surface
+  ---
+  duration_ms: 0.2806
+  type: 'test'
+  ...
+# Subtest: Passport keeps static preview and native gesture links independent of inline engine
+ok 194 - Passport keeps static preview and native gesture links independent of inline engine
+  ---
+  duration_ms: 1.0536
+  type: 'test'
+  ...
+# Subtest: Passport cover texture is exactly the supplied original JPEG
+ok 195 - Passport cover texture is exactly the supplied original JPEG
+  ---
+  duration_ms: 2.6174
+  type: 'test'
+  ...
+# Subtest: Passport assets exist and no account data is represented as authenticated
+ok 196 - Passport assets exist and no account data is represented as authenticated
+  ---
+  duration_ms: 0.5243
+  type: 'test'
+  ...
+# Subtest: venue entry has one loading guard and overlaps engine and transfer preparation
+ok 197 - venue entry has one loading guard and overlaps engine and transfer preparation
+  ---
+  duration_ms: 0.5493
+  type: 'test'
+  ...
+# Subtest: guided native controls keep the selected view and accessible caption through EN/ES changes
+ok 198 - guided native controls keep the selected view and accessible caption through EN/ES changes
+  ---
+  duration_ms: 4.8913
+  type: 'test'
+  ...
+# Subtest: every real ONE16 call carries the chosen language after repeated switches without changing section links
+ok 199 - every real ONE16 call carries the chosen language after repeated switches without changing section links
+  ---
+  duration_ms: 1.6051
+  type: 'test'
+  ...
+# Subtest: ONE16 imports only at the 200px intersection boundary and repeated observations mount once
+ok 200 - ONE16 imports only at the 200px intersection boundary and repeated observations mount once
+  ---
+  duration_ms: 5.95
+  type: 'test'
+  ...
+# Subtest: failed preview import retains a translated retry path and double retry still mounts once
+ok 201 - failed preview import retains a translated retry path and double retry still mounts once
+  ---
+  duration_ms: 1.1935
+  type: 'test'
+  ...
+# Subtest: latest preview language reaches a late mount and subsequent changes reach its controller
+ok 202 - latest preview language reaches a late mount and subsequent changes reach its controller
+  ---
+  duration_ms: 0.742
+  type: 'test'
+  ...
+# Subtest: destroy before a pending import resolves prevents mounting and removes the retry path
+ok 203 - destroy before a pending import resolves prevents mounting and removes the retry path
+  ---
+  duration_ms: 0.5442
+  type: 'test'
+  ...
+# Subtest: destroy before a late import failure leaves the initial poster state intact
+ok 204 - destroy before a late import failure leaves the initial poster state intact
+  ---
+  duration_ms: 0.5746
+  type: 'test'
+  ...
+# Subtest: without IntersectionObserver the viewport check respects 200px and teardown removes scroll work
+ok 205 - without IntersectionObserver the viewport check respects 200px and teardown removes scroll work
+  ---
+  duration_ms: 0.807
+  type: 'test'
+  ...
+# Subtest: document exit releases scenes, while a cached history entry keeps its paused views
+ok 206 - document exit releases scenes, while a cached history entry keeps its paused views
+  ---
+  duration_ms: 0.6422
+  type: 'test'
+  ...
+# Subtest: only known legacy root links continue to ONE16 with their exact query and fragment
+ok 207 - only known legacy root links continue to ONE16 with their exact query and fragment
+  ---
+  duration_ms: 1.3478
+  type: 'test'
+  ...
+# Subtest: legacy continuation cannot consume a supplied external destination or change the visitor origin
+ok 208 - legacy continuation cannot consume a supplied external destination or change the visitor origin
+  ---
+  duration_ms: 0.2216
+  type: 'test'
+  ...
+# Subtest: server routes prioritize NFC before brand landing and normalize duplicate experience URLs
+ok 209 - server routes prioritize NFC before brand landing and normalize duplicate experience URLs
+  ---
+  duration_ms: 1.0201
+  type: 'test'
+  ...
+# Subtest: platform and ONE16 have distinct canonical URLs while standalone AR paths remain unchanged
+ok 210 - platform and ONE16 have distinct canonical URLs while standalone AR paths remain unchanged
+  ---
+  duration_ms: 0.2002
+  type: 'test'
+  ...
+# Subtest: advanced Vercel routes beat the physical index while preserving NFC, canonical redirects and API headers
+ok 211 - advanced Vercel routes beat the physical index while preserving NFC, canonical redirects and API headers
+  ---
+  duration_ms: 7.3165
+  type: 'test'
+  ...
+# Subtest: local server handler serves landing/NFC/ONE16, keeps assets root-relative and delegates APIs intact
+ok 212 - local server handler serves landing/NFC/ONE16, keeps assets root-relative and delegates APIs intact
+  ---
+  duration_ms: 30.8593
+  type: 'test'
+  ...
+# Subtest: the real maquette stays within geometry/draw budgets using bevels and instanced seating
+ok 213 - the real maquette stays within geometry/draw budgets using bevels and instanced seating
+  ---
+  duration_ms: 47.2176
+  type: 'test'
+  ...
+# Subtest: transparent rendering owns an environment, bakes floor shadows once and has no idle loop
+ok 214 - transparent rendering owns an environment, bakes floor shadows once and has no idle loop
+  ---
+  duration_ms: 20.4052
+  type: 'test'
+  ...
+# Subtest: guided views run for 600ms, last selection wins and reduced motion settles instantly
+ok 215 - guided views run for 600ms, last selection wins and reduced motion settles instantly
+  ---
+  duration_ms: 22.7189
+  type: 'test'
+  ...
+# Subtest: canvas beacon taps notify shared UI state without cancelling native touch scrolling
+ok 216 - canvas beacon taps notify shared UI state without cancelling native touch scrolling
+  ---
+  duration_ms: 12.8753
+  type: 'test'
+  ...
+# Subtest: hidden and offscreen transitions pause elapsed time and resume without jumping
+ok 217 - hidden and offscreen transitions pause elapsed time and resume without jumping
+  ---
+  duration_ms: 10.5514
+  type: 'test'
+  ...
+# Subtest: motion preference changes stop parallax and finish the selected guided view immediately
+ok 218 - motion preference changes stop parallax and finish the selected guided view immediately
+  ---
+  duration_ms: 9.6802
+  type: 'test'
+  ...
+# Subtest: GPU/environment failures keep fallback and context restoration rebakes owned targets and shadows
+ok 219 - GPU/environment failures keep fallback and context restoration rebakes owned targets and shadows
+  ---
+  duration_ms: 24.9675
+  type: 'test'
+  ...
+# Subtest: the scene dependency graph starts after two frame boundaries and can be cancelled
+ok 220 - the scene dependency graph starts after two frame boundaries and can be cancelled
+  ---
+  duration_ms: 6.8041
+  type: 'test'
+  ...
+# Subtest: hero dependencies are local, isolated from venue/wallet and provide the 128px environment bake
+ok 221 - hero dependencies are local, isolated from venue/wallet and provide the 128px environment bake
+  ---
+  duration_ms: 2.447
+  type: 'test'
+  ...
+# Subtest: the public root is an English landing with direct ONE16 calls and a deferred concept scene
+ok 222 - the public root is an English landing with direct ONE16 calls and a deferred concept scene
+  ---
+  duration_ms: 2.3328
+  type: 'test'
+  ...
+# Subtest: copy distinguishes the public demo, the Testnet pilot and planned commercial capabilities
+ok 223 - copy distinguishes the public demo, the Testnet pilot and planned commercial capabilities
+  ---
+  duration_ms: 0.2784
+  type: 'test'
+  ...
+# Subtest: the only photographic preview is the actual inspected lightweight ONE16 render
+ok 224 - the only photographic preview is the actual inspected lightweight ONE16 render
+  ---
+  duration_ms: 0.4279
+  type: 'test'
+  ...
+# Subtest: every translated HTML text and accessibility attribute has a Spanish translation
+ok 225 - every translated HTML text and accessibility attribute has a Spanish translation
+  ---
+  duration_ms: 0.3542
+  type: 'test'
+  ...
+# Subtest: English is the default, with explicit query precedence over a stored language
+ok 226 - English is the default, with explicit query precedence over a stored language
+  ---
+  duration_ms: 0.2638
+  type: 'test'
+  ...
+# Subtest: switching Spanish updates metadata, labels and synchronized selectors, then restores English
+ok 227 - switching Spanish updates metadata, labels and synchronized selectors, then restores English
+  ---
+  duration_ms: 0.8163
+  type: 'test'
+  ...
+# Subtest: language selection persists locally and preserves unrelated query values and fragments
+ok 228 - language selection persists locally and preserves unrelated query values and fragments
+  ---
+  duration_ms: 1.1855
+  type: 'test'
+  ...
+# Subtest: a valid language query selects Spanish even when storage is unavailable
+ok 229 - a valid language query selects Spanish even when storage is unavailable
+  ---
+  duration_ms: 0.4873
+  type: 'test'
+  ...
+# Subtest: legacy QR/NFC continuation runs before preference storage and UI initialization
+ok 230 - legacy QR/NFC continuation runs before preference storage and UI initialization
+  ---
+  duration_ms: 0.595
+  type: 'test'
+  ...
+# Subtest: Quick Look uses typed USDZ Blob and requires second gesture, never automatic launch
+ok 231 - Quick Look uses typed USDZ Blob and requires second gesture, never automatic launch
+  ---
+  duration_ms: 27.5553
+  type: 'test'
+  ...
+# Subtest: Quick Look fetch failure remains retryable and never replaces original link
+ok 232 - Quick Look fetch failure remains retryable and never replaces original link
+  ---
+  duration_ms: 1.2029
+  type: 'test'
+  ...
+# Subtest: early world binding and lazy panel binding share one handler and one preparation
+ok 233 - early world binding and lazy panel binding share one handler and one preparation
+  ---
+  duration_ms: 1.3466
+  type: 'test'
+  ...
+# Subtest: actual bound click handler resets pose, height, orientation, zoom, inputs and help
+ok 234 - actual bound click handler resets pose, height, orientation, zoom, inputs and help
+  ---
+  duration_ms: 1.9727
+  type: 'test'
+  ...
+# Subtest: repeated activation is idempotent across walk/overview/plan
+ok 235 - repeated activation is idempotent across walk/overview/plan
+  ---
+  duration_ms: 2.1214
+  type: 'test'
+  ...
+# Subtest: fallback resets real plan position without claiming 3D or changing capability
+ok 236 - fallback resets real plan position without claiming 3D or changing capability
+  ---
+  duration_ms: 0.275
+  type: 'test'
+  ...
+# Subtest: early activation before layout does not invent a spawn and later activation works
+ok 237 - early activation before layout does not invent a spawn and later activation works
+  ---
+  duration_ms: 0.3286
+  type: 'test'
+  ...
+# Subtest: handler disposal removes actual click listener
+ok 238 - handler disposal removes actual click listener
+  ---
+  duration_ms: 0.235
+  type: 'test'
+  ...
+# Subtest: review registry has stable ordered IDs 1,4–25 and known world coordinates
+ok 239 - review registry has stable ordered IDs 1,4–25 and known world coordinates
+  ---
+  duration_ms: 2.1922
+  type: 'test'
+  ...
+# Subtest: both full and compact maps include all23 informational pins, actual floor and obstacles
+ok 240 - both full and compact maps include all23 informational pins, actual floor and obstacles
+  ---
+  duration_ms: 3.6487
+  type: 'test'
+  ...
+# Subtest: pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cannot inject markup
+ok 241 - pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cannot inject markup
+  ---
+  duration_ms: 2.5698
+  type: 'test'
+  ...
+# Subtest: nearby entries have world-anchored leaders and malformed geometry is ignored
+ok 242 - nearby entries have world-anchored leaders and malformed geometry is ignored
+  ---
+  duration_ms: 0.4009
+  type: 'test'
+  ...
+# Subtest: compact is local pose-centered viewBox with24x32world span, full staysglobal; numbers optional
+ok 243 - compact is local pose-centered viewBox with24x32world span, full staysglobal; numbers optional
+  ---
+  duration_ms: 2.1603
+  type: 'test'
+  ...
+# Subtest: new section positions follow their named zone views without changing legacy references
+ok 244 - new section positions follow their named zone views without changing legacy references
+  ---
+  duration_ms: 0.7721
+  type: 'test'
+  ...
+# Subtest: review markers use actual camera projection and retain edge points
+ok 245 - review markers use actual camera projection and retain edge points
+  ---
+  duration_ms: 2.0055
+  type: 'test'
+  ...
+# Subtest: 20 coincident labels separate with24px clearance, anchors preserved and none discarded
+ok 246 - 20 coincident labels separate with24px clearance, anchors preserved and none discarded
+  ---
+  duration_ms: 0.7259
+  type: 'test'
+  ...
+# Subtest: overview module makes23 noninteractive spans with stable IDs and leader elements
+ok 247 - overview module makes23 noninteractive spans with stable IDs and leader elements
+  ---
+  duration_ms: 2.1735
+  type: 'test'
+  ...
+# Subtest: labels avoid occupied UI rectangles while keeping the actual world anchor
+ok 248 - labels avoid occupied UI rectangles while keeping the actual world anchor
+  ---
+  duration_ms: 1.0704
+  type: 'test'
+  ...
+# Subtest: shorter corridor connects relocated entrance to all seven unchanged stairs and back
+ok 249 - shorter corridor connects relocated entrance to all seven unchanged stairs and back
+  ---
+  duration_ms: 47.6544
+  type: 'test'
+  ...
+# Subtest: scene compression matches corridor ends and preserves small decoration size
+ok 250 - scene compression matches corridor ends and preserves small decoration size
+  ---
+  duration_ms: 4.3481
+  type: 'test'
+  ...
+# Subtest: old NFC and www continue to the canonical domain with exact route, query and fragment
+ok 251 - old NFC and www continue to the canonical domain with exact route, query and fragment
+  ---
+  duration_ms: 1.0506
+  type: 'test'
+  ...
+# Subtest: canonical, exact preview, localhost and unrelated sites are not redirected
+ok 252 - canonical, exact preview, localhost and unrelated sites are not redirected
+  ---
+  duration_ms: 0.2439
+  type: 'test'
+  ...
+# Subtest: inline guard uses replace before storage/modules and preserves the browser-only fragment
+ok 253 - inline guard uses replace before storage/modules and preserves the browser-only fragment
+  ---
+  duration_ms: 3.5886
+  type: 'test'
+  ...
+# Subtest: every standalone entry has the same early canonical guard and its own canonical URL
+ok 254 - every standalone entry has the same early canonical guard and its own canonical URL
+  ---
+  duration_ms: 6.9708
+  type: 'test'
+  ...
+# Subtest: host redirects keep old NFC routes; wallet APIs and access metadata cannot be cached
+ok 255 - host redirects keep old NFC routes; wallet APIs and access metadata cannot be cached
+  ---
+  duration_ms: 2.5239
+  type: 'test'
+  ...
+# Subtest: placed transform survives loss of all surface hits and cannot follow a later target
+ok 256 - placed transform survives loss of all surface hits and cannot follow a later target
+  ---
+  duration_ms: 2.9138
+  type: 'test'
+  ...
+# Subtest: repositioning deliberately releases old world transform and requires a new valid surface
+ok 257 - repositioning deliberately releases old world transform and requires a new valid surface
+  ---
+  duration_ms: 0.7262
+  type: 'test'
+  ...
+# Subtest: ending an active session cancels surface resources exactly once and resets ownership
+ok 258 - ending an active session cancels surface resources exactly once and resets ownership
+  ---
+  duration_ms: 1.4266
+  type: 'test'
+  ...
+# Subtest: exit during pending permission ends a late XR grant without initializing resources
+ok 259 - exit during pending permission ends a late XR grant without initializing resources
+  ---
+  duration_ms: 0.7586
+  type: 'test'
+  ...
+# Subtest: late preparation cannot replace resources of a restarted XR session
+ok 260 - late preparation cannot replace resources of a restarted XR session
+  ---
+  duration_ms: 10.1146
+  type: 'test'
+  ...
+# Subtest: permission rejection retains the real error after busy clears and permits retry
+ok 261 - permission rejection retains the real error after busy clears and permits retry
+  ---
+  duration_ms: 1.5044
+  type: 'test'
+  ...
+# Subtest: stage card text comes from the purchased card and is absent without one
+ok 262 - stage card text comes from the purchased card and is absent without one
+  ---
+  duration_ms: 21.4554
+  type: 'test'
+  ...
+# Subtest: screen faces the middle of the venue on the backdrop's thin axis
+ok 263 - screen faces the middle of the venue on the backdrop's thin axis
+  ---
+  duration_ms: 0.3364
+  type: 'test'
+  ...
+# Subtest: long titles wrap and are truncated to three lines
+ok 264 - long titles wrap and are truncated to three lines
+  ---
+  duration_ms: 0.3397
+  type: 'test'
+  ...
+# Subtest: missing state file leaves the venue untouched
+ok 265 - missing state file leaves the venue untouched
+  ---
+  duration_ms: 0.4822
+  type: 'test'
+  ...
+# Subtest: purchased card mounts on the actual venue backdrop after GLTFLoader sanitizes its name
+ok 266 - purchased card mounts on the actual venue backdrop after GLTFLoader sanitizes its name
+  ---
+  duration_ms: 179.534
+  type: 'test'
+  ...
+# Subtest: the stage card shows a sponsor line only when the sponsor actually paid
+ok 267 - the stage card shows a sponsor line only when the sponsor actually paid
+  ---
+  duration_ms: 23.5095
+  type: 'test'
+  ...
+# Subtest: drawing a card with a sponsor writes the sponsor line last, and without one never mentions it
+ok 268 - drawing a card with a sponsor writes the sponsor line last, and without one never mentions it
+  ---
+  duration_ms: 0.9106
+  type: 'test'
+  ...
+# Subtest: central approach through paired stands reaches auditorium and stage and reverses
+ok 269 - central approach through paired stands reaches auditorium and stage and reverses
+  ---
+  duration_ms: 19.1891
+  type: 'test'
+  ...
+# Subtest: stand and auditorium viewpoints are distinct, clear, and correctly labeled
+ok 270 - stand and auditorium viewpoints are distinct, clear, and correctly labeled
+  ---
+  duration_ms: 0.2637
+  type: 'test'
+  ...
+# Subtest: Passport remains explicitly provisional and is not relabeled as a verified brand stand
+ok 271 - Passport remains explicitly provisional and is not relabeled as a verified brand stand
+  ---
+  duration_ms: 0.3728
+  type: 'test'
+  ...
+# Subtest: camera floor height follows ramp in both directions
+ok 272 - camera floor height follows ramp in both directions
+  ---
+  duration_ms: 5.6226
+  type: 'test'
+  ...
+# Subtest: unmodeled drop cannot be stepped off
+ok 273 - unmodeled drop cannot be stepped off
+  ---
+  duration_ms: 1.3001
+  type: 'test'
+  ...
+# Subtest: legacy floor retains zero height
+ok 274 - legacy floor retains zero height
+  ---
+  duration_ms: 0.1441
+  type: 'test'
+  ...
+# Subtest: compressed runtime stream restores exact original model and reports progress
+ok 275 - compressed runtime stream restores exact original model and reports progress
+  ---
+  duration_ms: 120.4539
+  type: 'test'
+  ...
+# Subtest: browser without gzip streaming support uses original GLB once
+ok 276 - browser without gzip streaming support uses original GLB once
+  ---
+  duration_ms: 11.0276
+  type: 'test'
+  ...
+# Subtest: HTTP model errors are explicit and do not trigger duplicate downloads
+ok 277 - HTTP model errors are explicit and do not trigger duplicate downloads
+  ---
+  duration_ms: 0.7576
+  type: 'test'
+  ...
+# Subtest: landing viewer defers heavy engine imports until initialization
+ok 278 - landing viewer defers heavy engine imports until initialization
+  ---
+  duration_ms: 5.4587
+  type: 'test'
+  ...
+# Subtest: host-level gzip decoding is not decompressed twice
+ok 279 - host-level gzip decoding is not decompressed twice
+  ---
+  duration_ms: 10.1535
+  type: 'test'
+  ...
+# Subtest: gzip network failure falls back once to exact original GLB
+ok 280 - gzip network failure falls back once to exact original GLB
+  ---
+  duration_ms: 11.2733
+  type: 'test'
+  ...
+# Subtest: gzip HTTP failure falls back once to exact original GLB
+ok 281 - gzip HTTP failure falls back once to exact original GLB
+  ---
+  duration_ms: 11.568
+  type: 'test'
+  ...
+# Subtest: gzip corrupt failure falls back once to exact original GLB
+ok 282 - gzip corrupt failure falls back once to exact original GLB
+  ---
+  duration_ms: 22.3219
+  type: 'test'
+  ...
+# Subtest: both transfer paths failing terminates after two requests
+ok 283 - both transfer paths failing terminates after two requests
+  ---
+  duration_ms: 0.584
+  type: 'test'
+  ...
+# Subtest: PBR export preserves timber and blue fabric tints and all surface channels
+ok 284 - PBR export preserves timber and blue fabric tints and all surface channels
+  ---
+  duration_ms: 1.4315
+  type: 'test'
+  ...
+# Subtest: the narrated exhibition has four dividers, eight branded positions and a wider aisle
+ok 285 - the narrated exhibition has four dividers, eight branded positions and a wider aisle
+  ---
+  duration_ms: 1.228
+  type: 'test'
+  ...
+# Subtest: download and decoded resources keep the cover until a successful render at the final pose
+ok 286 - download and decoded resources keep the cover until a successful render at the final pose
+  ---
+  duration_ms: 1.4428
+  type: 'test'
+  ...
+# Subtest: hidden or zero-sized viewports cannot claim a first frame, and a restored viewport can
+ok 287 - hidden or zero-sized viewports cannot claim a first frame, and a restored viewport can
+  ---
+  duration_ms: 0.2143
+  type: 'test'
+  ...
+# Subtest: renderer failure retains Welcome with no false ready and supports a clean retry
+ok 288 - renderer failure retains Welcome with no false ready and supports a clean retry
+  ---
+  duration_ms: 0.3237
+  type: 'test'
+  ...
+# Subtest: context failure retains Welcome with no false ready and supports a clean retry
+ok 289 - context failure retains Welcome with no false ready and supports a clean retry
+  ---
+  duration_ms: 0.1239
+  type: 'test'
+  ...
+# Subtest: choosePlan blocks late loading, error and render callbacks from revealing 3D
+ok 290 - choosePlan blocks late loading, error and render callbacks from revealing 3D
+  ---
+  duration_ms: 0.3437
+  type: 'test'
+  ...
+# Subtest: leave blocks late loading, error and render callbacks from revealing 3D
+ok 291 - leave blocks late loading, error and render callbacks from revealing 3D
+  ---
+  duration_ms: 0.1566
+  type: 'test'
+  ...
+# Subtest: the initial intent preserves static access, saved native pose and Passport precedence exactly once
+ok 292 - the initial intent preserves static access, saved native pose and Passport precedence exactly once
+  ---
+  duration_ms: 1.5437
+  type: 'test'
+  ...
+# Subtest: Welcome language uses URL, then shared preference, then English without requiring storage
+ok 293 - Welcome language uses URL, then shared preference, then English without requiring storage
+  ---
+  duration_ms: 0.3099
+  type: 'test'
+  ...
+# Subtest: progress percentages describe download only; geometry, textures and first view remain indeterminate
+ok 294 - progress percentages describe download only; geometry, textures and first view remain indeterminate
+  ---
+  duration_ms: 0.909
+  type: 'test'
+  ...
+# Subtest: the early inline Welcome bootstrap requests no venue image for NFC or explicit static access
+ok 295 - the early inline Welcome bootstrap requests no venue image for NFC or explicit static access
+  ---
+  duration_ms: 5.0414
+  type: 'test'
+  ...
+# Subtest: entry import failure shows the retry curtain while explicit 2D access stays available
+ok 296 - entry import failure shows the retry curtain while explicit 2D access stays available
+  ---
+  duration_ms: 1.2139
+  type: 'test'
+  ...
+# Subtest: Passport return settles after one16-plan without reviving a finished loading cover
+ok 297 - Passport return settles after one16-plan without reviving a finished loading cover
+  ---
+  duration_ms: 0.5597
+  type: 'test'
+  ...
+# Subtest: Passport return settles after one16-left without reviving a finished loading cover
+ok 298 - Passport return settles after one16-left without reviving a finished loading cover
+  ---
+  duration_ms: 0.2426
+  type: 'test'
+  ...
+# Subtest: NFC-only important hiding is disabled on explicit return before measuring the world
+ok 299 - NFC-only important hiding is disabled on explicit return before measuring the world
+  ---
+  duration_ms: 2.0674
+  type: 'test'
+  ...
+# Subtest: arcade light variation stays slow and bounded, respects live reduced motion, and restores on disposal
+ok 300 - arcade light variation stays slow and bounded, respects live reduced motion, and restores on disposal
+  ---
+  duration_ms: 2.9063
+  type: 'test'
+  ...
+# Subtest: texture filtering caps are shared across material arrays without changing image or color space
+ok 301 - texture filtering caps are shared across material arrays without changing image or color space
+  ---
+  duration_ms: 0.6427
+  type: 'test'
+  ...
+# Subtest: release verification accepts coherent real fixtures and only makes public GET requests
+ok 302 - release verification accepts coherent real fixtures and only makes public GET requests
+  ---
+  duration_ms: 60.36
+  type: 'test'
+  ...
+# Subtest: an HTML fallback with status 200 cannot masquerade as a released JSON route
+ok 303 - an HTML fallback with status 200 cannot masquerade as a released JSON route
+  ---
+  duration_ms: 23.9449
+  type: 'test'
+  ...
+# Subtest: verification refuses mixed runs and an enabled wallet without exposing response bodies
+ok 304 - verification refuses mixed runs and an enabled wallet without exposing response bodies
+  ---
+  duration_ms: 21.2714
+  type: 'test'
+  ...
+# Subtest: integration-only mode permits the preserved landing while final QA requires brand and CTA
+ok 305 - integration-only mode permits the preserved landing while final QA requires brand and CTA
+  ---
+  duration_ms: 42.0327
+  type: 'test'
+  ...
+# Subtest: floor reference numbers have walkable locations and follow actual floor height
+ok 306 - floor reference numbers have walkable locations and follow actual floor height
+  ---
+  duration_ms: 6.4511
+  type: 'test'
+  ...
+# Subtest: analog deadzone, proportional speed, diagonal normalization and radius clamp
+ok 307 - analog deadzone, proportional speed, diagonal normalization and radius clamp
+  ---
+  duration_ms: 1.0113
+  type: 'test'
+  ...
+# Subtest: actual two-finger handlers move and look independently and retain pointer ownership
+ok 308 - actual two-finger handlers move and look independently and retain pointer ownership
+  ---
+  duration_ms: 2.0296
+  type: 'test'
+  ...
+# Subtest: cancel, lost capture, blur, modal disable and mode clear stop without sticky input
+ok 309 - cancel, lost capture, blur, modal disable and mode clear stop without sticky input
+  ---
+  duration_ms: 0.7525
+  type: 'test'
+  ...
+# Subtest: joystick vectors feed actual collision navigation camera-relative without long-frame jump
+ok 310 - joystick vectors feed actual collision navigation camera-relative without long-frame jump
+  ---
+  duration_ms: 3.3889
+  type: 'test'
+  ...
+# Subtest: touch policy is on actual joystick, right-side zones collapsed in mobile walk
+ok 311 - touch policy is on actual joystick, right-side zones collapsed in mobile walk
+  ---
+  duration_ms: 2.1285
+  type: 'test'
+  ...
+# Subtest: installed Smart Account Kit payload passes our proxy and live read-only Stellar simulation
+ok 312 - installed Smart Account Kit payload passes our proxy and live read-only Stellar simulation # SKIP
+  ---
+  duration_ms: 1.0721
+  type: 'test'
+  ...
+# Subtest: config is testnet-only, accepts actual Marketplace aliases, and never returns secrets
+ok 313 - config is testnet-only, accepts actual Marketplace aliases, and never returns secrets
+  ---
+  duration_ms: 6.67
+  type: 'test'
+  ...
+# Subtest: prewarming availability neither creates wallets nor requests funds
+ok 314 - prewarming availability neither creates wallets nor requests funds
+  ---
+  duration_ms: 1.8027
+  type: 'test'
+  ...
+# Subtest: two instances share durable claim ownership; double taps cannot fund twice
+ok 315 - two instances share durable claim ownership; double taps cannot fund twice
+  ---
+  duration_ms: 5.464
+  type: 'test'
+  ...
+# Subtest: unknown outcomes survive reload and explicit retry without another claim, then reconcile onchain
+ok 316 - unknown outcomes survive reload and explicit retry without another claim, then reconcile onchain
+  ---
+  duration_ms: 3.2246
+  type: 'test'
+  ...
+# Subtest: a faucet success is pending until an actual asset balance is confirmed
+ok 317 - a faucet success is pending until an actual asset balance is confirmed
+  ---
+  duration_ms: 1.1585
+  type: 'test'
+  ...
+# Subtest: a terminated process becomes unknown, never a definitely failed retryable operation
+ok 318 - a terminated process becomes unknown, never a definitely failed retryable operation
+  ---
+  duration_ms: 5.6245
+  type: 'test'
+  ...
+# Subtest: stale pending operations become unknown without expiring claim ownership
+ok 319 - stale pending operations become unknown without expiring claim ownership
+  ---
+  duration_ms: 1.7609
+  type: 'test'
+  ...
+# Subtest: cooldowns remain definite failures and cannot be retried before the provider timestamp
+ok 320 - cooldowns remain definite failures and cannot be retried before the provider timestamp
+  ---
+  duration_ms: 4.2351
+  type: 'test'
+  ...
+# Subtest: only an explicit retry can repeat a definite provider rejection
+ok 321 - only an explicit retry can repeat a definite provider rejection
+  ---
+  duration_ms: 2.2512
+  type: 'test'
+  ...
+# Subtest: preexisting USDC skips the faucet and confirmed wallets never auto-top-up
+ok 322 - preexisting USDC skips the faucet and confirmed wallets never auto-top-up
+  ---
+  duration_ms: 2.1871
+  type: 'test'
+  ...
+# Subtest: writes require the exact allowed browser origin and checksum-valid C address
+ok 323 - writes require the exact allowed browser origin and checksum-valid C address
+  ---
+  duration_ms: 1.2447
+  type: 'test'
+  ...
+# Subtest: relay accepts only the approved one-passkey deployment and exact authorization tree
+ok 324 - relay accepts only the approved one-passkey deployment and exact authorization tree
+  ---
+  duration_ms: 8.3896
+  type: 'test'
+  ...
+# Subtest: relay performs bounded simulation before forwarding and keeps upstream failures private
+ok 325 - relay performs bounded simulation before forwarding and keeps upstream failures private
+  ---
+  duration_ms: 3.3045
+  type: 'test'
+  ...
+# Subtest: request JSON size is limited even without a Content-Length header
+ok 326 - request JSON size is limited even without a Content-Length header
+  ---
+  duration_ms: 0.5741
+  type: 'test'
+  ...
+# Subtest: only the deployment-specific preview receives its own disposable RP identity
+ok 327 - only the deployment-specific preview receives its own disposable RP identity
+  ---
+  duration_ms: 1.0819
+  type: 'test'
+  ...
+# Subtest: canonical wallet domain is agenticreality.space and old or www origins cannot request funds
+ok 328 - canonical wallet domain is agenticreality.space and old or www origins cannot request funds
+  ---
+  duration_ms: 0.8953
+  type: 'test'
+  ...
+# Subtest: public config fingerprints are stable and change for a different RP or ledger configuration
+ok 329 - public config fingerprints are stable and change for a different RP or ledger configuration
+  ---
+  duration_ms: 1.911
+  type: 'test'
+  ...
+# Subtest: API config and financial outcomes are never cached by browser or CDN
+ok 330 - API config and financial outcomes are never cached by browser or CDN
+  ---
+  duration_ms: 0.8336
+  type: 'test'
+  ...
+# Subtest: preparation and silent restore never create a passkey, deploy or request funds
+ok 331 - preparation and silent restore never create a passkey, deploy or request funds
+  ---
+  duration_ms: 2.6197
+  type: 'test'
+  ...
+# Subtest: a cold first click prepares only; the next tap starts WebAuthn synchronously
+ok 332 - a cold first click prepares only; the next tap starts WebAuthn synchronously
+  ---
+  duration_ms: 1.4032
+  type: 'test'
+  ...
+# Subtest: a double tap shares deployment and funding, then chain balance confirms readiness
+ok 333 - a double tap shares deployment and funding, then chain balance confirms readiness
+  ---
+  duration_ms: 2.3516
+  type: 'test'
+  ...
+# Subtest: an existing funded session is reused without prompting or refilling
+ok 334 - an existing funded session is reused without prompting or refilling
+  ---
+  duration_ms: 0.9015
+  type: 'test'
+  ...
+# Subtest: cancelling the passkey leaves the experience retryable and never claims
+ok 335 - cancelling the passkey leaves the experience retryable and never claims
+  ---
+  duration_ms: 2.5262
+  type: 'test'
+  ...
+# Subtest: deployment must exist before requesting USDC
+ok 336 - deployment must exist before requesting USDC
+  ---
+  duration_ms: 0.5876
+  type: 'test'
+  ...
+# Subtest: pending or unknown claims reconcile without ever posting again, including explicit retry
+ok 337 - pending or unknown claims reconcile without ever posting again, including explicit retry
+  ---
+  duration_ms: 1.5216
+  type: 'test'
+  ...
+# Subtest: successful faucet JSON alone cannot mark the wallet ready
+ok 338 - successful faucet JSON alone cannot mark the wallet ready
+  ---
+  duration_ms: 0.7727
+  type: 'test'
+  ...
+# Subtest: a claim timeout is reconciled on the next action without duplicate claims
+ok 339 - a claim timeout is reconciled on the next action without duplicate claims
+  ---
+  duration_ms: 1.6503
+  type: 'test'
+  ...
+# Subtest: cooldown is shown without automatic retries; a definitive failure needs explicit retry
+ok 340 - cooldown is shown without automatic retries; a definitive failure needs explicit retry
+  ---
+  duration_ms: 2.8106
+  type: 'test'
+  ...
+# Subtest: wrong networks and unavailable configuration never import signing code
+ok 341 - wrong networks and unavailable configuration never import signing code
+  ---
+  duration_ms: 1.1954
+  type: 'test'
+  ...
+# Subtest: explicit connect uses the same funded flow and state observers can unsubscribe
+ok 342 - explicit connect uses the same funded flow and state observers can unsubscribe
+  ---
+  duration_ms: 0.6916
+  type: 'test'
+  ...
+# Subtest: USDC formatting retains seven-decimal precision without floating point conversion
+ok 343 - USDC formatting retains seven-decimal precision without floating point conversion
+  ---
+  duration_ms: 0.7841
+  type: 'test'
+  ...
+# Subtest: relay or network rejection is reported as an error rather than passkey cancellation
+ok 344 - relay or network rejection is reported as an error rather than passkey cancellation
+  ---
+  duration_ms: 0.3893
+  type: 'test'
+  ...
+# Subtest: readonly configuration refresh reuses the prepared provider when public identity is unchanged
+ok 345 - readonly configuration refresh reuses the prepared provider when public identity is unchanged
+  ---
+  duration_ms: 0.4545
+  type: 'test'
+  ...
+# Subtest: changed public identity clears old in-memory balance and restores through a new provider without writes
+ok 346 - changed public identity clears old in-memory balance and restores through a new provider without writes
+  ---
+  duration_ms: 0.3639
+  type: 'test'
+  ...
+# Subtest: new configuration waits for the current passkey and funding operation, then removes stale results
+ok 347 - new configuration waits for the current passkey and funding operation, then removes stale results
+  ---
+  duration_ms: 0.4659
+  type: 'test'
+  ...
+# Subtest: a failed readonly configuration refresh preserves the existing funded session
+ok 348 - a failed readonly configuration refresh preserves the existing funded session
+  ---
+  duration_ms: 0.4287
+  type: 'test'
+  ...
+# Subtest: a configuration disabled by the server cannot keep an old signing provider active
+ok 349 - a configuration disabled by the server cannot keep an old signing provider active
+  ---
+  duration_ms: 0.3542
+  type: 'test'
+  ...
+# Subtest: opening the main-document panel prepares without creating, funding or changing navigation
+ok 350 - opening the main-document panel prepares without creating, funding or changing navigation
+  ---
+  duration_ms: 4.4566
+  type: 'test'
+  ...
+# Subtest: only explicit enabled buttons initiate passkey creation or connection
+ok 351 - only explicit enabled buttons initiate passkey creation or connection
+  ---
+  duration_ms: 0.7543
+  type: 'test'
+  ...
+# Subtest: pending operations offer a balance check; definite failures alone offer retry funding
+ok 352 - pending operations offer a balance check; definite failures alone offer retry funding
+  ---
+  duration_ms: 30.5921
+  type: 'test'
+  ...
+# Subtest: confirmed onchain balance is shown using safe text nodes and a Testnet explorer
+ok 353 - confirmed onchain balance is shown using safe text nodes and a Testnet explorer
+  ---
+  duration_ms: 0.5923
+  type: 'test'
+  ...
+# Subtest: close and native Escape preserve session and release subscriptions on teardown
+ok 354 - close and native Escape preserve session and release subscriptions on teardown
+  ---
+  duration_ms: 1.3729
+  type: 'test'
+  ...
+# Subtest: availability warnings explain missing USDC capacity without blocking wallet access
+ok 355 - availability warnings explain missing USDC capacity without blocking wallet access
+  ---
+  duration_ms: 0.7587
+  type: 'test'
+  ...
+# Subtest: unavailable setup offers a fresh read-only preparation check
+ok 356 - unavailable setup offers a fresh read-only preparation check
+  ---
+  duration_ms: 0.4592
+  type: 'test'
+  ...
+# Subtest: reopening refreshes cooldown eligibility without requiring another controller state change
+ok 357 - reopening refreshes cooldown eligibility without requiring another controller state change
+  ---
+  duration_ms: 1.5532
+  type: 'test'
+  ...
+# Subtest: provider uses IndexedDB, silent restore and no private Stellar deployer secret
+ok 358 - provider uses IndexedDB, silent restore and no private Stellar deployer secret
+  ---
+  duration_ms: 2.6759
+  type: 'test'
+  ...
+# Subtest: provider requires successful confirmed deployment before returning a new wallet address
+ok 359 - provider requires successful confirmed deployment before returning a new wallet address
+  ---
+  duration_ms: 3.0584
+  type: 'test'
+  ...
+# Subtest: a pending wallet recovered after reload resumes the same deterministic deployment
+ok 360 - a pending wallet recovered after reload resumes the same deterministic deployment
+  ---
+  duration_ms: 1.4342
+  type: 'test'
+  ...
+# Subtest: an explicit connect requests a fresh ownership-authenticated passkey immediately
+ok 361 - an explicit connect requests a fresh ownership-authenticated passkey immediately
+  ---
+  duration_ms: 0.7038
+  type: 'test'
+  ...
+# Subtest: balance reads verify the wallet WASM and simulate the locked SAC balance on Testnet
+ok 362 - balance reads verify the wallet WASM and simulate the locked SAC balance on Testnet
+  ---
+  duration_ms: 13.5422
+  type: 'test'
+  ...
+# Subtest: unaccepted wallet code and failed balance simulations cannot pass verification
+ok 363 - unaccepted wallet code and failed balance simulations cannot pass verification
+  ---
+  duration_ms: 2.4502
+  type: 'test'
+  ...
+# Subtest: insecure origins, mismatched relying-party domains and mainnet fail before loading SDK
+ok 364 - insecure origins, mismatched relying-party domains and mainnet fail before loading SDK
+  ---
+  duration_ms: 0.7619
+  type: 'test'
+  ...
+# Subtest: vendored browser ESM loads with its Buffer shim without global Buffer injection
+ok 365 - vendored browser ESM loads with its Buffer shim without global Buffer injection
+  ---
+  duration_ms: 120.2707
+  type: 'test'
+  ...
+# Subtest: canonical origin is exact even when a subdomain could technically use the same RP id
+ok 366 - canonical origin is exact even when a subdomain could technically use the same RP id
+  ---
+  duration_ms: 0.5562
+  type: 'test'
+  ...
+# Subtest: actual in-world open/close handlers preserve walk pose and share one panel load
+ok 367 - actual in-world open/close handlers preserve walk pose and share one panel load
+  ---
+  duration_ms: 2.3879
+  type: 'test'
+  ...
+# Subtest: raycast target accepts Passport display descendants and rejects unrelated venue
+ok 368 - raycast target accepts Passport display descendants and rejects unrelated venue
+  ---
+  duration_ms: 0.8386
+  type: 'test'
+  ...
+# Subtest: main world contains inspector and native AR; primary entry does not navigate away
+ok 369 - main world contains inspector and native AR; primary entry does not navigate away
+  ---
+  duration_ms: 1.8643
+  type: 'test'
+  ...
+1..369
+# tests 369
+# suites 0
+# pass 368
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 12508.6939

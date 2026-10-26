@@ -58,3 +58,6 @@ contracts/**/test_snapshots/
 .ads-secrets/
 
 .ads-font-cache/
+# Reproducible render tools: Python bytecode is local cache.
+__pycache__/
+*.py[cod]

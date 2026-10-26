@@ -1,0 +1,150 @@
+[
+  {
+    "viewport": {
+      "width": 320,
+      "height": 568
+    },
+    "button": {
+      "selector": "#kickFootball",
+      "x": 162,
+      "y": 262,
+      "w": 148,
+      "h": 44
+    },
+    "blockers": [
+      {
+        "selector": "#venueHud",
+        "x": 10,
+        "y": 10,
+        "w": 300,
+        "h": 185.796875
+      },
+      {
+        "selector": "#walkMinimap",
+        "x": 200,
+        "y": 316,
+        "w": 110,
+        "h": 240
+      },
+      {
+        "selector": ".touch-controls",
+        "x": 10,
+        "y": 387,
+        "w": 136,
+        "h": 169
+      }
+    ],
+    "overlaps": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "button": {
+      "selector": "#kickFootball",
+      "x": 232,
+      "y": 538,
+      "w": 148,
+      "h": 44
+    },
+    "blockers": [
+      {
+        "selector": "#venueHud",
+        "x": 10,
+        "y": 10,
+        "w": 370,
+        "h": 188.796875
+      },
+      {
+        "selector": "#walkMinimap",
+        "x": 254,
+        "y": 592,
+        "w": 126,
+        "h": 240
+      },
+      {
+        "selector": ".touch-controls",
+        "x": 10,
+        "y": 663,
+        "w": 144,
+        "h": 169
+      }
+    ],
+    "overlaps": []
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "button": {
+      "selector": "#kickFootball",
+      "x": 686,
+      "y": 278,
+      "w": 148,
+      "h": 44
+    },
+    "blockers": [
+      {
+        "selector": "#venueHud",
+        "x": 10,
+        "y": 6,
+        "w": 824,
+        "h": 93
+      },
+      {
+        "selector": "#walkMinimap",
+        "x": 708,
+        "y": 332,
+        "w": 126,
+        "h": 46
+      },
+      {
+        "selector": ".touch-controls",
+        "x": 10,
+        "y": 262,
+        "w": 144,
+        "h": 116
+      }
+    ],
+    "overlaps": []
+  },
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "button": {
+      "selector": "#kickFootball",
+      "x": 1282,
+      "y": 788,
+      "w": 148,
+      "h": 44
+    },
+    "blockers": [
+      {
+        "selector": "#venueHud",
+        "x": 10,
+        "y": 10,
+        "w": 1420,
+        "h": 96
+      },
+      {
+        "selector": "#walkMinimap",
+        "x": 1290,
+        "y": 842,
+        "w": 140,
+        "h": 46
+      },
+      {
+        "selector": ".touch-controls",
+        "x": 10,
+        "y": 719,
+        "w": 144,
+        "h": 169
+      }
+    ],
+    "overlaps": []
+  }
+]

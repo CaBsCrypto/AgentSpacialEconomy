@@ -113,6 +113,10 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 - [ ] README explains in its first lines what this is, and how to run the loop.
 - [ ] No secrets in git history.
 
+## Venue visual revision authorized on 26 Oct
+
+The owner approved the separate codex/render-textures-ui revision from sponsor run 3 (298fefa). Implement the thirteen-video evidence register in docs/render-review-2026-10-26/: eight double-sided exhibition positions, games and giant keyboard, arrival seating, check-in graphics, skills board, Energy Corner and photo booth, Content Hub recording set, stage branding, and the 8-by-3 photo lounge backdrop. Add shared exportable surface textures and polish the existing responsive viewer controls. Preserve the testnet agent loop, sponsor card, Passport, wallet, seven interior steps, shortened corridor, and removed exterior sections. New informational review IDs start at 21; physical dimensions remain estimates. Games and the recording set are visual reconstructions. The source videos stay outside Git.
+
 ## Backlog (logged, not built this weekend)
 
 - Per-day smart-account spending policies (OpenZeppelin policies or Nido session keys), beyond the implemented SEP-41 treasury allowance.
@@ -130,3 +134,21 @@ The revenue-side backlog entry is superseded for this feature branch by docs/ads
 Default main-stage content: the user-supplied HackMeridian Day 1 presentation, converted from GIF to a 10-second silent looping MP4. A paid audited scheduled advertisement temporarily replaces the loop; payment alone never publishes it.
 
 Approved 26 Oct main-stage pilot: implement the owner-approved QR/NFC, five measured passes, suggested scheduling, fulfillment recovery and PM/QA gates in docs/ads/main-stage-pilot.md. This supersedes the former incomplete-pilot freeze only within feature/ads-3d-ar-x402; preserve the recorded demo, wallet identity and main/dashboard.
+
+## Second venue review authorized on 26 Oct
+
+Continue codex/render-textures-ui from da9b680. Replace lower lounge box seating with rounded padded components, reserve check-in identity areas, add five labeled skills sheets including BACK END, wall-mount the games display with parallel giant keyboard and inward-facing sofa, reconstruct the eighteen-button arcade, and correct all eight white-table horizontal wordmarks and stand gaps. Reduce Content Hub to two bodies (6.6 m), synchronize its entrance/map/collisions, and add four practical fixtures plus two soft shadowless local lights. Separate the football and net for repeatable local tap/accessible-button interaction with reduced motion. Preserve all IDs and approved stage/photo booth designs; label reference 19 Zona de fotos · junto al escenario. Include the owner’s attached food-area screenshot by replacing its centered blocked view with a clear oblique buffet view. Integrate after per-section comparisons, run all existing suites and regressions, verify four agreed viewports on GPU within 5 MiB compressed, and publish one final mobile preview.
+
+
+## Onboarding and furniture follow-up authorized on 26 Oct
+
+Move the wallet totem near map reference 12 and guide visitors from the entrance spawn to its clear approach with floor-following luminous dots, including all seven steps and a matching map path. End guidance at the existing Testnet wallet/test-USDC flow. Remove the black curtain and its collision. Review every chair/table, especially central section 13, to remove deformed chair geometry and interpenetration; widen branded dividers while preserving the central passage. Move the Palta Labs avocado display to the DeFindex/Soroswap table and the physical Passport display to the Stellar Passport table, with a substantially larger, proportionate book. Synchronize semantic zones, views, minimap, interaction proximity, obstacles and accessible actions. Preserve approved graphics and existing wallet/Passport behavior, validate per-section on GPU and deploy the revised preview after review.
+
+
+## Final guided visitor delivery authorized on 26 Oct
+
+Continue codex/render-textures-ui from 349175e. Advance the USDC kiosk to Three (2.6,0,-5.6), beside the check-in bar, with approach (2.6,-4.3); synchronize physical/collision/zone/map data. Reduce only the Palta pedestal by 12.5%, enlarge the animated fruit by 8%, and replace all eight vertical project headers with horizontal headings while preserving approved desk wordmarks. Remove public review numbers and legends from ground, maps, overview, static and accessible content while preserving functional navigation and compatibility IDs. Guide entry to the kiosk, then unlock a shared companies route and two labeled branches only after a kiosk-origin Continue with verified deployed Testnet wallet and positive test USDC balance. Complete Passport on a loaded first frame and Palta on explicit visible interaction, in either order; dim visited branches and finish after both. Preserve visual progress per tab/wallet/configuration across rebuild and AR return, with a guide-only reset that never funds or changes the wallet. Verify all existing suites, regressions, four agreed viewports and real GPU within the venue model 5 MiB compressed budget; publish one final mobile preview with evidence.
+
+## Landing cleanup authorized on 26 Oct
+
+Remove the Spatial Agents submission-proof card and its dashboard/GitHub buttons from the public landing hero, as explicitly requested by the owner. Keep the Agentic Reality Space landing, ONE16 entry and the directly accessible dashboard.

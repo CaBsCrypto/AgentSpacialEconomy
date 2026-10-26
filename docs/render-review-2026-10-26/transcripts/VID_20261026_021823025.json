@@ -1,0 +1,702 @@
+{
+  "file": "VID_20261026_021823025.mp4",
+  "driveId": "1fhDU0VvYF-4Vwpey8HCZYfD9zEKM4bAc",
+  "url": "https://drive.google.com/file/d/1fhDU0VvYF-4Vwpey8HCZYfD9zEKM4bAc/view",
+  "durationSeconds": 16.144959,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 3.58,
+      "text": " Después pasamos a la sección del check-in, hay que ver bien qué es lo que dice, qué es lo que no.",
+      "avg_logprob": -0.24466311052823678,
+      "no_speech_prob": 0.042259640991687775,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.3,
+          "word": " Después",
+          "probability": 0.5795301198959351
+        },
+        {
+          "start": 0.3,
+          "end": 0.68,
+          "word": " pasamos",
+          "probability": 0.9651803374290466
+        },
+        {
+          "start": 0.68,
+          "end": 0.76,
+          "word": " a",
+          "probability": 0.9532076716423035
+        },
+        {
+          "start": 0.76,
+          "end": 0.8,
+          "word": " la",
+          "probability": 0.987433135509491
+        },
+        {
+          "start": 0.8,
+          "end": 1.12,
+          "word": " sección",
+          "probability": 0.9944089949131012
+        },
+        {
+          "start": 1.12,
+          "end": 1.26,
+          "word": " del",
+          "probability": 0.9172688722610474
+        },
+        {
+          "start": 1.26,
+          "end": 1.46,
+          "word": " check",
+          "probability": 0.6362123489379883
+        },
+        {
+          "start": 1.46,
+          "end": 1.68,
+          "word": "-in,",
+          "probability": 0.9146920144557953
+        },
+        {
+          "start": 1.86,
+          "end": 1.94,
+          "word": " hay",
+          "probability": 0.9772592782974243
+        },
+        {
+          "start": 1.94,
+          "end": 2.06,
+          "word": " que",
+          "probability": 0.998072624206543
+        },
+        {
+          "start": 2.06,
+          "end": 2.18,
+          "word": " ver",
+          "probability": 0.9974385499954224
+        },
+        {
+          "start": 2.18,
+          "end": 2.32,
+          "word": " bien",
+          "probability": 0.9567784667015076
+        },
+        {
+          "start": 2.32,
+          "end": 2.44,
+          "word": " qué",
+          "probability": 0.7596847414970398
+        },
+        {
+          "start": 2.44,
+          "end": 2.5,
+          "word": " es",
+          "probability": 0.9959976673126221
+        },
+        {
+          "start": 2.5,
+          "end": 2.58,
+          "word": " lo",
+          "probability": 0.996298611164093
+        },
+        {
+          "start": 2.58,
+          "end": 2.68,
+          "word": " que",
+          "probability": 0.989740252494812
+        },
+        {
+          "start": 2.68,
+          "end": 2.92,
+          "word": " dice,",
+          "probability": 0.9875229001045227
+        },
+        {
+          "start": 3.14,
+          "end": 3.2,
+          "word": " qué",
+          "probability": 0.9168187975883484
+        },
+        {
+          "start": 3.2,
+          "end": 3.28,
+          "word": " es",
+          "probability": 0.9944126009941101
+        },
+        {
+          "start": 3.28,
+          "end": 3.34,
+          "word": " lo",
+          "probability": 0.9969658255577087
+        },
+        {
+          "start": 3.34,
+          "end": 3.42,
+          "word": " que",
+          "probability": 0.9898760914802551
+        },
+        {
+          "start": 3.42,
+          "end": 3.58,
+          "word": " no.",
+          "probability": 0.996947705745697
+        }
+      ]
+    },
+    {
+      "start": 4.08,
+      "end": 8.48,
+      "text": " Y aquí es lo más importante, este banner, ahora está limpio, tenemos que agregarle todo esto.",
+      "avg_logprob": -0.24466311052823678,
+      "no_speech_prob": 0.042259640991687775,
+      "words": [
+        {
+          "start": 4.08,
+          "end": 4.32,
+          "word": " Y",
+          "probability": 0.794642984867096
+        },
+        {
+          "start": 4.32,
+          "end": 4.46,
+          "word": " aquí",
+          "probability": 0.9770097732543945
+        },
+        {
+          "start": 4.46,
+          "end": 4.54,
+          "word": " es",
+          "probability": 0.4897531270980835
+        },
+        {
+          "start": 4.54,
+          "end": 4.58,
+          "word": " lo",
+          "probability": 0.9642059206962585
+        },
+        {
+          "start": 4.58,
+          "end": 4.7,
+          "word": " más",
+          "probability": 0.9804091453552246
+        },
+        {
+          "start": 4.7,
+          "end": 5.02,
+          "word": " importante,",
+          "probability": 0.9990004897117615
+        },
+        {
+          "start": 5.3,
+          "end": 5.48,
+          "word": " este",
+          "probability": 0.9622288346290588
+        },
+        {
+          "start": 5.48,
+          "end": 5.72,
+          "word": " banner,",
+          "probability": 0.9504613876342773
+        },
+        {
+          "start": 5.96,
+          "end": 6.04,
+          "word": " ahora",
+          "probability": 0.9884117245674133
+        },
+        {
+          "start": 6.04,
+          "end": 6.3,
+          "word": " está",
+          "probability": 0.9679417610168457
+        },
+        {
+          "start": 6.3,
+          "end": 7.34,
+          "word": " limpio,",
+          "probability": 0.8773559331893921
+        },
+        {
+          "start": 7.34,
+          "end": 7.54,
+          "word": " tenemos",
+          "probability": 0.9324488043785095
+        },
+        {
+          "start": 7.54,
+          "end": 7.74,
+          "word": " que",
+          "probability": 0.9981094598770142
+        },
+        {
+          "start": 7.74,
+          "end": 8.14,
+          "word": " agregarle",
+          "probability": 0.9860732952753702
+        },
+        {
+          "start": 8.14,
+          "end": 8.24,
+          "word": " todo",
+          "probability": 0.9379312992095947
+        },
+        {
+          "start": 8.24,
+          "end": 8.48,
+          "word": " esto.",
+          "probability": 0.9089178442955017
+        }
+      ]
+    },
+    {
+      "start": 9.2,
+      "end": 14.16,
+      "text": " Agregar el mismo diseño, made to move, los logos acá y los logos acá.",
+      "avg_logprob": -0.24466311052823678,
+      "no_speech_prob": 0.042259640991687775,
+      "words": [
+        {
+          "start": 9.2,
+          "end": 9.6,
+          "word": " Agregar",
+          "probability": 0.6118017832438151
+        },
+        {
+          "start": 9.6,
+          "end": 9.68,
+          "word": " el",
+          "probability": 0.960851788520813
+        },
+        {
+          "start": 9.68,
+          "end": 9.84,
+          "word": " mismo",
+          "probability": 0.9977109432220459
+        },
+        {
+          "start": 9.84,
+          "end": 10.18,
+          "word": " diseño,",
+          "probability": 0.9973034560680389
+        },
+        {
+          "start": 10.32,
+          "end": 10.46,
+          "word": " made",
+          "probability": 0.14103515446186066
+        },
+        {
+          "start": 10.46,
+          "end": 10.66,
+          "word": " to",
+          "probability": 0.9163063764572144
+        },
+        {
+          "start": 10.66,
+          "end": 10.98,
+          "word": " move,",
+          "probability": 0.9868821501731873
+        },
+        {
+          "start": 11.58,
+          "end": 11.76,
+          "word": " los",
+          "probability": 0.964796245098114
+        },
+        {
+          "start": 11.76,
+          "end": 12.04,
+          "word": " logos",
+          "probability": 0.9519039392471313
+        },
+        {
+          "start": 12.04,
+          "end": 12.4,
+          "word": " acá",
+          "probability": 0.9959527254104614
+        },
+        {
+          "start": 12.4,
+          "end": 13.54,
+          "word": " y",
+          "probability": 0.5426605939865112
+        },
+        {
+          "start": 13.54,
+          "end": 13.64,
+          "word": " los",
+          "probability": 0.985629141330719
+        },
+        {
+          "start": 13.64,
+          "end": 13.88,
+          "word": " logos",
+          "probability": 0.9488081336021423
+        },
+        {
+          "start": 13.88,
+          "end": 14.16,
+          "word": " acá.",
+          "probability": 0.9991198182106018
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021823025.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 16.0426875,
+      "elapsed": 6.7810000000026776,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 3.58,
+          "text": " Después pasamos a la sección del check-in, hay que ver bien qué es lo que dice, qué es lo que no.",
+          "avg_logprob": -0.24466311052823678,
+          "no_speech_prob": 0.042259640991687775,
+          "words": [
+            {
+              "start": 0.0,
+              "end": 0.3,
+              "word": " Después",
+              "probability": 0.5795301198959351
+            },
+            {
+              "start": 0.3,
+              "end": 0.68,
+              "word": " pasamos",
+              "probability": 0.9651803374290466
+            },
+            {
+              "start": 0.68,
+              "end": 0.76,
+              "word": " a",
+              "probability": 0.9532076716423035
+            },
+            {
+              "start": 0.76,
+              "end": 0.8,
+              "word": " la",
+              "probability": 0.987433135509491
+            },
+            {
+              "start": 0.8,
+              "end": 1.12,
+              "word": " sección",
+              "probability": 0.9944089949131012
+            },
+            {
+              "start": 1.12,
+              "end": 1.26,
+              "word": " del",
+              "probability": 0.9172688722610474
+            },
+            {
+              "start": 1.26,
+              "end": 1.46,
+              "word": " check",
+              "probability": 0.6362123489379883
+            },
+            {
+              "start": 1.46,
+              "end": 1.68,
+              "word": "-in,",
+              "probability": 0.9146920144557953
+            },
+            {
+              "start": 1.86,
+              "end": 1.94,
+              "word": " hay",
+              "probability": 0.9772592782974243
+            },
+            {
+              "start": 1.94,
+              "end": 2.06,
+              "word": " que",
+              "probability": 0.998072624206543
+            },
+            {
+              "start": 2.06,
+              "end": 2.18,
+              "word": " ver",
+              "probability": 0.9974385499954224
+            },
+            {
+              "start": 2.18,
+              "end": 2.32,
+              "word": " bien",
+              "probability": 0.9567784667015076
+            },
+            {
+              "start": 2.32,
+              "end": 2.44,
+              "word": " qué",
+              "probability": 0.7596847414970398
+            },
+            {
+              "start": 2.44,
+              "end": 2.5,
+              "word": " es",
+              "probability": 0.9959976673126221
+            },
+            {
+              "start": 2.5,
+              "end": 2.58,
+              "word": " lo",
+              "probability": 0.996298611164093
+            },
+            {
+              "start": 2.58,
+              "end": 2.68,
+              "word": " que",
+              "probability": 0.989740252494812
+            },
+            {
+              "start": 2.68,
+              "end": 2.92,
+              "word": " dice,",
+              "probability": 0.9875229001045227
+            },
+            {
+              "start": 3.14,
+              "end": 3.2,
+              "word": " qué",
+              "probability": 0.9168187975883484
+            },
+            {
+              "start": 3.2,
+              "end": 3.28,
+              "word": " es",
+              "probability": 0.9944126009941101
+            },
+            {
+              "start": 3.28,
+              "end": 3.34,
+              "word": " lo",
+              "probability": 0.9969658255577087
+            },
+            {
+              "start": 3.34,
+              "end": 3.42,
+              "word": " que",
+              "probability": 0.9898760914802551
+            },
+            {
+              "start": 3.42,
+              "end": 3.58,
+              "word": " no.",
+              "probability": 0.996947705745697
+            }
+          ]
+        },
+        {
+          "start": 4.08,
+          "end": 8.48,
+          "text": " Y aquí es lo más importante, este banner, ahora está limpio, tenemos que agregarle todo esto.",
+          "avg_logprob": -0.24466311052823678,
+          "no_speech_prob": 0.042259640991687775,
+          "words": [
+            {
+              "start": 4.08,
+              "end": 4.32,
+              "word": " Y",
+              "probability": 0.794642984867096
+            },
+            {
+              "start": 4.32,
+              "end": 4.46,
+              "word": " aquí",
+              "probability": 0.9770097732543945
+            },
+            {
+              "start": 4.46,
+              "end": 4.54,
+              "word": " es",
+              "probability": 0.4897531270980835
+            },
+            {
+              "start": 4.54,
+              "end": 4.58,
+              "word": " lo",
+              "probability": 0.9642059206962585
+            },
+            {
+              "start": 4.58,
+              "end": 4.7,
+              "word": " más",
+              "probability": 0.9804091453552246
+            },
+            {
+              "start": 4.7,
+              "end": 5.02,
+              "word": " importante,",
+              "probability": 0.9990004897117615
+            },
+            {
+              "start": 5.3,
+              "end": 5.48,
+              "word": " este",
+              "probability": 0.9622288346290588
+            },
+            {
+              "start": 5.48,
+              "end": 5.72,
+              "word": " banner,",
+              "probability": 0.9504613876342773
+            },
+            {
+              "start": 5.96,
+              "end": 6.04,
+              "word": " ahora",
+              "probability": 0.9884117245674133
+            },
+            {
+              "start": 6.04,
+              "end": 6.3,
+              "word": " está",
+              "probability": 0.9679417610168457
+            },
+            {
+              "start": 6.3,
+              "end": 7.34,
+              "word": " limpio,",
+              "probability": 0.8773559331893921
+            },
+            {
+              "start": 7.34,
+              "end": 7.54,
+              "word": " tenemos",
+              "probability": 0.9324488043785095
+            },
+            {
+              "start": 7.54,
+              "end": 7.74,
+              "word": " que",
+              "probability": 0.9981094598770142
+            },
+            {
+              "start": 7.74,
+              "end": 8.14,
+              "word": " agregarle",
+              "probability": 0.9860732952753702
+            },
+            {
+              "start": 8.14,
+              "end": 8.24,
+              "word": " todo",
+              "probability": 0.9379312992095947
+            },
+            {
+              "start": 8.24,
+              "end": 8.48,
+              "word": " esto.",
+              "probability": 0.9089178442955017
+            }
+          ]
+        },
+        {
+          "start": 9.2,
+          "end": 14.16,
+          "text": " Agregar el mismo diseño, made to move, los logos acá y los logos acá.",
+          "avg_logprob": -0.24466311052823678,
+          "no_speech_prob": 0.042259640991687775,
+          "words": [
+            {
+              "start": 9.2,
+              "end": 9.6,
+              "word": " Agregar",
+              "probability": 0.6118017832438151
+            },
+            {
+              "start": 9.6,
+              "end": 9.68,
+              "word": " el",
+              "probability": 0.960851788520813
+            },
+            {
+              "start": 9.68,
+              "end": 9.84,
+              "word": " mismo",
+              "probability": 0.9977109432220459
+            },
+            {
+              "start": 9.84,
+              "end": 10.18,
+              "word": " diseño,",
+              "probability": 0.9973034560680389
+            },
+            {
+              "start": 10.32,
+              "end": 10.46,
+              "word": " made",
+              "probability": 0.14103515446186066
+            },
+            {
+              "start": 10.46,
+              "end": 10.66,
+              "word": " to",
+              "probability": 0.9163063764572144
+            },
+            {
+              "start": 10.66,
+              "end": 10.98,
+              "word": " move,",
+              "probability": 0.9868821501731873
+            },
+            {
+              "start": 11.58,
+              "end": 11.76,
+              "word": " los",
+              "probability": 0.964796245098114
+            },
+            {
+              "start": 11.76,
+              "end": 12.04,
+              "word": " logos",
+              "probability": 0.9519039392471313
+            },
+            {
+              "start": 12.04,
+              "end": 12.4,
+              "word": " acá",
+              "probability": 0.9959527254104614
+            },
+            {
+              "start": 12.4,
+              "end": 13.54,
+              "word": " y",
+              "probability": 0.5426605939865112
+            },
+            {
+              "start": 13.54,
+              "end": 13.64,
+              "word": " los",
+              "probability": 0.985629141330719
+            },
+            {
+              "start": 13.64,
+              "end": 13.88,
+              "word": " logos",
+              "probability": 0.9488081336021423
+            },
+            {
+              "start": 13.88,
+              "end": 14.16,
+              "word": " acá.",
+              "probability": 0.9991198182106018
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

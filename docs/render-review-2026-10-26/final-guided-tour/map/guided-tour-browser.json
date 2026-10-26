@@ -1,0 +1,1113 @@
+{
+  "mode": "map-only",
+  "fixture": "Original local dist + route-only lexical instrumentation. Real wallet controller and panel; restored provider fixture, no signing or POST. Real GPU Passport iframe first frame is delayed, never fabricated.",
+  "hardwareRequired": true,
+  "playwrightModule": "C:/Users/cabs_/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright",
+  "executable": "C:/Users/cabs_/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe",
+  "checks": [
+    {
+      "name": "normal: entry uses one luminous route and maps have no numeric pins",
+      "pass": true,
+      "details": {
+        "pointCount": 66
+      }
+    },
+    {
+      "name": "normal: explicit funded totem Continue replaces entry with shared trunk and two branches",
+      "pass": true,
+      "details": {
+        "ids": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          "Stellar Passport",
+          "DeFindex · Soroswap"
+        ]
+      }
+    },
+    {
+      "name": "map: companies plan 320x568 keeps readable status and an accessible reset",
+      "pass": true,
+      "details": {
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "mode": "plan",
+        "tour": {
+          "phase": "companies",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "panel": {
+          "id": "guidedTourStatus",
+          "x": 10,
+          "y": 204,
+          "width": 300,
+          "height": 62,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 298,
+          "scrollWidth": 298,
+          "clientHeight": 60,
+          "scrollHeight": 60
+        },
+        "text": {
+          "id": "guidedTourText",
+          "x": 21,
+          "y": 218.203125,
+          "width": 178.625,
+          "height": 33.59375,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 16.8,
+          "clientWidth": 179,
+          "scrollWidth": 179,
+          "clientHeight": 34,
+          "scrollHeight": 34
+        },
+        "reset": {
+          "id": "guidedTourReset",
+          "x": 207.625,
+          "y": 213,
+          "width": 91.375,
+          "height": 44,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 15,
+          "clientWidth": 89,
+          "scrollWidth": 89,
+          "clientHeight": 42,
+          "scrollHeight": 42
+        },
+        "plan": {
+          "id": "plan",
+          "x": 10,
+          "y": 204,
+          "width": 300,
+          "height": 352,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 300,
+          "scrollWidth": 300,
+          "clientHeight": 352,
+          "scrollHeight": 769
+        },
+        "openDialogs": [],
+        "zonesOpen": false,
+        "numericPins": [],
+        "routes": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          {
+            "text": "Stellar Passport",
+            "fontSize": 24,
+            "effectivePixels": 6.2798437499999995
+          },
+          {
+            "text": "DeFindex · Soroswap",
+            "fontSize": 24,
+            "effectivePixels": 6.2798437499999995
+          }
+        ],
+        "screenshot": "companies-plan-320x568.jpg"
+      }
+    },
+    {
+      "name": "map: companies plan 390x844 keeps readable status and an accessible reset",
+      "pass": true,
+      "details": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "mode": "plan",
+        "tour": {
+          "phase": "companies",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "panel": {
+          "id": "guidedTourStatus",
+          "x": 10,
+          "y": 207,
+          "width": 370,
+          "height": 66,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 368,
+          "scrollWidth": 368,
+          "clientHeight": 64,
+          "scrollHeight": 64
+        },
+        "text": {
+          "id": "guidedTourText",
+          "x": 23,
+          "y": 221.8125,
+          "width": 236.625,
+          "height": 36.375,
+          "visible": true,
+          "fontSize": 13,
+          "lineHeight": 18.2,
+          "clientWidth": 237,
+          "scrollWidth": 237,
+          "clientHeight": 36,
+          "scrollHeight": 36
+        },
+        "reset": {
+          "id": "guidedTourReset",
+          "x": 271.625,
+          "y": 218,
+          "width": 95.375,
+          "height": 44,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 15,
+          "clientWidth": 93,
+          "scrollWidth": 93,
+          "clientHeight": 42,
+          "scrollHeight": 42
+        },
+        "plan": {
+          "id": "plan",
+          "x": 10,
+          "y": 207,
+          "width": 370,
+          "height": 625,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 370,
+          "scrollWidth": 370,
+          "clientHeight": 625,
+          "scrollHeight": 1012
+        },
+        "openDialogs": [],
+        "zonesOpen": false,
+        "numericPins": [],
+        "routes": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          {
+            "text": "Stellar Passport",
+            "fontSize": 24,
+            "effectivePixels": 10.379999999999999
+          },
+          {
+            "text": "DeFindex · Soroswap",
+            "fontSize": 24,
+            "effectivePixels": 10.379999999999999
+          }
+        ],
+        "screenshot": "companies-plan-390x844.jpg"
+      }
+    },
+    {
+      "name": "map: companies plan 844x390 keeps readable status and an accessible reset",
+      "pass": true,
+      "details": {
+        "viewport": {
+          "width": 844,
+          "height": 390
+        },
+        "mode": "plan",
+        "tour": {
+          "phase": "companies",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "panel": {
+          "id": "guidedTourStatus",
+          "x": 10,
+          "y": 107,
+          "width": 420,
+          "height": 62,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 418,
+          "scrollWidth": 418,
+          "clientHeight": 60,
+          "scrollHeight": 60
+        },
+        "text": {
+          "id": "guidedTourText",
+          "x": 21,
+          "y": 121.203125,
+          "width": 292.625,
+          "height": 33.59375,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 16.8,
+          "clientWidth": 293,
+          "scrollWidth": 293,
+          "clientHeight": 34,
+          "scrollHeight": 34
+        },
+        "reset": {
+          "id": "guidedTourReset",
+          "x": 323.625,
+          "y": 116,
+          "width": 95.375,
+          "height": 44,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 15,
+          "clientWidth": 93,
+          "scrollWidth": 93,
+          "clientHeight": 42,
+          "scrollHeight": 42
+        },
+        "plan": {
+          "id": "plan",
+          "x": 10,
+          "y": 107,
+          "width": 824,
+          "height": 271,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 824,
+          "scrollWidth": 824,
+          "clientHeight": 271,
+          "scrollHeight": 492
+        },
+        "openDialogs": [],
+        "zonesOpen": false,
+        "numericPins": [],
+        "routes": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          {
+            "text": "Stellar Passport",
+            "fontSize": 24,
+            "effectivePixels": 5.19984375
+          },
+          {
+            "text": "DeFindex · Soroswap",
+            "fontSize": 24,
+            "effectivePixels": 5.19984375
+          }
+        ],
+        "screenshot": "companies-plan-844x390.jpg"
+      }
+    },
+    {
+      "name": "map: companies plan 1440x900 keeps readable status and an accessible reset",
+      "pass": true,
+      "details": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "mode": "plan",
+        "tour": {
+          "phase": "companies",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "panel": {
+          "id": "guidedTourStatus",
+          "x": 10,
+          "y": 114,
+          "width": 420,
+          "height": 66,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 418,
+          "scrollWidth": 418,
+          "clientHeight": 64,
+          "scrollHeight": 64
+        },
+        "text": {
+          "id": "guidedTourText",
+          "x": 23,
+          "y": 128.8125,
+          "width": 286.625,
+          "height": 36.375,
+          "visible": true,
+          "fontSize": 13,
+          "lineHeight": 18.2,
+          "clientWidth": 287,
+          "scrollWidth": 287,
+          "clientHeight": 36,
+          "scrollHeight": 36
+        },
+        "reset": {
+          "id": "guidedTourReset",
+          "x": 321.625,
+          "y": 125,
+          "width": 95.375,
+          "height": 44,
+          "visible": true,
+          "fontSize": 12,
+          "lineHeight": 15,
+          "clientWidth": 93,
+          "scrollWidth": 93,
+          "clientHeight": 42,
+          "scrollHeight": 42
+        },
+        "plan": {
+          "id": "plan",
+          "x": 10,
+          "y": 114,
+          "width": 1420,
+          "height": 774,
+          "visible": true,
+          "fontSize": 16,
+          "lineHeight": null,
+          "clientWidth": 1420,
+          "scrollWidth": 1420,
+          "clientHeight": 774,
+          "scrollHeight": 832
+        },
+        "openDialogs": [],
+        "zonesOpen": false,
+        "numericPins": [],
+        "routes": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          {
+            "text": "Stellar Passport",
+            "fontSize": 24,
+            "effectivePixels": 12
+          },
+          {
+            "text": "DeFindex · Soroswap",
+            "fontSize": 24,
+            "effectivePixels": 12
+          }
+        ],
+        "screenshot": "companies-plan-1440x900.jpg"
+      }
+    },
+    {
+      "name": "map: preparation and unlock never sign, POST or leave runtime errors",
+      "pass": true,
+      "details": {
+        "restores": 1,
+        "reads": 2,
+        "requests": 3
+      }
+    }
+  ],
+  "contexts": [
+    {
+      "label": "normal",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "hardwareAccelerated": true,
+      "initial": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 25,
+          "yaw": 0,
+          "pitch": 0.14,
+          "mode": "walk"
+        },
+        "sceneId": "486e2fef-a4a3-45b5-b5d6-04ab650be8c0",
+        "tour": {
+          "phase": "entry",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": false,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 9
+          },
+          "pendingDeployment": false,
+          "deployed": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [
+          {
+            "id": "entry",
+            "points": 66,
+            "dimmed": false
+          }
+        ],
+        "routeVisible": true,
+        "pointCount": 66,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [
+          {
+            "id": "entry",
+            "visited": "false"
+          }
+        ],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Sigue los puntos luminosos hasta el tótem · USDC de prueba",
+        "fixture": {
+          "mode": "funded",
+          "reads": 1,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 9
+            },
+            "pendingDeployment": false,
+            "deployed": true
+          }
+        }
+      },
+      "planViewports": [
+        {
+          "viewport": {
+            "width": 320,
+            "height": 568
+          },
+          "mode": "plan",
+          "tour": {
+            "phase": "companies",
+            "identity": {
+              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "fingerprint": "guided-tour-gpu-fixture-v1"
+            },
+            "milestones": {
+              "activated": true,
+              "passport": false,
+              "palta": false
+            }
+          },
+          "panel": {
+            "id": "guidedTourStatus",
+            "x": 10,
+            "y": 204,
+            "width": 300,
+            "height": 62,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 298,
+            "scrollWidth": 298,
+            "clientHeight": 60,
+            "scrollHeight": 60
+          },
+          "text": {
+            "id": "guidedTourText",
+            "x": 21,
+            "y": 218.203125,
+            "width": 178.625,
+            "height": 33.59375,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 16.8,
+            "clientWidth": 179,
+            "scrollWidth": 179,
+            "clientHeight": 34,
+            "scrollHeight": 34
+          },
+          "reset": {
+            "id": "guidedTourReset",
+            "x": 207.625,
+            "y": 213,
+            "width": 91.375,
+            "height": 44,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 15,
+            "clientWidth": 89,
+            "scrollWidth": 89,
+            "clientHeight": 42,
+            "scrollHeight": 42
+          },
+          "plan": {
+            "id": "plan",
+            "x": 10,
+            "y": 204,
+            "width": 300,
+            "height": 352,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 300,
+            "scrollWidth": 300,
+            "clientHeight": 352,
+            "scrollHeight": 769
+          },
+          "openDialogs": [],
+          "zonesOpen": false,
+          "numericPins": [],
+          "routes": [
+            "trunk",
+            "passport",
+            "palta"
+          ],
+          "labels": [
+            {
+              "text": "Stellar Passport",
+              "fontSize": 24,
+              "effectivePixels": 6.2798437499999995
+            },
+            {
+              "text": "DeFindex · Soroswap",
+              "fontSize": 24,
+              "effectivePixels": 6.2798437499999995
+            }
+          ],
+          "screenshot": "companies-plan-320x568.jpg"
+        },
+        {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "mode": "plan",
+          "tour": {
+            "phase": "companies",
+            "identity": {
+              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "fingerprint": "guided-tour-gpu-fixture-v1"
+            },
+            "milestones": {
+              "activated": true,
+              "passport": false,
+              "palta": false
+            }
+          },
+          "panel": {
+            "id": "guidedTourStatus",
+            "x": 10,
+            "y": 207,
+            "width": 370,
+            "height": 66,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 368,
+            "scrollWidth": 368,
+            "clientHeight": 64,
+            "scrollHeight": 64
+          },
+          "text": {
+            "id": "guidedTourText",
+            "x": 23,
+            "y": 221.8125,
+            "width": 236.625,
+            "height": 36.375,
+            "visible": true,
+            "fontSize": 13,
+            "lineHeight": 18.2,
+            "clientWidth": 237,
+            "scrollWidth": 237,
+            "clientHeight": 36,
+            "scrollHeight": 36
+          },
+          "reset": {
+            "id": "guidedTourReset",
+            "x": 271.625,
+            "y": 218,
+            "width": 95.375,
+            "height": 44,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 15,
+            "clientWidth": 93,
+            "scrollWidth": 93,
+            "clientHeight": 42,
+            "scrollHeight": 42
+          },
+          "plan": {
+            "id": "plan",
+            "x": 10,
+            "y": 207,
+            "width": 370,
+            "height": 625,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 370,
+            "scrollWidth": 370,
+            "clientHeight": 625,
+            "scrollHeight": 1012
+          },
+          "openDialogs": [],
+          "zonesOpen": false,
+          "numericPins": [],
+          "routes": [
+            "trunk",
+            "passport",
+            "palta"
+          ],
+          "labels": [
+            {
+              "text": "Stellar Passport",
+              "fontSize": 24,
+              "effectivePixels": 10.379999999999999
+            },
+            {
+              "text": "DeFindex · Soroswap",
+              "fontSize": 24,
+              "effectivePixels": 10.379999999999999
+            }
+          ],
+          "screenshot": "companies-plan-390x844.jpg"
+        },
+        {
+          "viewport": {
+            "width": 844,
+            "height": 390
+          },
+          "mode": "plan",
+          "tour": {
+            "phase": "companies",
+            "identity": {
+              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "fingerprint": "guided-tour-gpu-fixture-v1"
+            },
+            "milestones": {
+              "activated": true,
+              "passport": false,
+              "palta": false
+            }
+          },
+          "panel": {
+            "id": "guidedTourStatus",
+            "x": 10,
+            "y": 107,
+            "width": 420,
+            "height": 62,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 418,
+            "scrollWidth": 418,
+            "clientHeight": 60,
+            "scrollHeight": 60
+          },
+          "text": {
+            "id": "guidedTourText",
+            "x": 21,
+            "y": 121.203125,
+            "width": 292.625,
+            "height": 33.59375,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 16.8,
+            "clientWidth": 293,
+            "scrollWidth": 293,
+            "clientHeight": 34,
+            "scrollHeight": 34
+          },
+          "reset": {
+            "id": "guidedTourReset",
+            "x": 323.625,
+            "y": 116,
+            "width": 95.375,
+            "height": 44,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 15,
+            "clientWidth": 93,
+            "scrollWidth": 93,
+            "clientHeight": 42,
+            "scrollHeight": 42
+          },
+          "plan": {
+            "id": "plan",
+            "x": 10,
+            "y": 107,
+            "width": 824,
+            "height": 271,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 824,
+            "scrollWidth": 824,
+            "clientHeight": 271,
+            "scrollHeight": 492
+          },
+          "openDialogs": [],
+          "zonesOpen": false,
+          "numericPins": [],
+          "routes": [
+            "trunk",
+            "passport",
+            "palta"
+          ],
+          "labels": [
+            {
+              "text": "Stellar Passport",
+              "fontSize": 24,
+              "effectivePixels": 5.19984375
+            },
+            {
+              "text": "DeFindex · Soroswap",
+              "fontSize": 24,
+              "effectivePixels": 5.19984375
+            }
+          ],
+          "screenshot": "companies-plan-844x390.jpg"
+        },
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "mode": "plan",
+          "tour": {
+            "phase": "companies",
+            "identity": {
+              "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "fingerprint": "guided-tour-gpu-fixture-v1"
+            },
+            "milestones": {
+              "activated": true,
+              "passport": false,
+              "palta": false
+            }
+          },
+          "panel": {
+            "id": "guidedTourStatus",
+            "x": 10,
+            "y": 114,
+            "width": 420,
+            "height": 66,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 418,
+            "scrollWidth": 418,
+            "clientHeight": 64,
+            "scrollHeight": 64
+          },
+          "text": {
+            "id": "guidedTourText",
+            "x": 23,
+            "y": 128.8125,
+            "width": 286.625,
+            "height": 36.375,
+            "visible": true,
+            "fontSize": 13,
+            "lineHeight": 18.2,
+            "clientWidth": 287,
+            "scrollWidth": 287,
+            "clientHeight": 36,
+            "scrollHeight": 36
+          },
+          "reset": {
+            "id": "guidedTourReset",
+            "x": 321.625,
+            "y": 125,
+            "width": 95.375,
+            "height": 44,
+            "visible": true,
+            "fontSize": 12,
+            "lineHeight": 15,
+            "clientWidth": 93,
+            "scrollWidth": 93,
+            "clientHeight": 42,
+            "scrollHeight": 42
+          },
+          "plan": {
+            "id": "plan",
+            "x": 10,
+            "y": 114,
+            "width": 1420,
+            "height": 774,
+            "visible": true,
+            "fontSize": 16,
+            "lineHeight": null,
+            "clientWidth": 1420,
+            "scrollWidth": 1420,
+            "clientHeight": 774,
+            "scrollHeight": 832
+          },
+          "openDialogs": [],
+          "zonesOpen": false,
+          "numericPins": [],
+          "routes": [
+            "trunk",
+            "passport",
+            "palta"
+          ],
+          "labels": [
+            {
+              "text": "Stellar Passport",
+              "fontSize": 24,
+              "effectivePixels": 12
+            },
+            {
+              "text": "DeFindex · Soroswap",
+              "fontSize": 24,
+              "effectivePixels": 12
+            }
+          ],
+          "screenshot": "companies-plan-1440x900.jpg"
+        }
+      ],
+      "final": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 2.6,
+          "z": -4.3,
+          "yaw": 0,
+          "pitch": -0.4387306485075071,
+          "mode": "walk"
+        },
+        "sceneId": "486e2fef-a4a3-45b5-b5d6-04ab650be8c0",
+        "tour": {
+          "phase": "companies",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 9
+          },
+          "pendingDeployment": false,
+          "deployed": true,
+          "configurationError": null
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [
+          {
+            "id": "companies",
+            "points": 66,
+            "dimmed": false
+          },
+          {
+            "id": "passport",
+            "points": 9,
+            "dimmed": false
+          },
+          {
+            "id": "palta",
+            "points": 9,
+            "dimmed": false
+          }
+        ],
+        "routeVisible": true,
+        "pointCount": 84,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [
+          {
+            "id": "trunk",
+            "visited": "false"
+          },
+          {
+            "id": "passport",
+            "visited": "false"
+          },
+          {
+            "id": "palta",
+            "visited": "false"
+          }
+        ],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Explora ambas mesas: Stellar Passport y DeFindex · Soroswap",
+        "fixture": {
+          "mode": "funded",
+          "reads": 2,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 9
+            },
+            "pendingDeployment": false,
+            "deployed": true,
+            "configurationError": null
+          }
+        }
+      },
+      "errors": [],
+      "missing": [],
+      "externalBlocked": [
+        "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      ],
+      "walletApiRequests": [],
+      "events": [
+        {
+          "type": "one16-wallet-open",
+          "source": "totem",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-continue",
+          "source": "totem",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-close",
+          "source": "totem",
+          "status": "ready"
+        }
+      ]
+    }
+  ],
+  "pass": true
+}

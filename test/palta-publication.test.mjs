@@ -43,8 +43,8 @@ function watchResources(root) {
 
 test('overlapping Palta mounts remove only their own collision object and dispose once', async () => {
   const scene = new THREE.Scene(), unrelated = { id: 'existing' }, layout = { obstacles: [unrelated] };
-  const first = await mount(scene, layout), firstObstacle = layout.obstacles[1];
-  const second = await mount(scene, layout), secondObstacle = layout.obstacles[2];
+  const first = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), firstObstacle = layout.obstacles[1];
+  const second = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), secondObstacle = layout.obstacles[2];
   const resources = watchResources(first.root);
   assert.notEqual(firstObstacle, secondObstacle);
   assert.equal(scene.children.length, 2);
@@ -158,8 +158,8 @@ test('the unified picker respects Palta occlusion and retains wallet selection b
   const calls = { palta: 0, wallet: 0 };
   let onPointerUp;
   const context = {
-    THREE, camera, model, renderer: {}, mode: 'walk',
-    palta: { root, toggle: () => calls.palta++ },
+    THREE, camera, model, renderer: {}, mode: 'walk', active:true, venueUI:null, football:null, tapPointers:new Set(), $:()=>({open:false}),
+    palta: { root, open: () => calls.palta++ },
     canvas: { addEventListener: (_type, handler) => { onPointerUp = handler; }, getBoundingClientRect: () => ({ left: 0, top: 0, width: 100, height: 100 }) },
     isMainStageSign: () => false, isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
   };
@@ -287,27 +287,29 @@ test('an advertising mount resolving after its model is discarded releases its o
 
 test('discarding the venue releases preview, advertising, the host loop and Palta before scene resources', () => {
   const events = [], resource = name => ({ dispose: () => events.push(name) });
-  const context = { stageSections:resource('sections'), mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, walkFloorNumbers:{}, resourcesPrepared:true,
+  const context = { stageSections:resource('sections'), mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, activationGuide:resource('guide'), football:resource('football'), kickButton:{hidden:false}, arcadeLighting:resource('arcade'), paltaNearButton:{hidden:false}, resourcesPrepared:true,
     discardPalta:() => events.push('palta'), disposeVenueObject:object => { assert.equal(object,context.scene);events.push('scene'); } };
   const begin = viewer.indexOf('function discardVenueScene()'), end = viewer.indexOf('function applyInitialIntent()',begin);
   assert.ok(begin > 0 && end > begin);
   const discard = vm.runInNewContext(viewer.slice(begin,end)+';discardVenueScene',context);discard();
-  assert.deepEqual(events,['sections','sign','ads','host','palta','orbit','scene','renderer']);
-  for(const key of ['stageSections','mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','walkFloorNumbers'])assert.equal(context[key],null,key);
+  assert.deepEqual(events,['sections','sign','ads','host','palta','guide','football','arcade','orbit','scene','renderer']);
+  for(const key of ['stageSections','mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','activationGuide','football','arcadeLighting'])assert.equal(context[key],null,key);
   assert.equal(context.resourcesPrepared,false);
+  assert.equal(context.kickButton.hidden,true);assert.equal(context.paltaNearButton.hidden,true);
 });
 
 test('Palta and advertising update before render and the publisher acknowledgement follows the actual frame', () => {
   const events = [], elements = new Map(), element = id => { if(!elements.has(id))elements.set(id,{ open:false, hidden:false });return elements.get(id); };
-  const context = { active:true, last:0, resourcesPrepared:true, model:{}, mode:'overview', frame:0, contextFailed:false, overviewHotspots:null, venueAttempt:1, venueRenderUntil:0,
+  const context = { active:true, last:0, resourcesPrepared:true, model:{}, mode:'overview', frame:0, contextFailed:false, overviewHotspots:null, venueAttempt:1, venueRenderUntil:0, venueUI:null, paltaNearButton:{}, kickButton:{}, nearPalta:()=>false, activationGuide:null, football:{reset:()=>events.push('football-reset')}, arcadeLighting:{update:()=>events.push('arcade')},
     scene:{}, view:{clientWidth:800,clientHeight:600}, pose:{x:0,z:0}, PASSPORT_STAND:{view:{x:0,z:0}}, camera:{}, orbit:{update(){}}, clampOverview(){}, layout:{bounds:{}},
     renderer:{getContext:() => ({isContextLost:() => false}),render:() => events.push('render')},
     mainStageSign:{updatePlayback:() => events.push('sign-time')}, palta:{update:() => events.push('palta')}, adsSpatial:{update:() => events.push('ads'),afterFrame:() => events.push('ack')},
     venueLoading:{state:{phase:'ready',prepared:true},renderFrame:(_attempt,options) => options.render()},
     walletExperience:{afterFirstFrame:() => events.push('wallet-frame')}, $:element, document:{querySelector:element},updateReview(){},requestAnimationFrame:() => 1 };
-  const loopSource = viewer.match(/^function loop\(now\).*$/m)?.[0];assert.ok(loopSource);
+  const loopStart = viewer.indexOf('function loop(now)'), loopEnd = viewer.indexOf('\nlet passportTourInteraction=',loopStart);
+  assert.ok(loopStart > 0 && loopEnd > loopStart);const loopSource = viewer.slice(loopStart,loopEnd);
   const loop = vm.runInNewContext(loopSource+';loop',context);loop(1000);
-  assert.deepEqual(events,['palta','ads','sign-time','render','ack','wallet-frame']);
+  assert.deepEqual(events,['palta','ads','sign-time','arcade','football-reset','render','ack','wallet-frame']);
 });
 
 test('the recorded sections preview owns its surface without acquiring live advertising or replacing Palta', async () => {

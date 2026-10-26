@@ -62,3 +62,29 @@ test('totem, map and NFC use the shared panel while modal navigation stays pause
  assert.match(js,/mode==='walk'&&[^{};]*!\$\('activationDialog'\).open/);
  assert.match(nfc,/getWorldWallet\(documentRef\).afterFirstFrame\(\)/);
 });
+
+test('world wallet state observation is lazy, replays state and supports independent unsubscribe', async () => {
+ const documentRef = fixture(), calls = [], observers = new Set();
+ let state = {status: 'available', address: null};
+ const controller = {get state() {return state;}, subscribe(fn) {observers.add(fn);fn(state);return () => observers.delete(fn);}, prepare: async () => calls.push('prepare')};
+ const flow = createWorldWallet({documentRef, loadModules: async () => {calls.push('modules');return [{createWalletController: () => controller}, {bindWalletPanel: () => ({open() {}})}];}});
+ const seen = [], stop = flow.subscribe(value => seen.push(value));
+ assert.equal(flow.state, null);assert.deepEqual(seen, [null]);assert.deepEqual(calls, []);assert.equal(documentRef.body.children.length, 0);
+ await flow.prepare();assert.deepEqual(calls, ['modules', 'prepare']);assert.equal(seen.at(-1).status, 'available');
+ state = {status: 'ready', address: 'Cwallet', config: {network: 'testnet'}};for (const fn of observers) fn(state);
+ assert.equal(flow.state.status, 'ready');const copy = flow.state;copy.config.network = 'changed';assert.equal(flow.state.config.network, 'testnet');
+ stop();const count = seen.length;for (const fn of observers) fn(state);assert.equal(seen.length, count);
+});
+
+test('world wallet Continue carries the opening source while close and repeat triggers do not acknowledge', async () => {
+ const documentRef = fixture(), continues = [], closes = [];let panelOptions;
+ const state = {status: 'ready', address: 'Cwallet', balanceUnits: '1000000000'};
+ const controller = {get state() {return state;}, subscribe(fn) {fn(state);}, prepare: async () => {}};
+ const flow = createWorldWallet({documentRef, loadModules: async () => [{createWalletController: () => controller}, {bindWalletPanel: options => {panelOptions = options;return {open: () => options.dialog.showModal()};}}]});
+ documentRef.addEventListener('one16-wallet-continue', e => continues.push(e.detail));documentRef.addEventListener('one16-wallet-close', e => closes.push(e.detail));
+ await flow.open({source: 'totem'});await flow.open();panelOptions.onContinue(state);panelOptions.dialog.close();
+ assert.equal(continues.length, 1);assert.equal(continues[0].source, 'totem');assert.deepEqual(continues[0].state, state);assert.equal(closes[0].source, 'totem');
+ await flow.open();panelOptions.onContinue(state);panelOptions.dialog.close();assert.equal(continues[1].source, 'wallet');
+ await flow.open({source: 'totem'});panelOptions.dialog.close();assert.equal(continues.length, 2);
+ await flow.open({source: 'unknown'});panelOptions.onContinue(state);panelOptions.dialog.close();assert.equal(continues[2].source, 'wallet');
+});

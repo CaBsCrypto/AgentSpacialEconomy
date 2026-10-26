@@ -26,3 +26,6 @@ config/ads.local.json
 contracts/**/target/
 contracts/**/test_snapshots/
 **/node_modules/
+
+# Local payment journals and experiment diagnostics are not deployment input.
+agent/out/

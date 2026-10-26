@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="2048" viewBox="0 0 512 2048">
+<rect width="100%" height="100%" fill="#171c1c"/>
+<polygon points="45,61 97,91.16 149,61 149,80.76 97,111.96 45,80.76" fill="#f1d41b" stroke="none" stroke-width="1"/>
+<polygon points="45,91.16 78.28,110.92 45,132.76" fill="#f1d41b" stroke="none" stroke-width="1"/>
+<polygon points="149,91.16 115.72,110.92 149,132.76" fill="#f1d41b" stroke="none" stroke-width="1"/>
+<text x="168.5" y="93.448" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="54.6">Hack</text>
+<text x="168.5" y="154.6" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="54.6">Meridian</text>
+<text x="45.5" y="379.28" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="112">Made to</text>
+<g transform="translate(487,450) rotate(90)">
+<rect width="100%" height="100%" fill="#171c1c"/>
+<text x="90" y="429" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="450">Move</text>
+</g>
+<ellipse cx="117.5" cy="1908.5" rx="25.5" ry="25.5" fill="none" stroke="#f1d41b" stroke-width="4.125"/>
+<polyline points="80,1916 155,1890.5" fill="none" stroke="#f1d41b" stroke-width="5.625" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="80,1930.25 155,1904.75" fill="none" stroke="#f1d41b" stroke-width="5.625" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="165" y="1932.88" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="52">Stellar</text>
+</svg>

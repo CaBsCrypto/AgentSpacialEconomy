@@ -1,0 +1,1610 @@
+{
+  "file": "VID_20261026_021119922.mp4",
+  "driveId": "1aS8Fo6md58ZhAeQKwsuQVXTD-Eq--am_",
+  "url": "https://drive.google.com/file/d/1aS8Fo6md58ZhAeQKwsuQVXTD-Eq--am_/view",
+  "durationSeconds": 61.419771,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [
+    "Correct spelling grounded in frames: Grantfox, Trustless Work, DRIPS, GUAVA, Stellar Passport, 57BLOCKS, DeFindex, Soroswap, THE AHA COMPANY, OpenZeppelin. PaltaLabs is voice-supported; Machu is uncertain and is not a new stand."
+  ],
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 6.16,
+      "text": " Estamos en la zona de exposiciones de los proyectos, por aquí tenemos dos, tenemos a",
+      "avg_logprob": -0.3246078784649189,
+      "no_speech_prob": 0.144033744931221,
+      "words": [
+        {
+          "start": 0.0,
+          "end": 0.52,
+          "word": " Estamos",
+          "probability": 0.6308065056800842
+        },
+        {
+          "start": 0.52,
+          "end": 0.76,
+          "word": " en",
+          "probability": 0.9910768270492554
+        },
+        {
+          "start": 0.76,
+          "end": 0.88,
+          "word": " la",
+          "probability": 0.9721164703369141
+        },
+        {
+          "start": 0.88,
+          "end": 1.1,
+          "word": " zona",
+          "probability": 0.9930116534233093
+        },
+        {
+          "start": 1.1,
+          "end": 1.26,
+          "word": " de",
+          "probability": 0.9934800863265991
+        },
+        {
+          "start": 1.26,
+          "end": 1.94,
+          "word": " exposiciones",
+          "probability": 0.8664803802967072
+        },
+        {
+          "start": 1.94,
+          "end": 2.4,
+          "word": " de",
+          "probability": 0.8656208515167236
+        },
+        {
+          "start": 2.4,
+          "end": 2.54,
+          "word": " los",
+          "probability": 0.9927108287811279
+        },
+        {
+          "start": 2.54,
+          "end": 3.54,
+          "word": " proyectos,",
+          "probability": 0.997713029384613
+        },
+        {
+          "start": 3.54,
+          "end": 3.9,
+          "word": " por",
+          "probability": 0.960308313369751
+        },
+        {
+          "start": 3.9,
+          "end": 4.06,
+          "word": " aquí",
+          "probability": 0.894723653793335
+        },
+        {
+          "start": 4.06,
+          "end": 4.36,
+          "word": " tenemos",
+          "probability": 0.9945730566978455
+        },
+        {
+          "start": 4.36,
+          "end": 4.74,
+          "word": " dos,",
+          "probability": 0.8539705872535706
+        },
+        {
+          "start": 5.24,
+          "end": 5.92,
+          "word": " tenemos",
+          "probability": 0.980150580406189
+        },
+        {
+          "start": 5.92,
+          "end": 6.16,
+          "word": " a",
+          "probability": 0.9857111573219299
+        }
+      ]
+    },
+    {
+      "start": 6.16,
+      "end": 16.54,
+      "text": " Grand Fox y a Trustless Work, en el otro lado tenemos a Drips, después tenemos por",
+      "avg_logprob": -0.3246078784649189,
+      "no_speech_prob": 0.144033744931221,
+      "words": [
+        {
+          "start": 6.16,
+          "end": 6.48,
+          "word": " Grand",
+          "probability": 0.6186467409133911
+        },
+        {
+          "start": 6.48,
+          "end": 6.82,
+          "word": " Fox",
+          "probability": 0.5747124552726746
+        },
+        {
+          "start": 6.82,
+          "end": 7.38,
+          "word": " y",
+          "probability": 0.9545655846595764
+        },
+        {
+          "start": 7.38,
+          "end": 7.48,
+          "word": " a",
+          "probability": 0.8336126208305359
+        },
+        {
+          "start": 7.48,
+          "end": 7.94,
+          "word": " Trustless",
+          "probability": 0.6479086428880692
+        },
+        {
+          "start": 7.94,
+          "end": 8.22,
+          "word": " Work,",
+          "probability": 0.6638848781585693
+        },
+        {
+          "start": 8.78,
+          "end": 9.98,
+          "word": " en",
+          "probability": 0.6220332384109497
+        },
+        {
+          "start": 9.98,
+          "end": 10.08,
+          "word": " el",
+          "probability": 0.9888211488723755
+        },
+        {
+          "start": 10.08,
+          "end": 10.22,
+          "word": " otro",
+          "probability": 0.9988982677459717
+        },
+        {
+          "start": 10.22,
+          "end": 10.42,
+          "word": " lado",
+          "probability": 0.9979027509689331
+        },
+        {
+          "start": 10.42,
+          "end": 10.78,
+          "word": " tenemos",
+          "probability": 0.9830281734466553
+        },
+        {
+          "start": 10.78,
+          "end": 11.18,
+          "word": " a",
+          "probability": 0.9943167567253113
+        },
+        {
+          "start": 11.18,
+          "end": 12.5,
+          "word": " Drips,",
+          "probability": 0.5430173128843307
+        },
+        {
+          "start": 14.56,
+          "end": 15.3,
+          "word": " después",
+          "probability": 0.9556779861450195
+        },
+        {
+          "start": 15.3,
+          "end": 15.8,
+          "word": " tenemos",
+          "probability": 0.9914359450340271
+        },
+        {
+          "start": 15.8,
+          "end": 16.54,
+          "word": " por",
+          "probability": 0.8181052207946777
+        }
+      ]
+    },
+    {
+      "start": 16.54,
+      "end": 23.24,
+      "text": " acá a los Guava. Acá hay que fijarse las dimensiones del espacio,",
+      "avg_logprob": -0.3246078784649189,
+      "no_speech_prob": 0.144033744931221,
+      "words": [
+        {
+          "start": 16.54,
+          "end": 16.82,
+          "word": " acá",
+          "probability": 0.9848920106887817
+        },
+        {
+          "start": 16.82,
+          "end": 17.1,
+          "word": " a",
+          "probability": 0.9263550043106079
+        },
+        {
+          "start": 17.1,
+          "end": 17.24,
+          "word": " los",
+          "probability": 0.9734155535697937
+        },
+        {
+          "start": 17.24,
+          "end": 17.96,
+          "word": " Guava.",
+          "probability": 0.6021402031183243
+        },
+        {
+          "start": 20.64,
+          "end": 21.36,
+          "word": " Acá",
+          "probability": 0.6442530155181885
+        },
+        {
+          "start": 21.36,
+          "end": 21.44,
+          "word": " hay",
+          "probability": 0.9990422129631042
+        },
+        {
+          "start": 21.44,
+          "end": 21.52,
+          "word": " que",
+          "probability": 0.9974205493927002
+        },
+        {
+          "start": 21.52,
+          "end": 21.94,
+          "word": " fijarse",
+          "probability": 0.9929313361644745
+        },
+        {
+          "start": 21.94,
+          "end": 22.12,
+          "word": " las",
+          "probability": 0.9326075315475464
+        },
+        {
+          "start": 22.12,
+          "end": 22.76,
+          "word": " dimensiones",
+          "probability": 0.994398295879364
+        },
+        {
+          "start": 22.76,
+          "end": 22.9,
+          "word": " del",
+          "probability": 0.9940434098243713
+        },
+        {
+          "start": 22.9,
+          "end": 23.24,
+          "word": " espacio,",
+          "probability": 0.9963650703430176
+        }
+      ]
+    },
+    {
+      "start": 23.24,
+      "end": 29.06,
+      "text": " Miren, para que hay que hacerlo más ancho, después venimos, bueno los",
+      "avg_logprob": -0.539672206227596,
+      "no_speech_prob": 0.6076778173446655,
+      "words": [
+        {
+          "start": 23.24,
+          "end": 23.64,
+          "word": " Miren,",
+          "probability": 0.37224049819633365
+        },
+        {
+          "start": 24.0,
+          "end": 24.22,
+          "word": " para",
+          "probability": 0.29703813791275024
+        },
+        {
+          "start": 24.22,
+          "end": 24.38,
+          "word": " que",
+          "probability": 0.892865777015686
+        },
+        {
+          "start": 24.38,
+          "end": 24.9,
+          "word": " hay",
+          "probability": 0.7085250020027161
+        },
+        {
+          "start": 24.9,
+          "end": 25.0,
+          "word": " que",
+          "probability": 0.9661000370979309
+        },
+        {
+          "start": 25.0,
+          "end": 25.64,
+          "word": " hacerlo",
+          "probability": 0.9082642793655396
+        },
+        {
+          "start": 25.64,
+          "end": 25.82,
+          "word": " más",
+          "probability": 0.9321852922439575
+        },
+        {
+          "start": 25.82,
+          "end": 26.12,
+          "word": " ancho,",
+          "probability": 0.9876366555690765
+        },
+        {
+          "start": 26.34,
+          "end": 27.7,
+          "word": " después",
+          "probability": 0.7061340808868408
+        },
+        {
+          "start": 27.7,
+          "end": 28.3,
+          "word": " venimos,",
+          "probability": 0.599300391972065
+        },
+        {
+          "start": 28.56,
+          "end": 28.7,
+          "word": " bueno",
+          "probability": 0.9145734906196594
+        },
+        {
+          "start": 28.7,
+          "end": 29.06,
+          "word": " los",
+          "probability": 0.3509202301502228
+        }
+      ]
+    },
+    {
+      "start": 29.06,
+      "end": 36.06,
+      "text": " Trusted and the Grand Fox de nuevo, acá tenemos Estelar Passport, por ahora 1, 2, 3, 4,",
+      "avg_logprob": -0.539672206227596,
+      "no_speech_prob": 0.6076778173446655,
+      "words": [
+        {
+          "start": 29.06,
+          "end": 29.38,
+          "word": " Trusted",
+          "probability": 0.2988005056977272
+        },
+        {
+          "start": 29.38,
+          "end": 29.62,
+          "word": " and",
+          "probability": 0.11035571992397308
+        },
+        {
+          "start": 29.62,
+          "end": 29.72,
+          "word": " the",
+          "probability": 0.3809038996696472
+        },
+        {
+          "start": 29.72,
+          "end": 29.96,
+          "word": " Grand",
+          "probability": 0.39449888467788696
+        },
+        {
+          "start": 29.96,
+          "end": 30.12,
+          "word": " Fox",
+          "probability": 0.19711153209209442
+        },
+        {
+          "start": 30.12,
+          "end": 30.32,
+          "word": " de",
+          "probability": 0.8372893929481506
+        },
+        {
+          "start": 30.32,
+          "end": 30.52,
+          "word": " nuevo,",
+          "probability": 0.9916428327560425
+        },
+        {
+          "start": 31.46,
+          "end": 32.64,
+          "word": " acá",
+          "probability": 0.9203578233718872
+        },
+        {
+          "start": 32.64,
+          "end": 32.94,
+          "word": " tenemos",
+          "probability": 0.9959914088249207
+        },
+        {
+          "start": 32.94,
+          "end": 33.54,
+          "word": " Estelar",
+          "probability": 0.6017427866657575
+        },
+        {
+          "start": 33.54,
+          "end": 34.1,
+          "word": " Passport,",
+          "probability": 0.8033720254898071
+        },
+        {
+          "start": 34.6,
+          "end": 34.94,
+          "word": " por",
+          "probability": 0.9475424885749817
+        },
+        {
+          "start": 34.94,
+          "end": 35.08,
+          "word": " ahora",
+          "probability": 0.6463881731033325
+        },
+        {
+          "start": 35.08,
+          "end": 35.44,
+          "word": " 1,",
+          "probability": 0.22126087546348572
+        },
+        {
+          "start": 35.58,
+          "end": 35.6,
+          "word": " 2,",
+          "probability": 0.7123408913612366
+        },
+        {
+          "start": 35.64,
+          "end": 35.8,
+          "word": " 3,",
+          "probability": 0.9614420533180237
+        },
+        {
+          "start": 35.88,
+          "end": 36.06,
+          "word": " 4,",
+          "probability": 0.9893195629119873
+        }
+      ]
+    },
+    {
+      "start": 36.9,
+      "end": 45.38,
+      "text": " acá tenemos 57 Blocks y por aquí finalmente Paltelars, The Findex con ZoroSwap.",
+      "avg_logprob": -0.539672206227596,
+      "no_speech_prob": 0.6076778173446655,
+      "words": [
+        {
+          "start": 36.9,
+          "end": 37.1,
+          "word": " acá",
+          "probability": 0.9667329788208008
+        },
+        {
+          "start": 37.1,
+          "end": 37.46,
+          "word": " tenemos",
+          "probability": 0.9982378482818604
+        },
+        {
+          "start": 37.46,
+          "end": 38.68,
+          "word": " 57",
+          "probability": 0.9475374817848206
+        },
+        {
+          "start": 38.68,
+          "end": 39.38,
+          "word": " Blocks",
+          "probability": 0.8565386533737183
+        },
+        {
+          "start": 39.38,
+          "end": 41.32,
+          "word": " y",
+          "probability": 0.5089433789253235
+        },
+        {
+          "start": 41.32,
+          "end": 41.54,
+          "word": " por",
+          "probability": 0.9595930576324463
+        },
+        {
+          "start": 41.54,
+          "end": 41.74,
+          "word": " aquí",
+          "probability": 0.9602305889129639
+        },
+        {
+          "start": 41.74,
+          "end": 42.02,
+          "word": " finalmente",
+          "probability": 0.9898982048034668
+        },
+        {
+          "start": 42.02,
+          "end": 43.46,
+          "word": " Paltelars,",
+          "probability": 0.6559073403477669
+        },
+        {
+          "start": 43.52,
+          "end": 43.64,
+          "word": " The",
+          "probability": 0.659095287322998
+        },
+        {
+          "start": 43.64,
+          "end": 44.14,
+          "word": " Findex",
+          "probability": 0.7586970329284668
+        },
+        {
+          "start": 44.14,
+          "end": 44.52,
+          "word": " con",
+          "probability": 0.8239381313323975
+        },
+        {
+          "start": 44.52,
+          "end": 45.38,
+          "word": " ZoroSwap.",
+          "probability": 0.7132295705378056
+        }
+      ]
+    },
+    {
+      "start": 45.78,
+      "end": 50.62,
+      "text": " Ah no, pero creo que acá hay Machu. Tenemos aquí los últimos dos, acuérdate en cada una de las",
+      "avg_logprob": -0.539672206227596,
+      "no_speech_prob": 0.6076778173446655,
+      "words": [
+        {
+          "start": 45.78,
+          "end": 46.04,
+          "word": " Ah",
+          "probability": 0.6612221598625183
+        },
+        {
+          "start": 46.04,
+          "end": 46.08,
+          "word": " no,",
+          "probability": 0.5804431438446045
+        },
+        {
+          "start": 46.18,
+          "end": 46.24,
+          "word": " pero",
+          "probability": 0.867614209651947
+        },
+        {
+          "start": 46.24,
+          "end": 46.4,
+          "word": " creo",
+          "probability": 0.9614825248718262
+        },
+        {
+          "start": 46.4,
+          "end": 46.44,
+          "word": " que",
+          "probability": 0.9957618117332458
+        },
+        {
+          "start": 46.44,
+          "end": 46.56,
+          "word": " acá",
+          "probability": 0.5883738994598389
+        },
+        {
+          "start": 46.56,
+          "end": 46.64,
+          "word": " hay",
+          "probability": 0.9854676127433777
+        },
+        {
+          "start": 46.64,
+          "end": 46.9,
+          "word": " Machu.",
+          "probability": 0.4983503371477127
+        },
+        {
+          "start": 47.92,
+          "end": 48.4,
+          "word": " Tenemos",
+          "probability": 0.972265899181366
+        },
+        {
+          "start": 48.4,
+          "end": 48.58,
+          "word": " aquí",
+          "probability": 0.9035003781318665
+        },
+        {
+          "start": 48.58,
+          "end": 48.68,
+          "word": " los",
+          "probability": 0.7461075186729431
+        },
+        {
+          "start": 48.68,
+          "end": 48.92,
+          "word": " últimos",
+          "probability": 0.9496926069259644
+        },
+        {
+          "start": 48.92,
+          "end": 49.22,
+          "word": " dos,",
+          "probability": 0.5020220279693604
+        },
+        {
+          "start": 49.52,
+          "end": 49.88,
+          "word": " acuérdate",
+          "probability": 0.7526036575436592
+        },
+        {
+          "start": 49.88,
+          "end": 50.0,
+          "word": " en",
+          "probability": 0.7488643527030945
+        },
+        {
+          "start": 50.0,
+          "end": 50.16,
+          "word": " cada",
+          "probability": 0.9942585229873657
+        },
+        {
+          "start": 50.16,
+          "end": 50.32,
+          "word": " una",
+          "probability": 0.9785666465759277
+        },
+        {
+          "start": 50.32,
+          "end": 50.38,
+          "word": " de",
+          "probability": 0.9958974123001099
+        },
+        {
+          "start": 50.38,
+          "end": 50.62,
+          "word": " las",
+          "probability": 0.9880536198616028
+        }
+      ]
+    },
+    {
+      "start": 50.62,
+      "end": 58.98,
+      "text": " tenemos esos espacios, acá tenemos de Ajacompany y ahora sí el último de todos Open Cpplink.",
+      "avg_logprob": -0.5164459730897631,
+      "no_speech_prob": 0.22120359539985657,
+      "words": [
+        {
+          "start": 50.62,
+          "end": 51.18,
+          "word": " tenemos",
+          "probability": 0.4578549563884735
+        },
+        {
+          "start": 51.18,
+          "end": 51.52,
+          "word": " esos",
+          "probability": 0.5660549402236938
+        },
+        {
+          "start": 51.52,
+          "end": 52.8,
+          "word": " espacios,",
+          "probability": 0.9733964204788208
+        },
+        {
+          "start": 52.8,
+          "end": 53.82,
+          "word": " acá",
+          "probability": 0.9417359232902527
+        },
+        {
+          "start": 53.82,
+          "end": 54.14,
+          "word": " tenemos",
+          "probability": 0.997309684753418
+        },
+        {
+          "start": 54.14,
+          "end": 54.36,
+          "word": " de",
+          "probability": 0.8923996090888977
+        },
+        {
+          "start": 54.36,
+          "end": 55.2,
+          "word": " Ajacompany",
+          "probability": 0.7094272449612617
+        },
+        {
+          "start": 55.2,
+          "end": 56.5,
+          "word": " y",
+          "probability": 0.8051748871803284
+        },
+        {
+          "start": 56.5,
+          "end": 56.6,
+          "word": " ahora",
+          "probability": 0.9923065304756165
+        },
+        {
+          "start": 56.6,
+          "end": 56.76,
+          "word": " sí",
+          "probability": 0.7165734171867371
+        },
+        {
+          "start": 56.76,
+          "end": 56.88,
+          "word": " el",
+          "probability": 0.8115161657333374
+        },
+        {
+          "start": 56.88,
+          "end": 57.12,
+          "word": " último",
+          "probability": 0.9860652685165405
+        },
+        {
+          "start": 57.12,
+          "end": 57.3,
+          "word": " de",
+          "probability": 0.9912185072898865
+        },
+        {
+          "start": 57.3,
+          "end": 57.52,
+          "word": " todos",
+          "probability": 0.9953052997589111
+        },
+        {
+          "start": 57.52,
+          "end": 58.4,
+          "word": " Open",
+          "probability": 0.6301444172859192
+        },
+        {
+          "start": 58.4,
+          "end": 58.98,
+          "word": " Cpplink.",
+          "probability": 0.37740151956677437
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021119922.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 61.2266875,
+      "elapsed": 15.25,
+      "segments": [
+        {
+          "start": 0.0,
+          "end": 6.16,
+          "text": " Estamos en la zona de exposiciones de los proyectos, por aquí tenemos dos, tenemos a",
+          "avg_logprob": -0.3246078784649189,
+          "no_speech_prob": 0.144033744931221,
+          "words": [
+            {
+              "start": 0.0,
+              "end": 0.52,
+              "word": " Estamos",
+              "probability": 0.6308065056800842
+            },
+            {
+              "start": 0.52,
+              "end": 0.76,
+              "word": " en",
+              "probability": 0.9910768270492554
+            },
+            {
+              "start": 0.76,
+              "end": 0.88,
+              "word": " la",
+              "probability": 0.9721164703369141
+            },
+            {
+              "start": 0.88,
+              "end": 1.1,
+              "word": " zona",
+              "probability": 0.9930116534233093
+            },
+            {
+              "start": 1.1,
+              "end": 1.26,
+              "word": " de",
+              "probability": 0.9934800863265991
+            },
+            {
+              "start": 1.26,
+              "end": 1.94,
+              "word": " exposiciones",
+              "probability": 0.8664803802967072
+            },
+            {
+              "start": 1.94,
+              "end": 2.4,
+              "word": " de",
+              "probability": 0.8656208515167236
+            },
+            {
+              "start": 2.4,
+              "end": 2.54,
+              "word": " los",
+              "probability": 0.9927108287811279
+            },
+            {
+              "start": 2.54,
+              "end": 3.54,
+              "word": " proyectos,",
+              "probability": 0.997713029384613
+            },
+            {
+              "start": 3.54,
+              "end": 3.9,
+              "word": " por",
+              "probability": 0.960308313369751
+            },
+            {
+              "start": 3.9,
+              "end": 4.06,
+              "word": " aquí",
+              "probability": 0.894723653793335
+            },
+            {
+              "start": 4.06,
+              "end": 4.36,
+              "word": " tenemos",
+              "probability": 0.9945730566978455
+            },
+            {
+              "start": 4.36,
+              "end": 4.74,
+              "word": " dos,",
+              "probability": 0.8539705872535706
+            },
+            {
+              "start": 5.24,
+              "end": 5.92,
+              "word": " tenemos",
+              "probability": 0.980150580406189
+            },
+            {
+              "start": 5.92,
+              "end": 6.16,
+              "word": " a",
+              "probability": 0.9857111573219299
+            }
+          ]
+        },
+        {
+          "start": 6.16,
+          "end": 16.54,
+          "text": " Grand Fox y a Trustless Work, en el otro lado tenemos a Drips, después tenemos por",
+          "avg_logprob": -0.3246078784649189,
+          "no_speech_prob": 0.144033744931221,
+          "words": [
+            {
+              "start": 6.16,
+              "end": 6.48,
+              "word": " Grand",
+              "probability": 0.6186467409133911
+            },
+            {
+              "start": 6.48,
+              "end": 6.82,
+              "word": " Fox",
+              "probability": 0.5747124552726746
+            },
+            {
+              "start": 6.82,
+              "end": 7.38,
+              "word": " y",
+              "probability": 0.9545655846595764
+            },
+            {
+              "start": 7.38,
+              "end": 7.48,
+              "word": " a",
+              "probability": 0.8336126208305359
+            },
+            {
+              "start": 7.48,
+              "end": 7.94,
+              "word": " Trustless",
+              "probability": 0.6479086428880692
+            },
+            {
+              "start": 7.94,
+              "end": 8.22,
+              "word": " Work,",
+              "probability": 0.6638848781585693
+            },
+            {
+              "start": 8.78,
+              "end": 9.98,
+              "word": " en",
+              "probability": 0.6220332384109497
+            },
+            {
+              "start": 9.98,
+              "end": 10.08,
+              "word": " el",
+              "probability": 0.9888211488723755
+            },
+            {
+              "start": 10.08,
+              "end": 10.22,
+              "word": " otro",
+              "probability": 0.9988982677459717
+            },
+            {
+              "start": 10.22,
+              "end": 10.42,
+              "word": " lado",
+              "probability": 0.9979027509689331
+            },
+            {
+              "start": 10.42,
+              "end": 10.78,
+              "word": " tenemos",
+              "probability": 0.9830281734466553
+            },
+            {
+              "start": 10.78,
+              "end": 11.18,
+              "word": " a",
+              "probability": 0.9943167567253113
+            },
+            {
+              "start": 11.18,
+              "end": 12.5,
+              "word": " Drips,",
+              "probability": 0.5430173128843307
+            },
+            {
+              "start": 14.56,
+              "end": 15.3,
+              "word": " después",
+              "probability": 0.9556779861450195
+            },
+            {
+              "start": 15.3,
+              "end": 15.8,
+              "word": " tenemos",
+              "probability": 0.9914359450340271
+            },
+            {
+              "start": 15.8,
+              "end": 16.54,
+              "word": " por",
+              "probability": 0.8181052207946777
+            }
+          ]
+        },
+        {
+          "start": 16.54,
+          "end": 23.24,
+          "text": " acá a los Guava. Acá hay que fijarse las dimensiones del espacio,",
+          "avg_logprob": -0.3246078784649189,
+          "no_speech_prob": 0.144033744931221,
+          "words": [
+            {
+              "start": 16.54,
+              "end": 16.82,
+              "word": " acá",
+              "probability": 0.9848920106887817
+            },
+            {
+              "start": 16.82,
+              "end": 17.1,
+              "word": " a",
+              "probability": 0.9263550043106079
+            },
+            {
+              "start": 17.1,
+              "end": 17.24,
+              "word": " los",
+              "probability": 0.9734155535697937
+            },
+            {
+              "start": 17.24,
+              "end": 17.96,
+              "word": " Guava.",
+              "probability": 0.6021402031183243
+            },
+            {
+              "start": 20.64,
+              "end": 21.36,
+              "word": " Acá",
+              "probability": 0.6442530155181885
+            },
+            {
+              "start": 21.36,
+              "end": 21.44,
+              "word": " hay",
+              "probability": 0.9990422129631042
+            },
+            {
+              "start": 21.44,
+              "end": 21.52,
+              "word": " que",
+              "probability": 0.9974205493927002
+            },
+            {
+              "start": 21.52,
+              "end": 21.94,
+              "word": " fijarse",
+              "probability": 0.9929313361644745
+            },
+            {
+              "start": 21.94,
+              "end": 22.12,
+              "word": " las",
+              "probability": 0.9326075315475464
+            },
+            {
+              "start": 22.12,
+              "end": 22.76,
+              "word": " dimensiones",
+              "probability": 0.994398295879364
+            },
+            {
+              "start": 22.76,
+              "end": 22.9,
+              "word": " del",
+              "probability": 0.9940434098243713
+            },
+            {
+              "start": 22.9,
+              "end": 23.24,
+              "word": " espacio,",
+              "probability": 0.9963650703430176
+            }
+          ]
+        },
+        {
+          "start": 23.24,
+          "end": 29.06,
+          "text": " Miren, para que hay que hacerlo más ancho, después venimos, bueno los",
+          "avg_logprob": -0.539672206227596,
+          "no_speech_prob": 0.6076778173446655,
+          "words": [
+            {
+              "start": 23.24,
+              "end": 23.64,
+              "word": " Miren,",
+              "probability": 0.37224049819633365
+            },
+            {
+              "start": 24.0,
+              "end": 24.22,
+              "word": " para",
+              "probability": 0.29703813791275024
+            },
+            {
+              "start": 24.22,
+              "end": 24.38,
+              "word": " que",
+              "probability": 0.892865777015686
+            },
+            {
+              "start": 24.38,
+              "end": 24.9,
+              "word": " hay",
+              "probability": 0.7085250020027161
+            },
+            {
+              "start": 24.9,
+              "end": 25.0,
+              "word": " que",
+              "probability": 0.9661000370979309
+            },
+            {
+              "start": 25.0,
+              "end": 25.64,
+              "word": " hacerlo",
+              "probability": 0.9082642793655396
+            },
+            {
+              "start": 25.64,
+              "end": 25.82,
+              "word": " más",
+              "probability": 0.9321852922439575
+            },
+            {
+              "start": 25.82,
+              "end": 26.12,
+              "word": " ancho,",
+              "probability": 0.9876366555690765
+            },
+            {
+              "start": 26.34,
+              "end": 27.7,
+              "word": " después",
+              "probability": 0.7061340808868408
+            },
+            {
+              "start": 27.7,
+              "end": 28.3,
+              "word": " venimos,",
+              "probability": 0.599300391972065
+            },
+            {
+              "start": 28.56,
+              "end": 28.7,
+              "word": " bueno",
+              "probability": 0.9145734906196594
+            },
+            {
+              "start": 28.7,
+              "end": 29.06,
+              "word": " los",
+              "probability": 0.3509202301502228
+            }
+          ]
+        },
+        {
+          "start": 29.06,
+          "end": 36.06,
+          "text": " Trusted and the Grand Fox de nuevo, acá tenemos Estelar Passport, por ahora 1, 2, 3, 4,",
+          "avg_logprob": -0.539672206227596,
+          "no_speech_prob": 0.6076778173446655,
+          "words": [
+            {
+              "start": 29.06,
+              "end": 29.38,
+              "word": " Trusted",
+              "probability": 0.2988005056977272
+            },
+            {
+              "start": 29.38,
+              "end": 29.62,
+              "word": " and",
+              "probability": 0.11035571992397308
+            },
+            {
+              "start": 29.62,
+              "end": 29.72,
+              "word": " the",
+              "probability": 0.3809038996696472
+            },
+            {
+              "start": 29.72,
+              "end": 29.96,
+              "word": " Grand",
+              "probability": 0.39449888467788696
+            },
+            {
+              "start": 29.96,
+              "end": 30.12,
+              "word": " Fox",
+              "probability": 0.19711153209209442
+            },
+            {
+              "start": 30.12,
+              "end": 30.32,
+              "word": " de",
+              "probability": 0.8372893929481506
+            },
+            {
+              "start": 30.32,
+              "end": 30.52,
+              "word": " nuevo,",
+              "probability": 0.9916428327560425
+            },
+            {
+              "start": 31.46,
+              "end": 32.64,
+              "word": " acá",
+              "probability": 0.9203578233718872
+            },
+            {
+              "start": 32.64,
+              "end": 32.94,
+              "word": " tenemos",
+              "probability": 0.9959914088249207
+            },
+            {
+              "start": 32.94,
+              "end": 33.54,
+              "word": " Estelar",
+              "probability": 0.6017427866657575
+            },
+            {
+              "start": 33.54,
+              "end": 34.1,
+              "word": " Passport,",
+              "probability": 0.8033720254898071
+            },
+            {
+              "start": 34.6,
+              "end": 34.94,
+              "word": " por",
+              "probability": 0.9475424885749817
+            },
+            {
+              "start": 34.94,
+              "end": 35.08,
+              "word": " ahora",
+              "probability": 0.6463881731033325
+            },
+            {
+              "start": 35.08,
+              "end": 35.44,
+              "word": " 1,",
+              "probability": 0.22126087546348572
+            },
+            {
+              "start": 35.58,
+              "end": 35.6,
+              "word": " 2,",
+              "probability": 0.7123408913612366
+            },
+            {
+              "start": 35.64,
+              "end": 35.8,
+              "word": " 3,",
+              "probability": 0.9614420533180237
+            },
+            {
+              "start": 35.88,
+              "end": 36.06,
+              "word": " 4,",
+              "probability": 0.9893195629119873
+            }
+          ]
+        },
+        {
+          "start": 36.9,
+          "end": 45.38,
+          "text": " acá tenemos 57 Blocks y por aquí finalmente Paltelars, The Findex con ZoroSwap.",
+          "avg_logprob": -0.539672206227596,
+          "no_speech_prob": 0.6076778173446655,
+          "words": [
+            {
+              "start": 36.9,
+              "end": 37.1,
+              "word": " acá",
+              "probability": 0.9667329788208008
+            },
+            {
+              "start": 37.1,
+              "end": 37.46,
+              "word": " tenemos",
+              "probability": 0.9982378482818604
+            },
+            {
+              "start": 37.46,
+              "end": 38.68,
+              "word": " 57",
+              "probability": 0.9475374817848206
+            },
+            {
+              "start": 38.68,
+              "end": 39.38,
+              "word": " Blocks",
+              "probability": 0.8565386533737183
+            },
+            {
+              "start": 39.38,
+              "end": 41.32,
+              "word": " y",
+              "probability": 0.5089433789253235
+            },
+            {
+              "start": 41.32,
+              "end": 41.54,
+              "word": " por",
+              "probability": 0.9595930576324463
+            },
+            {
+              "start": 41.54,
+              "end": 41.74,
+              "word": " aquí",
+              "probability": 0.9602305889129639
+            },
+            {
+              "start": 41.74,
+              "end": 42.02,
+              "word": " finalmente",
+              "probability": 0.9898982048034668
+            },
+            {
+              "start": 42.02,
+              "end": 43.46,
+              "word": " Paltelars,",
+              "probability": 0.6559073403477669
+            },
+            {
+              "start": 43.52,
+              "end": 43.64,
+              "word": " The",
+              "probability": 0.659095287322998
+            },
+            {
+              "start": 43.64,
+              "end": 44.14,
+              "word": " Findex",
+              "probability": 0.7586970329284668
+            },
+            {
+              "start": 44.14,
+              "end": 44.52,
+              "word": " con",
+              "probability": 0.8239381313323975
+            },
+            {
+              "start": 44.52,
+              "end": 45.38,
+              "word": " ZoroSwap.",
+              "probability": 0.7132295705378056
+            }
+          ]
+        },
+        {
+          "start": 45.78,
+          "end": 50.62,
+          "text": " Ah no, pero creo que acá hay Machu. Tenemos aquí los últimos dos, acuérdate en cada una de las",
+          "avg_logprob": -0.539672206227596,
+          "no_speech_prob": 0.6076778173446655,
+          "words": [
+            {
+              "start": 45.78,
+              "end": 46.04,
+              "word": " Ah",
+              "probability": 0.6612221598625183
+            },
+            {
+              "start": 46.04,
+              "end": 46.08,
+              "word": " no,",
+              "probability": 0.5804431438446045
+            },
+            {
+              "start": 46.18,
+              "end": 46.24,
+              "word": " pero",
+              "probability": 0.867614209651947
+            },
+            {
+              "start": 46.24,
+              "end": 46.4,
+              "word": " creo",
+              "probability": 0.9614825248718262
+            },
+            {
+              "start": 46.4,
+              "end": 46.44,
+              "word": " que",
+              "probability": 0.9957618117332458
+            },
+            {
+              "start": 46.44,
+              "end": 46.56,
+              "word": " acá",
+              "probability": 0.5883738994598389
+            },
+            {
+              "start": 46.56,
+              "end": 46.64,
+              "word": " hay",
+              "probability": 0.9854676127433777
+            },
+            {
+              "start": 46.64,
+              "end": 46.9,
+              "word": " Machu.",
+              "probability": 0.4983503371477127
+            },
+            {
+              "start": 47.92,
+              "end": 48.4,
+              "word": " Tenemos",
+              "probability": 0.972265899181366
+            },
+            {
+              "start": 48.4,
+              "end": 48.58,
+              "word": " aquí",
+              "probability": 0.9035003781318665
+            },
+            {
+              "start": 48.58,
+              "end": 48.68,
+              "word": " los",
+              "probability": 0.7461075186729431
+            },
+            {
+              "start": 48.68,
+              "end": 48.92,
+              "word": " últimos",
+              "probability": 0.9496926069259644
+            },
+            {
+              "start": 48.92,
+              "end": 49.22,
+              "word": " dos,",
+              "probability": 0.5020220279693604
+            },
+            {
+              "start": 49.52,
+              "end": 49.88,
+              "word": " acuérdate",
+              "probability": 0.7526036575436592
+            },
+            {
+              "start": 49.88,
+              "end": 50.0,
+              "word": " en",
+              "probability": 0.7488643527030945
+            },
+            {
+              "start": 50.0,
+              "end": 50.16,
+              "word": " cada",
+              "probability": 0.9942585229873657
+            },
+            {
+              "start": 50.16,
+              "end": 50.32,
+              "word": " una",
+              "probability": 0.9785666465759277
+            },
+            {
+              "start": 50.32,
+              "end": 50.38,
+              "word": " de",
+              "probability": 0.9958974123001099
+            },
+            {
+              "start": 50.38,
+              "end": 50.62,
+              "word": " las",
+              "probability": 0.9880536198616028
+            }
+          ]
+        },
+        {
+          "start": 50.62,
+          "end": 58.98,
+          "text": " tenemos esos espacios, acá tenemos de Ajacompany y ahora sí el último de todos Open Cpplink.",
+          "avg_logprob": -0.5164459730897631,
+          "no_speech_prob": 0.22120359539985657,
+          "words": [
+            {
+              "start": 50.62,
+              "end": 51.18,
+              "word": " tenemos",
+              "probability": 0.4578549563884735
+            },
+            {
+              "start": 51.18,
+              "end": 51.52,
+              "word": " esos",
+              "probability": 0.5660549402236938
+            },
+            {
+              "start": 51.52,
+              "end": 52.8,
+              "word": " espacios,",
+              "probability": 0.9733964204788208
+            },
+            {
+              "start": 52.8,
+              "end": 53.82,
+              "word": " acá",
+              "probability": 0.9417359232902527
+            },
+            {
+              "start": 53.82,
+              "end": 54.14,
+              "word": " tenemos",
+              "probability": 0.997309684753418
+            },
+            {
+              "start": 54.14,
+              "end": 54.36,
+              "word": " de",
+              "probability": 0.8923996090888977
+            },
+            {
+              "start": 54.36,
+              "end": 55.2,
+              "word": " Ajacompany",
+              "probability": 0.7094272449612617
+            },
+            {
+              "start": 55.2,
+              "end": 56.5,
+              "word": " y",
+              "probability": 0.8051748871803284
+            },
+            {
+              "start": 56.5,
+              "end": 56.6,
+              "word": " ahora",
+              "probability": 0.9923065304756165
+            },
+            {
+              "start": 56.6,
+              "end": 56.76,
+              "word": " sí",
+              "probability": 0.7165734171867371
+            },
+            {
+              "start": 56.76,
+              "end": 56.88,
+              "word": " el",
+              "probability": 0.8115161657333374
+            },
+            {
+              "start": 56.88,
+              "end": 57.12,
+              "word": " último",
+              "probability": 0.9860652685165405
+            },
+            {
+              "start": 57.12,
+              "end": 57.3,
+              "word": " de",
+              "probability": 0.9912185072898865
+            },
+            {
+              "start": 57.3,
+              "end": 57.52,
+              "word": " todos",
+              "probability": 0.9953052997589111
+            },
+            {
+              "start": 57.52,
+              "end": 58.4,
+              "word": " Open",
+              "probability": 0.6301444172859192
+            },
+            {
+              "start": 58.4,
+              "end": 58.98,
+              "word": " Cpplink.",
+              "probability": 0.37740151956677437
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

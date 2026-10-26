@@ -1,0 +1,46 @@
+{
+  "file": "VID_20261026_021331223.mp4",
+  "driveId": "1qY7nm-ZG4X4WtdnulXIBIQ_OV4YGvEGt",
+  "url": "https://drive.google.com/file/d/1qY7nm-ZG4X4WtdnulXIBIQ_OV4YGvEGt/view",
+  "durationSeconds": 5.162292,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "medium",
+  "language": "es",
+  "speechStatus": "no reliable narration",
+  "reviewNotes": [
+    "Generic automatic phrases in high no-speech-probability windows were rejected as hallucinations. Visual evidence remains applicable."
+  ],
+  "segments": [],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021331223.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 4.992,
+      "elapsed": 5.26600000000326,
+      "segments": [
+        {
+          "start": 1.33,
+          "end": 2.95,
+          "text": " ¡Suscríbete!",
+          "avg_logprob": -0.9531124591827392,
+          "no_speech_prob": 0.7542086243629456,
+          "words": [
+            {
+              "start": 1.33,
+              "end": 2.95,
+              "word": " ¡Suscríbete!",
+              "probability": 0.5780960293486714
+            }
+          ]
+        }
+      ]
+    },
+    "medium": {
+      "video": "VID_20261026_021331223.mp4",
+      "model": "medium",
+      "duration": 4.992,
+      "segments": []
+    }
+  }
+}

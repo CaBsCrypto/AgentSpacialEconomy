@@ -4,11 +4,14 @@ export const corridorZ=z=>z<=6?z:z<32?6+(z-6)/2:z-13;
 export function shortenLayout(source){
  const l=structuredClone(source),poly=p=>p.map(([x,z])=>[x,corridorZ(z)]);
  l.walkable=l.walkable.map(poly);
+ for(const finish of l.floorFinishes??[])finish.polygon=poly(finish.polygon);
  for(const s of l.surfaces){s.polygon=poly(s.polygon);s.originZ=corridorZ(s.originZ);}
  for(const b of l.obstacles){const c=(b.minZ+b.maxZ)/2,d=corridorZ(c)-c;if(b.maxZ-b.minZ<6){b.minZ+=d;b.maxZ+=d;}else{b.minZ=corridorZ(b.minZ);b.maxZ=corridorZ(b.maxZ);}}
  for(const z of l.zones){z.polygon=poly(z.polygon);z.view.z=corridorZ(z.view.z);}
  l.spawn.z=corridorZ(l.spawn.z);l.bounds.maxZ=corridorZ(l.bounds.maxZ);
- for(const key of ['exteriorRoute','standsRoute'])for(const p of l[key]||[])p.z=corridorZ(p.z);
+ for(const key of ['exteriorRoute','standsRoute','activationRoute'])for(const p of l[key]||[])p.z=corridorZ(p.z);
+ for(const p of l.companyRoutes?.trunk??[])p.z=corridorZ(p.z);
+ for(const branch of l.companyRoutes?.branches??[]){for(const p of branch.points??[])p.z=corridorZ(p.z);if(branch.approach)branch.approach.z=corridorZ(branch.approach.z);}
  return moveMerchBackdropCollision(l);
 }
 export function shortenScene(scene,T){

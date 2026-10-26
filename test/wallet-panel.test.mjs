@@ -159,3 +159,15 @@ test('a late completed proof updates state without reopening a closed panel', as
   assert.equal(f.dialog.open, false); assert.equal(f.dialog.shows, shows); assert.match(f.get('walletVerification').textContent, /Passkey verificada/);
   panel.destroy(); f.get('walletVerify').click(); assert.deepEqual(f.calls.map(call => call[0]), ['prepare', 'verify']);
 });
+
+test('only the explicit Continue button acknowledges the current snapshot before closing', async () => {
+ const f = fixture(), continued = [], closed = [];
+ const panel = bindWalletPanel({dialog: f.dialog, controller: f.controller, onContinue: state => continued.push({state, open: f.dialog.open}), onClose: () => closed.push(true)});
+ await panel.open();f.get('closeActivation').click();assert.equal(continued.length, 0);
+ await panel.open();f.dialog.close();assert.equal(continued.length, 0);
+ await panel.open();f.update({status: 'pending', address: 'Cwallet'});f.get('walletContinue').click();
+ assert.equal(continued.length, 1);assert.equal(continued[0].state.status, 'pending');assert.equal(continued[0].open, true);
+ await panel.open();f.update({status: 'ready', balance: '100'});f.get('walletContinue').click();
+ assert.equal(continued[1].state.status, 'ready');assert.equal(closed.length, 4);
+ panel.destroy();f.get('walletContinue').click();assert.equal(continued.length, 2);
+});

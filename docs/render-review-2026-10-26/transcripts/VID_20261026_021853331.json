@@ -1,0 +1,498 @@
+{
+  "file": "VID_20261026_021853331.mp4",
+  "driveId": "1__pjABw6BVMb4ZDINN7W8a_qZhuqSUOB",
+  "url": "https://drive.google.com/file/d/1__pjABw6BVMb4ZDINN7W8a_qZhuqSUOB/view",
+  "durationSeconds": 12.985625,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [],
+  "segments": [
+    {
+      "start": 0.27,
+      "end": 4.99,
+      "text": " Aquí también tenemos esta mesa como de selección de habilidades de cada una de las personas.",
+      "avg_logprob": -0.2384448028960318,
+      "no_speech_prob": 0.07011332362890244,
+      "words": [
+        {
+          "start": 0.27,
+          "end": 0.85,
+          "word": " Aquí",
+          "probability": 0.6752424240112305
+        },
+        {
+          "start": 0.85,
+          "end": 1.09,
+          "word": " también",
+          "probability": 0.8714697360992432
+        },
+        {
+          "start": 1.09,
+          "end": 1.49,
+          "word": " tenemos",
+          "probability": 0.9803060293197632
+        },
+        {
+          "start": 1.49,
+          "end": 1.79,
+          "word": " esta",
+          "probability": 0.9477766156196594
+        },
+        {
+          "start": 1.79,
+          "end": 2.05,
+          "word": " mesa",
+          "probability": 0.9974777102470398
+        },
+        {
+          "start": 2.05,
+          "end": 2.31,
+          "word": " como",
+          "probability": 0.8230435252189636
+        },
+        {
+          "start": 2.31,
+          "end": 2.49,
+          "word": " de",
+          "probability": 0.8070637583732605
+        },
+        {
+          "start": 2.49,
+          "end": 3.25,
+          "word": " selección",
+          "probability": 0.9903546273708344
+        },
+        {
+          "start": 3.25,
+          "end": 3.41,
+          "word": " de",
+          "probability": 0.9946684241294861
+        },
+        {
+          "start": 3.41,
+          "end": 3.93,
+          "word": " habilidades",
+          "probability": 0.94178107380867
+        },
+        {
+          "start": 3.93,
+          "end": 4.05,
+          "word": " de",
+          "probability": 0.9800075888633728
+        },
+        {
+          "start": 4.05,
+          "end": 4.19,
+          "word": " cada",
+          "probability": 0.9972092509269714
+        },
+        {
+          "start": 4.19,
+          "end": 4.37,
+          "word": " una",
+          "probability": 0.9836475253105164
+        },
+        {
+          "start": 4.37,
+          "end": 4.47,
+          "word": " de",
+          "probability": 0.9978399276733398
+        },
+        {
+          "start": 4.47,
+          "end": 4.55,
+          "word": " las",
+          "probability": 0.9901485443115234
+        },
+        {
+          "start": 4.55,
+          "end": 4.99,
+          "word": " personas.",
+          "probability": 0.9968932867050171
+        }
+      ]
+    },
+    {
+      "start": 5.33,
+      "end": 10.35,
+      "text": " Si te fijas dice looking for a team, designer, front and back, etc.",
+      "avg_logprob": -0.2384448028960318,
+      "no_speech_prob": 0.07011332362890244,
+      "words": [
+        {
+          "start": 5.33,
+          "end": 5.75,
+          "word": " Si",
+          "probability": 0.5900589823722839
+        },
+        {
+          "start": 5.75,
+          "end": 5.85,
+          "word": " te",
+          "probability": 0.9407572150230408
+        },
+        {
+          "start": 5.85,
+          "end": 6.17,
+          "word": " fijas",
+          "probability": 0.9763821661472321
+        },
+        {
+          "start": 6.17,
+          "end": 6.41,
+          "word": " dice",
+          "probability": 0.7700571417808533
+        },
+        {
+          "start": 6.41,
+          "end": 6.77,
+          "word": " looking",
+          "probability": 0.2369757741689682
+        },
+        {
+          "start": 6.77,
+          "end": 7.01,
+          "word": " for",
+          "probability": 0.993410050868988
+        },
+        {
+          "start": 7.01,
+          "end": 7.09,
+          "word": " a",
+          "probability": 0.9697502255439758
+        },
+        {
+          "start": 7.09,
+          "end": 7.41,
+          "word": " team,",
+          "probability": 0.9848949313163757
+        },
+        {
+          "start": 7.61,
+          "end": 8.51,
+          "word": " designer,",
+          "probability": 0.9283103942871094
+        },
+        {
+          "start": 8.99,
+          "end": 9.53,
+          "word": " front",
+          "probability": 0.9341023564338684
+        },
+        {
+          "start": 9.53,
+          "end": 9.85,
+          "word": " and",
+          "probability": 0.6875148415565491
+        },
+        {
+          "start": 9.85,
+          "end": 10.11,
+          "word": " back,",
+          "probability": 0.9780890345573425
+        },
+        {
+          "start": 10.25,
+          "end": 10.35,
+          "word": " etc.",
+          "probability": 0.967246949672699
+        }
+      ]
+    },
+    {
+      "start": 10.75,
+      "end": 12.27,
+      "text": " Entonces la idea también es agregarlo.",
+      "avg_logprob": -0.2384448028960318,
+      "no_speech_prob": 0.07011332362890244,
+      "words": [
+        {
+          "start": 10.75,
+          "end": 10.93,
+          "word": " Entonces",
+          "probability": 0.773603618144989
+        },
+        {
+          "start": 10.93,
+          "end": 11.13,
+          "word": " la",
+          "probability": 0.6234159469604492
+        },
+        {
+          "start": 11.13,
+          "end": 11.21,
+          "word": " idea",
+          "probability": 0.9919058084487915
+        },
+        {
+          "start": 11.21,
+          "end": 11.51,
+          "word": " también",
+          "probability": 0.849181056022644
+        },
+        {
+          "start": 11.51,
+          "end": 11.71,
+          "word": " es",
+          "probability": 0.9835467338562012
+        },
+        {
+          "start": 11.71,
+          "end": 12.27,
+          "word": " agregarlo.",
+          "probability": 0.8782938321431478
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021853331.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 12.8853125,
+      "elapsed": 4.671999999998661,
+      "segments": [
+        {
+          "start": 0.27,
+          "end": 4.99,
+          "text": " Aquí también tenemos esta mesa como de selección de habilidades de cada una de las personas.",
+          "avg_logprob": -0.2384448028960318,
+          "no_speech_prob": 0.07011332362890244,
+          "words": [
+            {
+              "start": 0.27,
+              "end": 0.85,
+              "word": " Aquí",
+              "probability": 0.6752424240112305
+            },
+            {
+              "start": 0.85,
+              "end": 1.09,
+              "word": " también",
+              "probability": 0.8714697360992432
+            },
+            {
+              "start": 1.09,
+              "end": 1.49,
+              "word": " tenemos",
+              "probability": 0.9803060293197632
+            },
+            {
+              "start": 1.49,
+              "end": 1.79,
+              "word": " esta",
+              "probability": 0.9477766156196594
+            },
+            {
+              "start": 1.79,
+              "end": 2.05,
+              "word": " mesa",
+              "probability": 0.9974777102470398
+            },
+            {
+              "start": 2.05,
+              "end": 2.31,
+              "word": " como",
+              "probability": 0.8230435252189636
+            },
+            {
+              "start": 2.31,
+              "end": 2.49,
+              "word": " de",
+              "probability": 0.8070637583732605
+            },
+            {
+              "start": 2.49,
+              "end": 3.25,
+              "word": " selección",
+              "probability": 0.9903546273708344
+            },
+            {
+              "start": 3.25,
+              "end": 3.41,
+              "word": " de",
+              "probability": 0.9946684241294861
+            },
+            {
+              "start": 3.41,
+              "end": 3.93,
+              "word": " habilidades",
+              "probability": 0.94178107380867
+            },
+            {
+              "start": 3.93,
+              "end": 4.05,
+              "word": " de",
+              "probability": 0.9800075888633728
+            },
+            {
+              "start": 4.05,
+              "end": 4.19,
+              "word": " cada",
+              "probability": 0.9972092509269714
+            },
+            {
+              "start": 4.19,
+              "end": 4.37,
+              "word": " una",
+              "probability": 0.9836475253105164
+            },
+            {
+              "start": 4.37,
+              "end": 4.47,
+              "word": " de",
+              "probability": 0.9978399276733398
+            },
+            {
+              "start": 4.47,
+              "end": 4.55,
+              "word": " las",
+              "probability": 0.9901485443115234
+            },
+            {
+              "start": 4.55,
+              "end": 4.99,
+              "word": " personas.",
+              "probability": 0.9968932867050171
+            }
+          ]
+        },
+        {
+          "start": 5.33,
+          "end": 10.35,
+          "text": " Si te fijas dice looking for a team, designer, front and back, etc.",
+          "avg_logprob": -0.2384448028960318,
+          "no_speech_prob": 0.07011332362890244,
+          "words": [
+            {
+              "start": 5.33,
+              "end": 5.75,
+              "word": " Si",
+              "probability": 0.5900589823722839
+            },
+            {
+              "start": 5.75,
+              "end": 5.85,
+              "word": " te",
+              "probability": 0.9407572150230408
+            },
+            {
+              "start": 5.85,
+              "end": 6.17,
+              "word": " fijas",
+              "probability": 0.9763821661472321
+            },
+            {
+              "start": 6.17,
+              "end": 6.41,
+              "word": " dice",
+              "probability": 0.7700571417808533
+            },
+            {
+              "start": 6.41,
+              "end": 6.77,
+              "word": " looking",
+              "probability": 0.2369757741689682
+            },
+            {
+              "start": 6.77,
+              "end": 7.01,
+              "word": " for",
+              "probability": 0.993410050868988
+            },
+            {
+              "start": 7.01,
+              "end": 7.09,
+              "word": " a",
+              "probability": 0.9697502255439758
+            },
+            {
+              "start": 7.09,
+              "end": 7.41,
+              "word": " team,",
+              "probability": 0.9848949313163757
+            },
+            {
+              "start": 7.61,
+              "end": 8.51,
+              "word": " designer,",
+              "probability": 0.9283103942871094
+            },
+            {
+              "start": 8.99,
+              "end": 9.53,
+              "word": " front",
+              "probability": 0.9341023564338684
+            },
+            {
+              "start": 9.53,
+              "end": 9.85,
+              "word": " and",
+              "probability": 0.6875148415565491
+            },
+            {
+              "start": 9.85,
+              "end": 10.11,
+              "word": " back,",
+              "probability": 0.9780890345573425
+            },
+            {
+              "start": 10.25,
+              "end": 10.35,
+              "word": " etc.",
+              "probability": 0.967246949672699
+            }
+          ]
+        },
+        {
+          "start": 10.75,
+          "end": 12.27,
+          "text": " Entonces la idea también es agregarlo.",
+          "avg_logprob": -0.2384448028960318,
+          "no_speech_prob": 0.07011332362890244,
+          "words": [
+            {
+              "start": 10.75,
+              "end": 10.93,
+              "word": " Entonces",
+              "probability": 0.773603618144989
+            },
+            {
+              "start": 10.93,
+              "end": 11.13,
+              "word": " la",
+              "probability": 0.6234159469604492
+            },
+            {
+              "start": 11.13,
+              "end": 11.21,
+              "word": " idea",
+              "probability": 0.9919058084487915
+            },
+            {
+              "start": 11.21,
+              "end": 11.51,
+              "word": " también",
+              "probability": 0.849181056022644
+            },
+            {
+              "start": 11.51,
+              "end": 11.71,
+              "word": " es",
+              "probability": 0.9835467338562012
+            },
+            {
+              "start": 11.71,
+              "end": 12.27,
+              "word": " agregarlo.",
+              "probability": 0.8782938321431478
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

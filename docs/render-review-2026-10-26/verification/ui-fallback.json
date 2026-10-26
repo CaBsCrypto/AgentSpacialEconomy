@@ -1,0 +1,148 @@
+{
+  "transport": "Playwright route.fulfill from delivery/dist; no HTTP transport or external API",
+  "checks": [
+    "missing WebGL shows retry/2D choice; 2D SVG works with the inoperative places menu hidden",
+    "2D reference controls update all 23 pins without requiring WebGL",
+    "retry with WebGL still unavailable remains recoverable and keeps the menu hidden",
+    "a successful retry restores WebGL, the places menu and focus"
+  ],
+  "pageErrors": [],
+  "failedLocal": [],
+  "blockedExternal": [
+    "https://fonts.googleapis.com/css2"
+  ],
+  "failedState": {
+    "active": true,
+    "mode": "walk",
+    "pose": {
+      "x": 0,
+      "z": 25,
+      "yaw": 0,
+      "pitch": 0.14,
+      "mode": "walk"
+    },
+    "loaded": false,
+    "webgl": false,
+    "loading": {
+      "attempt": 1,
+      "phase": "error",
+      "choice": "scene",
+      "cover": true,
+      "prepared": false,
+      "loaded": 4085849,
+      "total": 4085849,
+      "error": {
+        "name": "Error"
+      }
+    },
+    "input": {
+      "movementPointer": null,
+      "lookPointer": null,
+      "forward": 0,
+      "right": 0
+    },
+    "zones": 20
+  },
+  "plan": {
+    "state": {
+      "active": true,
+      "mode": "plan",
+      "pose": {
+        "x": 0,
+        "z": 25,
+        "yaw": 0,
+        "pitch": 0.14,
+        "mode": "plan"
+      },
+      "loaded": false,
+      "webgl": false,
+      "loading": {
+        "attempt": 1,
+        "phase": "error",
+        "choice": "plan",
+        "cover": false,
+        "prepared": false,
+        "loaded": 4085849,
+        "total": 4085849,
+        "error": {
+          "name": "Error"
+        }
+      },
+      "input": {
+        "movementPointer": null,
+        "lookPointer": null,
+        "forward": 0,
+        "right": 0
+      },
+      "zones": 20
+    },
+    "classes": "review-enabled venue-ui venue-unavailable",
+    "placesDisplay": "none",
+    "planShown": true,
+    "svg": true
+  },
+  "retryBlocked": {
+    "active": true,
+    "mode": "walk",
+    "pose": {
+      "x": 0,
+      "z": 25,
+      "yaw": 0,
+      "pitch": 0.14,
+      "mode": "plan"
+    },
+    "loaded": false,
+    "webgl": false,
+    "loading": {
+      "attempt": 2,
+      "phase": "error",
+      "choice": "scene",
+      "cover": true,
+      "prepared": false,
+      "loaded": 0,
+      "total": null,
+      "error": {
+        "name": "Error"
+      }
+    },
+    "input": {
+      "movementPointer": null,
+      "lookPointer": null,
+      "forward": 0,
+      "right": 0
+    },
+    "zones": 20
+  },
+  "recovery": {
+    "active": true,
+    "mode": "walk",
+    "pose": {
+      "x": 0,
+      "z": 25,
+      "yaw": 0,
+      "pitch": 0.14,
+      "mode": "walk"
+    },
+    "loaded": true,
+    "webgl": true,
+    "loading": {
+      "attempt": 3,
+      "phase": "ready",
+      "choice": "scene",
+      "cover": false,
+      "prepared": true,
+      "loaded": 0,
+      "total": null,
+      "error": null
+    },
+    "input": {
+      "movementPointer": null,
+      "lookPointer": null,
+      "forward": 0,
+      "right": 0
+    },
+    "zones": 20
+  },
+  "passed": true,
+  "expectedRendererErrors": "WebGLRenderer reports context creation failure while the test blocks getContext; external fonts are deliberately blocked."
+}
