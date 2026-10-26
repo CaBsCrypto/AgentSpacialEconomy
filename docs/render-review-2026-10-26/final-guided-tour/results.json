@@ -83,5 +83,17 @@
     "numericReferencesVisible": 0,
     "blockedFindings": 0
   },
-  "verificationScope": "Local file-backed HTTP with real GPU. Tour uses real wallet controller/panel and read-only restored-provider fixture: no passkeys, signatures or wallet POST. Real Passport iframe rendered and emitted first frame. Live deployment verification follows separately."
+  "verificationScope": "Local file-backed HTTP with real GPU. Tour uses real wallet controller/panel and read-only restored-provider fixture: no passkeys, signatures or wallet POST. Real Passport iframe rendered and emitted first frame. Live deployment verification follows separately.",
+  "deployment": {
+    "id": "dpl_3FmNrJ11a69VYxb2wgbVgsqJPRxc",
+    "readyState": "READY",
+    "target": "preview",
+    "sourceCommit": "ac0308ef52f2cc9e874b3c0eeff16f4cb44563b0",
+    "url": "https://one16-passport-aaqnejj5t-cabscryptocontacto-6028s-projects.vercel.app/one16?lang=es",
+    "shareExpiresAt": "2026-10-27T08:39:52+00:00",
+    "mobileChecksPassed": 7,
+    "javascriptErrors": 0,
+    "httpErrors": 0,
+    "automaticWalletPosts": 0
+  }
 }

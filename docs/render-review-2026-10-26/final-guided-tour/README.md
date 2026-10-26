@@ -50,3 +50,12 @@ Plano real de empresas: [320×568](map/companies-plan-320x568.jpg), [390×844](m
 3. Ejecutar en serie `scripts/verify-venue-render.mjs`, `scripts/verify-activation-guide.mjs` y `scripts/verify-guided-tour.mjs`. La variable `GUIDED_TOUR_QA_MAP_ONLY=1` limita la última a los cuatro planos.
 
 Las dimensiones siguen siendo estimaciones del recorrido original. El escenario, Content Hub, cocina, muebles, Passport, fútbol y demás correcciones previamente aprobadas se conservan.
+
+
+## Preview final verificado
+
+Deployment `dpl_3FmNrJ11a69VYxb2wgbVgsqJPRxc`, estado READY, entorno preview; commit publicado `ac0308ef52f2cc9e874b3c0eeff16f4cb44563b0`. La comprobación móvil real confirmó el hash exacto del modelo comprimido, GPU NVIDIA/D3D11, ausencia de referencias numeradas, configuración Testnet correspondiente al dominio del preview, panel de wallet con Continuar sin saldo manteniendo la entrada, y primer fotograma real de Passport con retorno al recinto. Sin errores JS/HTTP ni POST automáticos de wallet.
+
+[Resultado del deployment](deployment/deployment-verification.json), [recorrido móvil](deployment/after-mobile.jpg), [wallet](deployment/wallet-mobile.jpg), [Passport](deployment/passport-mobile.jpg). El enlace temporal entregado en el chat vence el **27 de octubre, 05:39 (America/Santiago)**; su parámetro de acceso no se guarda en Git.
+
+En una muestra de red real desde este equipo, la descarga del modelo pasó de 1516,6 ms / 4.212.324 bytes a 2765,3 ms / 4.195.606 bytes; el primer fotograma fue 4125,7 → 4379,3 ms. Son muestras individuales con variación de red/CDN, no una mejora de latencia ni una medición celular. La comparación local equivalente mantuvo 16,7 ms por fotograma. Las pruebas móviles usan viewport y gestos de Chromium con GPU; no sustituyen una prueba en hardware Android/iPhone.

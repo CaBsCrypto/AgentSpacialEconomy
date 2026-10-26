@@ -1,0 +1,89 @@
+{
+  "sourceCommit": "ac0308ef52f2cc9e874b3c0eeff16f4cb44563b0",
+  "previewUrl": "https://one16-passport-aaqnejj5t-cabscryptocontacto-6028s-projects.vercel.app/one16?lang=es",
+  "expiresAt": "2026-10-27T08:39:52+00:00",
+  "checks": [
+    "Exact compressed model hash",
+    "Mobile venue GPU first frame",
+    "Zero review references",
+    "Preview-scoped Testnet configuration",
+    "Existing wallet panel and unfunded Continue gate",
+    "Real mobile Passport first frame and return",
+    "No automatic wallet POST or runtime/HTTP errors"
+  ],
+  "runs": [
+    {
+      "firstFrameMs": 4125.70000000298,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "medianFrameMs": 16.699999999999818,
+      "p95FrameMs": 33.400000000000546,
+      "downloads": [
+        {
+          "path": "/assets/one16.glb.gz",
+          "durationMs": 1516.6000000014901,
+          "encodedBytes": 4212324,
+          "transferBytes": 4212624
+        }
+      ],
+      "name": "before",
+      "modelResponses": [
+        {
+          "bytes": 4212324,
+          "sha256": "b3da6de9ea4c7e4de96a8ca26634051a7f46a70331bc4fb3b8597b93b4b5f7a6"
+        }
+      ],
+      "errors": [],
+      "httpErrors": [],
+      "automaticPosts": []
+    },
+    {
+      "firstFrameMs": 4379.30000000447,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "medianFrameMs": 16.699999999999818,
+      "p95FrameMs": 33.399999999999636,
+      "downloads": [
+        {
+          "path": "/assets/one16.glb.gz",
+          "durationMs": 2765.2999999970198,
+          "encodedBytes": 4195606,
+          "transferBytes": 4195906
+        }
+      ],
+      "tour": {
+        "phase": "entry",
+        "identity": null,
+        "milestones": {
+          "activated": false,
+          "passport": false,
+          "palta": false
+        }
+      },
+      "name": "after",
+      "modelResponses": [
+        {
+          "bytes": 4195606,
+          "sha256": "3b0d77cac54b32299bacf34a02f6d8b5a731026ba089161e8812dfbbf3b2ab4d"
+        }
+      ],
+      "errors": [],
+      "httpErrors": [],
+      "automaticPosts": [],
+      "walletConfiguration": {
+        "enabled": true,
+        "configured": true,
+        "origin": "https://one16-passport-aaqnejj5t-cabscryptocontacto-6028s-projects.vercel.app",
+        "rpId": "one16-passport-aaqnejj5t-cabscryptocontacto-6028s-projects.vercel.app",
+        "networkPassphrase": "Test SDF Network ; September 2015"
+      }
+    }
+  ],
+  "pass": true,
+  "deployment": {
+    "id": "dpl_3FmNrJ11a69VYxb2wgbVgsqJPRxc",
+    "url": "one16-passport-aaqnejj5t-cabscryptocontacto-6028s-projects.vercel.app",
+    "readyState": "READY",
+    "target": null,
+    "sourceCommit": "ac0308ef52f2cc9e874b3c0eeff16f4cb44563b0",
+    "sourceBranch": "codex/render-textures-ui"
+  }
+}
