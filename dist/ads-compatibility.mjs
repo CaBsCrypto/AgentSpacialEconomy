@@ -3,6 +3,7 @@ export const COMPATIBILITY_AMOUNT = '50000000';
 const idPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const hashPattern = /^[a-f0-9]{64}$/i;
 const rejectionMessages=Object.freeze({
+ invalid_exact_stellar_payload_fee_below_minimum:'La transferencia firmada necesita recalcular su comision antes de otra prueba.',
  invalid_exact_stellar_payload_fee_exceeds_maximum:'La comisión estimada supera el límite del facilitador.',
  invalid_exact_stellar_payload_simulation_failed:'El facilitador no pudo simular esta autorización.',
  invalid_exact_stellar_signature_expiration_too_far:'La vigencia de la firma supera el límite del facilitador.',
@@ -31,78 +32,42 @@ export function compatibilityVerdict(value, id, address) {
   const reason=value.status==='REJECTED'&&value.errorCode==='facilitator_rejected'&&Object.hasOwn(rejectionMessages,value.verificationReason)?value.verificationReason:null;
   return { isValid: value.isValid, waiting, evidence, ...(reason?{verificationReason:reason}:{}) };
 }
-export function createCompatibilityApi({ fetchImpl = fetch } = {}) {
-  return async (path, { method = 'GET', body, key } = {}) => {
-    const response = await fetchImpl(path, { method, credentials: 'same-origin', cache: 'no-store', headers: { ...(body === undefined ? {} : { 'Content-Type': 'application/json' }), ...(key ? { 'Idempotency-Key': key } : {}) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
-    let value;
-    try { value = await response.json(); } catch { throw failure('unverifiable_result', 'El servidor no devolvió una respuesta verificable.'); }
-    if (!response.ok) {
-      const code = /^[a-z0-9_-]{1,80}$/i.test(value.error?.code || '') ? value.error.code : 'request_failed';
-      throw Object.assign(failure(code, response.status === 401 ? 'La sesión caducó. Conecta otra vez tu passkey.' : response.status === 403 ? 'Esta sesión no tiene acceso al diagnóstico de este dominio.' : 'El diagnóstico no pudo completarse. Código: ' + code + '. No se solicitó liquidación.'), { status: response.status });
-    }
-    return value;
-  };
+function safeQuota(value){if(!value||value.limit!==3||!Number.isSafeInteger(value.used)||value.used<0||!Number.isSafeInteger(value.remaining)||value.remaining<0||value.remaining>3||value.retryAt!=null&&!Number.isFinite(Date.parse(value.retryAt)))throw failure('unverifiable_result','No se pudo comprobar el cupo.');return{limit:3,used:value.used,remaining:value.remaining,retryAt:value.retryAt||null};}
+export function createCompatibilityApi({fetchImpl=fetch}={}){return async(path,{method='GET',body,key}={})=>{
+ const response=await fetchImpl(path,{method,credentials:'same-origin',cache:'no-store',headers:{...(body===undefined?{}:{'Content-Type':'application/json'}),...(key?{'Idempotency-Key':key}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});let value;try{value=await response.json();}catch{throw failure('unverifiable_result','El servidor no devolvio una respuesta verificable.');}
+ if(!response.ok){const code=/^[a-z0-9_-]{1,80}$/i.test(value.error?.code||'')?value.error.code:'request_failed',details=value.error?.details||{};const error=Object.assign(failure(code,response.status===401?'La sesion caduco. Conecta otra vez tu passkey.':response.status===429?'El cupo esta ocupado. Espera hasta la hora indicada; no se solicito liquidacion.':'El diagnostico no pudo completarse. Codigo: '+code+'. No se solicito liquidacion.'),{status:response.status});if(typeof details.verificationStarted==='boolean')error.verificationStarted=details.verificationStarted;if(Number.isFinite(Date.parse(details.serverTime)))error.serverTime=details.serverTime;if(details.quota){try{error.quota=safeQuota(details.quota);}catch{}}if(Number.isFinite(Date.parse(details.retryAt||error.quota?.retryAt)))error.retryAt=details.retryAt||error.quota.retryAt;const retry=Number(response.headers.get('Retry-After'));if(response.headers.has('Retry-After')&&Number.isSafeInteger(retry)&&retry>=0&&retry<=3600)error.retryAfterSeconds=retry;throw error;}return value;
+};}
+/** Payload and preparation remain in memory. Recovery is a private GET. */
+export function createCompatibilityController({api=createCompatibilityApi(),walletFactory=createAdsWallet,origin=globalThis.location?.origin,now=()=>globalThis.performance?.now?.()??Date.now(),newKey=()=>crypto.randomUUID(),onState=()=>{}}={}){
+ let config,wallet,address,sessionAddress,busy=false,draft=null,pending=null,challengeKey=null,lastAttemptId=null,clock=null,cooldown=null;
+ let view={phase:'loading',connected:false,walletReady:false,retry:false,config:null,address:null,evidence:null,isValid:null,quota:null,expiresAt:null,message:'Comprobando configuracion...'};
+ const serverNow=()=>clock?clock.server+Math.max(0,now()-clock.local):now();
+ const syncClock=value=>{const time=Date.parse(value);if(Number.isFinite(time)&&(!clock||time>=serverNow()-1000))clock={server:time,local:now()};};
+ const snapshot=()=>({...view,remainingMs:view.expiresAt?Math.max(0,Date.parse(view.expiresAt)-serverNow()):null,retryInMs:cooldown?Math.max(0,cooldown-now()):view.quota?.retryAt?Math.max(0,Date.parse(view.quota.retryAt)-serverNow()):null,quotaBlocked:!!(cooldown&&cooldown>now())||(view.quota?.remaining===0&&(!view.quota.retryAt||Date.parse(view.quota.retryAt)>serverNow()))});
+ const emit=patch=>{view={...view,...patch};onState(snapshot());};
+ async function loadConfig(){config=validateCompatibilityConfig(await api('/api/ads/config'));emit({config:{...config}});return config;}
+ function verdict(value){const result=compatibilityVerdict(value,value.id,address);lastAttemptId=value.id;if(result.waiting){pending={id:value.id,uncertain:true};emit({phase:'pending',retry:true,isValid:null,evidence:result.evidence,expiresAt:null,message:'La verificacion original sigue pendiente. Consulta su estado; no se pedira otra firma.'});return;}pending=null;draft=null;challengeKey=null;emit({phase:result.isValid?'verified':'rejected',retry:false,isValid:result.isValid,evidence:result.evidence,expiresAt:null,message:result.isValid?'Verificacion aceptada. No se solicito liquidacion ni se activo el checkout.':'Verificacion rechazada. No se solicito liquidacion.'+(result.verificationReason?' '+rejectionMessages[result.verificationReason]:'')});}
+ async function readStatus(id=lastAttemptId){const value=await api('/api/ads/compatibility/status'+(id?'?attemptId='+encodeURIComponent(id):''));syncClock(value.serverTime);const quota=safeQuota(value.quota);emit({quota});const attempt=value.attempt;if((id&&attempt&&attempt.id!==id)||(id&&pending&&!attempt))throw failure('unverifiable_result','El intento original necesita actualizarse; no se reenviara la firma.');if(attempt){if(!idPattern.test(attempt.id||'')||attempt.payer&&attempt.payer!==address||typeof attempt.verificationStarted!=='boolean')throw failure('unverifiable_result','El estado no corresponde a esta wallet.');lastAttemptId=attempt.id;if(['VERIFIED','REJECTED','VERIFYING','RECONCILIATION_REQUIRED'].includes(attempt.status)){verdict(attempt);return value;}if(!['PENDING','EXPIRED'].includes(attempt.status)||attempt.verificationStarted)throw failure('unverifiable_result','El intento necesita revision.');}
+ if(value.challenge){syncClock(value.challenge.serverTime);draft=validateCompatibilityChallenge(value.challenge,config,address,origin,serverNow());lastAttemptId=draft.id;}else draft=null;pending=null;challengeKey=null;emit({phase:'connected',retry:false,evidence:null,isValid:null,expiresAt:draft?.expiresAt||null,message:quota.remaining===0?'El cupo esta ocupado. Espera hasta la hora indicada.':attempt?.status==='EXPIRED'?'El reto anterior caduco sin enviar la firma. Puedes iniciar otra prueba explicitamente.':view.walletReady?'Wallet autenticada. Puedes preparar una prueba.':'Sesion recuperada. Conecta tu passkey cuando quieras autorizar otra prueba.'});return value;}
+ async function action(work){if(busy)return;busy=true;try{return await work();}catch(error){syncClock(error.serverTime);if(Number.isSafeInteger(error.retryAfterSeconds)&&error.retryAfterSeconds>0)cooldown=now()+error.retryAfterSeconds*1000;if(error.quota)emit({quota:error.quota});if(error.retryAt&&!error.quota)emit({quota:{limit:3,used:3,remaining:0,retryAt:error.retryAt}});if(error.status===401){sessionAddress=null;emit({connected:false,walletReady:false});}if(error.verificationStarted===false||['challenge_expired','challenge_mismatch'].includes(error.code)){pending=null;draft=null;challengeKey=null;}else if(pending)pending.uncertain=true;const cancelled=error.name==='NotAllowedError'||error.cause?.name==='NotAllowedError';emit({phase:'error',retry:!!pending,expiresAt:draft?.expiresAt||null,message:cancelled?'La confirmacion de passkey se cancel\u00f3. Puedes volver a intentarlo.':error.message});}finally{busy=false;}}
+ return{get state(){return snapshot();},tick(){emit({});},
+ async load(){return action(async()=>{await loadConfig();try{const session=await api('/api/ads/auth/me');if(!/^C[A-Z2-7]{55}$/.test(session.identity?.address||''))throw failure('identity_mismatch','La sesion no es valida.');address=sessionAddress=session.identity.address;emit({connected:true,walletReady:false,address});await readStatus(null);}catch(error){if(error.status!==401)throw error;emit({phase:'ready',connected:false,walletReady:false,message:'Conecta tu passkey existente para continuar.'});}});},
+ async connect(){return action(async()=>{emit({phase:'connecting',walletReady:false,message:'Selecciona la passkey de tu wallet existente de ONE16.'});await loadConfig();wallet=await walletFactory(await api('/api/wallet/config'));const connection=await wallet.connect();if(!/^C[A-Z2-7]{55}$/.test(connection?.address||'')||wallet.address!==connection.address)throw failure('identity_mismatch','La wallet conectada no es valida.');if(sessionAddress!==connection.address){const session=await wallet.authenticate();if(session.identity?.address!==connection.address)throw failure('identity_mismatch','La sesion no corresponde a esta wallet.');sessionAddress=connection.address;}if(address&&address!==connection.address){pending=null;draft=null;challengeKey=null;lastAttemptId=null;}address=connection.address;emit({phase:'connected',connected:true,walletReady:true,address,message:'Wallet autenticada.'});await readStatus();});},
+ async verify(){return action(async()=>{if(!address||!view.connected)throw failure('authentication_required','Conecta primero tu passkey existente.');if(pending||view.retry){emit({phase:'checking',message:'Consultando el intento original sin reenviar la autorizacion...'});await readStatus(pending?.id||lastAttemptId);return;}if(!wallet||!view.walletReady)throw failure('authentication_required','Conecta tu passkey para autorizar otra prueba.');if(cooldown&&cooldown>now())throw failure('compatibility_quota','Espera a que termine el tiempo indicado antes de otra prueba.');await readStatus();if(pending||view.retry)return;if(snapshot().quotaBlocked)throw Object.assign(failure('compatibility_quota','El cupo esta ocupado. Espera hasta la hora indicada.'),{quota:view.quota,verificationStarted:false});if(draft&&Date.parse(draft.expiresAt)>serverNow()&&Date.parse(draft.expiresAt)-serverNow()<25000)throw failure('challenge_too_short','Queda poco tiempo en el reto anterior. Espera a que caduque e inicia otra prueba.');await loadConfig();emit({phase:'preparing',retry:false,evidence:null,isValid:null,message:'Preparando la transferencia sin firmar. El reto aun no ha comenzado.'});const prepared=await wallet.preparePayment({expected:{amountUnits:config.amountUnits,asset:config.asset,payTo:config.payTo,network:config.network}});if(draft&&Date.parse(draft.expiresAt)<=serverNow()){draft=null;challengeKey=null;}if(!draft){challengeKey ||= newKey();const issued=await api('/api/ads/compatibility/challenge',{method:'POST',body:{},key:challengeKey});syncClock(issued.serverTime);if(Date.parse(issued.expiresAt)<=serverNow()){challengeKey=null;throw failure('challenge_expired','El reto recuperado caduco. Inicia otra prueba explicitamente.');}draft=validateCompatibilityChallenge(issued,config,address,origin,serverNow());if(issued.quota)emit({quota:safeQuota(issued.quota)});}draft=validateCompatibilityChallenge(draft,config,address,origin,serverNow());if(Date.parse(draft.expiresAt)-serverNow()<25000)throw failure('challenge_too_short','Queda poco tiempo en el reto. Inicia otra prueba explicitamente cuando caduque.');emit({phase:'signing',expiresAt:draft.expiresAt,message:'Confirma con tu passkey. El reloj del reto y la vigencia de la firma son independientes.'});const payload=await wallet.signPayment({challenge:draft.challenge,expected:draft.expected,prepared});if(Date.parse(draft.expiresAt)<=serverNow())throw failure('challenge_expired','El reto caduco durante la confirmacion. No se envio la firma.');pending={id:draft.id,payload,key:newKey(),expiresAt:draft.expiresAt};lastAttemptId=draft.id;emit({phase:'verifying',expiresAt:null,message:'Verificando la autorizacion. No se solicitara liquidacion.'});const value=await api('/api/ads/compatibility/'+pending.id+'/verify',{method:'POST',body:{payload},key:pending.key});verdict(value);});}
+ };
 }
-/** Signed payloads stay in this closure only. No settlement, storage or wallet provisioning APIs are used. */
-export function createCompatibilityController({ api = createCompatibilityApi(), walletFactory = createAdsWallet, origin = globalThis.location?.origin, now = Date.now, newKey = () => crypto.randomUUID(), onState = () => {} } = {}) {
-  let config, wallet, address, busy = false, draft = null, pending = null, challengeKey = null;
-  let view = { phase: 'loading', connected: false, retry: false, config: null, address: null, evidence: null, isValid: null, message: 'Comprobando configuración…' };
-  const emit = patch => { view = { ...view, ...patch }; onState({ ...view }); };
-  async function loadConfig() { config = validateCompatibilityConfig(await api('/api/ads/config')); emit({ config: { ...config } }); return config; }
-  async function action(work) {
-    if (busy) return;
-    busy = true;
-    try { return await work(); }
-    catch (error) { if (pending) pending.uncertain = true; emit({ phase: 'error', retry: !!pending, message: error.name === 'NotAllowedError' ? 'La confirmación de passkey se canceló. Puedes volver a intentarlo.' : error.message }); }
-    finally { busy = false; }
-  }
-  return {
-    get state() { return { ...view }; },
-    async load() { return action(async () => { await loadConfig(); emit({ phase: 'ready', message: 'Diagnóstico disponible. Las compras conservan su configuración actual.' }); }); },
-    async connect() { return action(async () => {
-      emit({ phase: 'connecting', connected: false, retry: false, evidence: null, isValid: null, message: 'Selecciona la passkey de tu wallet existente de ONE16.' });
-      draft = null; pending = null; challengeKey = null; address = null;
-      await loadConfig();
-      const walletConfig = await api('/api/wallet/config');
-      wallet = await walletFactory(walletConfig);
-      const connection = await wallet.connect(), session = await wallet.authenticate();
-      if (!/^C[A-Z2-7]{55}$/.test(connection?.address || '') || session.identity?.address !== connection.address || wallet.address !== connection.address) throw failure('identity_mismatch', 'La sesión debe corresponder a la misma wallet C conectada con tu passkey.');
-      address = connection.address;
-      emit({ phase: 'connected', connected: true, address, message: 'Wallet autenticada. Revisa el importe y el receptor antes de autorizar la prueba.' });
-    }); },
-    async verify() { return action(async () => {
-      if (!address || !view.connected || !wallet) throw failure('authentication_required', 'Conecta primero tu passkey existente.');
-      emit({ phase: 'verifying', retry: false, evidence: null, isValid: null, message: pending ? 'Reintentando verificar la misma autorización…' : 'Solicitando un reto de verificación de 5 USDC de prueba…' });
-      if (pending && !pending.uncertain && Date.parse(pending.expiresAt) <= now()) { pending = null; draft = null; challengeKey = null; }
-      if (!pending) {
-        await loadConfig();
-        if (draft && Date.parse(draft.expiresAt) <= now()) { draft = null; challengeKey = null; }
-        if (!draft) {
-          challengeKey ||= newKey();
-          draft = validateCompatibilityChallenge(await api('/api/ads/compatibility/challenge', { method: 'POST', body: {}, key: challengeKey }), config, address, origin, now());
-        }
-        draft = validateCompatibilityChallenge(draft, config, address, origin, now());
-        emit({ message: 'Confirma con tu passkey una autorización de 5 USDC de prueba. Este diagnóstico sólo verificará su validez.' });
-        const payload = await wallet.signPayment({ challenge: draft.challenge, expected: draft.expected });
-        if (Date.parse(draft.expiresAt) <= now()) { draft = null; challengeKey = null; throw failure('challenge_expired', 'El reto caducó durante la confirmación. Inicia otra prueba explícitamente.'); }
-        pending = { id: draft.id, payload, expiresAt: draft.expiresAt, key: newKey() };
-      }
-      const result = compatibilityVerdict(await api('/api/ads/compatibility/' + pending.id + '/verify', { method: 'POST', body: { payload: pending.payload }, key: pending.key }), pending.id, address);
-      if (result.waiting) { pending.uncertain = true; emit({ phase: 'pending', retry: true, isValid: null, evidence: result.evidence, message: 'La verificación original sigue pendiente. Puedes consultar el mismo intento; no se pedirá otra firma ni se solicitará liquidación.' }); return; }
-      pending = null; draft = null; challengeKey = null;
-      emit({ phase: result.isValid ? 'verified' : 'rejected', retry: false, isValid: result.isValid, evidence: result.evidence, message: result.isValid ? 'Verificación aceptada. La autorización no se envió a liquidación. Un operador debe revisar la evidencia antes de habilitar compras.' : 'Verificación rechazada. La autorización no se envió a liquidación; las compras conservan su configuración.'+(result.verificationReason?' '+rejectionMessages[result.verificationReason]:'') });
-    }); },
-  };
-}
+
 export function initCompatibilityPage(documentRef = document, options = {}) {
   const $ = id => documentRef.getElementById(id);
   const controller = createCompatibilityController({ ...options, onState: state => {
-    const busy = ['loading', 'connecting', 'verifying'].includes(state.phase);
-    $('diagnosticStatus').textContent = state.message;
+    const busy = ['loading', 'connecting', 'preparing', 'signing', 'checking', 'verifying'].includes(state.phase);
+    if ($('diagnosticStatus').textContent !== state.message) $('diagnosticStatus').textContent = state.message;
     $('diagnosticStatus').dataset.phase = state.phase;
     $('connectWallet').disabled = busy || !state.config;
-    $('verifyWallet').disabled = busy || !state.connected || !state.config;
-    $('verifyWallet').textContent = state.retry ? 'Reintentar la misma verificación' : 'Autorizar 5 USDC de prueba y verificar';
+    $('verifyWallet').disabled = busy || !state.connected || !state.config || (!state.walletReady && !state.retry) || (state.quotaBlocked && !state.retry) || (state.phase === 'error' && state.remainingMs > 0 && state.remainingMs < 25000);
+    $('verifyWallet').textContent = state.retry ? 'Consultar el intento original' : 'Autorizar 5 USDC de prueba y verificar';
+    if ($('challengeClock')) $('challengeClock').textContent=state.remainingMs==null?(state.phase==='verifying'?'Autorizacion enviada; esperando el resultado.':'El reto comienza despues de preparar la transferencia.'):'Reto: '+Math.ceil(state.remainingMs/1000)+' s para enviar la autorizacion.';
+    if ($('quotaStatus')) $('quotaStatus').textContent=state.quota?('Cupo: '+state.quota.remaining+' de '+state.quota.limit+' verificaciones disponibles.'+(state.quota.retryAt?' Disponible de nuevo: '+new Date(state.quota.retryAt).toLocaleString()+'.':state.retryInMs>0?' Espera '+Math.ceil(state.retryInMs/1000)+' s.':'')):'';
     $('connectedAddress').textContent = state.address || 'Passkey sin conectar';
     $('recipientAddress').textContent = state.config?.payTo || 'Pendiente de confirmar';
     $('tokenAddress').textContent = state.config?.asset || 'Pendiente de confirmar';
@@ -116,6 +81,7 @@ export function initCompatibilityPage(documentRef = document, options = {}) {
   } });
   $('connectWallet').addEventListener('click', () => { void controller.connect(); });
   $('verifyWallet').addEventListener('click', () => { void controller.verify(); });
+  const timer=globalThis.setInterval?.(()=>controller.tick(),1000);globalThis.addEventListener?.('pagehide',()=>globalThis.clearInterval(timer),{once:true});
   void controller.load();
   return controller;
 }

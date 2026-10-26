@@ -20,6 +20,7 @@
     <section class="panel" aria-labelledby="reviewTitle">
       <h2 id="reviewTitle">Revisa esta prueba.</h2>
       <dl class="diagnostic-details"><div><dt>Red</dt><dd>Stellar Testnet</dd></div><div><dt>Importe autorizado</dt><dd>5 USDC de prueba</dd></div><div><dt>Receptor publicado</dt><dd id="recipientAddress" class="mono">Pendiente de confirmar</dd></div><div><dt>Contrato del token</dt><dd id="tokenAddress" class="mono">Pendiente de confirmar</dd></div><div><dt>Wallet conectada</dt><dd id="connectedAddress" class="mono">Passkey sin conectar</dd></div></dl>
+      <p id="challengeClock" class="small"></p><p class="hint">La vigencia de la firma se comprueba en Stellar y puede caducar antes que el reto.</p><p id="quotaStatus" class="small" aria-live="off"></p>
       <p id="checkoutStatus" class="small">Sin configuración verificable</p>
       <div class="diagnostic-actions"><button id="connectWallet" class="button quiet" type="button" disabled>Conectar mi passkey existente</button><button id="verifyWallet" class="button primary" type="button" disabled>Autorizar 5 USDC de prueba y verificar</button></div>
       <p id="diagnosticStatus" role="status" aria-live="polite">Comprobando configuración…</p>
