@@ -54,7 +54,7 @@ export function mountVenueUI(documentRef, { onInteract = () => {} } = {}) {
     if (bottom) view.style.setProperty('--venue-hud-bottom', `${Math.ceil(bottom)}px`);
     const mapBounds = minimap.getBoundingClientRect();
     view.style.setProperty('--venue-map-height', `${Math.ceil(mapBounds.height)}px`);
-    rectangles = [hud, panel, guide, get('helpPanel'), get('nearPassport'), get('nearActivation')]
+    rectangles = [hud, panel, guide, get('helpPanel'), get('nearPassport'), get('nearActivation'), get('kickFootball')]
       .filter(element => element && !element.hidden)
       .map(element => element.getBoundingClientRect())
       .filter(rect => rect.width > 0 && rect.height > 0)

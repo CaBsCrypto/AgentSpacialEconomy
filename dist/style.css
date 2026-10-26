@@ -117,3 +117,8 @@
  .venue-ui #overviewGuide{max-height:calc(100dvh - var(--venue-hud-bottom) - 20px)}
 }
 @media(max-width:350px){.venue-ui #walkMinimap{width:110px}.venue-ui #venueHud{gap:5px}.venue-ui .toolbar button{font-size:12px;padding:10px 6px}}
+
+/* The football action stays next to the existing nearby-experience controls. */
+#viewer.venue-ui #kickFootball{position:absolute;z-index:23;right:var(--venue-edge);bottom:calc(max(12px,env(safe-area-inset-bottom,0px)) + var(--venue-map-height) + 10px);min-height:44px;min-width:148px;padding:10px 16px;font-size:14px;border-radius:10px;background:#f5da72;color:#172019}
+.venue-ui.zones-open #kickFootball{visibility:hidden}
+#kickFootball:disabled{opacity:.65}
