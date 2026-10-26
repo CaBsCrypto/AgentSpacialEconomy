@@ -1,9 +1,9 @@
 // Lossless transfer; one original-GLB fallback if gzip is unsupported or fails.
 export async function fetchModel({onProgress=()=>{},fetcher=fetch,decompressor=globalThis.DecompressionStream}={}){
  async function transfer(compressed){
-  const response=await fetcher(compressed?'./assets/one16.glb.gz?v=29036fc3df13':'./assets/one16.glb?v=29036fc3df13');
+  const response=await fetcher(compressed?'./assets/one16.glb.gz?v=d9723dabddc5':'./assets/one16.glb?v=d9723dabddc5');
   if(!response.ok)throw Error(`Modelo: HTTP ${response.status}`);
-  const total=Number(response.headers.get('content-length'))||(compressed?4785964:15222868);
+  const total=Number(response.headers.get('content-length'))||(compressed?4212324:10849984);
   let loaded=0;
   const progress=new TransformStream({transform(chunk,controller){loaded+=chunk.byteLength;onProgress({loaded,total});controller.enqueue(chunk)}});
   let payload=await new Response(response.body.pipeThrough(progress)).arrayBuffer();
@@ -19,7 +19,7 @@ export async function fetchModel({onProgress=()=>{},fetcher=fetch,decompressor=g
  if(typeof decompressor!=='function')return transfer(false);
  try{return await transfer(true)}catch(error){
   if(error?.name==='AbortError')throw error;
-  onProgress({loaded:0,total:15222868});
+  onProgress({loaded:0,total:10849984});
   return transfer(false);
  }
 }

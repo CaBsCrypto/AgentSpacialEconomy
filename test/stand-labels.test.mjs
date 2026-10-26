@@ -64,3 +64,37 @@ test('facing visitor counters retain a 1.05m passage and the lateral Passport en
  const model=await parse(),origin=new T.Vector3(zone.view.x,1.45,zone.view.z),direction=new T.Vector3(PASSPORT_STAND.x-origin.x,0,PASSPORT_STAND.z-origin.z).normalize();
  const hit=new T.Raycaster(origin,direction).intersectObject(model,true)[0];assert(hit&&isPassportStandObject(hit.object));
 });
+
+
+test('the physical Passport book rests enlarged on its assigned desk and faces the stage-side visitor',async()=>{
+ const model=await parse(),display=layout.passportDisplay,table=layout.exhibition.positions.find(p=>p.graphic==='booth-passport').table;
+ const book=model.getObjectByName('Passport_proposed_AR_display');assert(book);
+ const bounds=new T.Box3().setFromObject(book),size=bounds.getSize(new T.Vector3());
+ assert.equal(display.tableId,'booth-passport');assert.equal(display.support,'tabletop');
+ assert(size.x>=.30&&size.x<=.40,'physical Passport was not enlarged to the requested tabletop width');
+ assert(Math.abs(size.x-display.bookWidth)<1e-4);
+ assert(Math.abs(bounds.min.y-(table.top+.05))<1e-4,'book floats above or sinks through its small plinth');
+ assert(Math.abs(book.position.x-display.position.x)<1e-4&&Math.abs(book.position.z-display.position.z)<1e-4);
+ let cover;book.traverse(object=>{if(object.name.startsWith('Passport_exact_supplied_front'))cover=object;});assert(cover);
+ const normal=new T.Vector3().fromBufferAttribute(cover.geometry.attributes.normal,0).applyMatrix3(new T.Matrix3().getNormalMatrix(cover.matrixWorld)).normalize();
+ assert(normal.z<-.85&&normal.y>.49,'the exact cover does not face the stage-side visitor upright');
+ assert(!model.getObjectByName('Passport_proposed_pedestal'),'old entry-hall pedestal remains in the model');
+});
+
+test('all eight staff chairs stand on the floor and clear their own desk and divider',async()=>{
+ const model=await parse(),chairs=[];
+ model.traverse(o=>{if(o.userData.role==='venue-chair'&&o.name.startsWith('Stands_staff_chair_'))chairs.push(o)});
+ assert.equal(chairs.length,8);
+ for(const position of layout.exhibition.positions){
+  const chair=chairs.find(o=>o.name.endsWith(position.graphic));assert(chair,position.graphic);
+  const b=new T.Box3().setFromObject(chair),c=position.chair,t=position.table;
+  assert(Math.abs(b.min.y)<1e-5&&b.max.y<.88,position.graphic+' floor support');
+  assert(b.min.x>=c.x-c.width/2-1e-5&&b.max.x<=c.x+c.width/2+1e-5);
+  assert(b.min.z>=c.z-c.depth/2-1e-5&&b.max.z<=c.z+c.depth/2+1e-5);
+  const tabletop={minX:t.x-t.width/2,maxX:t.x+t.width/2,minZ:t.z-t.depth/2,maxZ:t.z+t.depth/2};
+  const overlap=box=>Math.min(b.max.x,box.maxX)-Math.max(b.min.x,box.minX)>1e-5&&Math.min(b.max.z,box.maxZ)-Math.max(b.min.z,box.minZ)>1e-5;
+  assert(!overlap(tabletop),position.graphic+' chair intersects desk');
+  const z=position.row===1?-27.8:-32;
+  assert(!overlap({minX:t.x-1.8,maxX:t.x+1.8,minZ:z-.05,maxZ:z+.05}),position.graphic+' chair intersects divider');
+ }
+});

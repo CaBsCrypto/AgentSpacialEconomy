@@ -43,8 +43,8 @@ function watchResources(root) {
 
 test('overlapping Palta mounts remove only their own collision object and dispose once', async () => {
   const scene = new THREE.Scene(), unrelated = { id: 'existing' }, layout = { obstacles: [unrelated] };
-  const first = await mount(scene, layout), firstObstacle = layout.obstacles[1];
-  const second = await mount(scene, layout), secondObstacle = layout.obstacles[2];
+  const first = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), firstObstacle = layout.obstacles[1];
+  const second = await mount(scene, layout, {position:[0,0,0],floorCollision:true}), secondObstacle = layout.obstacles[2];
   const resources = watchResources(first.root);
   assert.notEqual(firstObstacle, secondObstacle);
   assert.equal(scene.children.length, 2);

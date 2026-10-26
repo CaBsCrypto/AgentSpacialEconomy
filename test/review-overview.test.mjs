@@ -12,7 +12,7 @@ test('20 coincident labels separate with24px clearance, anchors preserved and no
 class El{constructor(doc){this.ownerDocument=doc;this.style={};this.dataset={};this.children=[];}replaceChildren(){this.children=[];}append(...e){this.children.push(...e);}setAttribute(k,v){this[k]=v;}}
 test('overview module makes23 noninteractive spans with stable IDs and leader elements',()=>{
  const doc={createElement(tag){assert.equal(tag,'span');return new El(doc);}},layer=new El(doc),api=createReviewOverview(layer);assert.equal(api.entries.length,23);assert.equal(layer.children.length,69);assert.equal(layer.style.pointerEvents,'none');assert.deepEqual(api.entries.map(e=>e.badge.dataset.reviewId),['1',...Array.from({length:22},(_,i)=>String(i+4))]);
- const camera=new PerspectiveCamera(60,1,.1,300);camera.position.set(0,110,0);camera.lookAt(0,0,0);api.update(camera,new Vector3(),600,600,true);assert.equal(layer.hidden,false);assert(api.entries.every(e=>!e.badge.hidden));assert(api.entries.find(e=>e.section.id===11).badge.title.includes('PROVISIONAL'));
+ const camera=new PerspectiveCamera(60,1,.1,300);camera.position.set(0,110,0);camera.lookAt(0,0,0);api.update(camera,new Vector3(),600,600,true);assert.equal(layer.hidden,false);assert(api.entries.every(e=>!e.badge.hidden));assert(api.entries.find(e=>e.section.id===11).badge.title.includes('mesa Stellar Passport'));
  api.update(camera,new Vector3(),600,600,false);assert.equal(layer.hidden,true);api.update(camera,new Vector3(),0,600,true);assert.equal(layer.hidden,true);
 });
 

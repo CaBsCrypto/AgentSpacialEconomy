@@ -171,15 +171,18 @@ def booth_tabletop(key,labels):
 
 
 def booth_divider_pattern():
-    c=Canvas(2048,1162,DARK)
+    # Wider physical dividers get an extra column, with the same metric logo size.
+    # Keep the longest raster edge within the 2K mobile texture budget.
+    c=Canvas(2048,936,DARK);scale=936/1162
     marks=[]
     for row in range(4):
-        y=65+row*275
-        for col in range(6):
-            x=34+col*338;kind=["meridian","year","stellar"][(row+col)%3]
-            brand(c,x,y,282,118,kind,WHITE)
-            marks.append({"kind":kind,"box":[x,y,x+282,y+118]})
-    c.layout={"support":"divider","physicalSize":[2.82,1.60],"repeatRows":4,"repeatMarks":marks}
+        y=(65+row*275)*scale
+        for col in range(7):
+            width=282*scale;height=118*scale
+            x=(2048/7-width)/2+col*2048/7;kind=["meridian","year","stellar"][(row+col)%3]
+            brand(c,x,y,width,height,kind,WHITE)
+            marks.append({"kind":kind,"box":[x,y,x+width,y+height]})
+    c.layout={"support":"divider","physicalSize":[3.5,1.60],"repeatRows":4,"repeatColumns":7,"repeatMarks":marks}
     return c
 
 

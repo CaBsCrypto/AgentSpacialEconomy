@@ -78,15 +78,15 @@ test("collision square matches the venue's obstacle format", () => {
   assert.deepEqual(b, { minX: 4.95, maxX: 5.65, minZ: -5.35, maxZ: -4.65, id: "palta-reveal" });
 });
 
-test("default spot is inside the activation area and clear of the kiosk and Passport", () => {
+test("default spot belongs to the DeFindex / Soroswap table and adds no floor obstacle", () => {
   const layout = JSON.parse(readFileSync(new URL("../dist/assets/layout.json", import.meta.url), "utf8"));
-  const b = paltaObstacle(PALTA_DEFAULTS.position);
-  const overlaps = layout.obstacles.filter((o) => o.minX < b.maxX && o.maxX > b.minX && o.minZ < b.maxZ && o.maxZ > b.minZ);
-  assert.deepEqual(overlaps, []);
-  const act = layout.zones.find((z) => z.id === "activation");
-  const xs = act.polygon.map((p) => p[0]), zs = act.polygon.map((p) => p[1]);
-  const [x, , z] = PALTA_DEFAULTS.position;
-  assert.ok(x >= Math.min(...xs) && x <= Math.max(...xs) && z >= Math.min(...zs) && z <= Math.max(...zs));
+  const stand = layout.exhibition.positions.find(p => p.graphic === PALTA_DEFAULTS.tableId);
+  assert.equal(PALTA_DEFAULTS.tableId, "booth-defindex-soroswap");
+  assert.equal(PALTA_DEFAULTS.floorCollision, false);
+  assert.equal(PALTA_DEFAULTS.scale, .45);
+  assert.deepEqual([stand.table.x, stand.table.z], [-4, -30.8]);
+  assert.deepEqual(PALTA_DEFAULTS.position, [stand.table.x + PALTA_DEFAULTS.tableOffset[0], stand.table.top + PALTA_DEFAULTS.tableOffset[1], stand.table.z + PALTA_DEFAULTS.tableOffset[2]]);
+  assert.equal(stand.hardware, false);
 });
 
 test("GLB has the nodes and animations the module relies on", { skip: !existsSync(GLB) }, () => {
@@ -105,7 +105,7 @@ test("GLB has the nodes and animations the module relies on", { skip: !existsSyn
   assert.ok(readFileSync(GLB).length < 2.5e6, "keep the asset light for phones");
 });
 
-async function mountHeadless(reducedMotion) {
+async function mountHeadless(reducedMotion, options = {}) {
   const bytes = readFileSync(GLB);
   class HeadlessGLTFLoader {
     loadAsync() {
@@ -121,13 +121,32 @@ async function mountHeadless(reducedMotion) {
   const previous = Object.getOwnPropertyDescriptor(globalThis, "matchMedia");
   Object.defineProperty(globalThis, "matchMedia", { configurable: true, value: () => ({ matches: reducedMotion }) });
   try {
-    const palta = await mountPaltaReveal(THREE, scene, { GLTFLoader: HeadlessGLTFLoader, position: [0, 0, 0], yaw: 0, camera, layout });
+    const palta = await mountPaltaReveal(THREE, scene, { GLTFLoader: HeadlessGLTFLoader, position: [0, 0, 0], scale: 1, floorCollision: true, yaw: 0, camera, layout, ...options });
     return { palta, scene, camera, layout };
   } finally {
     if (previous) Object.defineProperty(globalThis, "matchMedia", previous);
     else delete globalThis.matchMedia;
   }
 }
+
+test("tabletop Palta retains its real animated scale, rests inside the desk and never duplicates floor collision", async (t) => {
+  const table = {x: -4, z: -30.8, top: .79, width: 1.95, depth: .75};
+  const layout = {obstacles: [{minX: -5.01, maxX: -2.99, minZ: -31.175, maxZ: -30.425}], exhibition: {positions: [{graphic: "booth-defindex-soroswap", table}]}};
+  const before = [...layout.obstacles];
+  const {palta} = await mountHeadless(true, {...PALTA_DEFAULTS, layout});
+  t.after(() => palta.dispose());
+  palta.open();palta.root.updateMatrixWorld(true);
+  assert.deepEqual(palta.root.scale.toArray(), [.45,.45,.45]);
+  assert.deepEqual(palta.root.position.toArray(), PALTA_DEFAULTS.position);
+  assert.deepEqual(layout.obstacles, before);
+  const pedestal = new THREE.Box3().setFromObject(palta.root.getObjectByName(NODE.pedestal));
+  assert(Math.abs(pedestal.min.y-(table.top+.005))<1e-6);
+  assert(pedestal.min.x>table.x-table.width/2&&pedestal.max.x<table.x+table.width/2);
+  assert(pedestal.min.z>table.z-table.depth/2&&pedestal.max.z<table.z+table.depth/2);
+  const full = new THREE.Box3().setFromObject(palta.root);
+  assert(full.max.y-table.top>.8&&full.max.y-table.top<1.12,'table display no longer has its intended metre-scale presence');
+  palta.dispose();assert.deepEqual(layout.obstacles, before);
+});
 
 function animationPose(root) {
   return ["palta_half_right", "palta_half_left", NODE.medallion, "palta_medallion_float", "palta_glow_ring", "palta_glow_spin", "palta_logo_soroswap", "palta_logo_defindex"].map((name) => {

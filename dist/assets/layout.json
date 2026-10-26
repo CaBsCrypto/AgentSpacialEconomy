@@ -691,139 +691,897 @@
       "minX": -13.2,
       "maxX": -10.8,
       "minZ": -20.5,
-      "maxZ": -19.5
+      "maxZ": -19.5,
+      "seatingId": "hack-table-01",
+      "seatingKind": "table"
     },
     {
-      "minX": -13.35,
-      "maxX": -10.65,
-      "minZ": -21.125,
-      "maxZ": -18.875
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-001",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-002",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-003",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-004",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-005",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-006",
+      "seatingKind": "chair"
     },
     {
       "minX": -13.2,
       "maxX": -10.8,
       "minZ": -24.5,
-      "maxZ": -23.5
+      "maxZ": -23.5,
+      "seatingId": "hack-table-02",
+      "seatingKind": "table"
     },
     {
-      "minX": -13.35,
-      "maxX": -10.65,
-      "minZ": -25.125,
-      "maxZ": -22.875
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-007",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-008",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-009",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-010",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-011",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-012",
+      "seatingKind": "chair"
     },
     {
       "minX": -13.2,
       "maxX": -10.8,
       "minZ": -28.5,
-      "maxZ": -27.5
+      "maxZ": -27.5,
+      "seatingId": "hack-table-03",
+      "seatingKind": "table"
     },
     {
-      "minX": -13.35,
-      "maxX": -10.65,
-      "minZ": -29.125,
-      "maxZ": -26.875
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-013",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-014",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-015",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-016",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-017",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-018",
+      "seatingKind": "chair"
     },
     {
       "minX": -13.2,
       "maxX": -10.8,
       "minZ": -32.5,
-      "maxZ": -31.5
+      "maxZ": -31.5,
+      "seatingId": "hack-table-04",
+      "seatingKind": "table"
     },
     {
-      "minX": -13.35,
-      "maxX": -10.65,
-      "minZ": -33.125,
-      "maxZ": -30.875
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-019",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-020",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-021",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-022",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-023",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-024",
+      "seatingKind": "chair"
     },
     {
       "minX": -13.2,
       "maxX": -10.8,
       "minZ": -36.5,
-      "maxZ": -35.5
+      "maxZ": -35.5,
+      "seatingId": "hack-table-05",
+      "seatingKind": "table"
     },
     {
-      "minX": -13.35,
-      "maxX": -10.65,
-      "minZ": -37.125,
-      "maxZ": -34.875
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-025",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -13.07,
+      "maxX": -12.53,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-026",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-027",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -12.27,
+      "maxX": -11.73,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-028",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-029",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -11.47,
+      "maxX": -10.93,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-030",
+      "seatingKind": "chair"
     },
     {
       "minX": -9.2,
       "maxX": -6.8,
       "minZ": -20.5,
-      "maxZ": -19.5
+      "maxZ": -19.5,
+      "seatingId": "hack-table-06",
+      "seatingKind": "table"
     },
     {
-      "minX": -9.35,
-      "maxX": -6.65,
-      "minZ": -21.125,
-      "maxZ": -18.875
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-031",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-032",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-033",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-034",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -19.27,
+      "maxZ": -18.65,
+      "seatingId": "hack-chair-035",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -21.35,
+      "maxZ": -20.73,
+      "seatingId": "hack-chair-036",
+      "seatingKind": "chair"
     },
     {
       "minX": -9.2,
       "maxX": -6.8,
       "minZ": -24.5,
-      "maxZ": -23.5
+      "maxZ": -23.5,
+      "seatingId": "hack-table-07",
+      "seatingKind": "table"
     },
     {
-      "minX": -9.35,
-      "maxX": -6.65,
-      "minZ": -25.125,
-      "maxZ": -22.875
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-037",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-038",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-039",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-040",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -23.27,
+      "maxZ": -22.65,
+      "seatingId": "hack-chair-041",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -25.35,
+      "maxZ": -24.73,
+      "seatingId": "hack-chair-042",
+      "seatingKind": "chair"
     },
     {
       "minX": -9.2,
       "maxX": -6.8,
       "minZ": -28.5,
-      "maxZ": -27.5
+      "maxZ": -27.5,
+      "seatingId": "hack-table-08",
+      "seatingKind": "table"
     },
     {
-      "minX": -9.35,
-      "maxX": -6.65,
-      "minZ": -29.125,
-      "maxZ": -26.875
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-043",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-044",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-045",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-046",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -27.27,
+      "maxZ": -26.65,
+      "seatingId": "hack-chair-047",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -29.35,
+      "maxZ": -28.73,
+      "seatingId": "hack-chair-048",
+      "seatingKind": "chair"
     },
     {
       "minX": -9.2,
       "maxX": -6.8,
       "minZ": -32.5,
-      "maxZ": -31.5
+      "maxZ": -31.5,
+      "seatingId": "hack-table-09",
+      "seatingKind": "table"
     },
     {
-      "minX": -9.35,
-      "maxX": -6.65,
-      "minZ": -33.125,
-      "maxZ": -30.875
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-049",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-050",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-051",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-052",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -31.27,
+      "maxZ": -30.65,
+      "seatingId": "hack-chair-053",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -33.35,
+      "maxZ": -32.73,
+      "seatingId": "hack-chair-054",
+      "seatingKind": "chair"
     },
     {
       "minX": -9.2,
       "maxX": -6.8,
       "minZ": -36.5,
-      "maxZ": -35.5
+      "maxZ": -35.5,
+      "seatingId": "hack-table-10",
+      "seatingKind": "table"
     },
     {
-      "minX": -9.35,
-      "maxX": -6.65,
-      "minZ": -37.125,
-      "maxZ": -34.875
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-055",
+      "seatingKind": "chair"
     },
     {
-      "minX": -5.775,
-      "maxX": -5.425,
-      "minZ": -37.8,
-      "maxZ": -29.8
+      "minX": -9.07,
+      "maxX": -8.53,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-056",
+      "seatingKind": "chair"
     },
     {
-      "minX": -3.95,
-      "maxX": -1.55,
-      "minZ": -42.05,
-      "maxZ": -34.55
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-057",
+      "seatingKind": "chair"
     },
     {
-      "minX": 1.55,
-      "maxX": 3.95,
-      "minZ": -42.05,
-      "maxZ": -34.55
+      "minX": -8.27,
+      "maxX": -7.73,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-058",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -35.27,
+      "maxZ": -34.65,
+      "seatingId": "hack-chair-059",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -7.47,
+      "maxX": -6.93,
+      "minZ": -37.35,
+      "maxZ": -36.73,
+      "seatingId": "hack-chair-060",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-061",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-062",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-063",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-064",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-065",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -35.31,
+      "maxZ": -34.69,
+      "seatingId": "auditorium-chair-066",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-067",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-068",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-069",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-070",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-071",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -36.41,
+      "maxZ": -35.79,
+      "seatingId": "auditorium-chair-072",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-073",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-074",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-075",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-076",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-077",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -37.51,
+      "maxZ": -36.89,
+      "seatingId": "auditorium-chair-078",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-079",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-080",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-081",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-082",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-083",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -38.61,
+      "maxZ": -37.99,
+      "seatingId": "auditorium-chair-084",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-085",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-086",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-087",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-088",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-089",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -39.71,
+      "maxZ": -39.09,
+      "seatingId": "auditorium-chair-090",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-091",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-092",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-093",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-094",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-095",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -40.81,
+      "maxZ": -40.19,
+      "seatingId": "auditorium-chair-096",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.77,
+      "maxX": -3.23,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-097",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.02,
+      "maxX": -2.48,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-098",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.27,
+      "maxX": -1.73,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-099",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.73,
+      "maxX": 2.27,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-100",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.48,
+      "maxX": 3.02,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-101",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.23,
+      "maxX": 3.77,
+      "minZ": -41.91,
+      "maxZ": -41.29,
+      "seatingId": "auditorium-chair-102",
+      "seatingKind": "chair"
     },
     {
       "minX": -4.5,
@@ -838,34 +1596,170 @@
       "maxZ": -42.9
     },
     {
-      "minX": 6.4,
-      "maxX": 7.6,
-      "minZ": -4.6,
-      "maxZ": -3.4
-    },
-    {
-      "minX": 2.1,
-      "maxX": 3.9,
-      "minZ": -17.9,
-      "maxZ": -16.1
-    },
-    {
-      "minX": -0.9,
-      "maxX": 0.9,
-      "minZ": -21.9,
-      "maxZ": -20.1
-    },
-    {
-      "minX": 2.1,
-      "maxX": 3.9,
-      "minZ": -25.9,
-      "maxZ": -24.1
+      "minX": 2.3,
+      "maxX": 3.5,
+      "minZ": -9.8,
+      "maxZ": -8.6
     },
     {
       "minX": -2.9,
-      "maxX": -1.1,
-      "minZ": -17.9,
-      "maxZ": -16.1
+      "maxX": -1.7,
+      "minZ": -17.8,
+      "maxZ": -16.6,
+      "seatingId": "cafe-table-11",
+      "seatingKind": "table"
+    },
+    {
+      "minX": -2.57,
+      "maxX": -2.03,
+      "minZ": -16.41,
+      "maxZ": -15.79,
+      "seatingId": "cafe-chair-103",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.57,
+      "maxX": -2.03,
+      "minZ": -18.61,
+      "maxZ": -17.99,
+      "seatingId": "cafe-chair-104",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -3.71,
+      "maxX": -3.09,
+      "minZ": -17.47,
+      "maxZ": -16.93,
+      "seatingId": "cafe-chair-105",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -1.51,
+      "maxX": -0.89,
+      "minZ": -17.47,
+      "maxZ": -16.93,
+      "seatingId": "cafe-chair-106",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.8,
+      "maxX": 3.0,
+      "minZ": -17.8,
+      "maxZ": -16.6,
+      "seatingId": "cafe-table-12",
+      "seatingKind": "table"
+    },
+    {
+      "minX": 2.13,
+      "maxX": 2.67,
+      "minZ": -16.41,
+      "maxZ": -15.79,
+      "seatingId": "cafe-chair-107",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.13,
+      "maxX": 2.67,
+      "minZ": -18.61,
+      "maxZ": -17.99,
+      "seatingId": "cafe-chair-108",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 0.99,
+      "maxX": 1.61,
+      "minZ": -17.47,
+      "maxZ": -16.93,
+      "seatingId": "cafe-chair-109",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 3.19,
+      "maxX": 3.81,
+      "minZ": -17.47,
+      "maxZ": -16.93,
+      "seatingId": "cafe-chair-110",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -1.4,
+      "maxX": -0.2,
+      "minZ": -21.9,
+      "maxZ": -20.7,
+      "seatingId": "cafe-table-13",
+      "seatingKind": "table"
+    },
+    {
+      "minX": -1.07,
+      "maxX": -0.53,
+      "minZ": -20.51,
+      "maxZ": -19.89,
+      "seatingId": "cafe-chair-111",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -1.07,
+      "maxX": -0.53,
+      "minZ": -22.71,
+      "maxZ": -22.09,
+      "seatingId": "cafe-chair-112",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -2.21,
+      "maxX": -1.59,
+      "minZ": -21.57,
+      "maxZ": -21.03,
+      "seatingId": "cafe-chair-113",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": -0.01,
+      "maxX": 0.61,
+      "minZ": -21.57,
+      "maxZ": -21.03,
+      "seatingId": "cafe-chair-114",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.2,
+      "maxX": 2.4,
+      "minZ": -25.35,
+      "maxZ": -24.15,
+      "seatingId": "cafe-table-14",
+      "seatingKind": "table"
+    },
+    {
+      "minX": 1.53,
+      "maxX": 2.07,
+      "minZ": -23.96,
+      "maxZ": -23.34,
+      "seatingId": "cafe-chair-115",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 1.53,
+      "maxX": 2.07,
+      "minZ": -26.16,
+      "maxZ": -25.54,
+      "seatingId": "cafe-chair-116",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 0.39,
+      "maxX": 1.01,
+      "minZ": -25.02,
+      "maxZ": -24.48,
+      "seatingId": "cafe-chair-117",
+      "seatingKind": "chair"
+    },
+    {
+      "minX": 2.59,
+      "maxX": 3.21,
+      "minZ": -25.02,
+      "maxZ": -24.48,
+      "seatingId": "cafe-chair-118",
+      "seatingKind": "chair"
     },
     {
       "minX": -3.88,
@@ -880,130 +1774,124 @@
       "maxZ": 33.4
     },
     {
-      "minX": 8.375,
-      "maxX": 9.025,
-      "minZ": -3.325,
-      "maxZ": -2.675
-    },
-    {
-      "minX": -5.1,
+      "minX": -5.8,
       "maxX": -2.2,
       "minZ": -27.88,
       "maxZ": -27.72
     },
     {
-      "minX": -4.66,
-      "maxX": -2.64,
+      "minX": -5.01,
+      "maxX": -2.99,
       "minZ": -26.875,
       "maxZ": -26.125
     },
     {
-      "minX": -4.435,
-      "maxX": -3.965,
-      "minZ": -27.225,
-      "maxZ": -26.775
+      "minX": -4.82,
+      "maxX": -4.28,
+      "minZ": -27.58,
+      "maxZ": -26.96
     },
     {
-      "minX": -4.66,
-      "maxX": -2.64,
+      "minX": -5.01,
+      "maxX": -2.99,
       "minZ": -29.375,
       "maxZ": -28.625
     },
     {
-      "minX": -4.435,
-      "maxX": -3.965,
-      "minZ": -28.725,
-      "maxZ": -28.275
+      "minX": -4.82,
+      "maxX": -4.28,
+      "minZ": -28.54,
+      "maxZ": -27.92
     },
     {
-      "minX": -5.1,
+      "minX": -5.8,
       "maxX": -2.2,
       "minZ": -32.08,
       "maxZ": -31.92
     },
     {
-      "minX": -4.66,
-      "maxX": -2.64,
+      "minX": -5.01,
+      "maxX": -2.99,
       "minZ": -31.175,
       "maxZ": -30.425
     },
     {
-      "minX": -4.435,
-      "maxX": -3.965,
-      "minZ": -31.525,
-      "maxZ": -31.075
+      "minX": -4.82,
+      "maxX": -4.28,
+      "minZ": -31.88,
+      "maxZ": -31.26
     },
     {
-      "minX": -4.66,
-      "maxX": -2.64,
+      "minX": -5.01,
+      "maxX": -2.99,
       "minZ": -33.975,
       "maxZ": -33.225
     },
     {
-      "minX": -4.435,
-      "maxX": -3.965,
-      "minZ": -33.325,
-      "maxZ": -32.875
+      "minX": -4.82,
+      "maxX": -4.28,
+      "minZ": -33.14,
+      "maxZ": -32.52
     },
     {
       "minX": 2.2,
-      "maxX": 5.1,
+      "maxX": 5.8,
       "minZ": -27.88,
       "maxZ": -27.72
     },
     {
-      "minX": 2.64,
-      "maxX": 4.66,
+      "minX": 2.99,
+      "maxX": 5.01,
       "minZ": -26.875,
       "maxZ": -26.125
     },
     {
-      "minX": 3.965,
-      "maxX": 4.435,
-      "minZ": -27.225,
-      "maxZ": -26.775
+      "minX": 4.28,
+      "maxX": 4.82,
+      "minZ": -27.58,
+      "maxZ": -26.96
     },
     {
-      "minX": 2.64,
-      "maxX": 4.66,
+      "minX": 2.99,
+      "maxX": 5.01,
       "minZ": -29.375,
       "maxZ": -28.625
     },
     {
-      "minX": 3.965,
-      "maxX": 4.435,
-      "minZ": -28.725,
-      "maxZ": -28.275
+      "minX": 4.28,
+      "maxX": 4.82,
+      "minZ": -28.54,
+      "maxZ": -27.92
     },
     {
       "minX": 2.2,
-      "maxX": 5.1,
+      "maxX": 5.8,
       "minZ": -32.08,
       "maxZ": -31.92
     },
     {
-      "minX": 2.64,
-      "maxX": 4.66,
+      "minX": 2.99,
+      "maxX": 5.01,
       "minZ": -31.175,
       "maxZ": -30.425
     },
     {
-      "minX": 3.965,
-      "maxX": 4.435,
-      "minZ": -31.525,
-      "maxZ": -31.075
+      "minX": 4.28,
+      "maxX": 4.82,
+      "minZ": -31.88,
+      "maxZ": -31.26
     },
     {
-      "minX": 2.64,
-      "maxX": 4.66,
+      "minX": 2.99,
+      "maxX": 5.01,
       "minZ": -33.975,
       "maxZ": -33.225
     },
     {
-      "minX": 3.965,
-      "maxX": 4.435,
-      "minZ": -33.325,
-      "maxZ": -32.875
+      "minX": 4.28,
+      "maxX": 4.82,
+      "minZ": -33.14,
+      "maxZ": -32.52
     },
     {
       "part": "giant-keyboard",
@@ -1242,6 +2130,22 @@
         ],
         [
           3.3,
+          -11.8
+        ],
+        [
+          1.55,
+          -11.8
+        ],
+        [
+          1.55,
+          -7.8
+        ],
+        [
+          3.3,
+          -7.8
+        ],
+        [
+          3.3,
           -6.5
         ],
         [
@@ -1413,36 +2317,38 @@
         ]
       ],
       "view": {
-        "x": 5,
-        "z": -18,
-        "yaw": 0.8
+        "x": 0,
+        "z": -15,
+        "yaw": 0,
+        "pitch": -0.12
       }
     },
     {
       "id": "activation",
-      "label": "Activación Stellar · concepto Testnet",
+      "label": "Tótem · wallet y USDC de prueba",
       "polygon": [
         [
-          5,
-          -6.5
+          1.55,
+          -11.8
         ],
         [
-          8,
-          -6.5
+          3.5,
+          -11.8
         ],
         [
-          8,
-          -0.8
+          3.5,
+          -7.8
         ],
         [
-          5,
-          -0.8
+          1.55,
+          -7.8
         ]
       ],
       "view": {
-        "x": 5.8,
-        "z": -1.4,
-        "yaw": -0.418
+        "x": 2.9,
+        "z": -7.9,
+        "yaw": 0,
+        "pitch": -0.12
       },
       "status": "Proposed Testnet concept; not installed"
     },
@@ -1475,35 +2381,6 @@
       }
     },
     {
-      "id": "passport",
-      "label": "Passport · demostración AR",
-      "polygon": [
-        [
-          8,
-          -3.8
-        ],
-        [
-          9.5,
-          -3.8
-        ],
-        [
-          9.5,
-          -1.0
-        ],
-        [
-          8,
-          -1.0
-        ]
-      ],
-      "view": {
-        "x": 8.7,
-        "z": -1.6,
-        "yaw": 0,
-        "pitch": -0.2
-      },
-      "status": "Proposed AR demonstration; not an observed installation or account."
-    },
-    {
       "id": "passport-stand16",
       "label": "Stellar Passport · stand 16",
       "polygon": [
@@ -1533,23 +2410,52 @@
       "status": "Passport image-tracking demo on reverse of Trustless Work / Grantfox."
     },
     {
+      "id": "passport",
+      "label": "Passport · demostración AR en mesa Stellar Passport",
+      "polygon": [
+        [
+          3.6,
+          -30.25
+        ],
+        [
+          5.6,
+          -30.25
+        ],
+        [
+          5.6,
+          -29.45
+        ],
+        [
+          3.6,
+          -29.45
+        ]
+      ],
+      "view": {
+        "x": 4.1,
+        "z": -29.9,
+        "yaw": 3.141592653589793,
+        "pitch": -0.2
+      },
+      "status": "Proposed AR demonstration on the Stellar Passport table; not an observed installation or account."
+    },
+    {
       "id": "stands",
       "label": "Exposición · ocho puestos",
       "polygon": [
         [
-          -5.2,
+          -5.9,
           -34.1
         ],
         [
-          5.2,
+          5.9,
           -34.1
         ],
         [
-          5.2,
+          5.9,
           -25
         ],
         [
-          -5.2,
+          -5.9,
           -25
         ]
       ],
@@ -1710,6 +2616,4910 @@
       "evidence": "October 26 narrated walkthrough; dimensions estimated; owner requested two bodies."
     }
   ],
+  "seating": {
+    "coordinateSystem": "Three.js X/Y/Z; dimensions in metres",
+    "dimensionsStatus": "Estimated placement; chair geometry bounded by shared helper",
+    "tables": [
+      {
+        "id": "hack-table-01",
+        "area": "hack",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -20
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -20.5,
+          "maxZ": -19.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -20.5,
+          "maxZ": -19.5
+        },
+        "proximityBounds": {
+          "minX": -13.44,
+          "maxX": -10.56,
+          "minZ": -20.74,
+          "maxZ": -19.26
+        },
+        "chairIds": [
+          "hack-chair-001",
+          "hack-chair-002",
+          "hack-chair-003",
+          "hack-chair-004",
+          "hack-chair-005",
+          "hack-chair-006"
+        ]
+      },
+      {
+        "id": "hack-table-02",
+        "area": "hack",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -24
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -24.5,
+          "maxZ": -23.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -24.5,
+          "maxZ": -23.5
+        },
+        "proximityBounds": {
+          "minX": -13.44,
+          "maxX": -10.56,
+          "minZ": -24.74,
+          "maxZ": -23.26
+        },
+        "chairIds": [
+          "hack-chair-007",
+          "hack-chair-008",
+          "hack-chair-009",
+          "hack-chair-010",
+          "hack-chair-011",
+          "hack-chair-012"
+        ]
+      },
+      {
+        "id": "hack-table-03",
+        "area": "hack",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -28
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -28.5,
+          "maxZ": -27.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -28.5,
+          "maxZ": -27.5
+        },
+        "proximityBounds": {
+          "minX": -13.44,
+          "maxX": -10.56,
+          "minZ": -28.74,
+          "maxZ": -27.26
+        },
+        "chairIds": [
+          "hack-chair-013",
+          "hack-chair-014",
+          "hack-chair-015",
+          "hack-chair-016",
+          "hack-chair-017",
+          "hack-chair-018"
+        ]
+      },
+      {
+        "id": "hack-table-04",
+        "area": "hack",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -32
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -32.5,
+          "maxZ": -31.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -32.5,
+          "maxZ": -31.5
+        },
+        "proximityBounds": {
+          "minX": -13.44,
+          "maxX": -10.56,
+          "minZ": -32.74,
+          "maxZ": -31.26
+        },
+        "chairIds": [
+          "hack-chair-019",
+          "hack-chair-020",
+          "hack-chair-021",
+          "hack-chair-022",
+          "hack-chair-023",
+          "hack-chair-024"
+        ]
+      },
+      {
+        "id": "hack-table-05",
+        "area": "hack",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -36
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -36.5,
+          "maxZ": -35.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -13.2,
+          "maxX": -10.8,
+          "minZ": -36.5,
+          "maxZ": -35.5
+        },
+        "proximityBounds": {
+          "minX": -13.44,
+          "maxX": -10.56,
+          "minZ": -36.74,
+          "maxZ": -35.26
+        },
+        "chairIds": [
+          "hack-chair-025",
+          "hack-chair-026",
+          "hack-chair-027",
+          "hack-chair-028",
+          "hack-chair-029",
+          "hack-chair-030"
+        ]
+      },
+      {
+        "id": "hack-table-06",
+        "area": "hack",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -20
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -20.5,
+          "maxZ": -19.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -20.5,
+          "maxZ": -19.5
+        },
+        "proximityBounds": {
+          "minX": -9.44,
+          "maxX": -6.56,
+          "minZ": -20.74,
+          "maxZ": -19.26
+        },
+        "chairIds": [
+          "hack-chair-031",
+          "hack-chair-032",
+          "hack-chair-033",
+          "hack-chair-034",
+          "hack-chair-035",
+          "hack-chair-036"
+        ]
+      },
+      {
+        "id": "hack-table-07",
+        "area": "hack",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -24
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -24.5,
+          "maxZ": -23.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -24.5,
+          "maxZ": -23.5
+        },
+        "proximityBounds": {
+          "minX": -9.44,
+          "maxX": -6.56,
+          "minZ": -24.74,
+          "maxZ": -23.26
+        },
+        "chairIds": [
+          "hack-chair-037",
+          "hack-chair-038",
+          "hack-chair-039",
+          "hack-chair-040",
+          "hack-chair-041",
+          "hack-chair-042"
+        ]
+      },
+      {
+        "id": "hack-table-08",
+        "area": "hack",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -28
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -28.5,
+          "maxZ": -27.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -28.5,
+          "maxZ": -27.5
+        },
+        "proximityBounds": {
+          "minX": -9.44,
+          "maxX": -6.56,
+          "minZ": -28.74,
+          "maxZ": -27.26
+        },
+        "chairIds": [
+          "hack-chair-043",
+          "hack-chair-044",
+          "hack-chair-045",
+          "hack-chair-046",
+          "hack-chair-047",
+          "hack-chair-048"
+        ]
+      },
+      {
+        "id": "hack-table-09",
+        "area": "hack",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -32
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -32.5,
+          "maxZ": -31.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -32.5,
+          "maxZ": -31.5
+        },
+        "proximityBounds": {
+          "minX": -9.44,
+          "maxX": -6.56,
+          "minZ": -32.74,
+          "maxZ": -31.26
+        },
+        "chairIds": [
+          "hack-chair-049",
+          "hack-chair-050",
+          "hack-chair-051",
+          "hack-chair-052",
+          "hack-chair-053",
+          "hack-chair-054"
+        ]
+      },
+      {
+        "id": "hack-table-10",
+        "area": "hack",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -36
+        },
+        "width": 2.4,
+        "depth": 1,
+        "topCenterHeight": 0.76,
+        "topHeight": 0.7875,
+        "undersideHeight": 0.7325,
+        "envelope": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -36.5,
+          "maxZ": -35.5,
+          "minY": 0,
+          "maxY": 0.7875
+        },
+        "collider": {
+          "minX": -9.2,
+          "maxX": -6.8,
+          "minZ": -36.5,
+          "maxZ": -35.5
+        },
+        "proximityBounds": {
+          "minX": -9.44,
+          "maxX": -6.56,
+          "minZ": -36.74,
+          "maxZ": -35.26
+        },
+        "chairIds": [
+          "hack-chair-055",
+          "hack-chair-056",
+          "hack-chair-057",
+          "hack-chair-058",
+          "hack-chair-059",
+          "hack-chair-060"
+        ]
+      },
+      {
+        "id": "cafe-table-11",
+        "area": "cafe",
+        "center": {
+          "x": -2.3,
+          "y": 0,
+          "z": -17.2
+        },
+        "width": 1.2,
+        "depth": 1.2,
+        "topCenterHeight": 0.74,
+        "topHeight": 0.7675,
+        "undersideHeight": 0.7125,
+        "envelope": {
+          "minX": -2.9,
+          "maxX": -1.7,
+          "minZ": -17.8,
+          "maxZ": -16.6,
+          "minY": 0,
+          "maxY": 0.7675
+        },
+        "collider": {
+          "minX": -2.9,
+          "maxX": -1.7,
+          "minZ": -17.8,
+          "maxZ": -16.6
+        },
+        "proximityBounds": {
+          "minX": -3.14,
+          "maxX": -1.46,
+          "minZ": -18.04,
+          "maxZ": -16.36
+        },
+        "chairIds": [
+          "cafe-chair-103",
+          "cafe-chair-104",
+          "cafe-chair-105",
+          "cafe-chair-106"
+        ]
+      },
+      {
+        "id": "cafe-table-12",
+        "area": "cafe",
+        "center": {
+          "x": 2.4,
+          "y": 0,
+          "z": -17.2
+        },
+        "width": 1.2,
+        "depth": 1.2,
+        "topCenterHeight": 0.74,
+        "topHeight": 0.7675,
+        "undersideHeight": 0.7125,
+        "envelope": {
+          "minX": 1.8,
+          "maxX": 3.0,
+          "minZ": -17.8,
+          "maxZ": -16.6,
+          "minY": 0,
+          "maxY": 0.7675
+        },
+        "collider": {
+          "minX": 1.8,
+          "maxX": 3.0,
+          "minZ": -17.8,
+          "maxZ": -16.6
+        },
+        "proximityBounds": {
+          "minX": 1.56,
+          "maxX": 3.24,
+          "minZ": -18.04,
+          "maxZ": -16.36
+        },
+        "chairIds": [
+          "cafe-chair-107",
+          "cafe-chair-108",
+          "cafe-chair-109",
+          "cafe-chair-110"
+        ]
+      },
+      {
+        "id": "cafe-table-13",
+        "area": "cafe",
+        "center": {
+          "x": -0.8,
+          "y": 0,
+          "z": -21.3
+        },
+        "width": 1.2,
+        "depth": 1.2,
+        "topCenterHeight": 0.74,
+        "topHeight": 0.7675,
+        "undersideHeight": 0.7125,
+        "envelope": {
+          "minX": -1.4,
+          "maxX": -0.2,
+          "minZ": -21.9,
+          "maxZ": -20.7,
+          "minY": 0,
+          "maxY": 0.7675
+        },
+        "collider": {
+          "minX": -1.4,
+          "maxX": -0.2,
+          "minZ": -21.9,
+          "maxZ": -20.7
+        },
+        "proximityBounds": {
+          "minX": -1.64,
+          "maxX": 0.04,
+          "minZ": -22.14,
+          "maxZ": -20.46
+        },
+        "chairIds": [
+          "cafe-chair-111",
+          "cafe-chair-112",
+          "cafe-chair-113",
+          "cafe-chair-114"
+        ]
+      },
+      {
+        "id": "cafe-table-14",
+        "area": "cafe",
+        "center": {
+          "x": 1.8,
+          "y": 0,
+          "z": -24.75
+        },
+        "width": 1.2,
+        "depth": 1.2,
+        "topCenterHeight": 0.74,
+        "topHeight": 0.7675,
+        "undersideHeight": 0.7125,
+        "envelope": {
+          "minX": 1.2,
+          "maxX": 2.4,
+          "minZ": -25.35,
+          "maxZ": -24.15,
+          "minY": 0,
+          "maxY": 0.7675
+        },
+        "collider": {
+          "minX": 1.2,
+          "maxX": 2.4,
+          "minZ": -25.35,
+          "maxZ": -24.15
+        },
+        "proximityBounds": {
+          "minX": 0.96,
+          "maxX": 2.64,
+          "minZ": -25.59,
+          "maxZ": -23.91
+        },
+        "chairIds": [
+          "cafe-chair-115",
+          "cafe-chair-116",
+          "cafe-chair-117",
+          "cafe-chair-118"
+        ]
+      }
+    ],
+    "chairs": [
+      {
+        "id": "hack-chair-001",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-002",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-003",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-004",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-005",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-006",
+        "area": "hack",
+        "tableId": "hack-table-01",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-007",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-008",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-009",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-010",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-011",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-012",
+        "area": "hack",
+        "tableId": "hack-table-02",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-013",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-014",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-015",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-016",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-017",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-018",
+        "area": "hack",
+        "tableId": "hack-table-03",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-019",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-020",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-021",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-022",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-023",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-024",
+        "area": "hack",
+        "tableId": "hack-table-04",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-025",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-026",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -12.8,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -13.06,
+          "maxX": -12.54,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -13.07,
+          "maxX": -12.53,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -13.31,
+          "maxX": -12.29,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "hack-chair-027",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-028",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -12,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -12.26,
+          "maxX": -11.74,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -12.27,
+          "maxX": -11.73,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -12.51,
+          "maxX": -11.49,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "hack-chair-029",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-030",
+        "area": "hack",
+        "tableId": "hack-table-05",
+        "center": {
+          "x": -11.2,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -11.46,
+          "maxX": -10.94,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -11.47,
+          "maxX": -10.93,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -11.71,
+          "maxX": -10.69,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "hack-chair-031",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-032",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-033",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-034",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-035",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -18.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -19.26,
+          "maxZ": -18.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -19.27,
+          "maxZ": -18.65
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -19.51,
+          "maxZ": -18.41
+        }
+      },
+      {
+        "id": "hack-chair-036",
+        "area": "hack",
+        "tableId": "hack-table-06",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -21.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -21.34,
+          "maxZ": -20.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -21.35,
+          "maxZ": -20.73
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -21.59,
+          "maxZ": -20.49
+        }
+      },
+      {
+        "id": "hack-chair-037",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-038",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-039",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-040",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-041",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -22.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -23.26,
+          "maxZ": -22.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -23.27,
+          "maxZ": -22.65
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -23.51,
+          "maxZ": -22.41
+        }
+      },
+      {
+        "id": "hack-chair-042",
+        "area": "hack",
+        "tableId": "hack-table-07",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -25.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -25.34,
+          "maxZ": -24.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -25.35,
+          "maxZ": -24.73
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -25.59,
+          "maxZ": -24.49
+        }
+      },
+      {
+        "id": "hack-chair-043",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-044",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-045",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-046",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-047",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -26.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -27.26,
+          "maxZ": -26.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -27.27,
+          "maxZ": -26.65
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -27.51,
+          "maxZ": -26.41
+        }
+      },
+      {
+        "id": "hack-chair-048",
+        "area": "hack",
+        "tableId": "hack-table-08",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -29.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -29.34,
+          "maxZ": -28.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -29.35,
+          "maxZ": -28.73
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -29.59,
+          "maxZ": -28.49
+        }
+      },
+      {
+        "id": "hack-chair-049",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-050",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-051",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-052",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-053",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -30.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -31.26,
+          "maxZ": -30.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -31.27,
+          "maxZ": -30.65
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -31.51,
+          "maxZ": -30.41
+        }
+      },
+      {
+        "id": "hack-chair-054",
+        "area": "hack",
+        "tableId": "hack-table-09",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -33.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -33.34,
+          "maxZ": -32.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -33.35,
+          "maxZ": -32.73
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -33.59,
+          "maxZ": -32.49
+        }
+      },
+      {
+        "id": "hack-chair-055",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-056",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -8.8,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -9.06,
+          "maxX": -8.54,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -9.07,
+          "maxX": -8.53,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -9.31,
+          "maxX": -8.29,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "hack-chair-057",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-058",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -8,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -8.26,
+          "maxX": -7.74,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -8.27,
+          "maxX": -7.73,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -8.51,
+          "maxX": -7.49,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "hack-chair-059",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -34.96
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -35.26,
+          "maxZ": -34.66,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -35.27,
+          "maxZ": -34.65
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -35.51,
+          "maxZ": -34.41
+        }
+      },
+      {
+        "id": "hack-chair-060",
+        "area": "hack",
+        "tableId": "hack-table-10",
+        "center": {
+          "x": -7.2,
+          "y": 0,
+          "z": -37.04
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -7.46,
+          "maxX": -6.94,
+          "minZ": -37.34,
+          "maxZ": -36.74,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -7.47,
+          "maxX": -6.93,
+          "minZ": -37.35,
+          "maxZ": -36.73
+        },
+        "proximityBounds": {
+          "minX": -7.71,
+          "maxX": -6.69,
+          "minZ": -37.59,
+          "maxZ": -36.49
+        }
+      },
+      {
+        "id": "auditorium-chair-061",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-062",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-063",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-064",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-065",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-066",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -35.0
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -35.3,
+          "maxZ": -34.7,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -35.31,
+          "maxZ": -34.69
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -35.55,
+          "maxZ": -34.45
+        }
+      },
+      {
+        "id": "auditorium-chair-067",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-068",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-069",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-070",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-071",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-072",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -36.1
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -36.4,
+          "maxZ": -35.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -36.41,
+          "maxZ": -35.79
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -36.65,
+          "maxZ": -35.55
+        }
+      },
+      {
+        "id": "auditorium-chair-073",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-074",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-075",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-076",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-077",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-078",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -37.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -37.5,
+          "maxZ": -36.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -37.51,
+          "maxZ": -36.89
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -37.75,
+          "maxZ": -36.65
+        }
+      },
+      {
+        "id": "auditorium-chair-079",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-080",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-081",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-082",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-083",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-084",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -38.3
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -38.6,
+          "maxZ": -38.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -38.61,
+          "maxZ": -37.99
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -38.85,
+          "maxZ": -37.75
+        }
+      },
+      {
+        "id": "auditorium-chair-085",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-086",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-087",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-088",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-089",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-090",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -39.4
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -39.7,
+          "maxZ": -39.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -39.71,
+          "maxZ": -39.09
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -39.95,
+          "maxZ": -38.85
+        }
+      },
+      {
+        "id": "auditorium-chair-091",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-092",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-093",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-094",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-095",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-096",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -40.5
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -40.8,
+          "maxZ": -40.2,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -40.81,
+          "maxZ": -40.19
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -41.05,
+          "maxZ": -39.95
+        }
+      },
+      {
+        "id": "auditorium-chair-097",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -3.5,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.76,
+          "maxX": -3.24,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.77,
+          "maxX": -3.23,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": -4.01,
+          "maxX": -2.99,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "auditorium-chair-098",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2.75,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.01,
+          "maxX": -2.49,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.02,
+          "maxX": -2.48,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": -3.26,
+          "maxX": -2.24,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "auditorium-chair-099",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": -2,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.26,
+          "maxX": -1.74,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.27,
+          "maxX": -1.73,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": -2.51,
+          "maxX": -1.49,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "auditorium-chair-100",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.74,
+          "maxX": 2.26,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.73,
+          "maxX": 2.27,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": 1.49,
+          "maxX": 2.51,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "auditorium-chair-101",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 2.75,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.49,
+          "maxX": 3.01,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.48,
+          "maxX": 3.02,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": 2.24,
+          "maxX": 3.26,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "auditorium-chair-102",
+        "area": "auditorium",
+        "tableId": null,
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -41.6
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.24,
+          "maxX": 3.76,
+          "minZ": -41.9,
+          "maxZ": -41.3,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.23,
+          "maxX": 3.77,
+          "minZ": -41.91,
+          "maxZ": -41.29
+        },
+        "proximityBounds": {
+          "minX": 2.99,
+          "maxX": 4.01,
+          "minZ": -42.15,
+          "maxZ": -41.05
+        }
+      },
+      {
+        "id": "cafe-chair-103",
+        "area": "cafe",
+        "tableId": "cafe-table-11",
+        "center": {
+          "x": -2.3,
+          "y": 0,
+          "z": -16.099999999999998
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.56,
+          "maxX": -2.04,
+          "minZ": -16.4,
+          "maxZ": -15.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.57,
+          "maxX": -2.03,
+          "minZ": -16.41,
+          "maxZ": -15.79
+        },
+        "proximityBounds": {
+          "minX": -2.81,
+          "maxX": -1.79,
+          "minZ": -16.65,
+          "maxZ": -15.55
+        }
+      },
+      {
+        "id": "cafe-chair-104",
+        "area": "cafe",
+        "tableId": "cafe-table-11",
+        "center": {
+          "x": -2.3,
+          "y": 0,
+          "z": -18.3
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.56,
+          "maxX": -2.04,
+          "minZ": -18.6,
+          "maxZ": -18.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.57,
+          "maxX": -2.03,
+          "minZ": -18.61,
+          "maxZ": -17.99
+        },
+        "proximityBounds": {
+          "minX": -2.81,
+          "maxX": -1.79,
+          "minZ": -18.85,
+          "maxZ": -17.75
+        }
+      },
+      {
+        "id": "cafe-chair-105",
+        "area": "cafe",
+        "tableId": "cafe-table-11",
+        "center": {
+          "x": -3.4,
+          "y": 0,
+          "z": -17.2
+        },
+        "angle": 1.5707963267948966,
+        "front": {
+          "x": 1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -3.7,
+          "maxX": -3.1,
+          "minZ": -17.46,
+          "maxZ": -16.94,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -3.71,
+          "maxX": -3.09,
+          "minZ": -17.47,
+          "maxZ": -16.93
+        },
+        "proximityBounds": {
+          "minX": -3.95,
+          "maxX": -2.85,
+          "minZ": -17.71,
+          "maxZ": -16.69
+        }
+      },
+      {
+        "id": "cafe-chair-106",
+        "area": "cafe",
+        "tableId": "cafe-table-11",
+        "center": {
+          "x": -1.1999999999999997,
+          "y": 0,
+          "z": -17.2
+        },
+        "angle": -1.5707963267948966,
+        "front": {
+          "x": -1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -1.5,
+          "maxX": -0.9,
+          "minZ": -17.46,
+          "maxZ": -16.94,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -1.51,
+          "maxX": -0.89,
+          "minZ": -17.47,
+          "maxZ": -16.93
+        },
+        "proximityBounds": {
+          "minX": -1.75,
+          "maxX": -0.65,
+          "minZ": -17.71,
+          "maxZ": -16.69
+        }
+      },
+      {
+        "id": "cafe-chair-107",
+        "area": "cafe",
+        "tableId": "cafe-table-12",
+        "center": {
+          "x": 2.4,
+          "y": 0,
+          "z": -16.099999999999998
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.14,
+          "maxX": 2.66,
+          "minZ": -16.4,
+          "maxZ": -15.8,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.13,
+          "maxX": 2.67,
+          "minZ": -16.41,
+          "maxZ": -15.79
+        },
+        "proximityBounds": {
+          "minX": 1.89,
+          "maxX": 2.91,
+          "minZ": -16.65,
+          "maxZ": -15.55
+        }
+      },
+      {
+        "id": "cafe-chair-108",
+        "area": "cafe",
+        "tableId": "cafe-table-12",
+        "center": {
+          "x": 2.4,
+          "y": 0,
+          "z": -18.3
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.14,
+          "maxX": 2.66,
+          "minZ": -18.6,
+          "maxZ": -18.0,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.13,
+          "maxX": 2.67,
+          "minZ": -18.61,
+          "maxZ": -17.99
+        },
+        "proximityBounds": {
+          "minX": 1.89,
+          "maxX": 2.91,
+          "minZ": -18.85,
+          "maxZ": -17.75
+        }
+      },
+      {
+        "id": "cafe-chair-109",
+        "area": "cafe",
+        "tableId": "cafe-table-12",
+        "center": {
+          "x": 1.2999999999999998,
+          "y": 0,
+          "z": -17.2
+        },
+        "angle": 1.5707963267948966,
+        "front": {
+          "x": 1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.0,
+          "maxX": 1.6,
+          "minZ": -17.46,
+          "maxZ": -16.94,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 0.99,
+          "maxX": 1.61,
+          "minZ": -17.47,
+          "maxZ": -16.93
+        },
+        "proximityBounds": {
+          "minX": 0.75,
+          "maxX": 1.85,
+          "minZ": -17.71,
+          "maxZ": -16.69
+        }
+      },
+      {
+        "id": "cafe-chair-110",
+        "area": "cafe",
+        "tableId": "cafe-table-12",
+        "center": {
+          "x": 3.5,
+          "y": 0,
+          "z": -17.2
+        },
+        "angle": -1.5707963267948966,
+        "front": {
+          "x": -1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 3.2,
+          "maxX": 3.8,
+          "minZ": -17.46,
+          "maxZ": -16.94,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 3.19,
+          "maxX": 3.81,
+          "minZ": -17.47,
+          "maxZ": -16.93
+        },
+        "proximityBounds": {
+          "minX": 2.95,
+          "maxX": 4.05,
+          "minZ": -17.71,
+          "maxZ": -16.69
+        }
+      },
+      {
+        "id": "cafe-chair-111",
+        "area": "cafe",
+        "tableId": "cafe-table-13",
+        "center": {
+          "x": -0.8,
+          "y": 0,
+          "z": -20.2
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -1.06,
+          "maxX": -0.54,
+          "minZ": -20.5,
+          "maxZ": -19.9,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -1.07,
+          "maxX": -0.53,
+          "minZ": -20.51,
+          "maxZ": -19.89
+        },
+        "proximityBounds": {
+          "minX": -1.31,
+          "maxX": -0.29,
+          "minZ": -20.75,
+          "maxZ": -19.65
+        }
+      },
+      {
+        "id": "cafe-chair-112",
+        "area": "cafe",
+        "tableId": "cafe-table-13",
+        "center": {
+          "x": -0.8,
+          "y": 0,
+          "z": -22.400000000000002
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -1.06,
+          "maxX": -0.54,
+          "minZ": -22.7,
+          "maxZ": -22.1,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -1.07,
+          "maxX": -0.53,
+          "minZ": -22.71,
+          "maxZ": -22.09
+        },
+        "proximityBounds": {
+          "minX": -1.31,
+          "maxX": -0.29,
+          "minZ": -22.95,
+          "maxZ": -21.85
+        }
+      },
+      {
+        "id": "cafe-chair-113",
+        "area": "cafe",
+        "tableId": "cafe-table-13",
+        "center": {
+          "x": -1.9000000000000001,
+          "y": 0,
+          "z": -21.3
+        },
+        "angle": 1.5707963267948966,
+        "front": {
+          "x": 1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": -2.2,
+          "maxX": -1.6,
+          "minZ": -21.56,
+          "maxZ": -21.04,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -2.21,
+          "maxX": -1.59,
+          "minZ": -21.57,
+          "maxZ": -21.03
+        },
+        "proximityBounds": {
+          "minX": -2.45,
+          "maxX": -1.35,
+          "minZ": -21.81,
+          "maxZ": -20.79
+        }
+      },
+      {
+        "id": "cafe-chair-114",
+        "area": "cafe",
+        "tableId": "cafe-table-13",
+        "center": {
+          "x": 0.30000000000000004,
+          "y": 0,
+          "z": -21.3
+        },
+        "angle": -1.5707963267948966,
+        "front": {
+          "x": -1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 0.0,
+          "maxX": 0.6,
+          "minZ": -21.56,
+          "maxZ": -21.04,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": -0.01,
+          "maxX": 0.61,
+          "minZ": -21.57,
+          "maxZ": -21.03
+        },
+        "proximityBounds": {
+          "minX": -0.25,
+          "maxX": 0.85,
+          "minZ": -21.81,
+          "maxZ": -20.79
+        }
+      },
+      {
+        "id": "cafe-chair-115",
+        "area": "cafe",
+        "tableId": "cafe-table-14",
+        "center": {
+          "x": 1.8,
+          "y": 0,
+          "z": -23.65
+        },
+        "angle": 3.141592653589793,
+        "front": {
+          "x": 1.2246467991473532e-16,
+          "z": -1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.54,
+          "maxX": 2.06,
+          "minZ": -23.95,
+          "maxZ": -23.35,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.53,
+          "maxX": 2.07,
+          "minZ": -23.96,
+          "maxZ": -23.34
+        },
+        "proximityBounds": {
+          "minX": 1.29,
+          "maxX": 2.31,
+          "minZ": -24.2,
+          "maxZ": -23.1
+        }
+      },
+      {
+        "id": "cafe-chair-116",
+        "area": "cafe",
+        "tableId": "cafe-table-14",
+        "center": {
+          "x": 1.8,
+          "y": 0,
+          "z": -25.85
+        },
+        "angle": 0,
+        "front": {
+          "x": 0.0,
+          "z": 1.0
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 1.54,
+          "maxX": 2.06,
+          "minZ": -26.15,
+          "maxZ": -25.55,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 1.53,
+          "maxX": 2.07,
+          "minZ": -26.16,
+          "maxZ": -25.54
+        },
+        "proximityBounds": {
+          "minX": 1.29,
+          "maxX": 2.31,
+          "minZ": -26.4,
+          "maxZ": -25.3
+        }
+      },
+      {
+        "id": "cafe-chair-117",
+        "area": "cafe",
+        "tableId": "cafe-table-14",
+        "center": {
+          "x": 0.7,
+          "y": 0,
+          "z": -24.75
+        },
+        "angle": 1.5707963267948966,
+        "front": {
+          "x": 1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 0.4,
+          "maxX": 1.0,
+          "minZ": -25.01,
+          "maxZ": -24.49,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 0.39,
+          "maxX": 1.01,
+          "minZ": -25.02,
+          "maxZ": -24.48
+        },
+        "proximityBounds": {
+          "minX": 0.15,
+          "maxX": 1.25,
+          "minZ": -25.26,
+          "maxZ": -24.24
+        }
+      },
+      {
+        "id": "cafe-chair-118",
+        "area": "cafe",
+        "tableId": "cafe-table-14",
+        "center": {
+          "x": 2.9000000000000004,
+          "y": 0,
+          "z": -24.75
+        },
+        "angle": -1.5707963267948966,
+        "front": {
+          "x": -1.0,
+          "z": 6.123233995736766e-17
+        },
+        "seatHeight": 0.46,
+        "envelope": {
+          "minX": 2.6,
+          "maxX": 3.2,
+          "minZ": -25.01,
+          "maxZ": -24.49,
+          "minY": 0,
+          "maxY": 0.88
+        },
+        "collider": {
+          "minX": 2.59,
+          "maxX": 3.21,
+          "minZ": -25.02,
+          "maxZ": -24.48
+        },
+        "proximityBounds": {
+          "minX": 2.35,
+          "maxX": 3.45,
+          "minZ": -25.26,
+          "maxZ": -24.24
+        }
+      }
+    ]
+  },
+  "floorFinishes": [
+    {
+      "polygon": [
+        [
+          -0.9,
+          2.45
+        ],
+        [
+          0.9,
+          2.45
+        ],
+        [
+          0.9,
+          32
+        ],
+        [
+          -0.9,
+          32
+        ]
+      ],
+      "topY": -1.02,
+      "name": "yellow corridor runner"
+    },
+    {
+      "polygon": [
+        [
+          -1.1,
+          -2.2
+        ],
+        [
+          1.1,
+          -2.2
+        ],
+        [
+          1.1,
+          0
+        ],
+        [
+          -1.1,
+          0
+        ]
+      ],
+      "topY": 0.024,
+      "name": "upper landing runner"
+    },
+    {
+      "polygon": [
+        [
+          -1.7,
+          -6.05
+        ],
+        [
+          1.7,
+          -6.05
+        ],
+        [
+          1.7,
+          -3.95
+        ],
+        [
+          -1.7,
+          -3.95
+        ]
+      ],
+      "topY": 0.028,
+      "name": "check-in runner"
+    }
+  ],
   "exteriorRoute": [
     {
       "x": 0,
@@ -1724,8 +7534,65 @@
       "z": 28
     }
   ],
+  "activation": {
+    "position": {
+      "x": 2.9,
+      "y": 0,
+      "z": -9.2
+    },
+    "approach": {
+      "x": 2.9,
+      "z": -7.9,
+      "yaw": 0,
+      "pitch": -0.12
+    },
+    "reviewReference": 10,
+    "nearReference": 12,
+    "triggerRadius": 2.2,
+    "purpose": "Existing Testnet wallet and test USDC flow; no automatic redemption."
+  },
+  "activationRoute": [
+    {
+      "x": 0,
+      "z": 38
+    },
+    {
+      "x": 0,
+      "z": 32
+    },
+    {
+      "x": 0,
+      "z": 6
+    },
+    {
+      "x": 0,
+      "z": 2.45
+    },
+    {
+      "x": 0,
+      "z": 0
+    },
+    {
+      "x": 0,
+      "z": -1
+    },
+    {
+      "x": 2.4,
+      "z": -3.6
+    },
+    {
+      "x": 2.9,
+      "z": -5.8
+    },
+    {
+      "x": 2.9,
+      "z": -7.9
+    }
+  ],
   "exhibition": {
     "dividerCount": 4,
+    "dividerWidth": 3.6,
+    "dividerInnerEdge": 2.2,
     "positionCount": 8,
     "aisleWidth": 4.4,
     "interRowClearance": 1.05,
@@ -1738,14 +7605,24 @@
         "row": 1,
         "face": "arrival",
         "table": {
-          "x": -3.65,
-          "z": -26.5
+          "x": -4.0,
+          "z": -26.5,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": -4.55,
+          "z": -27.27,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": -1.1,
           "z": -25.5,
-          "yaw": 1.197069506829343,
-          "pitch": -0.30323103419302916
+          "yaw": 1.2387368592520112,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1755,14 +7632,24 @@
         "row": 1,
         "face": "stage",
         "table": {
-          "x": -3.65,
-          "z": -29.0
+          "x": -4.0,
+          "z": -29.0,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": -4.55,
+          "z": -28.23,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": -1.1,
           "z": -30.0,
-          "yaw": 1.94452314676045,
-          "pitch": -0.30323103419302916
+          "yaw": 1.9028557943377822,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1772,14 +7659,24 @@
         "row": 2,
         "face": "arrival",
         "table": {
-          "x": -3.65,
-          "z": -30.8
+          "x": -4.0,
+          "z": -30.8,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": false,
+        "chair": {
+          "x": -4.55,
+          "z": -31.57,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": -1.1,
           "z": -29.8,
-          "yaw": 1.197069506829343,
-          "pitch": -0.30323103419302916
+          "yaw": 1.2387368592520112,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1789,14 +7686,24 @@
         "row": 2,
         "face": "stage",
         "table": {
-          "x": -3.65,
-          "z": -33.6
+          "x": -4.0,
+          "z": -33.6,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": -4.55,
+          "z": -32.83,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": -1.1,
           "z": -34.6,
-          "yaw": 1.94452314676045,
-          "pitch": -0.30323103419302916
+          "yaw": 1.9028557943377822,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1806,14 +7713,24 @@
         "row": 1,
         "face": "arrival",
         "table": {
-          "x": 3.65,
-          "z": -26.5
+          "x": 4.0,
+          "z": -26.5,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": 4.55,
+          "z": -27.27,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": 1.1,
           "z": -25.5,
-          "yaw": -1.197069506829343,
-          "pitch": -0.30323103419302916
+          "yaw": -1.2387368592520112,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1823,14 +7740,24 @@
         "row": 1,
         "face": "stage",
         "table": {
-          "x": 3.65,
-          "z": -29.0
+          "x": 4.0,
+          "z": -29.0,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": false,
+        "chair": {
+          "x": 4.55,
+          "z": -28.23,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": 1.1,
           "z": -30.0,
-          "yaw": -1.94452314676045,
-          "pitch": -0.30323103419302916
+          "yaw": -1.9028557943377822,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1840,14 +7767,24 @@
         "row": 2,
         "face": "arrival",
         "table": {
-          "x": 3.65,
-          "z": -30.8
+          "x": 4.0,
+          "z": -30.8,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": 4.55,
+          "z": -31.57,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": 1.1,
           "z": -29.8,
-          "yaw": -1.197069506829343,
-          "pitch": -0.30323103419302916
+          "yaw": -1.2387368592520112,
+          "pitch": -0.2724281336462304
         }
       },
       {
@@ -1857,22 +7794,52 @@
         "row": 2,
         "face": "stage",
         "table": {
-          "x": 3.65,
-          "z": -33.6
+          "x": 4.0,
+          "z": -33.6,
+          "width": 1.95,
+          "depth": 0.75,
+          "top": 0.79
+        },
+        "hardware": true,
+        "chair": {
+          "x": 4.55,
+          "z": -32.83,
+          "width": 0.54,
+          "depth": 0.62
         },
         "visitorView": {
           "x": 1.1,
           "z": -34.6,
-          "yaw": -1.94452314676045,
-          "pitch": -0.30323103419302916
+          "yaw": -1.9028557943377822,
+          "pitch": -0.2724281336462304
         }
       }
-    ]
+    ],
+    "optionalDisplays": {
+      "palta": {
+        "tableId": "booth-defindex-soroswap",
+        "position": {
+          "x": -4.62,
+          "y": 0.795,
+          "z": -31.0
+        },
+        "scale": 0.45,
+        "support": "tabletop"
+      }
+    }
   },
   "standsRoute": [
     {
       "x": 3,
       "z": -7
+    },
+    {
+      "x": 4.1,
+      "z": -7
+    },
+    {
+      "x": 4.1,
+      "z": -11.7
     },
     {
       "x": 5.8,
@@ -1899,6 +7866,37 @@
       "z": -39
     }
   ],
+  "passportDisplay": {
+    "tableId": "booth-passport",
+    "support": "tabletop",
+    "scale": 3.8,
+    "position": {
+      "x": 4.0,
+      "y": 1.0546153783798218,
+      "z": -28.79
+    },
+    "approach": {
+      "x": 4.1,
+      "z": -29.9,
+      "yaw": 3.141592653589793,
+      "pitch": -0.2
+    },
+    "bookBounds": {
+      "minX": 3.809999942779541,
+      "maxX": 4.190760135650635,
+      "minY": 0.8399999737739563,
+      "maxY": 1.2823597192764282,
+      "minZ": -28.936649322509766,
+      "maxZ": -28.666091918945312
+    },
+    "bookWidth": 0.38076019287109375,
+    "tabletopHeight": 0.79,
+    "plinthSize": [
+      0.46,
+      0.05,
+      0.32
+    ]
+  },
   "games": {
     "coordinateSystem": "Blender Z-up; viewer converts (x,y,z) to (x,z,-y)",
     "dimensionsStatus": "Estimated from narrated video; not field measured",

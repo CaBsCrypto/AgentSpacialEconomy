@@ -1,4 +1,4 @@
-// Palta reveal: an avocado on a pedestal in the activation area of the ONE16 twin. When a visitor
+// Palta reveal: a tabletop avocado at the DeFindex / Soroswap exhibition stand. When a visitor
 // walks up (or taps it) it splits in half and the seed turns into a medallion with the partner's
 // logo. Asset: ./assets/palta-reveal.glb (built by model/palta_reveal.py).
 //
@@ -12,10 +12,14 @@
 export const PALTA_DEFAULTS = Object.freeze({
   url: "./assets/palta-reveal.glb?v=a45b02d836b1",
   logoUrl: null,                 // official logo file, e.g. "./assets/palta-reveal/logo.png"
-  position: [5.3, 0, -5.0],      // three.js metres: activation area, left of the kiosk
-  yaw: 0.138,                    // resting orientation: faces the activation viewpoint
+  position: [-4.62, 0.795, -31.0], // rear outside corner of the DeFindex / Soroswap desk
+  tableId: "booth-defindex-soroswap",
+  tableOffset: [-0.62, 0.005, -0.20], // relative to table center/top, keeping front print clear
+  scale: 0.45,                   // approximately 1.07 m high including the opened medallion
+  floorCollision: false,        // the supporting desk already supplies collision
+  yaw: 0,                       // visitor side of this arrival-facing desk
   autoOpenDistance: 4,           // opens when the camera comes this close (XZ distance); the
-                                 // activation zone viewpoint is 3.6 m away
+                                 // nearby central aisle is within this range
   resetDistance: 8,              // closes again once the visitor walks this far away
   faceCamera: true,              // the fruit turns toward the visitor as it opens
   obstacleHalfSize: 0.35,        // collision square around the pedestal
@@ -78,8 +82,8 @@ export function proximityStep(state, distance, { autoOpenDistance, resetDistance
 }
 
 /** Collision square for layout.obstacles, in the same shape the venue uses. */
-export function paltaObstacle(position = PALTA_DEFAULTS.position, half = PALTA_DEFAULTS.obstacleHalfSize) {
-  const [x, , z] = position;
+export function paltaObstacle(position = PALTA_DEFAULTS.position, half = PALTA_DEFAULTS.obstacleHalfSize, scale = 1) {
+  const [x, , z] = position;half *= scale;
   const r = (v) => Math.round(v * 1000) / 1000;
   return { minX: r(x - half), maxX: r(x + half), minZ: r(z - half), maxZ: r(z + half), id: "palta-reveal" };
 }
@@ -117,6 +121,10 @@ async function applyLogo(THREE, root, logoUrl, isDisposed, ownResource) {
 
 export async function mountPaltaReveal(THREE, scene, options = {}) {
   const o = { ...PALTA_DEFAULTS, ...options };
+  if (!Object.hasOwn(options, "position") && o.layout) {
+    const table = o.layout.exhibition?.positions?.find(p => p.graphic === o.tableId)?.table;
+    if (table) o.position = [table.x + o.tableOffset[0], (table.top ?? .79) + o.tableOffset[1], table.z + o.tableOffset[2]];
+  }
   if (!o.GLTFLoader) throw new Error("mountPaltaReveal needs { GLTFLoader }");
   const gltf = await new o.GLTFLoader().loadAsync(o.url);
   const root = gltf.scene;
@@ -131,8 +139,12 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
       for (const value of Object.values(material)) if (value?.isTexture) ownResource(value);
     }
   });
-  root.name = "Palta reveal (Palta Labs activation)";
+  root.name = "Palta reveal (Palta Labs exhibition tabletop)";
   root.position.set(...o.position);
+  const scale = Number.isFinite(o.scale) && o.scale > 0 ? o.scale : 1;
+  root.scale.setScalar(scale);
+  root.userData.tableId = o.tableId;
+  root.userData.support = o.floorCollision ? "floor" : "tabletop";
   root.rotation.y = o.yaw;
   root.traverse((n) => { if (n.isMesh) n.frustumCulled = true; });
   scene.add(root);
@@ -141,7 +153,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
     if (!disposed) console.warn("palta logo skipped", e);
   });
   const obstacles = o.layout?.obstacles;
-  const obstacle = obstacles ? paltaObstacle(o.position, o.obstacleHalfSize) : null;
+  const obstacle = obstacles && o.floorCollision && o.position[1] < .1 ? paltaObstacle(o.position, o.obstacleHalfSize, scale) : null;
   if (obstacle) obstacles.push(obstacle);
 
   const mixer = new THREE.AnimationMixer(root);

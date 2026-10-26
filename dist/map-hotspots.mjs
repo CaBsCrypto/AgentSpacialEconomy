@@ -1,7 +1,7 @@
 export const HOTSPOTS=[
  {id:'activation',mark:'W',label:'Wallet · Testnet',status:'available',detail:'Tótem · passkey y USDC de prueba'},
  {id:'passport-stand16',mark:'P',label:'Stellar Passport · stand 16',status:'available',detail:'Reverso Trustless Work/Grantfox · escanear gráfica'},
- {id:'passport',mark:'P',label:'Passport AR',status:'available',detail:'Sponsor · demo disponible · ubicación provisional'},
+ {id:'passport',mark:'P',label:'Passport AR',status:'available',detail:'Mesa Stellar Passport · demo AR disponible'},
  {id:'stage',mark:'E',label:'Escenario',status:'soon',detail:'Host del evento · próximamente · contenido AR por definir'},
  {id:'merch',mark:'M',label:'Merch',status:'soon',detail:'Próximamente · contenido AR por definir'},
  {id:'stands',mark:'S',label:'Stands',status:'soon',detail:'Próximamente · experiencias de marca por definir'}
@@ -20,7 +20,7 @@ export function enhancePlan(container,layout,onOpen,{legendOnly=false}={}){
    button.addEventListener('click',()=>onOpen(spot,button));
   }
  }
- container.append(legend);const caption=container.querySelector('p');if(caption)caption.textContent='Toca un destello o su nombre · W: wallet Testnet · P: demo AR provisional · E/M/S: próximamente. Plano aproximado; desplázalo si no cabe.';
+ container.append(legend);const caption=container.querySelector('p');if(caption)caption.textContent='Toca un destello o su nombre · W: wallet Testnet · P: Passport AR · E/M/S: próximamente. Plano aproximado; desplázalo si no cabe.';
  const fit=()=>{const width=viewport.clientWidth,height=viewport.clientHeight;if(!width||!height)return;const vb=svg.getAttribute('viewBox').split(/\s+/).map(Number),ratio=vb[2]/vb[3];const w=Math.min(width,height*ratio),h=w/ratio;stage.style.width=w+'px';stage.style.height=h+'px';stage.style.left=(width-w)/2+'px';stage.style.top=(height-h)/2+'px'};
  if(typeof ResizeObserver!=='undefined'){const observer=new ResizeObserver(fit);observer.observe(viewport);mounted.set(container,observer)}fit();
 }

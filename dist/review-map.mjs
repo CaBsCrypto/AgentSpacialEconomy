@@ -4,7 +4,7 @@ const sections = [
  [1,'Exterior · cartel',0,38],
  [4,'Puerta de entrada',0,32],[5,'Pasillo amarillo',0,19],[6,'Lounge inferior',0,4.5],
  [7,'Escalera amarilla',0,1.2],[8,'Check-in',0,-6.1],[9,'Merch',-9,-5],
- [10,'Tótem · propuesta',7,-4],[11,'Passport · PROVISIONAL',8.7,-3],
+ [10,'Tótem · USDC de prueba',2.9,-9.2],[11,'Passport · mesa Stellar Passport',4,-28.8,'passport'],
  [12,'Comida / buffet',3.1,-7.1,'buffet'],[13,'Centro · mesas / builders',0,-21],
  [14,'Mesas builders · izquierda',-10,-28],[15,'Stands · izquierda',-3.2,-28.8],
  [16,'Stands · derecha',3.2,-28.8],[17,'Auditorio',0,-35],[18,'Escenario',0,-43],
@@ -15,10 +15,11 @@ const sections = [
  [24,'Fotomatón · Made to Move',10,-34,'photobooth'],
  [25,'Content Hub · sala acristalada',11.6,-14,'content-hub']
 ];
-export const REVIEW_SECTIONS=Object.freeze(sections.map(([id,label,x,z,zone])=>Object.freeze({id,label,x,z:corridorZ(z),...(zone?{zone}:{}),...(id===11?{provisional:true}:{})})));
+export const REVIEW_SECTIONS=Object.freeze(sections.map(([id,label,x,z,zone])=>Object.freeze({id,label,x,z:corridorZ(z),...(zone?{zone}:{})})));
 /** New references follow their named zone view when its geometry is rebuilt. */
 export function resolveReviewSections(layout = {}) {
  return REVIEW_SECTIONS.map(section=>{
+  if(section.id===10&&Number.isFinite(layout.activation?.position?.x)&&Number.isFinite(layout.activation?.position?.z))return {...section,x:layout.activation.position.x,z:layout.activation.position.z};
   const zone=section.zone&&layout.zones?.find(zone=>zone.id===section.zone);
   return zone&&Number.isFinite(zone.view?.x)&&Number.isFinite(zone.view?.z) ? {...section,x:zone.view.x,z:zone.view.z} : section;
  });
@@ -41,6 +42,8 @@ export function buildReviewSvg(layout={}, {pose,compact=false,showNumbers=true}=
  const obstacles=(Array.isArray(layout.obstacles)?layout.obstacles:[]).filter(b=>b&&['minX','maxX','minZ','maxZ'].every(k=>finite(b[k]))&&b.maxX>=b.minX&&b.maxZ>=b.minZ).map(b=>{
   const [x,y]=project(b.minX,b.minZ);return `<rect x="${x}" y="${y}" width="${fmt((b.maxX-b.minX)*scale)}" height="${fmt((b.maxZ-b.minZ)*scale)}" rx="1" fill="#73838b" opacity=".65"/>`;
  }).join('');
+ const guidePoints=Array.isArray(layout.activationRoute)&&layout.activationRoute.length>1&&layout.activationRoute.every(p=>finite(p.x)&&finite(p.z))?layout.activationRoute:[];
+ const guide=guidePoints.length?`<polyline data-activation-route="true" points="${guidePoints.map(p=>project(p.x,p.z).join(',')).join(' ')}" fill="none" stroke="#53edff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0.1 ${fmt(.55*scale)}" aria-label="Camino luminoso hasta el tótem de USDC de prueba"/>`:'';
  const posePoint=pose&&finite(pose.x)&&finite(pose.z)&&finite(pose.yaw)?project(pose.x,pose.z):null;
  const pins=reviewSections.map(s=>{
   const [ax,ay]=project(s.x,s.z);let [dx,dy]=offsets[s.id]||[0,0];
@@ -56,5 +59,5 @@ export function buildReviewSvg(layout={}, {pose,compact=false,showNumbers=true}=
  }
  const localCenter=posePoint||project(0,19);
  const viewBox=compact?`${fmt(localCenter[0]-12*scale)} ${fmt(localCenter[1]-16*scale)} ${fmt(24*scale)} ${fmt(32*scale)}`:`0 0 ${width} ${height}`;
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-label="Mapa de revisión: ${reviewSections.length} referencias aproximadas" data-review-map="${compact?'compact':'full'}" style="display:block;width:100%;height:auto;overflow:hidden"><title>ONE16 · mapa de revisión numerado</title><desc>Posiciones aproximadas para revisar el recorrido. Números informativos; Passport 11 es provisional. La flecha cian indica posición y orientación cuando están disponibles.</desc><rect width="800" height="1200" rx="18" fill="#101d29"/>${compact?'':`<text x="400" y="34" text-anchor="middle" fill="#e9eef1" font-family="system-ui,sans-serif" font-size="18" font-weight="700">ONE16 · ${reviewSections.length} referencias para revisar</text>`}${floor}${obstacles}${showNumbers?pins:''}${location}${compact?'':`<text x="400" y="1155" text-anchor="middle" fill="#c0cdd5" font-family="system-ui,sans-serif" font-size="${compact?15:16}">Distribución estimada · 11 Passport provisional</text><text x="400" y="1180" text-anchor="middle" fill="#8ca4b3" font-family="system-ui,sans-serif" font-size="13">Números de revisión, no nuevas ubicaciones verificadas</text>`}</svg>`;
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-label="Mapa de revisión: ${reviewSections.length} referencias aproximadas" data-review-map="${compact?'compact':'full'}" style="display:block;width:100%;height:auto;overflow:hidden"><title>ONE16 · mapa de revisión numerado</title><desc>Posiciones aproximadas para revisar el recorrido. Números informativos; 10 guía al tótem; 11 identifica la mesa Stellar Passport. La flecha cian indica posición y orientación cuando están disponibles.</desc><rect width="800" height="1200" rx="18" fill="#101d29"/>${compact?'':`<text x="400" y="34" text-anchor="middle" fill="#e9eef1" font-family="system-ui,sans-serif" font-size="18" font-weight="700">ONE16 · ${reviewSections.length} referencias para revisar</text>`}${floor}${obstacles}${guide}${showNumbers?pins:''}${location}${compact?'':`<text x="400" y="1155" text-anchor="middle" fill="#c0cdd5" font-family="system-ui,sans-serif" font-size="${compact?15:16}">Distribución estimada · guía al tótem de USDC de prueba</text><text x="400" y="1180" text-anchor="middle" fill="#8ca4b3" font-family="system-ui,sans-serif" font-size="13">Números de revisión, no nuevas ubicaciones verificadas</text>`}</svg>`;
 }

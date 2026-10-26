@@ -56,5 +56,5 @@ test('the lateral approach faces the unchanged stand16 target and clears the des
  assert.ok(Math.abs(PASSPORT_STAND.view.yaw-Math.atan2(-dx,-dz))<1e-8);
  assert.equal(PASSPORT_STAND.x,3.2);assert.equal(PASSPORT_STAND.z,-27.858);
  assert.equal(PASSPORT_STAND.targetSrc,'./assets/passport-target.png');
- const leftDeskEdge=3.65-2.02/2;assert.ok(PASSPORT_STAND.view.x+.24<leftDeskEdge);
+ const leftDeskEdge=4.0-2.02/2;assert.ok(PASSPORT_STAND.view.x+.24<leftDeskEdge);
 });

@@ -4,7 +4,7 @@ Blender Z-up, local front is -Y. Approximate dimensions: 0.8 x 0.65 x 1.93 m.
 import bpy,math
 from mathutils import Vector
 
-def build_totem(origin=(7,4,0),angle=-math.pi/4):
+def build_totem(origin=(2.9,9.2,0),angle=0):
  before=set(bpy.data.objects)
  def mat(name,c,metal=0,rough=.6,emit=0):
   m=bpy.data.materials.get(name)
@@ -31,16 +31,16 @@ def build_totem(origin=(7,4,0),angle=-math.pi/4):
  text('ActivationTotem / Activación','ACTIVACION',0,1.76,.064,white,y=-.119)
  text('ActivationTotem / Stellar','Stellar',0,1.645,.12,white,y=-.119)
  box('ActivationTotem / testnet pill',(0,-.119,1.50),(.46,.007,.077),cyan,.015)
- text('ActivationTotem / concept label','CONCEPTO TESTNET',0,1.5,.035,navy,y=-.124)
- text('ActivationTotem / test assets','XLM de prueba\nUSDC de prueba',0,1.365,.044,white,y=-.119)
- text('ActivationTotem / flow note','Flujo por definir',0,1.20,.040,muted,y=-.119)
+ text('ActivationTotem / concept label','TESTNET',0,1.5,.035,navy,y=-.124)
+ text('ActivationTotem / test assets','USDC de prueba',0,1.365,.044,white,y=-.119)
+ text('ActivationTotem / flow note','Toca para activar',0,1.20,.040,muted,y=-.119)
  text('ActivationTotem / no real value','SIN VALOR REAL',0,1.08,.035,white,y=-.119)
- text('ActivationTotem / demo notice','Maqueta visual · no opera fondos',0,1.015,.023,muted,y=-.119)
+ text('ActivationTotem / demo notice','Activa tu wallet · Obtén USDC',0,1.015,.023,muted,y=-.119)
  # Base front plaque remains legible from the arrival approach.
  box('ActivationTotem / proposal plaque',(0,-.145,.30),(.29,.012,.15),cyan,.007)
- text('ActivationTotem / proposal','PROPUESTA',0,.30,.034,navy,y=-.154)
+ text('ActivationTotem / proposal','EMPIEZA AQUI',0,.30,.034,navy,y=-.154)
  root=bpy.data.objects.new('ActivationTotem • Activación Stellar / propuesta Testnet',None);bpy.context.collection.objects.link(root)
  for o in set(bpy.data.objects)-before:
   if o!=root:o.parent=root
- root.location=origin;root.rotation_euler.z=angle;root['status']='Proposed kiosk, not an existing physical installation';root['network']='Concept Testnet only; no live wallet, faucet or transaction';root['approximate_dimensions_m']='0.80 x 0.65 base; 1.93 height';root['placement']='Right of arrival, opposite merch on the left'
+ root.location=origin;root.rotation_euler.z=angle;root['status']='Proposed kiosk, not an existing physical installation';root['network']='Testnet wallet UI; no automatic transaction';root['approximate_dimensions_m']='0.80 x 0.65 base; 1.93 height';root['placement']='Beside buffet near review reference 12; front faces the arrival route'
  return root

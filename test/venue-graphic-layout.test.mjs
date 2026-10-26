@@ -54,3 +54,12 @@ test('all eight tabletop arts retain metric aspect, transparent corners and a cl
  const info=JSON.parse(execFileSync('python',['-c',script,fileURLToPath(new URL('model/textures/graphics/',root)),...keys],{encoding:'utf8'}));
  for(const image of Object.values(info)){assert.equal(image.mode,'RGBA');assert.deepEqual(image.size,[2048,712]);assert.deepEqual(image.alpha,[0,255]);assert.equal(image.corner,0);}
 });
+
+
+test('wider stand pattern keeps natural physical proportions within the 2K mobile budget',()=>{
+ const graphic=manifest.graphics['booth-footer'];
+ assert(graphic.width<=2048&&graphic.height<=2048);
+ assert(Math.abs(graphic.width/graphic.height/(3.5/1.6)-1)<.001);
+ assert.deepEqual(graphic.layout.physicalSize,[3.5,1.6]);
+ assert.equal(graphic.layout.repeatColumns,7);assert.equal(graphic.layout.repeatRows,4);
+});

@@ -3,7 +3,7 @@ import {REVIEW_SECTIONS,resolveReviewSections,buildReviewSvg} from '../dist/revi
 const layout=JSON.parse(fs.readFileSync(new URL('../dist/assets/layout.json',import.meta.url)));
 test('review registry has stable ordered IDs 1,4–25 and known world coordinates',()=>{
  assert.deepEqual(REVIEW_SECTIONS.map(s=>s.id),[1,...Array.from({length:22},(_,i)=>i+4)]);
- assert.deepEqual(REVIEW_SECTIONS.find(s=>s.id===11),{id:11,label:'Passport · PROVISIONAL',x:8.7,z:-3,provisional:true});
+ assert.deepEqual(REVIEW_SECTIONS.find(s=>s.id===11),{id:11,label:'Passport · mesa Stellar Passport',x:4,z:-28.8,zone:'passport'});
  assert.equal(REVIEW_SECTIONS[0].z,25);assert.equal(REVIEW_SECTIONS.find(s=>s.id===18).z,-43);assert(Object.isFrozen(REVIEW_SECTIONS));assert(REVIEW_SECTIONS.every(Object.isFrozen));
 });
 test('both full and compact maps include all23 informational pins, actual floor and obstacles',()=>{
@@ -16,7 +16,7 @@ test('pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cann
  assert(!buildReviewSvg(layout,{pose:{x:0,z:NaN,yaw:Infinity}}).includes('data-review-pose'));
 });
 test('nearby entries have world-anchored leaders and malformed geometry is ignored',()=>{
- const svg=buildReviewSvg({walkable:[[['<svg>',0],[0,0],[1,1]]],obstacles:[{minX:NaN}]});assert(!svg.includes('NaN'));assert(!svg.includes('<svg>'));assert(svg.includes('data-world-x="8.7"'));assert(svg.includes('<path d="M'));assert.equal((svg.match(/data-review-number=/g)||[]).length,23);
+ const svg=buildReviewSvg({walkable:[[['<svg>',0],[0,0],[1,1]]],obstacles:[{minX:NaN}]});assert(!svg.includes('NaN'));assert(!svg.includes('<svg>'));assert(svg.includes('data-world-x="4"'));assert(svg.includes('<path d="M'));assert.equal((svg.match(/data-review-number=/g)||[]).length,23);
 });
 
 test('compact is local pose-centered viewBox with24x32world span, full staysglobal; numbers optional',()=>{
@@ -34,6 +34,14 @@ test('new section positions follow their named zone views without changing legac
  assert.equal(sections.find(s=>s.id===25).z,-15);
  assert.deepEqual(sections.find(s=>s.id===11),REVIEW_SECTIONS.find(s=>s.id===11));
  assert.equal(new Set(sections.map(s=>s.id)).size,23);
- assert.deepEqual(sections.filter(s=>s.zone).map(s=>s.zone),['buffet','photo','river','games','skills','energy','photobooth','content-hub']);
+ assert.deepEqual(sections.filter(s=>s.zone).map(s=>s.zone),['passport','buffet','photo','river','games','skills','energy','photobooth','content-hub']);
  const svg=buildReviewSvg(changed);assert.match(svg,/data-review-id="21" data-world-x="-8" data-world-z="-11"/);
+});
+
+test('the luminous map route follows the authored entrance route and the totem reference follows its location',()=>{
+ const l={activation:{position:{x:2.9,z:-9.2}},activationRoute:[{x:0,z:25},{x:0,z:0},{x:2.9,z:-7.9}]};
+ assert.equal(resolveReviewSections(l).find(s=>s.id===10).z,-9.2);
+ assert.match(buildReviewSvg(l),/data-activation-route="true"/);
+ assert.match(buildReviewSvg(l,{showNumbers:false}),/data-activation-route="true"/);
+ assert.doesNotMatch(buildReviewSvg({...l,activationRoute:[{x:NaN,z:0}]}),/data-activation-route/);
 });
