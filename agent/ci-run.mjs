@@ -6,14 +6,20 @@
 //      approves the venue agent a SEP-41 allowance up to the mandate budget, valid ~24 h
 //   4. writes ../.env, starts services.mjs, checks the facilitator, runs the loop (the agent draws
 //      its allocations under the allowance, then pays over x402)
+//   5. allowance mode only: an ephemeral sponsor pays the venue treasury for a stage-screen line
+//      (sponsor.mjs), then the treasury re-approves the agent what is left plus that income
+//      ("recharge") and reads the allowance back. A failure here never hides the main run.
 // Secret keys only ever live in memory and in the git-ignored .env; nothing here prints them.
 import { spawn, spawnSync } from "node:child_process";
 import { readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { Asset, BASE_FEE, Horizon, Keypair, Operation, TransactionBuilder } from "@stellar/stellar-sdk";
 import { networkConfig, explorerAccount } from "./config/networks.mjs";
 import { createSac } from "./onchain.mjs";
 import { liveUntilLedger } from "./lib/allowance.mjs";
+import { incomeUnits, rechargePlan, rechargeSummary, rechargeKey, RECHARGE_TYPE } from "./lib/income.mjs";
+import { Ledger } from "./ledger.mjs";
 import { fromUnits } from "./lib/money.mjs";
 
 const net = networkConfig("stellar:testnet");
@@ -50,11 +56,11 @@ async function ensureTrustline(kp) {
   }
 }
 
-async function buyUsdcWithXlm(kp) {
+async function buyUsdcWithXlm(kp, min = MIN_USDC) {
   for (const sendAmount of ["50", "200", "1000"]) {
     const { records } = await horizon.strictSendPaths(Asset.native(), sendAmount, [USDC]).call();
     const best = records.sort((a, b) => Number(b.destination_amount) - Number(a.destination_amount))[0];
-    if (!best || Number(best.destination_amount) < MIN_USDC) continue;
+    if (!best || Number(best.destination_amount) < min) continue;
     const path = best.path.map((p) => (p.asset_type === "native" ? Asset.native() : new Asset(p.asset_code, p.asset_issuer)));
     const destMin = (Number(best.destination_amount) * 0.95).toFixed(7);
     const res = await submit(kp, [
@@ -75,18 +81,21 @@ const service = Keypair.random();
 const allowanceMode = !process.env.AGENT_SECRET_KEY;
 let agent;
 let treasury = null;
+let sponsor = null;
 if (allowanceMode) {
   agent = Keypair.random();
   treasury = Keypair.random();
+  sponsor = Keypair.random();
   console.log(`Ephemeral agent wallet: ${agent.publicKey()}`);
   console.log(`Ephemeral operator treasury: ${treasury.publicKey()}`);
+  console.log(`Ephemeral sponsor wallet: ${sponsor.publicKey()}`);
 } else {
   agent = Keypair.fromSecret(process.env.AGENT_SECRET_KEY.trim());
   console.log(`Agent wallet from AGENT_SECRET_KEY: ${short(agent.publicKey())}`);
 }
 console.log(`Ephemeral service wallet: ${service.publicKey()}`);
 
-const funded = allowanceMode ? [agent, service, treasury] : [agent, service];
+const funded = allowanceMode ? [agent, service, treasury, sponsor] : [agent, service];
 await Promise.all(funded.map((kp) => friendbot(kp.publicKey())));
 await sleep(3000);
 for (const kp of funded) await ensureTrustline(kp);
@@ -105,6 +114,11 @@ if (balance < MIN_USDC) {
   }
 }
 console.log(`${allowanceMode ? "Treasury" : "Agent"} USDC balance: ${balance}`);
+let sponsorReady = false;
+if (sponsor) {
+  sponsorReady = (await usdcBalance(sponsor.publicKey())) >= 0.1 || (await buyUsdcWithXlm(sponsor, 0.12).catch(() => false));
+  console.log(sponsorReady ? `Sponsor USDC balance: ${await usdcBalance(sponsor.publicKey())}` : "Sponsor could not get testnet USDC; the sponsor step will be skipped.");
+}
 console.log(`Agent account: ${explorerAccount(net.id, agent.publicKey())}`);
 
 let allowanceEnv = {};
@@ -168,5 +182,43 @@ const run = spawnSync(process.execPath, ["run.mjs", "--mandate", "mandates/main-
   stdio: "inherit",
   env: childEnv,
 });
+
+// ---- income: sponsor pays the treasury, the treasury recharges the agent's allowance ----
+if (run.status === 0 && allowanceMode && sponsorReady) {
+  console.log("\nIncome: a sponsor buys a line on the main-stage screen (paid to the venue treasury)");
+  const paid = spawnSync(process.execPath, ["sponsor.mjs", "--run-id", runId], {
+    cwd: agentDir,
+    stdio: "inherit",
+    env: { ...childEnv, SPONSOR_SECRET_KEY: sponsor.secret() },
+  });
+  const ledgerFile = fileURLToPath(new URL("../dist/state/ledger.json", import.meta.url));
+  if (paid.status === 0 && existsSync(ledgerFile)) {
+    try {
+      const state = JSON.parse(await readFile(ledgerFile, "utf8"));
+      const income = incomeUnits(state);
+      const sac = createSac(net);
+      const before = await sac.allowanceUnits(treasury.publicKey(), agent.publicKey(), agent.publicKey());
+      const plan = rechargePlan(before, income);
+      if (!plan.ok) throw new Error(plan.reason);
+      const liveUntil = Number(allowanceEnv.ALLOWANCE_LIVE_UNTIL);
+      const { hash } = await sac.approve(treasury, agent.publicKey(), fromUnits(plan.newAllowanceUnits), liveUntil);
+      const verified = await sac.allowanceUnits(treasury.publicKey(), agent.publicKey(), agent.publicKey());
+      const summary = rechargeSummary({ beforeUnits: before, incomeUnits: income, afterUnits: plan.newAllowanceUnits, approveTx: hash, liveUntil, verifiedUnits: verified });
+      const ledger = Ledger.restore(state.mandate, state);
+      ledger.note({
+        type: RECHARGE_TYPE, agent: "operator-treasury", service: "recharge · USDC allowance (SEP-41 approve)",
+        priceUsdc: summary.incomeUsdc, status: summary.verified ? "settled" : "failed", tx: hash, key: rechargeKey(runId),
+        ...(summary.verified ? {} : { reason: `allowance read back ${summary.verifiedUsdc} USDC, expected ${summary.afterUsdc}` }),
+      });
+      ledger.onchain = { ...(ledger.onchain ?? {}), recharge: summary };
+      await writeFile(ledgerFile, JSON.stringify(ledger.toJSON(), null, 2));
+      console.log(`Treasury recharged the agent's allowance ${summary.beforeUsdc} → ${summary.afterUsdc} USDC with the sponsor income (SEP-41 approve, tx ${hash}); read back ${summary.verifiedUsdc} USDC${summary.verified ? " ✓" : " ✗"}`);
+    } catch (e) {
+      console.error(`Recharge skipped: ${e.message}`);
+    }
+  } else {
+    console.error("Sponsor step did not settle; the recorded run stays as the loop wrote it.");
+  }
+}
 services.kill();
 process.exit(run.status ?? 1);
