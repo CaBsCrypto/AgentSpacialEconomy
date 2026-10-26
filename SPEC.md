@@ -125,3 +125,5 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 The revenue-side backlog entry is superseded for this feature branch by docs/ads/PRD-v0.2.md and docs/ads/README.md. Implement the advertiser journey on Stellar Testnet only, with separate payment, queue, audit, scheduling, delivery and remedy states. PostgreSQL and an outbox are the source of truth. New purchases remain disabled until all commercial configuration and wallet/facilitator integration gates pass. The legacy recorded agent run is not evidence for this new flow.
 
 Default main-stage content: the user-supplied HackMeridian Day 1 presentation, converted from GIF to a 10-second silent looping MP4. A paid audited scheduled advertisement temporarily replaces the loop; payment alone never publishes it.
+
+Approved 26 Oct main-stage pilot: implement the owner-approved QR/NFC, five measured passes, suggested scheduling, fulfillment recovery and PM/QA gates in docs/ads/main-stage-pilot.md. This supersedes the former incomplete-pilot freeze only within feature/ads-3d-ar-x402; preserve the recorded demo, wallet identity and main/dashboard.
