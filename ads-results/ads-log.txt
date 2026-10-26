@@ -1,0 +1,14 @@
+Ephemeral venue treasury: GA47UI5F5WXC3ICJDRXAZUKOP5DLI2EYFCGRDQ67BNE2PJDPM7QYKIM7
+Ephemeral advertiser wallet: GAGL4HJDR6VMXOGYNJDHDD72WXUNYB2O72IUQBPXCI7NAH6B6RMB3OKZ
+Advertiser bought ~43.2943 testnet USDC for 50 XLM on the testnet DEX (tx 6178187c77253dc76913f025861d08278122b614fb5e1f912cf40b35c4926c61)
+Advertiser USDC: 43.2942958 · treasury USDC before: 0.0000000
+[services] Venue services on http://localhost:3001 (stellar:testnet)
+[services] Facilitator: https://x402.org/facilitator
+Paying to GB2PZG…EXA2
+Sponsor slot pays the venue treasury GA47UI…KIM7
+Advertiser "Demo Advertiser (testnet)" paid 5.00 USDC to the venue treasury for 5 min of main_stage_screen: SETTLED https://stellar.expert/explorer/testnet/tx/06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc
+Treasury USDC 0.0000000 → 5.0000000 (+5.0000000) ✓
+AdsRegistry instance CCF3QILVXKYOUE4M2SVZJYOWYQZ3IMS3DODPKPN2UVZELIKMVI63OCQS deployed from WASM d9caf94b2dfb… (tx 3b0eb98b2c82d2fd994691ad9d59289f2d858a5654d77abb0cac86058da4bb30)
+Order committed with payment = 06dcd5b2b16f… (tx 0a15bdb401be7ea1970acf2153129b839b38108bff03a515000ac16cb3fa9509)
+Read back: Queued, delivered 0 of 300000 ms, payment hash matches: yes ✓
+Wrote dist/state/ads.json
