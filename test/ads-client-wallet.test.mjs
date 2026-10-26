@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as sdk from '@stellar/stellar-sdk';
 import {createAdsWallet,ADS_USDC} from '../dist/ads-wallet.mjs';
+import {createWalletProvider} from '../dist/wallet-provider.mjs';
 const address=sdk.StrKey.encodeContract(Buffer.alloc(32,7)),payTo=sdk.Keypair.random().publicKey();
 const config={networkPassphrase:sdk.Networks.TESTNET,tokenContract:ADS_USDC,rpcUrl:'https://soroban-testnet.stellar.org',origin:'https://venue.example',rpId:'venue.example',accountWasmHash:'a'.repeat(64),webauthnVerifierAddress:sdk.StrKey.encodeContract(Buffer.alloc(32,8))};
-const browser={isSecureContext:true,navigator:{credentials:{}},PublicKeyCredential:function(){},location:{origin:'https://venue.example'}};
+const browser={isSecureContext:true,navigator:{credentials:{}},PublicKeyCredential:function(){},location:{origin:'https://venue.example',hostname:'venue.example'}};
 function fixture({evil=false}={}){
  const calls=[];
  class Kit{credentialId='credential';contractId=address;rules={list:async()=>[{id:17,context_type:{tag:'Default'},signers:[{tag:'External',values:[config.webauthnVerifierAddress,new Uint8Array(66)]}],policies:[]}]};connectWallet=async options=>{calls.push(['connect',options]);return {contractId:address};};signAuthEntry=async(entry,options)=>{calls.push(['sign',entry,options]);return entry;};}
@@ -37,4 +38,21 @@ test('a manipulated simulation invocation never reaches the passkey prompt',asyn
 test('browser bundle exports signing and challenge APIs without depending on a global Buffer',async()=>{
  const original=globalThis.Buffer;
  try{globalThis.Buffer=undefined;const bundled=await import('../dist/vendor/ads-wallet/kit.mjs?qa-no-buffer');assert.equal(typeof bundled.SmartAccountKit,'function');assert.equal(typeof bundled.startAuthentication,'function');assert.equal(typeof bundled.getCredentialIdFromSigner,'function');assert.equal(bundled.scValToNative(bundled.nativeToScVal(1234567n,{type:'i128'})),1234567n);}finally{globalThis.Buffer=original;}
+});
+
+
+test('map and advertiser connect the same existing passkey wallet without creating or funding an account',async()=>{
+ const f=fixture(),provider=await createWalletProvider(config,{browser,loadKit:f.options.loadSdk});
+ const mapped=await provider.connect(),advertiser=await createAdsWallet(config,f.options),connected=await advertiser.connect();
+ assert.equal(connected.address,mapped.address);assert.equal(advertiser.address,mapped.address);assert.equal(connected.credentialId,'credential');
+ assert.equal(f.calls.filter(call=>call[0]==='connect').length,2);
+ await advertiser.authenticate();
+ assert.deepEqual(f.calls.filter(call=>call[0]==='fetch').map(call=>call[1]),['/api/ads/auth/challenge','/api/ads/auth/verify']);
+ assert.equal(f.calls.some(call=>call[0]==='sign'),false);
+});
+
+test('published map and advertiser bundles use the same default IndexedDB database for credential mappings',async()=>{
+ const map=await import('../dist/vendor/wallet/kit.mjs'),ads=await import('../dist/vendor/ads-wallet/kit.mjs');
+ const mapStorage=new map.IndexedDBStorage(),adsStorage=new ads.IndexedDBStorage();
+ assert.equal(mapStorage.dbName,'smart-account-kit');assert.equal(adsStorage.dbName,mapStorage.dbName);
 });

@@ -1,5 +1,34 @@
 import { ADS_PLACEMENTS, createAdsPlayer } from './ads-player.mjs';
 import { createAdsWallet } from './ads-wallet.mjs';
+export const PILOT_PROFILE = 'main-stage-test-5m';
+export function configuredPilotOffer(config) {
+  if (!config.profile) return null;
+  if (config.profile !== PILOT_PROFILE) throw Error('El catálogo de este piloto no está disponible.');
+  const offer = config.offers?.find(item => item.id === PILOT_PROFILE);
+  if (!offer || offer.placementId !== 'main_stage_screen' || offer.plan !== 'TIME' || offer.units !== 1 || offer.durationMs !== 300000 || offer.amountUnits !== '50000000' || offer.designAmount !== '0') throw Error('La oferta no coincide con los 5 USDC de prueba por 5 minutos aprobados.');
+  return offer;
+}
+export function advertisementQuotePayload(config, input) {
+  const offer = configuredPilotOffer(config);
+  if (offer) {
+    if (input.placements.length !== 1 || input.placements[0] !== offer.placementId) throw Error('Este piloto vende únicamente la pantalla del main stage.');
+    return { campaignId: input.campaignId, offerId: offer.id, startsAt: input.startsAt, endsAt: input.endsAt };
+  }
+  return { campaignId: input.campaignId, placements: input.placements, plan: input.plan, units: input.units, startsAt: input.startsAt, endsAt: input.endsAt };
+}
+export function validatePilotQuote(quote, offer) {
+  if (!offer) return quote;
+  const line = quote.lines?.[0];
+  if (quote.offerId !== offer.id || quote.amountUnits !== offer.amountUnits || quote.plan !== offer.plan || quote.units !== 1 || quote.requiredUnits !== offer.durationMs || quote.timeUnitMs !== offer.durationMs || quote.placements?.length !== 1 || quote.placements[0] !== offer.placementId || quote.lines?.length !== 1 || line.placementId !== offer.placementId || line.unitAmount !== offer.amountUnits || line.designAmount !== '0' || line.amountUnits !== offer.amountUnits) throw Error('La cotización no corresponde a la oferta fija de 5 USDC de prueba y 5 minutos.');
+  return quote;
+}
+export async function requestPaymentAuthorization({ api, wallet, path, amountUnits, config, idempotencyKey }) {
+  const response = await api(path, { method: 'POST', allow402: true, idempotencyKey });
+  if (!response.paymentRequired) return response;
+  if (!amountUnits) throw Error('Debes recuperar la cotización original antes de autorizar el importe.');
+  const paymentPayload = await wallet.signPayment({ challenge: response.paymentRequired, expected: { amountUnits, payTo: config.payTo, asset: config.asset, network: config.network, resourceUrl: '/api/ads' + path } });
+  return { paymentPayload };
+}
 export const ORDER_LABELS = Object.freeze({ DRAFT: 'Brief guardado', PREAUDITED: 'Brief admitido', QUOTED: 'Cotización disponible', RESERVED: 'Capacidad reservada · pago pendiente', PAYMENT_PENDING: 'Verificando el pago', QUEUED: 'Pago confirmado · en cola durable', PROCESSING: 'Generando el anuncio', AUDITING: 'Auditando el creativo final', SCHEDULED: 'Anuncio programado', LIVE: 'Anuncio activo', COMPLETED: 'Obligaciones cerradas', BLOCKED: 'Orden bloqueada · requiere resolución', QUARANTINED: 'Contenido en cuarentena', CANCELLED: 'Orden cancelada', RECONCILIATION_REQUIRED: 'Reconciliando el intento original' });
 export function adsConfigPath(search = '') {
   const source = search instanceof URLSearchParams ? search : new URLSearchParams(search);
@@ -67,7 +96,7 @@ export async function initAdsPage(documentRef = document) {
   const $ = id => documentRef.getElementById(id), api = createAdsApi(), params = new URLSearchParams(location.search), publisher = params.get('publisher') === '1';
   const form = $('briefForm'), feedback = $('feedback');
   $('timeZoneHint').textContent = 'Fechas en tu zona horaria: ' + Intl.DateTimeFormat().resolvedOptions().timeZone + '. La cotización conserva los instantes exactos.';
-  let config = { enabled: false, missing: [], placements: [] }, wallet, signedIn = false, campaign, quote, order, polling, busy = false, ar = null, operatorRefunds = [];
+  let config = { enabled: false, missing: [], placements: [] }, pilotOffer = null, wallet, signedIn = false, campaign, quote, order, polling, busy = false, ar = null, operatorRefunds = [];
   const players = new Map(), artUrls = new Map(), rendered = new Map();
   documentRef.body.classList.toggle('publisher', publisher);
   const message = text => { feedback.querySelector('span').textContent = text; feedback.hidden = false; };
@@ -193,8 +222,9 @@ export async function initAdsPage(documentRef = document) {
     if (!placements.length) throw Error('Elige al menos una ubicación digital.');
     const startsAt = new Date(form.elements.startsAt.value), endsAt = new Date(form.elements.endsAt.value);
     if (!(endsAt > startsAt)) throw Error('La fecha de fin debe ser posterior al inicio.');
-    const quotePayload = { campaignId: campaign.id, placements, plan: form.elements.plan.value, units: form.elements.plan.value === 'EXCLUSIVE' ? exclusiveUnits(startsAt, endsAt, config.units?.exclusiveMs) : Number(form.elements.units.value), startsAt: startsAt.toISOString(), endsAt: endsAt.toISOString() };
-    quote = await api('/quotes', { method: 'POST', body: quotePayload, idempotencyKey: await requestKey('quote', quotePayload, quote && Date.parse(quote.expiresAt) <= Date.now()) });
+    const quotePayload = advertisementQuotePayload(config, { campaignId: campaign.id, placements, plan: pilotOffer ? 'TIME' : form.elements.plan.value, units: pilotOffer ? 1 : form.elements.plan.value === 'EXCLUSIVE' ? exclusiveUnits(startsAt, endsAt, config.units?.exclusiveMs) : Number(form.elements.units.value), startsAt: startsAt.toISOString(), endsAt: endsAt.toISOString() });
+    const result = await api('/quotes', { method: 'POST', body: quotePayload, idempotencyKey: await requestKey('quote', quotePayload, quote && Date.parse(quote.expiresAt) <= Date.now()) });
+    quote = validatePilotQuote(result, pilotOffer);
     const output = $('quoteOutput'); output.replaceChildren(); output.hidden = false;
     const price = documentRef.createElement('p'); price.className = 'quote-price'; price.textContent = formatAdsAmount(quote.amountUnits) + ' USDC de prueba'; output.append(price);
     const network = documentRef.createElement('p'); network.textContent = 'Stellar Testnet · ' + quote.plan + ' · ' + placements.length + ' ubicación(es)'; output.append(network);
@@ -207,7 +237,7 @@ export async function initAdsPage(documentRef = document) {
     const priority = documentRef.createElement('p'); priority.textContent = 'El anfitrión mantiene prioridad sobre el contenido del main stage. Una interrupción detiene las unidades aplicables. La entrega se mide en el publicador digital canónico, sin contar espectadores.'; terms.append(priority); output.append(terms);
   }));
   $('reserveButton').addEventListener('click', () => action(async () => {
-    requireSession(); order = await api('/orders', { method: 'POST', body: { quoteId: quote.id }, idempotencyKey: 'order:' + quote.id }); stored.set('order', { id: order.id, amountUnits: quote.amountUnits }); const orderUrl = new URL(location.href); orderUrl.searchParams.set('order', order.id); history.replaceState(null, '', orderUrl); renderOrder(); $('orderPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    requireSession(); validatePilotQuote(quote, pilotOffer); order = await api('/orders', { method: 'POST', body: { quoteId: quote.id }, idempotencyKey: 'order:' + quote.id }); stored.set('order', { id: order.id, amountUnits: quote.amountUnits }); const orderUrl = new URL(location.href); orderUrl.searchParams.set('order', order.id); history.replaceState(null, '', orderUrl); renderOrder(); $('orderPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }));
   function renderOrder() {
     if (!order) return;
@@ -240,13 +270,12 @@ export async function initAdsPage(documentRef = document) {
     let attempt = stored.get('payment:' + orderId);
     if (attempt && ['FAILED', 'EXPIRED'].includes(order.payment?.status)) { stored.remove('payment:' + orderId); attempt = null; }
     if (!attempt) {
-      const response = await api(path, { method: 'POST', allow402: true, idempotencyKey: await requestKey('paymentChallenge', { orderId }) });
-      if (!response.paymentRequired) { if (response.order?.id) order = response.order; else if (response.id) order = response; await updateOrder(); return; }
       const saved = stored.get('order');
       const amountUnits = order.amountUnits || saved?.amountUnits || quote?.amountUnits;
-      if (!amountUnits) throw Error('Debes recuperar la cotización original antes de autorizar el importe.');
-      const paymentPayload = await wallet.signPayment({ challenge: response.paymentRequired, expected: { amountUnits, payTo: config.payTo, asset: config.asset, network: config.network, resourceUrl: '/api/ads' + path } });
-      attempt = { key: crypto.randomUUID(), paymentPayload }; stored.set('payment:' + orderId, attempt);
+      if (pilotOffer) { validatePilotQuote(order.quote, pilotOffer); if (amountUnits !== pilotOffer.amountUnits) throw Error('El importe de la orden no coincide con la oferta fija.'); }
+      const response = await requestPaymentAuthorization({ api, wallet, path, amountUnits, config, idempotencyKey: await requestKey('paymentChallenge', { orderId }) });
+      if (!response.paymentPayload) { if (response.order?.id) order = response.order; else if (response.id) order = response; await updateOrder(); return; }
+      attempt = { key: crypto.randomUUID(), paymentPayload: response.paymentPayload }; stored.set('payment:' + orderId, attempt);
     }
     $('orderStatus').textContent = 'PAYMENT_PENDING · verificando liquidación del intento original';
     try { const receipt = await api(path, { method: 'POST', body: { paymentPayload: attempt.paymentPayload }, idempotencyKey: attempt.key }); if (receipt.order?.id) order = receipt.order; else if (receipt.id) order = receipt; if (receipt.receipt && !order.receipt) order.receipt = receipt.receipt; renderOrder(); await updateOrder(); }
@@ -306,10 +335,26 @@ export async function initAdsPage(documentRef = document) {
   try {
     config = await api(adsConfigPath(params));
     const selected = configuredPlacement(config, params.has('placement'));
-    if (selected) for (const input of documentRef.querySelectorAll('input[name="placement"]')) input.checked = input.value === selected;
     if (config.network !== 'stellar:testnet') throw Error('La publicidad debe operar exclusivamente en Stellar Testnet.');
+    pilotOffer = configuredPilotOffer(config);
+    $('pilotOffer').hidden = !pilotOffer; $('legacyPlans').hidden = !!pilotOffer; $('unitsLabel').hidden = !!pilotOffer;
+    if (pilotOffer) {
+      $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 minutos acumulados.';
+      $('spacesTitle').textContent = 'Tu anuncio, en el main stage.';
+      $('offerPrice').textContent = formatAdsAmount(pilotOffer.amountUnits) + ' USDC de prueba';
+      form.elements.plan.value = pilotOffer.plan; form.elements.units.value = String(pilotOffer.units); form.elements.units.disabled = true;
+      for (const input of documentRef.querySelectorAll('input[name="plan"]')) input.disabled = true;
+    }
+    for (const input of documentRef.querySelectorAll('input[name="placement"]')) {
+      const placement = config.placements.find(item => item.id === input.value);
+      const purchasable = !!placement && placement.purchasable !== false && (!pilotOffer || input.value === pilotOffer.placementId);
+      input.disabled = !purchasable;
+      if (selected || pilotOffer) input.checked = purchasable && input.value === (selected || pilotOffer.placementId);
+      if (!purchasable) { input.checked = false; input.closest('label').querySelector('span').textContent = 'No está a la venta'; }
+    }
     if (!config.enabled) setNotice('Las compras todavía están pendientes de configuración. Puedes explorar las ubicaciones; no hay una cotización pagable ni autorización de pago disponible.', true);
     else setNotice('Compras testnet habilitadas. El precio y las condiciones se muestran en una cotización antes de autorizar el pago.');
+    if (pilotOffer && selected && selected !== pilotOffer.placementId) setNotice('Puedes explorar este banner. La oferta de compra está disponible únicamente para la pantalla del main stage.', !config.enabled);
     if (config.defaultStageUrl) { const defaultUrl = new URL(config.defaultStageUrl, location.origin); if (defaultUrl.protocol === 'https:' || defaultUrl.origin === location.origin) for (const video of documentRef.querySelectorAll('.stage-default')) { video.src = defaultUrl.href; video.play().catch(() => {}); } }
     for (const input of documentRef.querySelectorAll('input[name="placement"]')) if (!config.placements.some(item => item.id === input.value)) { input.disabled = true; input.checked = false; }
     for (const player of players.values()) void player.refresh();
@@ -324,7 +369,7 @@ export async function initAdsPage(documentRef = document) {
         }
       } catch {}
     }
-  } catch (error) { setNotice('Las compras no están disponibles: ' + error.message, true); }
+  } catch (error) { config.enabled = false; setNotice('Las compras no están disponibles: ' + error.message, true); }
   controls();
 }
 if (typeof document !== 'undefined') void initAdsPage().catch(error => { const notice = document.getElementById('notice'); if (notice) { notice.textContent = 'No se pudo preparar la publicidad. ' + error.message; notice.classList.add('error'); } });
