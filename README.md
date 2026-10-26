@@ -46,8 +46,8 @@ Operator mandate (objective, budget, per-call cap, allowed services)
 | Facilitator | `https://x402.org/facilitator` (testnet, fee-sponsored); OpenZeppelin Channels as fallback |
 | Wallets | Agent wallet (payer, server-side Ed25519 signer, never in the browser) and service wallet (payee). Both need a USDC trustline |
 | APIs | Horizon testnet (accounts, trustlines, DEX path payment used to fund the agent with testnet USDC), Friendbot, Soroban RPC (x402 client), facilitator `/supported`, `/verify`, `/settle` |
-| Contracts | No custom contracts; payments invoke the USDC SAC. On-chain spending limits (OpenZeppelin smart-account policy) are in the backlog |
-| Spend control | `agent/ledger.mjs`: allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
+| Contracts | No custom contracts; payments and the allowance use the USDC SAC (`approve`, `transfer_from`, `allowance`). Per-day caps in a smart account (OpenZeppelin policy or Nido session keys) are in the backlog |
+| Spend control | **On-chain:** the operator's treasury approves the venue agent a SEP-41 allowance on the USDC SAC (amount = mandate budget, expires in ~24 h); the agent draws its allocations with `transfer_from` and the network refuses anything above. **Off-chain, before signing:** `agent/ledger.mjs` — allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
 
 ## On-chain evidence (Stellar testnet)
 

@@ -62,6 +62,17 @@ Before each payment the agent reads the service's `402 Payment Required` and ref
 
 Commit `dist/state/*.json` only after a real testnet run. Never commit `.env`.
 
+## On-chain budget ceiling (SEP-41 allowance)
+
+The operator's treasury holds the USDC and calls `approve(from = treasury, spender = venue agent, amount = mandate budget, live_until_ledger ≈ +24 h)` on the USDC Stellar Asset Contract. The venue agent starts with no USDC: before paying anything it draws exactly its allocations with `transfer_from`, then simulates a draw one cent above what is left — the network refuses it without anything being submitted. Two limits, two layers:
+
+| Layer | Who enforces it | What it limits |
+| --- | --- | --- |
+| SEP-41 allowance | Stellar (the USDC contract) | total the agent can ever draw, and until when |
+| `ledger.mjs` | the agent itself, before signing | per-call cap, approval threshold, allow-list, per-zone allocations |
+
+`ci-run.mjs` does this by default with throwaway accounts (`onchain.mjs` holds the SDK calls; `lib/allowance.mjs` the tested rules). `run.mjs` switches it on when `TREASURY_PUBLIC_KEY` is set; without it, the agent pays from its own balance as before. Signatures: [token interface](https://developers.stellar.org/docs/tokens/token-interface).
+
 ## Network config
 
 All testnet values live in `config/networks.mjs`, so the path to mainnet is one reviewed diff of that file instead of a search through the code. Mainnet is listed with its passphrase, Horizon, explorer, USDC and facilitator, but `enabled: false` makes every entry point refuse it; there is no public SDF mainnet RPC, so a provider must be chosen first. `STELLAR_NETWORK` selects the network (default `stellar:testnet`).
