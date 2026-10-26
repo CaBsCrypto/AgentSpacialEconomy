@@ -100,7 +100,8 @@ async function initialize(){
   const parsing=new GLTFLoader().parseAsync(bytes,'./assets/');parsing.then(gltf=>{if(!venueLoading.isCurrent(attempt))disposeVenueObject(gltf.scene);},()=>{});
   const gltf=await withTimeout(parsing,20000,'3D geometry timeout');if(!venueLoading.isCurrent(attempt))return;
   model=prepareVenueModel(gltf.scene,THREE);scene.add(model);
-  defaultStage=createDefaultStageLoop(THREE,model);
+  // Opt-in preview (?sections): the main stage shows the four paid sections from state/screen.json instead of the host loop. Default behaviour is unchanged.
+  defaultStage=/[?&]sections(=|&|$)/.test(globalThis.location?.search||'')?null:createDefaultStageLoop(THREE,model);
   mainStageSign=createMainStageSign(THREE,model);
   // The host loop owns the stage; the recorded agent card is a legacy fallback only.
   if(!defaultStage)await applyStageCard(THREE,model,{fetchImpl:(url,options)=>fetch(url,{...options,signal:AbortSignal.any([controller.signal,AbortSignal.timeout(5000)])})});
