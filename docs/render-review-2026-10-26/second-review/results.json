@@ -1,0 +1,83 @@
+{
+  "baseCommit": "da9b680",
+  "branch": "codex/render-textures-ui",
+  "frontend": {
+    "tests": 395,
+    "pass": 394,
+    "fail": 0,
+    "skipped": 1
+  },
+  "agent": {
+    "tests": 34,
+    "pass": 34,
+    "fail": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "skipped": 0
+  },
+  "footballBrowser": {
+    "passed": true,
+    "checks": 15
+  },
+  "model": {
+    "rawBytes": 15222868,
+    "gzipBytes": 4785964,
+    "budgetBytes": 5242880,
+    "sha256": "29036fc3df13719c78a535eee93f6dad08f76d86fce7e9cd8727b63462cb9a3c",
+    "embeddedImagesDecoded": 32
+  },
+  "render": {
+    "fixture": "File-backed HTTP responses; original application modules and GLB; no external network",
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "beforeFirstFrameMs": 1902.2999999970198,
+    "afterFirstFrameMs": 1678,
+    "beforeMedianFrameMs": 16.69999999999891,
+    "afterMedianFrameMs": 16.69999999999891,
+    "views": 28,
+    "pageErrors": [],
+    "missingLocalFiles": []
+  },
+  "viewports": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "evidence": [
+    "tables-overview.jpg",
+    "section-comparisons.jpg"
+  ],
+  "scopeNotes": [
+    "Dimensions and indistinct graphics estimated from video",
+    "Physical mobile and native AR remain owner review; browser touch/viewports emulated",
+    "Stage dynamic screen, wallet, sponsor, Passport target, seven steps and shortened corridor preserved"
+  ],
+  "visualAcceptance": {
+    "lowerLounge": "pass; upholstery gap closed and perpendicular layout preserved",
+    "checkIn": "pass; all main titles visible and repeated marks excluded",
+    "skills": "pass; five contained groups and centered portrait preset",
+    "games": "pass; wall display, parallel keyboard and inward-facing sofa",
+    "arcade": "pass; eighteen plungers, two triangular groups and top scores",
+    "tables": "8/8 pass; enlarged upright wordmarks with clear hardware band",
+    "contentHub": "pass; half length, padded seats, four fixtures visible",
+    "football": "15/15 browser checks pass",
+    "foodView": "pass; complete main counter in portrait view",
+    "retainedStagePhotoPassport": "pass; preserved IDs, content and navigation"
+  }
+}
