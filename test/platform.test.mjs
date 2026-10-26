@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { LANGUAGE_KEY, PAGE_TITLES, SPANISH_COPY, resolvePlatformLanguage, applyPlatformLanguage, mountPlatform, SCENE_VIEW_COPY, SCENE_VIEWS, updateSceneCaption, deferOne16Preview } from '../dist/platform.mjs';
+import { LANGUAGE_KEY, PAGE_TITLES, SPANISH_COPY, resolvePlatformLanguage, applyPlatformLanguage, mountPlatform, SCENE_VIEW_COPY, SCENE_VIEWS, updateSceneCaption, deferOne16Preview, buildQuoteRequest, validateQuote, QUOTE_SUBJECT } from '../dist/platform.mjs';
 
 const html = fs.readFileSync(new URL('../dist/platform.html', import.meta.url), 'utf8');
 const script = fs.readFileSync(new URL('../dist/platform.mjs', import.meta.url), 'utf8');
@@ -17,7 +17,7 @@ class Node extends EventTarget {
   click() { this.dispatchEvent(new Event('click')); }
 }
 function fixture() {
-  const hero = new Node('Make your event a place to explore', { 'data-i18n': 'heroTitle' });
+  const hero = new Node('Spaces that respond to their people', { 'data-i18n': 'heroTitle' });
   const how = new Node('One way in.More ways to interact.', { 'data-i18n': 'howTitle' });
   const phase = new Node('Available', { 'data-i18n': 'phaseCurrent' });
   const meta = new Node('', { 'data-i18n-content': 'metaDescription', content: 'Original English description' });
@@ -31,12 +31,15 @@ function fixture() {
 
 test('the public root is an English landing with direct ONE16 calls and a deferred concept scene', () => {
   assert.match(html, /<html lang="en"/);
-  assert.match(html, /Make your event a place to explore/);
+  assert.match(html, /Spaces that respond to their people/);
+  assert.match(html, /Agentic Realities · Spatial AI for Venues and Events/);
   assert.ok((html.match(/href="\/one16"/g) || []).length >= 4);
   assert.match(html, /href="#how-it-works"/);
   assert.match(html, /src="\/platform.mjs\?v=premium-1"/);
   assert.match(html, /href="\/platform.css\?v=premium-1"/);
-  assert.doesNotMatch(html, /<form\b|mailto:|type="email"/i);
+  // The quote form drafts an email on the device: it has no action or method, and the script never posts data.
+  assert.match(html, /<form class="quote-form" id="quoteForm"/);
+  assert.doesNotMatch(html, /<form\b[^>]*\b(?:action|method)=/i);
   assert.doesNotMatch(html, /entry\.mjs|viewer\.js|\.glb|\.usdz|data:image|wallet-controller\.mjs/i);
   assert.equal(/getUserMedia|requestSession|navigator\.credentials|fetch\(/.test(script), false);
   assert.deepEqual([...script.matchAll(/import\(['"]([^'"]+)/g)].map(match => match[1]), ['./platform-scene.mjs?v=premium-1', './one16-preview.mjs?v=1']);
@@ -71,7 +74,7 @@ test('the only photographic preview is the actual inspected lightweight ONE16 re
 test('every translated HTML text and accessibility attribute has a Spanish translation', () => {
   const keys = new Set([...html.matchAll(/data-i18n(?:-content|-aria|-alt)?="([^"]+)"/g)].map(match => match[1]));
   assert.deepEqual([...keys].sort(), Object.keys(SPANISH_COPY).sort());
-  assert.equal(SPANISH_COPY.heroTitle, 'Convierte tu evento en una experiencia para explorar');
+  assert.equal(SPANISH_COPY.heroTitle, 'Espacios que responden a sus personas');
   assert.match(SPANISH_COPY.pilotBody, /no tienen valor real/);
 });
 
@@ -94,7 +97,7 @@ test('switching Spanish updates metadata, labels and synchronized selectors, the
   assert.equal(f.image.getAttribute('alt'), SPANISH_COPY.one16ImageAlt);
   assert.deepEqual(f.buttons.map(button => button.getAttribute('aria-pressed')), ['false', 'true', 'false', 'true']);
   applyPlatformLanguage(f.documentRef, 'en');
-  assert.equal(f.hero.textContent, 'Make your event a place to explore');
+  assert.equal(f.hero.textContent, 'Spaces that respond to their people');
   assert.equal(f.meta.getAttribute('content'), 'Original English description');
   assert.equal(f.how.textContent, 'One way in.\nMore ways to interact.');
   assert.equal(f.documentRef.title, PAGE_TITLES.en);
@@ -136,3 +139,22 @@ test('legacy QR/NFC continuation runs before preference storage and UI initializ
 
 
 
+
+test('the landing segments spaces, services, scopes and both demos, and every quote path stays on the page', () => {
+  for (const id of ['spaces', 'services', 'plans', 'demos', 'demo-visitor', 'demo-host', 'quote']) assert.match(html, new RegExp('id="' + id + '"'), id);
+  for (const href of ['/dashboard.html', '/ads', '/passport-space.html']) assert.ok(html.includes('href="' + href + '"'), href);
+  assert.equal((html.match(/data-quote-scope="(?:event|season|permanent)"/g) || []).length, 3);
+  for (const value of ['event', 'season', 'permanent']) assert.match(html, new RegExp('<option value="' + value + '" data-i18n="optScope'));
+  assert.match(html, /Test assets have no real value/);
+});
+
+test('a quote request needs a name, a valid email, a space and a scope, and becomes a local email draft', () => {
+  assert.equal(validateQuote({ name: 'Ana', email: 'ana@example.org', space: 'event', scope: 'event' }), true);
+  for (const missing of [{ name: '' }, { email: 'not-an-email' }, { space: '' }, { scope: '' }]) assert.equal(validateQuote({ name: 'Ana', email: 'ana@example.org', space: 'event', scope: 'event', ...missing }), false);
+  const request = buildQuoteRequest([['Type of space', 'Event or venue'], ['Organization', ''], ['Your name', 'Ana & Co']], { language: 'en', email: 'team@example.org' });
+  assert.equal(request.subject, QUOTE_SUBJECT.en);
+  assert.equal(request.body, 'Type of space: Event or venue\nYour name: Ana & Co');
+  assert.ok(request.mailto.startsWith('mailto:team@example.org?subject='));
+  assert.match(request.mailto, /Ana%20%26%20Co/);
+  assert.equal(buildQuoteRequest([], { language: 'es', email: 'x@y.z' }).subject, QUOTE_SUBJECT.es);
+});
