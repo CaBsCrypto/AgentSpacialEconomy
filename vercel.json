@@ -1,19 +1,206 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "framework": null,
+  "buildCommand": "npm run build",
+  "installCommand": "npm ci --no-audit --no-fund",
   "outputDirectory": "dist",
-  "headers": [
+  "functions": {
+    "api/wallet/faucet.js": {
+      "maxDuration": 180,
+      "includeFiles": "node_modules/@sozu/faucet/**"
+    },
+    "api/wallet/relay.js": {
+      "maxDuration": 180
+    },
+    "api/wallet/config.js": {
+      "maxDuration": 30
+    }
+  },
+  "routes": [
     {
-      "source": "/state/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "src": "^/(.*)/$",
+      "headers": {
+        "Location": "/$1"
+      },
+      "status": 308
     },
     {
-      "source": "/assets/passport.usdz",
-      "headers": [{ "key": "Content-Type", "value": "model/vnd.usdz+zip" }]
+      "src": "^/$",
+      "headers": {
+        "Location": "https://agenticreality.space/"
+      },
+      "status": 308,
+      "has": [
+        {
+          "type": "host",
+          "value": "one16-passport-ar.vercel.app"
+        }
+      ]
     },
     {
-      "source": "/assets/passport.glb",
-      "headers": [{ "key": "Content-Type", "value": "model/gltf-binary" }]
+      "src": "^/$",
+      "headers": {
+        "Location": "https://agenticreality.space/"
+      },
+      "status": 308,
+      "has": [
+        {
+          "type": "host",
+          "value": "www.agenticreality.space"
+        }
+      ]
+    },
+    {
+      "src": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?$",
+      "headers": {
+        "Location": "https://agenticreality.space/$1"
+      },
+      "status": 308,
+      "has": [
+        {
+          "type": "host",
+          "value": "one16-passport-ar.vercel.app"
+        }
+      ]
+    },
+    {
+      "src": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?$",
+      "headers": {
+        "Location": "https://agenticreality.space/$1"
+      },
+      "status": 308,
+      "has": [
+        {
+          "type": "host",
+          "value": "www.agenticreality.space"
+        }
+      ]
+    },
+    {
+      "src": "^/index\\.html$",
+      "headers": {
+        "Location": "/one16"
+      },
+      "status": 308
+    },
+    {
+      "src": "^/platform\\.html$",
+      "headers": {
+        "Location": "/"
+      },
+      "status": 308
+    },
+    {
+      "src": "^/$",
+      "headers": {
+        "Location": "/one16"
+      },
+      "status": 308,
+      "has": [
+        {
+          "type": "query",
+          "key": "ar_fallback",
+          "value": "1"
+        }
+      ],
+      "missing": [
+        {
+          "type": "query",
+          "key": "passport",
+          "value": "^(?:stand16|return)$"
+        }
+      ]
+    },
+    {
+      "src": "^(?:/(.*))$",
+      "headers": {
+        "Permissions-Policy": "camera=(self), microphone=(), geolocation=(), xr-spatial-tracking=(self)",
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      },
+      "continue": true
+    },
+    {
+      "src": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?\\.mjs$",
+      "headers": {
+        "Content-Type": "application/javascript; charset=utf-8"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/assets(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?\\.glb$",
+      "headers": {
+        "Content-Type": "model/gltf-binary"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/assets(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?\\.usdz$",
+      "headers": {
+        "Content-Type": "model/vnd.usdz+zip"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/api(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?$",
+      "headers": {
+        "Cache-Control": "private, no-store, max-age=0",
+        "CDN-Cache-Control": "no-store",
+        "Vercel-CDN-Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/assets/passport-access\\.json$",
+      "headers": {
+        "Cache-Control": "no-store, max-age=0",
+        "CDN-Cache-Control": "no-store",
+        "Vercel-CDN-Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "passport",
+          "value": "stand16"
+        }
+      ]
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "passport",
+          "value": "return"
+        }
+      ]
+    },
+    {
+      "src": "^/one16$",
+      "dest": "/index.html"
+    },
+    {
+      "src": "^/$",
+      "dest": "/platform.html"
+    },
+    {
+      "src": "^/state/(.*)$",
+      "headers": {
+        "Cache-Control": "no-store",
+        "CDN-Cache-Control": "no-store",
+        "Vercel-CDN-Cache-Control": "no-store"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
     }
   ]
 }

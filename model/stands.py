@@ -1,5 +1,5 @@
 """Observed paired booth corridor; positions and scale approximate, typography only where legible."""
-import bpy,math
+import bpy,math,os
 from mathutils import Vector,Matrix
 
 def build_stands(layout):
@@ -44,6 +44,21 @@ def build_stands(layout):
   bpy.ops.object.select_all(action='DESELECT')
   for o in group:o.select_set(True)
   if group:bpy.context.view_layer.objects.active=group[0];bpy.ops.object.join();group[0].name='Stands observed corridor · '+m.name
+ # The approved Passport activation occupies only the reverse of the first
+ # right backdrop; the observed Trustless Work / Grantfox front stays intact.
+ target=os.path.join(os.path.dirname(os.path.dirname(__file__)),'dist','assets','passport-target.png')
+ if os.path.isfile(target):
+  image=bpy.data.images.load(target,check_existing=True)
+  material=bpy.data.materials.new('PassportStand target artwork');material.use_nodes=True
+  shader=material.node_tree.nodes.get('Principled BSDF');shader.inputs['Roughness'].default_value=1
+  texture=material.node_tree.nodes.new('ShaderNodeTexImage');texture.image=image
+  material.node_tree.links.new(texture.outputs['Color'],shader.inputs['Base Color'])
+  mesh=bpy.data.meshes.new('PassportStand reverse poster mesh')
+  mesh.from_pydata([(3.8,27.858,.73),(2.6,27.858,.73),(2.6,27.858,2.17),(3.8,27.858,2.17)],[],[(0,1,2,3)]);mesh.update()
+  uv=mesh.uv_layers.new(name='UVMap')
+  for loop,coord in zip(mesh.loops,[(0,0),(1,0),(1,1),(0,1)]):uv.data[loop.index].uv=coord
+  poster=bpy.data.objects.new('PassportStand target panel',mesh);bpy.context.collection.objects.link(poster);mesh.materials.append(material)
+  poster['experienceId']='passport-stand16';poster['url']='./passport-ar.html';poster['reviewSection']=16
  layout['zones'].append({'id':'stands','label':'Stands · corredor hacia el escenario','polygon':[[-4.7,-31.6],[4.7,-31.6],[4.7,-25],[-4.7,-25]],'view':{'x':0,'z':-25.3,'yaw':0},'evidence':'Narrated video: paired black booths between central builders/social area and auditorium. Geometry estimated; GUAVA, Trustless Work/Grantfox and THE AHA COMPANY visually legible. Far right booth left unbranded.'})
  for z in layout['zones']:
   if z['id']=='cafe':
@@ -51,4 +66,5 @@ def build_stands(layout):
    z['polygon']=[[x,max(zz,-25)] for x,zz in z['polygon']]
   if z['id']=='auditorium':
    z['polygon']=[[x,min(zz,-31.7)] for x,zz in z['polygon']];z['view']={'x':0,'z':-33,'yaw':0}
+ layout['zones'].append({'id':'passport-stand16','label':'Stellar Passport · stand 16','polygon':[[2.4,-29.7],[4,-29.7],[4,-27.9],[2.4,-27.9]],'view':{'x':3.2,'z':-29.15,'yaw':math.pi,'pitch':0},'status':'Passport image-tracking demo on the reverse of Trustless Work / Grantfox.'})
  layout['standsRoute']=[{'x':3,'z':-7},{'x':5.8,'z':-14},{'x':5.8,'z':-23},{'x':0,'z':-23},{'x':0,'z':-25},{'x':0,'z':-31},{'x':0,'z':-39}]

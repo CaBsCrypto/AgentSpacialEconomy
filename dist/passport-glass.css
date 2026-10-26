@@ -1,0 +1,103 @@
+/* Uniform transparency for the Passport interaction. The rendered object stays dominant. */
+.passport-ar,#passportDialog.passport-in-world{--passport-glass:rgba(10,25,42,.16);--passport-glass-soft:rgba(10,25,42,.10);--passport-glass-strong:rgba(10,25,42,.38);--passport-line:rgba(232,239,244,.22);--passport-text:rgba(243,247,250,.88);--passport-muted:rgba(218,231,241,.76);--passport-gold:rgba(245,220,164,.88)}
+html.passport-ar,html.passport-ar body{background:transparent;color:var(--passport-text)}
+.passport-ar .topbar,.passport-ar .embedded-tools{background:var(--passport-glass-soft);border-color:var(--passport-line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:none}
+.passport-ar .primary,.passport-ar .secondary,.passport-ar .quiet{background:var(--passport-glass);color:var(--passport-text);border:1px solid var(--passport-line);box-shadow:none}
+.passport-ar .primary,.passport-ar .embedded-tools [aria-pressed=true]{background:rgba(229,196,126,.26);color:rgba(255,246,222,.88);border-color:rgba(229,196,126,.36)}
+.passport-ar button:hover{background:rgba(190,213,232,.22)}
+.passport-ar .primary:hover,.passport-ar .embedded-tools [aria-pressed=true]:hover{background:rgba(229,196,126,.32)}
+.passport-ar .live-state,.passport-ar .embedded .live-state{background:var(--passport-glass);border-color:var(--passport-line);box-shadow:none;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.passport-ar .live-state p,.passport-ar .brand,.passport-ar .back{color:var(--passport-text)}
+.passport-ar .live-state span{background:rgba(229,196,126,.62)}
+.passport-ar .brand b,.passport-ar .eyebrow,.passport-ar #infoBlocks h3{color:var(--passport-gold)}
+.passport-ar .bottom-controls,.passport-ar .bottom-controls>div{background:transparent}
+.passport-ar .bottom-controls .secondary{background:var(--passport-glass)}
+.passport-ar .bottom-controls p,.passport-ar .bottom-controls small{color:rgba(240,246,250,.80);text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.passport-ar #infoDialog{background:var(--passport-glass-strong);border-color:rgba(229,196,126,.28);color:var(--passport-text);box-shadow:0 8px 30px rgba(0,0,0,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.passport-ar #infoDialog::backdrop{background:rgba(3,11,22,.06);backdrop-filter:none}
+.passport-ar .dialog-close{color:rgba(239,246,251,.84);background:rgba(10,25,42,.12);border-radius:50%}
+.passport-ar .info-description,.passport-ar #infoBlocks p{color:rgba(230,240,248,.84)}
+.passport-ar .info-note{color:var(--passport-muted)}
+.passport-ar #infoBlocks section{border-color:rgba(239,245,249,.16)}
+.passport-ar .embedded-error,.passport-ar .error{background:rgba(76,48,25,.28);border-color:rgba(229,196,126,.30);color:rgba(255,232,192,.88);box-shadow:none}
+.passport-ar .target-preview{background:var(--passport-glass-soft);border-color:var(--passport-line);box-shadow:none}
+.passport-ar .embedded-tools span,.passport-ar .target-preview figcaption,.passport-ar .privacy{color:var(--passport-muted)}
+.passport-ar .passport-object-canvas{opacity:.94}
+.passport-ar .embedded-fallback img{opacity:.94}
+/* Same treatment for the parent controls, without applying it to the game UI. */
+#passportDialog.passport-in-world{background:transparent;border:0;box-shadow:none}
+#passportDialog.passport-in-world::backdrop{background:rgba(6,16,26,.06);backdrop-filter:none}
+#passportDialog.passport-in-world>.eyebrow{color:rgba(245,220,164,.84)}
+#passportDialog.passport-in-world>h2{color:rgba(248,250,252,.90)}
+#passportDialog.passport-in-world .passport-context{color:rgba(236,244,250,.82)}
+#passportDialog.passport-in-world>.eyebrow,#passportDialog.passport-in-world>h2,#passportDialog.passport-in-world .passport-context{text-shadow:0 1px 4px rgba(0,0,0,.50)}
+#passportDialog.passport-in-world .passport-embedded-host{background:transparent}
+#passportDialog.passport-in-world .passport-legacy{background:rgba(10,25,42,.12);border:1px solid rgba(239,245,249,.12);color:rgba(227,238,246,.78);backdrop-filter:blur(5px)}
+#passportDialog.passport-in-world #closePassport{background:rgba(10,25,42,.18);border-color:rgba(239,245,249,.24);color:rgba(246,249,252,.86);box-shadow:none}
+#passportDialog.passport-in-world #closePassport:hover{background:rgba(10,25,42,.28)}
+/* Quiet the surrounding game HUD only while the Passport interaction is open. */
+body:has(#passportDialog[open]) #viewer .mode-controls button,
+body:has(#passportDialog[open]) #return,
+body:has(#passportDialog[open]) #restart,
+body:has(#passportDialog[open]) #help,
+body:has(#passportDialog[open]) #reviewToggle,
+body:has(#passportDialog[open]) #nearPassport,
+body:has(#passportDialog[open]) #zones button,
+body:has(#passportDialog[open]) #toggleZones,
+body:has(#passportDialog[open]) #overviewArHint{background:rgba(10,25,42,.14);color:rgba(235,243,248,.70);border-color:rgba(235,243,248,.16);box-shadow:none;backdrop-filter:blur(4px)}
+body:has(#passportDialog[open]) #viewer .mode-controls [aria-pressed=true],
+body:has(#passportDialog[open]) #reviewToggle[aria-pressed=true]{background:rgba(229,196,126,.20);color:rgba(255,246,222,.78)}
+body:has(#passportDialog[open]) #walkMinimap{opacity:.40;box-shadow:none}
+body:has(#passportDialog[open]) .touch-controls{opacity:.36}
+body:has(#passportDialog[open]) #walkStick{background:rgba(10,25,42,.16);box-shadow:none}
+body:has(#passportDialog[open]) #stickThumb{background:rgba(229,196,126,.32);box-shadow:none}
+body:has(#passportDialog[open]) #scene{opacity:.72}
+#passportDialog.passport-in-world .passport-legacy .world-ar-button,
+#passportDialog.passport-in-world .passport-legacy button{background:rgba(10,25,42,.16);border:1px solid rgba(235,243,248,.22);color:rgba(235,243,248,.84);box-shadow:none}
+#passportDialog.passport-in-world .passport-inspector{opacity:.94}
+/* Make room for the opened book and the shared reading controls. */
+.passport-ar .bottom-controls #readingHost{display:block}
+.passport-ar .bottom-controls .view-controls{margin-top:8px}
+.passport-ar .bottom-controls .view-controls button{min-height:32px;padding:6px 10px;font-size:10px}
+.passport-ar .bottom-controls .passport-reading-navigation button,.passport-ar .bottom-controls .passport-reading-navigation a{min-height:44px}
+.passport-ar .bottom-controls .passport-reading-text p{font-size:13px;text-shadow:none}
+.passport-ar .bottom-controls .passport-reading-text .passport-reading-note{font-size:10px}
+#passportDialog.passport-in-world{max-height:96dvh;overflow-y:auto}
+#passportDialog .passport-embedded-host{height:min(560px,66dvh);min-height:340px}
+#passportDialog.passport-in-world>h2{font-size:24px;margin-bottom:8px}
+#passportDialog.passport-in-world .passport-context{margin-bottom:12px}
+@media(max-width:640px){#passportDialog .passport-embedded-host{height:65dvh;min-height:340px}#passportDialog.passport-in-world{max-height:97dvh}}
+.passport-ar .bottom-controls .passport-reading-status{font-size:10px;line-height:1.5}
+.passport-ar .bottom-controls .passport-reading-hint{font-size:11px;line-height:1.5}
+.embedded #gestureHint,.embedded #trackingNote{display:none!important}
+#passportDialog .passport-embedded-host{height:min(600px,70dvh)}
+@media(max-width:640px){#passportDialog .passport-embedded-host{height:70dvh;min-height:340px}}
+
+#passportDialog.passport-in-world{scrollbar-width:thin;scrollbar-color:rgba(229,196,126,.24) transparent}
+#passportDialog.passport-in-world::-webkit-scrollbar{width:3px}
+#passportDialog.passport-in-world::-webkit-scrollbar-thumb{background:rgba(229,196,126,.24);border-radius:3px}
+
+.passport-ar body.reading-complete .embedded-tools,.passport-ar body.reading-complete .view-controls{display:none!important}
+
+/* The NFC presentation fills the visual viewport; the parent curtain owns its first paint. */
+html.passport-fullscreen,html.passport-fullscreen body{height:100%;min-height:100%;overflow:hidden;background:transparent!important}
+.passport-fullscreen #arStage,.passport-fullscreen #inspectStage{position:fixed;inset:0;width:100%;height:100dvh}
+.passport-fullscreen .embedded-tools{padding-top:max(9px,env(safe-area-inset-top));background:rgba(10,25,42,.10);border:0}
+.passport-fullscreen .passport-return{display:inline-flex;min-height:36px;width:36px;padding:0;font-size:23px;margin-left:4px}
+.passport-fullscreen .live-state{top:calc(55px + env(safe-area-inset-top));padding:5px 9px}
+.passport-fullscreen .bottom-controls{bottom:max(20px,env(safe-area-inset-bottom));left:18px;right:18px}
+.passport-fullscreen .embedded-error{top:calc(87px + env(safe-area-inset-top));font-size:11px}
+.passport-fullscreen .passport-camera-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:transparent}
+.passport-fullscreen .passport-reading-text{max-height:25dvh}
+
+/* World placement is a real XR session; preview fitting and ordinary camera controls are separate. */
+.passport-fullscreen #spatialSupportNote{display:block!important;font-size:10px;margin-top:12px;color:rgba(235,243,248,.78);line-height:1.5}
+.spatial-controls{display:none}
+body.spatial-active .spatial-controls{display:block;pointer-events:none}
+body.spatial-active .spatial-controls button{pointer-events:auto;min-height:44px}
+body.spatial-active .embedded-tools,body.spatial-active .view-controls,body.spatial-active .live-state,body.spatial-active #spatialSupportNote,body.spatial-active #trackingNote{display:none!important}
+body.spatial-active #endSpatial{position:fixed;right:14px;top:max(12px,env(safe-area-inset-top));background:rgba(10,25,42,.22)}
+body.spatial-active #spatialNote{position:fixed;left:50%;top:70px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:8px 14px;border:1px solid rgba(235,243,248,.18);border-radius:20px;background:rgba(10,25,42,.25);color:rgba(245,248,251,.9);font-size:11px;line-height:1.5;text-align:center;backdrop-filter:blur(5px)}
+body.spatial-active .spatial-controls>div{position:fixed;left:14px;right:14px;bottom:max(120px,env(safe-area-inset-bottom));display:flex;justify-content:center;gap:8px}
+body.spatial-active:not([data-spatial-state=placed]) #readingHost{display:none!important}
+body.spatial-active.reading-complete .spatial-controls{display:none!important}

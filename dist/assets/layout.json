@@ -1,5 +1,5 @@
 {
-  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m\u00b2 venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates. Exterior banner and forecourt dimensions estimated. Sections2/3 platform/exteriorstairs removed by user; interior7stairs unchanged.",
+  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m² venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates. Exterior banner and forecourt dimensions estimated. Sections2/3 platform/exteriorstairs removed by user; interior7stairs unchanged.",
   "surfaces": [
     {
       "polygon": [
@@ -155,11 +155,11 @@
       "polygon": [
         [
           -0.96,
-          0.0
+          0
         ],
         [
           0.96,
-          0.0
+          0
         ],
         [
           0.96,
@@ -170,7 +170,7 @@
           0.35
         ]
       ],
-      "baseY": 0.0,
+      "baseY": 0,
       "originX": 0,
       "originZ": 0,
       "slopeX": 0,
@@ -528,14 +528,14 @@
     {
       "minX": -2.22,
       "maxX": -1.94,
-      "minZ": 6.0,
-      "maxZ": 32.0
+      "minZ": 6,
+      "maxZ": 32
     },
     {
       "minX": 1.94,
       "maxX": 2.22,
-      "minZ": 6.0,
-      "maxZ": 32.0
+      "minZ": 6,
+      "maxZ": 32
     },
     {
       "minX": -4.9,
@@ -586,27 +586,27 @@
       "maxZ": 2.29
     },
     {
-      "minX": -6.0,
+      "minX": -6,
       "maxX": -1.1,
       "minZ": -0.1,
       "maxZ": 0.1
     },
     {
       "minX": 1.1,
-      "maxX": 6.0,
+      "maxX": 6,
       "minZ": -0.1,
       "maxZ": 0.1
     },
     {
       "minX": -1.1,
       "maxX": -0.98,
-      "minZ": 0.0,
+      "minZ": 0,
       "maxZ": 2.45
     },
     {
       "minX": 0.98,
       "maxX": 1.1,
-      "minZ": 0.0,
+      "minZ": 0,
       "maxZ": 2.45
     },
     {
@@ -665,19 +665,19 @@
     },
     {
       "minX": 12.2,
-      "maxX": 14.0,
+      "maxX": 14,
       "minZ": -28.35,
       "maxZ": -27.65
     },
     {
       "minX": 12.2,
-      "maxX": 14.0,
+      "maxX": 14,
       "minZ": -31.35,
       "maxZ": -30.65
     },
     {
       "minX": 12.2,
-      "maxX": 14.0,
+      "maxX": 14,
       "minZ": -34.35,
       "maxZ": -33.65
     },
@@ -943,7 +943,7 @@
       "minX": -4.025,
       "maxX": -3.475,
       "minZ": -27.5,
-      "maxZ": -27.0
+      "maxZ": -27
     },
     {
       "minX": -4.5,
@@ -960,7 +960,7 @@
     {
       "minX": -4.025,
       "maxX": -3.475,
-      "minZ": -31.0,
+      "minZ": -31,
       "maxZ": -30.5
     },
     {
@@ -979,7 +979,7 @@
       "minX": 2.3750000000000004,
       "maxX": 2.9250000000000003,
       "minZ": -27.5,
-      "maxZ": -27.0
+      "maxZ": -27
     },
     {
       "minX": 1.9000000000000001,
@@ -996,7 +996,7 @@
     {
       "minX": 2.3750000000000004,
       "maxX": 2.9250000000000003,
-      "minZ": -31.0,
+      "minZ": -31,
       "maxZ": -30.5
     }
   ],
@@ -1015,23 +1015,23 @@
   "zones": [
     {
       "id": "entrance",
-      "label": "Pasillo amarillo \u00b7 paraguas",
+      "label": "Pasillo amarillo · paraguas",
       "polygon": [
         [
           -2.2,
-          6.0
+          6
         ],
         [
           2.2,
-          6.0
+          6
         ],
         [
           2.2,
-          32.0
+          32
         ],
         [
           -2.2,
-          32.0
+          32
         ]
       ],
       "view": {
@@ -1042,23 +1042,23 @@
     },
     {
       "id": "arrival",
-      "label": "Escalera \u00b7 check-in",
+      "label": "Escalera · check-in",
       "polygon": [
         [
           -2.5,
-          -4.0
+          -4
         ],
         [
           2.5,
-          -4.0
+          -4
         ],
         [
           2.5,
-          6.0
+          6
         ],
         [
           -2.5,
-          6.0
+          6
         ]
       ],
       "view": {
@@ -1069,23 +1069,23 @@
     },
     {
       "id": "merch",
-      "label": "Merch \u00b7 a la izquierda",
+      "label": "Merch · a la izquierda",
       "polygon": [
         [
-          -13.0,
-          -9.0
+          -13,
+          -9
         ],
         [
-          -5.0,
-          -9.0
+          -5,
+          -9
         ],
         [
-          -5.0,
-          -1.0
+          -5,
+          -1
         ],
         [
-          -13.0,
-          -1.0
+          -13,
+          -1
         ]
       ],
       "view": {
@@ -1096,23 +1096,23 @@
     },
     {
       "id": "buffet",
-      "label": "Buffet \u00b7 encuentro",
+      "label": "Buffet · encuentro",
       "polygon": [
         [
-          -5.0,
-          -15.0
+          -5,
+          -15
         ],
         [
-          5.0,
-          -15.0
+          5,
+          -15
         ],
         [
-          5.0,
-          -5.0
+          5,
+          -5
         ],
         [
-          -5.0,
-          -5.0
+          -5,
+          -5
         ]
       ],
       "view": {
@@ -1123,23 +1123,23 @@
     },
     {
       "id": "river",
-      "label": "Ventanas \u00b7 sala acristalada",
+      "label": "Ventanas · sala acristalada",
       "polygon": [
         [
           9.9,
-          -31.0
+          -31
         ],
         [
           14.9,
-          -31.0
+          -31
         ],
         [
           14.9,
-          -7.0
+          -7
         ],
         [
           9.9,
-          -7.0
+          -7
         ]
       ],
       "view": {
@@ -1150,7 +1150,7 @@
     },
     {
       "id": "photo",
-      "label": "Photo lounge \u00b7 encuentro",
+      "label": "Photo lounge · encuentro",
       "polygon": [
         [
           5.5,
@@ -1177,23 +1177,23 @@
     },
     {
       "id": "stage",
-      "label": "Escenario \u00b7 HackMeridian",
+      "label": "Escenario · HackMeridian",
       "polygon": [
         [
           -5.5,
-          -49.0
+          -49
         ],
         [
           5.5,
-          -49.0
+          -49
         ],
         [
           5.5,
-          -37.0
+          -37
         ],
         [
           -5.5,
-          -37.0
+          -37
         ]
       ],
       "view": {
@@ -1234,19 +1234,19 @@
       "label": "Auditorio",
       "polygon": [
         [
-          -5.0,
-          -40.0
+          -5,
+          -40
         ],
         [
-          5.0,
-          -40.0
+          5,
+          -40
         ],
         [
-          5.0,
+          5,
           -31.7
         ],
         [
-          -5.0,
+          -5,
           -31.7
         ]
       ],
@@ -1258,22 +1258,22 @@
     },
     {
       "id": "cafe",
-      "label": "Zona central \u00b7 mesas / builders",
+      "label": "Zona central · mesas / builders",
       "polygon": [
         [
-          -6.0,
+          -6,
           -25
         ],
         [
-          6.0,
+          6,
           -25
         ],
         [
-          6.0,
+          6,
           -14.5
         ],
         [
-          -6.0,
+          -6,
           -14.5
         ]
       ],
@@ -1285,7 +1285,7 @@
     },
     {
       "id": "activation",
-      "label": "Activaci\u00f3n Stellar \u00b7 concepto Testnet",
+      "label": "Wallet · USDC de prueba",
       "polygon": [
         [
           5,
@@ -1309,11 +1309,11 @@
         "z": -1.4,
         "yaw": -0.418
       },
-      "status": "Proposed Testnet concept; not installed"
+      "status": "Stellar Testnet wallet pilot; physical placement proposed"
     },
     {
       "id": "exterior",
-      "label": "Exterior \u00b7 Welcome, Builders.",
+      "label": "Exterior · Welcome, Builders.",
       "polygon": [
         [
           -8,
@@ -1341,7 +1341,7 @@
     },
     {
       "id": "passport",
-      "label": "Passport \u00b7 demostraci\u00f3n AR",
+      "label": "Passport · demostración AR",
       "polygon": [
         [
           8,
@@ -1353,11 +1353,11 @@
         ],
         [
           9.5,
-          -1.0
+          -1
         ],
         [
           8,
-          -1.0
+          -1
         ]
       ],
       "view": {
@@ -1370,7 +1370,7 @@
     },
     {
       "id": "stands",
-      "label": "Stands \u00b7 corredor hacia el escenario",
+      "label": "Stands · corredor hacia el escenario",
       "polygon": [
         [
           -4.7,

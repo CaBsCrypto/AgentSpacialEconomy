@@ -1,0 +1,75 @@
+{
+  "verifiedAt": "2026-10-26T02:09:09.151Z",
+  "rows": [
+    {
+      "file": "platform.html",
+      "status": 200,
+      "productionSha256": "f997d36480a4f951109033c4f0334bff5b481c30172aecf7833039a1a120e0ce",
+      "sourceSha256": "f997d36480a4f951109033c4f0334bff5b481c30172aecf7833039a1a120e0ce",
+      "match": true
+    },
+    {
+      "file": "platform.mjs",
+      "status": 200,
+      "productionSha256": "1abce1ea995f43a9ef4167e120da2cf09e9ccdf0eb28aba0a25eaa09673f94b5",
+      "sourceSha256": "1abce1ea995f43a9ef4167e120da2cf09e9ccdf0eb28aba0a25eaa09673f94b5",
+      "match": true
+    },
+    {
+      "file": "platform.css",
+      "status": 200,
+      "productionSha256": "6a2496788973f3b620ba4f35c229e559084fc1f5d6b0410b3ad8b107328ec5ac",
+      "sourceSha256": "6a2496788973f3b620ba4f35c229e559084fc1f5d6b0410b3ad8b107328ec5ac",
+      "match": true
+    },
+    {
+      "file": "platform-scene.mjs",
+      "status": 200,
+      "productionSha256": "4164e685e2f12405bdf4af99bd01cf2e5e8246708edb957cd70ab665c320ff78",
+      "sourceSha256": "4164e685e2f12405bdf4af99bd01cf2e5e8246708edb957cd70ab665c320ff78",
+      "match": true
+    },
+    {
+      "file": "one16-preview.mjs",
+      "status": 200,
+      "productionSha256": "67f62d82bad96993817cb2daafb5e12e8998c28263c642cd7809c6487c7bc9a7",
+      "sourceSha256": "67f62d82bad96993817cb2daafb5e12e8998c28263c642cd7809c6487c7bc9a7",
+      "match": true
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "productionSha256": "48fe991c33276ac664e70b0c82295f25543f388bfbbe44791b2f41db993f5876",
+      "sourceSha256": "48fe991c33276ac664e70b0c82295f25543f388bfbbe44791b2f41db993f5876",
+      "match": true
+    },
+    {
+      "file": "entry.mjs",
+      "status": 200,
+      "productionSha256": "34a38fc5ecad1f7fc90c15fb5ab517060c6a6ae6e9b0c165a98dd68c86109129",
+      "sourceSha256": "34a38fc5ecad1f7fc90c15fb5ab517060c6a6ae6e9b0c165a98dd68c86109129",
+      "match": true
+    },
+    {
+      "file": "venue-model.mjs",
+      "status": 200,
+      "productionSha256": "af25210a57253d781d86378616623f841b8f547808f892254c89789770cdf2eb",
+      "sourceSha256": "af25210a57253d781d86378616623f841b8f547808f892254c89789770cdf2eb",
+      "match": true
+    },
+    {
+      "file": "venue-loading.mjs",
+      "status": 200,
+      "productionSha256": "8706e0102f8c519187d8086840bb032ac2aa8488344e8b1f5106d5193f2463e4",
+      "sourceSha256": "8706e0102f8c519187d8086840bb032ac2aa8488344e8b1f5106d5193f2463e4",
+      "match": true
+    },
+    {
+      "file": "viewer.js",
+      "status": 200,
+      "productionSha256": "a24380341bfbf07211854f3049aeaa1700d9fbd3ec0fc75ed4d01cb436512e41",
+      "sourceSha256": "a24380341bfbf07211854f3049aeaa1700d9fbd3ec0fc75ed4d01cb436512e41",
+      "match": true
+    }
+  ]
+}

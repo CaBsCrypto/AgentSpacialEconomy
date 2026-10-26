@@ -1,0 +1,9 @@
+{
+  "url": "https://agenticreality.space/passport-station.html",
+  "origin": "https://agenticreality.space",
+  "temporary": false,
+  "immersiveUrl": "https://agenticreality.space/?passport=stand16#recorrido",
+  "arUrl": "https://agenticreality.space/passport-space.html",
+  "nfcRecordType": "NDEF URI",
+  "note": "This QR opens the Passport station with two choices."
+}
