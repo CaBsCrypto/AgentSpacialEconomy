@@ -10,7 +10,7 @@ function fixture(override = () => null) {
     const pathname = new URL(url).pathname;
     const custom = await override(pathname);
     if (custom) return custom;
-    if (pathname === '/') return new Response(`<h1>Spatial Agents · Operating System</h1><p>AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES</p><p>Your venue's AI operator, on a capped USDC budget.</p><a href="/dashboard.html">See the live testnet run</a><a href="https://github.com/CaBsCrypto/AgentSpacialEconomy">GitHub</a>`, { headers: { 'content-type': 'text/html' } });
+    if (pathname === '/') return new Response(`<title>Agentic Reality Space | Events you can explore</title><h1 id="hero-title">Make your event a place to explore</h1><a href="/one16">Explore ONE16</a>`, { headers: { 'content-type': 'text/html' } });
     if (pathname === '/one16') return new Response('<script type="module" src="/entry.mjs"></script>', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/dashboard.html') return new Response('On-chain budget ceiling · recorded run', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/sitemap.xml') return new Response('<urlset><url>https://agenticreality.space/one16</url><url>https://agenticreality.space/dashboard.html</url></urlset>', { headers: { 'content-type': 'application/xml' } });
@@ -58,7 +58,7 @@ test('verification refuses mixed runs and a disabled wallet pilot without exposi
 });
 
 
-test('integration-only mode permits the preserved landing while final QA requires brand and CTA', async () => {
+test('integration-only mode permits an unrelated landing while final QA requires the platform hero and ONE16 access', async () => {
   const { fetchImpl } = fixture(pathname => pathname === '/' ? new Response('<h1>Existing landing</h1>', { headers: { 'content-type': 'text/html' } }) : null);
   const integration = await verifyRelease('https://release.example', { fetchImpl, integrationOnly: true });
   assert.equal(integration.passed, true, JSON.stringify(integration.checks.filter(check => !check.pass)));
@@ -66,6 +66,6 @@ test('integration-only mode permits the preserved landing while final QA require
   const final = await verifyRelease('https://release.example', { fetchImpl });
   assert.equal(final.passed, false);
   assert.equal(final.mode, 'final');
-  assert.equal(final.checks.find(check => check.name === 'Landing preserves project name, brand line and tagline')?.pass, false);
-  assert.equal(final.checks.find(check => check.name === 'Landing links to live testnet dashboard')?.pass, false);
+  assert.equal(final.checks.find(check => check.name === 'Landing preserves Agentic Reality Space identity and hero')?.pass, false);
+  assert.equal(final.checks.find(check => check.name === 'Landing links to the ONE16 experience')?.pass, false);
 });
