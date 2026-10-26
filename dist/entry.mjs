@@ -40,7 +40,7 @@ function waitForVenue(documentRef){
  return {promise,cancel:cleanup};
 }
 
-export async function bootstrapEntry({documentRef=globalThis.document,locationRef=globalThis.location,historyRef=globalThis.history,storage=(()=>{try{return globalThis.localStorage;}catch{return null;}})(),importWorld=()=>import('./viewer.js?v=welcome-1'),importPassport=()=>import('./passport-entry.mjs?v=spatial2'),activateAssets=()=>activateVenueAssets(documentRef)}={}){
+export async function bootstrapEntry({documentRef=globalThis.document,locationRef=globalThis.location,historyRef=globalThis.history,storage=(()=>{try{return globalThis.localStorage;}catch{return null;}})(),importWorld=()=>import('./viewer.js?v=hackmeridian-unify-2'),importPassport=()=>import('./passport-entry.mjs?v=spatial2'),activateAssets=()=>activateVenueAssets(documentRef)}={}){
  const enterWorld=async(fromPassport=false)=>{
   const settled=fromPassport?waitForVenue(documentRef):null;
   const welcome=prepareVenueWelcome(documentRef,locationRef,{fromPassport,storage});

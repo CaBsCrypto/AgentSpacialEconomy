@@ -9,7 +9,7 @@ for(const filename of await fs.readdir(root)) {
  html=html.replace(/<script\b[^>]*data-one16-canonical[^>]*>[\s\S]*?<\/script>/g,'').replace(/<link\b[^>]*rel="canonical"[^>]*>/g,'');
  const guard=`<script data-one16-canonical>${canonicalBootstrapScript()}</script><link rel="canonical" href="${CANONICAL_ORIGIN}${platformCanonicalPath(filename)}">`;
  html=html.replace(/<head(?:\s[^>]*)?>/i,head=>head+guard);
- if(filename==='index.html')html=html.replace(/entry\.mjs\?v=[^"']+/g,'entry.mjs?v=welcome-1');
+ if(filename==='index.html')html=html.replace(/entry\.mjs\?v=[^"']+/g,'entry.mjs?v=hackmeridian-unify-2');
  await fs.writeFile(file,html);
 }
 console.log('Canonical HTML entries prepared for '+CANONICAL_ORIGIN);
