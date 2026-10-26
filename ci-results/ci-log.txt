@@ -1,0 +1,37 @@
+Ephemeral agent wallet: GDZUZUZ4PDDQNPEZULBOMKQPKISJZOQWHRRCEYHV6NIVSU742BH4S75R
+Ephemeral operator treasury: GBA2QF3NV4IRO3WITYNLQGZXYDKAGSAZGUKO43OZTKUFJJ4G24ESTK44
+Ephemeral sponsor wallet: GAIXMZQVJ4PUICLJ4TOJBNJCWB2JCOEJCW736KHTYI3DSAGUH63G3Z3G
+Ephemeral service wallet: GBB2W6TCNNVRROSOQAB3CTOIIJPZJJAHU42U7ISDSMWPVE3BMVYM7XTE
+Bought ~43.3008 testnet USDC for 50 XLM on the testnet DEX (tx 6a952f5669418c600eef5d6e9cc745ba8f0218bd2fedab51c803f8d729821d17)
+Treasury USDC balance: 43.3008038
+Bought ~43.3008 testnet USDC for 50 XLM on the testnet DEX (tx c8ecdf489e6f55cdc82fcfa20c187f0d9388a1207767d005ba59d844c1134db7)
+Sponsor USDC balance: 43.3007527
+Agent account: https://stellar.expert/explorer/testnet/account/GDZUZUZ4PDDQNPEZULBOMKQPKISJZOQWHRRCEYHV6NIVSU742BH4S75R
+Treasury approved the venue agent 0.5 USDC until ledger 5410080 (SEP-41 approve, tx 1b1eea606cd48341f38e5be96f95d4a81c7ce3f37e12a39a70958ce245bcb995)
+OK: https://x402.org/facilitator supports stellar:testnet (exact v2)
+[services] Venue services on http://localhost:3001 (stellar:testnet)
+[services] Facilitator: https://x402.org/facilitator
+Paying to GBB2W6…7XTE
+Sponsor slot pays the venue treasury GBA2QF…TK44
+Run 2026-10-26T04:06:34.203Z · mandate "main-stage-hackmeridian" · stellar:testnet
+Objective: Show the live agenda and the next session on the main stage screen
+venue-agent → stage-agent: 0.20 USDC
+On-chain ceiling: 0.5 USDC left on the operator's allowance to venue-agent
+  0. drew 0.2 USDC from the treasury: SETTLED https://stellar.expert/explorer/testnet/tx/a07d3fb8709350ddce52ce1014ef74c66e6961b3d58bef06fd046085e176c812
+  0b. tried to draw 0.31 USDC: REFUSED BY THE NETWORK (simulation, nothing submitted)
+  1. venue-feed (0.01 USDC): SETTLED https://stellar.expert/explorer/testnet/tx/bcc3a4c25b21fc735575e9c99f6c85081db51bc53f5856c4c3a926ad5b804c09
+  next session: Morning briefing — Mon 09:00
+  2. screen-card (0.05 USDC): SETTLED https://stellar.expert/explorer/testnet/tx/600de94d6023b100f77d647305aa435737fca2ab5297581954da96e3ec30de31
+  3. premium-render (0.25 USDC): BLOCKED — price above the per-call cap (needs operator approval)
+
+Wrote dist/state/ledger.json and dist/state/stage.json
+
+Budget:
+  venue-agent: allocated 0.5 · spent 0 · reserved 0 · available 0.3
+  stage-agent: allocated 0.2 · spent 0.06 · reserved 0 · available 0.14
+Ledger: /home/runner/work/AgentSpacialEconomy/AgentSpacialEconomy/agent/out/ledger-2026-10-26T04_06_34.203Z.json
+
+Income: a sponsor buys a line on the main-stage screen (paid to the venue treasury)
+Sponsor "Demo Sponsor (testnet)" paid 0.10 USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/ce53090a4435ff8f70c714fed2a3136adf990d2e7546b4646edd374e779bd20e
+Added the sponsor line to dist/state/stage.json
+Treasury recharged the agent's allowance 0.3 → 0.4 USDC with the sponsor income (SEP-41 approve, tx e73ca48adfa708a092c03b53ecb09f21757d9ad0f53dbbfc9dbbb40238946657); read back 0.4 USDC ✓
