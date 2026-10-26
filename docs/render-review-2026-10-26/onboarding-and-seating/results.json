@@ -1,0 +1,141 @@
+{
+  "baseCommit": "dbb228f",
+  "branch": "codex/render-textures-ui",
+  "frontend": {
+    "tests": 426,
+    "pass": 425,
+    "fail": 0,
+    "skipped": 1
+  },
+  "agent": {
+    "tests": 34,
+    "pass": 34,
+    "fail": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "skipped": 0
+  },
+  "guideBrowser": {
+    "pass": true,
+    "checks": 37,
+    "failed": []
+  },
+  "model": {
+    "bytes": 10849984,
+    "gzipBytes": 4212324,
+    "budgetBytes": 5242880,
+    "sha256": "d9723dabddc50e91e086082cc7b5d77d1d050a9c52002e046c96b59f5658755f",
+    "embeddedImagesDecoded": 32
+  },
+  "placement": {
+    "walletTotem": {
+      "x": 2.9,
+      "y": 0,
+      "z": -9.2
+    },
+    "approach": {
+      "x": 2.9,
+      "z": -7.9,
+      "yaw": 0,
+      "pitch": -0.12
+    },
+    "palta": {
+      "tableId": "booth-defindex-soroswap",
+      "position": {
+        "x": -4.62,
+        "y": 0.795,
+        "z": -31.0
+      },
+      "scale": 0.45,
+      "support": "tabletop"
+    },
+    "passportDisplay": {
+      "tableId": "booth-passport",
+      "support": "tabletop",
+      "scale": 3.8,
+      "position": {
+        "x": 4.0,
+        "y": 1.0546153783798218,
+        "z": -28.79
+      },
+      "approach": {
+        "x": 4.1,
+        "z": -29.9,
+        "yaw": 3.141592653589793,
+        "pitch": -0.2
+      },
+      "bookBounds": {
+        "minX": 3.809999942779541,
+        "maxX": 4.190760135650635,
+        "minY": 0.8399999737739563,
+        "maxY": 1.2823597192764282,
+        "minZ": -28.936649322509766,
+        "maxZ": -28.666091918945312
+      },
+      "bookWidth": 0.38076019287109375,
+      "tabletopHeight": 0.79,
+      "plinthSize": [
+        0.46,
+        0.05,
+        0.32
+      ]
+    },
+    "dividerWidth": 3.6,
+    "centralAisleWidth": 4.4
+  },
+  "seating": {
+    "mainTables": 14,
+    "mainChairs": 118,
+    "staffChairs": 8,
+    "allChairs": 126,
+    "individualCollisions": true,
+    "actualGlbBoundsVerified": 126,
+    "curtainGeometryAndCollisionRemoved": true
+  },
+  "render": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "beforeFirstFrameMs": 2051.3000000044703,
+    "afterFirstFrameMs": 1861,
+    "beforeMedianFrameMs": 16.69999999999891,
+    "afterMedianFrameMs": 16.69999999999891,
+    "views": 34,
+    "errors": [],
+    "missingLocalFiles": [],
+    "fixture": "File-backed HTTP responses; original application modules and GLB; no external network"
+  },
+  "visualAcceptance": {
+    "guide": "pass across four viewports and all seven steps",
+    "section13": "pass; oriented chairs, planted legs, clear tables and central aisle",
+    "curtain": "pass; passage open, ray and collision regressions pass",
+    "eightTables": "pass; branding retained and displays use rear band",
+    "Palta": "pass; tabletop DeFindex/Soroswap placement and proportional scale",
+    "Passport": "pass; 3.8x book on Stellar Passport tabletop, preserved AR panel16"
+  },
+  "viewports": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "limits": [
+    "Estimated event dimensions",
+    "Mobile browser viewports/touch emulated; hardware GPU desktop",
+    "Wallet UI entry tested; no claim, redemption or payment executed in QA"
+  ]
+}

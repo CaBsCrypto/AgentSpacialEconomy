@@ -34,6 +34,12 @@ const viewpoints=[
  ['photobooth',{x:10,z:-34,yaw:-Math.PI/2,pitch:.02}],
  ['content-hub',{zone:'content-hub'}],
  ['content-hub-lights',{x:8,z:-14.75,yaw:-Math.PI/2,pitch:.50}],
+ ['activation',{zone:'activation'}],
+ ['central-seating-13',{x:0,z:-15,yaw:0,pitch:-.12}],
+ ['hack-seating',{x:-6,z:-18.1,yaw:.75,pitch:-.10}],
+ ['removed-curtain',{x:-8,z:-30.5,yaw:-Math.PI/2,pitch:-.02}],
+ ['palta-table',{x:-2.6,z:-29.2,yaw:.84,pitch:-.10}],
+ ['passport-display',{zone:'passport'}],
  ['stage',{x:0,z:-39,yaw:0,pitch:.04}],
  ['photocall',{x:10,z:-38,yaw:0,pitch:-.04}]
 ];
@@ -66,7 +72,7 @@ try{
   const standViews=(start.exhibition?.positions??[]).map((p,i)=>{const x=p.side==='left'?-1.1:1.1,z=p.table.z+(p.face==='stage'?-1:1),dx=p.table.x-x,dz=p.table.z-z;return ['table-'+(i+1)+'-'+p.graphic,p.visitorView??{x,z,yaw:Math.atan2(-dx,-dz),pitch:-Math.atan2(.857,Math.hypot(dx,dz))}];});
   for(const [label,pose] of (process.env.VENUE_QA_MOBILE_ONLY?[]:[...viewpoints,...standViews])){
    await page.evaluate(p=>p.zone?window.__venueQA.select(p.zone):window.__venueQA.view(p),pose);
-   await page.waitForTimeout(150);
+   await page.waitForTimeout(label==='palta-table'?3000:150);
    await page.screenshot({path:path.join(output,name+'-'+label+'.jpg'),type:'jpeg',quality:86});
    const stats=await page.evaluate(async()=>{
     const times=[];let last=performance.now();
@@ -92,7 +98,7 @@ try{
    }
    await page.setViewportSize({width:390,height:844});
    await page.evaluate(()=>window.__venueQA.review(false));
-   for(const id of ['arrival','buffet','skills','games','content-hub','energy','photo','stands','passport-stand16']){
+   for(const id of ['arrival','buffet','skills','games','content-hub','energy','photo','cafe','stands','passport','passport-stand16']){
     await page.evaluate(id=>window.__venueQA.select(id),id);
     await page.waitForTimeout(120);
     await page.screenshot({path:path.join(output,'after-mobile-zone-'+id+'.jpg'),type:'jpeg',quality:86});
