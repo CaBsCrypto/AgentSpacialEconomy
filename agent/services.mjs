@@ -17,8 +17,9 @@ import { paymentMiddlewareFromConfig } from "@x402/express";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 import { ExactStellarScheme } from "@x402/stellar/exact/server";
 import { StrKey } from "@stellar/stellar-sdk";
-import { CATALOG, SPONSOR_SLOT } from "./catalog.mjs";
+import { CATALOG, SPONSOR_SLOT, AD_SLOT } from "./catalog.mjs";
 import { sponsorSlot } from "./lib/income.mjs";
+import { adCreative } from "./lib/ads.mjs";
 import { toDollarPrice } from "./lib/money.mjs";
 import { networkConfig } from "./config/networks.mjs";
 
@@ -70,7 +71,7 @@ const route = (s, payTo) => [
 ];
 const PAID_ROUTES = Object.fromEntries([
   ...CATALOG.map((s) => route(s, PAY_TO)),
-  ...(TREASURY ? [route(SPONSOR_SLOT, TREASURY)] : []),
+  ...(TREASURY ? [route(SPONSOR_SLOT, TREASURY), route(AD_SLOT, TREASURY)] : []),
 ]);
 
 const schedule = JSON.parse(await readFile(new URL("./fixtures/schedule.json", import.meta.url), "utf8"));
@@ -81,12 +82,14 @@ app.use(express.json({ limit: "16kb" }));
 app.get("/health", (_req, res) =>
   res.json({ ok: true, network: NETWORK, paidRoutes: Boolean(PAY_TO), sponsorSlot: Boolean(PAY_TO && TREASURY) }));
 app.get("/catalog", (_req, res) =>
-  res.json({ network: NETWORK, services: CATALOG, income: PAY_TO && TREASURY ? [SPONSOR_SLOT] : [] }));
+  res.json({ network: NETWORK, services: CATALOG, income: PAY_TO && TREASURY ? [SPONSOR_SLOT, AD_SLOT] : [] }));
 
-// Fail closed: without a venue treasury the sponsor route is not in the payment config, so it must
-// never fall through to its handler for free.
-app.use(`/paid${SPONSOR_SLOT.path}`, (_req, res, next) =>
-  TREASURY ? next() : res.status(503).json({ error: "venue treasury not configured" }));
+// Fail closed: without a venue treasury the income routes are not in the payment config, so they
+// must never fall through to their handlers for free.
+for (const slot of [SPONSOR_SLOT, AD_SLOT]) {
+  app.use(`/paid${slot.path}`, (_req, res, next) =>
+    TREASURY ? next() : res.status(503).json({ error: "venue treasury not configured" }));
+}
 
 let paymentGate;
 if (PAY_TO) {
@@ -133,6 +136,15 @@ app.post(`/paid${SPONSOR_SLOT.path}`, (req, res) => {
   const slot = sponsorSlot(req.body);
   if (!slot) return res.status(400).json({ error: "name is required" });
   res.json({ ...slot, priceUsdc: SPONSOR_SLOT.priceUsdc, payTo: TREASURY, screen: "main-stage" });
+});
+
+app.post(`/paid${AD_SLOT.path}`, (req, res) => {
+  const creative = adCreative(req.body);
+  if (!creative) return res.status(400).json({ error: "advertiser is required" });
+  res.json({
+    ...creative, offerId: AD_SLOT.offerId, placement: AD_SLOT.placement, durationMs: AD_SLOT.durationMs,
+    priceUsdc: AD_SLOT.priceUsdc, payTo: TREASURY, issuedAt: new Date().toISOString(),
+  });
 });
 
 app.listen(PORT, () => {

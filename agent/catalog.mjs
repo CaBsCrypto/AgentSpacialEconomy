@@ -36,6 +36,21 @@ export const SPONSOR_SLOT = {
   description: "One sponsor line on the main-stage screen, paid to the venue treasury",
 };
 
+// Income, not spend: an advertiser buys five minutes of the main-stage screen and pays the venue
+// treasury. Price and duration are the pilot offer fixed on feature/ads-3d-ar-x402
+// (config/ads.example.json, offer main-stage-test-5m: 5 testnet USDC for 300000 ms).
+export const AD_SLOT = {
+  id: "ad-slot",
+  method: "POST",
+  path: "/ad-slot",
+  priceUsdc: "5.00",
+  payee: "venue-treasury",
+  offerId: "main-stage-test-5m",
+  placement: "main_stage_screen",
+  durationMs: 300000,
+  description: "Five minutes of the main-stage screen for one advertiser, paid to the venue treasury",
+};
+
 export function findService(catalog, id) {
   const s = catalog.find((c) => c.id === id);
   if (!s) throw new Error(`Service ${id} is not in the catalog`);
