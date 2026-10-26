@@ -16,6 +16,9 @@
     "api/wallet/config.js": {
       "maxDuration": 30
     },
+    "api/wallet/birth-receipt.js": {
+      "maxDuration": 30
+    },
     "api/ads.js": {
       "maxDuration": 180,
       "includeFiles": "{media/fonts/**,server/ads/**}"

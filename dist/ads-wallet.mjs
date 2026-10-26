@@ -28,7 +28,17 @@ export async function createAdsWallet(config, { loadSdk = () => import('./vendor
   if (!browser.isSecureContext || !browser.navigator?.credentials || !browser.PublicKeyCredential) throw Error('La passkey requiere un navegador compatible y un origen seguro.');
   if (config.origin && browser.location?.origin !== config.origin) throw Error('Abre la publicidad desde el dominio de tu wallet.');
   const sdk = await loadSdk();
-  const kit = new sdk.SmartAccountKit({ rpcUrl: config.rpcUrl, networkPassphrase: config.networkPassphrase, accountWasmHash: config.accountWasmHash, acceptedWasmHashes: config.acceptedWasmHashes || [config.accountWasmHash], webauthnVerifierAddress: config.webauthnVerifierAddress, relayerUrl: config.relayerUrl || '/api/wallet/relay', rpId: config.rpId, rpName: 'ONE16 Testnet', storage: new sdk.IndexedDBStorage(), ...(config.indexerUrl ? { indexerUrl: config.indexerUrl } : {}) });
+  const storage = new sdk.IndexedDBStorage();
+  let connectionProof = null, connecting = false;
+  const webAuthn = {
+    startRegistration: async () => { throw Error('Crea tu wallet desde la entrada de ONE16.'); },
+    startAuthentication: async options => {
+      const response = await sdk.startAuthentication(options);
+      if (connecting) connectionProof = { response, challenge: options.optionsJSON.challenge };
+      return response;
+    },
+  };
+  const kit = new sdk.SmartAccountKit({ rpcUrl: config.rpcUrl, networkPassphrase: config.networkPassphrase, accountWasmHash: config.accountWasmHash, acceptedWasmHashes: config.acceptedWasmHashes || [config.accountWasmHash], webauthnVerifierAddress: config.webauthnVerifierAddress, relayerUrl: config.relayerUrl || '/api/wallet/relay', rpId: config.rpId, rpName: 'ONE16 Testnet', storage, webAuthn, ...(config.indexerUrl ? { indexerUrl: config.indexerUrl } : {}) });
   const server = new sdk.rpc.Server(config.rpcUrl);
   let address;
   const post = async (path, body) => {
@@ -40,10 +50,39 @@ export async function createAdsWallet(config, { loadSdk = () => import('./vendor
   return {
     get address() { return address; },
     async connect() {
-      const session = await kit.connectWallet({ fresh: true });
-      address = session?.contractId || kit.contractId;
-      if (!address || !sdk.StrKey.isValidContract(address) || !kit.credentialId) throw Error('Primero crea o conecta la wallet passkey de ONE16.');
-      return { address, credentialId: kit.credentialId };
+      if (connecting) throw Error('Ya hay una conexion de passkey en curso.');
+      connecting = true; connectionProof = null;
+      try {
+        let session;
+        try { session = await kit.connectWallet({ fresh: true }); }
+        catch (error) {
+          const candidateAddress = error?.context?.contractId, proof = connectionProof;
+          // Only an incomplete indexer lookup can enter recovery. Ownership,
+          // code-identity and constructor failures keep their original error.
+          if (error?.name !== 'WalletProvenanceError' || error.code !== 2005 || !/indexer/i.test(error.message) || !sdk.StrKey.isValidContract(candidateAddress || '') || !proof?.response?.id || typeof proof.challenge !== 'string') throw error;
+          const response = await fetchImpl('/api/wallet/birth-receipt', { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ address: candidateAddress, credentialId: proof.response.id }), signal: AbortSignal.timeout(15000) });
+          const receipt = await response.json();
+          if (!response.ok) throw Error(receipt.message || 'El historial de esta wallet no se pudo verificar.');
+          const fields = ['address','credentialId','publicKeyBase64Url','birthWasmHash','creationTransactionHash','creationLedger','network'];
+          if (Object.keys(receipt).some(field => !fields.includes(field)) || receipt.address !== candidateAddress || receipt.credentialId !== proof.response.id || receipt.network !== 'testnet' || receipt.birthWasmHash !== config.accountWasmHash || !/^[0-9a-f]{64}$/.test(receipt.creationTransactionHash || '') || !Number.isSafeInteger(receipt.creationLedger) || receipt.creationLedger < 1 || !/^[A-Za-z0-9_-]{87}$/.test(receipt.publicKeyBase64Url || '')) throw Error('El recibo no corresponde a esta passkey y su wallet de prueba.');
+          const publicKey = Uint8Array.from(atob(receipt.publicKeyBase64Url.replace(/-/g,'+').replace(/_/g,'/') + '='), value => value.charCodeAt(0));
+          if (publicKey.length !== 65 || publicKey[0] !== 4) throw Error('La clave publica del recibo no es valida.');
+          const original = await storage.get(proof.response.id);
+          if (original && (original.contractId && original.contractId !== candidateAddress || original.isPrimary === false || original.birthConstructorArgsHash || original.publicKey && (original.publicKey.length !== publicKey.length || !publicKey.every((byte,index) => original.publicKey[index] === byte)))) throw Error('La asociacion local de esta passkey requiere una revision.');
+          const candidate = { ...(original || {}), credentialId: proof.response.id, publicKey, contractId: candidateAddress, createdAt: original?.createdAt || Date.now(), birthWasmHash: receipt.birthWasmHash, creationTransactionHash: receipt.creationTransactionHash, creationLedger: receipt.creationLedger, deploymentStatus: 'pending' };
+          // Do not copy a constructor hash or approval flag from a server receipt.
+          // The public SDK verifies birth and live signer, then requests a NEW
+          // ownership assertion. The first prompt only selected the credential.
+          delete candidate.birthConstructorArgsHash; delete candidate.associationVerified;
+          await storage.save(candidate);
+          try { session = await kit.connectWallet({ credentialId: proof.response.id, contractId: candidateAddress }); if ((session?.contractId || kit.contractId) !== candidateAddress || kit.credentialId !== proof.response.id) throw Error('La wallet verificada no corresponde al intento de conexion.'); }
+          catch (failure) { if (original) await storage.save(original); else await storage.delete(proof.response.id); throw failure; }
+        }
+        const connectedAddress = session?.contractId || kit.contractId;
+        if (!connectedAddress || !sdk.StrKey.isValidContract(connectedAddress) || !kit.credentialId) throw Error('Primero crea o conecta la wallet passkey de ONE16.');
+        address = connectedAddress;
+        return { address, credentialId: kit.credentialId };
+      } finally { connectionProof = null; connecting = false; }
     },
     async authenticate() {
       if (!address || !kit.credentialId) throw Error('Conecta tu wallet antes de continuar.');
