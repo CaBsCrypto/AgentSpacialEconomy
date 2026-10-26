@@ -1,0 +1,68 @@
+name: Paid screen time (testnet)
+
+# An ephemeral advertiser pays the venue treasury 5 testnet USDC over x402 for five minutes of the
+# main-stage screen; the treasury commits the order to an AdsRegistry instance on Soroban and reads
+# it back. Publishes dist/state/ads.json and the log to `ci/ads-results`.
+# Trigger: push to `ci/ads-run`, or "Run workflow" once this file is on main.
+on:
+  push:
+    branches: [ci/ads-run]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ads-order
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      STELLAR_NETWORK: stellar:testnet
+      FACILITATOR_URL: ${{ vars.FACILITATOR_URL || 'https://x402.org/facilitator' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install agent dependencies
+        working-directory: agent
+        run: npm install --no-audit --no-fund
+
+      - name: Unit tests
+        working-directory: agent
+        run: npm test
+
+      - name: Paid screen time on Stellar testnet
+        working-directory: agent
+        run: |
+          mkdir -p out
+          set -o pipefail
+          node ads-ci.mjs 2>&1 | tee out/ads-log.txt
+
+      - name: Secret scan of everything that will be published
+        id: scan
+        if: always()
+        run: |
+          mkdir -p ads-results
+          cp agent/out/ads-log.txt ads-results/ 2>/dev/null || true
+          cp dist/state/ads.json ads-results/ 2>/dev/null || true
+          if grep -rEn '\bS[A-Z2-7]{55}\b' ads-results 2>/dev/null; then
+            echo "A secret key would be published. Aborting."
+            exit 1
+          fi
+
+      - name: Publish results to ci/ads-results
+        if: always() && steps.scan.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B ci/ads-results
+          git add -f ads-results
+          git commit -m "ci: paid screen time run ${{ github.run_id }} [skip ci]" || echo "nothing to commit"
+          git push -f origin ci/ads-results
