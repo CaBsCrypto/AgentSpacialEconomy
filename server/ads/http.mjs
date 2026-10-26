@@ -1,3 +1,4 @@
+import {assertPurchaseAllowed,purchaseEligibility} from './checkout.mjs';
 import {AdsError,assert,sameSecret,identifier,canonical} from './common.mjs';
 import {publicAdsConfig,PLACEMENTS} from './config.mjs';
 const json=(value,status=200,headers={})=>new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'private, no-store','CDN-Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...headers}});
@@ -24,21 +25,23 @@ export function createAdsHandler({config,db,auth,service,refunds,corrections,com
    if(request.method==='POST')assert(request.headers.get('origin')===config.origin,403,'origin_rejected','The request origin does not match this venue.');
    if(parts[0]==='auth'){
     if(parts[1]==='challenge'&&request.method==='POST')return json(await auth.challenge(await readJson(request,4096)));
-    if(parts[1]==='verify'&&request.method==='POST'){const result=await auth.verify(await readJson(request,16384));return json({identity:result.identity,expiresAt:result.expiresAt},200,{'Set-Cookie':result.cookie});}
+    if(parts[1]==='verify'&&request.method==='POST'){const result=await auth.verify(await readJson(request,16384));return json({identity:result.identity,expiresAt:result.expiresAt,purchaseEligibility:purchaseEligibility(config,result.identity)},200,{'Set-Cookie':result.cookie});}
     if(parts[1]==='logout'&&request.method==='POST'){const result=await auth.logout(request);return json({status:'SIGNED_OUT'},200,{'Set-Cookie':result?.cookie||'__Host-ads_session=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'});}
    }
    const identity=await auth.authenticate(request),ownerId=identity.ownerId,key=request.headers.get('idempotency-key');
    if(request.method==='POST')assert(typeof key==='string'&&/^[A-Za-z0-9:_-]{8,160}$/.test(key),400,'idempotency_required','Provide an Idempotency-Key of 8 to 160 characters.');
+   if(request.method==='POST'&&(parts[0]==='quotes'||parts[0]==='orders'&&(parts.length===1||parts[2]==='pay')))assertPurchaseAllowed(config,identity);
    // Scope quotas by authenticated wallet, without retaining raw IP addresses.
    const rateKey='http:'+ownerId+':'+request.method;
    await db.query("INSERT INTO ads_rate_limits(key,count,expires_at) VALUES($1,1,now()+interval '1 minute') ON CONFLICT(key) DO UPDATE SET count=CASE WHEN ads_rate_limits.expires_at<now() THEN 1 ELSE ads_rate_limits.count+1 END,expires_at=CASE WHEN ads_rate_limits.expires_at<now() THEN EXCLUDED.expires_at ELSE ads_rate_limits.expires_at END",[rateKey]);
    const rate=(await db.query('SELECT count FROM ads_rate_limits WHERE key=$1',[rateKey])).rows[0];assert(rate.count<=(request.method==='GET'?240:60),429,'rate_limited','Wait before making another request.');
-   if(parts[0]==='auth'&&parts[1]==='me'&&request.method==='GET')return json({identity});
+   if(parts[0]==='auth'&&parts[1]==='me'&&request.method==='GET')return json({identity,purchaseEligibility:purchaseEligibility(config,identity)});
    if(parts[0]==='compatibility'&&request.method==='POST'){
     assert(compatibility,503,'compatibility_unconfigured','Compatibility verification is unavailable.');
     if(parts.length===2&&parts[1]==='challenge')return json(await compatibility.challenge(identity,await readJson(request,4096),key),201);
     if(parts.length===3&&parts[2]==='verify'){const result=await compatibility.verify(identity,identifier(parts[1]),await readJson(request,140000),key);return json(result,['VERIFYING','RECONCILIATION_REQUIRED'].includes(result.status)?202:200);}
    }
+   if(parts[0]==='availability'&&parts.length===1&&request.method==='GET'){const ids=url.searchParams.getAll('campaignId');assert(ids.length===1&&url.searchParams.getAll('startsAfter').length<=1,400,'availability_request_invalid','Selecciona una campaña y una ventana válida.');return json(await service.availability(ownerId,identifier(ids[0]),{startsAfter:url.searchParams.get('startsAfter')||undefined}));}
    if(parts[0]==='uploads'&&parts.length===1&&request.method==='POST')return json(await service.upload(ownerId,await readBytes(request,config.limits.uploadBytes||1048576),request.headers.get('content-type')?.split(';')[0],key),201);
    if(parts[0]==='campaigns'){
     if(parts.length===1&&request.method==='POST')return json(await service.campaign(ownerId,await readJson(request),key),201);

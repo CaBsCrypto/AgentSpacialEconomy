@@ -52,7 +52,7 @@ export async function createAdsWallet(config, { loadSdk = () => import('./vendor
       if (!challenge.challengeId || options.rpId !== config.rpId || options.userVerification !== 'required') throw Error('El reto de autenticación no es válido.');
       const response = await sdk.startAuthentication({ optionsJSON: options });
       const session = await post('/api/ads/auth/verify', { challengeId: challenge.challengeId, response });
-      return { address, identity: session.identity };
+      return { address, identity: session.identity, ...(session.purchaseEligibility?{purchaseEligibility:session.purchaseEligibility}:{}) };
 
     },
     async signPayment({ challenge, expected }) {
