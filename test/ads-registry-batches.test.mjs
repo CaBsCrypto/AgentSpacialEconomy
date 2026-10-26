@@ -89,3 +89,20 @@ test('disabled registry does not initialize or query durable state',async()=>{
  const service=createRegistryService({db,config:{...config,registryContract:''},runtime:{prepare(){throw Error('No signer');},submit(){throw Error('No network');},confirm(){throw Error('No network');}}});
  assert.equal((await service.syncOrder(uuid())).state,'DISABLED');assert.equal((await service.record({orderId:uuid(),operation:'commit',payload:{}})).state,'DISABLED');assert.equal((await service.flush()).state,'DISABLED');assert.equal(touched,0);
 });
+
+
+test('late UNKNOWN reconciliation cannot overwrite a concurrently confirmed transaction or its evidence',async t=>{
+ const db=await localDatabase(t),f=await seed(db),setup=createRegistryService({db,config,now:()=>f.base});
+ await setup.syncOrder(f.id);const job=(await jobs(db,f.id)).find(row=>row.operation==='commit'),hash=sha256('concurrent-local-reconciliation:'+job.id);
+ await db.query("UPDATE ads_registry_jobs SET state='SUBMITTED',transaction_hash=$2,signed_xdr='private-local-fixture',evidence=$3 WHERE id=$1",[job.id,hash,{state:'SUBMITTED'}]);
+ let entered,release;const started=new Promise(resolve=>{entered=resolve;}),held=new Promise(resolve=>{release=resolve;});
+ const slow=createRegistryService({db,config,runtime:{confirm:async()=>{entered();await held;return {state:'UNKNOWN',reason:'explicit-late-local-fixture'};}}});
+ const proof={state:'CONFIRMED',txHash:hash,ledger:1234,meaning:'Injected RPC confirmation; no network transaction'};
+ const fast=createRegistryService({db,config,runtime:{confirm:async()=>proof}}),pending=slow.reconcile(job.id);
+ await started;
+ try{const confirmed=await fast.reconcile(job.id);assert.equal(confirmed.state,'CONFIRMED');assert.deepEqual(confirmed.evidence,proof);}
+ finally{release();}
+ const late=await pending,persisted=(await db.query('SELECT state,evidence,transaction_hash FROM ads_registry_jobs WHERE id=$1',[job.id])).rows[0];
+ assert.equal(late.state,'CONFIRMED');assert.deepEqual(late.evidence,proof);assert(!('signed_xdr' in late));
+ assert.equal(persisted.state,'CONFIRMED');assert.deepEqual(persisted.evidence,proof);assert.equal(persisted.transaction_hash,hash);
+});

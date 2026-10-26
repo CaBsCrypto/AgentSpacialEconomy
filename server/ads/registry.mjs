@@ -77,8 +77,11 @@ export function createRegistryService({db,config,runtime=createSorobanRegistryRu
   if(job.state==='CONFIRMED'||!job.transaction_hash)return publicJob(job);
   let result;try{result=await runtime.confirm(job);}catch{result={state:'UNKNOWN'};}
   const state=result?.state==='CONFIRMED'&&result.txHash===job.transaction_hash?'CONFIRMED':'RECONCILIATION_REQUIRED';
-  await db.query('UPDATE ads_registry_jobs SET state=$2,evidence=$3::jsonb,updated_at=now() WHERE id=$1',[jobId,state,JSON.stringify(result)]);
-  return publicJob({...job,state,evidence:result});
+  // A slower observer cannot erase a confirmed receipt or replace its evidence.
+  const updated=(await db.query("UPDATE ads_registry_jobs SET state=$2,evidence=$3::jsonb,updated_at=now() WHERE id=$1 AND state<>'CONFIRMED' RETURNING *",[jobId,state,JSON.stringify(result)])).rows[0];
+  const current=updated||(await db.query('SELECT * FROM ads_registry_jobs WHERE id=$1',[jobId])).rows[0];
+  if(!current)throw new AdsError(404,'registry_job_not_found','Registro no disponible.');
+  return publicJob(current);
  }
  async function flush({limit=10}={}){
   if(!config.registryContract)return {state:'DISABLED',processed:0};
