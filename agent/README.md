@@ -21,15 +21,18 @@ Without keys or USDC yet: `npm run loop:dry` walks the whole plan and stops befo
 
 `node ci-run.mjs` does everything in one go: throwaway testnet accounts, USDC trustlines, a little testnet USDC bought with XLM on the testnet DEX, the services, the facilitator check and the loop. The workflow `.github/workflows/testnet-loop.yml` runs it on every push to `ci/testnet-run` (or "Run workflow" from the Actions tab once it is on `main`) and publishes `dist/state/*.json` plus the log to the `ci/testnet-results` branch.
 
-Recorded run, 25 Oct 2026 23:22 UTC (Stellar testnet, x402.org facilitator):
+Recorded run, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode):
 
-| Step | Price | Result |
+| Step | Amount | Result |
 | --- | --- | --- |
-| `venue-feed` | 0.01 USDC | settled · [tx da69…8da8](https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8) |
-| `screen-card` | 0.05 USDC | settled · [tx 3b65…b9d9](https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9) |
+| treasury `approve` → venue agent | 0.50 USDC, ~24 h | settled · [3add5054…](https://stellar.expert/explorer/testnet/tx/3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa) |
+| venue agent `transfer_from` (its allocations) | 0.20 USDC | settled · [914076fb…](https://stellar.expert/explorer/testnet/tx/914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083) |
+| venue agent draw above what is left | 0.31 USDC | refused by the network (simulation) |
+| `venue-feed` | 0.01 USDC | settled · [bb6d3dfb…](https://stellar.expert/explorer/testnet/tx/bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc) |
+| `screen-card` | 0.05 USDC | settled · [7d3e29ff…](https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0) |
 | `premium-render` | 0.25 USDC | blocked before signing — above the 0.10 per-call cap |
 
-Fees were paid by the facilitator, not the agent; the service wallet received exactly 0.06 USDC.
+x402 fees were paid by the facilitator; the service wallet received exactly 0.06 USDC and the agent kept 0.14.
 
 ## What the run does
 

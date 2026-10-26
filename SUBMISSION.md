@@ -28,14 +28,15 @@ Your venue's AI operator, on a capped USDC budget.
 
 - **A venue agent and a stage agent.** The venue agent allocates part of the operator's budget to the stage agent (one zone, one sub-budget).
 - **Paid venue services over x402.** The stage agent buys the live schedule (0.01 USDC) and then a screen card for the next session (0.05 USDC). Payments use x402 v2 (`exact` scheme) on Stellar testnet through a fee-sponsored facilitator: the agent signs Soroban auth entries only and needs no XLM for fees.
+- **A budget ceiling the network enforces.** The operator's treasury approves the venue agent a SEP-41 allowance on the USDC contract (amount = budget, expires in ~24 h). The agent starts with no USDC, draws exactly its allocations with `transfer_from`, and a draw above what is left is refused by Stellar itself.
 - **A budget ledger that says no before signing.** Allow-list, per-call cap, approval threshold and allocations are checked before any signature. The agent also reads the server's `402 Payment Required` and refuses if it asks for more than it reserved. In the demo, a 0.25 USDC "premium render" is refused by the 0.10 cap and shown as *needs operator approval*. Reruns with the same run id never pay twice.
 - **An operator dashboard.** Mandate, budget per agent, every attempt with its Stellar transaction, and the refused call.
 - **The result in the place.** The card the stage agent paid for appears on the main stage of our 3D digital twin of ONE16, the HackMeridian venue.
 - **A reproducible testnet run.** One command (or a GitHub Actions workflow) creates throwaway testnet accounts, funds the agent with testnet USDC through a DEX path payment, starts the services and runs the loop.
 
-**On-chain evidence (Stellar testnet):** `venue-feed` 0.01 USDC — tx `da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8`; `screen-card` 0.05 USDC — tx `3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9`. The service wallet received exactly 0.06 USDC; fees were paid by the facilitator.
+**On-chain evidence (Stellar testnet, 26 Oct 01:23 UTC):** allowance `approve` 0.50 USDC — tx `3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa`; budget draw 0.20 USDC — tx `914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083`; a 0.31 USDC draw refused by the network; `venue-feed` 0.01 USDC — tx `bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc`; `screen-card` 0.05 USDC — tx `7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator.
 
-**Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: OpenZeppelin smart-account spending limits to put the cap on-chain.
+**Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract (payments and a SEP-41 allowance as the on-chain budget ceiling) + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: per-day caps in a smart account (OpenZeppelin policies or Nido session keys).
 
 **Honest scope:** one bounded loop on testnet, deterministic plan, no real money; physical AR placement is not verified yet.
 

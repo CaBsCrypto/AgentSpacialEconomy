@@ -1,5 +1,5 @@
 {
-  "runId": "2026-10-25T23:22:03.198Z",
+  "runId": "2026-10-26T01:23:54.045Z",
   "network": "stellar:testnet",
   "mandate": {
     "id": "main-stage-hackmeridian",
@@ -24,44 +24,66 @@
       "agent": "stage-agent",
       "priceUsdc": "0.2",
       "status": "allocated",
-      "at": "2026-10-25T23:22:03.402Z"
+      "at": "2026-10-26T01:23:54.203Z"
+    },
+    {
+      "type": "onchain-draw",
+      "agent": "venue-agent",
+      "service": "budget draw · USDC allowance (SEP-41)",
+      "priceUsdc": "0.2",
+      "status": "settled",
+      "tx": "914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
+      "key": "2026-10-26T01:23:54.045Z#0:allowance-draw",
+      "at": "2026-10-26T01:23:57.277Z"
+    },
+    {
+      "type": "onchain-draw",
+      "agent": "venue-agent",
+      "service": "budget draw · USDC allowance (SEP-41)",
+      "priceUsdc": "0.31",
+      "status": "blocked",
+      "tx": null,
+      "explorer": null,
+      "reason": "refused by the network before submission: above the remaining allowance",
+      "at": "2026-10-26T01:23:57.712Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-25T23:22:03.198Z#1:venue-feed",
+      "key": "2026-10-26T01:23:54.045Z#1:venue-feed",
       "agent": "stage-agent",
       "service": "venue-feed",
       "priceUsdc": "0.01",
       "status": "settled",
-      "at": "2026-10-25T23:22:03.403Z",
-      "tx": "da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8",
-      "explorer": "https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8",
-      "payer": "GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6",
-      "settledAt": "2026-10-25T23:22:12.351Z"
+      "at": "2026-10-26T01:23:57.713Z",
+      "tx": "bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc",
+      "payer": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
+      "settledAt": "2026-10-26T01:24:02.397Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-25T23:22:03.198Z#2:screen-card",
+      "key": "2026-10-26T01:23:54.045Z#2:screen-card",
       "agent": "stage-agent",
       "service": "screen-card",
       "priceUsdc": "0.05",
       "status": "settled",
-      "at": "2026-10-25T23:22:12.363Z",
-      "tx": "3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9",
-      "explorer": "https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9",
-      "payer": "GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6",
-      "settledAt": "2026-10-25T23:22:17.177Z"
+      "at": "2026-10-26T01:24:02.423Z",
+      "tx": "7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0",
+      "payer": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
+      "settledAt": "2026-10-26T01:24:08.109Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-25T23:22:03.198Z#3:premium-render",
+      "key": "2026-10-26T01:23:54.045Z#3:premium-render",
       "agent": "stage-agent",
       "service": "premium-render",
       "priceUsdc": "0.25",
       "status": "blocked",
       "reason": "price above the per-call cap",
       "needsApproval": true,
-      "at": "2026-10-25T23:22:17.177Z"
+      "at": "2026-10-26T01:24:08.110Z"
     }
   ],
   "totals": {
@@ -80,5 +102,26 @@
       "available": "0.14"
     }
   },
-  "generatedAt": "2026-10-25T23:22:17.179Z"
+  "onchain": {
+    "mode": "sep41-allowance",
+    "network": "stellar:testnet",
+    "asset": {
+      "code": "USDC",
+      "sac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA"
+    },
+    "treasury": "GDNNKSLTL43WDLRXLRU6HWW6Q6GGL4BWU45WZF5AG3ME4WHPTK6JWCZK",
+    "spender": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
+    "approvedUsdc": "0.5",
+    "liveUntilLedger": 5408128,
+    "approveTx": "3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa",
+    "drawnUsdc": "0.2",
+    "drawTx": "914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
+    "remainingUsdc": "0.3",
+    "probe": {
+      "amountUsdc": "0.31",
+      "refused": true,
+      "reason": "HostError: Error(Contract, #9)"
+    }
+  },
+  "generatedAt": "2026-10-26T01:24:08.111Z"
 }
