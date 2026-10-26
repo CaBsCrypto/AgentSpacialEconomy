@@ -180,7 +180,7 @@ test('Vercel hosting has a private minute Cron,800s limit and explicit binary tr
  const {readFile}=await import('node:fs/promises');
  const settings=JSON.parse(await readFile(new URL('../vercel.json',import.meta.url),'utf8'));
  const runner=settings.functions['api/ads-runner.js'];
- assert.equal(runner.maxDuration,800);assert(!Object.hasOwn(runner,'memory'));assert.match(runner.includeFiles,/@sparticuz\/chromium\/bin/);
+ assert.equal(runner.maxDuration,800);assert(!Object.hasOwn(runner,'memory'));assert.match(runner.includeFiles,/@sparticuz\/chromium\/bin/);assert.match(runner.includeFiles,/playwright-core-vercel\/\{browsers\.json,package\.json\}/);
  assert.deepEqual(settings.crons.filter(job=>job.path==='/api/ads-runner'),[{path:'/api/ads-runner',schedule:'* * * * *'}]);
  const ignored=await readFile(new URL('../.vercelignore',import.meta.url),'utf8');
  for(const path of ['.ads-secrets/','.ads-qa/','.ads-private/','.ads-*/','.ads-*.pem'])assert(ignored.split(/\r?\n/).includes(path));
@@ -284,7 +284,7 @@ test('private probe failure reports its stage and closes resources on content fa
 
 test('private bundle check authenticates before filesystem,browser or database access',async()=>{
  let reads=0,runtime=0,browsers=0;
- const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{runtime++;throw Error('No runtime');},rendererSmoke:async()=>{browsers++;},bundleProbe:async()=>{reads++;return {directory:'ignored',files:['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'].map(name=>({name,readable:true}))};}});
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{runtime++;throw Error('No runtime');},rendererSmoke:async()=>{browsers++;},bundleProbe:async()=>{reads++;return {directory:'ignored',files:['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'].map(name=>({name,readable:true})),metadata:['browsers.json','package.json'].map(name=>({name,readable:true,valid:true}))};}});
  assert.equal((await request(handler,{url:'/api/ads-runner?check=bundle'})).status,401);assert.equal(reads,0);
  const result=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'});assert.equal(result.status,200);assert.equal(result.body.check,'bundle');assert.equal(result.body.ok,true);
  assert.equal(reads,1);assert.equal(runtime,0);assert.equal(browsers,0);
@@ -296,4 +296,26 @@ test('private bundle check exposes only the fixed relative file list and truthfu
  const result=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'}),text=JSON.stringify(result.body);
  assert.equal(result.status,503);assert.equal(result.body.ok,false);assert.equal(result.body.readable,false);assert.equal(result.body.directory,'node_modules/@sparticuz/chromium/bin');assert.equal(result.body.files.length,4);
  assert(!text.includes('/private/root'));assert(!text.includes('arbitrary-private-name'));assert(!text.includes('MUST_NOT_SERIALIZE'));
+});
+
+
+test('browser bundle requires readable and valid pinned Playwright metadata before imports',async()=>{
+ const {inspectVercelBrowserBundle,launchVercelBrowser}=await import('../server/ads/vercel-runner.mjs');
+ let imports=0;
+ for(const mode of ['missing','corrupt','wrong-version']){
+  const bundle=await inspectVercelBrowserBundle({
+   accessFile:async path=>{if(mode==='missing'&&path.endsWith('browsers.json'))throw Error('missing client metadata');},
+   readJsonFile:async path=>path.endsWith('package.json')?JSON.stringify({name:'playwright-core',version:mode==='wrong-version'?'1.64.1':'1.63.0'}):mode==='corrupt'?'not json':JSON.stringify({browsers:[{name:'chromium',browserVersion:'153.0.8010.12'}]})
+  });
+  assert(bundle.files.every(file=>file.readable));assert.equal(bundle.readable,false);assert.equal(bundle.metadata.length,2);
+  await assert.rejects(launchVercelBrowser({}, {inspectBundle:async()=>bundle,loadClient:async()=>{imports++;},loadBinary:async()=>{imports++;}}),error=>error.code==='CHROMIUM_BUNDLE_MISSING');
+ }
+ assert.equal(imports,0);
+});
+
+test('private bundle check fails when Playwright metadata is omitted despite readable Brotli assets',async()=>{
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{throw Error('No runtime');},bundleProbe:async()=>({files:['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'].map(name=>({name,readable:true}))})});
+ const response=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'});
+ assert.equal(response.status,503);assert.equal(response.body.ok,false);assert.equal(response.body.files.length,4);assert.equal(response.body.metadata.length,2);
+ assert.equal(response.body.clientDirectory,'node_modules/playwright-core-vercel');assert(response.body.metadata.every(file=>!file.readable&&!file.valid));
 });

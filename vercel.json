@@ -22,7 +22,7 @@
     },
     "api/ads-runner.js": {
       "maxDuration": 800,
-      "includeFiles": "{media/fonts/**,server/ads/**,node_modules/@sparticuz/chromium/bin/**}"
+      "includeFiles": "{media/fonts/**,server/ads/**,node_modules/@sparticuz/chromium/bin/**,node_modules/playwright-core-vercel/{browsers.json,package.json}}"
     }
   },
   "routes": [

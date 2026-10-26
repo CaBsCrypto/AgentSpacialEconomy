@@ -1,5 +1,5 @@
 import {createHash,timingSafeEqual} from 'node:crypto';
-import {access} from 'node:fs/promises';
+import {access,readFile} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {resolve} from 'node:path';
 import {createJobRunner} from './jobs.mjs';
@@ -16,14 +16,21 @@ export function cronAuthorized(header,secret){
 }
 const CHROMIUM_DIRECTORY='node_modules/@sparticuz/chromium/bin';
 const CHROMIUM_FILES=['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'];
+const CLIENT_DIRECTORY='node_modules/playwright-core-vercel';
+const CLIENT_FILES=['browsers.json','package.json'];
 const SMOKE_STAGES=new Set(['bundle-files','module-load','binary-extract','binary-launch','context','content','webgl','metadata','cleanup','complete']);
-export async function inspectVercelBrowserBundle({cwd=process.cwd(),accessFile=access}={}){
+export async function inspectVercelBrowserBundle({cwd=process.cwd(),accessFile=access,readJsonFile=readFile}={}){
  const directory=resolve(cwd,CHROMIUM_DIRECTORY);
  const results=await Promise.all(CHROMIUM_FILES.map(async name=>{
   try{await accessFile(resolve(directory,name),constants.R_OK);return {name,readable:true};}
   catch{return {name,readable:false};}
  }));
- return {directory:CHROMIUM_DIRECTORY,readable:results.every(file=>file.readable),files:results};
+ const metadata=await Promise.all(CLIENT_FILES.map(async name=>{
+  let readable=false,valid=false;
+  try{const file=resolve(cwd,CLIENT_DIRECTORY,name);await accessFile(file,constants.R_OK);readable=true;const value=JSON.parse(await readJsonFile(file,'utf8'));valid=name==='package.json'?value.name==='playwright-core'&&value.version==='1.63.0':value.browsers?.some(browser=>browser.name==='chromium'&&String(browser.browserVersion).split('.')[0]==='153')===true;}catch{}
+  return {name,readable,valid};
+ }));
+ return {directory:CHROMIUM_DIRECTORY,clientDirectory:CLIENT_DIRECTORY,readable:results.every(file=>file.readable)&&metadata.every(file=>file.readable&&file.valid),files:results,metadata};
 }
 export async function launchVercelBrowser(options={},{
  loadClient=()=>import('playwright-core-vercel'),loadBinary=()=>import('@sparticuz/chromium'),inspectBundle=inspectVercelBrowserBundle,
@@ -32,7 +39,7 @@ export async function launchVercelBrowser(options={},{
  const mark=stage=>{if(typeof onStage==='function')onStage(stage);};
  mark('bundle-files');
  const bundle=await inspectBundle();if(typeof onBundle==='function')onBundle(bundle);
- if(!bundle.readable){const error=new Error('Bundled Chromium files are unreadable: '+bundle.files.filter(file=>!file.readable).map(file=>file.name).join(', '));error.code='CHROMIUM_BUNDLE_MISSING';throw error;}
+ if(!bundle.readable){const error=new Error('Bundled Chromium files are unreadable: '+[...bundle.files.filter(file=>!file.readable),...(bundle.metadata||[]).filter(file=>!file.readable||!file.valid)].map(file=>file.name).join(', '));error.code='CHROMIUM_BUNDLE_MISSING';throw error;}
  mark('module-load');
  const [{chromium},module]=await Promise.all([loadClient(),loadBinary()]);
  const binary=module.default;
@@ -99,7 +106,8 @@ function taggedSmokeError(error,stage,bundle){
 }
 function safeBrowserBundle(bundle){
  const files=CHROMIUM_FILES.map(name=>({name,readable:Array.isArray(bundle?.files)&&bundle.files.find(file=>file.name===name)?.readable===true}));
- return {directory:CHROMIUM_DIRECTORY,readable:files.every(file=>file.readable),files};
+ const metadata=CLIENT_FILES.map(name=>({name,readable:Array.isArray(bundle?.metadata)&&bundle.metadata.find(file=>file.name===name)?.readable===true,valid:Array.isArray(bundle?.metadata)&&bundle.metadata.find(file=>file.name===name)?.valid===true}));
+ return {directory:CHROMIUM_DIRECTORY,clientDirectory:CLIENT_DIRECTORY,readable:files.every(file=>file.readable)&&metadata.every(file=>file.readable&&file.valid),files,metadata};
 }
 function privateSmokeDiagnostic(error,secret){
  const redact=value=>{
