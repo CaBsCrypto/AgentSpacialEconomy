@@ -1,16 +1,55 @@
-# Spatial Agents · Operating System
+# Agentic Realities · Spatial AI for Venues and Events
 
 AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES
 
 ![Concept art (made under the earlier working name "Agentic Spatial Economy") — human objectives, bounded agents, spatial experiences](docs/assets/agentic-spatial-economy-cover.png)
 
-**Your venue's AI operator, on a capped USDC budget.**
+**Your venue's AI operator automating your event AR layer with x402 on a capped USDC budget.**
 
-Spatial Agents · Operating System lets human administrators delegate the operation of physical spaces to agents with explicit authority, spending limits and measurable objectives. Its first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
+Agentic Realities lets the people who manage a physical space delegate its digital layer to agents with explicit authority, spending limits and measurable objectives. The operator sets objectives and a capped budget. Agents coordinate content, data, screens and AR for the people who pass through the space, and every payment comes with a receipt on Stellar. The space also earns: brands and sponsors pay its treasury for screen time. The first prototype recreates ONE16 in Lisbon as a mobile-first 3D event venue, with an in-world Stellar Passport demonstration and experimental native AR launch paths.
 
-**Live: [agenticreality.space](https://agenticreality.space)** · [operator dashboard](https://agenticreality.space/dashboard.html) · [ONE16 twin](https://agenticreality.space/one16) · [llms.txt](https://agenticreality.space/llms.txt)
+**Live: [agenticreality.space](https://agenticreality.space)** · [request a quote](https://agenticreality.space/#quote) · [demos](https://agenticreality.space/#demos) · [operator dashboard](https://agenticreality.space/dashboard.html) · [ONE16 twin](https://agenticreality.space/one16) · [buy screen time](https://agenticreality.space/ads) · [llms.txt](https://agenticreality.space/llms.txt)
 
-> Built at HackMeridian 2026 (Genesis · Stellar Composed). The repository implements the spatial frontend **and one bounded paid loop on Stellar testnet**: a venue agent delegates a budget to a stage agent, which pays for data and content over x402 in testnet USDC, under a per-call cap. It is not a deployed autonomous economy and moves no real money. Repo slug `AgentSpacialEconomy` is the earlier working name.
+> Built at HackMeridian 2026 (Genesis · Stellar Composed) under the name **Spatial Agents · Operating System**; the repo slug `AgentSpacialEconomy` is an earlier working name. The repository implements the spatial frontend, **one bounded paid loop on Stellar testnet** (a venue agent delegates a budget to a stage agent, which pays for data and content over x402 in testnet USDC, under a per-call cap) and a **controlled paid-advertising pilot**. It is not a deployed autonomous economy and moves no real money.
+
+## Value proposition and offer
+
+We are at the frontier of a new space of opportunity: physical spaces where agents work for the people who move through them.
+
+- **Customer:** whoever manages a space, such as an event venue, a campus, or a public or corporate building or shopping center. They set the mandate, approve what needs approval and see every payment.
+- **Who benefits:** the people who pass through or live in the space (attendees, students, workers, visitors) and the brands and sponsors who pay the space for screen time and activations.
+- **What the space gains:** personalized experiences for each person, more efficient coordination of services and suppliers, and wellbeing indicators that show how people live the space (planned).
+
+| Type of space | Duration | Example objective |
+| --- | --- | --- |
+| Events and venues | A few days | Help attendees discover projects and sessions |
+| Universities and campuses | All year | Connect students with programs, labs and events |
+| Public buildings | All year | Guide visitors and measure how services are used |
+| Corporate buildings | All year | Coordinate visitors, rooms and internal events |
+| Shopping centers | All year | Turn screens and walls into paid, measurable placements |
+
+One mandate, credits and the same catalog of resources serve every type of space.
+
+| Service | Status today |
+| --- | --- |
+| Digital twin and AR activations (3D, QR/NFC entry, AR on supported devices) | Available; physical AR placement not yet verified |
+| Agent operations under a mandate (objectives, credits, per-purchase cap, approvals, x402 purchases) | Recorded testnet run |
+| Paid screen time and sponsorships (5 test USDC for 5 minutes, AI review of each creative) | Pilot on testnet, one real passkey purchase delivered |
+| Visitor wallet and Passport (passkey wallet with test USDC, opt-in Stellar Passport) | Pilot on testnet |
+| Indicators and reports (objectives, credits, income, participation) | Planned |
+| Custom environments and integrations | On request |
+
+**Engagement models:**
+- *Event pilot:* a few days, one venue.
+- *Season:* several events.
+- *Permanent space:* all year, under a monthly mandate.
+
+The business model is a per-event or monthly mandate plus a margin on the services agents buy; screen time and sponsorships are income for the space. Proposed first pilot: One Sixteen (ONE16), Lisbon, with no agreement in place. Next live event: Chile Blockchain Week, Santiago, 17–22 November 2026.
+
+**Sales and demo channels on the landing:**
+- *B2C demo* ([`#demo-visitor`](https://agenticreality.space/#demo-visitor)): walk the ONE16 twin, create a passkey wallet and open the Passport.
+- *B2B demo* ([`#demo-host`](https://agenticreality.space/#demo-host)): the operator dashboard and buying screen time.
+- *Quote request* ([`#quote`](https://agenticreality.space/#quote)): the visitor picks the type of space, scope, audience, budget and services, and the page drafts an email to `contact@agenticreality.space` on their device. It has no form submission, no network request and stores nothing.
 
 ## Summary
 
@@ -100,6 +139,22 @@ Run of 26 Oct 2026 06:24 UTC ([Actions run 40279573914](https://github.com/CaBsC
 
 The registry never moves funds. No delivery is recorded, so the order stays `Queued`, and the ad is not shown in the twin. The advertiser is a throwaway testnet wallet named "Demo Advertiser (testnet)". The first deployment of the same contract, with a synthetic order and no payment, is on `feature/ads-3d-ar-x402` (`docs/ads/testnet-registry/`).
 
+### Paid screen time: a real passkey purchase delivered five passes (pilot)
+
+On 26 Oct 2026, a passkey smart wallet bought the pilot offer from `/ads` through checkout limited to the pilot wallet. It paid exactly 5 testnet USDC over x402, with fees sponsored. The audited ad then played five complete 60-second passes on the main stage of the ONE16 twin, with the host presentation looping in between. The noncustodial AdsRegistry contract records the commitment, the five deliveries signed by the screen publisher and the completion. Read back: `Completed`, `required=5`, `delivered=5`. Details and read-only verification are in `docs/ads/testnet-registry/` and the **Estado** section below.
+
+| What | Transaction or contract |
+| --- | --- |
+| 5 USDC payment from the passkey wallet to the venue treasury | [7b4349d0…](https://stellar.expert/explorer/testnet/tx/7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2) |
+| AdsRegistry instance holding the order and its five deliveries | [CDYMS2…QRVD](https://stellar.expert/explorer/testnet/contract/CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD) |
+| Order completed after the fifth pass (10:14 UTC) | [2bf5d4c4…](https://stellar.expert/explorer/testnet/tx/2bf5d4c4f1a922acc3cd44763b610bcdb79838bee278270573434addf98692d2) |
+
+The playback was observed in the browser 3D twin. It does not establish a physical screen or shared AR.
+
+### Main-stage screen in four paid sections (PR #30)
+
+The main-stage screen splits into four sections; each order pays the venue treasury 5 testnet USDC for five minutes of one section, and orders in the same section rotate. A run on 26 Oct 08:56 UTC with six throwaway advertisers paid 30 USDC to treasury [GCIFG6…CQOM](https://stellar.expert/explorer/testnet/account/GCIFG6G5TT64O3K5VFFCSVLSKA2LFGVM3AKVNM37HTYQSNSI32ZSCQOM) and committed every order to AdsRegistry [CA77KJ…DLDW](https://stellar.expert/explorer/testnet/contract/CA77KJNQHENANFHA44W4SQRELNN7GQ2BP7CXTM2PZHUGHHGYCSDJDLDW). The code is in [PR #30](https://github.com/CaBsCrypto/AgentSpacialEconomy/pull/30), in review.
+
 ## Setup, installation and environment variables
 
 Requirements: Node.js 22.x and npm for the site; the separate agent package supports Node.js 20+ (22 used in CI).
@@ -133,6 +188,7 @@ No keys or faucet: `node agent/ci-run.mjs` does everything with throwaway accoun
 
 ## Demo instructions
 
+0. Open the [landing](https://agenticreality.space). It shows the value proposition, the types of space, the services with their status and the engagement models. **Demos** opens the B2C (visitor) and B2B (host) paths, and **Request a quote** drafts a quote request.
 1. Open the [operator dashboard](https://agenticreality.space/dashboard.html). It displays a **recorded real testnet run**: mandate, treasury allowance, the agent credit pool, per-agent budget, two payments with transaction links, the blocked 0.25 USDC call, and a sponsor payment to the treasury that recharges the allowance. Below the stage card, **Paid screen time** shows a 5 USDC ad order paid to the treasury and committed to the AdsRegistry contract. When the page loads it checks each transaction live on Horizon testnet.
 2. Open the [ONE16 twin](https://agenticreality.space/one16), select **Vive la experiencia** and walk to the main stage to inspect the purchased **Morning briefing** card over the backdrop, with the "Presented by Demo Sponsor (testnet)" line the sponsor paid for.
 3. Open a payment link in stellar.expert and compare its hash and amount with the dashboard.
@@ -146,13 +202,13 @@ We started this project during HackMeridian; no project work existed before hack
 
 ## AI tooling
 
-We used Claude, OpenAI Codex and Dot during the hackathon for AI-assisted development and preparation of project materials. Our team chose the problem, scope and design, reviewed the outputs and tested the prototype.
+We used Claude, OpenAI Codex and Dot during the hackathon for AI-assisted development and preparation of project materials. At runtime, the advertising pilot uses Gemini 2.5 Flash-Lite through Vercel AI Gateway to pre-audit each ad creative against a content policy before it can be scheduled. Our team chose the problem, scope and design, reviewed the outputs and tested the prototype.
 
 ## Project docs
 
 - [THESIS.md](THESIS.md) — who it is for, the problem, why Stellar. The source of truth.
 - [SPEC.md](SPEC.md) — the HackMeridian MVP: demo path, ledger rules, done criteria.
-- [DESIGN.md](DESIGN.md) — name, colors, type and screens.
+- [DESIGN.md](DESIGN.md) — name, colors, type and screens. It still uses the event-time name "Spatial Agents · Operating System"; the public name is now "Agentic Realities · Spatial AI for Venues and Events".
 - [AGENTS.md](AGENTS.md) — rules and tools for coding agents (Raven MCP, Stellar skills).
 - [PLAN.md](PLAN.md) · [ISSUES.md](ISSUES.md) · [DEMO.md](DEMO.md) · [SUBMISSION.md](SUBMISSION.md) — schedule to submission, tasks, demo script, portal answers.
 - [agent/README.md](agent/README.md) — run the paid loop on Stellar testnet in about 5 minutes. The operator view is `dist/dashboard.html`.
@@ -203,10 +259,11 @@ The Passport interaction belongs inside the ONE16 experience. The standalone Pas
 | Agents and economy | **Implemented on Stellar testnet (one bounded loop):** mandate, venue agent → stage agent allocation, SEP-41 treasury allowance, budget ledger with per-call cap, x402 payments in testnet USDC, operator dashboard. Planned: more zones and agents, operator approvals and per-day smart-account policies. No real money. |
 | Stage screen | Implemented: the card bought by the stage agent is drawn on the stage backdrop; no change if no run is published. Placement in WebGL still to be checked on devices. |
 | Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
+| Landing as sales channel | Value proposition, types of space, services with status, engagement models, B2C/B2B demo entry points and a quote request drafted on the visitor's device ([PR #34](https://github.com/CaBsCrypto/AgentSpacialEconomy/pull/34)). |
 
 ### Source and release checks
 
-The site source includes the landing and ONE16 twin in `dist/`, the paid loop in `agent/`, and Vercel routing at the repository root. `/` serves the landing; `/one16` serves the twin. The dashboard and `state/` files remain static recorded evidence.
+The site source includes the landing and ONE16 twin in `dist/`, the paid loop in `agent/`, and Vercel routing at the repository root. `/` serves the landing (with `#demos` and the `#quote` request); `/one16` serves the twin. The dashboard and `state/` files remain static recorded evidence.
 
 For a release, verify HTTP 200 for `/`, `/one16`, `/dashboard.html`, `/state/ledger.json`, `/state/stage.json`, `/llms.txt`, `/robots.txt` and `/sitemap.xml`. Check the dashboard on a physical phone and walk to the purchased stage card in the twin. Automated tests do not establish physical-device AR placement.
 
