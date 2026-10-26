@@ -101,7 +101,7 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
     const {rows:[limit]}=await tx.query('SELECT count FROM ads_rate_limits WHERE key=$1 FOR UPDATE',[key]);assert(limit.count<=(config.model.previewPerHour||1),429,'preview_quota','The free preview quota is exhausted.');
    });
    const preview=await creative.generate({brief:revision.brief,logo:logoOf(revision),revisionId:revision.id,placements:isPilotConfig(config)?['main_stage_screen']:PLACEMENTS});
-   await db.query('INSERT INTO ads_previews(id,revision_id,artifacts,expires_at) VALUES($1,$2,$3,$4)',[uuid(),revision.id,preview.artifacts||[],new Date(now()+3600000)]);
+   await db.query('INSERT INTO ads_previews(id,revision_id,artifacts,expires_at) VALUES($1,$2,$3,$4)',[uuid(),revision.id,JSON.stringify(preview.artifacts||[]),new Date(now()+3600000)]);
    return {revisionId:revision.id,verdict:preview.verdict,artifacts:preview.artifacts?.map(a=>({...a,imageUrl:'/api/ads/previews/'+revision.id+'/'+a.key}))||[],meaning:'Preview only; no payment or delivery.'};
    });
   },
