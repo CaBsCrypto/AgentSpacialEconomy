@@ -36,7 +36,14 @@ jobs:
 
       - name: Unit tests
         working-directory: agent
-        run: npm test
+        run: |
+          set +e
+          npm test > test-out.txt 2>&1; code=$?
+          cat test-out.txt
+          if [ $code -ne 0 ]; then
+            grep -nE "not ok|error:|Error|expected|actual|operator" test-out.txt | head -40 | while IFS= read -r l; do echo "::error::$l"; done
+          fi
+          exit $code
 
       - name: Paid screen time on Stellar testnet
         working-directory: agent
