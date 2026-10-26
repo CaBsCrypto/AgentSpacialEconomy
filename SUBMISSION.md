@@ -1,6 +1,10 @@
 # SUBMISSION — paste-ready answers for the HackMeridian portal
 
-Deadline: **Mon 26 Oct 2026, 12:00 WET**. Required to submit: title, description, track, repository link, demo video link (YouTube or Vimeo), pitch deck file (PDF, PPTX, PPT or HTML, up to 20 MiB) and accepted terms. You can keep editing after submitting until the close.
+Deadline: **Mon 26 Oct 2026, 12:00 WET**. Required to submit: title, description, track, repository link, demo video link (YouTube or Vimeo), pitch deck file (PDF, PPTX, PPT or HTML, up to 20 MiB) and accepted terms.
+
+**Treat *Submit project* as final.** The portal page says a submitted project stays editable until the close, but the kickoff slide (Day 1, 0:07:20) says Submit is final and locked by the server clock. Save drafts until everything is in, then press Submit once. Ask an organizer if you need to change something after that.
+
+**Prizes we can target:** Genesis ranking (4 places across both tracks, 2 finalists per track) and the Smol Wins **Best GTM** and **Best UX** (one prize per team at most). The GTM paragraph below and the dashboard/landing are written with those in mind.
 
 Fill the `TEAM:` gaps before pasting. Same words as the README, the deck and the video.
 
@@ -52,7 +56,11 @@ Operators of event venues, campuses and museums program their screens and activa
 - Operator approvals from the dashboard for refused calls.
 - More zones and agents (stands, check-in, sponsor slots) and the revenue side: third parties paying to appear on screens or in AR.
 - Opt-in Stellar Passport profiles for visitors.
-- A pilot in a permanent space (a campus or museum) and an SCF application.
+- A pilot in a permanent space (a campus or museum) and an SCF application (SCF #46 closes 8 Nov 2026).
+- Operator approval in the operator's own wallet: passkey smart accounts with per-day caps and expiry (Nido, OpenZeppelin smart accounts), and agent-drafted transactions that a human signs.
+- Discovery both ways: our agents finding paid data services through an x402 marketplace, and venues selling screen and AR slots to other agents.
+
+**Go-to-market:** first customers are the organizers and venues of hackathons and tech events, who already run multi-day programs with live schedule changes and sponsor screens; we sell a per-event mandate (budget + rules) and take a margin on the services agents buy. From events we move to permanent spaces (campuses, innovation districts, museums) on a monthly mandate, where the same venue also earns by selling screen and AR placements. <!-- TEAM: name your first pilot venue or event network -->
 
 ## Repository link *
 
