@@ -170,38 +170,12 @@ function assertAboveHalves(metrics) {
   assert.ok(Math.abs(metrics.ring.x - metrics.midX) < 0.015, "ring stays centered above both halves");
 }
 
-test("product names travel with their halves and read upright without mirrored UVs after opening", async (t) => {
-  const { palta } = await mountHeadless(true);
-  t.after(() => palta.dispose());
-  palta.open();
-  palta.root.updateMatrixWorld(true);
-  for (const [name, text, parent] of [
-    ["palta_label_soroswap", "SoroSwap", "palta_half_left"],
-    ["palta_label_defindex", "DeFindex", "palta_half_right"],
-  ]) {
-    const label = palta.root.getObjectByName(name);
-    assert.ok(label?.isMesh, `${text} has its own textured label mesh`);
-    assert.equal(label.parent.name, parent, `${text} follows its half during opening and closing`);
-    assert.equal(label.userData.text, text);
-    assert.ok(label.material.map?.isTexture, `${text} is baked into the GLB texture`);
-    const positions = label.geometry.getAttribute("position"), uv = label.geometry.getAttribute("uv");
-    assert.ok(uv, `${text} has texture coordinates`);
-    const corners = Array.from({ length: positions.count }, (_, i) => ({
-      world: label.localToWorld(new THREE.Vector3().fromBufferAttribute(positions, i)),
-      u: uv.getX(i), v: uv.getY(i),
-    }));
-    const mean = (key, value) => {
-      const points = corners.filter((p) => Math.abs(p[key] - value) < 1e-6);
-      assert.ok(points.length >= 2, `${text}: expected a rectangular UV edge`);
-      return points.reduce((sum, p) => sum.add(p.world), new THREE.Vector3()).divideScalar(points.length);
-    };
-    const horizontal = mean("u", 1).sub(mean("u", 0)).normalize();
-    const vertical = mean("v", 0).sub(mean("v", 1)).normalize();
-    const normal = new THREE.Vector3(0, 0, 1).transformDirection(label.matrixWorld);
-    assert.ok(horizontal.x > 0.8, `${text}: increasing U reads left to right from the activation viewpoint`);
-    assert.ok(vertical.y > 0.95, `${text}: image top faces upward`);
-    assert.ok(normal.z > 0.8, `${text}: printed side faces the visitor`);
-    assert.ok(horizontal.clone().cross(vertical).dot(normal) > 0.99, `${text}: text plane has no reflected axes`);
+test("partner cavities show only official artwork without separate product-name labels", () => {
+  const g = glbJson(GLB);
+  assert.ok(!g.nodes.some((node) => /^palta_label_(soroswap|defindex)$/.test(node.name ?? "")), "remove both product-name label nodes");
+  assert.ok(!g.nodes.some((node) => ["SoroSwap", "DeFindex"].includes(node.extras?.text)), "no product-name text is mounted in the scene");
+  for (const collection of [g.meshes, g.materials, g.images, g.textures]) {
+    assert.ok(!collection.some((item) => /(?:SoroSwap|DeFindex) interior (?:label|text)/.test(item.name ?? "")), "remove the obsolete label meshes, materials and textures");
   }
 });
 
@@ -288,10 +262,6 @@ test("partner logos conform to their seed cavities and read upright without chan
     const vertical = new THREE.Vector3(0, 1, 0).transformDirection(logo.matrixWorld);
     const normal = new THREE.Vector3(0, 0, 1).transformDirection(logo.matrixWorld);
     assert.ok(horizontal.x > 0.8 && vertical.y > 0.95 && normal.z > 0.8, `${brand}: artwork faces the visitor upright after opening`);
-    const label = palta.root.getObjectByName(`palta_label_${id}`);
-    const logoBox = new THREE.Box3().setFromObject(logo, true);
-    const labelBox = new THREE.Box3().setFromObject(label, true);
-    assert.ok(logoBox.max.y < labelBox.min.y - 0.01, `${brand}: logo sits beneath the product name`);
   }
 
 });

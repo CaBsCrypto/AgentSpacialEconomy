@@ -6,11 +6,11 @@
 // If the GLB or the logo file is missing, nothing breaks: the venue keeps its current look.
 //
 // Viewer integration (dist/viewer.js), two lines:
-//   after the venue model is added:  import('./palta-reveal.mjs?v=5').then(m=>m.mountPaltaReveal(THREE,scene,{GLTFLoader,camera,canvas,layout})).then(p=>palta=p).catch(e=>console.warn('palta skipped',e));
+//   after the venue model is added:  import('./palta-reveal.mjs?v=6').then(m=>m.mountPaltaReveal(THREE,scene,{GLTFLoader,camera,canvas,layout})).then(p=>palta=p).catch(e=>console.warn('palta skipped',e));
 //   inside loop(), before render:     palta?.update(dt);
 
 export const PALTA_DEFAULTS = Object.freeze({
-  url: "./assets/palta-reveal.glb?v=bae9805efebe",
+  url: "./assets/palta-reveal.glb?v=a45b02d836b1",
   logoUrl: null,                 // official logo file, e.g. "./assets/palta-reveal/logo.png"
   position: [5.3, 0, -5.0],      // three.js metres: activation area, left of the kiosk
   yaw: 0.138,                    // resting orientation: faces the activation viewpoint

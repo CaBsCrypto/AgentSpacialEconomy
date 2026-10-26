@@ -264,15 +264,6 @@ def logo_plane(aspect, z):
     return Part(v, f, 'logo', uv=uv, normals=np.tile([0, 0, 1], (4, 1)))
 
 
-def interior_text_plane(material, width=0.40, height=0.11):
-    """A front-facing text quad; the half-node rotation lays it onto its cut face."""
-    v = np.array([[-width / 2, -height / 2, 0], [width / 2, -height / 2, 0],
-                  [width / 2, height / 2, 0], [-width / 2, height / 2, 0]], np.float32)
-    f = np.array([[0, 1, 2], [0, 2, 3]], np.uint32)
-    uv = np.array([[0, 1], [1, 1], [1, 0], [0, 0]], np.float32)
-    return Part(v, f, material, uv=uv, normals=np.tile([0, 0, 1], (4, 1)))
-
-
 def cavity_point(u, v, inset=0.0, depth=0.10):
     """Project onto the seed bowl and offset toward its air space along the true normal."""
     u, v = np.asarray(u), np.asarray(v)
@@ -352,21 +343,6 @@ def text_font(size, bold=False):
         except OSError:
             pass
     return ImageFont.load_default(size=size)
-
-
-def interior_text_texture(label):
-    """Dark, centered text on transparency; words are typeset rather than drawn brand logos."""
-    W, H = 1200, 330
-    im = Image.new('RGBA', (W, H), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    for size in range(236, 7, -1):
-        font = text_font(size, bold=True)
-        left, top, right, bottom = d.textbbox((0, 0), label, font=font)
-        if right - left <= W - 80 and bottom - top <= H - 64:
-            break
-    origin = ((W - (right - left)) / 2 - left, (H - (bottom - top)) / 2 - top)
-    d.text(origin, label, fill=(7, 18, 31, 255), font=font)
-    return im
 
 
 def plaque_texture():
@@ -552,8 +528,6 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     g = GLB()
     tex_logo = g.image(logo, 'Palta reveal logo slot')
     tex_plaque = g.image(plaque_texture(), 'Palta reveal proposal plaque')
-    tex_soroswap = g.image(interior_text_texture('SoroSwap'), 'SoroSwap interior label')
-    tex_defindex = g.image(interior_text_texture('DeFindex'), 'DeFindex interior label')
     partner_logos = {}
     for key, brand in [('soroswap', 'SoroSwap'), ('defindex', 'DeFindex')]:
         logo_file = os.path.join(ROOT, 'dist', 'assets', 'palta-reveal', 'partners', key + '.png')
@@ -578,10 +552,6 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     g.material('seam', pbr('Palta pedestal lime seam', (0.55, 0.78, 0.22), 0.4, 0.0,
                            emissive=(0.55, 0.78, 0.22), strength=0.9))
     g.material('plaque', pbr('Palta proposal plaque', (1, 1, 1), 0.5, 0.0, tex=tex_plaque))
-    g.material('soroswap_text', pbr('SoroSwap interior text', (1, 1, 1), 0.8,
-                                    tex=tex_soroswap, alpha='BLEND'))
-    g.material('defindex_text', pbr('DeFindex interior text', (1, 1, 1), 0.8,
-                                    tex=tex_defindex, alpha='BLEND'))
     g.material('cavity_backing', pbr('Seed cavity logo support navy',
                                       tuple(srgb([7 / 255, 18 / 255, 31 / 255])), 0.65))
     for key, official in partner_logos.items():
@@ -599,8 +569,6 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     m_medal = g.mesh('Medallion', medallion_parts(aspect))
     m_logo = g.mesh('Logo slot', [logo_plane(aspect, 0.03 / 2 + 0.002)])
     m_glow = g.mesh('Glow ring', glow_ring())
-    m_soroswap = g.mesh('SoroSwap interior label', [interior_text_plane('soroswap_text')])
-    m_defindex = g.mesh('DeFindex interior label', [interior_text_plane('defindex_text')])
     # Both the dark support and official mark follow the original concavity; its flesh rim stays visible.
     m_cavity_backing = g.mesh('Seed cavity logo support', [cavity_patch('cavity_backing')])
     for key, official in partner_logos.items():
@@ -628,10 +596,6 @@ def build(out_path, logo_path=None, fruit_height=0.75, pedestal_height=0.95):
     n_right = g.node('palta_half_right', fruit, m_right, t=(0, 0, HINGE_Z))
     n_left = g.node('palta_half_left', fruit, m_left, t=(0, 0, HINGE_Z))
     # Inward normals are +/-X when closed, then face +Z as the halves open by 62 degrees.
-    g.node('palta_label_soroswap', n_left, m_soroswap,
-           t=(0.008, 0.66, -HINGE_Z), r=quat_y(np.pi / 2), extras={'text': 'SoroSwap'})
-    g.node('palta_label_defindex', n_right, m_defindex,
-           t=(-0.008, 0.66, -HINGE_Z), r=quat_y(-np.pi / 2), extras={'text': 'DeFindex'})
     for key, half, side in [('soroswap', n_left, -1), ('defindex', n_right, 1)]:
         official = partner_logos[key]
         # Curved vertices use this group's depth=0.10 frame; normals point into the air space.
