@@ -60,6 +60,15 @@
   .seg-deposit { background: repeating-linear-gradient(45deg, var(--ase-signal) 0 4px, var(--ase-zone) 4px 8px); }
   .card-preview .sponsor { color: var(--ase-muted); font-size: .85rem; margin-top: 8px; }
   .kv .status { white-space: normal; }
+  .quad { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--ase-night); border: 1px solid var(--ase-line); border-radius: 12px; padding: 8px; margin: 6px 0 8px; }
+  .quad > div { min-width: 0; min-height: 118px; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; color: var(--ase-night); }
+  .quad .lab { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .quad .adv { font-weight: 700; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .quad .hl { font-size: .88rem; overflow-wrap: anywhere; }
+  .quad .left { margin-top: auto; font-size: .78rem; font-variant-numeric: tabular-nums; }
+  .quad .q-A { background: #f2d14b; } .quad .q-B { background: #72e3df; } .quad .q-C { background: #eef4f7; } .quad .q-D { background: #c9a6ff; }
+  .quad .free { background: var(--ase-deep); color: var(--ase-text); border: 1px dashed var(--ase-budget); }
+  .quad .free .lab, .quad .free .price { color: var(--ase-budget); }
   @media (max-width: 560px) { .hide-sm { display: none; } }
 
 /* submission-dashboard-polish */
@@ -129,6 +138,12 @@ main,section,.grid>*{min-width:0}main{width:100%}h1,.hash,.kv dd,.bar-head>*,.bl
     <h2 id="screen-h">On the stage screen</h2>
     <div id="screen" class="empty">Loading…</div>
     <p><a href="/one16">Walk the venue →</a></p>
+  </section>
+
+  <section aria-labelledby="split-h" id="split-section" hidden>
+    <h2 id="split-h">Main-stage screen · four paid sections</h2>
+    <p class="live-status" id="split-live" aria-live="polite"></p>
+    <div id="split"></div>
   </section>
 
   <section aria-labelledby="ads-h" id="ads-section" hidden>
@@ -266,6 +281,60 @@ if (stage?.card) {
     </div>`;
 } else if (ledger) {
   $("screen").textContent = "No card was bought in this run, so the stage keeps its default content.";
+}
+
+// ---- four-section main-stage screen: each paid order buys 5 minutes of one section; sections rotate ----
+const { screenNow, validScreen, clock, SECTIONS } = await import("./screen-schedule.mjs?v=1");
+const split = await getJSON("./state/screen.json");
+if (validScreen(split)) {
+  $("split-section").hidden = false;
+  const lis = (ms) => new Date(ms).toLocaleTimeString("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  const txA = (h, text, attr) => h ? `<a href="https://stellar.expert/explorer/testnet/tx/${esc(h)}" target="_blank" rel="noopener">${text}</a><span class="live" ${attr}="${esc(h)}"></span>` : "—";
+  const reg = split.registry?.contractId ? split.registry : null;
+  $("split").innerHTML = `
+    <p><small>Recorded testnet run · ${esc(new Date(split.runId).toLocaleString("en-GB", { timeZone: "Europe/Lisbon" }))} Lisbon. The screen is split in four; each order pays the venue treasury ${usdc(split.screen?.priceUsdc ?? "5")} over x402 for five minutes of one section, and orders in the same section play one after the other. The same view runs on the stage in the <a href="/one16">ONE16 twin</a>.</small></p>
+    <div class="quad" id="quad" aria-live="off"></div>
+    <dl class="grid kv">
+      <div><dt>Orders paid</dt><dd>${esc(split.orders.length)} × ${usdc(split.screen?.priceUsdc ?? "5")}</dd></div>
+      <div><dt>Treasury balance read back</dt><dd>${split.treasury?.verified ? `+${usdc(Number(split.treasury.receivedUsdc))} ✓` : "not verified"}</dd></div>
+      <div><dt>AdsRegistry contract (Soroban)</dt><dd>${reg ? `<a href="${esc(reg.explorerContract)}" target="_blank" rel="noopener"><span class="hash">${esc(reg.contractId.slice(0, 6))}…${esc(reg.contractId.slice(-4))}</span></a> · ${txA(reg.deployTx, "deploy tx", "data-split-tx")}` : "—"}</dd></div>
+    </dl>
+    <div class="scroll"><table class="ledger-table">
+      <thead><tr><th>Section</th><th>Advertiser</th><th>On screen (Lisbon)</th><th>Payment</th><th class="hide-sm">On chain</th></tr></thead>
+      <tbody>${split.orders.map((o) => `<tr>
+        <td data-label="Section"><strong>${esc(o.quadrant)}</strong></td>
+        <td data-label="Advertiser">${esc(o.advertiser)}<br><small>${esc(o.headline ?? "")}</small></td>
+        <td data-label="On screen">${esc(lis(o.start))}–${esc(lis(o.end))}</td>
+        <td data-label="Payment">${usdc(o.priceUsdc ?? "5")} · ${txA(o.tx, "tx", "data-split-tx")}</td>
+        <td class="hide-sm">${o.commitTx ? `${txA(o.commitTx, "commit", "data-split-tx")}<br><small>${esc(o.readBack?.state ?? "")}${o.readBack?.verified ? " ✓" : ""}</small>` : "—"}</td>
+      </tr>`).join("")}</tbody>
+    </table></div>
+    <p><small>Advertisers are throwaway testnet wallets. Orders are paid and committed on chain; delivery is not recorded on chain, and the rotation shown here and in the twin is a replay of the recorded window.</small></p>`;
+  let checkText = "";
+  const paint = () => {
+    const v = screenNow(split);
+    const modeText = v.mode === "replay" ? `Replaying the recorded rotation · ${clock(v.t - v.first)} of ${clock(v.last - v.first)}` : v.mode === "upcoming" ? "Recorded orders start soon" : "Live window";
+    $("split-live").textContent = checkText ? `${modeText} · ${checkText}` : modeText;
+    $("quad").innerHTML = SECTIONS.map((q) => {
+      const s = v.sections[q];
+      if (s.current) return `<div class="q-${q}"><span class="lab">Section ${q} · paid</span><span class="adv">${esc(s.current.advertiser)}</span><span class="hl">${esc(s.current.headline ?? "")}</span><span class="left">${clock(s.remainingMs)} left${s.next ? ` · next: ${esc(s.next.advertiser)}` : ""}</span></div>`;
+      return `<div class="free"><span class="lab">Section ${q} · available</span><span class="adv">Your project here</span><span class="price">5 USDC · 5 min</span><span class="left">${s.next ? `next: ${esc(s.next.advertiser)}` : ""}</span></div>`;
+    }).join("");
+  };
+  paint();
+  setInterval(paint, 1000);
+  const hs = [...new Set([...split.orders.flatMap((o) => [o.tx, o.commitTx]), reg?.deployTx].filter(Boolean).map((h) => h.toLowerCase()))];
+  Promise.all(hs.map(async (h) => [h, await confirmTx("stellar:testnet", h)])).then((results) => {
+    const byHash = new Map(results);
+    for (const el of document.querySelectorAll(".live[data-split-tx]")) {
+      const c = byHash.get(el.dataset.splitTx.toLowerCase());
+      el.textContent = confirmationLabel(c);
+      el.classList.toggle("confirmed", c?.state === "confirmed");
+    }
+    const ok = results.filter(([, c]) => c.state === "confirmed").length;
+    checkText = results.every(([, c]) => c.state === "unavailable") ? "live check unavailable" : `live check: ${ok} of ${hs.length} transactions confirmed on Stellar testnet`;
+    paint();
+  });
 }
 
 // ---- paid screen time: an advertiser paid the treasury; the order is committed on Soroban ----
