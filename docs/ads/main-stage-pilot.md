@@ -16,7 +16,7 @@ Only main_stage_screen in the 3D/AR twin. QR/NFC plus clickable sign share https
 
 ## Gates
 
-- [ ] H1: deploy includes Playwright browsers.json, all Chromium files, browser startup and WebGL2 pass.
+- [x] H1: deploy includes Playwright browsers.json, all Chromium files, browser startup and WebGL2 pass.
 - [ ] H2: worker continues while publisher holds its lease; stable units, lot evidence and issuer serialization pass.
 - [ ] H3: QR/NFC/sign, suggested availability, private five-unit progress and public authoritative countdown pass.
 - [ ] H4: real C-wallet compatibility and real content preaudit pass before a controlled exact-5-USDC purchase.
@@ -41,3 +41,7 @@ One commercial order/payment; stable five units. Attempts, reservations and deli
 Historical runtime attempts stopped at MODULE_NOT_FOUND: playwright-core-vercel/browsers.json. This approved plan resumes with a targeted packaging fix, not a blind retry. Two failures from the same cause across the team stop that milestone and require an exact error report; no financial fallback. No claim of advertiser settlement/publication until actual evidence exists.
 
 Report: 04:30 Santiago / 07:30 Lisbon. Freeze: 06:15 Santiago / 09:15 Lisbon. If a gate is incomplete, report NOT VALIDATED and keep purchases closed. Physical poster/tag placement and native passkey confirmations require the operator/device owner.
+
+## Checkpoint 07:24 UTC / Lisboa
+
+H1 PASS on Vercel Chromium153/WebGL2. H2/H3 implementation and local/native SQL evidence pass; hosted full-build validation in progress. H4 blocked by the existing wallet indexer birth provenance response; no bypass and no charge. H5 NOT VALIDATED. Checkout stays closed. Main/PR28 included by explicit owner approval. Native direct DB18/18; root677 PASS/2 skip; agent42 PASS; Rust9 PASS; reconciliation race fix28 PASS. Physical devices/NFC and real purchase plus five unique passes remain pending.

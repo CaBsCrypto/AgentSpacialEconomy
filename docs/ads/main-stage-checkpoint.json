@@ -1,0 +1,51 @@
+{
+  "observedAt": "2026-10-26T07:24:00Z",
+  "branch": "feature/ads-3d-ar-x402",
+  "mainIncluded": "0378e01d27dd279adaea7dcf44c3c9af93e808cb",
+  "checkout": "DISABLED",
+  "publicDiagnosticDeploymentId": "dpl_7azPun7M12Ry389bmMveGMv5Pc5r",
+  "publicScope": "baseline plus H1 packaging plus approved main PR28; full pilot Preview pending",
+  "renderer": {
+    "chromium": "153.0.8010.0",
+    "webgl2": true,
+    "pixel": [
+      0,
+      255,
+      0,
+      255
+    ],
+    "advertisementOrDelivery": false
+  },
+  "tests": {
+    "root": {
+      "passed": 677,
+      "failed": 0,
+      "skipped": 2
+    },
+    "agent": {
+      "passed": 42,
+      "failed": 0
+    },
+    "rust": {
+      "passed": 9,
+      "failed": 0
+    },
+    "postgresNativeDirect": {
+      "passed": 18,
+      "statefulSql": 15,
+      "isolatedDatabase": "ads_test",
+      "failed": 0,
+      "skipped": 0
+    },
+    "registryRaceRegression": {
+      "passed": 28,
+      "failed": 0
+    }
+  },
+  "migrations": 13,
+  "humanWalletConnection": "blocked: unverified birth provenance; indexer did not return one complete schema-2 birth claim",
+  "newPilotSettlements": 0,
+  "canonicalFivePassOrdersValidated": 0,
+  "physicalDeviceOrNfcValidation": false,
+  "goPublic": false
+}
