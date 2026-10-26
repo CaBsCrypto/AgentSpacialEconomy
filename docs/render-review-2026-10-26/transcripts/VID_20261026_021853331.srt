@@ -1,0 +1,11 @@
+1
+00:00:00,270 --> 00:00:04,990
+Aquí también tenemos esta mesa como de selección de habilidades de cada una de las personas.
+
+2
+00:00:05,330 --> 00:00:10,350
+Si te fijas dice looking for a team, designer, front and back, etc.
+
+3
+00:00:10,750 --> 00:00:12,270
+Entonces la idea también es agregarlo.

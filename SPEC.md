@@ -110,6 +110,10 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 - [ ] README explains in its first lines what this is, and how to run the loop.
 - [ ] No secrets in git history.
 
+## Venue visual revision authorized on 26 Oct
+
+The owner approved the separate codex/render-textures-ui revision from sponsor run 3 (298fefa). Implement the thirteen-video evidence register in docs/render-review-2026-10-26/: eight double-sided exhibition positions, games and giant keyboard, arrival seating, check-in graphics, skills board, Energy Corner and photo booth, Content Hub recording set, stage branding, and the 8-by-3 photo lounge backdrop. Add shared exportable surface textures and polish the existing responsive viewer controls. Preserve the testnet agent loop, sponsor card, Passport, wallet, seven interior steps, shortened corridor, and removed exterior sections. New informational review IDs start at 21; physical dimensions remain estimates. Games and the recording set are visual reconstructions. The source videos stay outside Git.
+
 ## Backlog (logged, not built this weekend)
 
 - Per-day smart-account spending policies (OpenZeppelin policies or Nido session keys), beyond the implemented SEP-41 treasury allowance.

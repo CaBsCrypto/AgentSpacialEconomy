@@ -1,0 +1,39 @@
+{
+  "file": "VID_20261025_210243989.mp4",
+  "driveId": "19cCwcqgxvaqiSbVEUQrLenrOhQhNeR85",
+  "url": "https://drive.google.com/file/d/19cCwcqgxvaqiSbVEUQrLenrOhQhNeR85/view",
+  "durationSeconds": 35.951,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "medium",
+  "language": "es",
+  "speechStatus": "no reliable narration",
+  "reviewNotes": [
+    "Generic automatic phrases in high no-speech-probability windows were rejected as hallucinations. Visual evidence remains applicable.",
+    "Correct spelling grounded in frames: Grantfox, Trustless Work, DRIPS, GUAVA, Stellar Passport, 57BLOCKS, DeFindex, Soroswap, THE AHA COMPANY, OpenZeppelin. PaltaLabs is voice-supported; Machu is uncertain and is not a new stand."
+  ],
+  "segments": [],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261025_210243989.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 35.84,
+      "elapsed": 2.875,
+      "segments": []
+    },
+    "medium": {
+      "video": "VID_20261025_210243989.mp4",
+      "model": "medium",
+      "duration": 35.84,
+      "segments": [
+        {
+          "start": 33.18,
+          "end": 35.54,
+          "text": " ¡Gracias por ver el vídeo!",
+          "avg_logprob": -0.9604400098323822,
+          "no_speech_prob": 0.7563750743865967
+        }
+      ]
+    }
+  }
+}

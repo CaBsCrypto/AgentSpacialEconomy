@@ -1,0 +1,11 @@
+1
+00:00:00,000 --> 00:00:03,580
+Después pasamos a la sección del check-in, hay que ver bien qué es lo que dice, qué es lo que no.
+
+2
+00:00:04,080 --> 00:00:08,480
+Y aquí es lo más importante, este banner, ahora está limpio, tenemos que agregarle todo esto.
+
+3
+00:00:09,200 --> 00:00:14,160
+Agregar el mismo diseño, made to move, los logos acá y los logos acá.

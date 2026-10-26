@@ -1,0 +1,176 @@
+{
+  "file": "VID_20261026_021740335.mp4",
+  "driveId": "1hXVliyLp15dJN_Z5_xLd6jQlH9q5HYZh",
+  "url": "https://drive.google.com/file/d/1hXVliyLp15dJN_Z5_xLd6jQlH9q5HYZh/view",
+  "durationSeconds": 10.160959,
+  "engine": "faster-whisper 1.2.1 / OpenAI Whisper",
+  "model": "small",
+  "language": "es",
+  "speechStatus": "narration",
+  "reviewNotes": [
+    "Visible yellow objects are cylindrical poufs; blue furniture includes a larger L-shaped seat. Shapes grounded in frames."
+  ],
+  "segments": [
+    {
+      "start": 0.75,
+      "end": 6.39,
+      "text": " sección inicial después de los paraguas tenemos dos sillones amarillos pequeños",
+      "avg_logprob": -0.3182000368833542,
+      "no_speech_prob": 0.0972239226102829,
+      "words": [
+        {
+          "start": 0.75,
+          "end": 1.55,
+          "word": " sección",
+          "probability": 0.6588810384273529
+        },
+        {
+          "start": 1.55,
+          "end": 1.93,
+          "word": " inicial",
+          "probability": 0.9905320405960083
+        },
+        {
+          "start": 1.93,
+          "end": 2.39,
+          "word": " después",
+          "probability": 0.8101862072944641
+        },
+        {
+          "start": 2.39,
+          "end": 2.63,
+          "word": " de",
+          "probability": 0.9965291619300842
+        },
+        {
+          "start": 2.63,
+          "end": 2.75,
+          "word": " los",
+          "probability": 0.9592218399047852
+        },
+        {
+          "start": 2.75,
+          "end": 3.41,
+          "word": " paraguas",
+          "probability": 0.9736277063687643
+        },
+        {
+          "start": 3.41,
+          "end": 4.09,
+          "word": " tenemos",
+          "probability": 0.5950634479522705
+        },
+        {
+          "start": 4.09,
+          "end": 5.39,
+          "word": " dos",
+          "probability": 0.4663514792919159
+        },
+        {
+          "start": 5.39,
+          "end": 5.63,
+          "word": " sillones",
+          "probability": 0.7385421395301819
+        },
+        {
+          "start": 5.63,
+          "end": 5.93,
+          "word": " amarillos",
+          "probability": 0.9776600301265717
+        },
+        {
+          "start": 5.93,
+          "end": 6.39,
+          "word": " pequeños",
+          "probability": 0.8005483746528625
+        }
+      ]
+    }
+  ],
+  "rawWhisper": {
+    "small": {
+      "video": "VID_20261026_021740335.mp4",
+      "model": "small",
+      "language": "es",
+      "duration": 10.0266875,
+      "elapsed": 3.4219999999986612,
+      "segments": [
+        {
+          "start": 0.75,
+          "end": 6.39,
+          "text": " sección inicial después de los paraguas tenemos dos sillones amarillos pequeños",
+          "avg_logprob": -0.3182000368833542,
+          "no_speech_prob": 0.0972239226102829,
+          "words": [
+            {
+              "start": 0.75,
+              "end": 1.55,
+              "word": " sección",
+              "probability": 0.6588810384273529
+            },
+            {
+              "start": 1.55,
+              "end": 1.93,
+              "word": " inicial",
+              "probability": 0.9905320405960083
+            },
+            {
+              "start": 1.93,
+              "end": 2.39,
+              "word": " después",
+              "probability": 0.8101862072944641
+            },
+            {
+              "start": 2.39,
+              "end": 2.63,
+              "word": " de",
+              "probability": 0.9965291619300842
+            },
+            {
+              "start": 2.63,
+              "end": 2.75,
+              "word": " los",
+              "probability": 0.9592218399047852
+            },
+            {
+              "start": 2.75,
+              "end": 3.41,
+              "word": " paraguas",
+              "probability": 0.9736277063687643
+            },
+            {
+              "start": 3.41,
+              "end": 4.09,
+              "word": " tenemos",
+              "probability": 0.5950634479522705
+            },
+            {
+              "start": 4.09,
+              "end": 5.39,
+              "word": " dos",
+              "probability": 0.4663514792919159
+            },
+            {
+              "start": 5.39,
+              "end": 5.63,
+              "word": " sillones",
+              "probability": 0.7385421395301819
+            },
+            {
+              "start": 5.63,
+              "end": 5.93,
+              "word": " amarillos",
+              "probability": 0.9776600301265717
+            },
+            {
+              "start": 5.93,
+              "end": 6.39,
+              "word": " pequeños",
+              "probability": 0.8005483746528625
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

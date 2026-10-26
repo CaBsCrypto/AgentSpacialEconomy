@@ -1,0 +1,6003 @@
+[
+  {
+    "name": "before",
+    "fixture": "File-backed HTTP responses; original application modules and GLB; no external network",
+    "start": {
+      "firstFrameMs": 1080.4000000059605,
+      "mode": "walk",
+      "pose": {
+        "x": 0,
+        "z": 25,
+        "yaw": 0,
+        "pitch": 0.14,
+        "mode": "walk"
+      },
+      "ready": "ready",
+      "zones": [
+        {
+          "id": "entrance",
+          "view": {
+            "x": 0,
+            "z": 17,
+            "yaw": 0
+          },
+          "label": "Pasillo amarillo · paraguas"
+        },
+        {
+          "id": "arrival",
+          "view": {
+            "x": 0,
+            "z": 4,
+            "yaw": 0
+          },
+          "label": "Escalera · check-in"
+        },
+        {
+          "id": "merch",
+          "view": {
+            "x": -5.3,
+            "z": -3.5,
+            "yaw": 1.5708
+          },
+          "label": "Merch · a la izquierda"
+        },
+        {
+          "id": "buffet",
+          "view": {
+            "x": 3,
+            "z": -7,
+            "yaw": 0.6
+          },
+          "label": "Buffet · encuentro"
+        },
+        {
+          "id": "river",
+          "view": {
+            "x": 12,
+            "z": -10,
+            "yaw": 0
+          },
+          "label": "Ventanas · sala acristalada"
+        },
+        {
+          "id": "photo",
+          "view": {
+            "x": 7,
+            "z": -33,
+            "yaw": -0.5
+          },
+          "label": "Photo lounge · encuentro"
+        },
+        {
+          "id": "stage",
+          "view": {
+            "x": 0,
+            "z": -39,
+            "yaw": 0
+          },
+          "label": "Escenario · HackMeridian"
+        },
+        {
+          "id": "hack",
+          "view": {
+            "x": -6,
+            "z": -19,
+            "yaw": 0.5
+          },
+          "label": "Mesas de trabajo"
+        },
+        {
+          "id": "auditorium",
+          "view": {
+            "x": 0,
+            "z": -33,
+            "yaw": 0
+          },
+          "label": "Auditorio"
+        },
+        {
+          "id": "cafe",
+          "view": {
+            "x": 5,
+            "z": -18,
+            "yaw": 0.8
+          },
+          "label": "Zona central · mesas / builders"
+        },
+        {
+          "id": "activation",
+          "view": {
+            "x": 5.8,
+            "z": -1.4,
+            "yaw": -0.418
+          },
+          "label": "Wallet · USDC de prueba"
+        },
+        {
+          "id": "exterior",
+          "view": {
+            "x": 0,
+            "z": 25,
+            "yaw": 0,
+            "pitch": 0.14
+          },
+          "label": "Exterior · Welcome, Builders."
+        },
+        {
+          "id": "passport",
+          "view": {
+            "x": 8.7,
+            "z": -1.6,
+            "yaw": 0,
+            "pitch": -0.2
+          },
+          "label": "Passport · demostración AR"
+        },
+        {
+          "id": "stands",
+          "view": {
+            "x": 0,
+            "z": -25.3,
+            "yaw": 0
+          },
+          "label": "Stands · corredor hacia el escenario"
+        },
+        {
+          "id": "passport-stand16",
+          "view": {
+            "x": 3.2,
+            "z": -29.15,
+            "yaw": 3.141592653589793,
+            "pitch": 0
+          },
+          "label": "Stellar Passport · stand 16"
+        }
+      ],
+      "render": {
+        "calls": 402,
+        "triangles": 276081,
+        "memory": {
+          "geometries": 383,
+          "textures": 24
+        },
+        "pixelRatio": 1,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "meshes": 349
+    },
+    "errors": [],
+    "missingLocalFiles": [],
+    "requests": [
+      {
+        "path": "index.html",
+        "bytes": 137600
+      },
+      {
+        "path": "entry.mjs",
+        "bytes": 4626
+      },
+      {
+        "path": "assets/exterior.webp",
+        "bytes": 193030
+      },
+      {
+        "path": "venue-loading.mjs",
+        "bytes": 6790
+      },
+      {
+        "path": "style.css",
+        "bytes": 27472
+      },
+      {
+        "path": "passport-glass.css",
+        "bytes": 10266
+      },
+      {
+        "path": "viewer.js",
+        "bytes": 29675
+      },
+      {
+        "path": "stage-screen.mjs",
+        "bytes": 5770
+      },
+      {
+        "path": "world-wallet.mjs",
+        "bytes": 5006
+      },
+      {
+        "path": "embedded-passport.mjs",
+        "bytes": 2118
+      },
+      {
+        "path": "passport-stand.mjs",
+        "bytes": 1722
+      },
+      {
+        "path": "venue-model.mjs",
+        "bytes": 697
+      },
+      {
+        "path": "walk-floor-numbers.mjs",
+        "bytes": 1746
+      },
+      {
+        "path": "android-launch.mjs",
+        "bytes": 1943
+      },
+      {
+        "path": "walk-input.mjs",
+        "bytes": 2852
+      },
+      {
+        "path": "quicklook.mjs",
+        "bytes": 1612
+      },
+      {
+        "path": "review-map.mjs",
+        "bytes": 5443
+      },
+      {
+        "path": "review-overview.mjs",
+        "bytes": 4313
+      },
+      {
+        "path": "overview-controls.mjs",
+        "bytes": 650
+      },
+      {
+        "path": "overview-hotspots.mjs",
+        "bytes": 2525
+      },
+      {
+        "path": "map-hotspots.mjs",
+        "bytes": 3350
+      },
+      {
+        "path": "world-passport.mjs",
+        "bytes": 736
+      },
+      {
+        "path": "load-timeout.mjs",
+        "bytes": 211
+      },
+      {
+        "path": "model-transfer.mjs",
+        "bytes": 1533
+      },
+      {
+        "path": "navigation.mjs",
+        "bytes": 2046
+      },
+      {
+        "path": "reset-controller.mjs",
+        "bytes": 842
+      },
+      {
+        "path": "short-corridor.mjs",
+        "bytes": 1991
+      },
+      {
+        "path": "merch-backdrop.mjs",
+        "bytes": 1784
+      },
+      {
+        "path": "review-map.mjs",
+        "bytes": 5443
+      },
+      {
+        "path": "navigation.mjs",
+        "bytes": 2046
+      },
+      {
+        "path": "merch-backdrop.mjs",
+        "bytes": 1784
+      },
+      {
+        "path": "vendor/three/build/three.module.js",
+        "bytes": 603113
+      },
+      {
+        "path": "vendor/three/examples/jsm/loaders/GLTFLoader.js",
+        "bytes": 114739
+      },
+      {
+        "path": "vendor/three/examples/jsm/controls/OrbitControls.js",
+        "bytes": 38703
+      },
+      {
+        "path": "assets/one16.glb.gz",
+        "bytes": 1627304
+      },
+      {
+        "path": "vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "bytes": 35539
+      },
+      {
+        "path": "vendor/three/build/three.core.js",
+        "bytes": 1403455
+      },
+      {
+        "path": "state/stage.json",
+        "bytes": 984
+      },
+      {
+        "path": "palta-reveal.mjs",
+        "bytes": 11466
+      },
+      {
+        "path": "assets/passport-target.png",
+        "bytes": 267282
+      },
+      {
+        "path": "assets/palta-reveal.glb",
+        "bytes": 1874348
+      },
+      {
+        "path": "assets/palta-reveal/logo.png",
+        "bytes": 35406
+      },
+      {
+        "path": "wallet.css",
+        "bytes": 4767
+      },
+      {
+        "path": "wallet-controller.mjs",
+        "bytes": 12390
+      },
+      {
+        "path": "wallet-panel.mjs",
+        "bytes": 9270
+      }
+    ],
+    "frames": [
+      {
+        "label": "arrival",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 4,
+          "yaw": 0,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 273,
+          "triangles": 253816,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000273
+      },
+      {
+        "label": "lower-lounge-left",
+        "mode": "walk",
+        "pose": {
+          "x": -1,
+          "z": 3.5,
+          "yaw": 1.4,
+          "pitch": -0.13,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 25,
+          "triangles": 96212,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.800000000000182
+      },
+      {
+        "label": "lower-lounge-right",
+        "mode": "walk",
+        "pose": {
+          "x": 1,
+          "z": 3.5,
+          "yaw": -1.4,
+          "pitch": -0.13,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 60,
+          "triangles": 117782,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000273
+      },
+      {
+        "label": "checkin",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -2.6,
+          "yaw": 0,
+          "pitch": 0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 221,
+          "triangles": 137492,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.699999999999818
+      },
+      {
+        "label": "keyboard",
+        "mode": "walk",
+        "pose": {
+          "x": -9,
+          "z": -8,
+          "yaw": 0.9,
+          "pitch": -0.11,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 19,
+          "triangles": 87512,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "arcade",
+        "mode": "walk",
+        "pose": {
+          "x": -9.2,
+          "z": -15.5,
+          "yaw": 1.05,
+          "pitch": -0.16,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 18,
+          "triangles": 87120,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "skills",
+        "mode": "walk",
+        "pose": {
+          "x": 4.7,
+          "z": -7.1,
+          "yaw": -0.4,
+          "pitch": -0.08,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 217,
+          "triangles": 131696,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.800000000000182
+      },
+      {
+        "label": "stands",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -25.3,
+          "yaw": 0,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 216,
+          "triangles": 131104,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "stand-reverse",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -30.2,
+          "yaw": 3.141592653589793,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 181,
+          "triangles": 240755,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.700000000000728,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "energy",
+        "mode": "walk",
+        "pose": {
+          "x": 11,
+          "z": -28.5,
+          "yaw": -1.5707963267948966,
+          "pitch": -0.06,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 20,
+          "triangles": 93684,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "photobooth",
+        "mode": "walk",
+        "pose": {
+          "x": 10,
+          "z": -34,
+          "yaw": -1.5707963267948966,
+          "pitch": 0.02,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 20,
+          "triangles": 93684,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "content-hub",
+        "mode": "walk",
+        "pose": {
+          "x": 11.6,
+          "z": -14,
+          "yaw": -0.25,
+          "pitch": -0.02,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 213,
+          "triangles": 129996,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "stage",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -39,
+          "yaw": 0,
+          "pitch": 0.04,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 191,
+          "triangles": 119482,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "photocall",
+        "mode": "walk",
+        "pose": {
+          "x": 10,
+          "z": -38,
+          "yaw": 0,
+          "pitch": -0.04,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · sala acristalada"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 7,
+              "z": -33,
+              "yaw": -0.5
+            },
+            "label": "Photo lounge · encuentro"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -19,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -33,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Wallet · USDC de prueba"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Stands · corredor hacia el escenario"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          }
+        ],
+        "render": {
+          "calls": 85,
+          "triangles": 108138,
+          "memory": {
+            "geometries": 383,
+            "textures": 24
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 349,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      }
+    ]
+  },
+  {
+    "name": "after",
+    "fixture": "File-backed HTTP responses; original application modules and GLB; no external network",
+    "start": {
+      "firstFrameMs": 1520.5999999940395,
+      "mode": "walk",
+      "pose": {
+        "x": 0,
+        "z": 25,
+        "yaw": 0,
+        "pitch": 0.14,
+        "mode": "walk"
+      },
+      "ready": "ready",
+      "zones": [
+        {
+          "id": "entrance",
+          "view": {
+            "x": 0,
+            "z": 17,
+            "yaw": 0
+          },
+          "label": "Pasillo amarillo · paraguas"
+        },
+        {
+          "id": "arrival",
+          "view": {
+            "x": 0,
+            "z": 4,
+            "yaw": 0
+          },
+          "label": "Escalera · check-in"
+        },
+        {
+          "id": "merch",
+          "view": {
+            "x": -5.3,
+            "z": -3.5,
+            "yaw": 1.5708
+          },
+          "label": "Merch · a la izquierda"
+        },
+        {
+          "id": "buffet",
+          "view": {
+            "x": 3,
+            "z": -7,
+            "yaw": 0.6
+          },
+          "label": "Buffet · encuentro"
+        },
+        {
+          "id": "river",
+          "view": {
+            "x": 12,
+            "z": -10,
+            "yaw": 0
+          },
+          "label": "Ventanas · costado río"
+        },
+        {
+          "id": "photo",
+          "view": {
+            "x": 10,
+            "z": -38,
+            "yaw": 0
+          },
+          "label": "Photocall · chill zone"
+        },
+        {
+          "id": "stage",
+          "view": {
+            "x": 0,
+            "z": -39,
+            "yaw": 0
+          },
+          "label": "Escenario · HackMeridian"
+        },
+        {
+          "id": "hack",
+          "view": {
+            "x": -6,
+            "z": -21,
+            "yaw": 0.5
+          },
+          "label": "Mesas de trabajo"
+        },
+        {
+          "id": "auditorium",
+          "view": {
+            "x": 0,
+            "z": -34.5,
+            "yaw": 0
+          },
+          "label": "Auditorio"
+        },
+        {
+          "id": "cafe",
+          "view": {
+            "x": 5,
+            "z": -18,
+            "yaw": 0.8
+          },
+          "label": "Zona central · mesas / builders"
+        },
+        {
+          "id": "activation",
+          "view": {
+            "x": 5.8,
+            "z": -1.4,
+            "yaw": -0.418
+          },
+          "label": "Activación Stellar · concepto Testnet"
+        },
+        {
+          "id": "exterior",
+          "view": {
+            "x": 0,
+            "z": 25,
+            "yaw": 0,
+            "pitch": 0.14
+          },
+          "label": "Exterior · Welcome, Builders."
+        },
+        {
+          "id": "passport",
+          "view": {
+            "x": 8.7,
+            "z": -1.6,
+            "yaw": 0,
+            "pitch": -0.2
+          },
+          "label": "Passport · demostración AR"
+        },
+        {
+          "id": "passport-stand16",
+          "view": {
+            "x": 3.2,
+            "z": -29.15,
+            "yaw": 3.141592653589793,
+            "pitch": 0
+          },
+          "label": "Stellar Passport · stand 16"
+        },
+        {
+          "id": "stands",
+          "view": {
+            "x": 0,
+            "z": -25.3,
+            "yaw": 0
+          },
+          "label": "Exposición · ocho puestos"
+        },
+        {
+          "id": "games",
+          "view": {
+            "x": -9.2,
+            "z": -12,
+            "yaw": 0.9
+          },
+          "label": "Juegos · teclado gigante y arcade"
+        },
+        {
+          "id": "skills",
+          "view": {
+            "x": 4.3,
+            "z": -8,
+            "yaw": 0
+          },
+          "label": "Skills board · forma tu equipo"
+        },
+        {
+          "id": "energy",
+          "view": {
+            "x": 11,
+            "z": -28.5,
+            "yaw": -1.5707963267948966
+          },
+          "label": "Energy Corner · fútbol"
+        },
+        {
+          "id": "photobooth",
+          "view": {
+            "x": 10,
+            "z": -34,
+            "yaw": -1.5707963267948966
+          },
+          "label": "Fotomatón · Made to Move"
+        },
+        {
+          "id": "content-hub",
+          "view": {
+            "x": 11.6,
+            "z": -14,
+            "yaw": -0.25
+          },
+          "label": "Content Hub · sala acristalada"
+        }
+      ],
+      "render": {
+        "calls": 908,
+        "triangles": 515520,
+        "memory": {
+          "geometries": 454,
+          "textures": 60
+        },
+        "pixelRatio": 1,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "meshes": 415
+    },
+    "errors": [],
+    "missingLocalFiles": [],
+    "requests": [
+      {
+        "path": "index.html",
+        "bytes": 149863
+      },
+      {
+        "path": "entry.mjs",
+        "bytes": 4626
+      },
+      {
+        "path": "assets/exterior.webp",
+        "bytes": 193030
+      },
+      {
+        "path": "venue-loading.mjs",
+        "bytes": 6711
+      },
+      {
+        "path": "style.css",
+        "bytes": 34655
+      },
+      {
+        "path": "passport-glass.css",
+        "bytes": 10167
+      },
+      {
+        "path": "viewer.js",
+        "bytes": 30420
+      },
+      {
+        "path": "stage-screen.mjs",
+        "bytes": 5770
+      },
+      {
+        "path": "world-wallet.mjs",
+        "bytes": 4892
+      },
+      {
+        "path": "embedded-passport.mjs",
+        "bytes": 2088
+      },
+      {
+        "path": "passport-stand.mjs",
+        "bytes": 1697
+      },
+      {
+        "path": "venue-model.mjs",
+        "bytes": 683
+      },
+      {
+        "path": "walk-floor-numbers.mjs",
+        "bytes": 1766
+      },
+      {
+        "path": "android-launch.mjs",
+        "bytes": 1943
+      },
+      {
+        "path": "walk-input.mjs",
+        "bytes": 2852
+      },
+      {
+        "path": "quicklook.mjs",
+        "bytes": 1612
+      },
+      {
+        "path": "review-map.mjs",
+        "bytes": 6257
+      },
+      {
+        "path": "venue-ui.mjs",
+        "bytes": 6946
+      },
+      {
+        "path": "review-overview.mjs",
+        "bytes": 4523
+      },
+      {
+        "path": "overview-controls.mjs",
+        "bytes": 650
+      },
+      {
+        "path": "overview-hotspots.mjs",
+        "bytes": 2641
+      },
+      {
+        "path": "map-hotspots.mjs",
+        "bytes": 3348
+      },
+      {
+        "path": "world-passport.mjs",
+        "bytes": 736
+      },
+      {
+        "path": "load-timeout.mjs",
+        "bytes": 211
+      },
+      {
+        "path": "model-transfer.mjs",
+        "bytes": 1535
+      },
+      {
+        "path": "navigation.mjs",
+        "bytes": 2046
+      },
+      {
+        "path": "reset-controller.mjs",
+        "bytes": 842
+      },
+      {
+        "path": "short-corridor.mjs",
+        "bytes": 1963
+      },
+      {
+        "path": "merch-backdrop.mjs",
+        "bytes": 1764
+      },
+      {
+        "path": "review-map.mjs",
+        "bytes": 6257
+      },
+      {
+        "path": "navigation.mjs",
+        "bytes": 2046
+      },
+      {
+        "path": "merch-backdrop.mjs",
+        "bytes": 1764
+      },
+      {
+        "path": "vendor/three/build/three.module.js",
+        "bytes": 603113
+      },
+      {
+        "path": "vendor/three/examples/jsm/loaders/GLTFLoader.js",
+        "bytes": 114739
+      },
+      {
+        "path": "vendor/three/examples/jsm/controls/OrbitControls.js",
+        "bytes": 38703
+      },
+      {
+        "path": "assets/one16.glb.gz",
+        "bytes": 4085849
+      },
+      {
+        "path": "vendor/three/examples/jsm/utils/BufferGeometryUtils.js",
+        "bytes": 35539
+      },
+      {
+        "path": "vendor/three/build/three.core.js",
+        "bytes": 1403455
+      },
+      {
+        "path": "state/stage.json",
+        "bytes": 984
+      },
+      {
+        "path": "palta-reveal.mjs",
+        "bytes": 11226
+      },
+      {
+        "path": "assets/palta-reveal.glb",
+        "bytes": 1874348
+      },
+      {
+        "path": "assets/palta-reveal/logo.png",
+        "bytes": 35406
+      },
+      {
+        "path": "wallet.css",
+        "bytes": 4766
+      },
+      {
+        "path": "wallet-controller.mjs",
+        "bytes": 12161
+      },
+      {
+        "path": "wallet-panel.mjs",
+        "bytes": 9116
+      }
+    ],
+    "frames": [
+      {
+        "label": "arrival",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 4,
+          "yaw": 0,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 672,
+          "triangles": 470702,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000273
+      },
+      {
+        "label": "lower-lounge-left",
+        "mode": "walk",
+        "pose": {
+          "x": -1,
+          "z": 3.5,
+          "yaw": 1.4,
+          "pitch": -0.13,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 70,
+          "triangles": 95134,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000273
+      },
+      {
+        "label": "lower-lounge-right",
+        "mode": "walk",
+        "pose": {
+          "x": 1,
+          "z": 3.5,
+          "yaw": -1.4,
+          "pitch": -0.13,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 60,
+          "triangles": 77110,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "checkin",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -2.6,
+          "yaw": 0,
+          "pitch": 0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 487,
+          "triangles": 250008,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "keyboard",
+        "mode": "walk",
+        "pose": {
+          "x": -9,
+          "z": -8,
+          "yaw": 0.9,
+          "pitch": -0.11,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 72,
+          "triangles": 90966,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.800000000000182
+      },
+      {
+        "label": "arcade",
+        "mode": "walk",
+        "pose": {
+          "x": -9.2,
+          "z": -15.5,
+          "yaw": 1.05,
+          "pitch": -0.16,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 33,
+          "triangles": 89576,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "skills",
+        "mode": "walk",
+        "pose": {
+          "x": 4.7,
+          "z": -7.1,
+          "yaw": -0.4,
+          "pitch": -0.08,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 457,
+          "triangles": 231964,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.699999999999818,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "stands",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -25.3,
+          "yaw": 0,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 411,
+          "triangles": 219968,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "stand-reverse",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -30.2,
+          "yaw": 3.141592653589793,
+          "pitch": -0.12,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 251,
+          "triangles": 245927,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "energy",
+        "mode": "walk",
+        "pose": {
+          "x": 11,
+          "z": -28.5,
+          "yaw": -1.5707963267948966,
+          "pitch": -0.06,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 21,
+          "triangles": 85872,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "photobooth",
+        "mode": "walk",
+        "pose": {
+          "x": 10,
+          "z": -34,
+          "yaw": -1.5707963267948966,
+          "pitch": 0.02,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 23,
+          "triangles": 86132,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "content-hub",
+        "mode": "walk",
+        "pose": {
+          "x": 11.6,
+          "z": -14,
+          "yaw": -0.25,
+          "pitch": -0.02,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 417,
+          "triangles": 219432,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      },
+      {
+        "label": "stage",
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": -39,
+          "yaw": 0,
+          "pitch": 0.04,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 321,
+          "triangles": 180144,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.799999999999272
+      },
+      {
+        "label": "photocall",
+        "mode": "walk",
+        "pose": {
+          "x": 10,
+          "z": -38,
+          "yaw": 0,
+          "pitch": -0.04,
+          "mode": "walk"
+        },
+        "ready": "ready",
+        "zones": [
+          {
+            "id": "entrance",
+            "view": {
+              "x": 0,
+              "z": 17,
+              "yaw": 0
+            },
+            "label": "Pasillo amarillo · paraguas"
+          },
+          {
+            "id": "arrival",
+            "view": {
+              "x": 0,
+              "z": 4,
+              "yaw": 0
+            },
+            "label": "Escalera · check-in"
+          },
+          {
+            "id": "merch",
+            "view": {
+              "x": -5.3,
+              "z": -3.5,
+              "yaw": 1.5708
+            },
+            "label": "Merch · a la izquierda"
+          },
+          {
+            "id": "buffet",
+            "view": {
+              "x": 3,
+              "z": -7,
+              "yaw": 0.6
+            },
+            "label": "Buffet · encuentro"
+          },
+          {
+            "id": "river",
+            "view": {
+              "x": 12,
+              "z": -10,
+              "yaw": 0
+            },
+            "label": "Ventanas · costado río"
+          },
+          {
+            "id": "photo",
+            "view": {
+              "x": 10,
+              "z": -38,
+              "yaw": 0
+            },
+            "label": "Photocall · chill zone"
+          },
+          {
+            "id": "stage",
+            "view": {
+              "x": 0,
+              "z": -39,
+              "yaw": 0
+            },
+            "label": "Escenario · HackMeridian"
+          },
+          {
+            "id": "hack",
+            "view": {
+              "x": -6,
+              "z": -21,
+              "yaw": 0.5
+            },
+            "label": "Mesas de trabajo"
+          },
+          {
+            "id": "auditorium",
+            "view": {
+              "x": 0,
+              "z": -34.5,
+              "yaw": 0
+            },
+            "label": "Auditorio"
+          },
+          {
+            "id": "cafe",
+            "view": {
+              "x": 5,
+              "z": -18,
+              "yaw": 0.8
+            },
+            "label": "Zona central · mesas / builders"
+          },
+          {
+            "id": "activation",
+            "view": {
+              "x": 5.8,
+              "z": -1.4,
+              "yaw": -0.418
+            },
+            "label": "Activación Stellar · concepto Testnet"
+          },
+          {
+            "id": "exterior",
+            "view": {
+              "x": 0,
+              "z": 25,
+              "yaw": 0,
+              "pitch": 0.14
+            },
+            "label": "Exterior · Welcome, Builders."
+          },
+          {
+            "id": "passport",
+            "view": {
+              "x": 8.7,
+              "z": -1.6,
+              "yaw": 0,
+              "pitch": -0.2
+            },
+            "label": "Passport · demostración AR"
+          },
+          {
+            "id": "passport-stand16",
+            "view": {
+              "x": 3.2,
+              "z": -29.15,
+              "yaw": 3.141592653589793,
+              "pitch": 0
+            },
+            "label": "Stellar Passport · stand 16"
+          },
+          {
+            "id": "stands",
+            "view": {
+              "x": 0,
+              "z": -25.3,
+              "yaw": 0
+            },
+            "label": "Exposición · ocho puestos"
+          },
+          {
+            "id": "games",
+            "view": {
+              "x": -9.2,
+              "z": -12,
+              "yaw": 0.9
+            },
+            "label": "Juegos · teclado gigante y arcade"
+          },
+          {
+            "id": "skills",
+            "view": {
+              "x": 4.3,
+              "z": -8,
+              "yaw": 0
+            },
+            "label": "Skills board · forma tu equipo"
+          },
+          {
+            "id": "energy",
+            "view": {
+              "x": 11,
+              "z": -28.5,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Energy Corner · fútbol"
+          },
+          {
+            "id": "photobooth",
+            "view": {
+              "x": 10,
+              "z": -34,
+              "yaw": -1.5707963267948966
+            },
+            "label": "Fotomatón · Made to Move"
+          },
+          {
+            "id": "content-hub",
+            "view": {
+              "x": 11.6,
+              "z": -14,
+              "yaw": -0.25
+            },
+            "label": "Content Hub · sala acristalada"
+          }
+        ],
+        "render": {
+          "calls": 79,
+          "triangles": 52024,
+          "memory": {
+            "geometries": 454,
+            "textures": 60
+          },
+          "pixelRatio": 1,
+          "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        "meshes": 415,
+        "frameMedianMs": 16.69999999999891,
+        "frameP95Ms": 16.700000000000728
+      }
+    ]
+  }
+]

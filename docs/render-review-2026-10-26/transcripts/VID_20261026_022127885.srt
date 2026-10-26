@@ -1,0 +1,7 @@
+1
+00:00:00,050 --> 00:00:05,210
+Y finalmente por aquí tenemos el Chillson que estaba en el costado derecho del mini stage
+
+2
+00:00:05,210 --> 00:00:08,810
+que también tenemos que replicarle cada uno de los diseños.

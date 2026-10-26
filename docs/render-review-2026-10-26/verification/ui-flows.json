@@ -1,0 +1,188 @@
+{
+  "transport": "Playwright route.fulfill from delivery/dist; no HTTP transport or external API",
+  "checks": [
+    "actual viewer reached prepared first frame",
+    "places panel blocks walking and clears input",
+    "zone selection closes panel and keyboard walking resumes",
+    "joystick real touch sets forward axis; release clears ownership",
+    "canvas look remains unblocked after joystick release",
+    "overview guide and recenter work; Escape closes help without leaving venue",
+    "closing places restores focus",
+    "help closes with Escape and restores focus",
+    "full map and return to walking preserve loaded scene"
+  ],
+  "pageErrors": [],
+  "failedLocal": [],
+  "blockedExternal": [
+    "https://fonts.googleapis.com/css2"
+  ],
+  "initial": {
+    "active": true,
+    "mode": "walk",
+    "pose": {
+      "x": 0,
+      "z": 25,
+      "yaw": 0,
+      "pitch": 0.14,
+      "mode": "walk"
+    },
+    "loaded": true,
+    "webgl": true,
+    "loading": {
+      "attempt": 1,
+      "phase": "ready",
+      "choice": "scene",
+      "cover": false,
+      "prepared": true,
+      "loaded": 0,
+      "total": null,
+      "error": null
+    },
+    "input": {
+      "movementPointer": null,
+      "lookPointer": null,
+      "forward": 0,
+      "right": 0
+    },
+    "zones": 20
+  },
+  "selection": {
+    "label": "Pasillo amarillo · paraguas",
+    "state": {
+      "active": true,
+      "mode": "walk",
+      "pose": {
+        "x": 0,
+        "z": 17,
+        "yaw": 0,
+        "pitch": 0,
+        "mode": "walk"
+      },
+      "loaded": true,
+      "webgl": true,
+      "loading": {
+        "attempt": 1,
+        "phase": "ready",
+        "choice": "scene",
+        "cover": false,
+        "prepared": true,
+        "loaded": 0,
+        "total": null,
+        "error": null
+      },
+      "input": {
+        "movementPointer": null,
+        "lookPointer": null,
+        "forward": 0,
+        "right": 0
+      },
+      "zones": 20
+    },
+    "focus": {
+      "id": "toggleZones",
+      "tag": "BUTTON",
+      "hiddenAncestor": false
+    }
+  },
+  "keyboardAfter": {
+    "active": true,
+    "mode": "walk",
+    "pose": {
+      "x": 0,
+      "z": 16.89,
+      "yaw": 0,
+      "pitch": 0,
+      "mode": "walk"
+    },
+    "loaded": true,
+    "webgl": true,
+    "loading": {
+      "attempt": 1,
+      "phase": "ready",
+      "choice": "scene",
+      "cover": false,
+      "prepared": true,
+      "loaded": 0,
+      "total": null,
+      "error": null
+    },
+    "input": {
+      "movementPointer": null,
+      "lookPointer": null,
+      "forward": 0,
+      "right": 0
+    },
+    "zones": 20
+  },
+  "touch": {
+    "before": {
+      "active": true,
+      "mode": "walk",
+      "pose": {
+        "x": 0,
+        "z": 16.89,
+        "yaw": 0,
+        "pitch": 0,
+        "mode": "walk"
+      },
+      "loaded": true,
+      "webgl": true,
+      "loading": {
+        "attempt": 1,
+        "phase": "ready",
+        "choice": "scene",
+        "cover": false,
+        "prepared": true,
+        "loaded": 0,
+        "total": null,
+        "error": null
+      },
+      "input": {
+        "movementPointer": null,
+        "lookPointer": null,
+        "forward": 0,
+        "right": 0
+      },
+      "zones": 20
+    },
+    "combined": {
+      "active": true,
+      "mode": "walk",
+      "pose": {
+        "x": 0,
+        "z": 16.473236434108536,
+        "yaw": 0,
+        "pitch": 0,
+        "mode": "walk"
+      },
+      "loaded": true,
+      "webgl": true,
+      "loading": {
+        "attempt": 1,
+        "phase": "ready",
+        "choice": "scene",
+        "cover": false,
+        "prepared": true,
+        "loaded": 0,
+        "total": null,
+        "error": null
+      },
+      "input": {
+        "movementPointer": 2,
+        "lookPointer": 3,
+        "forward": 0.757751937984496,
+        "right": 0
+      },
+      "zones": 20
+    },
+    "canvasHit": {
+      "atStart": "scene",
+      "atMove": "scene"
+    }
+  },
+  "mouseLook": {
+    "before": -0.14,
+    "after": -0.3
+  },
+  "passed": true
+}
