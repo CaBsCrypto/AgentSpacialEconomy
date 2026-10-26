@@ -80,21 +80,40 @@ export function createPublisher({db,config,now=Date.now,owner=uuid()}){
  }
  return {lease,schedule,acknowledge,get fence(){return fence;},owner};
 }
-export async function runCanonicalRenderer({publisher,config,signal,browser:injected}){
- const browser=injected||await(await import('playwright')).chromium.launch({headless:true});
- const origin=new URL(config.publisherOrigin).origin;
- const context=await browser.newContext({extraHTTPHeaders:{'x-ads-publisher':config.publisherToken||''}});
- await context.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
- const page=await context.newPage();
- await page.exposeBinding('__adsPublisherAck',async(_source,ack)=>publisher.acknowledge(ack));
- let timer;
+export async function runCanonicalRenderer({publisher,config,signal,browser:injected,browserFactory,launchOptions={},shouldContinue}){
+ if(signal?.aborted)return {state:'ABORTED'};
+ // Authority and heartbeats cover browser startup as well as navigation.
+ assert(await publisher.lease(),409,'publisher_in_use','Another canonical publisher holds the lease.');
+ let browser,context,timer,heartbeat,stopped=false,onAbort;
+ const abortError=()=>Object.assign(new Error('Renderer stopped'),{name:'AbortError'});
+ let rejectFailure;
+ const failure=new Promise((_,reject)=>{rejectFailure=reject;});failure.catch(()=>{});
+ const aborted=new Promise((_,reject)=>{onAbort=()=>reject(abortError());signal?.addEventListener('abort',onAbort,{once:true});if(signal?.aborted)onAbort();});aborted.catch(()=>{});
+ const guard=work=>Promise.race([work,failure,aborted]);
+ let finish;const completed=new Promise(resolve=>{finish=resolve;});
+ timer=setInterval(()=>{
+  if(heartbeat||stopped)return;
+  heartbeat=(async()=>{if(!await publisher.lease())throw Error('Publisher lease lost');await publisher.schedule();if(shouldContinue&&!await shouldContinue())finish();})()
+   .catch(rejectFailure).finally(()=>{heartbeat=null;});
+ },config.heartbeatMs);
  try{
-  assert(await publisher.lease(),409,'publisher_in_use','Another canonical publisher holds the lease.');
-  await publisher.schedule();await page.goto(origin+'/one16?publisher=1',{waitUntil:'domcontentloaded'});
-  await new Promise((resolve,reject)=>{
-   let busy=false;
-   timer=setInterval(async()=>{if(busy)return;busy=true;try{if(!await publisher.lease())throw Error('Publisher lease lost');await publisher.schedule();}catch(error){clearInterval(timer);reject(error);}finally{busy=false;}},config.heartbeatMs);
-   signal?.addEventListener('abort',resolve,{once:true});
-  });
- }finally{clearInterval(timer);await context.close();if(!injected)await browser.close();}
+  const launch=browserFactory||((options)=>import('playwright').then(({chromium})=>chromium.launch(options)));
+  const opening=Promise.resolve(injected||launch({headless:true,timeout:30000,...launchOptions})).then(async value=>{if(stopped&&!injected)await value.close();return value;});
+  browser=await guard(opening);
+  const origin=new URL(config.publisherOrigin).origin;
+  context=await guard(browser.newContext({extraHTTPHeaders:{'x-ads-publisher':config.publisherToken||''}}));
+  await guard(context.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort()));
+  const page=await guard(context.newPage());
+  await guard(page.exposeBinding('__adsPublisherAck',async(_source,ack)=>!stopped&&!signal?.aborted&&publisher.acknowledge(ack)));
+  await guard(publisher.schedule());
+  const response=await guard(page.goto(origin+'/one16?publisher=1',{waitUntil:'domcontentloaded',timeout:60000}));
+  assert(!response||response.ok(),503,'publisher_navigation_failed','The canonical venue did not load.');
+  if(typeof page.url==='function')assert(new URL(page.url()).origin===origin&&new URL(page.url()).pathname==='/one16',503,'publisher_navigation_failed','The canonical venue redirected away from its admitted page.');
+  await Promise.race([guard(new Promise(()=>{})),completed]);return {state:'COMPLETE'};
+ }catch(error){if(error?.name!=='AbortError')throw error;return {state:'ABORTED'};}
+ finally{
+  stopped=true;clearInterval(timer);signal?.removeEventListener('abort',onAbort);
+  if(heartbeat)await heartbeat;
+  try{await context?.close();}finally{if(!injected)await browser?.close();}
+ }
 }

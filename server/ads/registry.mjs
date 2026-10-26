@@ -101,17 +101,21 @@ export function registryArguments(operation,payload,s){
  if(['complete','dispute','expire'].includes(operation))return [bytes(payload.order)];
  throw new AdsError(400,'registry_operation_invalid','Operación no permitida.');
 }
+function validateRegistryTransaction(job,envelope,config,s,expectedSource){
+ if(config.network!=='stellar:testnet')fail('registry_testnet_only','Only Testnet is permitted.');
+ if(!operations.has(job?.operation))fail('registry_operation_invalid','Registry operation is not admitted.');
+ const tx=s.TransactionBuilder.fromXDR(envelope,s.Networks.TESTNET),op=tx.operations[0];
+ if(tx.innerTransaction||tx.operations.length!==1||op?.type!=='invokeHostFunction'||op.func.switch().name!=='hostFunctionTypeInvokeContract')fail('registry_transaction_invalid','Invocación de registro inválida.');
+ const fn=op.func.invokeContract(),expected=registryArguments(job.operation,job.payload,s);
+ if(s.Address.fromScAddress(fn.contractAddress()).toString()!==config.registryContract||fn.functionName().toString()!==job.operation||canonical(fn.args().map(a=>a.toXDR('base64')))!==canonical(expected.map(a=>a.toXDR('base64'))))fail('registry_transaction_invalid','La firma modificó la invocación autorizada.');
+ if(expectedSource&&(tx.source!==expectedSource||op.source&&op.source!==expectedSource))fail('registry_transaction_invalid','El origen de registro no coincide con su autoridad.');
+ return tx;
+}
 export function createSorobanRegistryRuntime({config,signer,rpc,loadSdk=()=>import('@stellar/stellar-sdk')}){
- if(!signer&&config.registrySignerSecretFile)signer=createOperatorRegistrySigner({secretFile:config.registrySignerSecretFile,config,rpc,loadSdk});
+ if(!signer&&(config.registrySignerSecret||config.registrySignerSecretFile))signer=createOperatorRegistrySigner({secret:config.registrySignerSecret,secretFile:config.registrySignerSecretFile,config,rpc,loadSdk});
  const ready=()=>{if(config.network!=='stellar:testnet'||!config.registryContract)fail('registry_not_configured','El registro Soroban no está desplegado en Testnet.');};
  const server=async()=>{ready();if(!rpc){const {Server}=await import('@stellar/stellar-sdk/rpc');rpc=new Server(config.rpcUrl??'https://soroban-testnet.stellar.org');}return rpc;};
- const validate=async(job,envelope)=>{
-  const s=await loadSdk(),tx=s.TransactionBuilder.fromXDR(envelope,s.Networks.TESTNET),op=tx.operations[0];
-  if(tx.innerTransaction||tx.operations.length!==1||op?.type!=='invokeHostFunction'||op.func.switch().name!=='hostFunctionTypeInvokeContract')fail('registry_transaction_invalid','Invocación de registro inválida.');
-  const f=op.func.invokeContract(),expected=registryArguments(job.operation,job.payload,s);
-  if(s.Address.fromScAddress(f.contractAddress()).toString()!==config.registryContract||f.functionName().toString()!==job.operation||canonical(f.args().map(a=>a.toXDR('base64')))!==canonical(expected.map(a=>a.toXDR('base64'))))fail('registry_transaction_invalid','La firma modificó la invocación autorizada.');
-  return tx;
- };
+ const validate=async(job,envelope)=>validateRegistryTransaction(job,envelope,config,await loadSdk(),signer?.address||config.registryIssuer);
  return {
   async prepare(job){
    ready();if(signer?.prepare){const signed=await signer.prepare(job);const tx=await validate(job,signed.signedXdr);if(tx.hash().toString('hex')!==signed.txHash)fail('registry_transaction_invalid','Hash de registro incorrecto.');return signed;}if(!signer?.address?.startsWith('G')||typeof signer.signTransaction!=='function')fail('registry_signer_unavailable','Falta el firmante restringido del registro.');
@@ -153,13 +157,21 @@ export async function prepareRegistryDelivery(order,deliveryRows,{config,nonceSt
  payload.signature=sign(null,registryEvidenceDigest(config,payload,s),key).toString('hex');return payload;});
 }
 
-/** File-backed issuer exposes only the five restricted registry operations. */
-export function createOperatorRegistrySigner({secretFile,config,rpc,loadSdk=()=>import('@stellar/stellar-sdk')}){
+/** Restricted operator key stays in memory or a private file; it is never returned. */
+export function createOperatorRegistrySigner({secret,secretFile,config,rpc,loadSdk=()=>import('@stellar/stellar-sdk')}){
  return {address:config.registryIssuer,async prepare(job){
-  if(!secretFile||!operations.has(job.operation)||!(config.operators??[]).includes(config.registryIssuer))fail('registry_signer_unavailable','The configured registry issuer is not authorized.');
-  const s=await loadSdk();let key;try{key=s.Keypair.fromSecret((await readFile(secretFile,'utf8')).trim());}catch{fail('registry_signer_unavailable','The restricted registry issuer key could not be loaded.');}
+  if(config.network!=='stellar:testnet')fail('registry_testnet_only','Only Testnet is permitted.');
+  if(!operations.has(job?.operation)||!(config.operators??[]).includes(config.registryIssuer)||!secret&&!secretFile)fail('registry_signer_unavailable','The configured registry issuer is not authorized.');
+  const s=await loadSdk();
+  if(!s.StrKey.isValidEd25519PublicKey(config.registryIssuer||'')||!s.StrKey.isValidContract(config.registryContract||''))fail('registry_signer_unavailable','Configure the public registry and its issuer.');
+  registryArguments(job.operation,job.payload,s);
+  let key;try{key=s.Keypair.fromSecret((secret||(await readFile(secretFile,'utf8'))).trim());}catch{fail('registry_signer_unavailable','The restricted registry issuer key could not be loaded.');}
   if(key.publicKey()!==config.registryIssuer)fail('registry_signer_mismatch','The issuer key does not match the configured public authority.');
-  const signer={address:key.publicKey(),async signTransaction(xdr,{networkPassphrase}){if(networkPassphrase!==s.Networks.TESTNET)fail('registry_testnet_only','Only Testnet is permitted.');const tx=s.TransactionBuilder.fromXDR(xdr,s.Networks.TESTNET);tx.sign(key);return {signedTxXdr:tx.toXDR()};}};
+  const signer={address:key.publicKey(),async signTransaction(envelope,{networkPassphrase}){
+   if(networkPassphrase!==s.Networks.TESTNET)fail('registry_testnet_only','Only Testnet is permitted.');
+   // Re-check after RPC preparation and before using the key.
+   const tx=validateRegistryTransaction(job,envelope,config,s,key.publicKey());tx.sign(key);return {signedTxXdr:tx.toXDR()};
+  }};
   return createSorobanRegistryRuntime({config,signer,rpc,loadSdk}).prepare(job);
  }};
 }

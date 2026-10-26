@@ -27,3 +27,15 @@ test('negative, fractional, excessive and infeasible demand fail before pricing'
  for(const units of [-1,0,1.2,101])assert.throws(()=>buildDemand(order('x','TIME',units),cfg));
  assert.throws(()=>buildDemand(order('x','EXCLUSIVE',1,0,2000),cfg));
 });
+
+test('frozen pass render lead wins over a larger new default without changing sixty-second units',()=>{
+ const newConfig={timeUnitMs:300000,rotationMs:60000,passMs:60000,renderLeadMs:10000,maxUnits:5,maxWindowMs:600000,maxCampaignSharePercent:100};
+ const legacy={id:'legacy-lead',campaignId:'legacy',committedAt:0,plan:'PASSES',units:5,passMs:60000,renderLeadMs:2000,startsAt:0,endsAt:600000};
+ const fresh={...legacy,id:'fresh-lead',renderLeadMs:10000};
+ assert.equal(buildDemand(legacy,newConfig).durationMs,310000);assert.equal(buildDemand(fresh,newConfig).durationMs,350000);
+ for(const [quote,occupied] of [[legacy,62000],[fresh,70000]]){
+  const slots=planRotations([quote],[],newConfig);assert.equal(slots.length,5);
+  assert(slots.every(slot=>slot.end-slot.start===occupied&&slot.deliveryUnits===1));
+ }
+ assert.equal(legacy.passMs,60000);assert.equal(legacy.units,5);assert.equal(legacy.renderLeadMs,2000);
+});

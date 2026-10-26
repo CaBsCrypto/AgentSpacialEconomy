@@ -15,7 +15,7 @@ function fixture({evil=false}={}){
  const entry=new sdk.xdr.SorobanAuthorizationEntry({credentials:sdk.xdr.SorobanCredentials.sorobanCredentialsAddress(new sdk.xdr.SorobanAddressCredentials({address:new sdk.Address(address).toScAddress(),nonce:sdk.xdr.Int64.fromString('55'),signatureExpirationLedger:0,signature:sdk.nativeToScVal([])})),rootInvocation:root});
  return {result:{auth:[entry]}};
  };}
- const fakeSdk={...sdk,SmartAccountKit:Kit,IndexedDBStorage:class{},getCredentialIdFromSigner:value=>value?.tag==='External'?'credential':value,rpc:{Server,assembleTransaction:transaction=>({build:()=>transaction})},startAuthentication:async({optionsJSON})=>{calls.push(['authentication',optionsJSON]);return{id:'credential',type:'public-key',response:{clientDataJSON:'json'}};}};
+ const fakeSdk={...sdk,SmartAccountKit:Kit,IndexedDBStorage:class{async get(id){calls.push(['credential',id]);const publicKey=new Uint8Array(65);publicKey[0]=4;return{credentialId:id,contractId:address,publicKey};}},getCredentialIdFromSigner:value=>value?.tag==='External'?'credential':value,rpc:{Server,assembleTransaction:transaction=>({build:()=>transaction})},startAuthentication:async({optionsJSON})=>{calls.push(['authentication',optionsJSON]);return{id:'credential',type:'public-key',response:{clientDataJSON:'json'}};}};
  const fetchImpl=async(path,options)=>{calls.push(['fetch',path,JSON.parse(options.body)]);return path.endsWith('challenge')?Response.json({challengeId:'challenge',options:{challenge:'server-generated',rpId:'venue.example',userVerification:'required',allowCredentials:[{id:'credential'}]}}):Response.json({authenticated:true});};
  return{calls,options:{browser,loadSdk:async()=>fakeSdk,fetchImpl}};
 }
@@ -44,7 +44,7 @@ test('browser bundle exports signing and challenge APIs without depending on a g
 test('map and advertiser connect the same existing passkey wallet without creating or funding an account',async()=>{
  const f=fixture(),provider=await createWalletProvider(config,{browser,loadKit:f.options.loadSdk});
  const mapped=await provider.connect(),advertiser=await createAdsWallet(config,f.options),connected=await advertiser.connect();
- assert.equal(connected.address,mapped.address);assert.equal(advertiser.address,mapped.address);assert.equal(connected.credentialId,'credential');
+ assert.equal(connected.address,mapped.address);assert.equal(advertiser.address,mapped.address);assert.equal(connected.credentialId,'credential');assert.equal(connected.credentialId,mapped.credentialId);assert.equal(f.calls.find(call=>call[0]==='credential')[1],connected.credentialId);
  assert.equal(f.calls.filter(call=>call[0]==='connect').length,2);
  await advertiser.authenticate();
  assert.deepEqual(f.calls.filter(call=>call[0]==='fetch').map(call=>call[1]),['/api/ads/auth/challenge','/api/ads/auth/verify']);

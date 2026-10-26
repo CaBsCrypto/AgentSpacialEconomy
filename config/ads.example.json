@@ -1,5 +1,5 @@
 {
-  "_instructions": "The approved Testnet pilot sells only main-stage-test-5m: 5 USDC total, design included, 300 seconds accumulated. Other null terms, budgets, geometry and credentials deliberately block checkout. Copy to ignored config/ads.local.json and configure them explicitly.",
+  "_instructions": "Approved Testnet pilot: 5 USDC total for five complete sixty-second main-stage deliveries; design included. Interrupted plays remain owed, with no automatic refund closure. Remaining null operational fields block checkout.",
   "network": "stellar:testnet",
   "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
   "issuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
@@ -7,19 +7,19 @@
   "termsVersion": null,
   "policyVersion": null,
   "interruptions": null,
-  "refundPolicy": null,
-  "refundDesign": null,
+  "refundPolicy": "FULFILL_REMAINING",
+  "refundDesign": "NEVER",
   "refundDeadlineMs": null,
   "disputeAuthority": null,
   "privacyNotice": null,
   "retentionMs": null,
   "timeUnitMs": 300000,
   "rotationMs": null,
-  "passMs": null,
+  "passMs": 60000,
   "exclusiveUnitMs": null,
   "reservationMs": null,
   "processingMs": null,
-  "maxUnits": 1,
+  "maxUnits": 5,
   "maxWindowMs": null,
   "maxCampaignSharePercent": null,
   "includedRevisions": null,
@@ -61,12 +61,12 @@
     },
     "main_stage_screen": {
       "TIME": {
-        "unitAmount": "50000000",
-        "designAmount": "0"
-      },
-      "PASSES": {
         "unitAmount": null,
         "designAmount": null
+      },
+      "PASSES": {
+        "unitAmount": "10000000",
+        "designAmount": "0"
       },
       "EXCLUSIVE": {
         "unitAmount": null,

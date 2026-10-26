@@ -37,6 +37,7 @@ export function createRefundService({db,config,runtime=createStellarRefundRuntim
    const prior=(await tx.query('SELECT * FROM ads_refunds WHERE order_id=$1 AND idempotency_key=$2',[orderId,idempotencyKey])).rows[0];
    if(prior){if(prior.reason!==reason)fail(409,'idempotency_conflict','La clave corresponde a otra reclamación.');return prior;}
    if(!(await tx.query("SELECT id FROM ads_payment_attempts WHERE order_id=$1 AND state='SETTLED'",[orderId])).rows[0])fail(409,'refund_payment_unconfirmed','No hay liquidación confirmada.');
+   if(order.quote?.terms?.refundPolicy==='FULFILL_REMAINING')fail(409,'delivery_still_owed','Las entregas incompletas siguen pendientes; solicita reprogramación o abre una reclamación.');
    const deadline=order.quote?.terms?.refundDeadlineMs;if(!Number.isSafeInteger(deadline)||deadline<1)fail(409,'refund_policy_missing','Falta el plazo de devolución contratado.');
    if(now()>Date.parse(order.quote.endsAt)+deadline)fail(409,'refund_window_expired','El plazo de devolución requiere revisión de la autoridad de disputa.');
    const placements=(await tx.query('SELECT * FROM ads_placements WHERE order_id=$1 FOR UPDATE',[orderId])).rows;

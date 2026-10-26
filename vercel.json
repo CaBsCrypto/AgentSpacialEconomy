@@ -19,6 +19,10 @@
     "api/ads.js": {
       "maxDuration": 180,
       "includeFiles": "{media/fonts/**,server/ads/**}"
+    },
+    "api/ads-runner.js": {
+      "maxDuration": 800,
+      "includeFiles": "{media/fonts/**,server/ads/**,node_modules/@sparticuz/chromium/bin/**}"
     }
   },
   "routes": [
@@ -213,6 +217,12 @@
     },
     {
       "handle": "filesystem"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/ads-runner",
+      "schedule": "* * * * *"
     }
   ]
 }

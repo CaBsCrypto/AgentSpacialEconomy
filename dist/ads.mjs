@@ -5,7 +5,7 @@ export function configuredPilotOffer(config) {
   if (!config.profile) return null;
   if (config.profile !== PILOT_PROFILE) throw Error('El catálogo de este piloto no está disponible.');
   const offer = config.offers?.find(item => item.id === PILOT_PROFILE);
-  if (!offer || offer.placementId !== 'main_stage_screen' || offer.plan !== 'TIME' || offer.units !== 1 || offer.durationMs !== 300000 || offer.amountUnits !== '50000000' || offer.designAmount !== '0') throw Error('La oferta no coincide con los 5 USDC de prueba por 5 minutos aprobados.');
+  if (!offer || config.offers.length !== 1 || config.plans?.length !== 1 || config.plans[0] !== 'PASSES' || config.units?.passMs !== 60000 || offer.offerVersion !== 2 || offer.placementId !== 'main_stage_screen' || offer.plan !== 'PASSES' || offer.units !== 5 || offer.requiredUnits !== 5 || offer.passMs !== 60000 || offer.durationMs !== 300000 || offer.unitAmount !== '10000000' || offer.amountUnits !== '50000000' || offer.designAmount !== '0') throw Error('La oferta no coincide con los 5 USDC de prueba por 5 entregas completas de 1 minuto.');
   return offer;
 }
 export function advertisementQuotePayload(config, input) {
@@ -18,8 +18,8 @@ export function advertisementQuotePayload(config, input) {
 }
 export function validatePilotQuote(quote, offer) {
   if (!offer) return quote;
-  const line = quote.lines?.[0];
-  if (quote.offerId !== offer.id || quote.amountUnits !== offer.amountUnits || quote.plan !== offer.plan || quote.units !== 1 || quote.requiredUnits !== offer.durationMs || quote.timeUnitMs !== offer.durationMs || quote.placements?.length !== 1 || quote.placements[0] !== offer.placementId || quote.lines?.length !== 1 || line.placementId !== offer.placementId || line.unitAmount !== offer.amountUnits || line.designAmount !== '0' || line.amountUnits !== offer.amountUnits) throw Error('La cotización no corresponde a la oferta fija de 5 USDC de prueba y 5 minutos.');
+  const line = quote?.lines?.[0];
+  if (quote?.offerId !== offer.id || quote.offerVersion !== offer.offerVersion || quote.amountUnits !== offer.amountUnits || quote.plan !== offer.plan || quote.units !== offer.units || quote.requiredUnits !== offer.requiredUnits || quote.unit !== 'PASSES' || quote.passMs !== offer.passMs || quote.placements?.length !== 1 || quote.placements[0] !== offer.placementId || quote.lines?.length !== 1 || line.placementId !== offer.placementId || line.plan !== offer.plan || line.units !== offer.units || line.unitAmount !== offer.unitAmount || line.designAmount !== '0' || line.deliveryAmount !== offer.amountUnits || line.amountUnits !== offer.amountUnits || quote.terms?.refundPolicy !== 'FULFILL_REMAINING') throw Error('La cotización no corresponde a 5 entregas completas de 1 minuto por 5 USDC de prueba.');
   return quote;
 }
 export async function requestPaymentAuthorization({ api, wallet, path, amountUnits, config, idempotencyKey }) {
@@ -50,10 +50,24 @@ export function exclusiveUnits(startsAt, endsAt, unitMs) {
   if (!Number.isSafeInteger(unitMs) || unitMs <= 0 || !Number.isSafeInteger(duration) || duration <= 0 || duration % unitMs !== 0) throw Error('La ventana debe ser un múltiplo exacto de la unidad exclusiva configurada.');
   return duration / unitMs;
 }
+export function fulfillmentRemaining(order, config = {}) {
+  return (order?.quote ? order.quote.terms?.refundPolicy : config.terms?.refundPolicy) === 'FULFILL_REMAINING';
+}
+export function deliveryProgress(item, quote = {}) {
+  if (quote.plan !== 'PASSES' && item.unit !== 'PASSES') return null;
+  const required = quote.requiredUnits ?? item.required, completed = item.delivered ?? 0;
+  if (!Number.isSafeInteger(required) || required <= 0 || !Number.isSafeInteger(completed) || completed < 0 || completed > required || item.required != null && item.required !== required) return { valid: false };
+  return { valid: true, completed, required, owed: required - completed };
+}
+export function quoteUnitsDescription(quote, config = {}) {
+  if (quote.plan === 'TIME') return quote.units + ' unidad(es) de ' + ((quote.timeUnitMs ?? config.units?.timeMs) / 1000) + ' segundos de actividad acumulada.';
+  if (quote.plan === 'PASSES') return quote.units + ' entregas completas de ' + ((quote.passMs ?? config.units?.passMs) / 1000) + ' segundos. Una entrega interrumpida no cuenta y sigue pendiente.';
+  return 'Ventana exclusiva: ' + new Date(quote.startsAt).toLocaleString() + ' → ' + new Date(quote.endsAt).toLocaleString();
+}
 export function orderProgress(order) {
   const status = order?.status, queue = order?.queue?.state;
   const paid = order?.payment?.status === 'SETTLED';
-  return { payment: paid, queue: paid && ['QUEUED', 'LIVE', 'COMPLETED'].includes(status), processing: ['SCHEDULED', 'LIVE', 'COMPLETED'].includes(status) || queue === 'SCHEDULED', scheduled: ['LIVE', 'COMPLETED'].includes(status) || queue === 'SCHEDULED', delivery: status === 'COMPLETED' && order.placements?.length > 0 && order.placements.every(item => ['FULFILLED', 'CLOSED_WITH_REMEDY'].includes(item.status)) };
+  return { payment: paid, queue: paid && ['QUEUED', 'LIVE', 'COMPLETED'].includes(status), processing: ['SCHEDULED', 'LIVE', 'COMPLETED'].includes(status) || queue === 'SCHEDULED', scheduled: ['LIVE', 'COMPLETED'].includes(status) || queue === 'SCHEDULED', delivery: status === 'COMPLETED' && order.placements?.length > 0 && order.placements.every(item => ['FULFILLED', 'CLOSED_WITH_REMEDY'].includes(item.status) && (!fulfillmentRemaining(order) || deliveryProgress(item, order.quote)?.owed === 0)) };
 }
 export function includedCorrectionEligible(order) {
   const included = order?.quote?.terms?.includedRevisions;
@@ -121,6 +135,9 @@ export async function initAdsPage(documentRef = document) {
     $('reserveButton').disabled = busy || !quote || !config.enabled || Date.parse(quote.expiresAt) <= Date.now();
     $('payButton').disabled = busy || !order || !signedIn || !config.enabled || ['SETTLED', 'VERIFYING', 'AUTHORIZED', 'SETTLING', 'RECONCILIATION_REQUIRED'].includes(order.payment?.status) || ['BLOCKED', 'QUARANTINED', 'CANCELLED', 'COMPLETED', 'RECONCILIATION_REQUIRED'].includes(order.status);
     $('walletButton').disabled = busy;
+    const keepOwed = fulfillmentRemaining(order, config);
+    documentRef.querySelectorAll('[data-remedy="refunds"]').forEach(button => { button.hidden = keepOwed; button.disabled = busy || keepOwed; });
+    $('fulfillmentNotice').hidden = !keepOwed; $('remedyHelp').textContent = keepOwed ? 'Se conservará la evidencia. Una reclamación o solicitud de cambio de ventana no equivale a entregas confirmadas.' : 'Se conservará la evidencia. Una solicitud no significa que la devolución o el cambio estén confirmados.'; $('remediesSummary').textContent = keepOwed ? 'Reclamación o cambio de ventana' : 'Reclamación, devolución o cambio de ventana';
     $('correctionPanel').hidden = !includedCorrectionEligible(order); $('correctionButton').disabled = busy || !signedIn || !includedCorrectionEligible(order);
   }
   async function action(task) {
@@ -222,7 +239,7 @@ export async function initAdsPage(documentRef = document) {
     if (!placements.length) throw Error('Elige al menos una ubicación digital.');
     const startsAt = new Date(form.elements.startsAt.value), endsAt = new Date(form.elements.endsAt.value);
     if (!(endsAt > startsAt)) throw Error('La fecha de fin debe ser posterior al inicio.');
-    const quotePayload = advertisementQuotePayload(config, { campaignId: campaign.id, placements, plan: pilotOffer ? 'TIME' : form.elements.plan.value, units: pilotOffer ? 1 : form.elements.plan.value === 'EXCLUSIVE' ? exclusiveUnits(startsAt, endsAt, config.units?.exclusiveMs) : Number(form.elements.units.value), startsAt: startsAt.toISOString(), endsAt: endsAt.toISOString() });
+    const quotePayload = advertisementQuotePayload(config, { campaignId: campaign.id, placements, plan: pilotOffer ? pilotOffer.plan : form.elements.plan.value, units: pilotOffer ? pilotOffer.units : form.elements.plan.value === 'EXCLUSIVE' ? exclusiveUnits(startsAt, endsAt, config.units?.exclusiveMs) : Number(form.elements.units.value), startsAt: startsAt.toISOString(), endsAt: endsAt.toISOString() });
     const result = await api('/quotes', { method: 'POST', body: quotePayload, idempotencyKey: await requestKey('quote', quotePayload, quote && Date.parse(quote.expiresAt) <= Date.now()) });
     quote = validatePilotQuote(result, pilotOffer);
     const output = $('quoteOutput'); output.replaceChildren(); output.hidden = false;
@@ -230,10 +247,10 @@ export async function initAdsPage(documentRef = document) {
     const network = documentRef.createElement('p'); network.textContent = 'Stellar Testnet · ' + quote.plan + ' · ' + placements.length + ' ubicación(es)'; output.append(network);
     const recipient = documentRef.createElement('p'); recipient.className = 'mono small'; recipient.textContent = 'Beneficiario: ' + config.payTo; output.append(recipient);
     const expiry = documentRef.createElement('p'); expiry.className = 'small'; expiry.textContent = 'Cotización válida hasta ' + new Date(quote.expiresAt).toLocaleString(); output.append(expiry);
-    const units = documentRef.createElement('p'); units.className = 'small'; units.textContent = quote.plan === 'TIME' ? quote.units + ' unidad(es) de ' + (config.units?.timeMs / 1000) + ' segundos de actividad acumulada.' : quote.plan === 'PASSES' ? quote.units + ' pase(s) completos de ' + (config.units?.passMs / 1000) + ' segundos.' : 'Ventana exclusiva: ' + new Date(quote.startsAt).toLocaleString() + ' → ' + new Date(quote.endsAt).toLocaleString(); output.append(units);
+    const units = documentRef.createElement('p'); units.className = 'small'; units.textContent = quoteUnitsDescription(quote, config); output.append(units);
     const terms = documentRef.createElement('div'); terms.className = 'terms';
     if (typeof quote.terms === 'string') terms.textContent = quote.terms;
-    else for (const [key, label] of Object.entries({ version: 'Condiciones', interruptions: 'Interrupciones y pausas', refundPolicy: 'Devoluciones', refundDeadlineMs: 'Plazo para devolución en segundos', disputeAuthority: 'Resolución de reclamaciones', includedRevisions: 'Revisiones incluidas', processingMs: 'Plazo de procesamiento en segundos' })) { const value = quote.terms?.[key]; if (value != null) { const text = documentRef.createElement('p'); text.textContent = label + ': ' + (key.endsWith('Ms') ? value / 1000 : value === 'FULL' ? 'Devolución completa según condiciones' : value === 'PRO_RATA' ? 'Devolución proporcional al déficit' : String(value)); terms.append(text); } }
+    else for (const [key, label] of Object.entries({ version: 'Condiciones', interruptions: 'Interrupciones y pausas', refundPolicy: 'Devoluciones', refundDeadlineMs: 'Plazo para devolución en segundos', disputeAuthority: 'Resolución de reclamaciones', includedRevisions: 'Revisiones incluidas', processingMs: 'Plazo de procesamiento en segundos' })) { const value = quote.terms?.[key]; if (value != null) { const text = documentRef.createElement('p'); text.textContent = label + ': ' + (key.endsWith('Ms') ? value / 1000 : value === 'FULL' ? 'Devolución completa según condiciones' : value === 'PRO_RATA' ? 'Devolución proporcional al déficit' : value === 'FULFILL_REMAINING' ? 'Las entregas incompletas siguen pendientes; no se cierran mediante devolución automática' : String(value)); terms.append(text); } }
     const priority = documentRef.createElement('p'); priority.textContent = 'El anfitrión mantiene prioridad sobre el contenido del main stage. Una interrupción detiene las unidades aplicables. La entrega se mide en el publicador digital canónico, sin contar espectadores.'; terms.append(priority); output.append(terms);
   }));
   $('reserveButton').addEventListener('click', () => action(async () => {
@@ -248,10 +265,11 @@ export async function initAdsPage(documentRef = document) {
     $('orderReason').textContent = order.queue?.reason || order.reason || (order.payment?.status === 'RECONCILIATION_REQUIRED' ? 'Se está consultando el intento original. No autorices un pago nuevo.' : 'El estado de entrega se consulta por ubicación.');
     const progress = orderProgress(order); for (const element of documentRef.querySelectorAll('[data-step]')) element.classList.toggle('done', !!progress[element.dataset.step]);
     const delivery = $('deliveryOutput'); delivery.replaceChildren();
+    if (order.quote) { const contract = documentRef.createElement('p'); contract.className = 'small'; contract.textContent = 'Condiciones contratadas · ' + order.quote.plan + ' · ' + quoteUnitsDescription(order.quote); delivery.append(contract); }
     if (order.placements?.length) {
       const table = documentRef.createElement('table'), head = documentRef.createElement('tr');
-      for (const text of ['Ubicación', 'Entregado / contratado', 'Estado']) { const cell = documentRef.createElement('th'); cell.textContent = text; cell.scope = 'col'; head.append(cell); } table.append(head);
-      for (const item of order.placements) { const row = documentRef.createElement('tr'); for (const text of [item.placementId, String(item.delivered || 0) + ' / ' + String(item.required || 0) + ' ' + (item.unit || ''), item.status]) { const cell = documentRef.createElement('td'); cell.textContent = text; row.append(cell); } table.append(row); } delivery.append(table);
+      for (const text of ['Ubicación', 'Entregado / contratado', 'Pendiente', 'Estado']) { const cell = documentRef.createElement('th'); cell.textContent = text; cell.scope = 'col'; head.append(cell); } table.append(head);
+      for (const item of order.placements) { const row = documentRef.createElement('tr'), passes = deliveryProgress(item, order.quote); const completed = passes ? passes.valid ? passes.completed + ' / ' + passes.required + ' entregas completas' : 'Recuento pendiente de verificación' : String(item.delivered || 0) + ' / ' + String(item.required || 0) + ' ' + (item.unit || ''); const owed = passes ? passes.valid ? passes.owed + ' entrega(s)' : 'Pendiente de verificación' : String(item.deficit ?? Math.max(0, (item.required || 0) - (item.delivered || 0))) + ' ' + (item.unit || ''); if (passes) { const summary = documentRef.createElement('dl'); summary.className = 'delivery-summary'; summary.setAttribute('aria-label', 'Entregas de ' + (item.placementId === 'main_stage_screen' ? 'Main stage' : item.placementId)); for (const [label, value] of [['Entregas completas', passes.valid ? passes.completed + ' / ' + passes.required : 'Sin verificar'], ['Entregas pendientes', passes.valid ? String(passes.owed) : 'Sin verificar']]) { const group = documentRef.createElement('div'), term = documentRef.createElement('dt'), count = documentRef.createElement('dd'); term.textContent = label; count.textContent = value; group.append(term, count); summary.append(group); } delivery.append(summary); } for (const text of [item.placementId, completed, owed, item.status]) { const cell = documentRef.createElement('td'); cell.textContent = text; row.append(cell); } table.append(row); } delivery.append(table);
     }
     const receipts = $('receiptOutput'); receipts.replaceChildren();
     const tx = order.receipt?.transaction || order.receipt?.tx || order.payment?.transaction;
@@ -272,7 +290,7 @@ export async function initAdsPage(documentRef = document) {
     if (!attempt) {
       const saved = stored.get('order');
       const amountUnits = order.amountUnits || saved?.amountUnits || quote?.amountUnits;
-      if (pilotOffer) { validatePilotQuote(order.quote, pilotOffer); if (amountUnits !== pilotOffer.amountUnits) throw Error('El importe de la orden no coincide con la oferta fija.'); }
+      if (pilotOffer && order.quote?.offerVersion === pilotOffer.offerVersion) { validatePilotQuote(order.quote, pilotOffer); if (amountUnits !== pilotOffer.amountUnits) throw Error('El importe de la orden no coincide con la oferta fija.'); }
       const response = await requestPaymentAuthorization({ api, wallet, path, amountUnits, config, idempotencyKey: await requestKey('paymentChallenge', { orderId }) });
       if (!response.paymentPayload) { if (response.order?.id) order = response.order; else if (response.id) order = response; await updateOrder(); return; }
       attempt = { key: crypto.randomUUID(), paymentPayload: response.paymentPayload }; stored.set('payment:' + orderId, attempt);
@@ -291,6 +309,7 @@ export async function initAdsPage(documentRef = document) {
   documentRef.querySelectorAll('[data-remedy]').forEach(button => button.addEventListener('click', () => action(async () => {
     requireSession(); if (!order) return;
     const reason = $('remedyReason').value.trim(); if (!reason) throw Error('Describe el motivo de la solicitud.');
+    if (button.dataset.remedy === 'refunds' && fulfillmentRemaining(order, config)) throw Error('Las entregas incompletas siguen pendientes. Puedes abrir una reclamación o solicitar reprogramación.');
     const body = { reason };
     if (button.dataset.remedy === 'reprogram') { const start = new Date($('reprogramStart').value), end = new Date($('reprogramEnd').value); if (!(end > start)) throw Error('Indica una nueva ventana válida.'); body.startsAt = start.toISOString(); body.endsAt = end.toISOString(); body.consented = true; }
     await api('/orders/' + encodeURIComponent(order.id) + '/' + button.dataset.remedy, { method: 'POST', body, idempotencyKey: await requestKey('remedy:' + button.dataset.remedy, { orderId: order.id, ...body }) }); message('Solicitud registrada. Consulta el estado para conocer su resolución.'); await updateOrder();
@@ -339,9 +358,9 @@ export async function initAdsPage(documentRef = document) {
     pilotOffer = configuredPilotOffer(config);
     $('pilotOffer').hidden = !pilotOffer; $('legacyPlans').hidden = !!pilotOffer; $('unitsLabel').hidden = !!pilotOffer;
     if (pilotOffer) {
-      $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 minutos acumulados.';
+      $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 entregas completas de 1 minuto.';
       $('spacesTitle').textContent = 'Tu anuncio, en el main stage.';
-      $('offerPrice').textContent = formatAdsAmount(pilotOffer.amountUnits) + ' USDC de prueba';
+      $('offerPrice').textContent = formatAdsAmount(pilotOffer.amountUnits) + ' USDC de prueba · 5 entregas de 1 minuto';
       form.elements.plan.value = pilotOffer.plan; form.elements.units.value = String(pilotOffer.units); form.elements.units.disabled = true;
       for (const input of documentRef.querySelectorAll('input[name="plan"]')) input.disabled = true;
     }
