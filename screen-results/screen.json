@@ -1,0 +1,166 @@
+{
+  "runId": "2026-10-26T09:14:02.448Z",
+  "network": "stellar:testnet",
+  "kind": "recorded testnet run",
+  "screen": {
+    "sections": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "slotMs": 300000,
+    "priceUsdc": "5.00",
+    "placement": "main_stage_screen"
+  },
+  "treasury": {
+    "account": "GAAXFX723RXRLQNEGQJWLP4YK2N7RV5RS5Z2VRP3OASL3PUTGCDGANFR",
+    "usdcBefore": "0.0000000",
+    "usdcAfter": "30.0000000",
+    "receivedUsdc": "30.0000000",
+    "verified": true
+  },
+  "orders": [
+    {
+      "advertiser": "Demo Advertiser 1 (testnet)",
+      "headline": "Live demo at table 4",
+      "account": "GD3YW663XZDNB3XZUHFY5YWQBRSDUZ7GLZPR6PZKWCWWMPLHRNNCX433",
+      "priceUsdc": "5.00",
+      "tx": "983fb6e4510be54c6e4973f063fd3292f31a66b1f7353dbfd874bd7627428f6a",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/983fb6e4510be54c6e4973f063fd3292f31a66b1f7353dbfd874bd7627428f6a",
+      "id": "2026-10-26T09:14:02.448Z#1",
+      "quadrant": "A",
+      "paidAt": 1793006048053,
+      "start": 1793006048053,
+      "end": 1793006348053,
+      "commitTx": "f3beb566f831d71d0d99d3df3572452800ac73090413533d104c0862e4201eb4",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/f3beb566f831d71d0d99d3df3572452800ac73090413533d104c0862e4201eb4",
+      "order": "062b32fc4cc4a36ddc0c9fb1e82d64249af562dbc1278eb462285a0e86f57dbf",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 2 (testnet)",
+      "headline": "Workshop at 15:00, room 2",
+      "account": "GBXNMVPMRQSELZGRK4I7KHCIAH5I5LDDBZ3MTFORRF4V2XMWCCZ5UKKO",
+      "priceUsdc": "5.00",
+      "tx": "7067b524b7d23f27ded25f37ff4ea4c86c04afa80dd78b2bd2e6ef4149e716c6",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/7067b524b7d23f27ded25f37ff4ea4c86c04afa80dd78b2bd2e6ef4149e716c6",
+      "id": "2026-10-26T09:14:02.448Z#2",
+      "quadrant": "B",
+      "paidAt": 1793006057615,
+      "start": 1793006057615,
+      "end": 1793006357615,
+      "commitTx": "c9cc31c3363fc78f4e3a05739ecee6072cbf8fe1a678a29f590b1e845d103350",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/c9cc31c3363fc78f4e3a05739ecee6072cbf8fe1a678a29f590b1e845d103350",
+      "order": "9542a0a1866babe7847cf166d9eaf528471f7257700515a3e36c6e1ce24270ad",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 3 (testnet)",
+      "headline": "Ask us about the testnet faucet",
+      "account": "GCGGJ52LZXIB7LIV3KVAE2NKSV7WVNZQZRS2245DIDHUEDFFAHWU523Z",
+      "priceUsdc": "5.00",
+      "tx": "42ee176cd22e8ca6f03c6ee07a856ebaad49f3189eb38aae080b8557bc48580d",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/42ee176cd22e8ca6f03c6ee07a856ebaad49f3189eb38aae080b8557bc48580d",
+      "id": "2026-10-26T09:14:02.448Z#3",
+      "quadrant": "C",
+      "paidAt": 1793006062463,
+      "start": 1793006062463,
+      "end": 1793006362463,
+      "commitTx": "18a1d12d31118f4f40d9cf5432d51d83c77bae2fc55bb2d204a80d6afd150441",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/18a1d12d31118f4f40d9cf5432d51d83c77bae2fc55bb2d204a80d6afd150441",
+      "order": "a7578124d70a4980cfea653525eb53ae415d18fd65ccdd606f7f65b7bbe64ce8",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 4 (testnet)",
+      "headline": "Hiring Soroban developers",
+      "account": "GBGVDQO6JRTO7VJ4AV2JBZ2ZA3PQDNJTC4KW4OJJS7LQG63KB3Z2SXWY",
+      "priceUsdc": "5.00",
+      "tx": "d6448de931e4fcc21a28a75363c1de1b74c8f83870aefa80da029dbd206c6776",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/d6448de931e4fcc21a28a75363c1de1b74c8f83870aefa80da029dbd206c6776",
+      "id": "2026-10-26T09:14:02.448Z#4",
+      "quadrant": "D",
+      "paidAt": 1793006067792,
+      "start": 1793006067792,
+      "end": 1793006367792,
+      "commitTx": "e1b8b6adbbc84a5afdbcb1ea2e99952d346b1ce2b528b28ee9a4e8b53f6019a7",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/e1b8b6adbbc84a5afdbcb1ea2e99952d346b1ce2b528b28ee9a4e8b53f6019a7",
+      "order": "47ab05510c25662da4273ee0ed11c7678f0ca2a8b7747fe5182b8ee82bfb85ae",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 5 (testnet)",
+      "headline": "Free coffee at the merch stand",
+      "account": "GDNWXX4WGCS6SYAFNAFUBPJINCTFUA4AZYDJJ3M6G6IQAU4IBHYQ7F5E",
+      "priceUsdc": "5.00",
+      "tx": "cef93845feaf056cd69363721b6592eaa47531cb473db4b4ada4392953358e55",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/cef93845feaf056cd69363721b6592eaa47531cb473db4b4ada4392953358e55",
+      "id": "2026-10-26T09:14:02.448Z#5",
+      "quadrant": "A",
+      "paidAt": 1793006077757,
+      "start": 1793006348053,
+      "end": 1793006648053,
+      "commitTx": "2d1b3bd6f6d3808388e5cb767b2f9f722f32654d6fab90dab9c8f1d7e4f95cba",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/2d1b3bd6f6d3808388e5cb767b2f9f722f32654d6fab90dab9c8f1d7e4f95cba",
+      "order": "f0a2ccfef720621cd4e8a0aa5ae847fc3d14b71617d12693461922c39b5986e7",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 6 (testnet)",
+      "headline": "Vote for our project",
+      "account": "GBMBHGZINMXH6YOILNJGTLP5WI4TA37PFS75JRJE2SZPRSCVB3AZRFSF",
+      "priceUsdc": "5.00",
+      "tx": "c6700e6a5264123c060d2a44b4775940fcb3fa3768f0ad28ef97f290c19d6f8a",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/c6700e6a5264123c060d2a44b4775940fcb3fa3768f0ad28ef97f290c19d6f8a",
+      "id": "2026-10-26T09:14:02.448Z#6",
+      "quadrant": "C",
+      "paidAt": 1793006082839,
+      "start": 1793006362463,
+      "end": 1793006662463,
+      "commitTx": "6cff437d7bad82c833c09c5b3208b666600dfc4161d922f0e56bbf42ebb75543",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/6cff437d7bad82c833c09c5b3208b666600dfc4161d922f0e56bbf42ebb75543",
+      "order": "f5383e68e152f147977c522ec9add3cc18a91a730e9d3ddf1f03662e8526f28f",
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    }
+  ],
+  "registry": {
+    "contractId": "CCKTWGCYID6WU3ZJJYOSDVOAYRKOCPL56NIYFZGO5RXJLA6GR7U66VYV",
+    "explorerContract": "https://stellar.expert/explorer/testnet/contract/CCKTWGCYID6WU3ZJJYOSDVOAYRKOCPL56NIYFZGO5RXJLA6GR7U66VYV",
+    "wasmHash": "d9caf94b2dfb159c7d46bf5779d358d6cced9ee7a94bd69e2bb1fa354b5ee526",
+    "wasmVerified": true,
+    "deployTx": "2b557cefad18798d649444e405765e803b85c6905bc8601b08606a4cd5437125",
+    "deployExplorer": "https://stellar.expert/explorer/testnet/tx/2b557cefad18798d649444e405765e803b85c6905bc8601b08606a4cd5437125"
+  },
+  "recordedAt": "2026-10-26T09:15:18.204Z"
+}
