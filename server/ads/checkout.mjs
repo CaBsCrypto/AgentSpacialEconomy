@@ -1,18 +1,20 @@
 import {StrKey} from '@stellar/stellar-sdk';
 import {AdsError} from './common.mjs';
 export const CHECKOUT_MODES=Object.freeze(['DISABLED','CONTROLLED','PUBLIC']);
-const purchaseOnly=new Set(['ADS_CHECKOUT_ENABLED','ADS_CHECKOUT_MODE','ADS_ALLOWED_BUYERS','walletCompatibilityVerified']);
+const purchaseOnly=new Set(['ADS_CHECKOUT_ENABLED','ADS_CHECKOUT_MODE','ADS_ALLOWED_BUYERS','walletCompatibilityVerified','ADS_CHECKOUT_UNTIL']);
 export function readCheckoutPolicy(env={}){
  const mode=env.ADS_CHECKOUT_MODE||(env.ADS_CHECKOUT_ENABLED==='true'?'PUBLIC':'DISABLED');
  const missing=[];if(!CHECKOUT_MODES.includes(mode))missing.push('ADS_CHECKOUT_MODE');
+ const checkoutUntil=env.ADS_CHECKOUT_UNTIL||null;if(checkoutUntil&&!Number.isFinite(Date.parse(checkoutUntil)))missing.push('ADS_CHECKOUT_UNTIL');
  let buyers=[];
  try{buyers=env.ADS_ALLOWED_BUYERS_JSON?JSON.parse(env.ADS_ALLOWED_BUYERS_JSON):[];if(!Array.isArray(buyers)||buyers.some(v=>typeof v!=='string'||!StrKey.isValidContract(v)))throw Error();buyers=[...new Set(buyers)];}catch{missing.push('ADS_ALLOWED_BUYERS');buyers=[];}
  if(mode==='CONTROLLED'&&!buyers.length)missing.push('ADS_ALLOWED_BUYERS');
- return {checkoutMode:CHECKOUT_MODES.includes(mode)?mode:'DISABLED',allowedBuyers:buyers,missing:[...new Set(missing)]};
+ return {checkoutMode:CHECKOUT_MODES.includes(mode)?mode:'DISABLED',allowedBuyers:buyers,checkoutUntil,missing:[...new Set(missing)]};
 }
 export function operationalConfigurationReady(config){return Array.isArray(config.missing)&&config.missing.every(key=>purchaseOnly.has(key));}
-export function purchaseEligibility(config,identity){
+export function purchaseEligibility(config,identity,{now=Date.now}={}){
  const mode=config.checkoutMode||(config.enabled===true?'PUBLIC':'DISABLED');
+ if(config.checkoutUntil&&Number.isFinite(Date.parse(config.checkoutUntil))&&now()>=Date.parse(config.checkoutUntil))return {canPurchase:false,mode,reason:'checkout_window_closed'};
  if(config.enabled!==true||mode==='DISABLED')return {canPurchase:false,mode,reason:'checkout_unconfigured'};
  if(mode==='CONTROLLED'&&(!identity?.address||!config.allowedBuyers?.includes(identity.address)))return {canPurchase:false,mode,reason:'controlled_buyer_required'};
  return {canPurchase:true,mode,reason:null};

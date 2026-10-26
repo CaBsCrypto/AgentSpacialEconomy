@@ -34,3 +34,12 @@ test('availability is owner-scoped and rejects duplicate campaign identifiers',a
  const f=fixture(a),id='11111111-1111-4111-8111-111111111111';const r=await f.handler(new Request(origin+'/api/ads/availability?campaignId='+id));assert.equal(r.status,200);assert.equal((await r.json()).owner,'stellar:testnet:'+a);
  const bad=await f.handler(new Request(origin+'/api/ads/availability?campaignId='+id+'&campaignId='+id));assert.equal(bad.status,400);
 });
+
+
+test('controlled checkout deadline closes new purchases while paid work stays operational',()=>{
+ const until='2026-10-26T09:15:00.000Z',cutoff=Date.parse(until),controlled={...cfg,checkoutUntil:until};
+ assert(purchaseEligibility(controlled,{address:a},{now:()=>cutoff-1}).canPurchase);
+ assert.deepEqual(purchaseEligibility(controlled,{address:a},{now:()=>cutoff}),{canPurchase:false,mode:'CONTROLLED',reason:'checkout_window_closed'});
+ assert.equal(readCheckoutPolicy({ADS_CHECKOUT_UNTIL:'invalid'}).missing.includes('ADS_CHECKOUT_UNTIL'),true);
+ assert(operationalConfigurationReady({missing:['ADS_CHECKOUT_UNTIL']}));
+});
