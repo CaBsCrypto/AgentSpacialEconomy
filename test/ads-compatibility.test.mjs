@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as sdk from '@stellar/stellar-sdk';
 import {createTestDatabase} from './helpers/ads-db.mjs';
-import {createCompatibilityService,COMPATIBILITY_TTL_MS} from '../server/ads/compatibility.mjs';
+import {createCompatibilityService,COMPATIBILITY_TTL_MS,safeVerificationReason} from '../server/ads/compatibility.mjs';
 import {createAdsHandler} from '../server/ads/http.mjs';
 import {createAdsRuntime} from '../server/ads/runtime.mjs';
 import {inspectStellarPayment} from '../server/ads/stellar-payments.mjs';
@@ -207,4 +207,26 @@ test('runtime wiring shares the injected payment adapter with the isolated verif
  const response=await application.handler(request('/compatibility/'+challenge.id+'/verify',{payload},'runtime-verification-key'));
  assert.equal(response.status,200);assert.equal((await response.json()).status,'VERIFIED');assert.equal(f.calls.verify,1);
  await f.assertNoFinancialWork();
+});
+
+
+test('facilitator diagnostics accept only fixed tokens, never messages or filtered payload fragments',()=>{
+ const known='invalid_exact_stellar_payload_unexpected_pending_signatures';
+ assert.equal(safeVerificationReason(known),known);assert.equal(('facilitator_rejected:'+known).length,80);
+ for(const value of [null,undefined,42,{},'unknown_reason','invalid_exact_stellar_payload_fee_exceeds_maximum\nPRIVATE_PAYLOAD','https://private.invalid','Bearer private-token','PRIVATE_XDR_FIXTURE','S'+'A'.repeat(55),'invalid_exact_stellar_payload_fee_exceeds_maximum '+('a'.repeat(100))])assert.equal(safeVerificationReason(value),null);
+});
+
+test('safe rejection reason is durable and private while generic code and idempotent verify remain stable',async t=>{
+ const reason='invalid_exact_stellar_payload_fee_exceeds_maximum',f=await fixture(t,{verifyMode:()=>({isValid:false,payer,invalidReason:reason,invalidMessage:'PRIVATE_SIMULATION_DIAGNOSTIC',extra:{payload:'PRIVATE_XDR_FIXTURE'}})}),challenge=await f.challenge(),payload=authorization(challenge),key='safe-diagnostic-verify';
+ const result=await f.service.verify(identity,challenge.id,{payload},key);assert.equal(result.errorCode,'facilitator_rejected');assert.equal(result.verificationReason,reason);assert.equal(result.status,'REJECTED');
+ const row=(await f.db.query('SELECT error_code,verification_hash FROM ads_compatibility WHERE id=$1',[challenge.id])).rows[0];assert.equal(row.error_code,'facilitator_rejected:'+reason);assert.match(row.verification_hash,/^[0-9a-f]{64}$/);
+ assert.deepEqual(await f.service.verify(identity,challenge.id,{payload},key),result);assert.equal(f.calls.verify,1);
+ for(const value of [result,row])assert.doesNotMatch(JSON.stringify(value),/PRIVATE_SIMULATION_DIAGNOSTIC|PRIVATE_XDR_FIXTURE|invalidMessage|extra/);
+ assert.equal(f.config.enabled,false);await f.assertNoFinancialWork();
+});
+
+test('unknown or payload-bearing reason cannot enter durable or private diagnostic output',async t=>{
+ const f=await fixture(t,{verifyMode:()=>({isValid:false,payer,invalidReason:'invalid_exact_stellar_payload_fee_exceeds_maximum\nPRIVATE_XDR_FIXTURE',invalidMessage:'PRIVATE_DETAIL'})}),challenge=await f.challenge(),payload=authorization(challenge);
+ const result=await f.service.verify(identity,challenge.id,{payload},'unsafe-diagnostic-verify'),row=(await f.db.query('SELECT error_code FROM ads_compatibility WHERE id=$1',[challenge.id])).rows[0];
+ assert.equal(result.errorCode,'facilitator_rejected');assert(!Object.hasOwn(result,'verificationReason'));assert.equal(row.error_code,'facilitator_rejected');assert.doesNotMatch(JSON.stringify({result,row}),/PRIVATE_XDR_FIXTURE|PRIVATE_DETAIL/);await f.assertNoFinancialWork();
 });

@@ -10,10 +10,48 @@ const HASH=/^[a-f0-9]{64}$/i;
 const fail=(status,code,message)=>{throw new AdsError(status,code,message);};
 const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
 const iso=value=>new Date(value).toISOString();
+// Fixed protocol tokens from the pinned Stellar facilitator. Free-form messages,
+// extensions and payload fragments are never diagnostic output or persisted here.
+const REJECTION_PREFIX='facilitator_rejected:';
+const VERIFICATION_REASONS=new Set([
+ 'invalid_exact_stellar_payload_event_missing_contract_id',
+ 'invalid_exact_stellar_payload_event_not_transfer',
+ 'invalid_exact_stellar_payload_event_wrong_amount',
+ 'invalid_exact_stellar_payload_event_wrong_asset',
+ 'invalid_exact_stellar_payload_event_wrong_from',
+ 'invalid_exact_stellar_payload_event_wrong_to',
+ 'invalid_exact_stellar_payload_facilitator_in_auth',
+ 'invalid_exact_stellar_payload_facilitator_is_payer',
+ 'invalid_exact_stellar_payload_fee_exceeds_maximum',
+ 'invalid_exact_stellar_payload_has_subinvocations',
+ 'invalid_exact_stellar_payload_malformed',
+ 'invalid_exact_stellar_payload_missing_payer_signature',
+ 'invalid_exact_stellar_payload_multiple_transfers',
+ 'invalid_exact_stellar_payload_no_auth_entries',
+ 'invalid_exact_stellar_payload_no_transfer_events',
+ 'invalid_exact_stellar_payload_simulation_failed',
+ 'invalid_exact_stellar_payload_unexpected_pending_signatures',
+ 'invalid_exact_stellar_payload_unsafe_tx_or_op_source',
+ 'invalid_exact_stellar_payload_unsupported_credential_type',
+ 'invalid_exact_stellar_payload_wrong_amount',
+ 'invalid_exact_stellar_payload_wrong_asset',
+ 'invalid_exact_stellar_payload_wrong_function_name',
+ 'invalid_exact_stellar_payload_wrong_operation',
+ 'invalid_exact_stellar_payload_wrong_recipient',
+ 'invalid_exact_stellar_signature_expiration_too_far',
+ 'invalid_network',
+ 'invalid_x402_version',
+ 'network_mismatch',
+ 'unexpected_verify_error',
+ 'unsupported_scheme',
+ ]);
+export const safeVerificationReason=value=>typeof value==='string'&&VERIFICATION_REASONS.has(value)?value:null;
+const rejectionCode=value=>{const reason=safeVerificationReason(value);return reason?REJECTION_PREFIX+reason:'facilitator_rejected';};
 function publicResult(row){
- const e=row.expected;
+ const e=row.expected,prefixed=typeof row.error_code==='string'&&row.error_code.startsWith(REJECTION_PREFIX);
+ const reason=prefixed?safeVerificationReason(row.error_code.slice(REJECTION_PREFIX.length)):null;
  return {id:row.id,status:row.state,isValid:row.state==='VERIFIED'?true:row.state==='REJECTED'?false:null,
-  payer:row.payer,expiresAt:iso(row.expires_at),gateChanged:false,errorCode:row.error_code||null,
+  payer:row.payer,expiresAt:iso(row.expires_at),gateChanged:false,errorCode:prefixed?'facilitator_rejected':row.error_code||null,...(reason?{verificationReason:reason}:{}),
   evidence:{payloadHash:row.payload_hash||null,authHash:row.auth_hash||null,requirementsHash:sha256(row.requirements),
    verificationHash:row.verification_hash||null,expiresLedger:row.expires_ledger==null?null:Number(row.expires_ledger),
    startLedger:row.start_ledger==null?null:Number(row.start_ledger),network:e.network,asset:e.asset,amountUnits:e.amountUnits,payTo:e.payTo,resourceUrl:e.resourceUrl},
@@ -119,7 +157,7 @@ export function createCompatibilityService({db,config,runtime,now=Date.now}){
    if(!object(verdict)||typeof verdict.isValid!=='boolean')throw Error('invalid_verification_response');
    if(now()>=+new Date(claim.row.expires_at))return await finish(id,requestKey,payloadHash,'RECONCILIATION_REQUIRED',{errorCode:'verification_expired'});
    const valid=verdict.isValid===true&&verdict.payer===who.address;
-   return await finish(id,requestKey,payloadHash,valid?'VERIFIED':'REJECTED',{verificationHash:sha256(verdict),errorCode:valid?null:verdict.isValid?'verification_payer_mismatch':'facilitator_rejected'});
+   return await finish(id,requestKey,payloadHash,valid?'VERIFIED':'REJECTED',{verificationHash:sha256(verdict),errorCode:valid?null:verdict.isValid?'verification_payer_mismatch':rejectionCode(verdict.invalidReason)});
   }catch{return await finish(id,requestKey,payloadHash,'RECONCILIATION_REQUIRED',{errorCode:'facilitator_verification_unavailable'});}
  }
  return Object.freeze({challenge,verify});

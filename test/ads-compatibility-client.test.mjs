@@ -83,3 +83,13 @@ test('an uncertain 202 remains pending after expiry and never requests another s
  const requests=f.requests.filter(item=>item.path.endsWith('/verify'));assert.equal(requests[0].key,requests[1].key);assert.equal(requests[0].body.payload,requests[1].body.payload);
  assert.equal(JSON.stringify(f.controller.state).includes('PRIVATE_XDR_FIXTURE'),false);
 });
+
+
+test('private rejection detail uses only constant user messages for recognized tokens',async()=>{
+ const reason='invalid_exact_stellar_payload_fee_exceeds_maximum',base={id,status:'REJECTED',isValid:false,gateChanged:false,errorCode:'facilitator_rejected',evidence:{payloadHash:hashB}},f=fixture({verifyResult:{...base,verificationReason:reason,invalidMessage:'PRIVATE_RAW_FEE_MESSAGE'}});
+ await f.controller.connect();await f.controller.verify();assert.equal(f.controller.state.phase,'rejected');assert.match(f.controller.state.message,/comisión estimada supera el límite del facilitador/);assert.equal(f.signs,1);assert.equal(f.verificationCalls,1);assert.doesNotMatch(JSON.stringify(f.views),/PRIVATE_RAW_FEE_MESSAGE/);
+ for(const detail of [{verificationReason:reason+' PRIVATE_XDR_FIXTURE'},{verificationReason:'toString'},{verificationReason:reason,errorCode:'other'}]){
+  const value={...base,...detail};assert(!Object.hasOwn(compatibilityVerdict(value,id,address),'verificationReason'));const unsafe=fixture({verifyResult:value});await unsafe.controller.connect();await unsafe.controller.verify();assert.doesNotMatch(JSON.stringify(unsafe.views),/PRIVATE_XDR_FIXTURE|comisión estimada/);
+ }
+ assert(!Object.hasOwn(compatibilityVerdict({...verified,verificationReason:reason,errorCode:'facilitator_rejected'},id,address),'verificationReason'));
+});

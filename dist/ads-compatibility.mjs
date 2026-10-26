@@ -2,6 +2,11 @@ import { ADS_USDC, createAdsWallet, validatePaymentRequirements } from './ads-wa
 export const COMPATIBILITY_AMOUNT = '50000000';
 const idPattern = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 const hashPattern = /^[a-f0-9]{64}$/i;
+const rejectionMessages=Object.freeze({
+ invalid_exact_stellar_payload_fee_exceeds_maximum:'La comisión estimada supera el límite del facilitador.',
+ invalid_exact_stellar_payload_simulation_failed:'El facilitador no pudo simular esta autorización.',
+ invalid_exact_stellar_signature_expiration_too_far:'La vigencia de la firma supera el límite del facilitador.',
+});
 const failure = (code, message) => Object.assign(new Error(message), { code });
 export function validateCompatibilityConfig(config) {
   if (config.network !== 'stellar:testnet' || config.asset !== ADS_USDC || !/^G[A-Z2-7]{55}$/.test(config.payTo || '') || !config.offers?.some(offer => offer.id === 'main-stage-test-5m' && offer.amountUnits === COMPATIBILITY_AMOUNT)) throw failure('configuration_mismatch', 'El diagnóstico requiere el receptor y los 5 USDC de prueba publicados para Stellar Testnet.');
@@ -23,7 +28,8 @@ export function compatibilityVerdict(value, id, address) {
   const evidence = {};
   for (const key of ['authHash', 'payloadHash', 'requirementsHash', 'verificationHash']) if (hashPattern.test(value.evidence?.[key] || '')) evidence[key] = value.evidence[key].toLowerCase();
   if (value.isValid && (!evidence.authHash || !evidence.payloadHash)) throw failure('unverifiable_result', 'La respuesta aceptada no incluye los hashes de evidencia.');
-  return { isValid: value.isValid, waiting, evidence };
+  const reason=value.status==='REJECTED'&&value.errorCode==='facilitator_rejected'&&Object.hasOwn(rejectionMessages,value.verificationReason)?value.verificationReason:null;
+  return { isValid: value.isValid, waiting, evidence, ...(reason?{verificationReason:reason}:{}) };
 }
 export function createCompatibilityApi({ fetchImpl = fetch } = {}) {
   return async (path, { method = 'GET', body, key } = {}) => {
@@ -84,7 +90,7 @@ export function createCompatibilityController({ api = createCompatibilityApi(), 
       const result = compatibilityVerdict(await api('/api/ads/compatibility/' + pending.id + '/verify', { method: 'POST', body: { payload: pending.payload }, key: pending.key }), pending.id, address);
       if (result.waiting) { pending.uncertain = true; emit({ phase: 'pending', retry: true, isValid: null, evidence: result.evidence, message: 'La verificación original sigue pendiente. Puedes consultar el mismo intento; no se pedirá otra firma ni se solicitará liquidación.' }); return; }
       pending = null; draft = null; challengeKey = null;
-      emit({ phase: result.isValid ? 'verified' : 'rejected', retry: false, isValid: result.isValid, evidence: result.evidence, message: result.isValid ? 'Verificación aceptada. La autorización no se envió a liquidación. Un operador debe revisar la evidencia antes de habilitar compras.' : 'Verificación rechazada. La autorización no se envió a liquidación; las compras conservan su configuración.' });
+      emit({ phase: result.isValid ? 'verified' : 'rejected', retry: false, isValid: result.isValid, evidence: result.evidence, message: result.isValid ? 'Verificación aceptada. La autorización no se envió a liquidación. Un operador debe revisar la evidencia antes de habilitar compras.' : 'Verificación rechazada. La autorización no se envió a liquidación; las compras conservan su configuración.'+(result.verificationReason?' '+rejectionMessages[result.verificationReason]:'') });
     }); },
   };
 }
