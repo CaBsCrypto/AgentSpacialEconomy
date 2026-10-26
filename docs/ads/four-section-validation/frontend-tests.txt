@@ -1,0 +1,4649 @@
+TAP version 13
+# Subtest: published QR and NFC metadata share the canonical domain and retain existing entry routes
+ok 1 - published QR and NFC metadata share the canonical domain and retain existing entry routes
+  ---
+  duration_ms: 29.4778
+  type: 'test'
+  ...
+# Subtest: published PNG and SVG retain the QR codes decoded for the canonical station URL
+ok 2 - published PNG and SVG retain the QR codes decoded for the canonical station URL
+  ---
+  duration_ms: 85.6157
+  type: 'test'
+  ...
+# Subtest: both legacy Android pages launch canonical assets and return to the canonical experience
+ok 3 - both legacy Android pages launch canonical assets and return to the canonical experience
+  ---
+  duration_ms: 6.5227
+  type: 'test'
+  ...
+# Subtest: activation approach remains arrival-right, walkable and independently labelled
+ok 4 - activation approach remains arrival-right, walkable and independently labelled
+  ---
+  duration_ms: 3.6642
+  type: 'test'
+  ...
+# Subtest: every exported totem name is recognized after the actual Three loader sanitization
+ok 5 - every exported totem name is recognized after the actual Three loader sanitization
+  ---
+  duration_ms: 152.0672
+  type: 'test'
+  ...
+# Subtest: a tap resolves any totem mesh through its model parent without accepting a Passport
+ok 6 - a tap resolves any totem mesh through its model parent without accepting a Passport
+  ---
+  duration_ms: 0.2953
+  type: 'test'
+  ...
+# Subtest: first-frame scheduling warms once without starting a wallet ceremony or a claim
+ok 7 - first-frame scheduling warms once without starting a wallet ceremony or a claim
+  ---
+  duration_ms: 5.3658
+  type: 'test'
+  ...
+# Subtest: closing during module preparation does not reopen the wallet over the experience
+ok 8 - closing during module preparation does not reopen the wallet over the experience
+  ---
+  duration_ms: 1.6677
+  type: 'test'
+  ...
+# Subtest: totem, map and NFC use the shared panel while modal navigation stays paused
+ok 9 - totem, map and NFC use the shared panel while modal navigation stays paused
+  ---
+  duration_ms: 53.5825
+  type: 'test'
+  ...
+# Subtest: external model actions commit intent before work, reject conflicting or ambiguous replay and cache failures
+ok 10 - external model actions commit intent before work, reject conflicting or ambiguous replay and cache failures
+  ---
+  duration_ms: 8777.5229
+  type: 'test'
+  ...
+# Subtest: onchain authority only admits one Default External passkey with the exact credential
+ok 11 - onchain authority only admits one Default External passkey with the exact credential
+  ---
+  duration_ms: 5.4573
+  type: 'test'
+  ...
+# Subtest: real WebAuthn verification creates an opaque secure session and consumes its challenge once
+ok 12 - real WebAuthn verification creates an opaque secure session and consumes its challenge once
+  ---
+  duration_ms: 7169.9481
+  type: 'test'
+  ...
+# Subtest: wrong origin, absent user verification, changed authority and expiry fail without reusable challenges
+ok 13 - wrong origin, absent user verification, changed authority and expiry fail without reusable challenges
+  ---
+  duration_ms: 11.9725
+  type: 'test'
+  ...
+# Subtest: concurrent replay admits one session, counter rollback fails and signer removal invalidates session
+ok 14 - concurrent replay admits one session, counter rollback fails and signer removal invalidates session
+  ---
+  duration_ms: 13.9086
+  type: 'test'
+  ...
+# Subtest: wallet authority reads the public bindings and current RPC data, never a browser public key
+ok 15 - wallet authority reads the public bindings and current RPC data, never a browser public key
+  ---
+  duration_ms: 1400.0414
+  type: 'test'
+  ...
+# Subtest: auth SQL persists one-use challenges and opaque sessions in a real PostgreSQL engine
+ok 16 - auth SQL persists one-use challenges and opaque sessions in a real PostgreSQL engine
+  ---
+  duration_ms: 5726.9246
+  type: 'test'
+  ...
+# Subtest: the payment balance reader uses only a Testnet USDC balance simulation for the authenticated wallet
+ok 17 - the payment balance reader uses only a Testnet USDC balance simulation for the authenticated wallet
+  ---
+  duration_ms: 22.5357
+  type: 'test'
+  ...
+# Subtest: failed, missing, restored or negative balance reads cannot be used as spendable funds
+ok 18 - failed, missing, restored or negative balance reads cannot be used as spendable funds
+  ---
+  duration_ms: 7.8228
+  type: 'test'
+  ...
+# Subtest: controlled purchases accept only a valid explicit C-wallet allowlist and fail closed for malformed policy
+ok 19 - controlled purchases accept only a valid explicit C-wallet allowlist and fail closed for malformed policy
+  ---
+  duration_ms: 76.0067
+  type: 'test'
+  ...
+# Subtest: purchase eligibility has no operator bypass and never exposes the buyer list publicly
+ok 20 - purchase eligibility has no operator bypass and never exposes the buyer list publicly
+  ---
+  duration_ms: 1.5029
+  type: 'test'
+  ...
+# Subtest: closing new sales does not disable technically ready paid obligations
+ok 21 - closing new sales does not disable technically ready paid obligations
+  ---
+  duration_ms: 1.1219
+  type: 'test'
+  ...
+# Subtest: unlisted signed payment cannot reach quotas, decoder or payment service
+ok 22 - unlisted signed payment cannot reach quotas, decoder or payment service
+  ---
+  duration_ms: 38.4893
+  type: 'test'
+  ...
+# Subtest: allowlisted buyer reaches the unchanged exact payment challenge
+ok 23 - allowlisted buyer reaches the unchanged exact payment challenge
+  ---
+  duration_ms: 4.5797
+  type: 'test'
+  ...
+# Subtest: availability is owner-scoped and rejects duplicate campaign identifiers
+ok 24 - availability is owner-scoped and rejects duplicate campaign identifiers
+  ---
+  duration_ms: 2.8027
+  type: 'test'
+  ...
+# Subtest: controlled checkout deadline closes new purchases while paid work stays operational
+ok 25 - controlled checkout deadline closes new purchases while paid work stays operational
+  ---
+  duration_ms: 0.4567
+  type: 'test'
+  ...
+# Subtest: included corrections are restricted by order state and terms, with disputes and refunds blocking the action
+ok 26 - included corrections are restricted by order state and terms, with disputes and refunds blocking the action
+  ---
+  duration_ms: 1.8471
+  type: 'test'
+  ...
+# Subtest: explicit correction preserves the original order and campaign and applies only the exact passing revision
+ok 27 - explicit correction preserves the original order and campaign and applies only the exact passing revision
+  ---
+  duration_ms: 2.5448
+  type: 'test'
+  ...
+# Subtest: a blocked or concurrently replaced correction never reaches the paid order
+ok 28 - a blocked or concurrently replaced correction never reaches the paid order
+  ---
+  duration_ms: 1.0713
+  type: 'test'
+  ...
+# Subtest: an ineligible order is rejected before upload or any mutation
+ok 29 - an ineligible order is rejected before upload or any mutation
+  ---
+  duration_ms: 0.4
+  type: 'test'
+  ...
+# Subtest: pilot checkout sends only campaign, server offer and exact selected window despite stale hidden form values
+ok 30 - pilot checkout sends only campaign, server offer and exact selected window despite stale hidden form values
+  ---
+  duration_ms: 8.2472
+  type: 'test'
+  ...
+# Subtest: pilot catalogue rejects changed money, duration, placement, plan, units or design before checkout
+ok 31 - pilot catalogue rejects changed money, duration, placement, plan, units or design before checkout
+  ---
+  duration_ms: 1.0238
+  type: 'test'
+  ...
+# Subtest: pilot quote freezes five complete sixty-second passes and five-USDC total with zero design charge
+ok 32 - pilot quote freezes five complete sixty-second passes and five-USDC total with zero design charge
+  ---
+  duration_ms: 0.8192
+  type: 'test'
+  ...
+# Subtest: legacy explicit catalogues preserve their prior quote contract
+ok 33 - legacy explicit catalogues preserve their prior quote contract
+  ---
+  duration_ms: 0.3132
+  type: 'test'
+  ...
+# Subtest: server insufficient-balance 409 stops before any wallet signature or funding request
+ok 34 - server insufficient-balance 409 stops before any wallet signature or funding request
+  ---
+  duration_ms: 47.7431
+  type: 'test'
+  ...
+# Subtest: only a payment challenge reaches the wallet and server replay never signs again
+ok 35 - only a payment challenge reaches the wallet and server replay never signs again
+  ---
+  duration_ms: 0.8583
+  type: 'test'
+  ...
+# Subtest: pass progress counts only server-confirmed whole deliveries and keeps every unfinished pass owed
+ok 36 - pass progress counts only server-confirmed whole deliveries and keeps every unfinished pass owed
+  ---
+  duration_ms: 1.0051
+  type: 'test'
+  ...
+# Subtest: fulfillment policy keeps the debt open even if a remedy label claims completion
+ok 37 - fulfillment policy keeps the debt open even if a remedy label claims completion
+  ---
+  duration_ms: 0.8147
+  type: 'test'
+  ...
+# Subtest: historical TIME orders display their frozen duration and preserve their original refund policy
+ok 38 - historical TIME orders display their frozen duration and preserve their original refund policy
+  ---
+  duration_ms: 0.9874
+  type: 'test'
+  ...
+# Subtest: new pilot offer freezes a minute between campaign plays while historical quotes remain readable
+ok 39 - new pilot offer freezes a minute between campaign plays while historical quotes remain readable
+  ---
+  duration_ms: 9.0459
+  type: 'test'
+  ...
+# Subtest: wallet login proves a server challenge and does not mistake a client connect for a session
+ok 40 - wallet login proves a server challenge and does not mistake a client connect for a session
+  ---
+  duration_ms: 62.6274
+  type: 'test'
+  ...
+# Subtest: x402 client signs exactly the transfer entry with caller-selected context rule then returns unsubmitted XDR
+ok 41 - x402 client signs exactly the transfer entry with caller-selected context rule then returns unsubmitted XDR
+  ---
+  duration_ms: 58.207
+  type: 'test'
+  ...
+# Subtest: a manipulated simulation invocation never reaches the passkey prompt
+ok 42 - a manipulated simulation invocation never reaches the passkey prompt
+  ---
+  duration_ms: 4.5042
+  type: 'test'
+  ...
+# Subtest: browser bundle exports signing and challenge APIs without depending on a global Buffer
+ok 43 - browser bundle exports signing and challenge APIs without depending on a global Buffer
+  ---
+  duration_ms: 256.0651
+  type: 'test'
+  ...
+# Subtest: map and advertiser connect the same existing passkey wallet without creating or funding an account
+ok 44 - map and advertiser connect the same existing passkey wallet without creating or funding an account
+  ---
+  duration_ms: 3.4738
+  type: 'test'
+  ...
+# Subtest: published map and advertiser bundles use the same default IndexedDB database for credential mappings
+ok 45 - published map and advertiser bundles use the same default IndexedDB database for credential mappings
+  ---
+  duration_ms: 368.1695
+  type: 'test'
+  ...
+# Subtest: ads reader verifies image bytes and expires from server time even when local wall clock differs
+ok 46 - ads reader verifies image bytes and expires from server time even when local wall clock differs
+  ---
+  duration_ms: 87.9982
+  type: 'test'
+  ...
+# Subtest: ads reader immediately removes cached content on failed freshness check and version rollback
+ok 47 - ads reader immediately removes cached content on failed freshness check and version rollback
+  ---
+  duration_ms: 8.0546
+  type: 'test'
+  ...
+# Subtest: neutral update, suspension and expired half-open creative remove the active revision
+ok 48 - neutral update, suspension and expired half-open creative remove the active revision
+  ---
+  duration_ms: 8.9425
+  type: 'test'
+  ...
+# Subtest: changing a creative cannot resurrect an image whose validation finished after suspension
+ok 49 - changing a creative cannot resurrect an image whose validation finished after suspension
+  ---
+  duration_ms: 1.9703
+  type: 'test'
+  ...
+# Subtest: multiple independent readers never generate audience or delivery mutations
+ok 50 - multiple independent readers never generate audience or delivery mutations
+  ---
+  duration_ms: 6.0739
+  type: 'test'
+  ...
+# Subtest: tampered image, active CTA schemes and off-origin artefacts fail closed
+ok 51 - tampered image, active CTA schemes and off-origin artefacts fail closed
+  ---
+  duration_ms: 3.8093
+  type: 'test'
+  ...
+# Subtest: paid, queued and fulfilled states remain distinct including partial and remedied orders
+ok 52 - paid, queued and fulfilled states remain distinct including partial and remedied orders
+  ---
+  duration_ms: 1.0131
+  type: 'test'
+  ...
+# Subtest: quote values preserve exact integer money and exclusive window units
+ok 53 - quote values preserve exact integer money and exclusive window units
+  ---
+  duration_ms: 0.8521
+  type: 'test'
+  ...
+# Subtest: API sends raw uploads and stable idempotency keys, and understands x402 402 without treating it as settlement
+ok 54 - API sends raw uploads and stable idempotency keys, and understands x402 402 without treating it as settlement
+  ---
+  duration_ms: 2
+  type: 'test'
+  ...
+# Subtest: payment requirements pin amount, payee, network and asset before a wallet can sign
+ok 55 - payment requirements pin amount, payee, network and asset before a wallet can sign
+  ---
+  duration_ms: 1.1884
+  type: 'test'
+  ...
+# Subtest: wallet chooses a single exact current context rule and refuses ambiguity or policy bypass
+ok 56 - wallet chooses a single exact current context rule and refuses ambiguity or policy bypass
+  ---
+  duration_ms: 1.0499
+  type: 'test'
+  ...
+# Subtest: a response delayed beyond its validity never revives cached content
+ok 57 - a response delayed beyond its validity never revives cached content
+  ---
+  duration_ms: 4.0389
+  type: 'test'
+  ...
+# Subtest: structured API failures retain the server explanation instead of showing an object
+ok 58 - structured API failures retain the server explanation instead of showing an object
+  ---
+  duration_ms: 0.9121
+  type: 'test'
+  ...
+# Subtest: QR configuration preserves every placement parameter for server validation
+ok 59 - QR configuration preserves every placement parameter for server validation
+  ---
+  duration_ms: 1.7872
+  type: 'test'
+  ...
+# Subtest: a disabled checkout still admits a pinned five-USDC Testnet diagnostic configuration
+ok 60 - a disabled checkout still admits a pinned five-USDC Testnet diagnostic configuration
+  ---
+  duration_ms: 3.2312
+  type: 'test'
+  ...
+# Subtest: page load checks config and session by GET; explicit connect reuses one C wallet without funding
+ok 61 - page load checks config and session by GET; explicit connect reuses one C wallet without funding
+  ---
+  duration_ms: 4.5011
+  type: 'test'
+  ...
+# Subtest: the explicit verification action pins backend challenge and calls only verify, exposing hashes without signed data
+ok 62 - the explicit verification action pins backend challenge and calls only verify, exposing hashes without signed data
+  ---
+  duration_ms: 5.3083
+  type: 'test'
+  ...
+# Subtest: changed recipient, amount, payer, network, resource or expiry is refused before the passkey signature
+ok 63 - changed recipient, amount, payer, network, resource or expiry is refused before the passkey signature
+  ---
+  duration_ms: 6.6081
+  type: 'test'
+  ...
+# Subtest: a lost verify response recovers with GET without another payload POST, signature or challenge
+ok 64 - a lost verify response recovers with GET without another payload POST, signature or challenge
+  ---
+  duration_ms: 1.8794
+  type: 'test'
+  ...
+# Subtest: cancelled passkey and an unauthenticated action never send a signed payload for verification
+ok 65 - cancelled passkey and an unauthenticated action never send a signed payload for verification
+  ---
+  duration_ms: 1.3356
+  type: 'test'
+  ...
+# Subtest: a valid verdict requires the same challenge, payer and both evidence hashes; rejection remains distinct
+ok 66 - a valid verdict requires the same challenge, payer and both evidence hashes; rejection remains distinct
+  ---
+  duration_ms: 0.9002
+  type: 'test'
+  ...
+# Subtest: API keeps a diagnostic same-origin and no-store, and never reflects raw backend error payloads
+ok 67 - API keeps a diagnostic same-origin and no-store, and never reflects raw backend error payloads
+  ---
+  duration_ms: 56.7662
+  type: 'test'
+  ...
+# Subtest: an uncertain 202 remains pending after expiry and never requests another signature
+ok 68 - an uncertain 202 remains pending after expiry and never requests another signature
+  ---
+  duration_ms: 2.3545
+  type: 'test'
+  ...
+# Subtest: private rejection detail uses only constant user messages for recognized tokens
+ok 69 - private rejection detail uses only constant user messages for recognized tokens
+  ---
+  duration_ms: 3.6716
+  type: 'test'
+  ...
+# Subtest: restored pending session is read only and refresh recovery never signs or posts
+ok 70 - restored pending session is read only and refresh recovery never signs or posts
+  ---
+  duration_ms: 1.1872
+  type: 'test'
+  ...
+# Subtest: quota errors carry a sane Retry-After clock without raw backend messages
+ok 71 - quota errors carry a sane Retry-After clock without raw backend messages
+  ---
+  duration_ms: 2.2198
+  type: 'test'
+  ...
+# Subtest: preparation precedes the sixty-second challenge and server time ignores the local clock epoch
+ok 72 - preparation precedes the sixty-second challenge and server time ignores the local clock epoch
+  ---
+  duration_ms: 2.9331
+  type: 'test'
+  ...
+# Subtest: cancelled ceremonies reuse the unsubmitted challenge and show a server-anchored countdown
+ok 73 - cancelled ceremonies reuse the unsubmitted challenge and show a server-anchored countdown
+  ---
+  duration_ms: 1.5999
+  type: 'test'
+  ...
+# Subtest: lost challenge response followed by expiry retires the old key and recovers on an explicit action
+ok 74 - lost challenge response followed by expiry retires the old key and recovers on an explicit action
+  ---
+  duration_ms: 2.8833
+  type: 'test'
+  ...
+# Subtest: definite pre-dispatch expiry clears the payload while a 401 requires reconnecting
+ok 75 - definite pre-dispatch expiry clears the payload while a 401 requires reconnecting
+  ---
+  duration_ms: 1.304
+  type: 'test'
+  ...
+# Subtest: fee below minimum is a fixed private diagnostic message
+ok 76 - fee below minimum is a fixed private diagnostic message
+  ---
+  duration_ms: 0.3348
+  type: 'test'
+  ...
+# Subtest: a nearly expired reusable challenge waits for its clock instead of asking for a doomed signature
+ok 77 - a nearly expired reusable challenge waits for its clock instead of asking for a doomed signature
+  ---
+  duration_ms: 0.85
+  type: 'test'
+  ...
+# Subtest: compatibility status is owner scoped and cannot verify or create a challenge
+ok 78 - compatibility status is owner scoped and cannot verify or create a challenge
+  ---
+  duration_ms: 61.9116
+  type: 'test'
+  ...
+# Subtest: compatibility status rejects unauthenticated and malformed selections
+ok 79 - compatibility status rejects unauthenticated and malformed selections
+  ---
+  duration_ms: 3.8174
+  type: 'test'
+  ...
+# Subtest: quota reports Retry-After without creating a new verification
+ok 80 - quota reports Retry-After without creating a new verification
+  ---
+  duration_ms: 4.0637
+  type: 'test'
+  ...
+# Subtest: explicit local verify-only proof persists intent before facilitator verify and never settles, enqueues or enables checkout
+ok 81 - explicit local verify-only proof persists intent before facilitator verify and never settles, enqueues or enables checkout
+  ---
+  duration_ms: 4998.5626
+  type: 'test'
+  ...
+# Subtest: server challenge requirements are immutable and unsigned requests reuse one active draft
+ok 82 - server challenge requirements are immutable and unsigned requests reuse one active draft
+  ---
+  duration_ms: 3440.9511
+  type: 'test'
+  ...
+# Subtest: another owner, stale challenge or changed receiver cannot reach decoding or external verification
+ok 83 - another owner, stale challenge or changed receiver cannot reach decoding or external verification
+  ---
+  duration_ms: 3568.3012
+  type: 'test'
+  ...
+# Subtest: resource, requirements and actual XDR tampering fail before any ledger or facilitator call
+ok 84 - resource, requirements and actual XDR tampering fail before any ledger or facilitator call
+  ---
+  duration_ms: 5139.9294
+  type: 'test'
+  ...
+# Subtest: authorization ledger expiry cannot exceed the declared sixty-second window or predate the current ledger
+ok 85 - authorization ledger expiry cannot exceed the declared sixty-second window or predate the current ledger
+  ---
+  duration_ms: 14469.3573
+  type: 'test'
+  ...
+# Subtest: facilitator rejection, wrong payer and malformed success cannot produce a verified proof
+ok 86 - facilitator rejection, wrong payer and malformed success cannot produce a verified proof
+  ---
+  duration_ms: 22716.587
+  type: 'test'
+  ...
+# Subtest: bounded facilitator timeout is durable and repeated or restarted requests never call it again
+ok 87 - bounded facilitator timeout is durable and repeated or restarted requests never call it again
+  ---
+  duration_ms: 15933.8772
+  type: 'test'
+  ...
+# Subtest: two service instances return pending while one verifies and retain its successful proof without a duplicate external call
+ok 88 - two service instances return pending while one verifies and retain its successful proof without a duplicate external call
+  ---
+  duration_ms: 4901.9567
+  type: 'test'
+  ...
+# Subtest: a recovered interrupted intent remains pending until its durable verification deadline and then fails closed
+ok 89 - a recovered interrupted intent remains pending until its durable verification deadline and then fails closed
+  ---
+  duration_ms: 5731.3373
+  type: 'test'
+  ...
+# Subtest: one authorization nonce and hash cannot verify two independently issued challenges
+ok 90 - one authorization nonce and hash cannot verify two independently issued challenges
+  ---
+  duration_ms: 4976.0429
+  type: 'test'
+  ...
+# Subtest: HTTP compatibility requires same origin, session and idempotency while ignoring client identity overrides
+ok 91 - HTTP compatibility requires same origin, session and idempotency while ignoring client identity overrides
+  ---
+  duration_ms: 12989.7193
+  type: 'test'
+  ...
+# Subtest: runtime wiring shares the injected payment adapter with the isolated verification-only service
+ok 92 - runtime wiring shares the injected payment adapter with the isolated verification-only service
+  ---
+  duration_ms: 9975.6067
+  type: 'test'
+  ...
+# Subtest: facilitator diagnostics accept only fixed tokens, never messages or filtered payload fragments
+ok 93 - facilitator diagnostics accept only fixed tokens, never messages or filtered payload fragments
+  ---
+  duration_ms: 0.5305
+  type: 'test'
+  ...
+# Subtest: safe rejection reason is durable and private while generic code and idempotent verify remain stable
+ok 94 - safe rejection reason is durable and private while generic code and idempotent verify remain stable
+  ---
+  duration_ms: 6618.5017
+  type: 'test'
+  ...
+# Subtest: unknown or payload-bearing reason cannot enter durable or private diagnostic output
+ok 95 - unknown or payload-bearing reason cannot enter durable or private diagnostic output
+  ---
+  duration_ms: 5336.0051
+  type: 'test'
+  ...
+# Subtest: status restores one reusable unsigned challenge across keys and derives expiry without changing history
+ok 96 - status restores one reusable unsigned challenge across keys and derives expiry without changing history
+  ---
+  duration_ms: 6590.1585
+  type: 'test'
+  ...
+# Subtest: four concurrent signed admissions share three hourly slots atomically across configurations
+ok 97 - four concurrent signed admissions share three hourly slots atomically across configurations
+  ---
+  duration_ms: 6161.4975
+  type: 'test'
+  ...
+# Subtest: an admitted verdict after draft expiry stays definitive until its separate verification deadline
+ok 98 - an admitted verdict after draft expiry stays definitive until its separate verification deadline
+  ---
+  duration_ms: 6899.5162
+  type: 'test'
+  ...
+# Subtest: a lost verify response is recoverable by private read without another authorization or facilitator call
+ok 99 - a lost verify response is recoverable by private read without another authorization or facilitator call
+  ---
+  duration_ms: 5120.6296
+  type: 'test'
+  ...
+# Subtest: rejected and uncertain admissions retain their hourly slots measured from admission rather than draft creation
+ok 100 - rejected and uncertain admissions retain their hourly slots measured from admission rather than draft creation
+  ---
+  duration_ms: 4570.18
+  type: 'test'
+  ...
+# Subtest: missing operational configuration disables purchases while the approved pilot price is explicit
+ok 101 - missing operational configuration disables purchases while the approved pilot price is explicit
+  ---
+  duration_ms: 5.5911
+  type: 'test'
+  ...
+# Subtest: pubnet and lookalike asset are rejected before API initialization
+ok 102 - pubnet and lookalike asset are rejected before API initialization
+  ---
+  duration_ms: 2.2005
+  type: 'test'
+  ...
+# Subtest: public configuration cannot echo a pasted signing secret or private runtime credentials
+ok 103 - public configuration cannot echo a pasted signing secret or private runtime credentials
+  ---
+  duration_ms: 7.0188
+  type: 'test'
+  ...
+# Subtest: uploads sniff real bytes, re-decode, strip metadata and reject active or oversized content
+ok 104 - uploads sniff real bytes, re-decode, strip metadata and reject active or oversized content
+  ---
+  duration_ms: 1952.6793
+  type: 'test'
+  ...
+# Subtest: a model ALLOW cannot waive rights, asset integrity, domain or SSRF checks
+ok 105 - a model ALLOW cannot waive rights, asset integrity, domain or SSRF checks
+  ---
+  duration_ms: 1164.8892
+  type: 'test'
+  ...
+# Subtest: generation produces fixed-ratio raster artifacts and audit binds exact immutable hashes and CTA
+ok 106 - generation produces fixed-ratio raster artifacts and audit binds exact immutable hashes and CTA
+  ---
+  duration_ms: 8478.765
+  type: 'test'
+  ...
+# Subtest: uncertain, missing, timed-out or incorrectly bound final moderation never approves publication
+ok 107 - uncertain, missing, timed-out or incorrectly bound final moderation never approves publication
+  ---
+  duration_ms: 1270.9042
+  type: 'test'
+  ...
+# Subtest: worst-case cost and input budgets are reserved before invoking any model
+ok 108 - worst-case cost and input budgets are reserved before invoking any model
+  ---
+  duration_ms: 3677.859
+  type: 'test'
+  ...
+# Subtest: website-only briefs are preaudited and generated with one real website CTA and no invented X profile
+ok 109 - website-only briefs are preaudited and generated with one real website CTA and no invented X profile
+  ---
+  duration_ms: 6690.176
+  type: 'test'
+  ...
+# Subtest: an optional X URL remains strict when supplied, including failed inspection or a redirect outside x.com
+ok 110 - an optional X URL remains strict when supplied, including failed inspection or a redirect outside x.com
+  ---
+  duration_ms: 16948.3904
+  type: 'test'
+  ...
+# Subtest: website and ownership declaration remain mandatory when X is omitted or empty
+ok 111 - website and ownership declaration remain mandatory when X is omitted or empty
+  ---
+  duration_ms: 8546.8237
+  type: 'test'
+  ...
+# Subtest: PostgreSQL CI guard rejects non-test environments, database names and URL overrides before loading a driver
+ok 112 - PostgreSQL CI guard rejects non-test environments, database names and URL overrides before loading a driver
+  ---
+  duration_ms: 5.734
+  type: 'test'
+  ...
+# Subtest: CI fixtures isolate search_path per pool and remove only their generated schema
+ok 113 - CI fixtures isolate search_path per pool and remove only their generated schema
+  ---
+  duration_ms: 147.4387
+  type: 'test'
+  ...
+# Subtest: server-selected database identity is checked before any schema mutation
+ok 114 - server-selected database identity is checked before any schema mutation
+  ---
+  duration_ms: 3.9931
+  type: 'test'
+  ...
+# Subtest: OZ auth callback is path keyed and only the exact canonical Testnet URL receives the existing server credential
+ok 115 - OZ auth callback is path keyed and only the exact canonical Testnet URL receives the existing server credential
+  ---
+  duration_ms: 7.549
+  type: 'test'
+  ...
+# Subtest: public x402.org never reads or transmits the Channels key and no provider fallback is possible
+ok 116 - public x402.org never reads or transmits the Channels key and no provider fallback is possible
+  ---
+  duration_ms: 66.0173
+  type: 'test'
+  ...
+# Subtest: mainnet, credentials, encoded paths, lookalike hosts, fragments, queries and noncanonical URL spellings fail before network
+ok 117 - mainnet, credentials, encoded paths, lookalike hosts, fragments, queries and noncanonical URL spellings fail before network
+  ---
+  duration_ms: 5.7537
+  type: 'test'
+  ...
+# Subtest: all three transport operations pin URLs, bound body/time and forbid redirects
+ok 118 - all three transport operations pin URLs, bound body/time and forbid redirects
+  ---
+  duration_ms: 7.3332
+  type: 'test'
+  ...
+# Subtest: probe only discovers v2 exact sponsored Testnet support and returns no signer, URL, key or raw extra
+ok 119 - probe only discovers v2 exact sponsored Testnet support and returns no signer, URL, key or raw extra
+  ---
+  duration_ms: 11.9131
+  type: 'test'
+  ...
+# Subtest: provider failures, oversized responses and malformed results fail closed without leaking response text
+ok 120 - provider failures, oversized responses and malformed results fail closed without leaking response text
+  ---
+  duration_ms: 9.2755
+  type: 'test'
+  ...
+# Subtest: the existing resource-server SDK uses the explicitly selected authenticated facilitator and keeps verify separate from settle
+ok 121 - the existing resource-server SDK uses the explicitly selected authenticated facilitator and keeps verify separate from settle
+  ---
+  duration_ms: 993.5409
+  type: 'test'
+  ...
+# Subtest: non-2xx responses cannot approve verification or settlement; explicit negative verdicts remain observable
+ok 122 - non-2xx responses cannot approve verification or settlement; explicit negative verdicts remain observable
+  ---
+  duration_ms: 5.4588
+  type: 'test'
+  ...
+# Subtest: local PostgreSQL pipeline with explicit creative/payment adapters: confirmed payment to queued audit, canonical frames and separate delivery
+ok 123 - local PostgreSQL pipeline with explicit creative/payment adapters: confirmed payment to queued audit, canonical frames and separate delivery
+  ---
+  duration_ms: 9962.0805
+  type: 'test'
+  ...
+# Subtest: atomic reservation refuses competing last capacity and rolls back a two-placement conflict
+ok 124 - atomic reservation refuses competing last capacity and rolls back a two-placement conflict
+  ---
+  duration_ms: 7952.861
+  type: 'test'
+  ...
+# Subtest: final uncertainty quarantines the paid order and never fabricates delivery
+ok 125 - final uncertainty quarantines the paid order and never fabricates delivery
+  ---
+  duration_ms: 17077.3865
+  type: 'test'
+  ...
+# Subtest: HTTP keeps disabled checkout explicit, blocks CSRF before auth, and does not expose session tokens
+ok 126 - HTTP keeps disabled checkout explicit, blocks CSRF before auth, and does not expose session tokens
+  ---
+  duration_ms: 69.7522
+  type: 'test'
+  ...
+# Subtest: included correction preserves payment and cannot bypass an operator hold
+ok 127 - included correction preserves payment and cannot bypass an operator hold
+  ---
+  duration_ms: 8596.1719
+  type: 'test'
+  ...
+# Subtest: x402 standard headers preserve the signed payload and only SETTLED returns a payment response
+ok 128 - x402 standard headers preserve the signed payload and only SETTLED returns a payment response
+  ---
+  duration_ms: 22.2585
+  type: 'test'
+  ...
+# Subtest: operator dispute HTTP cannot replace the authenticated identity or route dispute ID with body fields
+ok 129 - operator dispute HTTP cannot replace the authenticated identity or route dispute ID with body fields
+  ---
+  duration_ms: 4.4763
+  type: 'test'
+  ...
+# Subtest: the same preaudited correction draft creates separate immutable generation revisions for two paid orders
+ok 130 - the same preaudited correction draft creates separate immutable generation revisions for two paid orders
+  ---
+  duration_ms: 6737.4726
+  type: 'test'
+  ...
+# Subtest: stored manifest reuse rejects a missing placement or a different revision before fulfilling design
+ok 131 - stored manifest reuse rejects a missing placement or a different revision before fulfilling design
+  ---
+  duration_ms: 9027.8344
+  type: 'test'
+  ...
+# Subtest: pilot entitlements remain five across repeated initialization and recovery
+ok 132 - pilot entitlements remain five across repeated initialization and recovery
+  ---
+  duration_ms: 8812.0281
+  type: 'test'
+  ...
+# Subtest: recovery cannot consume another committed reservation
+ok 133 - recovery cannot consume another committed reservation
+  ---
+  duration_ms: 5125.8136
+  type: 'test'
+  ...
+# Subtest: public playback is derived from confirmed ACKs, not the seventy-second reservation
+ok 134 - public playback is derived from confirmed ACKs, not the seventy-second reservation
+  ---
+  duration_ms: 0.5544
+  type: 'test'
+  ...
+# Subtest: expired partial delivery creates a consented deficit batch with one order and one frozen payment
+ok 135 - expired partial delivery creates a consented deficit batch with one order and one frozen payment
+  ---
+  duration_ms: 3962.5561
+  type: 'test'
+  ...
+# Subtest: availability suggests five estimated passes and a one-hour window without taking a reservation
+ok 136 - availability suggests five estimated passes and a one-hour window without taking a reservation
+  ---
+  duration_ms: 3629.7662
+  type: 'test'
+  ...
+# Subtest: stale, expired and cross-attempt playback cannot show a running paid minute
+ok 137 - stale, expired and cross-attempt playback cannot show a running paid minute
+  ---
+  duration_ms: 1.1929
+  type: 'test'
+  ...
+# Subtest: an unpaid expired quote never becomes a purchased delivery debt
+ok 138 - an unpaid expired quote never becomes a purchased delivery debt
+  ---
+  duration_ms: 6220.7594
+  type: 'test'
+  ...
+# Subtest: interrupted pass and worker restart preserve the durable campaign interval inside the paid window
+ok 139 - interrupted pass and worker restart preserve the durable campaign interval inside the paid window
+  ---
+  duration_ms: 6506.2786
+  type: 'test'
+  ...
+# Subtest: recovery fills a waiting campaign interval with another campaign and gives both five turns
+ok 140 - recovery fills a waiting campaign interval with another campaign and gives both five turns
+  ---
+  duration_ms: 6722.7334
+  type: 'test'
+  ...
+# Subtest: legacy recovery without a frozen interval remains contiguous after an interrupted reservation
+ok 141 - legacy recovery without a frozen interval remains contiguous after an interrupted reservation
+  ---
+  duration_ms: 6196.6535
+  type: 'test'
+  ...
+# Subtest: OIDC readiness rejects expired, unsigned, foreign-issuer and not-yet-valid fixtures
+ok 142 - OIDC readiness rejects expired, unsigned, foreign-issuer and not-yet-valid fixtures
+  ---
+  duration_ms: 3.7988
+  type: 'test'
+  ...
+# Subtest: explicit server API key has precedence without reading OIDC or changing environment
+ok 143 - explicit server API key has precedence without reading OIDC or changing environment
+  ---
+  duration_ms: 0.6802
+  type: 'test'
+  ...
+# Subtest: ordinary caller headers and a hosted build-time token cannot establish runtime readiness
+ok 144 - ordinary caller headers and a hosted build-time token cannot establish runtime readiness
+  ---
+  duration_ms: 2.3387
+  type: 'test'
+  ...
+# Subtest: official request-context reader isolates concurrent requests and never writes token env
+ok 145 - official request-context reader isolates concurrent requests and never writes token env
+  ---
+  duration_ms: 1.9842
+  type: 'test'
+  ...
+# Subtest: missing, expired or changed context fails closed before credential fallback
+ok 146 - missing, expired or changed context fails closed before credential fallback
+  ---
+  duration_ms: 1.6465
+  type: 'test'
+  ...
+# Subtest: local explicit OIDC env token must be fresh and never consults caller context
+ok 147 - local explicit OIDC env token must be fresh and never consults caller context
+  ---
+  duration_ms: 0.6905
+  type: 'test'
+  ...
+# Subtest: public configuration exposes only readiness while preserving unrelated integration gates
+ok 148 - public configuration exposes only readiness while preserving unrelated integration gates
+  ---
+  duration_ms: 3.0254
+  type: 'test'
+  ...
+# Subtest: runtime resolver refreshes readiness per request while sharing only the database pool
+ok 149 - runtime resolver refreshes readiness per request while sharing only the database pool
+  ---
+  duration_ms: 3.5556
+  type: 'test'
+  ...
+# Subtest: each model call resolves its own request credential without reusing a previous provider
+ok 150 - each model call resolves its own request credential without reusing a previous provider
+  ---
+  duration_ms: 1460.4824
+  type: 'test'
+  ...
+# Subtest: missing model auth fails before loading or calling the SDK and cannot reuse a previous token
+ok 151 - missing model auth fails before loading or calling the SDK and cannot reuse a previous token
+  ---
+  duration_ms: 1.2007
+  type: 'test'
+  ...
+# Subtest: public config HTTP route derives readiness from platform context and ignores caller token headers
+ok 152 - public config HTTP route derives readiness from platform context and ignores caller token headers
+  ---
+  duration_ms: 51.8919
+  type: 'test'
+  ...
+# Subtest: dispute resolution takes authority and dispute identity only from the authenticated session and route
+ok 153 - dispute resolution takes authority and dispute identity only from the authenticated session and route
+  ---
+  duration_ms: 47.7481
+  type: 'test'
+  ...
+# Subtest: every authenticated business mutation requires an idempotency key before touching quotas or services
+ok 154 - every authenticated business mutation requires an idempotency key before touching quotas or services
+  ---
+  duration_ms: 23.6107
+  type: 'test'
+  ...
+# Subtest: malformed keys and a foreign origin cannot reach a protected action
+ok 155 - malformed keys and a foreign origin cannot reach a protected action
+  ---
+  duration_ms: 2.0273
+  type: 'test'
+  ...
+# Subtest: an advertiser cannot make an operator request by placing an operator identity in JSON
+ok 156 - an advertiser cannot make an operator request by placing an operator identity in JSON
+  ---
+  duration_ms: 1.3036
+  type: 'test'
+  ...
+# Subtest: the initial x402 challenge includes its key and does not transmit an authorization payload
+ok 157 - the initial x402 challenge includes its key and does not transmit an authorization payload
+  ---
+  duration_ms: 3.7263
+  type: 'test'
+  ...
+# Subtest: countdown uses confirmed remaining time, never the seventy-second reservation or local wall clock
+ok 158 - countdown uses confirmed remaining time, never the seventy-second reservation or local wall clock
+  ---
+  duration_ms: 44.8731
+  type: 'test'
+  ...
+# Subtest: starting, pause, missing and stale evidence cannot produce a fabricated countdown
+ok 159 - starting, pause, missing and stale evidence cannot produce a fabricated countdown
+  ---
+  duration_ms: 1.2144
+  type: 'test'
+  ...
+# Subtest: a repeated public manifest or additional reader never adds delivery units
+ok 160 - a repeated public manifest or additional reader never adds delivery units
+  ---
+  duration_ms: 1.566
+  type: 'test'
+  ...
+# Subtest: private five-pass timeline is backed by completed rows and preserves unpaid debt
+ok 161 - private five-pass timeline is backed by completed rows and preserves unpaid debt
+  ---
+  duration_ms: 2.5223
+  type: 'test'
+  ...
+# Subtest: reprogramming requires explicit consent and sends the current fulfillment version without amount or signature
+ok 162 - reprogramming requires explicit consent and sends the current fulfillment version without amount or signature
+  ---
+  duration_ms: 1.212
+  type: 'test'
+  ...
+# Subtest: availability is explicitly estimated and requires exactly five distinct server-provided turns
+ok 163 - availability is explicitly estimated and requires exactly five distinct server-provided turns
+  ---
+  duration_ms: 0.8022
+  type: 'test'
+  ...
+# Subtest: physical QR and NFC share the same stable main-stage URL with no wallet, order or payment token
+ok 164 - physical QR and NFC share the same stable main-stage URL with no wallet, order or payment token
+  ---
+  duration_ms: 23.2498
+  type: 'test'
+  ...
+# Subtest: stage access stays beside the actual stage and is independently disposable
+ok 165 - stage access stays beside the actual stage and is independently disposable
+  ---
+  duration_ms: 12.8422
+  type: 'test'
+  ...
+# Subtest: legacy TIME, EXCLUSIVE and unversioned manifests ignore pilot timing metadata
+ok 166 - legacy TIME, EXCLUSIVE and unversioned manifests ignore pilot timing metadata
+  ---
+  duration_ms: 4.4452
+  type: 'test'
+  ...
+# Subtest: purchase access comes from authenticated eligibility while old fixtures keep existing semantics
+ok 167 - purchase access comes from authenticated eligibility while old fixtures keep existing semantics
+  ---
+  duration_ms: 1.412
+  type: 'test'
+  ...
+# Subtest: PostgreSQL settlement rollback recovers original payment and creates exactly one durable job
+ok 168 - PostgreSQL settlement rollback recovers original payment and creates exactly one durable job
+  ---
+  duration_ms: 8473.235
+  type: 'test'
+  ...
+# Subtest: PostgreSQL rejects reused authorization nonce across independent orders
+ok 169 - PostgreSQL rejects reused authorization nonce across independent orders
+  ---
+  duration_ms: 7838.0298
+  type: 'test'
+  ...
+# Subtest: PostgreSQL refund receipt stays unresolved until an exact confirmed transfer, without a second submission
+ok 170 - PostgreSQL refund receipt stays unresolved until an exact confirmed transfer, without a second submission
+  ---
+  duration_ms: 5384.6388
+  type: 'test'
+  ...
+# Subtest: registry synchronization signs XDR evidence once and preserves commit/evidence/complete ordering in PostgreSQL
+ok 171 - registry synchronization signs XDR evidence once and preserves commit/evidence/complete ordering in PostgreSQL
+  ---
+  duration_ms: 4782.9251
+  type: 'test'
+  ...
+# Subtest: quoted settlement remedy computes exact deficit, pauses publication on approval and closes only after confirmed refund
+ok 172 - quoted settlement remedy computes exact deficit, pauses publication on approval and closes only after confirmed refund
+  ---
+  duration_ms: 3461.6064
+  type: 'test'
+  ...
+# Subtest: a missing independent placement reservation refuses payment before transmission
+ok 173 - a missing independent placement reservation refuses payment before transmission
+  ---
+  duration_ms: 4223.0244
+  type: 'test'
+  ...
+# Subtest: checkout closing during verification prevents the first settlement while preserving the durable attempt
+ok 174 - checkout closing during verification prevents the first settlement while preserving the durable attempt
+  ---
+  duration_ms: 3285.3183
+  type: 'test'
+  ...
+# Subtest: a payment already submitted before cutoff still reconciles and queues after cutoff without a second charge
+ok 175 - a payment already submitted before cutoff still reconciles and queues after cutoff without a second charge
+  ---
+  duration_ms: 3122.1702
+  type: 'test'
+  ...
+# Subtest: settlement starts only after durable SETTLING and queues once across retries
+ok 176 - settlement starts only after durable SETTLING and queues once across retries
+  ---
+  duration_ms: 10.3356
+  type: 'test'
+  ...
+# Subtest: same key with changed payload conflicts even after confirmed payment
+ok 177 - same key with changed payload conflicts even after confirmed payment
+  ---
+  duration_ms: 3.1733
+  type: 'test'
+  ...
+# Subtest: timeout preserves attempt and prevents a fresh charge or challenge
+ok 178 - timeout preserves attempt and prevents a fresh charge or challenge
+  ---
+  duration_ms: 5.3821
+  type: 'test'
+  ...
+# Subtest: settlement with no transaction or no proof cannot enqueue
+ok 179 - settlement with no transaction or no proof cannot enqueue
+  ---
+  duration_ms: 1.9412
+  type: 'test'
+  ...
+# Subtest: authoritative recovery without new settlement queues the original attempt
+ok 180 - authoritative recovery without new settlement queues the original attempt
+  ---
+  duration_ms: 3.6467
+  type: 'test'
+  ...
+# Subtest: expired reservation, wrong owner and failed verification never settle
+ok 181 - expired reservation, wrong owner and failed verification never settle
+  ---
+  duration_ms: 3.289
+  type: 'test'
+  ...
+# Subtest: XDR parser binds exact payer, asset, recipient, amount and auth nonce
+ok 182 - XDR parser binds exact payer, asset, recipient, amount and auth nonce
+  ---
+  duration_ms: 35.3534
+  type: 'test'
+  ...
+# Subtest: event amount match with a different nonce never proves an order; altered envelope source is allowed
+ok 183 - event amount match with a different nonce never proves an order; altered envelope source is allowed
+  ---
+  duration_ms: 33.6321
+  type: 'test'
+  ...
+# Subtest: missing historical coverage fails closed instead of interpreting zero events as no payment
+ok 184 - missing historical coverage fails closed instead of interpreting zero events as no payment
+  ---
+  duration_ms: 0.8818
+  type: 'test'
+  ...
+# Subtest: local pilot fixes 5 USDC for five complete 60-second main-stage passes without a design surcharge
+ok 185 - local pilot fixes 5 USDC for five complete 60-second main-stage passes without a design surcharge
+  ---
+  duration_ms: 5536.2268
+  type: 'test'
+  ...
+# Subtest: pilot rejects price, duration, quantity, placement, plan and offer-version tampering without creating an order
+ok 186 - pilot rejects price, duration, quantity, placement, plan and offer-version tampering without creating an order
+  ---
+  duration_ms: 4820.7403
+  type: 'test'
+  ...
+# Subtest: switching to five passes preserves a legacy TIME quote, its frozen duration and payable amount
+ok 187 - switching to five passes preserves a legacy TIME quote, its frozen duration and payable amount
+  ---
+  duration_ms: 4094.7086
+  type: 'test'
+  ...
+# Subtest: 20 explicit local 5 USDC settlements debit 100 to 0 once each; the 21st is refused before authorization processing
+ok 188 - 20 explicit local 5 USDC settlements debit 100 to 0 once each; the 21st is refused before authorization processing
+  ---
+  duration_ms: 16144.3255
+  type: 'test'
+  ...
+# Subtest: five full minutes require five unique complete 60-second pass IDs; settlement and generation deliver zero
+ok 189 - five full minutes require five unique complete 60-second pass IDs; settlement and generation deliver zero
+  ---
+  duration_ms: 8713.2205
+  type: 'test'
+  ...
+# Subtest: an interrupted minute restarts from zero and leaves one owed pass after expiry without an automatic refund
+ok 190 - an interrupted minute restarts from zero and leaves one owed pass after expiry without an automatic refund
+  ---
+  duration_ms: 8678.4917
+  type: 'test'
+  ...
+# Subtest: campaign share counts planned minute passes only inside the relevant window and still caps overlapping demand
+ok 191 - campaign share counts planned minute passes only inside the relevant window and still caps overlapping demand
+  ---
+  duration_ms: 15.9649
+  type: 'test'
+  ...
+# Subtest: same-campaign pass scheduling preserves millisecond commitment order read from PostgreSQL dates
+ok 192 - same-campaign pass scheduling preserves millisecond commitment order read from PostgreSQL dates
+  ---
+  duration_ms: 6.5278
+  type: 'test'
+  ...
+# Subtest: compatible campaigns rotate one complete minute per round; multiple orders cannot buy extra turns for one campaign
+ok 193 - compatible campaigns rotate one complete minute per round; multiple orders cannot buy extra turns for one campaign
+  ---
+  duration_ms: 0.5852
+  type: 'test'
+  ...
+# Subtest: interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights
+ok 194 - interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights
+  ---
+  duration_ms: 8472.6193
+  type: 'test'
+  ...
+# Subtest: consented partial recovery keeps the original paid order and completes only the missing pass with sales closed
+ok 195 - consented partial recovery keeps the original paid order and completes only the missing pass with sales closed
+  ---
+  duration_ms: 8504.7218
+  type: 'test'
+  ...
+# Subtest: availability survives fifteen seconds of review before quote admission
+ok 196 - availability survives fifteen seconds of review before quote admission
+  ---
+  duration_ms: 3993.7884
+  type: 'test'
+  ...
+# Subtest: pg wire conversion distinguishes SQL arrays from JSON arrays including an empty result
+ok 197 - pg wire conversion distinguishes SQL arrays from JSON arrays including an empty result
+  ---
+  duration_ms: 3.2906
+  type: 'test'
+  ...
+# Subtest: preview persists a JSON artifact array through pg binding and durable replay does not generate again
+ok 198 - preview persists a JSON artifact array through pg binding and durable replay does not generate again
+  ---
+  duration_ms: 5300.3305
+  type: 'test'
+  ...
+# Subtest: uncertain empty preview stays a JSON array and keeps its audit verdict
+ok 199 - uncertain empty preview stays a JSON array and keeps its audit verdict
+  ---
+  duration_ms: 3596.5872
+  type: 'test'
+  ...
+# Subtest: a failed preview remains durable and replay does not spend another generation
+ok 200 - a failed preview remains durable and replay does not spend another generation
+  ---
+  duration_ms: 4144.6684
+  type: 'test'
+  ...
+# Subtest: only interval between matching applied-frame acknowledgements counts
+ok 201 - only interval between matching applied-frame acknowledgements counts
+  ---
+  duration_ms: 2.6121
+  type: 'test'
+  ...
+# Subtest: stale, fenced and different revision acknowledgements never count
+ok 202 - stale, fenced and different revision acknowledgements never count
+  ---
+  duration_ms: 0.5214
+  type: 'test'
+  ...
+# Subtest: time clips to window and remaining obligation
+ok 203 - time clips to window and remaining obligation
+  ---
+  duration_ms: 0.3403
+  type: 'test'
+  ...
+# Subtest: tampering and another publisher key invalidate evidence
+ok 204 - tampering and another publisher key invalidate evidence
+  ---
+  duration_ms: 4.7211
+  type: 'test'
+  ...
+# Subtest: a refund requires configured operator authority and confirmed transfer evidence
+ok 205 - a refund requires configured operator authority and confirmed transfer evidence
+  ---
+  duration_ms: 15.6422
+  type: 'test'
+  ...
+# Subtest: refunds cannot exceed settled amount, cross owners or silently change idempotent requests
+ok 206 - refunds cannot exceed settled amount, cross owners or silently change idempotent requests
+  ---
+  duration_ms: 1.7725
+  type: 'test'
+  ...
+# Subtest: without a separately configured operator signer no refund can be signed
+ok 207 - without a separately configured operator signer no refund can be signed
+  ---
+  duration_ms: 0.929
+  type: 'test'
+  ...
+# Subtest: registry without deployed contract remains explicitly disabled
+ok 208 - registry without deployed contract remains explicitly disabled
+  ---
+  duration_ms: 2.2426
+  type: 'test'
+  ...
+# Subtest: proportional remedies separate audited design, conserve integer remainder and reject missing terms
+ok 209 - proportional remedies separate audited design, conserve integer remainder and reject missing terms
+  ---
+  duration_ms: 1.5073
+  type: 'test'
+  ...
+# Subtest: FULL refunds affect the deficient placement and preserve fulfilled placement obligations
+ok 210 - FULL refunds affect the deficient placement and preserve fulfilled placement obligations
+  ---
+  duration_ms: 0.4954
+  type: 'test'
+  ...
+# Subtest: restricted refund runtime validates amount and destination before requesting a signature
+ok 211 - restricted refund runtime validates amount and destination before requesting a signature
+  ---
+  duration_ms: 105.6933
+  type: 'test'
+  ...
+# Subtest: initial pilot batch keeps the original contract key and frozen terms
+ok 212 - initial pilot batch keeps the original contract key and frozen terms
+  ---
+  duration_ms: 5284.8642
+  type: 'test'
+  ...
+# Subtest: partial parent plus completed child records separate immutable commitments and batch-local nonces
+ok 213 - partial parent plus completed child records separate immutable commitments and batch-local nonces
+  ---
+  duration_ms: 4773.4745
+  type: 'test'
+  ...
+# Subtest: two registry services serialize one issuer across different orders while submit is outside the transaction
+ok 214 - two registry services serialize one issuer across different orders while submit is outside the transaction
+  ---
+  duration_ms: 3878.3174
+  type: 'test'
+  ...
+# Subtest: ambiguous submitted registry hash blocks new signatures even after a lease expires
+ok 215 - ambiguous submitted registry hash blocks new signatures even after a lease expires
+  ---
+  duration_ms: 3969.9173
+  type: 'test'
+  ...
+# Subtest: disabled registry does not initialize or query durable state
+ok 216 - disabled registry does not initialize or query durable state
+  ---
+  duration_ms: 0.617
+  type: 'test'
+  ...
+# Subtest: late UNKNOWN reconciliation cannot overwrite a concurrently confirmed transaction or its evidence
+ok 217 - late UNKNOWN reconciliation cannot overwrite a concurrently confirmed transaction or its evidence
+  ---
+  duration_ms: 3831.1934
+  type: 'test'
+  ...
+# Subtest: environment-backed registry signer signs exactly its issuer,contract,operation and arguments
+ok 218 - environment-backed registry signer signs exactly its issuer,contract,operation and arguments
+  ---
+  duration_ms: 47.1532
+  type: 'test'
+  ...
+# Subtest: wrong key,Mainnet,non-allowlisted issuer and unknown operation fail before signing or RPC
+ok 219 - wrong key,Mainnet,non-allowlisted issuer and unknown operation fail before signing or RPC
+  ---
+  duration_ms: 5.414
+  type: 'test'
+  ...
+# Subtest: RPC changes to contract,operation,arguments or issuer are rejected before the private key signs
+ok 220 - RPC changes to contract,operation,arguments or issuer are rejected before the private key signs
+  ---
+  duration_ms: 32.3005
+  type: 'test'
+  ...
+# Subtest: private file remains a fallback; an explicit memory key takes priority
+ok 221 - private file remains a fallback; an explicit memory key takes priority
+  ---
+  duration_ms: 35.3359
+  type: 'test'
+  ...
+# Subtest: configuration accepts a public offlineG or passkeyC authority without changing advertiser authentication
+ok 222 - configuration accepts a public offlineG or passkeyC authority without changing advertiser authentication
+  ---
+  duration_ms: 6.9655
+  type: 'test'
+  ...
+# Subtest: configuration rejects secret material and authorities absent from the public allowlist
+ok 223 - configuration rejects secret material and authorities absent from the public allowlist
+  ---
+  duration_ms: 3.7
+  type: 'test'
+  ...
+# Subtest: registry private environment key is omitted from public config and missing credentials disable configured registry
+ok 224 - registry private environment key is omitted from public config and missing credentials disable configured registry
+  ---
+  duration_ms: 5.6454
+  type: 'test'
+  ...
+# Subtest: FULFILL_REMAINING needs no invented refund deadline while legacy monetary policies still require it
+ok 225 - FULFILL_REMAINING needs no invented refund deadline while legacy monetary policies still require it
+  ---
+  duration_ms: 4.7118
+  type: 'test'
+  ...
+# Subtest: allowlisting an offlineG operator does not enable advertiserG authentication
+ok 226 - allowlisting an offlineG operator does not enable advertiserG authentication
+  ---
+  duration_ms: 58.5695
+  type: 'test'
+  ...
+# Subtest: private Cron authorization rejects absent, malformed and different tokens
+ok 227 - private Cron authorization rejects absent, malformed and different tokens
+  ---
+  duration_ms: 4.4311
+  type: 'test'
+  ...
+# Subtest: unauthorized requests never initialize runtime or access the database
+ok 228 - unauthorized requests never initialize runtime or access the database
+  ---
+  duration_ms: 1.7578
+  type: 'test'
+  ...
+# Subtest: authenticated disabled configuration returns a safe503 without creating a runner
+ok 229 - authenticated disabled configuration returns a safe503 without creating a runner
+  ---
+  duration_ms: 0.7916
+  type: 'test'
+  ...
+# Subtest: authenticated machine caller requires no browser Origin and receives bounded status
+ok 230 - authenticated machine caller requires no browser Origin and receives bounded status
+  ---
+  duration_ms: 2.9005
+  type: 'test'
+  ...
+# Subtest: invalid configuration is rejected before a lease or database operation
+ok 231 - invalid configuration is rejected before a lease or database operation
+  ---
+  duration_ms: 2.2592
+  type: 'test'
+  ...
+# Subtest: busy global publisher lease returns immediately before jobs, scheduling or Chromium
+ok 232 - busy global publisher lease returns immediately before jobs, scheduling or Chromium
+  ---
+  duration_ms: 0.8622
+  type: 'test'
+  ...
+# Subtest: deadline abort closes actual renderer context and owned browser without recording delivery
+ok 233 - deadline abort closes actual renderer context and owned browser without recording delivery
+  ---
+  duration_ms: 34.377
+  type: 'test'
+  ...
+# Subtest: aborted and busy renderer never launches Chromium
+ok 234 - aborted and busy renderer never launches Chromium
+  ---
+  duration_ms: 1.4506
+  type: 'test'
+  ...
+# Subtest: navigation failure closes owned resources and refuses a login redirect
+ok 235 - navigation failure closes owned resources and refuses a login redirect
+  ---
+  duration_ms: 7.8534
+  type: 'test'
+  ...
+# Subtest: abort during browser startup closes a late browser and removes heartbeat work
+ok 236 - abort during browser startup closes a late browser and removes heartbeat work
+  ---
+  duration_ms: 3.3764
+  type: 'test'
+  ...
+# Subtest: operational publisher with checkout disabled still requires settled payment, audited revision and unpaused scheduled obligation
+ok 237 - operational publisher with checkout disabled still requires settled payment, audited revision and unpaused scheduled obligation
+  ---
+  duration_ms: 4811.6094
+  type: 'test'
+  ...
+# Subtest: concurrent real database Cron invocations share one fenced publisher authority
+ok 238 - concurrent real database Cron invocations share one fenced publisher authority
+  ---
+  duration_ms: 2923.715
+  type: 'test'
+  ...
+# Subtest: renderer stops early after its last ready obligation and closes on lost authority
+ok 239 - renderer stops early after its last ready obligation and closes on lost authority
+  ---
+  duration_ms: 19.4029
+  type: 'test'
+  ...
+# Subtest: runtime launcher uses the Linux package only on Vercel
+ok 240 - runtime launcher uses the Linux package only on Vercel
+  ---
+  duration_ms: 0.7337
+  type: 'test'
+  ...
+# Subtest: serverless browser package and Playwright client pin the same Chromium major
+ok 241 - serverless browser package and Playwright client pin the same Chromium major
+  ---
+  duration_ms: 63.95
+  type: 'test'
+  ...
+# Subtest: Vercel hosting has a private minute Cron,800s limit and explicit binary tracing without memory override
+ok 242 - Vercel hosting has a private minute Cron,800s limit and explicit binary tracing without memory override
+  ---
+  duration_ms: 18.2388
+  type: 'test'
+  ...
+# Subtest: Linux serverless binary smoke renders WebGL2 without external requests
+ok 243 - Linux serverless binary smoke renders WebGL2 without external requests # SKIP
+  ---
+  duration_ms: 0.343
+  type: 'test'
+  ...
+# Subtest: private renderer check authenticates before any browser,configuration or database access
+ok 244 - private renderer check authenticates before any browser,configuration or database access
+  ---
+  duration_ms: 2.0963
+  type: 'test'
+  ...
+# Subtest: renderer check admits only its exact fixed mode and no caller URL or additional options
+ok 245 - renderer check admits only its exact fixed mode and no caller URL or additional options
+  ---
+  duration_ms: 0.638
+  type: 'test'
+  ...
+# Subtest: technical renderer check uses fixed inline content,blocks requests and closes resources
+ok 246 - technical renderer check uses fixed inline content,blocks requests and closes resources
+  ---
+  duration_ms: 1.3233
+  type: 'test'
+  ...
+# Subtest: unsupported WebGL and browser errors produce truthful failures with cleanup and no application runtime
+ok 247 - unsupported WebGL and browser errors produce truthful failures with cleanup and no application runtime
+  ---
+  duration_ms: 0.9706
+  type: 'test'
+  ...
+# Subtest: technical renderer timeout closes a stalled browser instead of reporting success
+ok 248 - technical renderer timeout closes a stalled browser instead of reporting success
+  ---
+  duration_ms: 15.0185
+  type: 'test'
+  ...
+# Subtest: publisher startup uses 120 seconds lookahead by default with 180 seconds ceiling
+ok 249 - publisher startup uses 120 seconds lookahead by default with 180 seconds ceiling
+  ---
+  duration_ms: 0.6988
+  type: 'test'
+  ...
+# Subtest: serverless launcher supplies the explicit shipped bin directory before browser startup
+ok 250 - serverless launcher supplies the explicit shipped bin directory before browser startup
+  ---
+  duration_ms: 8.3152
+  type: 'test'
+  ...
+# Subtest: unreadable shipped binary is diagnosed before loading or launching Chromium
+ok 251 - unreadable shipped binary is diagnosed before loading or launching Chromium
+  ---
+  duration_ms: 3.183
+  type: 'test'
+  ...
+# Subtest: private smoke diagnostics preserve bounded library failure details and redact credentials
+ok 252 - private smoke diagnostics preserve bounded library failure details and redact credentials
+  ---
+  duration_ms: 0.7937
+  type: 'test'
+  ...
+# Subtest: private probe failure reports its stage and closes resources on content failure
+ok 253 - private probe failure reports its stage and closes resources on content failure
+  ---
+  duration_ms: 2.8712
+  type: 'test'
+  ...
+# Subtest: private bundle check authenticates before filesystem,browser or database access
+ok 254 - private bundle check authenticates before filesystem,browser or database access
+  ---
+  duration_ms: 0.8105
+  type: 'test'
+  ...
+# Subtest: private bundle check exposes only the fixed relative file list and truthful readability
+ok 255 - private bundle check exposes only the fixed relative file list and truthful readability
+  ---
+  duration_ms: 0.3953
+  type: 'test'
+  ...
+# Subtest: browser bundle requires readable and valid pinned Playwright metadata before imports
+ok 256 - browser bundle requires readable and valid pinned Playwright metadata before imports
+  ---
+  duration_ms: 0.7212
+  type: 'test'
+  ...
+# Subtest: private bundle check fails when Playwright metadata is omitted despite readable Brotli assets
+ok 257 - private bundle check fails when Playwright metadata is omitted despite readable Brotli assets
+  ---
+  duration_ms: 0.4413
+  type: 'test'
+  ...
+# Subtest: private publisher accepts explicit operational readiness with new checkout closed and rejects a technical stop
+ok 258 - private publisher accepts explicit operational readiness with new checkout closed and rejects a technical stop
+  ---
+  duration_ms: 0.4645
+  type: 'test'
+  ...
+# Subtest: private facilitator discovery requires Cron authorization and cannot start a publisher or settle
+ok 259 - private facilitator discovery requires Cron authorization and cannot start a publisher or settle
+  ---
+  duration_ms: 0.4086
+  type: 'test'
+  ...
+# Subtest: facilitator discovery fails closed for unknown provider, absent sponsorship and transport error
+ok 260 - facilitator discovery fails closed for unknown provider, absent sponsorship and transport error
+  ---
+  duration_ms: 0.6286
+  type: 'test'
+  ...
+# Subtest: TIME and PASSES alternate by campaign, passes stay whole
+ok 261 - TIME and PASSES alternate by campaign, passes stay whole
+  ---
+  duration_ms: 27.3901
+  type: 'test'
+  ...
+# Subtest: exclusive and host half-open blocks cannot overlap turns
+ok 262 - exclusive and host half-open blocks cannot overlap turns
+  ---
+  duration_ms: 1.1141
+  type: 'test'
+  ...
+# Subtest: impossible exclusive or insufficient time refuses entire schedule
+ok 263 - impossible exclusive or insufficient time refuses entire schedule
+  ---
+  duration_ms: 5.9512
+  type: 'test'
+  ...
+# Subtest: independent clients have no effect on demand
+ok 264 - independent clients have no effect on demand
+  ---
+  duration_ms: 0.4252
+  type: 'test'
+  ...
+# Subtest: prices are exact integers with independent design line item
+ok 265 - prices are exact integers with independent design line item
+  ---
+  duration_ms: 0.9876
+  type: 'test'
+  ...
+# Subtest: tie breaks are stable, input order does not affect schedule
+ok 266 - tie breaks are stable, input order does not affect schedule
+  ---
+  duration_ms: 0.8304
+  type: 'test'
+  ...
+# Subtest: negative, fractional, excessive and infeasible demand fail before pricing
+ok 267 - negative, fractional, excessive and infeasible demand fail before pricing
+  ---
+  duration_ms: 0.6871
+  type: 'test'
+  ...
+# Subtest: frozen pass render lead wins over a larger new default without changing sixty-second units
+ok 268 - frozen pass render lead wins over a larger new default without changing sixty-second units
+  ---
+  duration_ms: 0.7995
+  type: 'test'
+  ...
+# Subtest: new campaign spacing separates five passes while legacy and another campaign retain their capacity
+ok 269 - new campaign spacing separates five passes while legacy and another campaign retain their capacity
+  ---
+  duration_ms: 1.2287
+  type: 'test'
+  ...
+# Subtest: a campaign waiting for its interval cannot advance the clock past another eligible campaign
+ok 270 - a campaign waiting for its interval cannot advance the clock past another eligible campaign
+  ---
+  duration_ms: 1.1174
+  type: 'test'
+  ...
+# Subtest: eligible scheduling preserves one complete pass per campaign per round without starvation
+ok 271 - eligible scheduling preserves one complete pass per campaign per round without starvation
+  ---
+  duration_ms: 1.1649
+  type: 'test'
+  ...
+# Subtest: advertising surfaces attach to the actual stage and require configured central geometry
+ok 272 - advertising surfaces attach to the actual stage and require configured central geometry
+  ---
+  duration_ms: 7.0907
+  type: 'test'
+  ...
+# Subtest: only a decoded matching texture replaces host content and frame acknowledgement matches its revision
+ok 273 - only a decoded matching texture replaces host content and frame acknowledgement matches its revision
+  ---
+  duration_ms: 2.0503
+  type: 'test'
+  ...
+# Subtest: a stale pending decode cannot revive a replaced or suspended advertisement
+ok 274 - a stale pending decode cannot revive a replaced or suspended advertisement
+  ---
+  duration_ms: 1.0244
+  type: 'test'
+  ...
+# Subtest: wrong-ratio output fails closed without stretching or replacing the main-stage default
+ok 275 - wrong-ratio output fails closed without stretching or replacing the main-stage default
+  ---
+  duration_ms: 0.608
+  type: 'test'
+  ...
+# Subtest: main-stage background is a muted looping inline VideoTexture independent of advertising API
+ok 276 - main-stage background is a muted looping inline VideoTexture independent of advertising API
+  ---
+  duration_ms: 1.056
+  type: 'test'
+  ...
+# Subtest: AR places a device-local surface once, hides on tracking loss and restores parent on exit
+ok 277 - AR places a device-local surface once, hides on tracking loss and restores parent on exit
+  ---
+  duration_ms: 5.4284
+  type: 'test'
+  ...
+# Subtest: private storage is content addressed, deduplicated and checks bytes on reads
+ok 278 - private storage is content addressed, deduplicated and checks bytes on reads
+  ---
+  duration_ms: 39.1571
+  type: 'test'
+  ...
+# Subtest: private storage rejects path traversal, public roots, unsupported types and missing configuration
+ok 279 - private storage rejects path traversal, public roots, unsupported types and missing configuration
+  ---
+  duration_ms: 2.7999
+  type: 'test'
+  ...
+# Subtest: blob adapter uses private access and never trusts corrupt duplicate objects
+ok 280 - blob adapter uses private access and never trusts corrupt duplicate objects
+  ---
+  duration_ms: 29.5533
+  type: 'test'
+  ...
+# Subtest: a lost Blob PUT response is deduplicated only by reading matching private content
+ok 281 - a lost Blob PUT response is deduplicated only by reading matching private content
+  ---
+  duration_ms: 1.3955
+  type: 'test'
+  ...
+# Subtest: CTA normalization rejects active schemes, credentials, IP aliases and unadmitted domains
+ok 282 - CTA normalization rejects active schemes, credentials, IP aliases and unadmitted domains
+  ---
+  duration_ms: 11.6159
+  type: 'test'
+  ...
+# Subtest: DNS policy rejects private, link local, mapped and multicast ranges
+ok 283 - DNS policy rejects private, link local, mapped and multicast ranges
+  ---
+  duration_ms: 0.4924
+  type: 'test'
+  ...
+# Subtest: every redirect rechecks domain and DNS and pins the checked connection address
+ok 284 - every redirect rechecks domain and DNS and pins the checked connection address
+  ---
+  duration_ms: 5.2395
+  type: 'test'
+  ...
+# Subtest: unavailable inspection, redirect loops and unsuccessful destinations fail closed
+ok 285 - unavailable inspection, redirect loops and unsuccessful destinations fail closed
+  ---
+  duration_ms: 1.3437
+  type: 'test'
+  ...
+# Subtest: incomplete indexer recovery uses the public SDK connection with a NEW ownership assertion and no local approval
+ok 286 - incomplete indexer recovery uses the public SDK connection with a NEW ownership assertion and no local approval
+  ---
+  duration_ms: 46.1185
+  type: 'test'
+  ...
+# Subtest: server cannot supply approval hashes, another wallet, another credential or another birth code
+ok 287 - server cannot supply approval hashes, another wallet, another credential or another birth code
+  ---
+  duration_ms: 7.6
+  type: 'test'
+  ...
+# Subtest: failed SDK birth or ownership proof restores prior mappings and does not connect
+ok 288 - failed SDK birth or ownership proof restores prior mappings and does not connect
+  ---
+  duration_ms: 6.111
+  type: 'test'
+  ...
+# Subtest: code, constructor and ownership failures never enter the receipt fallback
+ok 289 - code, constructor and ownership failures never enter the receipt fallback
+  ---
+  duration_ms: 0.9925
+  type: 'test'
+  ...
+# Subtest: conflicting primary mapping cannot be replaced with recovered metadata
+ok 290 - conflicting primary mapping cannot be replaced with recovered metadata
+  ---
+  duration_ms: 3.5106
+  type: 'test'
+  ...
+# Subtest: signed WebAuthn auth is re-simulated in enforce mode and real assembler updates fee and preserves exact authorization
+ok 291 - signed WebAuthn auth is re-simulated in enforce mode and real assembler updates fee and preserves exact authorization
+  ---
+  duration_ms: 37.1394
+  type: 'test'
+  ...
+# Subtest: opaque preparation happens before the server challenge and is consumed once
+ok 292 - opaque preparation happens before the server challenge and is consumed once
+  ---
+  duration_ms: 17.0298
+  type: 'test'
+  ...
+# Subtest: prepared transfer cannot be reused with changed terms or a forged token
+ok 293 - prepared transfer cannot be reused with changed terms or a forged token
+  ---
+  duration_ms: 3.4894
+  type: 'test'
+  ...
+# Subtest: fails closed after enforce error
+ok 294 - fails closed after enforce error
+  ---
+  duration_ms: 7.3571
+  type: 'test'
+  ...
+# Subtest: fails closed after restore preamble
+ok 295 - fails closed after restore preamble
+  ---
+  duration_ms: 6.7063
+  type: 'test'
+  ...
+# Subtest: fails closed after incomplete resources
+ok 296 - fails closed after incomplete resources
+  ---
+  duration_ms: 5.9395
+  type: 'test'
+  ...
+# Subtest: fails closed after changed authorization bytes
+ok 297 - fails closed after changed authorization bytes
+  ---
+  duration_ms: 10.4766
+  type: 'test'
+  ...
+# Subtest: fails closed after changed signed nonce
+ok 298 - fails closed after changed signed nonce
+  ---
+  duration_ms: 8.4491
+  type: 'test'
+  ...
+# Subtest: final assembly rejects extraOperation
+ok 299 - final assembly rejects extraOperation
+  ---
+  duration_ms: 19.8082
+  type: 'test'
+  ...
+# Subtest: final assembly rejects envelopeSigner
+ok 300 - final assembly rejects envelopeSigner
+  ---
+  duration_ms: 10.9943
+  type: 'test'
+  ...
+# Subtest: final assembly rejects operationSource
+ok 301 - final assembly rejects operationSource
+  ---
+  duration_ms: 8.5062
+  type: 'test'
+  ...
+# Subtest: final assembly rejects fee
+ok 302 - final assembly rejects fee
+  ---
+  duration_ms: 7.7006
+  type: 'test'
+  ...
+# Subtest: final assembly rejects footprint
+ok 303 - final assembly rejects footprint
+  ---
+  duration_ms: 9.7424
+  type: 'test'
+  ...
+# Subtest: two simultaneous signing calls cannot open another passkey prompt
+ok 304 - two simultaneous signing calls cannot open another passkey prompt
+  ---
+  duration_ms: 8.0637
+  type: 'test'
+  ...
+# Subtest: private worker authenticates before runtime, database or job access
+ok 305 - private worker authenticates before runtime, database or job access
+  ---
+  duration_ms: 3.3818
+  type: 'test'
+  ...
+# Subtest: worker rejects caller options and disabled configuration without constructing jobs
+ok 306 - worker rejects caller options and disabled configuration without constructing jobs
+  ---
+  duration_ms: 2.289
+  type: 'test'
+  ...
+# Subtest: worker returns bounded aggregate status and does not leak failures
+ok 307 - worker returns bounded aggregate status and does not leak failures
+  ---
+  duration_ms: 2.3536
+  type: 'test'
+  ...
+# Subtest: operational worker continues existing obligations with checkout closed while publisher authority is occupied
+ok 308 - operational worker continues existing obligations with checkout closed while publisher authority is occupied
+  ---
+  duration_ms: 3618.646
+  type: 'test'
+  ...
+# Subtest: parallel workers respect the existing job lease without a global publisher lease
+ok 309 - parallel workers respect the existing job lease without a global publisher lease
+  ---
+  duration_ms: 4544.9393
+  type: 'test'
+  ...
+# Subtest: a crashed job lease is reclaimed once and a later worker does not repeat reconciliation
+ok 310 - a crashed job lease is reclaimed once and a later worker does not repeat reconciliation
+  ---
+  duration_ms: 4128.685
+  type: 'test'
+  ...
+# Subtest: worker caps admission at eight jobs and leaves headroom for durable operations
+ok 311 - worker caps admission at eight jobs and leaves headroom for durable operations
+  ---
+  duration_ms: 1.6466
+  type: 'test'
+  ...
+# Subtest: worker budget never cancels an in-flight durable job or starts a second job afterward
+ok 312 - worker budget never cancels an in-flight durable job or starts a second job afterward
+  ---
+  duration_ms: 32.5943
+  type: 'test'
+  ...
+# Subtest: pre-aborted worker does not touch recovery, SQL or jobs
+ok 313 - pre-aborted worker does not touch recovery, SQL or jobs
+  ---
+  duration_ms: 0.7432
+  type: 'test'
+  ...
+# Subtest: registry reconciliation precedes bounded flushing independently of publishing
+ok 314 - registry reconciliation precedes bounded flushing independently of publishing
+  ---
+  duration_ms: 2.0038
+  type: 'test'
+  ...
+# Subtest: recovery runs before seeding and again after durable work using the runtime service
+ok 315 - recovery runs before seeding and again after durable work using the runtime service
+  ---
+  duration_ms: 1.0909
+  type: 'test'
+  ...
+# Subtest: maintenance enqueues only persisted reconciliation and destination-monitor work
+ok 316 - maintenance enqueues only persisted reconciliation and destination-monitor work
+  ---
+  duration_ms: 0.5902
+  type: 'test'
+  ...
+# Subtest: Vercel exposes separate minute Crons with180s worker and800s publisher limits
+ok 317 - Vercel exposes separate minute Crons with180s worker and800s publisher limits
+  ---
+  duration_ms: 5.3189
+  type: 'test'
+  ...
+# Subtest: private worker accepts operational readiness with checkout disabled but never ignores technical readiness
+ok 318 - private worker accepts operational readiness with checkout disabled but never ignores technical readiness
+  ---
+  duration_ms: 2.6224
+  type: 'test'
+  ...
+# Subtest: strict AR uses correct ARCore package and explicit same-site failure marker
+ok 319 - strict AR uses correct ARCore package and explicit same-site failure marker
+  ---
+  duration_ms: 1.2287
+  type: 'test'
+  ...
+# Subtest: actual launch handler remains synchronous without cancelling native navigation or claiming camera
+ok 320 - actual launch handler remains synchronous without cancelling native navigation or claiming camera
+  ---
+  duration_ms: 0.5008
+  type: 'test'
+  ...
+# Subtest: fallback reports unresolved native launch, never asserts incompatible hardware
+ok 321 - fallback reports unresolved native launch, never asserts incompatible hardware
+  ---
+  duration_ms: 0.4405
+  type: 'test'
+  ...
+# Subtest: asset diagnostic validates actual public response data and reports MIME without treating it as AR success
+ok 322 - asset diagnostic validates actual public response data and reports MIME without treating it as AR success
+  ---
+  duration_ms: 76.791
+  type: 'test'
+  ...
+# Subtest: Android launch targets small public Passport and returns same ONE16 document
+ok 323 - Android launch targets small public Passport and returns same ONE16 document
+  ---
+  duration_ms: 1.8709
+  type: 'test'
+  ...
+# Subtest: iPhone has safe early href and immediate preparation binding before lazy panel
+ok 324 - iPhone has safe early href and immediate preparation binding before lazy panel
+  ---
+  duration_ms: 0.6127
+  type: 'test'
+  ...
+# Subtest: isolated AR runtime files match pinned distribution hashes and resolve local imports
+ok 325 - isolated AR runtime files match pinned distribution hashes and resolve local imports
+  ---
+  duration_ms: 360.3184
+  type: 'test'
+  ...
+# Subtest: compiled Passport target is bound to exact source image and contains real extraction output
+ok 326 - compiled Passport target is bound to exact source image and contains real extraction output
+  ---
+  duration_ms: 73.3449
+  type: 'test'
+  ...
+# Subtest: AR reports tracking only after an active camera session and actual target events
+ok 327 - AR reports tracking only after an active camera session and actual target events
+  ---
+  duration_ms: 4.0119
+  type: 'test'
+  ...
+# Subtest: stopping while camera permission is pending cleans up again after the request resolves
+ok 328 - stopping while camera permission is pending cleans up again after the request resolves
+  ---
+  duration_ms: 6.428
+  type: 'test'
+  ...
+# Subtest: stopping while libraries load prevents a later camera start
+ok 329 - stopping while libraries load prevents a later camera start
+  ---
+  duration_ms: 2.3114
+  type: 'test'
+  ...
+# Subtest: denied camera is recoverable and cleans the failed adapter
+ok 330 - denied camera is recoverable and cleans the failed adapter
+  ---
+  duration_ms: 0.8053
+  type: 'test'
+  ...
+# Subtest: duplicate starts share a request; lost tracking does not reset user transformations
+ok 331 - duplicate starts share a request; lost tracking does not reset user transformations
+  ---
+  duration_ms: 0.7977
+  type: 'test'
+  ...
+# Subtest: gesture scale and pitch stay bounded, invalid pinch values cannot corrupt state, reset is exact
+ok 332 - gesture scale and pitch stay bounded, invalid pinch values cannot corrupt state, reset is exact
+  ---
+  duration_ms: 0.5511
+  type: 'test'
+  ...
+# Subtest: camera shutdown stops every track and clears the video stream
+ok 333 - camera shutdown stops every track and clears the video stream
+  ---
+  duration_ms: 0.4818
+  type: 'test'
+  ...
+# Subtest: stop immediately releases busy; a late canceled permission cannot clear a restarted session
+ok 334 - stop immediately releases busy; a late canceled permission cannot clear a restarted session
+  ---
+  duration_ms: 3.1884
+  type: 'test'
+  ...
+# Subtest: cancel before the startup microtask never begins preparation or changes paused state
+ok 335 - cancel before the startup microtask never begins preparation or changes paused state
+  ---
+  duration_ms: 0.8819
+  type: 'test'
+  ...
+# Subtest: target prefetch aborts on exit and clears its timeout
+ok 336 - target prefetch aborts on exit and clears its timeout
+  ---
+  duration_ms: 2.0591
+  type: 'test'
+  ...
+# Subtest: target prefetch timeout also covers a stalled response body
+ok 337 - target prefetch timeout also covers a stalled response body
+  ---
+  duration_ms: 0.4726
+  type: 'test'
+  ...
+# Subtest: camera preview becomes ready as soon as video plays, without recognition events or marker files
+ok 338 - camera preview becomes ready as soon as video plays, without recognition events or marker files
+  ---
+  duration_ms: 4.5036
+  type: 'test'
+  ...
+# Subtest: pending permission can be canceled and a late old grant cannot replace the current video
+ok 339 - pending permission can be canceled and a late old grant cannot replace the current video
+  ---
+  duration_ms: 1.1769
+  type: 'test'
+  ...
+# Subtest: permission denial stays truthful and a retry can succeed
+ok 340 - permission denial stays truthful and a retry can succeed
+  ---
+  duration_ms: 0.9171
+  type: 'test'
+  ...
+# Subtest: canceling after video is attached clears the stream and resolves promptly
+ok 341 - canceling after video is attached clears the stream and resolves promptly
+  ---
+  duration_ms: 0.868
+  type: 'test'
+  ...
+# Subtest: main viewer no longer imports MindAR or waits for a target before displaying the object
+ok 342 - main viewer no longer imports MindAR or waits for a target before displaying the object
+  ---
+  duration_ms: 13.3257
+  type: 'test'
+  ...
+# Subtest: credits: 1 credit = 0.01 USDC by default, exact and never floating point
+ok 343 - credits: 1 credit = 0.01 USDC by default, exact and never floating point
+  ---
+  duration_ms: 1.8441
+  type: 'test'
+  ...
+# Subtest: credit pool reads the allowance, the draw, the spend and a sponsor deposit
+ok 344 - credit pool reads the allowance, the draw, the spend and a sponsor deposit
+  ---
+  duration_ms: 2.8971
+  type: 'test'
+  ...
+# Subtest: live reads are testnet only and report each state without throwing
+ok 345 - live reads are testnet only and report each state without throwing
+  ---
+  duration_ms: 1.4278
+  type: 'test'
+  ...
+# Subtest: live USDC balance comes from the right trustline only
+ok 346 - live USDC balance comes from the right trustline only
+  ---
+  duration_ms: 1.0321
+  type: 'test'
+  ...
+# Subtest: every distinct recorded hash is checked once, and labels never claim more than Horizon said
+ok 347 - every distinct recorded hash is checked once, and labels never claim more than Horizon said
+  ---
+  duration_ms: 0.6376
+  type: 'test'
+  ...
+# Subtest: same-world panel mounts once, tears down on close, and remounts without changing visitor position
+ok 348 - same-world panel mounts once, tears down on close, and remounts without changing visitor position
+  ---
+  duration_ms: 4.5289
+  type: 'test'
+  ...
+# Subtest: the active same-origin frame can return to ONE16 while preserving the visitor pose
+ok 349 - the active same-origin frame can return to ONE16 while preserving the visitor pose
+  ---
+  duration_ms: 1.1469
+  type: 'test'
+  ...
+# Subtest: return messages reject incorrect origins, sources, message types and stale frames
+ok 350 - return messages reject incorrect origins, sources, message types and stale frames
+  ---
+  duration_ms: 0.8996
+  type: 'test'
+  ...
+# Subtest: mount and cleanup are idempotent and support an explicitly injected message target
+ok 351 - mount and cleanup are idempotent and support an explicitly injected message target
+  ---
+  duration_ms: 0.4016
+  type: 'test'
+  ...
+# Subtest: fullscreen camera, first-frame and failure messages are accepted only from the active same-origin frame
+ok 352 - fullscreen camera, first-frame and failure messages are accepted only from the active same-origin frame
+  ---
+  duration_ms: 0.7295
+  type: 'test'
+  ...
+# Subtest: spatial capability and reading page updates reject foreign or stale frames
+ok 353 - spatial capability and reading page updates reject foreign or stale frames
+  ---
+  duration_ms: 0.574
+  type: 'test'
+  ...
+# Subtest: actual entrance traverses corridor and all seven steps to hall, then reverses exactly
+ok 354 - actual entrance traverses corridor and all seven steps to hall, then reverses exactly
+  ---
+  duration_ms: 48.6704
+  type: 'test'
+  ...
+# Subtest: merch is arrival-relative left and its camera looks left
+ok 355 - merch is arrival-relative left and its camera looks left
+  ---
+  duration_ms: 0.4316
+  type: 'test'
+  ...
+# Subtest: arrival stair state survives repeated mode-independent movement pauses
+ok 356 - arrival stair state survives repeated mode-independent movement pauses
+  ---
+  duration_ms: 17.3582
+  type: 'test'
+  ...
+# Subtest: the NFC URL imports only its Passport entry and never hydrates or starts the venue
+ok 357 - the NFC URL imports only its Passport entry and never hydrates or starts the venue
+  ---
+  duration_ms: 2.4055
+  type: 'test'
+  ...
+# Subtest: explicit return changes the route before lazy world import and holds the curtain until the venue ready event
+ok 358 - explicit return changes the route before lazy world import and holds the curtain until the venue ready event
+  ---
+  duration_ms: 2.9669
+  type: 'test'
+  ...
+# Subtest: a failed venue initialization reveals its normal fallback instead of leaving a loading curtain forever
+ok 359 - a failed venue initialization reveals its normal fallback instead of leaving a loading curtain forever
+  ---
+  duration_ms: 1.288
+  type: 'test'
+  ...
+# Subtest: normal ONE16 entry restores deferred CSS and image sources without importing the Passport entry
+ok 360 - normal ONE16 entry restores deferred CSS and image sources without importing the Passport entry
+  ---
+  duration_ms: 2.2956
+  type: 'test'
+  ...
+# Subtest: loading keeps one exact-cover curtain, releases its background only for a real camera message, and fades once after the first frame
+ok 361 - loading keeps one exact-cover curtain, releases its background only for a real camera message, and fades once after the first frame
+  ---
+  duration_ms: 2.8767
+  type: 'test'
+  ...
+# Subtest: model loading failure preserves the cover and offers a real retry of the existing iframe
+ok 362 - model loading failure preserves the cover and offers a real retry of the existing iframe
+  ---
+  duration_ms: 2.9455
+  type: 'test'
+  ...
+# Subtest: HTML chooses the fast route before module loading and contains no eager venue image URLs
+ok 363 - HTML chooses the fast route before module loading and contains no eager venue image URLs
+  ---
+  duration_ms: 22.7555
+  type: 'test'
+  ...
+# Subtest: native placement waits for the model, follows page state, and never duplicates the final two-action screen
+ok 364 - native placement waits for the model, follows page state, and never duplicates the final two-action screen
+  ---
+  duration_ms: 0.8598
+  type: 'test'
+  ...
+# Subtest: export contains no orphan exterior railway, sleepers, fence, platform or stairs
+ok 365 - export contains no orphan exterior railway, sleepers, fence, platform or stairs
+  ---
+  duration_ms: 2.9997
+  type: 'test'
+  ...
+# Subtest: new default entrance starts outside, faces sign, and reaches yellow corridor reversibly
+ok 366 - new default entrance starts outside, faces sign, and reaches yellow corridor reversibly
+  ---
+  duration_ms: 135.6479
+  type: 'test'
+  ...
+# Subtest: removed exteriorplatform is not walkable; forecourt stays flat and interiorstairs remain
+ok 367 - removed exteriorplatform is not walkable; forecourt stays flat and interiorstairs remain
+  ---
+  duration_ms: 0.4535
+  type: 'test'
+  ...
+# Subtest: static tour and actual plan exist in HTML independent of JavaScript, fetch and WebGL
+ok 368 - static tour and actual plan exist in HTML independent of JavaScript, fetch and WebGL
+  ---
+  duration_ms: 2.3549
+  type: 'test'
+  ...
+# Subtest: engine error propagates without waiting for timeout
+ok 369 - engine error propagates without waiting for timeout
+  ---
+  duration_ms: 1.352
+  type: 'test'
+  ...
+# Subtest: never-resolving engine settles with honest timeout error
+ok 370 - never-resolving engine settles with honest timeout error
+  ---
+  duration_ms: 5.9266
+  type: 'test'
+  ...
+# Subtest: working engine returns result
+ok 371 - working engine returns result
+  ---
+  duration_ms: 0.4939
+  type: 'test'
+  ...
+# Subtest: GPU unavailable/throw returns false without bypass
+ok 372 - GPU unavailable/throw returns false without bypass
+  ---
+  duration_ms: 1.8367
+  type: 'test'
+  ...
+# Subtest: supported probe frees only its own temporary context
+ok 373 - supported probe frees only its own temporary context
+  ---
+  duration_ms: 0.4356
+  type: 'test'
+  ...
+# Subtest: Passport rejects unsupported inline GPU before import and retains poster
+ok 374 - Passport rejects unsupported inline GPU before import and retains poster
+  ---
+  duration_ms: 4.1369
+  type: 'test'
+  ...
+# Subtest: wallet and Passport are available; other confirmed stations are upcoming
+ok 375 - wallet and Passport are available; other confirmed stations are upcoming
+  ---
+  duration_ms: 3.4667
+  type: 'test'
+  ...
+# Subtest: real Three camera projects stations consistently after orbit, zoom and resize
+ok 376 - real Three camera projects stations consistently after orbit, zoom and resize
+  ---
+  duration_ms: 3.2478
+  type: 'test'
+  ...
+# Subtest: projection hides targets behind camera instead of showing misleading screen pins
+ok 377 - projection hides targets behind camera instead of showing misleading screen pins
+  ---
+  duration_ms: 0.6829
+  type: 'test'
+  ...
+# Subtest: actual overview hotspot click handlers invoke correct same-world experience
+ok 378 - actual overview hotspot click handlers invoke correct same-world experience
+  ---
+  duration_ms: 2.1253
+  type: 'test'
+  ...
+# Subtest: minimum targets and reduced-motion styles are supplied, not decorative-only SVG pins
+ok 379 - minimum targets and reduced-motion styles are supplied, not decorative-only SVG pins
+  ---
+  duration_ms: 12.5974
+  type: 'test'
+  ...
+# Subtest: overview labels keep44px targets separate in desktop, portrait and landscape while retaining world anchors
+ok 380 - overview labels keep44px targets separate in desktop, portrait and landscape while retaining world anchors
+  ---
+  duration_ms: 1.9616
+  type: 'test'
+  ...
+# Subtest: all actual zone views and arrival are clear of real model collision
+ok 381 - all actual zone views and arrival are clear of real model collision
+  ---
+  duration_ms: 4.5204
+  type: 'test'
+  ...
+# Subtest: all view points connected on actual walking plane
+ok 382 - all view points connected on actual walking plane
+  ---
+  duration_ms: 202.2641
+  type: 'test'
+  ...
+# Subtest: every selected zone reports its own room state
+ok 383 - every selected zone reports its own room state
+  ---
+  duration_ms: 0.6672
+  type: 'test'
+  ...
+# Subtest: real venue moves only striped Merch backdrop, preserving clothes, counter and vertical sign
+ok 384 - real venue moves only striped Merch backdrop, preserving clothes, counter and vertical sign
+  ---
+  duration_ms: 401.397
+  type: 'test'
+  ...
+# Subtest: backdrop collision follows moved panel; vertical sign and all other obstacles stay fixed
+ok 385 - backdrop collision follows moved panel; vertical sign and all other obstacles stay fixed
+  ---
+  duration_ms: 4.6838
+  type: 'test'
+  ...
+# Subtest: forward is camera negative Z; right is positive X
+ok 386 - forward is camera negative Z; right is positive X
+  ---
+  duration_ms: 3.7939
+  type: 'test'
+  ...
+# Subtest: forward follows yaw at all four cardinal directions
+ok 387 - forward follows yaw at all four cardinal directions
+  ---
+  duration_ms: 0.7582
+  type: 'test'
+  ...
+# Subtest: diagonal motion is normalized
+ok 388 - diagonal motion is normalized
+  ---
+  duration_ms: 0.3222
+  type: 'test'
+  ...
+# Subtest: walk cannot cross obstacle or boundary after repeated input
+ok 389 - walk cannot cross obstacle or boundary after repeated input
+  ---
+  duration_ms: 24.2626
+  type: 'test'
+  ...
+# Subtest: long frame stalls cannot teleport through geometry
+ok 390 - long frame stalls cannot teleport through geometry
+  ---
+  duration_ms: 0.3503
+  type: 'test'
+  ...
+# Subtest: mode retries preserve first-person pose and room state
+ok 391 - mode retries preserve first-person pose and room state
+  ---
+  duration_ms: 0.7703
+  type: 'test'
+  ...
+# Subtest: drag pitch is clamped, including orientation transitions
+ok 392 - drag pitch is clamped, including orientation transitions
+  ---
+  duration_ms: 0.3189
+  type: 'test'
+  ...
+# Subtest: no invented floor means walking unavailable
+ok 393 - no invented floor means walking unavailable
+  ---
+  duration_ms: 1.6527
+  type: 'test'
+  ...
+# Subtest: preparation changes the corridor once, returns the scene and rejects an incompatible guard
+ok 394 - preparation changes the corridor once, returns the scene and rejects an incompatible guard
+  ---
+  duration_ms: 9.197
+  type: 'test'
+  ...
+# Subtest: a ready real scene hides roofs, preserves its poster until first render and stays idle between changes
+ok 395 - a ready real scene hides roofs, preserves its poster until first render and stays idle between changes
+  ---
+  duration_ms: 38.6934
+  type: 'test'
+  ...
+# Subtest: mobile activation connects gestures; Done, offscreen and document hiding restore native scrolling
+ok 396 - mobile activation connects gestures; Done, offscreen and document hiding restore native scrolling
+  ---
+  duration_ms: 2.7127
+  type: 'test'
+  ...
+# Subtest: failed loads retain the image and retry obtains a fresh independent scene
+ok 397 - failed loads retain the image and retry obtains a fresh independent scene
+  ---
+  duration_ms: 2.7255
+  type: 'test'
+  ...
+# Subtest: WebGL failure and context loss show a recoverable poster and dispose scene resources once
+ok 398 - WebGL failure and context loss show a recoverable poster and dispose scene resources once
+  ---
+  duration_ms: 8.2495
+  type: 'test'
+  ...
+# Subtest: disposal aborts network work and a late parser result never reaches the GPU
+ok 399 - disposal aborts network work and a late parser result never reaches the GPU
+  ---
+  duration_ms: 8.9646
+  type: 'test'
+  ...
+# Subtest: a transfer timeout aborts the original signal and ignores its late response
+ok 400 - a transfer timeout aborts the original signal and ignores its late response
+  ---
+  duration_ms: 2.5177
+  type: 'test'
+  ...
+# Subtest: preview uses the current gzip transfer helper and cannot enter transaction, AR or camera runtimes
+ok 401 - preview uses the current gzip transfer helper and cannot enter transaction, AR or camera runtimes
+  ---
+  duration_ms: 2.3528
+  type: 'test'
+  ...
+# Subtest: native OrbitControls cancels a held mobile gesture before disconnecting and accepts the next gesture
+ok 402 - native OrbitControls cancels a held mobile gesture before disconnecting and accepts the next gesture
+  ---
+  duration_ms: 8.1414
+  type: 'test'
+  ...
+# Subtest: the perspective fit fills desktop and narrow stages without clipping and refits only on actual size changes
+ok 403 - the perspective fit fills desktop and narrow stages without clipping and refits only on actual size changes
+  ---
+  duration_ms: 6.0294
+  type: 'test'
+  ...
+# Subtest: the current venue GLB fills at least three quarters of the desktop preview height with the roof hidden
+ok 404 - the current venue GLB fills at least three quarters of the desktop preview height with the roof hidden
+  ---
+  duration_ms: 301.32
+  type: 'test'
+  ...
+# Subtest: overview top-down preset frames full venue on phone and PC
+ok 405 - overview top-down preset frames full venue on phone and PC
+  ---
+  duration_ms: 2.0443
+  type: 'test'
+  ...
+# Subtest: overview clamp bounds pan while preserving camera offset
+ok 406 - overview clamp bounds pan while preserving camera offset
+  ---
+  duration_ms: 1.8733
+  type: 'test'
+  ...
+# Subtest: overlapping Palta mounts remove only their own collision object and dispose once
+ok 407 - overlapping Palta mounts remove only their own collision object and dispose once
+  ---
+  duration_ms: 113.7558
+  type: 'test'
+  ...
+# Subtest: an optional logo never blocks mounting and a texture arriving after disposal is released
+ok 408 - an optional logo never blocks mounting and a texture arriving after disposal is released
+  ---
+  duration_ms: 33.2829
+  type: 'test'
+  ...
+# Subtest: disposal also frees replaced logo materials, the original placeholder and new textures
+ok 409 - disposal also frees replaced logo materials, the original placeholder and new textures
+  ---
+  duration_ms: 21.6419
+  type: 'test'
+  ...
+# Subtest: a discarded scene prevents even starting a delayed optional Palta import
+ok 410 - a discarded scene prevents even starting a delayed optional Palta import
+  ---
+  duration_ms: 1.698
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner scene changes
+ok 411 - a late mount is disposed after its owner scene changes
+  ---
+  duration_ms: 3.2933
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner camera changes
+ok 412 - a late mount is disposed after its owner camera changes
+  ---
+  duration_ms: 1.5989
+  type: 'test'
+  ...
+# Subtest: a late mount is disposed after its owner attempt changes
+ok 413 - a late mount is disposed after its owner attempt changes
+  ---
+  duration_ms: 1.8377
+  type: 'test'
+  ...
+# Subtest: current Palta mounts share the cached venue lifetime and optional failures do not fail Welcome
+ok 414 - current Palta mounts share the cached venue lifetime and optional failures do not fail Welcome
+  ---
+  duration_ms: 3.2704
+  type: 'test'
+  ...
+# Subtest: the unified picker respects Palta occlusion and retains wallet selection behind it
+ok 415 - the unified picker respects Palta occlusion and retains wallet selection behind it
+  ---
+  duration_ms: 10.6229
+  type: 'test'
+  ...
+# Subtest: cache revisions reach the optional activation through the existing entry chain
+ok 416 - cache revisions reach the optional activation through the existing entry chain
+  ---
+  duration_ms: 5.6843
+  type: 'test'
+  ...
+# Subtest: the recorded card remains an awaited fallback before Palta when there is no host loop
+ok 417 - the recorded card remains an awaited fallback before Palta when there is no host loop
+  ---
+  duration_ms: 6.5783
+  type: 'test'
+  ...
+# Subtest: an obsolete attempt aborts the fallback and cannot start Palta or acquire advertising ownership
+ok 418 - an obsolete attempt aborts the fallback and cannot start Palta or acquire advertising ownership
+  ---
+  duration_ms: 3.5478
+  type: 'test'
+  ...
+# Subtest: the host loop owns the prepared stage and prevents a recorded card request or overwrite
+ok 419 - the host loop owns the prepared stage and prevents a recorded card request or overwrite
+  ---
+  duration_ms: 2.2202
+  type: 'test'
+  ...
+# Subtest: an advertising mount resolving after its model is discarded releases its own controller
+ok 420 - an advertising mount resolving after its model is discarded releases its own controller
+  ---
+  duration_ms: 2.3428
+  type: 'test'
+  ...
+# Subtest: discarding the venue releases preview, advertising, the host loop and Palta before scene resources
+ok 421 - discarding the venue releases preview, advertising, the host loop and Palta before scene resources
+  ---
+  duration_ms: 2.8278
+  type: 'test'
+  ...
+# Subtest: Palta and advertising update before render and the publisher acknowledgement follows the actual frame
+ok 422 - Palta and advertising update before render and the publisher acknowledgement follows the actual frame
+  ---
+  duration_ms: 2.3585
+  type: 'test'
+  ...
+# Subtest: the recorded sections preview owns its surface without acquiring live advertising or replacing Palta
+ok 423 - the recorded sections preview owns its surface without acquiring live advertising or replacing Palta
+  ---
+  duration_ms: 6.4234
+  type: 'test'
+  ...
+# Subtest: missing recorded sections restore the host loop while the preview stays excluded from advertising
+ok 424 - missing recorded sections restore the host loop while the preview stays excluded from advertising
+  ---
+  duration_ms: 2.9387
+  type: 'test'
+  ...
+# Subtest: an obsolete preview mount releases its controller before it can acquire scene ownership
+ok 425 - an obsolete preview mount releases its controller before it can acquire scene ownership
+  ---
+  duration_ms: 2.9385
+  type: 'test'
+  ...
+# Subtest: a preview finishing after leave remains suspended in the cached scene
+ok 426 - a preview finishing after leave remains suspended in the cached scene
+  ---
+  duration_ms: 2.5779
+  type: 'test'
+  ...
+# Subtest: a preview finishing after hidden tab remains suspended in the cached scene
+ok 427 - a preview finishing after hidden tab remains suspended in the cached scene
+  ---
+  duration_ms: 2.8403
+  type: 'test'
+  ...
+# Subtest: publisher acknowledgements remain available normally and are suppressed in the sections preview
+ok 428 - publisher acknowledgements remain available normally and are suppressed in the sections preview
+  ---
+  duration_ms: 2.5769
+  type: 'test'
+  ...
+# Subtest: asset URL tracks the GLB hash and both entrypoints load the same module revision
+ok 429 - asset URL tracks the GLB hash and both entrypoints load the same module revision
+  ---
+  duration_ms: 16.0843
+  type: 'test'
+  ...
+# Subtest: logo plane stays inside the medallion for square, wide and tall logos
+ok 430 - logo plane stays inside the medallion for square, wide and tall logos
+  ---
+  duration_ms: 1.9654
+  type: 'test'
+  ...
+# Subtest: yaw turns local +Z toward the visitor and angle deltas take the short way
+ok 431 - yaw turns local +Z toward the visitor and angle deltas take the short way
+  ---
+  duration_ms: 0.6862
+  type: 'test'
+  ...
+# Subtest: opens on approach, closes far away, and a manual close waits until the visitor leaves
+ok 432 - opens on approach, closes far away, and a manual close waits until the visitor leaves
+  ---
+  duration_ms: 0.5562
+  type: 'test'
+  ...
+# Subtest: collision square matches the venue's obstacle format
+ok 433 - collision square matches the venue's obstacle format
+  ---
+  duration_ms: 0.4717
+  type: 'test'
+  ...
+# Subtest: default spot is inside the activation area and clear of the kiosk and Passport
+ok 434 - default spot is inside the activation area and clear of the kiosk and Passport
+  ---
+  duration_ms: 3.1575
+  type: 'test'
+  ...
+# Subtest: GLB has the nodes and animations the module relies on
+ok 435 - GLB has the nodes and animations the module relies on
+  ---
+  duration_ms: 7.4661
+  type: 'test'
+  ...
+# Subtest: partner cavities show only official artwork without separate product-name labels
+ok 436 - partner cavities show only official artwork without separate product-name labels
+  ---
+  duration_ms: 3.2439
+  type: 'test'
+  ...
+# Subtest: official partner logos are embedded unchanged and retain the source PNG proportions
+ok 437 - official partner logos are embedded unchanged and retain the source PNG proportions
+  ---
+  duration_ms: 39.3079
+  type: 'test'
+  ...
+# Subtest: partner logos conform to their seed cavities and read upright without changing the source proportions
+ok 438 - partner logos conform to their seed cavities and read upright without changing the source proportions
+  ---
+  duration_ms: 68.0595
+  type: 'test'
+  ...
+# Subtest: partner logos appear outside, settle into the curved cavities, and reverse cleanly without touching the medallion
+ok 439 - partner logos appear outside, settle into the curved cavities, and reverse cleanly without touching the medallion
+  ---
+  duration_ms: 62.0678
+  type: 'test'
+  ...
+# Subtest: medallion and glow ring ascend together, finish centered above the halves, and keep 10 cm clearance through idle
+ok 440 - medallion and glow ring ascend together, finish centered above the halves, and keep 10 cm clearance through idle
+  ---
+  duration_ms: 221.2232
+  type: 'test'
+  ...
+# minimum real-mesh clearance over the full idle loop: 10.74 cm
+# Subtest: reduced motion opens immediately, stays still, closes and reopens with the real GLB
+ok 441 - reduced motion opens immediately, stays still, closes and reopens with the real GLB
+  ---
+  duration_ms: 146.8567
+  type: 'test'
+  ...
+# Subtest: real GLB closes manually, rearms away, and opens on returning
+ok 442 - real GLB closes manually, rearms away, and opens on returning
+  ---
+  duration_ms: 92.8867
+  type: 'test'
+  ...
+# Subtest: setLogo fits a wide image and darkens only the medallion face after loading succeeds
+ok 443 - setLogo fits a wide image and darkens only the medallion face after loading succeeds
+  ---
+  duration_ms: 739.4181
+  type: 'test'
+  ...
+# Subtest: real supplied GLB remains centered, upright, normalized and unchanged when closed
+ok 444 - real supplied GLB remains centered, upright, normalized and unchanged when closed
+  ---
+  duration_ms: 122.2755
+  type: 'test'
+  ...
+# Subtest: cover rotates around the spine and turning a leaf reveals the second page
+ok 445 - cover rotates around the spine and turning a leaf reveals the second page
+  ---
+  duration_ms: 30.801
+  type: 'test'
+  ...
+# Subtest: reduced motion and immediate page changes settle without advancing frames
+ok 446 - reduced motion and immediate page changes settle without advancing frames
+  ---
+  duration_ms: 27.7383
+  type: 'test'
+  ...
+# Subtest: two legible page textures contain the supplied copy and dispose without touching GLB resources
+ok 447 - two legible page textures contain the supplied copy and dispose without touching GLB resources
+  ---
+  duration_ms: 20.5978
+  type: 'test'
+  ...
+# Subtest: the cover hides the copy until opened and each turn exposes the intended information page
+ok 448 - the cover hides the copy until opened and each turn exposes the intended information page
+  ---
+  duration_ms: 69.998
+  type: 'test'
+  ...
+# Subtest: both information sheets use the original emblem at low opacity and restore full text opacity
+ok 449 - both information sheets use the original emblem at low opacity and restore full text opacity
+  ---
+  duration_ms: 30.7935
+  type: 'test'
+  ...
+# Subtest: watermark image loader resolves on load and treats missing or stalled artwork as optional
+ok 450 - watermark image loader resolves on load and treats missing or stalled artwork as optional
+  ---
+  duration_ms: 17.7761
+  type: 'test'
+  ...
+# Subtest: a late watermark updates only the existing page textures and is ignored after disposal
+ok 451 - a late watermark updates only the existing page textures and is ignored after disposal
+  ---
+  duration_ms: 16.9358
+  type: 'test'
+  ...
+# Subtest: primary Passport stand is reachable and appears in the actual embedded layout and map
+ok 452 - primary Passport stand is reachable and appears in the actual embedded layout and map
+  ---
+  duration_ms: 3.8279
+  type: 'test'
+  ...
+# Subtest: main dialog embeds the camera interaction without a primary page navigation
+ok 453 - main dialog embeds the camera interaction without a primary page navigation
+  ---
+  duration_ms: 1.65
+  type: 'test'
+  ...
+# Subtest: preview stays until a real nonempty model frame has been submitted
+ok 454 - preview stays until a real nonempty model frame has been submitted
+  ---
+  duration_ms: 2.6346
+  type: 'test'
+  ...
+# Subtest: closing before the frame cancels reveal and a stale callback cannot affect a restarted view
+ok 455 - closing before the frame cancels reveal and a stale callback cannot affect a restarted view
+  ---
+  duration_ms: 0.4471
+  type: 'test'
+  ...
+# Subtest: a single tap activates once and a subsequent lost capture does not activate again
+ok 456 - a single tap activates once and a subsequent lost capture does not activate again
+  ---
+  duration_ms: 22.0463
+  type: 'test'
+  ...
+# Subtest: dragging rotates and never opens the book even if the pointer returns to its start
+ok 457 - dragging rotates and never opens the book even if the pointer returns to its start
+  ---
+  duration_ms: 1.8795
+  type: 'test'
+  ...
+# Subtest: stationary two-finger gestures cannot become a tap when the last finger is lifted
+ok 458 - stationary two-finger gestures cannot become a tap when the last finger is lifted
+  ---
+  duration_ms: 1.1562
+  type: 'test'
+  ...
+# Subtest: pinching applies scale and lifting one finger never converts the remaining sequence into a tap
+ok 459 - pinching applies scale and lifting one finger never converts the remaining sequence into a tap
+  ---
+  duration_ms: 0.5635
+  type: 'test'
+  ...
+# Subtest: pointer cancellation and lost capture do not open the Passport
+ok 460 - pointer cancellation and lost capture do not open the Passport
+  ---
+  duration_ms: 1.0112
+  type: 'test'
+  ...
+# Subtest: tap classification includes release displacement when no move event was delivered
+ok 461 - tap classification includes release displacement when no move event was delivered
+  ---
+  duration_ms: 0.3935
+  type: 'test'
+  ...
+# Subtest: paused interaction ignores starts and cancels a gesture that was already in progress
+ok 462 - paused interaction ignores starts and cancels a gesture that was already in progress
+  ---
+  duration_ms: 0.5262
+  type: 'test'
+  ...
+# Subtest: cleanup releases active pointers and removes all behavior, including repeated cleanup
+ok 463 - cleanup releases active pointers and removes all behavior, including repeated cleanup
+  ---
+  duration_ms: 0.689
+  type: 'test'
+  ...
+# Subtest: a browser that refuses pointer capture still supports a tap without throwing
+ok 464 - a browser that refuses pointer capture still supports a tap without throwing
+  ---
+  duration_ms: 0.9126
+  type: 'test'
+  ...
+# Subtest: portrait mobile uses sixty percent width with the exact supplied cover aspect and center
+ok 465 - portrait mobile uses sixty percent width with the exact supplied cover aspect and center
+  ---
+  duration_ms: 3.4248
+  type: 'test'
+  ...
+# Subtest: desktop cover caps at 280px and short landscape screens limit it by available height
+ok 466 - desktop cover caps at 280px and short landscape screens limit it by available height
+  ---
+  duration_ms: 1.0214
+  type: 'test'
+  ...
+# Subtest: collapsed or invalid viewport dimensions produce finite empty bounds
+ok 467 - collapsed or invalid viewport dimensions produce finite empty bounds
+  ---
+  duration_ms: 0.5944
+  type: 'test'
+  ...
+# Subtest: reading progresses through two pages to completion, clamps, goes back and closes
+ok 468 - reading progresses through two pages to completion, clamps, goes back and closes
+  ---
+  duration_ms: 6.45
+  type: 'test'
+  ...
+# Subtest: subscribers receive the current page immediately and unsubscribe cleanly
+ok 469 - subscribers receive the current page immediately and unsubscribe cleanly
+  ---
+  duration_ms: 0.484
+  type: 'test'
+  ...
+# Subtest: discreet accessible arrows handle cover and both pages without large page buttons
+ok 470 - discreet accessible arrows handle cover and both pages without large page buttons
+  ---
+  duration_ms: 2.1905
+  type: 'test'
+  ...
+# Subtest: after page two, completion offers exactly the external CTA and return to ONE16
+ok 471 - after page two, completion offers exactly the external CTA and return to ONE16
+  ---
+  duration_ms: 3.0761
+  type: 'test'
+  ...
+# Subtest: closing resets the accessible reader and disposing releases controls and subscription
+ok 472 - closing resets the accessible reader and disposing releases controls and subscription
+  ---
+  duration_ms: 1.3081
+  type: 'test'
+  ...
+# Subtest: configured pages identify a demo rather than authenticated account details
+ok 473 - configured pages identify a demo rather than authenticated account details
+  ---
+  duration_ms: 0.4559
+  type: 'test'
+  ...
+# Subtest: actual immersive-ar support takes precedence over user-agent native fallbacks
+ok 474 - actual immersive-ar support takes precedence over user-agent native fallbacks
+  ---
+  duration_ms: 13.3536
+  type: 'test'
+  ...
+# Subtest: Quick Look requires an iOS device and an actual rel-ar feature declaration
+ok 475 - Quick Look requires an iOS device and an actual rel-ar feature declaration
+  ---
+  duration_ms: 1.147
+  type: 'test'
+  ...
+# Subtest: Android without web AR offers an explicitly unverified native viewer rather than claiming installed ARCore
+ok 476 - Android without web AR offers an explicitly unverified native viewer rather than claiming installed ARCore
+  ---
+  duration_ms: 1.8448
+  type: 'test'
+  ...
+# Subtest: insecure contexts do not probe or offer camera-based placement
+ok 477 - insecure contexts do not probe or offer camera-based placement
+  ---
+  duration_ms: 0.7178
+  type: 'test'
+  ...
+# Subtest: Quick Look uses a same-origin spatial USDZ and precisely one image child on a real rel-ar link
+ok 478 - Quick Look uses a same-origin spatial USDZ and precisely one image child on a real rel-ar link
+  ---
+  duration_ms: 1.4061
+  type: 'test'
+  ...
+# Subtest: Scene Viewer intent uses ARCore ar_only, the spatial GLB, and the same NFC URL as fallback
+ok 479 - Scene Viewer intent uses ARCore ar_only, the spatial GLB, and the same NFC URL as fallback
+  ---
+  duration_ms: 1.1532
+  type: 'test'
+  ...
+# Subtest: native entry is hidden throughout the information pages and final two-action screen, and is cleaned up
+ok 480 - native entry is hidden throughout the information pages and final two-action screen, and is cleaned up
+  ---
+  duration_ms: 4.0717
+  type: 'test'
+  ...
+# Subtest: unsupported and webxr capability kinds do not add native buttons
+ok 481 - unsupported and webxr capability kinds do not add native buttons
+  ---
+  duration_ms: 0.8526
+  type: 'test'
+  ...
+# Subtest: native fallback explains an unresolved launch without claiming hardware incompatibility and hides with the native entry
+ok 482 - native fallback explains an unresolved launch without claiming hardware incompatibility and hides with the native entry
+  ---
+  duration_ms: 1.0414
+  type: 'test'
+  ...
+# Subtest: native spatial GLB wraps the existing roots without altering geometry, materials or source JPEG bytes
+ok 483 - native spatial GLB wraps the existing roots without altering geometry, materials or source JPEG bytes
+  ---
+  duration_ms: 16.371
+  type: 'test'
+  ...
+# Subtest: native placement is upright, twenty centimetres wide, centered eighteen centimetres above the anchor
+ok 484 - native placement is upright, twenty centimetres wide, centered eighteen centimetres above the anchor
+  ---
+  duration_ms: 4.5913
+  type: 'test'
+  ...
+# Subtest: native USDZ preserves every source payload except the top scene transform and shares GLB orientation
+ok 485 - native USDZ preserves every source payload except the top scene transform and shares GLB orientation
+  ---
+  duration_ms: 96.6268
+  type: 'test'
+  ...
+# Subtest: the spatial builder is reproducible and does not modify the supplied source assets
+ok 486 - the spatial builder is reproducible and does not modify the supplied source assets
+  ---
+  duration_ms: 656.0253
+  type: 'test'
+  ...
+# Subtest: start requests the immersive session synchronously inside the initiating gesture
+ok 487 - start requests the immersive session synchronously inside the initiating gesture
+  ---
+  duration_ms: 21.5487
+  type: 'test'
+  ...
+# Subtest: placing produces an upright twenty-centimeter object fixed while the camera turns, walks and loses hits
+ok 488 - placing produces an upright twenty-centimeter object fixed while the camera turns, walks and loses hits
+  ---
+  duration_ms: 16.0237
+  type: 'test'
+  ...
+# Subtest: temporary tracking loss hides the object and restores the same pose without a new surface
+ok 489 - temporary tracking loss hides the object and restores the same pose without a new surface
+  ---
+  duration_ms: 4.3115
+  type: 'test'
+  ...
+# Subtest: reference reset rebases the book before rendering and preserves its physical camera-relative pose
+ok 490 - reference reset rebases the book before rendering and preserves its physical camera-relative pose
+  ---
+  duration_ms: 5.4312
+  type: 'test'
+  ...
+# Subtest: repositioning discards the old hit and requires a new tracked surface
+ok 491 - repositioning discards the old hit and requires a new tracked surface
+  ---
+  duration_ms: 6.2474
+  type: 'test'
+  ...
+# Subtest: ending a session restores the exact preview transform and disposes surface resources once
+ok 492 - ending a session restores the exact preview transform and disposes surface resources once
+  ---
+  duration_ms: 3.3199
+  type: 'test'
+  ...
+# Subtest: canceling a pending permission request ends a late grant without initializing XR or touching the preview
+ok 493 - canceling a pending permission request ends a late grant without initializing XR or touching the preview
+  ---
+  duration_ms: 2.1894
+  type: 'test'
+  ...
+# Subtest: XR selection opens information only when its ray intersects the placed book
+ok 494 - XR selection opens information only when its ray intersects the placed book
+  ---
+  duration_ms: 7.6423
+  type: 'test'
+  ...
+# Subtest: Passport target faces the reverse of Trustless/Grantfox and is clickable from the rear only
+ok 495 - Passport target faces the reverse of Trustless/Grantfox and is clickable from the rear only
+  ---
+  duration_ms: 15.3689
+  type: 'test'
+  ...
+# Subtest: adding stand graphic to real GLB leaves original brand and venue geometry unchanged
+ok 496 - adding stand graphic to real GLB leaves original brand and venue geometry unchanged
+  ---
+  duration_ms: 396.5822
+  type: 'test'
+  ...
+# Subtest: a regenerated source poster is reused without loading a book or duplicating the target
+ok 497 - a regenerated source poster is reused without loading a book or duplicating the target
+  ---
+  duration_ms: 1.3138
+  type: 'test'
+  ...
+# Subtest: entering stand16 loads only its poster until the Passport experience is activated
+ok 498 - entering stand16 loads only its poster until the Passport experience is activated
+  ---
+  duration_ms: 2.006
+  type: 'test'
+  ...
+# Subtest: a failed poster texture keeps a clickable stand target without adding a book
+ok 499 - a failed poster texture keeps a clickable stand target without adding a book
+  ---
+  duration_ms: 1.8718
+  type: 'test'
+  ...
+# Subtest: placing on a tilted surface keeps the book upright and faces the initial viewer once
+ok 500 - placing on a tilted surface keeps the book upright and faces the initial viewer once
+  ---
+  duration_ms: 7.4251
+  type: 'test'
+  ...
+# Subtest: the real Passport leaves the camera frustum when looking away and returns to the same world point
+ok 501 - the real Passport leaves the camera frustum when looking away and returns to the same world point
+  ---
+  duration_ms: 82.9949
+  type: 'test'
+  ...
+# Subtest: walking one meter creates real parallax while the cover retains its original heading
+ok 502 - walking one meter creates real parallax while the cover retains its original heading
+  ---
+  duration_ms: 12.5919
+  type: 'test'
+  ...
+# Subtest: hit and placement matrices are owned copies, including typed arrays and repeated calls
+ok 503 - hit and placement matrices are owned copies, including typed arrays and repeated calls
+  ---
+  duration_ms: 0.6999
+  type: 'test'
+  ...
+# Subtest: invalid hit, viewer and reset matrices cannot place a corrupt transform
+ok 504 - invalid hit, viewer and reset matrices cannot place a corrupt transform
+  ---
+  duration_ms: 0.8676
+  type: 'test'
+  ...
+# Subtest: reference-space reset preserves physical position and viewing direction using the inverse delta
+ok 505 - reference-space reset preserves physical position and viewing direction using the inverse delta
+  ---
+  duration_ms: 0.988
+  type: 'test'
+  ...
+# Subtest: a reset rebases a pending hit before placement and missing transforms demand a new surface
+ok 506 - a reset rebases a pending hit before placement and missing transforms demand a new surface
+  ---
+  duration_ms: 0.5981
+  type: 'test'
+  ...
+# Subtest: Passport keeps static preview and native gesture links independent of inline engine
+ok 507 - Passport keeps static preview and native gesture links independent of inline engine
+  ---
+  duration_ms: 1.5928
+  type: 'test'
+  ...
+# Subtest: Passport cover texture is exactly the supplied original JPEG
+ok 508 - Passport cover texture is exactly the supplied original JPEG
+  ---
+  duration_ms: 5.3657
+  type: 'test'
+  ...
+# Subtest: Passport assets exist and no account data is represented as authenticated
+ok 509 - Passport assets exist and no account data is represented as authenticated
+  ---
+  duration_ms: 1.1561
+  type: 'test'
+  ...
+# Subtest: venue entry has one loading guard and overlaps engine and transfer preparation
+ok 510 - venue entry has one loading guard and overlaps engine and transfer preparation
+  ---
+  duration_ms: 1.5729
+  type: 'test'
+  ...
+# Subtest: guided native controls keep the selected view and accessible caption through EN/ES changes
+ok 511 - guided native controls keep the selected view and accessible caption through EN/ES changes
+  ---
+  duration_ms: 9.8713
+  type: 'test'
+  ...
+# Subtest: every real ONE16 call carries the chosen language after repeated switches without changing section links
+ok 512 - every real ONE16 call carries the chosen language after repeated switches without changing section links
+  ---
+  duration_ms: 2.6534
+  type: 'test'
+  ...
+# Subtest: ONE16 imports only at the 200px intersection boundary and repeated observations mount once
+ok 513 - ONE16 imports only at the 200px intersection boundary and repeated observations mount once
+  ---
+  duration_ms: 11.3455
+  type: 'test'
+  ...
+# Subtest: failed preview import retains a translated retry path and double retry still mounts once
+ok 514 - failed preview import retains a translated retry path and double retry still mounts once
+  ---
+  duration_ms: 3.1008
+  type: 'test'
+  ...
+# Subtest: latest preview language reaches a late mount and subsequent changes reach its controller
+ok 515 - latest preview language reaches a late mount and subsequent changes reach its controller
+  ---
+  duration_ms: 1.5975
+  type: 'test'
+  ...
+# Subtest: destroy before a pending import resolves prevents mounting and removes the retry path
+ok 516 - destroy before a pending import resolves prevents mounting and removes the retry path
+  ---
+  duration_ms: 1.298
+  type: 'test'
+  ...
+# Subtest: destroy before a late import failure leaves the initial poster state intact
+ok 517 - destroy before a late import failure leaves the initial poster state intact
+  ---
+  duration_ms: 1.9723
+  type: 'test'
+  ...
+# Subtest: without IntersectionObserver the viewport check respects 200px and teardown removes scroll work
+ok 518 - without IntersectionObserver the viewport check respects 200px and teardown removes scroll work
+  ---
+  duration_ms: 1.9121
+  type: 'test'
+  ...
+# Subtest: document exit releases scenes, while a cached history entry keeps its paused views
+ok 519 - document exit releases scenes, while a cached history entry keeps its paused views
+  ---
+  duration_ms: 1.2885
+  type: 'test'
+  ...
+# Subtest: only known legacy root links continue to ONE16 with their exact query and fragment
+ok 520 - only known legacy root links continue to ONE16 with their exact query and fragment
+  ---
+  duration_ms: 3.1307
+  type: 'test'
+  ...
+# Subtest: legacy continuation cannot consume a supplied external destination or change the visitor origin
+ok 521 - legacy continuation cannot consume a supplied external destination or change the visitor origin
+  ---
+  duration_ms: 0.8371
+  type: 'test'
+  ...
+# Subtest: server routes prioritize NFC before brand landing and normalize duplicate experience URLs
+ok 522 - server routes prioritize NFC before brand landing and normalize duplicate experience URLs
+  ---
+  duration_ms: 1.9827
+  type: 'test'
+  ...
+# Subtest: platform and ONE16 have distinct canonical URLs while standalone AR paths remain unchanged
+ok 523 - platform and ONE16 have distinct canonical URLs while standalone AR paths remain unchanged
+  ---
+  duration_ms: 0.3404
+  type: 'test'
+  ...
+# Subtest: advanced Vercel routes beat the physical index while preserving NFC, canonical redirects and API headers
+ok 524 - advanced Vercel routes beat the physical index while preserving NFC, canonical redirects and API headers
+  ---
+  duration_ms: 12.2325
+  type: 'test'
+  ...
+# Subtest: local server handler serves landing/NFC/ONE16, keeps assets root-relative and delegates APIs intact
+ok 525 - local server handler serves landing/NFC/ONE16, keeps assets root-relative and delegates APIs intact
+  ---
+  duration_ms: 64.5432
+  type: 'test'
+  ...
+# Subtest: the real maquette stays within geometry/draw budgets using bevels and instanced seating
+ok 526 - the real maquette stays within geometry/draw budgets using bevels and instanced seating
+  ---
+  duration_ms: 90.0814
+  type: 'test'
+  ...
+# Subtest: transparent rendering owns an environment, bakes floor shadows once and has no idle loop
+ok 527 - transparent rendering owns an environment, bakes floor shadows once and has no idle loop
+  ---
+  duration_ms: 46.5304
+  type: 'test'
+  ...
+# Subtest: guided views run for 600ms, last selection wins and reduced motion settles instantly
+ok 528 - guided views run for 600ms, last selection wins and reduced motion settles instantly
+  ---
+  duration_ms: 66.966
+  type: 'test'
+  ...
+# Subtest: canvas beacon taps notify shared UI state without cancelling native touch scrolling
+ok 529 - canvas beacon taps notify shared UI state without cancelling native touch scrolling
+  ---
+  duration_ms: 31.0612
+  type: 'test'
+  ...
+# Subtest: hidden and offscreen transitions pause elapsed time and resume without jumping
+ok 530 - hidden and offscreen transitions pause elapsed time and resume without jumping
+  ---
+  duration_ms: 37.2079
+  type: 'test'
+  ...
+# Subtest: motion preference changes stop parallax and finish the selected guided view immediately
+ok 531 - motion preference changes stop parallax and finish the selected guided view immediately
+  ---
+  duration_ms: 28.3701
+  type: 'test'
+  ...
+# Subtest: GPU/environment failures keep fallback and context restoration rebakes owned targets and shadows
+ok 532 - GPU/environment failures keep fallback and context restoration rebakes owned targets and shadows
+  ---
+  duration_ms: 58.3448
+  type: 'test'
+  ...
+# Subtest: the scene dependency graph starts after two frame boundaries and can be cancelled
+ok 533 - the scene dependency graph starts after two frame boundaries and can be cancelled
+  ---
+  duration_ms: 14.0771
+  type: 'test'
+  ...
+# Subtest: hero dependencies are local, isolated from venue/wallet and provide the 128px environment bake
+ok 534 - hero dependencies are local, isolated from venue/wallet and provide the 128px environment bake
+  ---
+  duration_ms: 6.4622
+  type: 'test'
+  ...
+# Subtest: the public root is an English landing with direct ONE16 calls and a deferred concept scene
+ok 535 - the public root is an English landing with direct ONE16 calls and a deferred concept scene
+  ---
+  duration_ms: 5.2051
+  type: 'test'
+  ...
+# Subtest: copy distinguishes the public demo, the Testnet pilot and planned commercial capabilities
+ok 536 - copy distinguishes the public demo, the Testnet pilot and planned commercial capabilities
+  ---
+  duration_ms: 0.6647
+  type: 'test'
+  ...
+# Subtest: the only photographic preview is the actual inspected lightweight ONE16 render
+ok 537 - the only photographic preview is the actual inspected lightweight ONE16 render
+  ---
+  duration_ms: 1.1934
+  type: 'test'
+  ...
+# Subtest: every translated HTML text and accessibility attribute has a Spanish translation
+ok 538 - every translated HTML text and accessibility attribute has a Spanish translation
+  ---
+  duration_ms: 1.1842
+  type: 'test'
+  ...
+# Subtest: English is the default, with explicit query precedence over a stored language
+ok 539 - English is the default, with explicit query precedence over a stored language
+  ---
+  duration_ms: 1.3326
+  type: 'test'
+  ...
+# Subtest: switching Spanish updates metadata, labels and synchronized selectors, then restores English
+ok 540 - switching Spanish updates metadata, labels and synchronized selectors, then restores English
+  ---
+  duration_ms: 2.9293
+  type: 'test'
+  ...
+# Subtest: language selection persists locally and preserves unrelated query values and fragments
+ok 541 - language selection persists locally and preserves unrelated query values and fragments
+  ---
+  duration_ms: 4.6435
+  type: 'test'
+  ...
+# Subtest: a valid language query selects Spanish even when storage is unavailable
+ok 542 - a valid language query selects Spanish even when storage is unavailable
+  ---
+  duration_ms: 1.3568
+  type: 'test'
+  ...
+# Subtest: legacy QR/NFC continuation runs before preference storage and UI initialization
+ok 543 - legacy QR/NFC continuation runs before preference storage and UI initialization
+  ---
+  duration_ms: 0.6787
+  type: 'test'
+  ...
+# Subtest: Quick Look uses typed USDZ Blob and requires second gesture, never automatic launch
+ok 544 - Quick Look uses typed USDZ Blob and requires second gesture, never automatic launch
+  ---
+  duration_ms: 105.4351
+  type: 'test'
+  ...
+# Subtest: Quick Look fetch failure remains retryable and never replaces original link
+ok 545 - Quick Look fetch failure remains retryable and never replaces original link
+  ---
+  duration_ms: 1.9028
+  type: 'test'
+  ...
+# Subtest: early world binding and lazy panel binding share one handler and one preparation
+ok 546 - early world binding and lazy panel binding share one handler and one preparation
+  ---
+  duration_ms: 6.0384
+  type: 'test'
+  ...
+# Subtest: actual bound click handler resets pose, height, orientation, zoom, inputs and help
+ok 547 - actual bound click handler resets pose, height, orientation, zoom, inputs and help
+  ---
+  duration_ms: 7.0859
+  type: 'test'
+  ...
+# Subtest: repeated activation is idempotent across walk/overview/plan
+ok 548 - repeated activation is idempotent across walk/overview/plan
+  ---
+  duration_ms: 5.7965
+  type: 'test'
+  ...
+# Subtest: fallback resets real plan position without claiming 3D or changing capability
+ok 549 - fallback resets real plan position without claiming 3D or changing capability
+  ---
+  duration_ms: 0.6019
+  type: 'test'
+  ...
+# Subtest: early activation before layout does not invent a spawn and later activation works
+ok 550 - early activation before layout does not invent a spawn and later activation works
+  ---
+  duration_ms: 0.7092
+  type: 'test'
+  ...
+# Subtest: handler disposal removes actual click listener
+ok 551 - handler disposal removes actual click listener
+  ---
+  duration_ms: 0.487
+  type: 'test'
+  ...
+# Subtest: review registry has stable ordered IDs 1,4–20 and known world coordinates
+ok 552 - review registry has stable ordered IDs 1,4–20 and known world coordinates
+  ---
+  duration_ms: 5.5087
+  type: 'test'
+  ...
+# Subtest: both full and compact maps include all18 informational pins, actual floor and obstacles
+ok 553 - both full and compact maps include all18 informational pins, actual floor and obstacles
+  ---
+  duration_ms: 6.2919
+  type: 'test'
+  ...
+# Subtest: pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cannot inject markup
+ok 554 - pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cannot inject markup
+  ---
+  duration_ms: 7.5016
+  type: 'test'
+  ...
+# Subtest: nearby entries have world-anchored leaders and malformed geometry is ignored
+ok 555 - nearby entries have world-anchored leaders and malformed geometry is ignored
+  ---
+  duration_ms: 0.6496
+  type: 'test'
+  ...
+# Subtest: compact is local pose-centered viewBox with24x32world span, full staysglobal; numbers optional
+ok 556 - compact is local pose-centered viewBox with24x32world span, full staysglobal; numbers optional
+  ---
+  duration_ms: 8.034
+  type: 'test'
+  ...
+# Subtest: review markers use actual camera projection and retain edge points
+ok 557 - review markers use actual camera projection and retain edge points
+  ---
+  duration_ms: 5.8898
+  type: 'test'
+  ...
+# Subtest: 20 coincident labels separate with24px clearance, anchors preserved and none discarded
+ok 558 - 20 coincident labels separate with24px clearance, anchors preserved and none discarded
+  ---
+  duration_ms: 2.2475
+  type: 'test'
+  ...
+# Subtest: overview module makes18 noninteractive spans with stable IDs and leader elements
+ok 559 - overview module makes18 noninteractive spans with stable IDs and leader elements
+  ---
+  duration_ms: 13.674
+  type: 'test'
+  ...
+# Subtest: the dated verifier report counts six unique exact payments without changing the recording
+ok 560 - the dated verifier report counts six unique exact payments without changing the recording
+  ---
+  duration_ms: 7.9441
+  type: 'test'
+  ...
+# Subtest: a recorded balance flag or transaction-success flag cannot stand in for payment verification
+ok 561 - a recorded balance flag or transaction-success flag cannot stand in for payment verification
+  ---
+  duration_ms: 3.3723
+  type: 'test'
+  ...
+# Subtest: duplicated, missing, mismatched or incomplete transfer evidence fails closed
+ok 562 - duplicated, missing, mismatched or incomplete transfer evidence fails closed
+  ---
+  duration_ms: 21.1903
+  type: 'test'
+  ...
+# Subtest: dashboard keeps experiment evidence dated, isolated, and linked to the explicit preview
+ok 563 - dashboard keeps experiment evidence dated, isolated, and linked to the explicit preview
+  ---
+  duration_ms: 1.4573
+  type: 'test'
+  ...
+# Subtest: legacy host cards never read or mount the experimental recording
+ok 564 - legacy host cards never read or mount the experimental recording
+  ---
+  duration_ms: 18.3153
+  type: 'test'
+  ...
+# Subtest: preview timers stop on leave and dispose, and recreated scenes have one timer
+ok 565 - preview timers stop on leave and dispose, and recreated scenes have one timer
+  ---
+  duration_ms: 13.0746
+  type: 'test'
+  ...
+# Subtest: missing or malformed preview leaves the host fallback available without a timer or mesh
+ok 566 - missing or malformed preview leaves the host fallback available without a timer or mesh
+  ---
+  duration_ms: 2.2066
+  type: 'test'
+  ...
+# Subtest: the explicit preview is excluded from the live publisher and acknowledgement path
+ok 567 - the explicit preview is excluded from the live publisher and acknowledgement path
+  ---
+  duration_ms: 2.2068
+  type: 'test'
+  ...
+# Subtest: only a recorded testnet run with well-formed paid orders is shown
+ok 568 - only a recorded testnet run with well-formed paid orders is shown
+  ---
+  duration_ms: 4.2741
+  type: 'test'
+  ...
+# Subtest: each section shows its current order, the next one and the time left
+ok 569 - each section shows its current order, the next one and the time left
+  ---
+  duration_ms: 0.7864
+  type: 'test'
+  ...
+# Subtest: after the recorded window the rotation is replayed on a loop and labelled as a replay
+ok 570 - after the recorded window the rotation is replayed on a loop and labelled as a replay
+  ---
+  duration_ms: 1.5544
+  type: 'test'
+  ...
+# Subtest: the four sections are drawn without errors, with free sections offered for sale
+ok 571 - the four sections are drawn without errors, with free sections offered for sale
+  ---
+  duration_ms: 2.9021
+  type: 'test'
+  ...
+# Subtest: ambiguous identities, duplicate transfers and overlapping section windows are rejected
+ok 572 - ambiguous identities, duplicate transfers and overlapping section windows are rejected
+  ---
+  duration_ms: 0.553
+  type: 'test'
+  ...
+# Subtest: half-open boundaries rotate once, and disabling replay produces finished rather than live
+ok 573 - half-open boundaries rotate once, and disabling replay produces finished rather than live
+  ---
+  duration_ms: 0.4995
+  type: 'test'
+  ...
+# Subtest: shorter corridor connects relocated entrance to all seven unchanged stairs and back
+ok 574 - shorter corridor connects relocated entrance to all seven unchanged stairs and back
+  ---
+  duration_ms: 127.4494
+  type: 'test'
+  ...
+# Subtest: scene compression matches corridor ends and preserves small decoration size
+ok 575 - scene compression matches corridor ends and preserves small decoration size
+  ---
+  duration_ms: 17.342
+  type: 'test'
+  ...
+# Subtest: old NFC and www continue to the canonical domain with exact route, query and fragment
+ok 576 - old NFC and www continue to the canonical domain with exact route, query and fragment
+  ---
+  duration_ms: 1.6225
+  type: 'test'
+  ...
+# Subtest: canonical, exact preview, localhost and unrelated sites are not redirected
+ok 577 - canonical, exact preview, localhost and unrelated sites are not redirected
+  ---
+  duration_ms: 0.6128
+  type: 'test'
+  ...
+# Subtest: inline guard uses replace before storage/modules and preserves the browser-only fragment
+ok 578 - inline guard uses replace before storage/modules and preserves the browser-only fragment
+  ---
+  duration_ms: 5.5579
+  type: 'test'
+  ...
+# Subtest: every standalone entry has the same early canonical guard and its own canonical URL
+ok 579 - every standalone entry has the same early canonical guard and its own canonical URL
+  ---
+  duration_ms: 8.9724
+  type: 'test'
+  ...
+# Subtest: host redirects keep old NFC routes; wallet APIs and access metadata cannot be cached
+ok 580 - host redirects keep old NFC routes; wallet APIs and access metadata cannot be cached
+  ---
+  duration_ms: 9.3984
+  type: 'test'
+  ...
+# Subtest: placed transform survives loss of all surface hits and cannot follow a later target
+ok 581 - placed transform survives loss of all surface hits and cannot follow a later target
+  ---
+  duration_ms: 3.8018
+  type: 'test'
+  ...
+# Subtest: repositioning deliberately releases old world transform and requires a new valid surface
+ok 582 - repositioning deliberately releases old world transform and requires a new valid surface
+  ---
+  duration_ms: 0.4274
+  type: 'test'
+  ...
+# Subtest: ending an active session cancels surface resources exactly once and resets ownership
+ok 583 - ending an active session cancels surface resources exactly once and resets ownership
+  ---
+  duration_ms: 2.1975
+  type: 'test'
+  ...
+# Subtest: exit during pending permission ends a late XR grant without initializing resources
+ok 584 - exit during pending permission ends a late XR grant without initializing resources
+  ---
+  duration_ms: 1.3995
+  type: 'test'
+  ...
+# Subtest: late preparation cannot replace resources of a restarted XR session
+ok 585 - late preparation cannot replace resources of a restarted XR session
+  ---
+  duration_ms: 11.6962
+  type: 'test'
+  ...
+# Subtest: permission rejection retains the real error after busy clears and permits retry
+ok 586 - permission rejection retains the real error after busy clears and permits retry
+  ---
+  duration_ms: 2.0079
+  type: 'test'
+  ...
+# Subtest: stage card text comes from the purchased card and is absent without one
+ok 587 - stage card text comes from the purchased card and is absent without one
+  ---
+  duration_ms: 49.3709
+  type: 'test'
+  ...
+# Subtest: screen faces the middle of the venue on the backdrop's thin axis
+ok 588 - screen faces the middle of the venue on the backdrop's thin axis
+  ---
+  duration_ms: 0.5673
+  type: 'test'
+  ...
+# Subtest: long titles wrap and are truncated to three lines
+ok 589 - long titles wrap and are truncated to three lines
+  ---
+  duration_ms: 0.6247
+  type: 'test'
+  ...
+# Subtest: missing state file leaves the venue untouched
+ok 590 - missing state file leaves the venue untouched
+  ---
+  duration_ms: 0.6997
+  type: 'test'
+  ...
+# Subtest: purchased card mounts on the actual venue backdrop after GLTFLoader sanitizes its name
+ok 591 - purchased card mounts on the actual venue backdrop after GLTFLoader sanitizes its name
+  ---
+  duration_ms: 359.1841
+  type: 'test'
+  ...
+# Subtest: the stage card shows a sponsor line only when the sponsor actually paid
+ok 592 - the stage card shows a sponsor line only when the sponsor actually paid
+  ---
+  duration_ms: 52.3332
+  type: 'test'
+  ...
+# Subtest: drawing a card with a sponsor writes the sponsor line last, and without one never mentions it
+ok 593 - drawing a card with a sponsor writes the sponsor line last, and without one never mentions it
+  ---
+  duration_ms: 1.9024
+  type: 'test'
+  ...
+# Subtest: central approach through paired stands reaches auditorium and stage and reverses
+ok 594 - central approach through paired stands reaches auditorium and stage and reverses
+  ---
+  duration_ms: 83.1793
+  type: 'test'
+  ...
+# Subtest: stand and auditorium viewpoints are distinct, clear, and correctly labeled
+ok 595 - stand and auditorium viewpoints are distinct, clear, and correctly labeled
+  ---
+  duration_ms: 0.5551
+  type: 'test'
+  ...
+# Subtest: Passport remains explicitly provisional and is not relabeled as a verified brand stand
+ok 596 - Passport remains explicitly provisional and is not relabeled as a verified brand stand
+  ---
+  duration_ms: 0.5075
+  type: 'test'
+  ...
+# Subtest: camera floor height follows ramp in both directions
+ok 597 - camera floor height follows ramp in both directions
+  ---
+  duration_ms: 13.137
+  type: 'test'
+  ...
+# Subtest: unmodeled drop cannot be stepped off
+ok 598 - unmodeled drop cannot be stepped off
+  ---
+  duration_ms: 2.5201
+  type: 'test'
+  ...
+# Subtest: legacy floor retains zero height
+ok 599 - legacy floor retains zero height
+  ---
+  duration_ms: 0.3309
+  type: 'test'
+  ...
+# Subtest: compressed runtime stream restores exact original model and reports progress
+ok 600 - compressed runtime stream restores exact original model and reports progress
+  ---
+  duration_ms: 188.1398
+  type: 'test'
+  ...
+# Subtest: browser without gzip streaming support uses original GLB once
+ok 601 - browser without gzip streaming support uses original GLB once
+  ---
+  duration_ms: 14.8606
+  type: 'test'
+  ...
+# Subtest: HTTP model errors are explicit and do not trigger duplicate downloads
+ok 602 - HTTP model errors are explicit and do not trigger duplicate downloads
+  ---
+  duration_ms: 1.9994
+  type: 'test'
+  ...
+# Subtest: landing viewer defers heavy engine imports until initialization
+ok 603 - landing viewer defers heavy engine imports until initialization
+  ---
+  duration_ms: 4.7898
+  type: 'test'
+  ...
+# Subtest: host-level gzip decoding is not decompressed twice
+ok 604 - host-level gzip decoding is not decompressed twice
+  ---
+  duration_ms: 20.2837
+  type: 'test'
+  ...
+# Subtest: gzip network failure falls back once to exact original GLB
+ok 605 - gzip network failure falls back once to exact original GLB
+  ---
+  duration_ms: 17.4838
+  type: 'test'
+  ...
+# Subtest: gzip HTTP failure falls back once to exact original GLB
+ok 606 - gzip HTTP failure falls back once to exact original GLB
+  ---
+  duration_ms: 12.6696
+  type: 'test'
+  ...
+# Subtest: gzip corrupt failure falls back once to exact original GLB
+ok 607 - gzip corrupt failure falls back once to exact original GLB
+  ---
+  duration_ms: 41.5375
+  type: 'test'
+  ...
+# Subtest: both transfer paths failing terminates after two requests
+ok 608 - both transfer paths failing terminates after two requests
+  ---
+  duration_ms: 1.0296
+  type: 'test'
+  ...
+# Subtest: download and decoded resources keep the cover until a successful render at the final pose
+ok 609 - download and decoded resources keep the cover until a successful render at the final pose
+  ---
+  duration_ms: 3.1952
+  type: 'test'
+  ...
+# Subtest: hidden or zero-sized viewports cannot claim a first frame, and a restored viewport can
+ok 610 - hidden or zero-sized viewports cannot claim a first frame, and a restored viewport can
+  ---
+  duration_ms: 0.2546
+  type: 'test'
+  ...
+# Subtest: renderer failure retains Welcome with no false ready and supports a clean retry
+ok 611 - renderer failure retains Welcome with no false ready and supports a clean retry
+  ---
+  duration_ms: 0.3721
+  type: 'test'
+  ...
+# Subtest: context failure retains Welcome with no false ready and supports a clean retry
+ok 612 - context failure retains Welcome with no false ready and supports a clean retry
+  ---
+  duration_ms: 0.1608
+  type: 'test'
+  ...
+# Subtest: choosePlan blocks late loading, error and render callbacks from revealing 3D
+ok 613 - choosePlan blocks late loading, error and render callbacks from revealing 3D
+  ---
+  duration_ms: 0.988
+  type: 'test'
+  ...
+# Subtest: leave blocks late loading, error and render callbacks from revealing 3D
+ok 614 - leave blocks late loading, error and render callbacks from revealing 3D
+  ---
+  duration_ms: 0.3983
+  type: 'test'
+  ...
+# Subtest: the initial intent preserves static access, saved native pose and Passport precedence exactly once
+ok 615 - the initial intent preserves static access, saved native pose and Passport precedence exactly once
+  ---
+  duration_ms: 2.2546
+  type: 'test'
+  ...
+# Subtest: Welcome language uses URL, then shared preference, then English without requiring storage
+ok 616 - Welcome language uses URL, then shared preference, then English without requiring storage
+  ---
+  duration_ms: 0.3876
+  type: 'test'
+  ...
+# Subtest: progress percentages describe download only; geometry, textures and first view remain indeterminate
+ok 617 - progress percentages describe download only; geometry, textures and first view remain indeterminate
+  ---
+  duration_ms: 1.2295
+  type: 'test'
+  ...
+# Subtest: the early inline Welcome bootstrap requests no venue image for NFC or explicit static access
+ok 618 - the early inline Welcome bootstrap requests no venue image for NFC or explicit static access
+  ---
+  duration_ms: 8.2518
+  type: 'test'
+  ...
+# Subtest: entry import failure shows the retry curtain while explicit 2D access stays available
+ok 619 - entry import failure shows the retry curtain while explicit 2D access stays available
+  ---
+  duration_ms: 3.058
+  type: 'test'
+  ...
+# Subtest: Passport return settles after one16-plan without reviving a finished loading cover
+ok 620 - Passport return settles after one16-plan without reviving a finished loading cover
+  ---
+  duration_ms: 1.4284
+  type: 'test'
+  ...
+# Subtest: Passport return settles after one16-left without reviving a finished loading cover
+ok 621 - Passport return settles after one16-left without reviving a finished loading cover
+  ---
+  duration_ms: 0.5709
+  type: 'test'
+  ...
+# Subtest: NFC-only important hiding is disabled on explicit return before measuring the world
+ok 622 - NFC-only important hiding is disabled on explicit return before measuring the world
+  ---
+  duration_ms: 3.983
+  type: 'test'
+  ...
+# Subtest: release verification accepts coherent real fixtures and only makes public GET requests
+ok 623 - release verification accepts coherent real fixtures and only makes public GET requests
+  ---
+  duration_ms: 256.6928
+  type: 'test'
+  ...
+# Subtest: an HTML fallback with status 200 cannot masquerade as a released JSON route
+ok 624 - an HTML fallback with status 200 cannot masquerade as a released JSON route
+  ---
+  duration_ms: 229.5013
+  type: 'test'
+  ...
+# Subtest: verification refuses mixed runs and a disabled wallet pilot without exposing response bodies
+ok 625 - verification refuses mixed runs and a disabled wallet pilot without exposing response bodies
+  ---
+  duration_ms: 56.3243
+  type: 'test'
+  ...
+# Subtest: integration-only mode permits the preserved landing while final QA requires brand and CTA
+ok 626 - integration-only mode permits the preserved landing while final QA requires brand and CTA
+  ---
+  duration_ms: 142.945
+  type: 'test'
+  ...
+# Subtest: floor reference numbers have walkable locations and follow actual floor height
+ok 627 - floor reference numbers have walkable locations and follow actual floor height
+  ---
+  duration_ms: 13.8608
+  type: 'test'
+  ...
+# Subtest: analog deadzone, proportional speed, diagonal normalization and radius clamp
+ok 628 - analog deadzone, proportional speed, diagonal normalization and radius clamp
+  ---
+  duration_ms: 3.0147
+  type: 'test'
+  ...
+# Subtest: actual two-finger handlers move and look independently and retain pointer ownership
+ok 629 - actual two-finger handlers move and look independently and retain pointer ownership
+  ---
+  duration_ms: 5.4279
+  type: 'test'
+  ...
+# Subtest: cancel, lost capture, blur, modal disable and mode clear stop without sticky input
+ok 630 - cancel, lost capture, blur, modal disable and mode clear stop without sticky input
+  ---
+  duration_ms: 1.6516
+  type: 'test'
+  ...
+# Subtest: joystick vectors feed actual collision navigation camera-relative without long-frame jump
+ok 631 - joystick vectors feed actual collision navigation camera-relative without long-frame jump
+  ---
+  duration_ms: 6.8923
+  type: 'test'
+  ...
+# Subtest: touch policy is on actual joystick, right-side zones collapsed in mobile walk
+ok 632 - touch policy is on actual joystick, right-side zones collapsed in mobile walk
+  ---
+  duration_ms: 4.5487
+  type: 'test'
+  ...
+# Subtest: installed Smart Account Kit payload passes our proxy and live read-only Stellar simulation
+ok 633 - installed Smart Account Kit payload passes our proxy and live read-only Stellar simulation # SKIP
+  ---
+  duration_ms: 4.5699
+  type: 'test'
+  ...
+# Subtest: config is testnet-only, accepts actual Marketplace aliases, and never returns secrets
+ok 634 - config is testnet-only, accepts actual Marketplace aliases, and never returns secrets
+  ---
+  duration_ms: 16.4821
+  type: 'test'
+  ...
+# Subtest: prewarming availability neither creates wallets nor requests funds
+ok 635 - prewarming availability neither creates wallets nor requests funds
+  ---
+  duration_ms: 3.2925
+  type: 'test'
+  ...
+# Subtest: two instances share durable claim ownership; double taps cannot fund twice
+ok 636 - two instances share durable claim ownership; double taps cannot fund twice
+  ---
+  duration_ms: 13.1032
+  type: 'test'
+  ...
+# Subtest: unknown outcomes survive reload and explicit retry without another claim, then reconcile onchain
+ok 637 - unknown outcomes survive reload and explicit retry without another claim, then reconcile onchain
+  ---
+  duration_ms: 7.2566
+  type: 'test'
+  ...
+# Subtest: a faucet success is pending until an actual asset balance is confirmed
+ok 638 - a faucet success is pending until an actual asset balance is confirmed
+  ---
+  duration_ms: 2.9541
+  type: 'test'
+  ...
+# Subtest: a terminated process becomes unknown, never a definitely failed retryable operation
+ok 639 - a terminated process becomes unknown, never a definitely failed retryable operation
+  ---
+  duration_ms: 3.8589
+  type: 'test'
+  ...
+# Subtest: stale pending operations become unknown without expiring claim ownership
+ok 640 - stale pending operations become unknown without expiring claim ownership
+  ---
+  duration_ms: 1.9011
+  type: 'test'
+  ...
+# Subtest: cooldowns remain definite failures and cannot be retried before the provider timestamp
+ok 641 - cooldowns remain definite failures and cannot be retried before the provider timestamp
+  ---
+  duration_ms: 12.354
+  type: 'test'
+  ...
+# Subtest: only an explicit retry can repeat a definite provider rejection
+ok 642 - only an explicit retry can repeat a definite provider rejection
+  ---
+  duration_ms: 17.6114
+  type: 'test'
+  ...
+# Subtest: preexisting USDC skips the faucet and confirmed wallets never auto-top-up
+ok 643 - preexisting USDC skips the faucet and confirmed wallets never auto-top-up
+  ---
+  duration_ms: 3.5901
+  type: 'test'
+  ...
+# Subtest: writes require the exact allowed browser origin and checksum-valid C address
+ok 644 - writes require the exact allowed browser origin and checksum-valid C address
+  ---
+  duration_ms: 5.2728
+  type: 'test'
+  ...
+# Subtest: relay accepts only the approved one-passkey deployment and exact authorization tree
+ok 645 - relay accepts only the approved one-passkey deployment and exact authorization tree
+  ---
+  duration_ms: 27.2512
+  type: 'test'
+  ...
+# Subtest: relay performs bounded simulation before forwarding and keeps upstream failures private
+ok 646 - relay performs bounded simulation before forwarding and keeps upstream failures private
+  ---
+  duration_ms: 6.2143
+  type: 'test'
+  ...
+# Subtest: request JSON size is limited even without a Content-Length header
+ok 647 - request JSON size is limited even without a Content-Length header
+  ---
+  duration_ms: 1.4662
+  type: 'test'
+  ...
+# Subtest: only the deployment-specific preview receives its own disposable RP identity
+ok 648 - only the deployment-specific preview receives its own disposable RP identity
+  ---
+  duration_ms: 2.633
+  type: 'test'
+  ...
+# Subtest: canonical wallet domain is agenticreality.space and old or www origins cannot request funds
+ok 649 - canonical wallet domain is agenticreality.space and old or www origins cannot request funds
+  ---
+  duration_ms: 1.5229
+  type: 'test'
+  ...
+# Subtest: public config fingerprints are stable and change for a different RP or ledger configuration
+ok 650 - public config fingerprints are stable and change for a different RP or ledger configuration
+  ---
+  duration_ms: 5.9462
+  type: 'test'
+  ...
+# Subtest: API config and financial outcomes are never cached by browser or CDN
+ok 651 - API config and financial outcomes are never cached by browser or CDN
+  ---
+  duration_ms: 1.3093
+  type: 'test'
+  ...
+# Subtest: observed prefunding is durably recorded, so spending it cannot enable an automatic top-up
+ok 652 - observed prefunding is durably recorded, so spending it cannot enable an automatic top-up
+  ---
+  duration_ms: 2.8115
+  type: 'test'
+  ...
+# Subtest: a stale pending reader cannot downgrade a concurrent onchain confirmation to unknown
+ok 653 - a stale pending reader cannot downgrade a concurrent onchain confirmation to unknown
+  ---
+  duration_ms: 3.2647
+  type: 'test'
+  ...
+# Subtest: a CLI completion cannot overwrite a confirmation inserted after its final Redis read
+ok 654 - a CLI completion cannot overwrite a confirmation inserted after its final Redis read
+  ---
+  duration_ms: 2.8414
+  type: 'test'
+  ...
+# Subtest: ambiguous provider outcome payment_failed never enables a second claim
+ok 655 - ambiguous provider outcome payment_failed never enables a second claim
+  ---
+  duration_ms: 3.6551
+  type: 'test'
+  ...
+# Subtest: ambiguous provider outcome unrecognized_provider_failure never enables a second claim
+ok 656 - ambiguous provider outcome unrecognized_provider_failure never enables a second claim
+  ---
+  duration_ms: 5.8962
+  type: 'test'
+  ...
+# Subtest: ambiguous provider outcome user_cooldown never enables a second claim
+ok 657 - ambiguous provider outcome user_cooldown never enables a second claim
+  ---
+  duration_ms: 3.4446
+  type: 'test'
+  ...
+# Subtest: ambiguous provider outcome missing result never enables a second claim
+ok 658 - ambiguous provider outcome missing result never enables a second claim
+  ---
+  duration_ms: 3.2488
+  type: 'test'
+  ...
+# Subtest: explicit retries across instances atomically advance one failed revision, even at the same timestamp
+ok 659 - explicit retries across instances atomically advance one failed revision, even at the same timestamp
+  ---
+  duration_ms: 4.8565
+  type: 'test'
+  ...
+# Subtest: the public schema matches the installed pinned SDK and reads its actual saveSession output
+ok 660 - the public schema matches the installed pinned SDK and reads its actual saveSession output
+  ---
+  duration_ms: 13.3863
+  type: 'test'
+  ...
+# Subtest: new and restored own sessions resolve exactly the same deployed association
+ok 661 - new and restored own sessions resolve exactly the same deployed association
+  ---
+  duration_ms: 1.2194
+  type: 'test'
+  ...
+# Subtest: missing current session hides instead of selecting a different stored visitor
+ok 662 - missing current session hides instead of selecting a different stored visitor
+  ---
+  duration_ms: 0.5392
+  type: 'test'
+  ...
+# Subtest: expired current session hides instead of selecting a different stored visitor
+ok 663 - expired current session hides instead of selecting a different stored visitor
+  ---
+  duration_ms: 7.8318
+  type: 'test'
+  ...
+# Subtest: mismatched association hides instead of selecting a different stored visitor
+ok 664 - mismatched association hides instead of selecting a different stored visitor
+  ---
+  duration_ms: 0.7709
+  type: 'test'
+  ...
+# Subtest: pending deployment hides instead of selecting a different stored visitor
+ok 665 - pending deployment hides instead of selecting a different stored visitor
+  ---
+  duration_ms: 0.6271
+  type: 'test'
+  ...
+# Subtest: occupied deployment hides instead of selecting a different stored visitor
+ok 666 - occupied deployment hides instead of selecting a different stored visitor
+  ---
+  duration_ms: 0.4576
+  type: 'test'
+  ...
+# Subtest: an absent database is never created, with enumeration or the upgrade-abort fallback
+ok 667 - an absent database is never created, with enumeration or the upgrade-abort fallback
+  ---
+  duration_ms: 2.6349
+  type: 'test'
+  ...
+# Subtest: missing stores, denied access and unsupported IndexedDB fail quietly
+ok 668 - missing stores, denied access and unsupported IndexedDB fail quietly
+  ---
+  duration_ms: 1.6066
+  type: 'test'
+  ...
+# Subtest: the badge shows exact BigInt USDC, a compact address, a full accessible label and top-document link
+ok 669 - the badge shows exact BigInt USDC, a compact address, a full accessible label and top-document link
+  ---
+  duration_ms: 87.3487
+  type: 'test'
+  ...
+# Subtest: a balance error or a different response address keeps only the own public wallet identity
+ok 670 - a balance error or a different response address keeps only the own public wallet identity
+  ---
+  duration_ms: 1.2479
+  type: 'test'
+  ...
+# Subtest: a balance error or a different response address keeps only the own public wallet identity
+ok 671 - a balance error or a different response address keeps only the own public wallet identity
+  ---
+  duration_ms: 1.3664
+  type: 'test'
+  ...
+# Subtest: a balance error or a different response address keeps only the own public wallet identity
+ok 672 - a balance error or a different response address keeps only the own public wallet identity
+  ---
+  duration_ms: 3.4226
+  type: 'test'
+  ...
+# Subtest: a balance error or a different response address keeps only the own public wallet identity
+ok 673 - a balance error or a different response address keeps only the own public wallet identity
+  ---
+  duration_ms: 1.6074
+  type: 'test'
+  ...
+# Subtest: absent and expired sessions remove the previous address, balance and accessibility attributes
+ok 674 - absent and expired sessions remove the previous address, balance and accessibility attributes
+  ---
+  duration_ms: 1.5774
+  type: 'test'
+  ...
+# Subtest: a late previous-wallet balance can never replace the current session address or balance
+ok 675 - a late previous-wallet balance can never replace the current session address or balance
+  ---
+  duration_ms: 43.19
+  type: 'test'
+  ...
+# Subtest: concurrent entry events serialize storage reads and re-read the latest identity
+ok 676 - concurrent entry events serialize storage reads and re-read the latest identity
+  ---
+  duration_ms: 2.1104
+  type: 'test'
+  ...
+# Subtest: focus, pageshow and visible-page changes coalesce, never poll, and are removed on dispose
+ok 677 - focus, pageshow and visible-page changes coalesce, never poll, and are removed on dispose
+  ---
+  duration_ms: 4.5386
+  type: 'test'
+  ...
+# Subtest: expiry is one scheduled refresh and clears the badge when the active session expires
+ok 678 - expiry is one scheduled refresh and clears the badge when the active session expires
+  ---
+  duration_ms: 11.9048
+  type: 'test'
+  ...
+# Subtest: mounting is idempotent for the same anchor and never loads a graphics or wallet runtime
+ok 679 - mounting is idempotent for the same anchor and never loads a graphics or wallet runtime
+  ---
+  duration_ms: 13.2792
+  type: 'test'
+  ...
+# Subtest: the lightweight contract checksum validator matches SDK addresses and refuses altered strings
+ok 680 - the lightweight contract checksum validator matches SDK addresses and refuses altered strings
+  ---
+  duration_ms: 0.511
+  type: 'test'
+  ...
+# Subtest: birth receipt binds successful Testnet envelope, derived C, salt, deployer, code and one exact P-256 primary signer
+ok 681 - birth receipt binds successful Testnet envelope, derived C, salt, deployer, code and one exact P-256 primary signer
+  ---
+  duration_ms: 39.2994
+  type: 'test'
+  ...
+# Subtest: failed or tampered historical transaction, wrong network and another passkey cannot recover
+ok 682 - failed or tampered historical transaction, wrong network and another passkey cannot recover
+  ---
+  duration_ms: 14.9213
+  type: 'test'
+  ...
+# Subtest: ambiguous creation, another deployer, additional policies and invalid P-256 points fail closed
+ok 683 - ambiguous creation, another deployer, additional policies and invalid P-256 points fail closed
+  ---
+  duration_ms: 17.0881
+  type: 'test'
+  ...
+# Subtest: history search uses only fixed Testnet providers and one bounded ledger; hint is never evidence
+ok 684 - history search uses only fixed Testnet providers and one bounded ledger; hint is never evidence
+  ---
+  duration_ms: 73.4103
+  type: 'test'
+  ...
+# Subtest: preauth receipt route enforces exact Origin, JSON4KB, method and three requests per public address per minute
+ok 685 - preauth receipt route enforces exact Origin, JSON4KB, method and three requests per public address per minute
+  ---
+  duration_ms: 29.9992
+  type: 'test'
+  ...
+# Subtest: a sponsored fee-bump receipt binds the outer hash while verifying the inner direct creation
+ok 686 - a sponsored fee-bump receipt binds the outer hash while verifying the inner direct creation
+  ---
+  duration_ms: 19.324
+  type: 'test'
+  ...
+# Subtest: a full 200-record ledger page, inconsistent ledger and oversized history stay unresolved
+ok 687 - a full 200-record ledger page, inconsistent ledger and oversized history stay unresolved
+  ---
+  duration_ms: 15.8992
+  type: 'test'
+  ...
+# Subtest: preparation and silent restore never create a passkey, deploy or request funds
+ok 688 - preparation and silent restore never create a passkey, deploy or request funds
+  ---
+  duration_ms: 13.2879
+  type: 'test'
+  ...
+# Subtest: a cold first click prepares only; the next tap starts WebAuthn synchronously
+ok 689 - a cold first click prepares only; the next tap starts WebAuthn synchronously
+  ---
+  duration_ms: 3.4995
+  type: 'test'
+  ...
+# Subtest: a double tap shares deployment and funding, then chain balance confirms readiness
+ok 690 - a double tap shares deployment and funding, then chain balance confirms readiness
+  ---
+  duration_ms: 4.1507
+  type: 'test'
+  ...
+# Subtest: an existing funded session is reused without prompting or refilling
+ok 691 - an existing funded session is reused without prompting or refilling
+  ---
+  duration_ms: 1.388
+  type: 'test'
+  ...
+# Subtest: cancelling the passkey leaves the experience retryable and never claims
+ok 692 - cancelling the passkey leaves the experience retryable and never claims
+  ---
+  duration_ms: 1.3503
+  type: 'test'
+  ...
+# Subtest: deployment must exist before requesting USDC
+ok 693 - deployment must exist before requesting USDC
+  ---
+  duration_ms: 0.5312
+  type: 'test'
+  ...
+# Subtest: pending or unknown claims reconcile without ever posting again, including explicit retry
+ok 694 - pending or unknown claims reconcile without ever posting again, including explicit retry
+  ---
+  duration_ms: 1.5345
+  type: 'test'
+  ...
+# Subtest: successful faucet JSON alone cannot mark the wallet ready
+ok 695 - successful faucet JSON alone cannot mark the wallet ready
+  ---
+  duration_ms: 0.5393
+  type: 'test'
+  ...
+# Subtest: a claim timeout is reconciled on the next action without duplicate claims
+ok 696 - a claim timeout is reconciled on the next action without duplicate claims
+  ---
+  duration_ms: 1.0977
+  type: 'test'
+  ...
+# Subtest: cooldown is shown without automatic retries; a definitive failure needs explicit retry
+ok 697 - cooldown is shown without automatic retries; a definitive failure needs explicit retry
+  ---
+  duration_ms: 2.0467
+  type: 'test'
+  ...
+# Subtest: wrong networks and unavailable configuration never import signing code
+ok 698 - wrong networks and unavailable configuration never import signing code
+  ---
+  duration_ms: 0.9169
+  type: 'test'
+  ...
+# Subtest: explicit connect uses the same funded flow and state observers can unsubscribe
+ok 699 - explicit connect uses the same funded flow and state observers can unsubscribe
+  ---
+  duration_ms: 1.3246
+  type: 'test'
+  ...
+# Subtest: USDC formatting retains seven-decimal precision without floating point conversion
+ok 700 - USDC formatting retains seven-decimal precision without floating point conversion
+  ---
+  duration_ms: 0.2394
+  type: 'test'
+  ...
+# Subtest: relay or network rejection is reported as an error rather than passkey cancellation
+ok 701 - relay or network rejection is reported as an error rather than passkey cancellation
+  ---
+  duration_ms: 1.0051
+  type: 'test'
+  ...
+# Subtest: readonly configuration refresh reuses the prepared provider when public identity is unchanged
+ok 702 - readonly configuration refresh reuses the prepared provider when public identity is unchanged
+  ---
+  duration_ms: 0.9181
+  type: 'test'
+  ...
+# Subtest: changed public identity clears old in-memory balance and restores through a new provider without writes
+ok 703 - changed public identity clears old in-memory balance and restores through a new provider without writes
+  ---
+  duration_ms: 1.1831
+  type: 'test'
+  ...
+# Subtest: new configuration waits for the current passkey and funding operation, then removes stale results
+ok 704 - new configuration waits for the current passkey and funding operation, then removes stale results
+  ---
+  duration_ms: 1.3001
+  type: 'test'
+  ...
+# Subtest: a failed readonly configuration refresh preserves the existing funded session
+ok 705 - a failed readonly configuration refresh preserves the existing funded session
+  ---
+  duration_ms: 0.9255
+  type: 'test'
+  ...
+# Subtest: a configuration disabled by the server cannot keep an old signing provider active
+ok 706 - a configuration disabled by the server cannot keep an old signing provider active
+  ---
+  duration_ms: 0.8217
+  type: 'test'
+  ...
+# Subtest: real SimpleWebAuthn cancellation wrappers remain retryable before a credential is created
+ok 707 - real SimpleWebAuthn cancellation wrappers remain retryable before a credential is created
+  ---
+  duration_ms: 1.1142
+  type: 'test'
+  ...
+# Subtest: a wrapped browser denial outside the passkey ceremony remains a service error
+ok 708 - a wrapped browser denial outside the passkey ceremony remains a service error
+  ---
+  duration_ms: 0.9727
+  type: 'test'
+  ...
+# Subtest: passkey proof starts in the click task and serializes with other wallet actions without funding
+ok 709 - passkey proof starts in the click task and serializes with other wallet actions without funding
+  ---
+  duration_ms: 1.3013
+  type: 'test'
+  ...
+# Subtest: cancelled or failed proof preserves the wallet balance and main status in a separate error field
+ok 710 - cancelled or failed proof preserves the wallet balance and main status in a separate error field
+  ---
+  duration_ms: 1.3225
+  type: 'test'
+  ...
+# Subtest: proof cannot certify another wallet, credential or key
+ok 711 - proof cannot certify another wallet, credential or key
+  ---
+  duration_ms: 1.9652
+  type: 'test'
+  ...
+# Subtest: a new public key or configuration invalidates the existing proof while retaining IndexedDB restoration
+ok 712 - a new public key or configuration invalidates the existing proof while retaining IndexedDB restoration
+  ---
+  duration_ms: 1.7162
+  type: 'test'
+  ...
+# Subtest: configuration changes wait for verification and discard the proof bound to the old configuration
+ok 713 - configuration changes wait for verification and discard the proof bound to the old configuration
+  ---
+  duration_ms: 0.8451
+  type: 'test'
+  ...
+# Subtest: proof before a connected wallet is available never prepares, creates or claims automatically
+ok 714 - proof before a connected wallet is available never prepares, creates or claims automatically
+  ---
+  duration_ms: 0.6008
+  type: 'test'
+  ...
+# Subtest: direct wallet HTML is light, canonical and contains no venue, Passport or camera graph
+ok 715 - direct wallet HTML is light, canonical and contains no venue, Passport or camera graph
+  ---
+  duration_ms: 4.5339
+  type: 'test'
+  ...
+# Subtest: automatic opening uses the real shared panel/controller and only prepares or silently restores
+ok 716 - automatic opening uses the real shared panel/controller and only prepares or silently restores
+  ---
+  duration_ms: 7.4228
+  type: 'test'
+  ...
+# Subtest: only an explicit close or continue action navigates to the existing ONE16 route
+ok 717 - only an explicit close or continue action navigates to the existing ONE16 route
+  ---
+  duration_ms: 3.4199
+  type: 'test'
+  ...
+# Subtest: module loading failure offers a retry without initiating any wallet action
+ok 718 - module loading failure offers a retry without initiating any wallet action
+  ---
+  duration_ms: 1.3454
+  type: 'test'
+  ...
+# Subtest: opening the main-document panel prepares without creating, funding or changing navigation
+ok 719 - opening the main-document panel prepares without creating, funding or changing navigation
+  ---
+  duration_ms: 6.2232
+  type: 'test'
+  ...
+# Subtest: only explicit enabled buttons initiate passkey creation or connection
+ok 720 - only explicit enabled buttons initiate passkey creation or connection
+  ---
+  duration_ms: 0.6709
+  type: 'test'
+  ...
+# Subtest: pending operations offer a balance check; definite failures alone offer retry funding
+ok 721 - pending operations offer a balance check; definite failures alone offer retry funding
+  ---
+  duration_ms: 43.0581
+  type: 'test'
+  ...
+# Subtest: confirmed onchain balance is shown using safe text nodes and a Testnet explorer
+ok 722 - confirmed onchain balance is shown using safe text nodes and a Testnet explorer
+  ---
+  duration_ms: 0.439
+  type: 'test'
+  ...
+# Subtest: close and native Escape preserve session and release subscriptions on teardown
+ok 723 - close and native Escape preserve session and release subscriptions on teardown
+  ---
+  duration_ms: 1.4513
+  type: 'test'
+  ...
+# Subtest: availability warnings explain missing USDC capacity without blocking wallet access
+ok 724 - availability warnings explain missing USDC capacity without blocking wallet access
+  ---
+  duration_ms: 0.9887
+  type: 'test'
+  ...
+# Subtest: unavailable setup offers a fresh read-only preparation check
+ok 725 - unavailable setup offers a fresh read-only preparation check
+  ---
+  duration_ms: 0.7519
+  type: 'test'
+  ...
+# Subtest: reopening refreshes cooldown eligibility without requiring another controller state change
+ok 726 - reopening refreshes cooldown eligibility without requiring another controller state change
+  ---
+  duration_ms: 1.548
+  type: 'test'
+  ...
+# Subtest: a connected main-document wallet exposes a synchronous independent proof action
+ok 727 - a connected main-document wallet exposes a synchronous independent proof action
+  ---
+  duration_ms: 2.61
+  type: 'test'
+  ...
+# Subtest: a late completed proof updates state without reopening a closed panel
+ok 728 - a late completed proof updates state without reopening a closed panel
+  ---
+  duration_ms: 1.2836
+  type: 'test'
+  ...
+# Subtest: fresh native verification starts synchronously for the same cached credential and validates a real P-256 assertion
+ok 729 - fresh native verification starts synchronously for the same cached credential and validates a real P-256 assertion
+  ---
+  duration_ms: 36.796
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects signature without invoking any wallet operation
+ok 730 - fresh proof rejects signature without invoking any wallet operation
+  ---
+  duration_ms: 16.9606
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects challenge without invoking any wallet operation
+ok 731 - fresh proof rejects challenge without invoking any wallet operation
+  ---
+  duration_ms: 2.9424
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects origin without invoking any wallet operation
+ok 732 - fresh proof rejects origin without invoking any wallet operation
+  ---
+  duration_ms: 2.5238
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects rp_id without invoking any wallet operation
+ok 733 - fresh proof rejects rp_id without invoking any wallet operation
+  ---
+  duration_ms: 2.142
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects user_verification without invoking any wallet operation
+ok 734 - fresh proof rejects user_verification without invoking any wallet operation
+  ---
+  duration_ms: 2.559
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects user_presence without invoking any wallet operation
+ok 735 - fresh proof rejects user_presence without invoking any wallet operation
+  ---
+  duration_ms: 2.4272
+  type: 'test'
+  ...
+# Subtest: fresh proof rejects credential without invoking any wallet operation
+ok 736 - fresh proof rejects credential without invoking any wallet operation
+  ---
+  duration_ms: 2.2957
+  type: 'test'
+  ...
+# Subtest: fresh proof also fails if the same credential is no longer an authorized onchain signer
+ok 737 - fresh proof also fails if the same credential is no longer an authorized onchain signer
+  ---
+  duration_ms: 4.6615
+  type: 'test'
+  ...
+# Subtest: a changing public-key association cannot turn a signature from the old key into a current proof
+ok 738 - a changing public-key association cannot turn a signature from the old key into a current proof
+  ---
+  duration_ms: 5.4864
+  type: 'test'
+  ...
+# Subtest: verification is main-document only and cancellation neither clears credentials nor creates a wallet
+ok 739 - verification is main-document only and cancellation neither clears credentials nor creates a wallet
+  ---
+  duration_ms: 2.5097
+  type: 'test'
+  ...
+# Subtest: the browser bundle exports the exact pinned SDK verifier and retains its license notices
+ok 740 - the browser bundle exports the exact pinned SDK verifier and retains its license notices
+  ---
+  duration_ms: 20.9277
+  type: 'test'
+  ...
+# Subtest: the real bundled SDK silent restore never invokes native authentication for absent, expired or failed sessions
+ok 741 - the real bundled SDK silent restore never invokes native authentication for absent, expired or failed sessions
+  ---
+  duration_ms: 5.6993
+  type: 'test'
+  ...
+# Subtest: provider uses IndexedDB, silent restore and no private Stellar deployer secret
+ok 742 - provider uses IndexedDB, silent restore and no private Stellar deployer secret
+  ---
+  duration_ms: 3.9941
+  type: 'test'
+  ...
+# Subtest: provider requires successful confirmed deployment before returning a new wallet address
+ok 743 - provider requires successful confirmed deployment before returning a new wallet address
+  ---
+  duration_ms: 8.1072
+  type: 'test'
+  ...
+# Subtest: a pending wallet recovered after reload resumes the same deterministic deployment
+ok 744 - a pending wallet recovered after reload resumes the same deterministic deployment
+  ---
+  duration_ms: 2.3407
+  type: 'test'
+  ...
+# Subtest: an explicit connect requests a fresh ownership-authenticated passkey immediately
+ok 745 - an explicit connect requests a fresh ownership-authenticated passkey immediately
+  ---
+  duration_ms: 2.4369
+  type: 'test'
+  ...
+# Subtest: balance reads verify the wallet WASM and simulate the locked SAC balance on Testnet
+ok 746 - balance reads verify the wallet WASM and simulate the locked SAC balance on Testnet
+  ---
+  duration_ms: 30.5427
+  type: 'test'
+  ...
+# Subtest: unaccepted wallet code and failed balance simulations cannot pass verification
+ok 747 - unaccepted wallet code and failed balance simulations cannot pass verification
+  ---
+  duration_ms: 5.4275
+  type: 'test'
+  ...
+# Subtest: insecure origins, mismatched relying-party domains and mainnet fail before loading SDK
+ok 748 - insecure origins, mismatched relying-party domains and mainnet fail before loading SDK
+  ---
+  duration_ms: 1.16
+  type: 'test'
+  ...
+# Subtest: vendored browser ESM loads with its Buffer shim without global Buffer injection
+ok 749 - vendored browser ESM loads with its Buffer shim without global Buffer injection
+  ---
+  duration_ms: 257.2912
+  type: 'test'
+  ...
+# Subtest: canonical origin is exact even when a subdomain could technically use the same RP id
+ok 750 - canonical origin is exact even when a subdomain could technically use the same RP id
+  ---
+  duration_ms: 1.5358
+  type: 'test'
+  ...
+# Subtest: a late confirmed deployment resumes the stored passkey through SDK ownership checks without redeploying
+ok 751 - a late confirmed deployment resumes the stored passkey through SDK ownership checks without redeploying
+  ---
+  duration_ms: 2.9798
+  type: 'test'
+  ...
+# Subtest: an unresolved known deployment hash stays pending without another relay submission
+ok 752 - an unresolved known deployment hash stays pending without another relay submission
+  ---
+  duration_ms: 3.7432
+  type: 'test'
+  ...
+# Subtest: existing occupied chain state reconnects only a local approved constructor and never redeploys
+ok 753 - existing occupied chain state reconnects only a local approved constructor and never redeploys
+  ---
+  duration_ms: 4.6201
+  type: 'test'
+  ...
+# Subtest: resume reads the latest persisted credential and an RPC outage cannot authorize redeployment
+ok 754 - resume reads the latest persisted credential and an RPC outage cannot authorize redeployment
+  ---
+  duration_ms: 5.453
+  type: 'test'
+  ...
+# Subtest: a definitely failed transaction with no contract can retry the same credential deployment
+ok 755 - a definitely failed transaction with no contract can retry the same credential deployment
+  ---
+  duration_ms: 3.4993
+  type: 'test'
+  ...
+# Subtest: official CLI invocation always has an explicit C address, fixed origin, bounded lifetime and no shell
+ok 756 - official CLI invocation always has an explicit C address, fixed origin, bounded lifetime and no shell
+  ---
+  duration_ms: 22.2549
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 757 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.2171
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 758 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.1054
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 759 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.1946
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 760 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.2356
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 761 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.1458
+  type: 'test'
+  ...
+# Subtest: unexpected CLI recipient, wallet generation or malformed output remains unknown
+ok 762 - unexpected CLI recipient, wallet generation or malformed output remains unknown
+  ---
+  duration_ms: 0.373
+  type: 'test'
+  ...
+# Subtest: timeouts and abnormal exits never trigger another child process or reinterpret uncertainty as rejection
+ok 763 - timeouts and abnormal exits never trigger another child process or reinterpret uncertainty as rejection
+  ---
+  duration_ms: 0.7453
+  type: 'test'
+  ...
+# Subtest: an ordinary nonzero CLI exit preserves an explicit safe provider rejection without stderr
+ok 764 - an ordinary nonzero CLI exit preserves an explicit safe provider rejection without stderr
+  ---
+  duration_ms: 0.6316
+  type: 'test'
+  ...
+# Subtest: invalid addresses are refused before spawning any CLI process
+ok 765 - invalid addresses are refused before spawning any CLI process
+  ---
+  duration_ms: 1.9444
+  type: 'test'
+  ...
+# Subtest: actual in-world open/close handlers preserve walk pose and share one panel load
+ok 766 - actual in-world open/close handlers preserve walk pose and share one panel load
+  ---
+  duration_ms: 5.1648
+  type: 'test'
+  ...
+# Subtest: raycast target accepts Passport display descendants and rejects unrelated venue
+ok 767 - raycast target accepts Passport display descendants and rejects unrelated venue
+  ---
+  duration_ms: 0.5678
+  type: 'test'
+  ...
+# Subtest: main world contains inspector and native AR; primary entry does not navigate away
+ok 768 - main world contains inspector and native AR; primary entry does not navigate away
+  ---
+  duration_ms: 7.1206
+  type: 'test'
+  ...
+# Subtest: access waits for the successful 3D frame, then restores the existing balance beside Help without claims
+ok 769 - access waits for the successful 3D frame, then restores the existing balance beside Help without claims
+  ---
+  duration_ms: 11.5306
+  type: 'test'
+  ...
+# Subtest: repeated frames and NFC return reuse the same button and warm-up without a floating duplicate
+ok 770 - repeated frames and NFC return reuse the same button and warm-up without a floating duplicate
+  ---
+  duration_ms: 1.7074
+  type: 'test'
+  ...
+# Subtest: label and balance updates retain button identity, focus and existing scene position
+ok 771 - label and balance updates retain button identity, focus and existing scene position
+  ---
+  duration_ms: 5.8441
+  type: 'test'
+  ...
+# Subtest: a fresh document restores its own public wallet and confirmed balance without requesting an address
+ok 772 - a fresh document restores its own public wallet and confirmed balance without requesting an address
+  ---
+  duration_ms: 2.7197
+  type: 'test'
+  ...
+# Subtest: toolbar layout overrides only the hidden legacy access and keeps map and mobile controls separate
+ok 773 - toolbar layout overrides only the hidden legacy access and keeps map and mobile controls separate
+  ---
+  duration_ms: 11.4485
+  type: 'test'
+  ...
+1..773
+# tests 773
+# suites 0
+# pass 771
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 307369.496

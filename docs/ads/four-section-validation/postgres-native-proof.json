@@ -1,0 +1,9 @@
+{
+  "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "database": "ads_test",
+  "address": "127.0.0.1",
+  "port": 55432,
+  "backend": "postgres",
+  "schema": "ads_test_61e0704bc1f0a57f5add8752",
+  "migrations": 13
+}

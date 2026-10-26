@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights
+ok 1 - interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights
+  ---
+  duration_ms: 8323.0021
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19749.5429

@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: onchain authority only admits one Default External passkey with the exact credential
+ok 1 - onchain authority only admits one Default External passkey with the exact credential
+  ---
+  duration_ms: 8.242
+  type: 'test'
+  ...
+# Subtest: real WebAuthn verification creates an opaque secure session and consumes its challenge once
+ok 2 - real WebAuthn verification creates an opaque secure session and consumes its challenge once
+  ---
+  duration_ms: 1571.2843
+  type: 'test'
+  ...
+# Subtest: wrong origin, absent user verification, changed authority and expiry fail without reusable challenges
+ok 3 - wrong origin, absent user verification, changed authority and expiry fail without reusable challenges
+  ---
+  duration_ms: 41.216
+  type: 'test'
+  ...
+# Subtest: concurrent replay admits one session, counter rollback fails and signer removal invalidates session
+ok 4 - concurrent replay admits one session, counter rollback fails and signer removal invalidates session
+  ---
+  duration_ms: 47.2474
+  type: 'test'
+  ...
+# Subtest: wallet authority reads the public bindings and current RPC data, never a browser public key
+ok 5 - wallet authority reads the public bindings and current RPC data, never a browser public key
+  ---
+  duration_ms: 1485.4821
+  type: 'test'
+  ...
+# Subtest: auth SQL persists one-use challenges and opaque sessions in a real PostgreSQL engine
+ok 6 - auth SQL persists one-use challenges and opaque sessions in a real PostgreSQL engine
+  ---
+  duration_ms: 5909.0195
+  type: 'test'
+  ...
+# Subtest: PostgreSQL CI guard rejects non-test environments, database names and URL overrides before loading a driver
+ok 7 - PostgreSQL CI guard rejects non-test environments, database names and URL overrides before loading a driver
+  ---
+  duration_ms: 3.4561
+  type: 'test'
+  ...
+# Subtest: CI fixtures isolate search_path per pool and remove only their generated schema
+ok 8 - CI fixtures isolate search_path per pool and remove only their generated schema
+  ---
+  duration_ms: 7.6365
+  type: 'test'
+  ...
+# Subtest: server-selected database identity is checked before any schema mutation
+ok 9 - server-selected database identity is checked before any schema mutation
+  ---
+  duration_ms: 1.7332
+  type: 'test'
+  ...
+# Subtest: local PostgreSQL pipeline with explicit creative/payment adapters: confirmed payment to queued audit, canonical frames and separate delivery
+ok 10 - local PostgreSQL pipeline with explicit creative/payment adapters: confirmed payment to queued audit, canonical frames and separate delivery
+  ---
+  duration_ms: 15250.1886
+  type: 'test'
+  ...
+# Subtest: atomic reservation refuses competing last capacity and rolls back a two-placement conflict
+ok 11 - atomic reservation refuses competing last capacity and rolls back a two-placement conflict
+  ---
+  duration_ms: 12521.1035
+  type: 'test'
+  ...
+# Subtest: final uncertainty quarantines the paid order and never fabricates delivery
+ok 12 - final uncertainty quarantines the paid order and never fabricates delivery
+  ---
+  duration_ms: 14584.363
+  type: 'test'
+  ...
+# Subtest: HTTP keeps disabled checkout explicit, blocks CSRF before auth, and does not expose session tokens
+ok 13 - HTTP keeps disabled checkout explicit, blocks CSRF before auth, and does not expose session tokens
+  ---
+  duration_ms: 54.2455
+  type: 'test'
+  ...
+# Subtest: included correction preserves payment and cannot bypass an operator hold
+ok 14 - included correction preserves payment and cannot bypass an operator hold
+  ---
+  duration_ms: 4052.42
+  type: 'test'
+  ...
+# Subtest: x402 standard headers preserve the signed payload and only SETTLED returns a payment response
+ok 15 - x402 standard headers preserve the signed payload and only SETTLED returns a payment response
+  ---
+  duration_ms: 20.0813
+  type: 'test'
+  ...
+# Subtest: operator dispute HTTP cannot replace the authenticated identity or route dispute ID with body fields
+ok 16 - operator dispute HTTP cannot replace the authenticated identity or route dispute ID with body fields
+  ---
+  duration_ms: 7.2055
+  type: 'test'
+  ...
+# Subtest: the same preaudited correction draft creates separate immutable generation revisions for two paid orders
+ok 17 - the same preaudited correction draft creates separate immutable generation revisions for two paid orders
+  ---
+  duration_ms: 5666.3059
+  type: 'test'
+  ...
+# Subtest: stored manifest reuse rejects a missing placement or a different revision before fulfilling design
+ok 18 - stored manifest reuse rejects a missing placement or a different revision before fulfilling design
+  ---
+  duration_ms: 3430.578
+  type: 'test'
+  ...
+# Subtest: pilot entitlements remain five across repeated initialization and recovery
+ok 19 - pilot entitlements remain five across repeated initialization and recovery
+  ---
+  duration_ms: 2833.7646
+  type: 'test'
+  ...
+# Subtest: recovery cannot consume another committed reservation
+ok 20 - recovery cannot consume another committed reservation
+  ---
+  duration_ms: 1475.4854
+  type: 'test'
+  ...
+# Subtest: public playback is derived from confirmed ACKs, not the seventy-second reservation
+ok 21 - public playback is derived from confirmed ACKs, not the seventy-second reservation
+  ---
+  duration_ms: 0.6622
+  type: 'test'
+  ...
+# Subtest: expired partial delivery creates a consented deficit batch with one order and one frozen payment
+ok 22 - expired partial delivery creates a consented deficit batch with one order and one frozen payment
+  ---
+  duration_ms: 9060.8459
+  type: 'test'
+  ...
+# Subtest: availability suggests five estimated passes and a one-hour window without taking a reservation
+ok 23 - availability suggests five estimated passes and a one-hour window without taking a reservation
+  ---
+  duration_ms: 5119.4512
+  type: 'test'
+  ...
+# Subtest: stale, expired and cross-attempt playback cannot show a running paid minute
+ok 24 - stale, expired and cross-attempt playback cannot show a running paid minute
+  ---
+  duration_ms: 0.9887
+  type: 'test'
+  ...
+# Subtest: an unpaid expired quote never becomes a purchased delivery debt
+ok 25 - an unpaid expired quote never becomes a purchased delivery debt
+  ---
+  duration_ms: 3030.8401
+  type: 'test'
+  ...
+# Subtest: interrupted pass and worker restart preserve the durable campaign interval inside the paid window
+ok 26 - interrupted pass and worker restart preserve the durable campaign interval inside the paid window
+  ---
+  duration_ms: 4642.0055
+  type: 'test'
+  ...
+# Subtest: recovery fills a waiting campaign interval with another campaign and gives both five turns
+ok 27 - recovery fills a waiting campaign interval with another campaign and gives both five turns
+  ---
+  duration_ms: 2203.2572
+  type: 'test'
+  ...
+# Subtest: legacy recovery without a frozen interval remains contiguous after an interrupted reservation
+ok 28 - legacy recovery without a frozen interval remains contiguous after an interrupted reservation
+  ---
+  duration_ms: 3823.6467
+  type: 'test'
+  ...
+# Subtest: PostgreSQL settlement rollback recovers original payment and creates exactly one durable job
+ok 29 - PostgreSQL settlement rollback recovers original payment and creates exactly one durable job
+  ---
+  duration_ms: 2158.3953
+  type: 'test'
+  ...
+# Subtest: PostgreSQL rejects reused authorization nonce across independent orders
+ok 30 - PostgreSQL rejects reused authorization nonce across independent orders
+  ---
+  duration_ms: 5441.2833
+  type: 'test'
+  ...
+# Subtest: PostgreSQL refund receipt stays unresolved until an exact confirmed transfer, without a second submission
+ok 31 - PostgreSQL refund receipt stays unresolved until an exact confirmed transfer, without a second submission
+  ---
+  duration_ms: 2609.9382
+  type: 'test'
+  ...
+# Subtest: registry synchronization signs XDR evidence once and preserves commit/evidence/complete ordering in PostgreSQL
+ok 32 - registry synchronization signs XDR evidence once and preserves commit/evidence/complete ordering in PostgreSQL
+  ---
+  duration_ms: 1556.1616
+  type: 'test'
+  ...
+# Subtest: quoted settlement remedy computes exact deficit, pauses publication on approval and closes only after confirmed refund
+ok 33 - quoted settlement remedy computes exact deficit, pauses publication on approval and closes only after confirmed refund
+  ---
+  duration_ms: 1629.3967
+  type: 'test'
+  ...
+# Subtest: a missing independent placement reservation refuses payment before transmission
+ok 34 - a missing independent placement reservation refuses payment before transmission
+  ---
+  duration_ms: 1360.9937
+  type: 'test'
+  ...
+# Subtest: checkout closing during verification prevents the first settlement while preserving the durable attempt
+ok 35 - checkout closing during verification prevents the first settlement while preserving the durable attempt
+  ---
+  duration_ms: 14510.1914
+  type: 'test'
+  ...
+# Subtest: a payment already submitted before cutoff still reconciles and queues after cutoff without a second charge
+ok 36 - a payment already submitted before cutoff still reconciles and queues after cutoff without a second charge
+  ---
+  duration_ms: 11272.7075
+  type: 'test'
+  ...
+# Subtest: pg wire conversion distinguishes SQL arrays from JSON arrays including an empty result
+ok 37 - pg wire conversion distinguishes SQL arrays from JSON arrays including an empty result
+  ---
+  duration_ms: 4.2953
+  type: 'test'
+  ...
+# Subtest: preview persists a JSON artifact array through pg binding and durable replay does not generate again
+ok 38 - preview persists a JSON artifact array through pg binding and durable replay does not generate again
+  ---
+  duration_ms: 1154.7607
+  type: 'test'
+  ...
+# Subtest: uncertain empty preview stays a JSON array and keeps its audit verdict
+ok 39 - uncertain empty preview stays a JSON array and keeps its audit verdict
+  ---
+  duration_ms: 1375.6757
+  type: 'test'
+  ...
+# Subtest: a failed preview remains durable and replay does not spend another generation
+ok 40 - a failed preview remains durable and replay does not spend another generation
+  ---
+  duration_ms: 1207.7761
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 94513.934

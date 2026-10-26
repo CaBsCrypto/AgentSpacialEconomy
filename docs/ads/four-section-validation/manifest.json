@@ -1,0 +1,189 @@
+{
+  "createdAt": "2026-10-26T10:25:45.557Z",
+  "codeCommit": "b8aa31a96ff41866fa19891da6a86464740ee94b",
+  "paymentRunCommit": "a5bfe1f58533dc0d17d434a2ed9b82cccdf01436",
+  "runId": "2026-10-26T10:12:02.195Z",
+  "note": "Manifest excludes itself. Text line endings are canonicalized to LF for stable verification across Windows Git checkouts.",
+  "files": [
+    {
+      "path": "agent-tests.txt",
+      "sha256": "8e46d54c05e8bba06942af61ae531042383e99788f0253ce71aac1b87983a179",
+      "bytes": 15454,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "baseline-recovery-failure.txt",
+      "sha256": "b2203fbe46491b1491fd1457b6c27f8930f0c835b48305be20a101e10804773e",
+      "bytes": 999,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "build.txt",
+      "sha256": "d9311e4d4baad6b378755cbc1eb30a31c3d15b854224c12a747027c96baf6d8e",
+      "bytes": 587,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "dashboard-evidence.jpg",
+      "sha256": "d71ea35702e50fb9f6bc70f7820e12c82ac0b6a629901eb9cc85384dd4439f40",
+      "bytes": 105503,
+      "normalization": "binary, unchanged"
+    },
+    {
+      "path": "default-stage.jpg",
+      "sha256": "f0516911acd172133e31858aaa7fbd1ed429fbc5689a0aa804d655b101ebc367",
+      "bytes": 116932,
+      "normalization": "binary, unchanged"
+    },
+    {
+      "path": "failed-startup-run.json",
+      "sha256": "8702f1d49bf627b55d4b2e91767477992d671de994d24d7dbcbfa94c781ced05",
+      "bytes": 1538,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "failed-startup.txt",
+      "sha256": "f12a6a2913d11d73d14c6c597b7b4453e2330836e1aa1ec3b9b5bf1193e58ddd",
+      "bytes": 317,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "fresh-audit.json",
+      "sha256": "4f4453eb037bdc9e5a667dbd4445e418281843d2cf8d771011642db962064023",
+      "bytes": 19920,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "fresh-audit.txt",
+      "sha256": "8c3e05dafdba472e5b3fc481e39b390925b7d2f8dacf5471ca2c02ea211f3fe8",
+      "bytes": 99,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "fresh-run.json",
+      "sha256": "ac00ed29ff1a050fa922faa522a1643e82ad2476fea6010362fc0a62a6aece9c",
+      "bytes": 18600,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "fresh-run.txt",
+      "sha256": "f957744ca70a430e16042c3ecde13d7def82bfa5fefae8160f4b7ec276a3e50b",
+      "bytes": 1761,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "frontend-tests.txt",
+      "sha256": "d703bcec0edc887e24e9635a224cef3c82c75d7fcc0a59c1bdb6d6ec71d1023a",
+      "bytes": 182956,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "historical-audit.json",
+      "sha256": "07e957fd62ebec1e5795f9302187372b9959590e0bc39bc059f5910d3bab9eae",
+      "bytes": 17169,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "http-preflight.json",
+      "sha256": "3e536683d3f281ae580f44d1174c6c9c2d9f7e0c78b583917266b4283b7c4f73",
+      "bytes": 338,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "pilot-offer.jpg",
+      "sha256": "1927ce164ceff56805d117209687685af359802638edaa68a7350c528620adc3",
+      "bytes": 67303,
+      "normalization": "binary, unchanged"
+    },
+    {
+      "path": "pilot-source-hashes.json",
+      "sha256": "af1027e169e22d44a2ce999ec0b991bb957fdbbe1b2b019431167dd05f4ecc7b",
+      "bytes": 420,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-cleanup.json",
+      "sha256": "491c51575fe9ff7c2a800efff4b9042959bc41ae964493f56551389e951f16c8",
+      "bytes": 54,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-native-proof.json",
+      "sha256": "c0c47dd593c9e988a611f089f7a4ecb72a46e59b1db199cb73f28e5e86eb42a7",
+      "bytes": 255,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-portable-provenance.json",
+      "sha256": "ec6d322d8b6e37f9342921402e908a95008f4c93cd25bb181d2cc28884b102e2",
+      "bytes": 386,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-proof.json",
+      "sha256": "53831d02da51374eb631a1dfacfdea2047c87c3039e369fe4ff3ba43e6ac33fa",
+      "bytes": 255,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-stop.txt",
+      "sha256": "c31f1a56f163aa95c7e4b8e41f24586e86fa35cc041ebc54a912726547d7bf7e",
+      "bytes": 65,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-summary.json",
+      "sha256": "61582aa747017e527f31aaa5fc8a94ad31b096d051d0a795e764c1b8d4ecbaff",
+      "bytes": 636,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "postgres-tests.txt",
+      "sha256": "c0aad51a8bb9eb3fbf78d065b786d7e6b14c3a5c0ffe842bd6c51b3d53335b95",
+      "bytes": 10219,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "recovery-corrected.txt",
+      "sha256": "9e82b96bacc726c7a640d5a1a7ed8749d4b0bcfb34c0b52d8e71262def6ad688",
+      "bytes": 403,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "rust-summary.json",
+      "sha256": "6a12396a22f3c7838f50c0c709843a8a9714bce7f9db540a95363f038dc31b3a",
+      "bytes": 407,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "rust-tests.txt",
+      "sha256": "9745e83ad9b8afc3f502fe43e9df226458e087bc6e1a2c0da63be676157c1f36",
+      "bytes": 7415,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "secret-scan.json",
+      "sha256": "4d2ec33fdad4aacfe0170d7a5b29c790dcb3bf55ecbfc1996fabce75ec048b42",
+      "bytes": 391,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "sections-preview.jpg",
+      "sha256": "109621e78a2712ea46ebff695fbb88dd494b9587d38ab645d29edf5e32c0f4bb",
+      "bytes": 119033,
+      "normalization": "binary, unchanged"
+    },
+    {
+      "path": "test-summary.json",
+      "sha256": "82033eca28dccba2d6d46d6bd0389cf725fb35c521f81a103cc25216d5f30883",
+      "bytes": 788,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
+      "path": "../four-section-validation.md",
+      "sha256": "d68b26e48f8d8c2c30d75bad161d804205b29170ce66fec994ded1f543812c59",
+      "bytes": 16484,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    }
+  ]
+}

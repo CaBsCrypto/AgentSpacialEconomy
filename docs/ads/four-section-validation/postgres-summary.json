@@ -1,0 +1,24 @@
+{
+  "backend": "postgres",
+  "database": "ads_test",
+  "host": "127.0.0.1",
+  "port": 55432,
+  "exitCode": 0,
+  "files": [
+    "test/ads-db.test.mjs",
+    "test/ads-auth.test.mjs",
+    "test/ads-payments-sql.test.mjs",
+    "test/ads-flow.test.mjs",
+    "test/ads-fulfillment.test.mjs",
+    "test/ads-preview-json.test.mjs"
+  ],
+  "command": "node .ads-qa/run-native-combined.mjs",
+  "note": "Two cutoff tests explicitly choose PGlite; native proof and remaining integration fixtures use PostgreSQL.",
+  "tests": 40,
+  "pass": 40,
+  "fail": 0,
+  "skipped": 0,
+  "durationMs": 94513.934,
+  "remainingTestSchemas": 0,
+  "migrations": 13
+}

@@ -1,0 +1,1 @@
+VERIFIED: 6 exact payments, 30 testnet USDC, 7 registry transactions; Queued, no delivery claimed.
