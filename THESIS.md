@@ -16,7 +16,7 @@ Our design lets the operator state objectives, a budget and rules, then inspect 
 
 From organizing events ourselves, we have seen a lack of experiences that surprise attendees. We want to help teams plan 3D and AR experiences and communicate those plans more clearly.
 
-Our budget experiment asks whether an operator would delegate content and data purchases when each payment has a limit, a record and a visible result. A venue pilot will test operator demand and willingness to pay. The verified prototype covers testnet payments and a result in a digital twin; physical AR placement remains unverified.
+This prototype tests one mechanism for that digital layer: an operator gives agents a bounded content and data budget, each purchase is recorded, and the purchased result appears in the venue's digital twin. A venue pilot will test operator demand, coordination benefits and willingness to pay. Physical AR placement remains unverified.
 
 ## The seed (us) → the thesis (us + AI)
 
@@ -29,6 +29,7 @@ Our budget experiment asks whether an operator would delegate content and data p
 | --- | --- |
 | Agents pay per call for data and content | **x402 on Stellar**: the agent signs auth entries only; a facilitator assembles, pays fees and settles in USDC. The facilitator pays the fees for those x402 payments. |
 | A ceiling on what the agent can draw from the treasury | **Implemented on testnet:** a SEP-41 allowance on the USDC Stellar Asset Contract, with an amount and ledger expiry. A 0.50 USDC approval and 0.20 USDC draw settled; a further 0.31 USDC draw was refused during simulation, without submission. The agent's ledger separately enforces per-call limits before signing. Per-day smart-account policies remain future work. |
+| Income that refills the budget | **Recorded on testnet (run 3):** a sponsor pays the venue treasury over x402 for a stage-screen line; the treasury re-approves the agent's SEP-41 allowance by that income. |
 | Money that matches the receipt | Every settled call has a testnet transaction hash the operator can open in an explorer. |
 | An audience that already has an event identity | **Stellar Passport** (a HackMeridian partner) already turns attendance into an on-chain profile. Future, opt-in layer; not part of this MVP. |
 

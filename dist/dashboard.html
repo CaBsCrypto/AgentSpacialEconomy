@@ -53,7 +53,32 @@
   .empty { color: var(--ase-muted); }
   .scroll { overflow-x: auto; }
   footer { color: var(--ase-muted); font-size: .8rem; margin-top: 24px; }
+  .live { display: inline-block; margin-left: 6px; color: var(--ase-muted); font-size: .78rem; }
+  .live.confirmed { color: var(--ase-signal); }
+  .live-status { color: var(--ase-muted); font-size: .85rem; margin: -4px 0 10px; }
+  .seg-drawn { background: var(--ase-line); } .seg-left { background: var(--ase-zone); }
+  .seg-deposit { background: repeating-linear-gradient(45deg, var(--ase-signal) 0 4px, var(--ase-zone) 4px 8px); }
+  .card-preview .sponsor { color: var(--ase-muted); font-size: .85rem; margin-top: 8px; }
+  .kv .status { white-space: normal; }
   @media (max-width: 560px) { .hide-sm { display: none; } }
+
+/* submission-dashboard-polish */
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/fonts/DMSans-Regular.ttf') format('truetype')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url('/assets/fonts/DMSans-Bold.ttf') format('truetype')}
+main,section,.grid>*{min-width:0}main{width:100%}h1,.hash,.kv dd,.bar-head>*,.blocked-card,.card-preview{overflow-wrap:anywhere}
+.proof-inline{display:none}
+@media(max-width:560px){
+  header{align-items:flex-start}h1{min-width:0}.badge{max-width:100%;white-space:normal}.scroll{overflow:visible}
+  .ledger-table,.ledger-table tbody{display:block;width:100%;max-width:100%}
+  .ledger-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
+  .ledger-table tbody{display:grid;gap:12px}
+  .ledger-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'agent price' 'service service' 'status status';gap:12px;padding:14px;border:1px solid var(--ase-line);border-radius:10px;background:var(--ase-night)}
+  .ledger-table td{display:block;min-width:0;padding:0;border:0;overflow-wrap:anywhere}
+  .ledger-table td:before{display:block;margin-bottom:4px;content:attr(data-label);color:var(--ase-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+  .ledger-table td[data-label='Agent']{grid-area:agent}.ledger-table td[data-label='Price']{grid-area:price}.ledger-table td[data-label='Service']{grid-area:service}.ledger-table td[data-label='Status']{grid-area:status}
+  .ledger-table td.hide-sm{display:none}.ledger-table td[colspan]{grid-column:1/-1}.status{white-space:normal}
+  .ledger-table .proof-inline{display:block;width:fit-content;max-width:100%;margin-top:8px;min-height:44px;padding-block:10px;line-height:1.5}
+}
 </style>
 </head>
 <body>
@@ -85,9 +110,15 @@
     <div id="onchain"></div>
   </section>
 
+  <section aria-labelledby="credits-h" id="credits-section" hidden>
+    <h2 id="credits-h">Agent credit pool</h2>
+    <div id="credits"></div>
+  </section>
+
   <section aria-labelledby="ledger-h">
     <h2 id="ledger-h">Ledger · every attempt</h2>
-    <div class="scroll"><table>
+    <p class="live-status" id="live-status" aria-live="polite"></p>
+    <div class="scroll"><table class="ledger-table">
       <thead><tr><th>Agent</th><th>Service</th><th>Price</th><th>Status</th><th class="hide-sm">Proof</th></tr></thead>
       <tbody id="rows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
     </table></div>
@@ -97,7 +128,7 @@
   <section aria-labelledby="screen-h">
     <h2 id="screen-h">On the stage screen</h2>
     <div id="screen" class="empty">Loading…</div>
-    <p><a href="./">Walk the venue →</a></p>
+    <p><a href="/one16">Walk the venue →</a></p>
   </section>
 
   <footer>
@@ -105,6 +136,8 @@
   </footer>
 </main>
 <script type="module">
+import { creditPool } from "./credits.mjs?v=1";
+import { confirmTx, usdcBalance, txHashes, confirmationLabel } from "./live-chain.mjs?v=1";
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const usdc = (v) => `<span class="money">${esc(v)} USDC</span>`;
@@ -145,14 +178,21 @@ if (!ledger) {
       </div>
     </div>`).join("");
 
+  const rowReason = (r) => r.type === "onchain-draw" && r.status === "blocked" ? "Rejected during simulation; not submitted to Stellar."
+    : r.service === "premium-render" && r.status === "blocked" ? "Per-call cap exceeded; blocked before signing."
+    : r.type === "income" && r.status === "settled" ? "Paid by the sponsor to the venue treasury (income, not agent spend)."
+    : r.type === "onchain-recharge" && r.status === "settled" ? "Treasury raised the agent's allowance by the sponsor income."
+    : r.reason;
+  const liveTag = (tx) => (tx ? `<span class="live" data-tx="${esc(tx)}"></span>` : "");
+  const txLink = (tx, text) => (tx ? `<a href="https://stellar.expert/explorer/testnet/tx/${esc(tx)}" target="_blank" rel="noopener">${text}</a>` : "—");
   const payments = ledger.rows.filter((r) => r.type !== "allocation");
   $("rows").innerHTML = payments.map((r) => `
     <tr>
-      <td>${esc(r.agent)}</td>
-      <td>${esc(r.service)}</td>
-      <td>${usdc(r.priceUsdc)}</td>
-      <td><span class="status ${esc(r.status)}">${r.status === "settled" ? "✓ " : r.status === "blocked" ? "⛔ " : "• "}${esc(r.status)}</span>${r.reason ? `<br><small>${esc(r.reason)}</small>` : ""}</td>
-      <td class="hide-sm">${r.explorer ? `<a href="${esc(r.explorer)}" target="_blank" rel="noopener">tx <span class="hash">${esc(r.tx.slice(0, 8))}…</span></a>` : "—"}</td>
+      <td data-label="Agent">${esc(r.agent)}</td>
+      <td data-label="Service">${esc(r.service)}${r.explorer ? `<a class="proof-inline" href="${esc(r.explorer)}" target="_blank" rel="noopener">View testnet transaction <span class="hash">${esc(r.tx?.slice(0, 8) || "tx")}…</span></a>` : ""}</td>
+      <td data-label="Price">${usdc(r.priceUsdc)}</td>
+      <td data-label="Status"><span class="status ${esc(r.status)}">${r.status === "settled" ? "✓ " : r.status === "blocked" ? "⛔ " : "• "}${esc(r.status)}</span>${rowReason(r) ? `<br><small>${esc(rowReason(r))}</small>` : ""}</td>
+      <td class="hide-sm">${r.explorer ? `<a href="${esc(r.explorer)}" target="_blank" rel="noopener">tx <span class="hash">${esc(r.tx.slice(0, 8))}…</span></a>${liveTag(r.tx)}` : "—"}</td>
     </tr>`).join("") || `<tr><td colspan="5" class="empty">No payments in this run.</td></tr>`;
 
   const oc = ledger.onchain;
@@ -162,12 +202,40 @@ if (!ledger) {
     $("onchain-section").hidden = false;
     $("onchain").innerHTML = `
       <dl class="grid kv">
-        <div><dt>Approved by the operator's treasury</dt><dd>${usdc(oc.approvedUsdc)} · ${link(oc.approveTx, "approve tx")}</dd></div>
-        <div><dt>Drawn by venue-agent for its allocations</dt><dd>${usdc(oc.drawnUsdc)} · ${link(oc.drawTx, "transfer_from tx")}</dd></div>
+        <div><dt>Approved by the operator's treasury</dt><dd>${usdc(oc.approvedUsdc)} · ${link(oc.approveTx, "approve tx")}${liveTag(oc.approveTx)}</dd></div>
+        <div><dt>Drawn by venue-agent for its allocations</dt><dd>${usdc(oc.drawnUsdc)} · ${link(oc.drawTx, "transfer_from tx")}${liveTag(oc.drawTx)}</dd></div>
         <div><dt>Left on the allowance</dt><dd>${usdc(oc.remainingUsdc)}${oc.liveUntilLedger ? ` · expires at ledger ${esc(oc.liveUntilLedger)}` : ""}</dd></div>
-        <div><dt>Draw above what is left</dt><dd>${oc.probe ? `${usdc(oc.probe.amountUsdc)} · <span class="status ${oc.probe.refused ? "blocked" : "failed"}">${oc.probe.refused ? "⛔ refused by the network" : "not refused"}</span>` : "—"}</dd></div>
+        <div><dt>Draw above what is left · simulation</dt><dd>${oc.probe ? `${usdc(oc.probe.amountUsdc)} · <span class="status ${oc.probe.refused ? "blocked" : "failed"}">${oc.probe.refused ? "⛔ rejected in simulation · not submitted" : "not refused"}</span>` : "—"}</dd></div>
       </dl>
-      <p><small>SEP-41 allowance on the USDC Stellar Asset Contract (<span class="hash">${esc(oc.asset?.sac ?? "")}</span>). The network enforces this ceiling and its expiry, whatever the agent's code does; the per-call cap below is the agent's own, stricter rule.</small></p>`;
+      <p><small>SEP-41 allowance on the USDC Stellar Asset Contract (<span class="hash">${esc(oc.asset?.sac ?? "")}</span>). The network enforces this ceiling and its expiry, whatever the agent's code does; the per-call cap below is the agent's own, stricter rule.</small></p>
+      <p id="live-balances" class="live-status" aria-live="polite"></p>`;
+  }
+
+  const pool = creditPool(ledger);
+  if (pool) {
+    const rc = oc.recharge;
+    const total = Number(pool.drawn) + Number(pool.leftAfterDeposit ?? pool.left);
+    const w = (v) => pct(v, total);
+    const credits = (v) => `<span class="money">${esc(v)} credits</span>`;
+    $("credits-section").hidden = false;
+    $("credits").innerHTML = `
+      <p><small>The SEP-41 allowance, counted the way an operator budgets: 1 credit = ${usdc(pool.creditUsdc)} (testnet). The network and the ledger still enforce every amount in USDC.</small></p>
+      <div class="bar">
+        <div class="bar-head"><strong>venue-agent pool</strong><span>${credits(pool.leftAfterDeposit ?? pool.left)} left to draw · ${credits(pool.spent)} spent</span></div>
+        <div class="track" role="img" aria-label="Credit pool: ${esc(pool.spent)} spent, ${esc(pool.drawn)} drawn, ${esc(pool.left)} left on the allowance, ${esc(pool.deposited)} deposited by a sponsor">
+          <span class="seg-spent" style="width:${w(pool.spent)}%"></span>
+          <span class="seg-drawn" style="width:${w(Number(pool.drawn) - Number(pool.spent))}%"></span>
+          <span class="seg-left" style="width:${w(pool.left)}%"></span>
+          <span class="seg-deposit" style="width:${w(pool.deposited)}%"></span>
+        </div>
+      </div>
+      <div class="legend"><span><i class="seg-spent"></i>spent by agents</span><span><i class="seg-drawn"></i>drawn, not yet spent</span><span><i class="seg-left"></i>left on the allowance</span><span><i class="seg-deposit"></i>sponsor deposit</span></div>
+      <dl class="grid kv" style="margin-top:12px">
+        <div><dt>Approved by the treasury</dt><dd>${credits(pool.approved)}</dd></div>
+        <div><dt>Drawn for allocations</dt><dd>${credits(pool.drawn)}</dd></div>
+        <div><dt>Spent on paid calls</dt><dd>${credits(pool.spent)}</dd></div>
+        <div><dt>Sponsor deposit · recharge</dt><dd>${rc ? `+${credits(pool.deposited)} · ${txLink(rc.approveTx, "re-approve tx")}${liveTag(rc.approveTx)}<br><small>${rc.verified ? `allowance read back: ${usdc(rc.verifiedUsdc)} ✓` : "allowance not verified"}</small>` : "none in this run"}</dd></div>
+      </dl>`;
   }
 
   $("blocked").innerHTML = payments.filter((r) => r.status === "blocked" && r.type === "payment").map((r) => `
@@ -188,9 +256,38 @@ if (stage?.card) {
       <div class="title">${esc(c.title)}</div>
       <div>${esc(when)} · ${esc(c.location)}</div>
       ${stage.explorer ? `<p><small>Paid for: <a href="${esc(stage.explorer)}" target="_blank" rel="noopener">see the transaction</a></small></p>` : ""}
+      ${stage.sponsor?.tx ? `<div class="sponsor">${esc(stage.sponsor.label || "Presented by")} ${esc(stage.sponsor.name)}${stage.sponsor.message ? ` · ${esc(stage.sponsor.message)}` : ""} · <a href="${esc(stage.sponsor.explorer)}" target="_blank" rel="noopener">sponsor paid ${esc(stage.sponsor.priceUsdc)} USDC to the venue treasury</a></div>` : ""}
     </div>`;
 } else if (ledger) {
   $("screen").textContent = "No card was bought in this run, so the stage keeps its default content.";
+}
+
+// ---- live check: are the recorded transactions on Stellar testnet right now? ----
+if (ledger?.network === "stellar:testnet") {
+  const hashes = txHashes(ledger, stage);
+  $("live-status").textContent = hashes.length ? `Checking ${hashes.length} recorded transactions live on Stellar testnet…` : "";
+  const results = await Promise.all(hashes.map(async (h) => [h, await confirmTx(ledger.network, h)]));
+  const byHash = new Map(results);
+  for (const el of document.querySelectorAll(".live[data-tx]")) {
+    const c = byHash.get(el.dataset.tx.toLowerCase());
+    el.textContent = confirmationLabel(c);
+    el.classList.toggle("confirmed", c?.state === "confirmed");
+  }
+  const confirmed = results.filter(([, c]) => c.state === "confirmed").length;
+  const at = new Date().toLocaleTimeString("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", minute: "2-digit" });
+  $("live-status").textContent = !hashes.length ? ""
+    : results.every(([, c]) => c.state === "unavailable") ? "Live check unavailable right now; showing the recorded run."
+    : `Live check · ${at} Lisbon: ${confirmed} of ${hashes.length} recorded transactions confirmed on Stellar testnet (Horizon).`;
+
+  const oc = ledger.onchain;
+  if (oc?.treasury && oc?.spender && $("live-balances")) {
+    const issuer = "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5"; // testnet USDC (Circle)
+    const [t, a] = await Promise.all([usdcBalance(ledger.network, oc.treasury, issuer), usdcBalance(ledger.network, oc.spender, issuer)]);
+    const show = (b) => (b.state === "ok" ? `${esc(b.balance)} USDC` : b.state === "not-found" ? "account not found (testnet may have been reset)" : "unavailable");
+    if (t.state !== "unavailable" || a.state !== "unavailable") {
+      $("live-balances").innerHTML = `Live balances now · treasury <span class="hash">${esc(oc.treasury.slice(0, 6))}…</span>: <span class="money">${show(t)}</span> · venue-agent wallet <span class="hash">${esc(oc.spender.slice(0, 6))}…</span>: <span class="money">${show(a)}</span>`;
+    }
+  }
 }
 </script>
 </body>

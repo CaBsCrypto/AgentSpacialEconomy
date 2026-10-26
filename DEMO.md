@@ -22,32 +22,32 @@ Ask Raven: "Given these judging criteria, what is weakest in this project?" and 
 
 ## Video script (3:00)
 
-Use the exact project name **Spatial Agents · Operating System**, brand line **AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES**, and one-liner **Your venue's AI operator, on a capped USDC budget.** Show the one-liner in the first five seconds.
+Show **AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES**, **Spatial Agents · Operating System**, and **Your venue's AI operator, on a capped USDC budget.** in the opening title card; the one-liner appears in the first five seconds. The narration below is 344 words; rehearse it with the exact block timings before recording.
 
-| Time | Block | On screen | Say (paraphrase within the time) |
+| Time | Block | On screen | Narration |
 | --- | --- | --- | --- |
-| 0:00-0:30 | **Problem** | Brand/title card, then the ONE16 twin | From organizing events ourselves, we have seen a lack of experiences that surprise attendees. We want teams to plan 3D and AR experiences and communicate those plans more clearly. This prototype tests a bounded way for a venue's agent to buy the content and data behind an experience, with a record of what each payment produced. |
-| 0:30-2:00 | **Testnet demo** | Dashboard recorded-run label, On-chain budget ceiling, both payment rows, stellar.expert, then /one16 and the stage card, then blocked card | Here is a recorded real testnet run. The operator approved 0.50 USDC with an expiring SEP-41 allowance. The agent drew 0.20; a further 0.31 draw exceeded the remaining allowance and was refused during network simulation, with nothing submitted. The stage agent bought the schedule fixture for 0.01 and the Morning briefing screen card for 0.05 USDC over x402. Open one transaction to inspect the settlement. In the ONE16 twin, select Vive la experiencia and walk to the main stage: the purchased card appears over the backdrop. Back on the dashboard, the 0.25 USDC premium render is blocked by the 0.10 per-call cap before signing. These are separate protections: the USDC contract limits treasury draws; our policy ledger checks each proposed call. |
-| 2:00-2:30 | **How** | Diagram: mandate, treasury allowance, venue/stage agents, x402, Stellar, ledger, screen | The plan is deterministic. The operator sets the objective and budget. The USDC contract enforces the treasury allowance, while the policy ledger checks the service, price and allocation before the agent signs. A facilitator settles the x402 payments and pays their fees. The resulting transaction hashes and card connect spending to a visible result. |
-| 2:30-3:00 | **Next** | Proposed pilot, future-work labels, repo/site end card | Our proposed first pilot is One Sixteen Venue; no agreement or partnership is in place. We want to test whether the budget mechanism helps real operators, then explore more zones, human approvals and per-day smart-account policies. Physical AR placement is still unverified. Everything shown here was built during HackMeridian with our own venue references and AI-assisted development. |
+| 00:00-00:30 | **Problem** | Title card and ONE16 twin. | Your venue's AI operator, on a capped USDC budget. From organizing events ourselves, we have seen a lack of experiences that surprise attendees. We want teams to plan 3D and AR experiences and communicate those plans more clearly. Spatial Agents · Operating System tests a budget for content and data purchases, with a record and a visible result. |
+| 00:30-02:00 | **Demo** | Recorded-run label, On-chain budget ceiling, both payment rows, stellar.expert, /one16 stage card and blocked call. | Here is the operator dashboard, showing a recorded run on Stellar testnet. No real funds are involved. The operator gives the main stage an objective: show the agenda and the next session. The budget is fifty cents in testnet USDC. The treasury approves an expiring SEP-41 allowance. The agent draws twenty cents. A further thirty-one-cent draw exceeds the remaining allowance and is rejected during network simulation. Nothing is submitted. The stage agent buys the schedule fixture for one cent and a screen card for five cents over x402. Both settled payments have transaction links. Opening one in Stellar Expert shows the actual testnet receipt. Now we enter the ONE16 digital twin and walk to the main stage. The purchased card, Morning briefing, appears on the backdrop. The receipt connects to a visible result. The treasury allowance and the per-call cap provide two separate spending checks. Finally, a twenty-five-cent request is blocked before signing: it exceeds the ten-cent per-call cap. The dashboard explains the refusal and shows that operator approval is needed. |
+| 02:00-02:30 | **How** | Mandate, treasury allowance, agents, x402, Stellar, ledger and screen diagram. | The flow is a mandate, a venue agent, a stage agent, and paid services. The agent receives an x402 payment challenge, checks the price, and signs only when the budget rules allow it. The facilitator settles the payments in USDC on Stellar testnet and pays their fees. Transaction hashes connect the ledger to the stage card. |
+| 02:30-03:00 | **Next** | Proposed pilot, future-work labels, repo/site end card. | Our proposed first pilot is One Sixteen Venue. No agreement or partnership is in place. We want to test operator value, then explore more zones, human approvals, per-day smart-account policies, and sponsor revenue. Our team built this during HackMeridian using our own venue photos and videos, with Claude, OpenAI Codex and Dot. Physical AR placement remains unverified. Explore agenticreality.space. |
 
-Record a complete backup before the final take. Label any reused run as **Recorded testnet run** with its actual date; do not imply that a static dashboard starts payments. If a fresh run is needed, the person opens [Testnet loop](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/workflows/testnet-loop.yml), chooses **Run workflow** on **main**, waits for a successful run and verifies its artifacts. A new workflow result does not update the public site automatically.
+Record a complete backup before the final take. Label any reused run as **Recorded testnet run** with its actual date. The static dashboard does not start payments. If fresh evidence is needed, the person opens [Testnet loop](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/workflows/testnet-loop.yml), chooses **Run workflow** on **main**, waits for success and verifies artifacts; workflow results do not update the site automatically.
 
-Human steps: start the screen recording, capture the dashboard and explorer without secrets, walk to the stage, record a second take, then upload the final video to YouTube as unlisted or to Vimeo. Verify playback without signing in before adding the link to SUBMISSION.md. Keep the backup recording available.
+Human steps: start recording, capture dashboard/explorer without secrets, walk to the stage, record a second take, review, then upload to YouTube as unlisted or Vimeo. Verify playback without signing in before adding the final URL to SUBMISSION.md.
 
 ## Deck outline (7 slides)
 
-Export a PDF strictly under **20 MiB**. Use the DESIGN.md colors and typography, English text, and at least one complete real transaction hash with its testnet explorer link.
+Export a PDF strictly under **20 MiB**, using DESIGN.md colors and DM Sans. Include at least one complete real transaction hash with its testnet explorer link.
 
-1. **Brand + name + one-liner.** `AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES` above *Spatial Agents · Operating System*, then `Your venue's AI operator, on a capped USDC budget.`
-2. **Problem.** Our first-hand event experience: a lack of experiences that surprise attendees. Goal: plan 3D/AR experiences and improve team communication. Label the spending problem as a hypothesis to test.
-3. **What it does.** Operator mandate and treasury allowance, venue agent, stage agent, paid services, visible result. One zone and a deterministic plan on testnet.
-4. **Demo evidence.** Dashboard with 0.01/0.05 USDC payments and real hashes, the Morning briefing card on the stage, and the blocked 0.25 USDC call. Label captures as a recorded run.
-5. **Stellar integration.** SEP-41 allowance: approve 0.50, draw 0.20, reject a further 0.31 in simulation. x402 payments with facilitator-paid fees. Per-call cap in the agent ledger; per-day smart-account policies are future work.
-6. **Market experiment.** Proposed first pilot: One Sixteen Venue, no agreement. Test a per-event mandate and service margin; campuses and museums are later target markets.
-7. **Next + our team.** Built during HackMeridian from our own venue photos/videos. AI tools: Claude, OpenAI Codex, Dot. Future work and links to repo, website and final video. Physical AR placement remains unverified.
+1. **Brand + name + one-liner.** Use the three exact opening texts above.
+2. **Problem.** Our first-hand event experience: a lack of experiences that surprise attendees. Goal: plan 3D/AR experiences and improve team communication. Spending benefits are a hypothesis to test.
+3. **What it does.** Operator mandate, treasury allowance, venue agent, stage agent, paid services, visible result. One zone and a deterministic testnet plan.
+4. **Demo evidence.** Dashboard with 0.01/0.05 USDC payments and real hashes, Morning briefing on the stage, blocked 0.25 USDC call. Label captures as a recorded run.
+5. **Stellar integration.** SEP-41 allowance: approve 0.50, draw 0.20, reject a further 0.31 in simulation. x402 payments with facilitator-paid fees. Agent-side per-call cap; per-day smart-account policies are future work.
+6. **Market experiment.** Proposed first pilot: One Sixteen Venue, without an agreement. Test a per-event mandate and service margin; campuses/museums are later target markets.
+7. **Next + our team.** Built during HackMeridian from our own venue photos/videos. AI: Claude, OpenAI Codex, Dot. Future work and repo/site/final-video links. Physical AR placement remains unverified.
 
-## Submission data (fill in, same words everywhere)
+## Submission data (same words everywhere)
 
 | Field | Value |
 | --- | --- |
@@ -58,12 +58,11 @@ Export a PDF strictly under **20 MiB**. Use the DESIGN.md colors and typography,
 | Website | https://agenticreality.space |
 | Dashboard | https://agenticreality.space/dashboard.html |
 | ONE16 twin | https://agenticreality.space/one16 |
-| Video | Pending human upload and playback verification without signing in; put the final URL in SUBMISSION.md. |
+| Video | Pending human upload and logged-out playback verification; put final URL in SUBMISSION.md. |
 | Deck | Pending final PDF verification and portal attachment; strictly under 20 MiB. |
-| Stellar integration | A SEP-41 allowance bounds treasury draws; an agent-side policy ledger checks calls before x402 payments in testnet USDC, each with a transaction hash. |
-| Built during the event | Landing, ONE16 twin, agent, paid services, allowance integration, ledger, dashboard, stage screen, CI runner and docs. No project work existed before the event; our team used its own venue photos/videos. |
+| Built during event | Landing, twin, agent, paid services, allowance, ledger, dashboard, stage screen, CI runner and docs. No prior project work; own venue photos/videos. |
 | AI tools | Claude, OpenAI Codex, Dot. |
 | First pilot | One Sixteen Venue, proposed without an agreement or partnership. |
 | Test it yourself | [Agent setup and recorded evidence](agent/README.md); [Testnet loop workflow](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/workflows/testnet-loop.yml). |
 
-Feature freeze: **Monday 26 October, 09:15 WET**. Review the saved portal draft with the person and submit once at **11:00 WET**, ahead of the **12:00 WET** close. Login, upload, terms acceptance and portal clicks are human steps: guide one step at a time and wait for confirmation.
+Feature freeze: **Monday 26 October, 09:15 WET**. Review the portal draft with the person and submit once at **11:00 WET**, before the **12:00 WET** close. Login, upload, terms and portal clicks are human steps: guide one step at a time and wait for confirmation.

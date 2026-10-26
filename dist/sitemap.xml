@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Host: agenticreality.space (Vercel). If the site moves, update these URLs and robots.txt. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://agenticreality.space/</loc><lastmod>2026-10-25</lastmod></url>
-  <url><loc>https://agenticreality.space/dashboard.html</loc><lastmod>2026-10-25</lastmod></url>
-  <url><loc>https://agenticreality.space/passport.html</loc><lastmod>2026-10-25</lastmod></url>
-  <url><loc>https://agenticreality.space/llms.txt</loc><lastmod>2026-10-25</lastmod></url>
+  <url><loc>https://agenticreality.space/</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://agenticreality.space/dashboard.html</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://agenticreality.space/passport.html</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://agenticreality.space/llms.txt</loc><lastmod>2026-10-26</lastmod></url>
+  <url><loc>https://agenticreality.space/one16</loc><lastmod>2026-10-26</lastmod></url>
 </urlset>

@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-26T01:23:54.045Z",
+  "runId": "2026-10-26T03:21:08.743Z",
   "card": {
     "label": "Next on the main stage",
     "title": "Morning briefing",
     "start": "2026-10-26T09:00:00Z",
     "location": "Main stage",
-    "issuedAt": "2026-10-26T01:24:03.502Z",
+    "issuedAt": "2026-10-26T03:21:18.232Z",
     "theme": {
       "background": "#07121f",
       "text": "#eef4f7",
@@ -13,6 +13,14 @@
       "money": "#e3bd79"
     }
   },
-  "tx": "7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0",
-  "explorer": "https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0"
+  "tx": "a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0",
+  "explorer": "https://stellar.expert/explorer/testnet/tx/a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0",
+  "sponsor": {
+    "label": "Presented by",
+    "name": "Demo Sponsor (testnet)",
+    "message": "Your brand here · sponsor slots paid in testnet USDC",
+    "priceUsdc": "0.10",
+    "tx": "821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3",
+    "explorer": "https://stellar.expert/explorer/testnet/tx/821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3"
+  }
 }

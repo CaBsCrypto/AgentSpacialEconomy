@@ -30,11 +30,12 @@ Your venue's AI operator, on a capped USDC budget.
 - **Paid venue services over x402.** The stage agent buys the schedule fixture (0.01 USDC) and then a screen card for the next session (0.05 USDC). Payments use x402 v2 (`exact` scheme) on Stellar testnet through a fee-sponsored facilitator: the agent signs Soroban auth entries only and needs no XLM to pay the fees of those x402 payments.
 - **A budget ceiling the network enforces.** The operator's treasury approves the venue agent a SEP-41 allowance on the USDC contract (amount = budget, approved with a roughly 24-hour ledger window). The agent starts with no USDC, draws exactly its allocations with `transfer_from`, and a draw above the remaining allowance is refused during network simulation without being submitted.
 - **A budget ledger that says no before signing.** Allow-list, per-call cap, approval threshold and allocations are checked before any signature. The agent also reads the server's `402 Payment Required` and refuses if it asks for more than it reserved. In the demo, a 0.25 USDC "premium render" is refused by the 0.10 cap and shown as *needs operator approval*. Reruns with the same run id never pay twice.
-- **An operator dashboard.** Mandate, budget per agent, every attempt with its Stellar transaction, and the refused call.
+- **An operator dashboard.** Mandate, budget per agent, the agent credit pool (1 credit = 0.01 USDC), every attempt with its Stellar transaction checked live on Horizon testnet, and the refused call.
+- **Income that refills the budget.** A sponsor pays the venue treasury 0.10 USDC over x402 for a line on the stage screen; the treasury then re-approves the agent's SEP-41 allowance by that amount (0.30 → 0.40 USDC, read back from the network).
 - **The result in the place.** The card the stage agent paid for appears on the main stage of our 3D digital twin of ONE16, the HackMeridian venue.
 - **A reproducible testnet run.** One command (or a GitHub Actions workflow) creates throwaway testnet accounts, funds the treasury with testnet USDC through a DEX path payment, approves the allowance, draws the allocation, starts the services and runs the loop.
 
-**On-chain evidence (Stellar testnet, 26 Oct 01:23 UTC):** allowance `approve` 0.50 USDC — tx `3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa`; budget draw 0.20 USDC — tx `914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083`; a 0.31 USDC draw refused during network simulation, with nothing submitted; `venue-feed` 0.01 USDC — tx `bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc`; `screen-card` 0.05 USDC — tx `7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator.
+**On-chain evidence (Stellar testnet, 26 Oct 03:21 UTC, run 3):** allowance `approve` 0.50 USDC — tx `9bcab3db185200309a3d1bb63ef09c128212d68b8418ffaf2a192206f7ffe62d`; budget draw 0.20 USDC — tx `7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb`; a 0.31 USDC draw refused during network simulation, with nothing submitted; `venue-feed` 0.01 USDC — tx `ebb69bd495625e948fdb1ce6f3e1ee8b21eaea343fe77b086bed4849598c667a`; `screen-card` 0.05 USDC — tx `a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0`; sponsor slot 0.10 USDC paid to the treasury — tx `821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3`; treasury re-approves 0.40 USDC — tx `d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator. Run 2 (01:23 UTC) is in the README.
 
 **Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract (payments and a SEP-41 allowance as the on-chain budget ceiling) + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: per-day caps in a smart account (OpenZeppelin policies or Nido session keys).
 
@@ -44,7 +45,7 @@ Your venue's AI operator, on a capped USDC budget.
 
 From organizing events ourselves, we have seen a lack of experiences that surprise attendees. We want to help teams plan 3D and AR experiences and communicate those plans more clearly.
 
-This prototype tests one mechanism for that digital layer: an operator gives agents a bounded content and data budget, each purchase is recorded, and the purchased result appears in the venue's digital twin. Whether this solves operators' spending and coordination problems is a hypothesis for a venue pilot, not a claim of validated customer demand. Physical AR placement remains unverified.
+This prototype tests one mechanism for that digital layer: an operator gives agents a bounded content and data budget, each purchase is recorded, and the purchased result appears in the venue's digital twin. A venue pilot will test operator demand, coordination benefits and willingness to pay. Physical AR placement remains unverified.
 
 ## Challenges
 
@@ -63,7 +64,7 @@ This prototype tests one mechanism for that digital layer: an operator gives age
 - Operator approval in the operator's own wallet: passkey smart accounts with per-day caps and expiry (Nido, OpenZeppelin smart accounts), and agent-drafted transactions that a human signs.
 - Discovery both ways: our agents finding paid data services through an x402 marketplace, and venues selling screen and AR slots to other agents.
 
-**Go-to-market:** our proposed first pilot is One Sixteen Venue; no agreement or partnership is in place. We would test whether event operators can plan compelling spatial experiences and delegate a small, auditable content budget. A per-event mandate with a service margin is our business-model hypothesis. Campuses, innovation districts and museums are later target markets, subject to pilot results.
+**Go-to-market:** Our proposed first pilot is One Sixteen Venue; no agreement or partnership is in place. We would test whether event operators can plan compelling spatial experiences and delegate a small, auditable content budget. A per-event mandate with a service margin is our business-model hypothesis. Campuses, innovation districts and museums are later target markets, subject to pilot results.
 
 ## Repository link *
 
@@ -81,7 +82,7 @@ Pending human upload: paste the final YouTube or Vimeo URL here after confirming
 
 ## Deck file *
 
-Pending attachment: use the final 7-slide PDF, strictly under 20 MiB, after checking every page and at least one real transaction hash.
+Attach `docs/submission/spatial-agents-deck.pdf`: the verified final 7-slide PDF (1.401 MiB), with real dashboard/twin screenshots and a linked testnet transaction hash. Upload the PDF file in the portal; its repository copy is https://github.com/CaBsCrypto/AgentSpacialEconomy/blob/main/docs/submission/spatial-agents-deck.pdf.
 
 ## Thematic track
 
@@ -93,7 +94,7 @@ Stellar testnet, x402, USDC, Stellar Asset Contract, SEP-41, Soroban auth entrie
 
 ## Prior work disclosure
 
-We started this project during HackMeridian; no project work existed before hacking opened at 09:00 WET on Sunday 25 October 2026. Our team created the landing page and ONE16 digital twin during the hackathon, using our own venue photos and videos and AI-assisted development. The agent, paid services, budget ledger, dashboard, stage-screen integration and supporting documentation were also built during the event. The repository's first commit is dated 25 October 2026, 10:30 WET; its public history records the work. Third-party software is used under its respective licenses.
+We started this project during HackMeridian; no project work existed before hacking opened at 09:00 WET on Sunday 25 October 2026. Our team created the landing page and ONE16 digital twin during the hackathon, using our own venue photos and videos and AI-assisted development. The agent, paid services, allowance integration, budget ledger, dashboard, stage screen, CI runner and supporting documentation were also built during the event. The repository's first commit is dated 25 October 2026, 10:30 WET; its public history records the work. Third-party software is used under its respective licenses.
 
 ## AI tooling note
 

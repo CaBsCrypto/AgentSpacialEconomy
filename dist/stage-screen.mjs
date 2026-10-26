@@ -22,7 +22,15 @@ export function cardText(state) {
     when,
     location: String(c.location || "").slice(0, 60),
     paid: Boolean(state.tx),
+    sponsor: sponsorLine(state.sponsor),
   };
+}
+
+/** "Presented by <name> · <message>" when a sponsor paid the venue treasury for this screen, else null. */
+export function sponsorLine(sponsor) {
+  if (!sponsor || !sponsor.tx || typeof sponsor.name !== "string" || !sponsor.name.trim()) return null;
+  const message = typeof sponsor.message === "string" ? sponsor.message.trim() : "";
+  return `${String(sponsor.label || "Presented by").slice(0, 20)} ${sponsor.name.trim().slice(0, 40)}${message ? ` · ${message.slice(0, 80)}` : ""}`;
 }
 
 /**
@@ -82,6 +90,12 @@ export function drawCard(ctx, w, h, t) {
     ctx.fillStyle = "#e3bd79";
     ctx.font = "400 28px 'DM Sans', system-ui, sans-serif";
     ctx.fillText("Bought by the stage agent · testnet USDC over x402", pad, h - 80);
+  }
+  if (t.sponsor) {
+    ctx.fillStyle = "#90a8bb";
+    ctx.font = "400 24px 'DM Sans', system-ui, sans-serif";
+    const [line] = wrapLines(t.sponsor, w - pad * 2, (s) => ctx.measureText(s).width, 1);
+    ctx.fillText(line, pad, h - 40);
   }
 }
 

@@ -21,7 +21,7 @@ Without keys or USDC yet: `npm run loop:dry` walks the whole plan and stops befo
 
 `node ci-run.mjs` does everything in one go: throwaway testnet accounts, USDC trustlines, a little testnet USDC bought with XLM on the testnet DEX, the services, the facilitator check and the loop. The workflow `.github/workflows/testnet-loop.yml` runs it on every push to `ci/testnet-run` (or "Run workflow" from the Actions tab once it is on `main`) and publishes `dist/state/*.json` plus the log to the `ci/testnet-results` branch.
 
-Recorded run, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode):
+Run 2, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode). The site now shows run 3, which repeats these steps and adds the sponsor income (below):
 
 | Step | Amount | Result |
 | --- | --- | --- |
@@ -33,6 +33,16 @@ Recorded run, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allo
 | `premium-render` | 0.25 USDC | blocked before signing — above the 0.10 per-call cap |
 
 x402 fees were paid by the facilitator; the service wallet received exactly 0.06 USDC and the agent kept 0.14.
+
+### Income: a sponsor refills the agent's budget
+
+With `TREASURY_PUBLIC_KEY` set, `services.mjs` also sells `POST /paid/sponsor-slot` (0.10 testnet USDC), paid **to the treasury**. After the loop, with the services still running:
+
+```bash
+SPONSOR_SECRET_KEY=S... node sponsor.mjs   # a separate testnet wallet with testnet USDC; never commit it
+```
+
+`sponsor.mjs` checks the 402 before signing (price ≤ `--max`, testnet, payTo = treasury), appends an `income` row to `dist/state/ledger.json` (idempotent per run) and a "Presented by" line to `dist/state/stage.json`. In allowance mode `ci-run.mjs` does this with a throwaway sponsor and then has the treasury re-approve the agent what is left plus the income, reading the allowance back. Run 3 (26 Oct 03:21 UTC): sponsor → treasury 0.10 USDC [821f7b12…](https://stellar.expert/explorer/testnet/tx/821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3), re-approve 0.30 → 0.40 USDC [d954f245…](https://stellar.expert/explorer/testnet/tx/d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9).
 
 ## What the run does
 
