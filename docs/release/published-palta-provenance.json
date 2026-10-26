@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-10-26T02:32:00Z",
+  "deployment": "dpl_Eejam1oTSbqsrApWqFD1hz6EvVCJ",
+  "sourceCommit": "c2ea71c1d6523a811ab17715506ce6f4ef20470c",
+  "note": "Published Palta lifecycle refinements were present in production before source unification; source files were compared byte-for-byte with the public responses before import.",
+  "files": [
+    {
+      "path": "dist/viewer.js",
+      "sourceSha256": "eeece1d45a26d99b47465ae82fc929700ca463de46662aada1291db52bf1ea6c"
+    },
+    {
+      "path": "dist/palta-reveal.mjs",
+      "sourceSha256": "f37f45ec10043bb437e5e9b6bd7df59920d2a433f18af4f047a2d33f436ad2cb"
+    }
+  ]
+}

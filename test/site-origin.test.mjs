@@ -15,7 +15,7 @@ test('inline guard uses replace before storage/modules and preserves the browser
  const redirects=[],location={href:'https://one16-passport-ar.vercel.app/?passport=stand16#recorrido',replace:value=>redirects.push(value)};
  vm.runInNewContext(canonicalBootstrapScript(),{URL,location});assert.deepEqual(redirects,[CANONICAL_ORIGIN+'/?passport=stand16#recorrido']);
  location.href=CANONICAL_ORIGIN+'/';vm.runInNewContext(canonicalBootstrapScript(),{URL,location});assert.equal(redirects.length,1);
- const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.ok(html.indexOf('data-one16-canonical')<html.indexOf('classList.add(\'one16-booting\')'));assert.ok(html.indexOf('data-one16-canonical')<html.indexOf('type="module"'));assert.match(html,/entry\.mjs\?v=welcome-1/);
+ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.ok(html.indexOf('data-one16-canonical')<html.indexOf('classList.add(\'one16-booting\')'));assert.ok(html.indexOf('data-one16-canonical')<html.indexOf('type="module"'));assert.match(html,/entry\.mjs\?v=hackmeridian-unify-2/);
 });
 test('every standalone entry has the same early canonical guard and its own canonical URL',()=>{
  const dir=new URL('../dist/',import.meta.url);for(const filename of fs.readdirSync(dir).filter(name=>name.endsWith('.html'))){

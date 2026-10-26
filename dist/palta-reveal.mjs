@@ -6,7 +6,7 @@
 // If the GLB or the logo file is missing, nothing breaks: the venue keeps its current look.
 //
 // Viewer integration (dist/viewer.js), two lines:
-//   after the venue model is added:  import('./palta-reveal.mjs?v=6').then(m=>m.mountPaltaReveal(THREE,scene,{GLTFLoader,camera,canvas,layout})).then(p=>palta=p).catch(e=>console.warn('palta skipped',e));
+//   after the venue model is added:  import('./palta-reveal.mjs?v=palta-publish-1').then(m=>m.mountPaltaReveal(THREE,scene,{GLTFLoader,camera,canvas,layout})).then(p=>palta=p).catch(e=>console.warn('palta skipped',e));
 //   inside loop(), before render:     palta?.update(dt);
 
 export const PALTA_DEFAULTS = Object.freeze({
@@ -88,10 +88,13 @@ function prefersReducedMotion() {
   try { return globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true; } catch { return false; }
 }
 
-async function applyLogo(THREE, root, logoUrl) {
+async function applyLogo(THREE, root, logoUrl, isDisposed, ownResource) {
+  if (isDisposed()) return false;
   const slot = root.getObjectByName(NODE.logo);
   if (!slot || !logoUrl) return false;
   const texture = await new THREE.TextureLoader().loadAsync(logoUrl);
+  if (isDisposed()) { texture.dispose(); return false; }
+  ownResource(texture);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.flipY = false; // glTF UV convention, like the textures GLTFLoader creates
   texture.anisotropy = 4;
@@ -99,13 +102,13 @@ async function applyLogo(THREE, root, logoUrl) {
   const baked = Number(slot.userData?.aspect) || 1;
   const [sx, sy] = logoScale(baked, aspect);
   slot.scale.set(sx, sy, 1);
-  const m = slot.material.clone();
+  const m = slot.material.clone(); ownResource(m);
   m.map = texture; m.emissiveMap = texture; m.transparent = true; m.needsUpdate = true;
   slot.material = m;
   // The official white wordmark needs contrast; retain the neutral face until a logo loads.
   root.getObjectByName("palta_medallion_body")?.traverse((node) => {
     if (!node.isMesh || !node.material.name.startsWith("Medallion face")) return;
-    const face = node.material.clone();
+    const face = node.material.clone(); ownResource(face);
     face.color.set("#07121f"); face.emissive.set("#07121f");
     node.material = face;
   });
@@ -117,16 +120,29 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   if (!o.GLTFLoader) throw new Error("mountPaltaReveal needs { GLTFLoader }");
   const gltf = await new o.GLTFLoader().loadAsync(o.url);
   const root = gltf.scene;
+  let disposed = false;
+  const resources = new Set();
+  const ownResource = (resource) => { if (resource?.dispose) resources.add(resource); };
+  root.traverse((node) => {
+    ownResource(node.geometry);
+    for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+      if (!material) continue;
+      ownResource(material);
+      for (const value of Object.values(material)) if (value?.isTexture) ownResource(value);
+    }
+  });
   root.name = "Palta reveal (Palta Labs activation)";
   root.position.set(...o.position);
   root.rotation.y = o.yaw;
   root.traverse((n) => { if (n.isMesh) n.frustumCulled = true; });
   scene.add(root);
 
-  if (o.logoUrl) applyLogo(THREE, root, o.logoUrl).catch((e) => console.warn("palta logo skipped", e));
-  if (o.layout?.obstacles && !o.layout.obstacles.some((b) => b.id === "palta-reveal")) {
-    o.layout.obstacles.push(paltaObstacle(o.position, o.obstacleHalfSize));
-  }
+  if (o.logoUrl) applyLogo(THREE, root, o.logoUrl, () => disposed, ownResource).catch((e) => {
+    if (!disposed) console.warn("palta logo skipped", e);
+  });
+  const obstacles = o.layout?.obstacles;
+  const obstacle = obstacles ? paltaObstacle(o.position, o.obstacleHalfSize) : null;
+  if (obstacle) obstacles.push(obstacle);
 
   const mixer = new THREE.AnimationMixer(root);
   const clip = (name) => THREE.AnimationClip.findByName(gltf.animations, name);
@@ -139,7 +155,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   let prox = { mode: "closed", armed: true, manual: false }, targetYaw = 0, isOpen = false;
 
   mixer.addEventListener("finished", (e) => {
-    if (!reduced && e.action === openAction && openAction.timeScale > 0) idleAction.reset().fadeIn(0.4).play();
+    if (!disposed && !reduced && e.action === openAction && openAction.timeScale > 0) idleAction.reset().fadeIn(0.4).play();
   });
 
   function facing() {
@@ -150,7 +166,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   }
 
   function open({ manual = false } = {}) {
-    if (isOpen) return; isOpen = true; prox = { mode: "open", armed: true, manual };
+    if (disposed || isOpen) return; isOpen = true; prox = { mode: "open", armed: true, manual };
     targetYaw = facing();
     openAction.timeScale = 1; openAction.paused = false;
     if (!openAction.isRunning()) openAction.reset();
@@ -159,7 +175,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   }
 
   function close() {
-    if (!isOpen) return; isOpen = false; prox = { ...prox, mode: "closed" };
+    if (disposed || !isOpen) return; isOpen = false; prox = { ...prox, mode: "closed" };
     idleAction.fadeOut(0.2);
     openAction.paused = false; openAction.timeScale = -1;
     if (openAction.time === 0) openAction.time = openAction.getClip().duration;
@@ -182,6 +198,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   if (o.canvas) { o.canvas.addEventListener("pointerdown", down); o.canvas.addEventListener("pointerup", up); }
 
   function update(dt = 0.016) {
+    if (disposed) return;
     const step = Math.min(Math.max(dt, 0), 0.25); // keeps time on slow phones, ignores tab-switch gaps
     if (o.camera && o.autoOpenDistance > 0) {
       const d = Math.hypot(o.camera.position.x - root.position.x, o.camera.position.z - root.position.z);
@@ -197,24 +214,27 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
 
   // Manual toggle (tap, button, or a call from elsewhere in the app).
   function toggle() {
+    if (disposed) return;
     if (isOpen) { close(); prox = { mode: "closed", armed: false, manual: false }; }
     else open({ manual: true });
   }
 
   function dispose() {
+    if (disposed) return;
+    disposed = true; isOpen = false; tap = null;
     if (o.canvas) { o.canvas.removeEventListener("pointerdown", down); o.canvas.removeEventListener("pointerup", up); }
-    mixer.stopAllAction(); scene.remove(root);
-    if (o.layout?.obstacles) {
-      const i = o.layout.obstacles.findIndex((b) => b.id === "palta-reveal");
-      if (i >= 0) o.layout.obstacles.splice(i, 1);
-    }
+    mixer.stopAllAction(); mixer.uncacheRoot(root); scene.remove(root);
+    const i = obstacles?.indexOf(obstacle) ?? -1;
+    if (i >= 0) obstacles.splice(i, 1);
+    for (const resource of resources) resource.dispose();
+    resources.clear();
   }
 
   return {
     root, update, dispose, toggle,
     open: () => open({ manual: true }),
     close: () => { close(); prox = { mode: "closed", armed: false, manual: false }; },
-    setLogo: (url) => applyLogo(THREE, root, url),
+    setLogo: (url) => applyLogo(THREE, root, url, () => disposed, ownResource),
     get isOpen() { return isOpen; },
   };
 }
