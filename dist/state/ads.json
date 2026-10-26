@@ -1,0 +1,82 @@
+{
+  "runId": "2026-10-26T06:24:37.467Z",
+  "network": "stellar:testnet",
+  "offer": {
+    "id": "main-stage-test-5m",
+    "placement": "main_stage_screen",
+    "durationMs": 300000,
+    "priceUsdc": "5.00",
+    "payTo": "GA47UI5F5WXC3ICJDRXAZUKOP5DLI2EYFCGRDQ67BNE2PJDPM7QYKIM7"
+  },
+  "advertiser": {
+    "account": "GAGL4HJDR6VMXOGYNJDHDD72WXUNYB2O72IUQBPXCI7NAH6B6RMB3OKZ",
+    "name": "Demo Advertiser (testnet)",
+    "headline": "Five minutes on the main stage, paid in testnet USDC"
+  },
+  "rows": [
+    {
+      "type": "ad-order",
+      "agent": "advertiser",
+      "service": "ad-slot · main-stage screen · 5 min",
+      "priceUsdc": "5.00",
+      "status": "settled",
+      "key": "2026-10-26T06:24:37.467Z#A:ad-slot",
+      "at": "2026-10-26T06:24:42.616Z",
+      "tx": "06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc"
+    }
+  ],
+  "treasury": {
+    "account": "GA47UI5F5WXC3ICJDRXAZUKOP5DLI2EYFCGRDQ67BNE2PJDPM7QYKIM7",
+    "usdcBefore": "0.0000000",
+    "usdcAfter": "5.0000000",
+    "receivedUsdc": "5.0000000",
+    "verified": true
+  },
+  "registry": {
+    "contractId": "CCF3QILVXKYOUE4M2SVZJYOWYQZ3IMS3DODPKPN2UVZELIKMVI63OCQS",
+    "explorerContract": "https://stellar.expert/explorer/testnet/contract/CCF3QILVXKYOUE4M2SVZJYOWYQZ3IMS3DODPKPN2UVZELIKMVI63OCQS",
+    "wasmHash": "d9caf94b2dfb159c7d46bf5779d358d6cced9ee7a94bd69e2bb1fa354b5ee526",
+    "wasmVerified": true,
+    "issuer": "GA47UI5F5WXC3ICJDRXAZUKOP5DLI2EYFCGRDQ67BNE2PJDPM7QYKIM7",
+    "deployTx": "3b0eb98b2c82d2fd994691ad9d59289f2d858a5654d77abb0cac86058da4bb30",
+    "deployExplorer": "https://stellar.expert/explorer/testnet/tx/3b0eb98b2c82d2fd994691ad9d59289f2d858a5654d77abb0cac86058da4bb30",
+    "commitTx": "0a15bdb401be7ea1970acf2153129b839b38108bff03a515000ac16cb3fa9509",
+    "commitExplorer": "https://stellar.expert/explorer/testnet/tx/0a15bdb401be7ea1970acf2153129b839b38108bff03a515000ac16cb3fa9509",
+    "commitment": {
+      "order": "d0c95c15a44932e2c989ed5aabf2364b529a2ce819fa58e12f29b969f2068ce1",
+      "revision": "5e6e48658ead2b5b5c960c334569aa027617092e2dcde22adcd9687c0af4b7d2",
+      "terms": "e668c1e4f41c94f4b556a94c8f3e107fa46d9953a7da01160f77ae9acc8773e1",
+      "manifest": "5ce282cd2f9db1afd483692d04266492a366d51cdbb001a794538aadf96ab7fb",
+      "payment": "06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc",
+      "claimant": "GAGL4HJDR6VMXOGYNJDHDD72WXUNYB2O72IUQBPXCI7NAH6B6RMB3OKZ",
+      "deadline": 1793000100000,
+      "placements": [
+        {
+          "slot": "main_stage_screen",
+          "plan": "Time",
+          "units": 300000,
+          "pass_ms": 0,
+          "start": 1792996200000,
+          "end": 1792996500000
+        }
+      ]
+    },
+    "terms": {
+      "offer": "main-stage-test-5m",
+      "placement": "main_stage_screen",
+      "plan": "Time",
+      "durationMs": 300000,
+      "priceUsdc": "5.00",
+      "payTo": "GA47UI5F5WXC3ICJDRXAZUKOP5DLI2EYFCGRDQ67BNE2PJDPM7QYKIM7",
+      "network": "stellar:testnet"
+    },
+    "readBack": {
+      "verified": true,
+      "state": "Queued",
+      "deliveredMs": "0",
+      "requiredMs": "300000"
+    }
+  },
+  "recordedAt": "2026-10-26T06:24:52.453Z"
+}

@@ -87,6 +87,19 @@ Run of 26 Oct 2026 03:21 UTC ([Actions run 40263552583](https://github.com/CaBsC
 
 Treasury [GC6FWZ…TOTO](https://stellar.expert/explorer/testnet/account/GC6FWZPKZZ7PVJ3FKOCKA3VSP4HIVKDYB64RXQLQVU6WWT7XA6CITOTO) (−0.20 drawn, +0.10 sponsor) · agent [GAOQEW…H2O2](https://stellar.expert/explorer/testnet/account/GAOQEWK6M5CFFA4NYY77P3D2ZYLOSY6O5JU667GWCVM3DCNFQ7JGH2O2) (0.14 USDC left) · sponsor [GCRS4T…77XW](https://stellar.expert/explorer/testnet/account/GCRS4TEBW5B6PAV235KP34DROX5BC4WHPOGKKMKLBJPCWRBTWN4Q77XW) (−0.10) · service [GDSRUN…CV5G](https://stellar.expert/explorer/testnet/account/GDSRUNKPVMAJ4P6EIKJ6JZQY2HSVLGRT46BYKNDGAFYCEVH4H4BVCV5G) (+0.06). The sponsor is a throwaway testnet wallet named "Demo Sponsor (testnet)", not a real company.
 
+### Paid screen time: an ad order committed on Soroban
+
+Run of 26 Oct 2026 06:24 UTC ([Actions run 40279573914](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40279573914)), separate from the loop, with its own throwaway treasury and advertiser. The offer is the pilot fixed on `feature/ads-3d-ar-x402`: 5 testnet USDC for 5 minutes of the main-stage screen.
+
+| What | Transaction |
+| --- | --- |
+| An **advertiser pays the venue treasury** 5 USDC over x402 (`POST /paid/ad-slot`, payTo = treasury, 402 checked before signing); treasury balance read back 0 → 5 | [06dcd5b2…](https://stellar.expert/explorer/testnet/tx/06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc) |
+| The treasury **deploys an AdsRegistry instance** ([CCF3QI…OCQS](https://stellar.expert/explorer/testnet/contract/CCF3QILVXKYOUE4M2SVZJYOWYQZ3IMS3DODPKPN2UVZELIKMVI63OCQS)) from the WASM already on testnet (`d9caf94b…`, the code the network runs was checked against it) | [3b0eb98b…](https://stellar.expert/explorer/testnet/tx/3b0eb98b2c82d2fd994691ad9d59289f2d858a5654d77abb0cac86058da4bb30) |
+| The treasury **commits the order**: hashes of the terms and the ad, the advertiser as claimant, the 5-minute window, and the x402 settlement hash above as `payment` | [0a15bdb4…](https://stellar.expert/explorer/testnet/tx/0a15bdb401be7ea1970acf2153129b839b38108bff03a515000ac16cb3fa9509) |
+| `get(order)` read back by simulation | `Queued`, delivered 0 of 300 s, `payment` equal to the settlement hash |
+
+The registry never moves funds. No delivery is recorded, so the order stays `Queued`, and the ad is not shown in the twin. The advertiser is a throwaway testnet wallet named "Demo Advertiser (testnet)". The first deployment of the same contract, with a synthetic order and no payment, is on `feature/ads-3d-ar-x402` (`docs/ads/testnet-registry/`).
+
 ## Setup, installation and environment variables
 
 Requirements: Node.js 22.x and npm for the site; the separate agent package supports Node.js 20+ (22 used in CI).
@@ -120,7 +133,7 @@ No keys or faucet: `node agent/ci-run.mjs` does everything with throwaway accoun
 
 ## Demo instructions
 
-1. Open the [operator dashboard](https://agenticreality.space/dashboard.html). It displays a **recorded real testnet run**: mandate, treasury allowance, the agent credit pool, per-agent budget, two payments with transaction links, the blocked 0.25 USDC call, and a sponsor payment to the treasury that recharges the allowance. When the page loads it checks each transaction live on Horizon testnet.
+1. Open the [operator dashboard](https://agenticreality.space/dashboard.html). It displays a **recorded real testnet run**: mandate, treasury allowance, the agent credit pool, per-agent budget, two payments with transaction links, the blocked 0.25 USDC call, and a sponsor payment to the treasury that recharges the allowance. Below the stage card, **Paid screen time** shows a 5 USDC ad order paid to the treasury and committed to the AdsRegistry contract. When the page loads it checks each transaction live on Horizon testnet.
 2. Open the [ONE16 twin](https://agenticreality.space/one16), select **Vive la experiencia** and walk to the main stage to inspect the purchased **Morning briefing** card over the backdrop, with the "Presented by Demo Sponsor (testnet)" line the sponsor paid for.
 3. Open a payment link in stellar.expert and compare its hash and amount with the dashboard.
 4. To create fresh evidence, a person opens [Actions > Testnet loop](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/workflows/testnet-loop.yml), selects **Run workflow** on **main**, and waits for success (normally about two minutes). Inspect the new `dist/state/*.json` in `ci/testnet-results`; publishing those results needs a reviewed change and deployment before the freeze. The static dashboard does not trigger payments.

@@ -32,14 +32,17 @@ Your venue's AI operator, on a capped USDC budget.
 - **A budget ledger that says no before signing.** Allow-list, per-call cap, approval threshold and allocations are checked before any signature. The agent also reads the server's `402 Payment Required` and refuses if it asks for more than it reserved. In the demo, a 0.25 USDC "premium render" is refused by the 0.10 cap and shown as *needs operator approval*. Reruns with the same run id never pay twice.
 - **An operator dashboard.** Mandate, budget per agent, the agent credit pool (1 credit = 0.01 USDC), every attempt with its Stellar transaction checked live on Horizon testnet, and the refused call.
 - **Income that refills the budget.** A sponsor pays the venue treasury 0.10 USDC over x402 for a line on the stage screen; the treasury then re-approves the agent's SEP-41 allowance by that amount (0.30 → 0.40 USDC, read back from the network).
+- **Paid screen time recorded on Soroban.** An advertiser pays the venue treasury 5 USDC over x402 for five minutes of the main-stage screen. The treasury commits that order to AdsRegistry, a noncustodial Soroban contract we wrote during the event, with the x402 settlement hash as its payment reference, and reads it back (`Queued`, nothing delivered yet).
 - **The result in the place.** The card the stage agent paid for appears on the main stage of our 3D digital twin of ONE16, the HackMeridian venue.
 - **A reproducible testnet run.** One command (or a GitHub Actions workflow) creates throwaway testnet accounts, funds the treasury with testnet USDC through a DEX path payment, approves the allowance, draws the allocation, starts the services and runs the loop.
 
 **On-chain evidence (Stellar testnet, 26 Oct 03:21 UTC, run 3):** allowance `approve` 0.50 USDC — tx `9bcab3db185200309a3d1bb63ef09c128212d68b8418ffaf2a192206f7ffe62d`; budget draw 0.20 USDC — tx `7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb`; a 0.31 USDC draw refused during network simulation, with nothing submitted; `venue-feed` 0.01 USDC — tx `ebb69bd495625e948fdb1ce6f3e1ee8b21eaea343fe77b086bed4849598c667a`; `screen-card` 0.05 USDC — tx `a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0`; sponsor slot 0.10 USDC paid to the treasury — tx `821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3`; treasury re-approves 0.40 USDC — tx `d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator. Run 2 (01:23 UTC) is in the README.
 
-**Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract (payments and a SEP-41 allowance as the on-chain budget ceiling) + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: per-day caps in a smart account (OpenZeppelin policies or Nido session keys).
+**Paid screen time (26 Oct 06:24 UTC):** advertiser pays the treasury 5 USDC over x402 — tx `06dcd5b2b16f7f9419c1b029306b09d74dab0187cb5626f7aa8040cbe352decc`; AdsRegistry instance `CCF3QILVXKYOUE4M2SVZJYOWYQZ3IMS3DODPKPN2UVZELIKMVI63OCQS` deployed — tx `3b0eb98b2c82d2fd994691ad9d59289f2d858a5654d77abb0cac86058da4bb30`; order committed with that payment hash — tx `0a15bdb401be7ea1970acf2153129b839b38108bff03a515000ac16cb3fa9509`; read back `Queued`.
 
-**Honest scope:** one bounded loop on testnet, deterministic plan, no real money; physical AR placement is not verified yet.
+**Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract (payments and a SEP-41 allowance as the on-chain budget ceiling) + a Soroban contract that records paid ad orders + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: per-day caps in a smart account (OpenZeppelin policies or Nido session keys).
+
+**Honest scope:** one bounded loop and one recorded ad order on testnet, deterministic plan, no real money; the ad order is committed but not delivered; physical AR placement is not verified yet.
 
 ## Problem solved
 
@@ -90,7 +93,7 @@ Stellar Composed (builder track: Genesis — already assigned)
 
 ## Tech stack (comma-separated, max 25)
 
-Stellar testnet, x402, USDC, Stellar Asset Contract, SEP-41, Soroban auth entries, Horizon, @stellar/stellar-sdk, @x402/express, @x402/fetch, @x402/stellar, Node.js, Express, Three.js, model-viewer, Blender, GitHub Actions, Vercel, HTML, CSS, JavaScript, smart-account-kit, @sozu/faucet, @upstash/redis, esbuild
+Stellar testnet, x402, USDC, Stellar Asset Contract, SEP-41, Soroban (Rust contract and auth entries), Horizon, @stellar/stellar-sdk, @x402/express, @x402/fetch, @x402/stellar, Node.js, Express, Three.js, model-viewer, Blender, GitHub Actions, Vercel, HTML, CSS, JavaScript, smart-account-kit, @sozu/faucet, @upstash/redis, esbuild
 
 ## Prior work disclosure
 
