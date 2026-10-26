@@ -1,0 +1,48 @@
+{
+  "observedAt": "2026-10-26T09:59:06.193Z",
+  "network": "stellar:testnet",
+  "transactionHash": "7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2",
+  "orderId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+  "rpc": "https://soroban-testnet.stellar.org",
+  "horizon": "https://horizon-testnet.stellar.org/transactions/7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2",
+  "scope": "READ-ONLY: getTransaction, getEvents, Horizon GET and token balance simulation; no signing, transfer or funding",
+  "status": "SUCCESS",
+  "horizonSuccessful": true,
+  "horizonStatus": 200,
+  "ledger": 5396981,
+  "horizonLedger": 5396981,
+  "invocation": {
+    "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+    "function": "transfer",
+    "sender": "CCNKDO25M3S33RNDGSHDO2NOKEJE37YNKQHJP4G443CVQUJVLETKOXYM",
+    "recipient": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+    "amountUnits": "50000000",
+    "operationCount": 1
+  },
+  "events": [
+    {
+      "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "sender": "CCNKDO25M3S33RNDGSHDO2NOKEJE37YNKQHJP4G443CVQUJVLETKOXYM",
+      "recipient": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+      "amountUnits": "50000000",
+      "ledger": 5396981,
+      "eventId": "0023179856892157952-0000000000"
+    }
+  ],
+  "exactTransferConfirmed": true,
+  "fees": {
+    "feeBump": true,
+    "feeAccount": "GA6THKUY2XJZOBRFMEQMMEADSCQLCZ2QMQWAWMMDXBTE7SARKAXVH7TL",
+    "feeChargedStroops": "212044",
+    "transactionSource": "GAVEQRRMERMATTJHRCK2DJWJYKOGVT2HNXD5QBJ7T6OSTNVVT4D6P72I",
+    "sponsored": true
+  },
+  "payerBalance": {
+    "amountUnits": "950000000",
+    "usdc": "95.0000000",
+    "isExpected95": true,
+    "observedAt": "2026-10-26T09:59:07.856Z"
+  },
+  "passed": true,
+  "evidenceHash": "4cb55ffed0795d4502b1a3ac1c6670983972a57de26acc94008ff82d5da404c7"
+}

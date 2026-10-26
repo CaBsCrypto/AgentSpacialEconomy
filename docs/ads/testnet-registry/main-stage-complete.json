@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-10-26T10:14:28.255Z",
+  "network": "stellar:testnet",
+  "transactionHash": "2bf5d4c4f1a922acc3cd44763b610bcdb79838bee278270573434addf98692d2",
+  "rpc": "https://soroban-testnet.stellar.org",
+  "horizon": "https://horizon-testnet.stellar.org/transactions/2bf5d4c4f1a922acc3cd44763b610bcdb79838bee278270573434addf98692d2",
+  "rpcStatus": "SUCCESS",
+  "ledger": 5397185,
+  "horizonStatus": 200,
+  "horizonSuccessful": true,
+  "horizonLedger": 5397185,
+  "operation": "complete",
+  "scope": "Read-only getTransaction and Horizon GET; no simulation of write, no signing or submission",
+  "confirmed": true
+}

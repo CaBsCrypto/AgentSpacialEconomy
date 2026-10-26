@@ -9,7 +9,7 @@ La corrida nueva y su auditoría independiente verificaron **seis pagos únicos 
 - `a9a3c40` conserva la corrección concurrente de recuperación de `33372de`; el archivo de prueba coincide exactamente con el original.
 - `950aa15` incorpora y corrige el experimento, con una oferta independiente, verificación de pagos y separación entre grabación y entrega.
 - `a5bfe1f58533dc0d17d434a2ed9b82cccdf01436` corrige el arranque. Es el commit exacto, con árbol limpio, que ejecutó la corrida nueva.
-- Durante la validación, el original avanzó a `104770ec85cf66e933b2da623129d798de8cf83c`. Se conservaron también los cuatro archivos de `eae5282` y `104770e`: configuración de compatibilidad wallet, evidencia de preaudit, serialización JSON de previews y su prueba. Se copiaron byte a byte a esta rama; las cuatro evidencias sin seguimiento del original permanecen allí.
+- Durante la validación, el original avanzó a `104770ec85cf66e933b2da623129d798de8cf83c`. Se conservaron también los cuatro archivos de `eae5282` y `104770e`: configuración de compatibilidad wallet, evidencia de preaudit, serialización JSON de previews y su prueba. Se copiaron byte a byte a esta rama. Al cierre, el original avanzó a `33bbc94a9346ab2e6e3e40216e871691e75a348b`, que solo actualiza documentación y evidencia del piloto completado por el trabajo concurrente; también se conservaron exactamente sus once archivos. Esa evidencia del piloto es independiente de los seis pagos y compromisos Queued de esta validación. [Comparación de los once archivos](four-section-validation/pilot-completion-source-hashes.json).
 - No se modificó el checkout original ni se hizo push, merge o despliegue público. Únicamente se creó el registro **Testnet** autorizado. El correo referido era contexto recibido; no se enviaron correos.
 
 ## Comportamiento corregido
@@ -68,7 +68,7 @@ La corrección verifica salud/red antes del fondeo, usa un plazo absoluto de 120
 | Auditoría histórica | 6 pagos / 30 USDC; 7 transacciones de registro | [historical-audit.json](four-section-validation/historical-audit.json) |
 | Corrida nueva y auditoría independiente | 6 pagos / 30 USDC; 7 transacciones de registro, WASM y compromisos completos | [fresh-audit.json](four-section-validation/fresh-audit.json) |
 
-El código combinado probado está en `b8aa31a96ff41866fa19891da6a86464740ee94b`; el commit posterior solo guarda el informe y sus artefactos. La primera suite completa corregida, anterior a los cuatro casos nuevos del piloto concurrente, pasó 767 casos con las mismas dos omisiones.
+El código combinado probado está en `b8aa31a96ff41866fa19891da6a86464740ee94b`; los commits posteriores solo guardan documentación y evidencia. La primera suite completa corregida, anterior a los cuatro casos nuevos del piloto concurrente, pasó 767 casos con las mismas dos omisiones.
 
 Los dos omitidos son el smoke Chromium serverless de Linux y una simulación Stellar opcional de lectura con SmartAccountKit. No se presentan como pruebas ejecutadas en Windows.
 

@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-10-26T10:25:45.557Z",
+  "createdAt": "2026-10-26T10:28:02.915Z",
   "codeCommit": "b8aa31a96ff41866fa19891da6a86464740ee94b",
   "paymentRunCommit": "a5bfe1f58533dc0d17d434a2ed9b82cccdf01436",
   "runId": "2026-10-26T10:12:02.195Z",
@@ -90,6 +90,12 @@
       "normalization": "UTF-8; CRLF normalized to LF"
     },
     {
+      "path": "pilot-completion-source-hashes.json",
+      "sha256": "626a19d2b057c61b174b292ba99f8e3c9f177030c3846970c4e0ee3b0127226a",
+      "bytes": 3940,
+      "normalization": "UTF-8; CRLF normalized to LF"
+    },
+    {
       "path": "pilot-offer.jpg",
       "sha256": "1927ce164ceff56805d117209687685af359802638edaa68a7350c528620adc3",
       "bytes": 67303,
@@ -163,7 +169,7 @@
     },
     {
       "path": "secret-scan.json",
-      "sha256": "4d2ec33fdad4aacfe0170d7a5b29c790dcb3bf55ecbfc1996fabce75ec048b42",
+      "sha256": "3566ef308a0e382f09de0aa55c56f90e9aff2301a32572bb66e6c58a342ebed3",
       "bytes": 391,
       "normalization": "UTF-8; CRLF normalized to LF"
     },
@@ -181,8 +187,8 @@
     },
     {
       "path": "../four-section-validation.md",
-      "sha256": "d68b26e48f8d8c2c30d75bad161d804205b29170ce66fec994ded1f543812c59",
-      "bytes": 16484,
+      "sha256": "ac51b622dae94309a9d087542e831430b8a84256e93bf25c9124c3ea8a6471ee",
+      "bytes": 16847,
       "normalization": "UTF-8; CRLF normalized to LF"
     }
   ]
