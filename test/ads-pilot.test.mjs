@@ -234,15 +234,21 @@ test('compatible campaigns rotate one complete minute per round; multiple orders
 
 
 test('interrupted pilot pass is automatically recovered inside its window without charging or duplicating rights',async t=>{
- const f=await setup(t),quote=await f.quote(await f.campaign()),{slots,frame,complete}=await startPublisher(f,quote);
+ const f=await setup(t);
+ // Six attempts with five 60-second campaign intervals need at least 663 s
+ // including this fixture's 500 ms render margin; a 10-minute window cannot fit.
+ const quote=await f.quote(await f.campaign(),{endsAt:new Date(f.now()+905000).toISOString()}),{slots,frame,complete}=await startPublisher(f,quote);
+ const original=(await f.db.query('SELECT quote,terms_hash,amount FROM ads_orders WHERE id=$1',[quote.orderId])).rows[0];
  await frame(slots[0],0);await frame(slots[0],10000);await frame(slots[0],20000);await frame(slots[0],50000);await frame(slots[0],60000);
  for(const slot of slots.slice(1))await complete(slot);
  const retry=(await f.db.query("SELECT * FROM ads_reservations WHERE order_id=$1 AND unit_number=1 AND id<>$2 AND state='COMMITTED' ORDER BY starts_at LIMIT 1",[quote.orderId,slots[0].id])).rows[0];
  assert(retry,'lost minute gets a new complete slot');assert.notEqual(retry.pass_id,slots[0].pass_id);assert.equal(retry.batch_id,quote.orderId);
+ assert.equal(quote.minCampaignGapMs,60000);assert(+new Date(retry.starts_at)>=+new Date(slots.at(-1).ends_at)+quote.minCampaignGapMs);assert(+new Date(retry.ends_at)<=Date.parse(quote.endsAt));
  await complete(retry);
  const state=await f.service.getOrder(quote.orderId,ownerId);assert.equal(state.status,'COMPLETED');assert.equal(state.fulfillment.units.filter(u=>u.status==='COMPLETED').length,5);assert.equal(f.settlements,1);
  const rows=(await f.db.query('SELECT unit_number FROM ads_delivery WHERE order_id=$1 ORDER BY unit_number',[quote.orderId])).rows;
  assert.deepEqual(rows.map(r=>r.unit_number),[1,2,3,4,5]);assert.equal(Number((await f.db.query('SELECT count(*) AS n FROM ads_orders')).rows[0].n),1);
+ assert.equal(state.placements[0].required,5);assert.equal(state.placements[0].delivered,5);assert.equal((await f.db.query('SELECT * FROM ads_delivery WHERE pass_id=$1',[slots[0].pass_id])).rowCount,0);assert.equal(Number((await f.db.query('SELECT count(*) AS n FROM ads_payment_attempts WHERE order_id=$1',[quote.orderId])).rows[0].n),1);assert.deepEqual((await f.db.query('SELECT quote,terms_hash,amount FROM ads_orders WHERE id=$1',[quote.orderId])).rows[0],original);
 });
 
 test('consented partial recovery keeps the original paid order and completes only the missing pass with sales closed',async t=>{
