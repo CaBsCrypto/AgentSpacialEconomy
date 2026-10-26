@@ -1,0 +1,19 @@
+Official Palta Labs product logos: Soroswap and DeFindex
+Retrieved UTC date: 2026-10-26
+
+Discovery and attribution:
+- https://paltalabs.io/ official homepage identifies Soroswap.finance and DeFindex as its products.
+- Official homepage JavaScript references https://links.paltalabs.io/soroswap-full.svg and https://links.paltalabs.io/defindex-full.svg.
+- https://links.paltalabs.io/ serves a PaltaLabs Links page with explicit <img alt="Soroswap" src="/soroswap.svg"> and <img alt="DeFindex" src="/defindex.svg">.
+
+Selected seed-cavity logomarks:
+- soroswap.svg: exact HTTP response from https://links.paltalabs.io/soroswap.svg; width70 height50 viewBox0 0 70 50; official purple #8866DD mark.
+- soroswap.png: faithful rasterization of soroswap.svg, width1024 height731 RGBA, alpha0..255. SHA256 dbf03cf2d7afc56fbf9dcabd8eaf356acb0930536f1d34a5a061af400e45c884
+- defindex.svg: exact HTTP response from https://links.paltalabs.io/defindex.svg; width42 height42 viewBox0 0 42 42; official pale lavender #DEC9F4 mark.
+- defindex.png: faithful rasterization of defindex.svg, width1024 height1024 RGBA, alpha0..255. SHA256 8b0e5ff9c892d303b506e7cb8f44168c32ba9d50b218fbdc97a826e22d0b72ed
+
+Full logo variants retained for reference:
+- https://links.paltalabs.io/soroswap-full.svg; source162x56; PNG1624x561.
+- https://links.paltalabs.io/defindex-full.svg; source203x42; PNG1624x336.
+
+Method: Invoke-WebRequest saved exact SVG response bytes. sharp rasterized the SVG at density600 and resized proportionally to widths1024(logomarks) or1624(full). No recoloring, cropping, redesign, AI generation or added background. Exact SVGs retained. Source SVGs contain an empty script element carrying extension metadata; source scripts were never executed; only rendered PNGs are used as model textures. Both selected PNGs visually inspected; transparent background validated with Pillow. Official colors work on a dark support such as #07121f.

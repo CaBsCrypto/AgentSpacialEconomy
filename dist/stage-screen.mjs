@@ -5,7 +5,8 @@
 // Pure helpers (cardText, screenPlacement, wrapLines) are exported for tests; THREE is passed in so
 // this module never imports three.js itself.
 
-export const BACKDROP_NODE = "Yellow event backdrop";
+// three.js GLTFLoader stores node names with spaces turned into "_" (PropertyBinding.sanitizeNodeName).
+export const BACKDROP_NODE = "Yellow_event_backdrop";
 
 export function cardText(state) {
   const c = state?.card;

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palta reveal · vista previa</title>
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js"}}</script>
+<style>
+  :root { --ase-night:#07121f; --ase-deep:#102742; --ase-line:#498095; --ase-signal:#72e3df; --ase-text:#eef4f7; --ase-muted:#90a8bb; }
+  html, body { margin:0; height:100%; background:#d7dcdd; font-family:'DM Sans', system-ui, sans-serif; color:var(--ase-text); }
+  canvas { display:block; width:100%; height:100%; touch-action:none; }
+  .bar { position:fixed; left:16px; right:16px; bottom:16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+         background:color-mix(in srgb, var(--ase-night) 88%, transparent); border:1px solid var(--ase-line); border-radius:12px; padding:10px 12px; }
+  button, label.file { font:700 15px 'DM Sans', system-ui, sans-serif; color:var(--ase-night); background:var(--ase-signal);
+         border:0; border-radius:8px; padding:10px 14px; cursor:pointer; }
+  label.file { background:var(--ase-text); }
+  label.file input { display:none; }
+  .note { flex:1 1 220px; font-size:13px; color:var(--ase-muted); }
+</style>
+</head>
+<body>
+<canvas id="scene" aria-label="Palta que se abre y muestra un logo"></canvas>
+<div class="bar">
+  <button id="toggle" type="button">Abrir</button>
+  <label class="file">Probar logo… <input id="logo" type="file" accept="image/png,image/webp,image/jpeg"></label>
+  <span class="note" id="note">Arrastra para girar. El logo se prueba solo en este navegador; no se sube a ningún lado.</span>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from './vendor/three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from './vendor/three/examples/jsm/controls/OrbitControls.js';
+import { mountPaltaReveal } from './palta-reveal.mjs?v=6';
+
+const canvas = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15;
+const scene = new THREE.Scene(); scene.background = new THREE.Color('#d7dcdd');
+scene.add(new THREE.HemisphereLight(0xe7efff, 0x7e6a4a, 2.4));   // same lights as dist/viewer.js
+const sun = new THREE.DirectionalLight(0xfff2d2, 2.6); sun.position.set(-20, 22, 8); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 1.2); fill.position.set(15, 14, -30); scene.add(fill);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(4, 64), new THREE.MeshStandardMaterial({ color: '#c9c3b6', roughness: .9 }));
+floor.rotation.x = -Math.PI / 2; scene.add(floor);
+
+const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 50);
+camera.position.set(0, 1.55, 4.3);
+const orbit = new OrbitControls(camera, canvas);
+orbit.target.set(0, 1.2, 0); orbit.enableDamping = true; orbit.minDistance = 1.2; orbit.maxDistance = 6; orbit.maxPolarAngle = Math.PI * 0.55; orbit.update();
+
+// No auto-open here and no camera-facing: the buttons drive it.
+const palta = await mountPaltaReveal(THREE, scene, { GLTFLoader, position: [0, 0, 0], yaw: 0, autoOpenDistance: 0, faceCamera: false, camera, canvas, logoUrl: './assets/palta-reveal/logo.png' });
+const toggle = document.getElementById('toggle');
+const sync = () => { toggle.textContent = palta.isOpen ? 'Cerrar' : 'Abrir'; };
+toggle.addEventListener('click', () => { palta.toggle(); sync(); });
+canvas.addEventListener('pointerup', () => setTimeout(sync));
+document.getElementById('logo').addEventListener('change', async (e) => {
+  const f = e.target.files?.[0]; if (!f) return;
+  try { await palta.setLogo(URL.createObjectURL(f)); if (!palta.isOpen) { palta.toggle(); sync(); } document.getElementById('note').textContent = 'Logo de prueba: ' + f.name; }
+  catch { document.getElementById('note').textContent = 'No se pudo leer esa imagen. Usa PNG con fondo transparente.'; }
+});
+
+function fit() { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+addEventListener('resize', fit); fit();
+let last = performance.now();
+renderer.setAnimationLoop((now) => { const dt = (now - last) / 1000; last = now; orbit.update(); palta.update(dt); renderer.render(scene, camera); });
+</script>
+</body>
+</html>
