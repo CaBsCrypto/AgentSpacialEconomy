@@ -20,6 +20,7 @@ Everything else is decoration. If time runs short, protect steps 3, 5 and 7.
 8. **Income.** A sponsor buys one line on the stage screen: `POST /paid/sponsor-slot`, 0.10 testnet USDC over x402, paid to the **venue treasury**. The sponsor checks the 402 before signing (price, testnet, payTo = treasury). The payment is an `income` row in the ledger; it never changes an agent's budget.
 9. **Recharge.** The treasury re-approves the venue agent what is left on the allowance plus the income (SEP-41 `approve` sets, it does not add) and reads it back. Recorded in run 3 (0.30 → 0.40 USDC).
 10. **Credit pool and live reads.** The dashboard shows the allowance as credits (1 credit = `mandate.creditUsdc`, default 0.01 USDC) and checks every recorded transaction and the treasury and agent balances on Horizon testnet when it loads, falling back to the recorded values.
+11. **Paid screen time on Soroban.** An advertiser buys the pilot offer from `feature/ads-3d-ar-x402` (`main-stage-test-5m`: 5 testnet USDC for 5 minutes of `main_stage_screen`): `POST /paid/ad-slot` over x402, paid to the **venue treasury**, after the same 402 preflight as the sponsor. The treasury deploys an AdsRegistry instance from the WASM already on testnet, commits the order with the settlement hash as `payment`, and reads it back with `get` (`Queued`, nothing delivered). The registry never moves funds; no delivery is claimed. Separate run, separate state file (`dist/state/ads.json`), shown on the dashboard.
 
 ## Judges can test it (P1, after every P0)
 
@@ -43,6 +44,7 @@ Judges review asynchronously and use the product like beta testers. Give them th
 | Stage screen in the twin | Reads `state/stage.json` | Falls back to the current default if the file is missing. Shows the sponsor line only for a settled sponsor payment. |
 | `agent/sponsor.mjs`, `agent/lib/income.mjs` | Income side (extension) | Sponsor payment to the treasury, recharge rules. Unit-tested. |
 | `dist/credits.mjs`, `dist/live-chain.mjs` | Dashboard helpers (extension) | Credit math and read-only Horizon checks. Unit-tested. |
+| `agent/advertiser.mjs`, `agent/registry.mjs`, `agent/lib/ads.mjs`, `agent/ads-ci.mjs` | Paid screen time (extension) | Ad payment to the treasury, AdsRegistry deploy/commit/get, commitment rules. Unit-tested; run by the **Paid screen time (testnet)** workflow. |
 
 ## Payments
 

@@ -44,6 +44,17 @@ SPONSOR_SECRET_KEY=S... node sponsor.mjs   # a separate testnet wallet with test
 
 `sponsor.mjs` checks the 402 before signing (price ≤ `--max`, testnet, payTo = treasury), appends an `income` row to `dist/state/ledger.json` (idempotent per run) and a "Presented by" line to `dist/state/stage.json`. In allowance mode `ci-run.mjs` does this with a throwaway sponsor and then has the treasury re-approve the agent what is left plus the income, reading the allowance back. Run 3 (26 Oct 03:21 UTC): sponsor → treasury 0.10 USDC [821f7b12…](https://stellar.expert/explorer/testnet/tx/821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3), re-approve 0.30 → 0.40 USDC [d954f245…](https://stellar.expert/explorer/testnet/tx/d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9).
 
+### Paid screen time: an ad order committed on Soroban
+
+`services.mjs` also sells `POST /paid/ad-slot`: the pilot offer `main-stage-test-5m`, 5 testnet USDC for 5 minutes of `main_stage_screen`, paid **to the treasury**.
+
+```bash
+ADVERTISER_SECRET_KEY=S... node advertiser.mjs --run-id <id>   # a separate testnet wallet with testnet USDC; never commit it
+node ads-ci.mjs                                                # or everything with throwaway accounts (needs internet)
+```
+
+`advertiser.mjs` checks the 402 before signing (price ≤ `--max`, testnet, payTo = treasury), raises the x402 client's per-payment cap to exactly that maximum, and writes `dist/state/ads.json`. `ads-ci.mjs` then has the treasury deploy an AdsRegistry instance from the WASM already on testnet (`registry.mjs`), commit the order with the settlement hash as `payment` (`lib/ads.mjs` builds and checks the commitment) and read it back with `get`. Nothing is delivered, so the order stays `Queued`. In GitHub Actions: push to `ci/ads-run` (workflow **Paid screen time (testnet)**); results land on `ci/ads-results`.
+
 ## What the run does
 
 1. `venue-agent` gives `stage-agent` its allocation from the mandate (`mandates/main-stage.json`).

@@ -106,7 +106,7 @@ export async function verifyRelease(baseURL, { fetchImpl = fetch, integrationOnl
   const walletResponse = await get('/api/wallet/config', /application\/json/i);
   if (walletResponse) {
     const wallet = json('/api/wallet/config');
-    add('Wallet pilot remains disabled', wallet?.enabled === false);
+    add('Wallet pilot is enabled and configured', wallet?.enabled === true && wallet?.configured === true);
     add('Wallet config only targets testnet', wallet?.network === 'testnet' && wallet?.networkPassphrase === TESTNET_PASSPHRASE && wallet?.rpcUrl === 'https://soroban-testnet.stellar.org');
   }
   return { checkedAt: new Date().toISOString(), baseURL: base.origin, mode: integrationOnly ? 'integration' : 'final', passed: checks.every(check => check.pass), checkCount: checks.length, failed: checks.filter(check => !check.pass).length, checks };
