@@ -41,7 +41,7 @@ export async function verifyRelease(baseURL, { fetchImpl = fetch, integrationOnl
       pages.set(url.pathname, record);
       return record;
     } catch (error) {
-      add(`GET ${url.pathname}`, false, { url: displayURL, error: error.name || 'RequestError' });
+      add(`GET ${url.pathname}`, false, { url: displayURL, error: error.name || 'RequestError', ...(typeof error.cause?.code === 'string' && /^[A-Z0-9_]{1,40}$/.test(error.cause.code) ? { code: error.cause.code } : {}) });
       return null;
     }
   }
