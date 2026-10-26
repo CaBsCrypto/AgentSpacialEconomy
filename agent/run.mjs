@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import dotenv from "dotenv";
 import { Ledger, ROOT_AGENT } from "./ledger.mjs";
+import { networkConfig, explorerTx } from "./config/networks.mjs";
 import { findService } from "./catalog.mjs";
 import { nextSession, lisbonTime } from "./lib/plan.mjs";
 import { paymentRequiredFrom, settlementFrom, settlementTx, withinReservation } from "./lib/x402-headers.mjs";
@@ -26,7 +27,7 @@ const { values: args } = parseArgs({
   },
 });
 
-const NETWORK = process.env.STELLAR_NETWORK || "stellar:testnet";
+const NETWORK = networkConfig().id; // throws for anything but testnet
 const SERVICES_URL = (process.env.SERVICES_URL || "http://localhost:3001").replace(/\/$/, "");
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
 
@@ -126,7 +127,7 @@ async function buy(step, agent, serviceId, { method = "GET", body } = {}) {
   ledger.settle(key, { tx, payer, note: tx ? null : "paid, but the service sent no settlement header" });
   results[key] = data;
   await save();
-  log(`  ${step}. ${serviceId} (${service.priceUsdc} USDC): SETTLED ${tx ? `https://stellar.expert/explorer/testnet/tx/${tx}` : "(no tx hash returned)"}`);
+  log(`  ${step}. ${serviceId} (${service.priceUsdc} USDC): SETTLED ${tx ? explorerTx(NETWORK, tx) : "(no tx hash returned)"}`);
   return data;
 }
 

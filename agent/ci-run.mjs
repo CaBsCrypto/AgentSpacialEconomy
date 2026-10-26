@@ -7,23 +7,25 @@
 import { spawn, spawnSync } from "node:child_process";
 import { writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Asset, BASE_FEE, Horizon, Keypair, Networks, Operation, TransactionBuilder } from "@stellar/stellar-sdk";
+import { Asset, BASE_FEE, Horizon, Keypair, Operation, TransactionBuilder } from "@stellar/stellar-sdk";
+import { networkConfig, explorerAccount } from "./config/networks.mjs";
 
-const USDC = new Asset("USDC", "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5"); // Circle testnet issuer
+const net = networkConfig("stellar:testnet");
+const USDC = new Asset(net.usdc.code, net.usdc.issuer);
 const MIN_USDC = 0.3;
-const horizon = new Horizon.Server("https://horizon-testnet.stellar.org");
+const horizon = new Horizon.Server(net.horizonUrl);
 const agentDir = fileURLToPath(new URL("./", import.meta.url));
 const short = (pub) => `${pub.slice(0, 6)}…${pub.slice(-4)}`;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function friendbot(pub) {
-  const r = await fetch(`https://friendbot.stellar.org?addr=${encodeURIComponent(pub)}`);
+  const r = await fetch(`${net.friendbotUrl}?addr=${encodeURIComponent(pub)}`);
   if (!r.ok && r.status !== 400) throw new Error(`friendbot HTTP ${r.status}`); // 400 = already funded
 }
 
 async function submit(kp, ops) {
   const account = await horizon.loadAccount(kp.publicKey());
-  const b = new TransactionBuilder(account, { fee: String(Number(BASE_FEE) * 10), networkPassphrase: Networks.TESTNET });
+  const b = new TransactionBuilder(account, { fee: String(Number(BASE_FEE) * 10), networkPassphrase: net.passphrase });
   ops.forEach((op) => b.addOperation(op));
   const tx = b.setTimeout(60).build();
   tx.sign(kp);
@@ -88,10 +90,10 @@ if (balance < MIN_USDC) {
   }
 }
 console.log(`Agent USDC balance: ${balance}`);
-console.log(`Agent account: https://stellar.expert/explorer/testnet/account/${agent.publicKey()}`);
+console.log(`Agent account: ${explorerAccount(net.id, agent.publicKey())}`);
 
 // ---- environment for services.mjs and run.mjs ----
-const facilitator = process.env.FACILITATOR_URL || "https://x402.org/facilitator";
+const facilitator = process.env.FACILITATOR_URL || net.facilitatorUrl;
 const runEnv = {
   STELLAR_NETWORK: "stellar:testnet",
   FACILITATOR_URL: facilitator,

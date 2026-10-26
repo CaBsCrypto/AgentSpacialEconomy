@@ -57,6 +57,11 @@ Before each payment the agent reads the service's `402 Payment Required` and ref
 | `catalog.mjs` | Services and prices |
 | `lib/` | USDC math (7 decimals, BigInt), x402 header parsing, planning helpers |
 | `setup-testnet.mjs`, `check-facilitator.mjs` | One-time setup and a facilitator check |
+| `config/networks.mjs` | Every network-specific value (passphrase, Horizon, RPC, friendbot, explorer, USDC issuer and SAC, facilitator) |
 | `out/` | Per-run ledgers and results (git-ignored) |
 
 Commit `dist/state/*.json` only after a real testnet run. Never commit `.env`.
+
+## Network config
+
+All testnet values live in `config/networks.mjs`, so the path to mainnet is one reviewed diff of that file instead of a search through the code. Mainnet is listed with its passphrase, Horizon, explorer, USDC and facilitator, but `enabled: false` makes every entry point refuse it; there is no public SDF mainnet RPC, so a provider must be chosen first. `STELLAR_NETWORK` selects the network (default `stellar:testnet`).

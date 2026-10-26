@@ -7,13 +7,12 @@
 // the per-call cap and the approval threshold, and the agent has enough available budget.
 // Nothing is ever deleted: blocked, failed and settled attempts all stay as rows.
 import { toUnits, fromUnits } from "./lib/money.mjs";
+import { explorerTx } from "./config/networks.mjs";
 
 export const ROOT_AGENT = "venue-agent";
 
 export function explorerUrl(network, tx) {
-  if (!tx) return null;
-  const net = network === "stellar:pubnet" ? "public" : "testnet";
-  return `https://stellar.expert/explorer/${net}/tx/${tx}`;
+  return explorerTx(network, tx);
 }
 
 export class Ledger {
