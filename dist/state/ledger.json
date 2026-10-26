@@ -1,5 +1,5 @@
 {
-  "runId": "2026-10-26T01:23:54.045Z",
+  "runId": "2026-10-26T03:21:08.743Z",
   "network": "stellar:testnet",
   "mandate": {
     "id": "main-stage-hackmeridian",
@@ -24,7 +24,7 @@
       "agent": "stage-agent",
       "priceUsdc": "0.2",
       "status": "allocated",
-      "at": "2026-10-26T01:23:54.203Z"
+      "at": "2026-10-26T03:21:08.945Z"
     },
     {
       "type": "onchain-draw",
@@ -32,10 +32,10 @@
       "service": "budget draw · USDC allowance (SEP-41)",
       "priceUsdc": "0.2",
       "status": "settled",
-      "tx": "914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
-      "explorer": "https://stellar.expert/explorer/testnet/tx/914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
-      "key": "2026-10-26T01:23:54.045Z#0:allowance-draw",
-      "at": "2026-10-26T01:23:57.277Z"
+      "tx": "7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb",
+      "key": "2026-10-26T03:21:08.743Z#0:allowance-draw",
+      "at": "2026-10-26T03:21:12.970Z"
     },
     {
       "type": "onchain-draw",
@@ -46,44 +46,66 @@
       "tx": null,
       "explorer": null,
       "reason": "refused by the network before submission: above the remaining allowance",
-      "at": "2026-10-26T01:23:57.712Z"
+      "at": "2026-10-26T03:21:13.035Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-26T01:23:54.045Z#1:venue-feed",
+      "key": "2026-10-26T03:21:08.743Z#1:venue-feed",
       "agent": "stage-agent",
       "service": "venue-feed",
       "priceUsdc": "0.01",
       "status": "settled",
-      "at": "2026-10-26T01:23:57.713Z",
-      "tx": "bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc",
-      "explorer": "https://stellar.expert/explorer/testnet/tx/bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc",
-      "payer": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
-      "settledAt": "2026-10-26T01:24:02.397Z"
+      "at": "2026-10-26T03:21:13.036Z",
+      "tx": "ebb69bd495625e948fdb1ce6f3e1ee8b21eaea343fe77b086bed4849598c667a",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/ebb69bd495625e948fdb1ce6f3e1ee8b21eaea343fe77b086bed4849598c667a",
+      "payer": "GAOQEWK6M5CFFA4NYY77P3D2ZYLOSY6O5JU667GWCVM3DCNFQ7JGH2O2",
+      "settledAt": "2026-10-26T03:21:17.715Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-26T01:23:54.045Z#2:screen-card",
+      "key": "2026-10-26T03:21:08.743Z#2:screen-card",
       "agent": "stage-agent",
       "service": "screen-card",
       "priceUsdc": "0.05",
       "status": "settled",
-      "at": "2026-10-26T01:24:02.423Z",
-      "tx": "7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0",
-      "explorer": "https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0",
-      "payer": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
-      "settledAt": "2026-10-26T01:24:08.109Z"
+      "at": "2026-10-26T03:21:17.727Z",
+      "tx": "a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0",
+      "payer": "GAOQEWK6M5CFFA4NYY77P3D2ZYLOSY6O5JU667GWCVM3DCNFQ7JGH2O2",
+      "settledAt": "2026-10-26T03:21:22.538Z"
     },
     {
       "type": "payment",
-      "key": "2026-10-26T01:23:54.045Z#3:premium-render",
+      "key": "2026-10-26T03:21:08.743Z#3:premium-render",
       "agent": "stage-agent",
       "service": "premium-render",
       "priceUsdc": "0.25",
       "status": "blocked",
       "reason": "price above the per-call cap",
       "needsApproval": true,
-      "at": "2026-10-26T01:24:08.110Z"
+      "at": "2026-10-26T03:21:22.539Z"
+    },
+    {
+      "type": "income",
+      "agent": "sponsor",
+      "service": "sponsor-slot · main-stage screen",
+      "priceUsdc": "0.1",
+      "status": "settled",
+      "tx": "821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3",
+      "key": "2026-10-26T03:21:08.743Z#S:sponsor-slot",
+      "at": "2026-10-26T03:21:28.117Z"
+    },
+    {
+      "type": "onchain-recharge",
+      "agent": "operator-treasury",
+      "service": "recharge · USDC allowance (SEP-41 approve)",
+      "priceUsdc": "0.1",
+      "status": "settled",
+      "tx": "d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9",
+      "key": "2026-10-26T03:21:08.743Z#R:allowance-recharge",
+      "at": "2026-10-26T03:21:33.396Z"
     }
   ],
   "totals": {
@@ -109,19 +131,28 @@
       "code": "USDC",
       "sac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA"
     },
-    "treasury": "GDNNKSLTL43WDLRXLRU6HWW6Q6GGL4BWU45WZF5AG3ME4WHPTK6JWCZK",
-    "spender": "GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6",
+    "treasury": "GC6FWZPKZZ7PVJ3FKOCKA3VSP4HIVKDYB64RXQLQVU6WWT7XA6CITOTO",
+    "spender": "GAOQEWK6M5CFFA4NYY77P3D2ZYLOSY6O5JU667GWCVM3DCNFQ7JGH2O2",
     "approvedUsdc": "0.5",
-    "liveUntilLedger": 5408128,
-    "approveTx": "3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa",
+    "liveUntilLedger": 5409535,
+    "approveTx": "9bcab3db185200309a3d1bb63ef09c128212d68b8418ffaf2a192206f7ffe62d",
     "drawnUsdc": "0.2",
-    "drawTx": "914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083",
+    "drawTx": "7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb",
     "remainingUsdc": "0.3",
     "probe": {
       "amountUsdc": "0.31",
       "refused": true,
       "reason": "HostError: Error(Contract, #9)"
+    },
+    "recharge": {
+      "beforeUsdc": "0.3",
+      "incomeUsdc": "0.1",
+      "afterUsdc": "0.4",
+      "verifiedUsdc": "0.4",
+      "verified": true,
+      "approveTx": "d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9",
+      "liveUntilLedger": 5409535
     }
   },
-  "generatedAt": "2026-10-26T01:24:08.111Z"
+  "generatedAt": "2026-10-26T03:21:33.396Z"
 }

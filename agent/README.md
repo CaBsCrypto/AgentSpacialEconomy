@@ -21,7 +21,7 @@ Without keys or USDC yet: `npm run loop:dry` walks the whole plan and stops befo
 
 `node ci-run.mjs` does everything in one go: throwaway testnet accounts, USDC trustlines, a little testnet USDC bought with XLM on the testnet DEX, the services, the facilitator check and the loop. The workflow `.github/workflows/testnet-loop.yml` runs it on every push to `ci/testnet-run` (or "Run workflow" from the Actions tab once it is on `main`) and publishes `dist/state/*.json` plus the log to the `ci/testnet-results` branch.
 
-Recorded run, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode):
+Run 2, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode). The site now shows run 3, which repeats these steps and adds the sponsor income (below):
 
 | Step | Amount | Result |
 | --- | --- | --- |

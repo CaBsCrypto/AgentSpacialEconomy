@@ -57,7 +57,9 @@ Operator mandate (objective, budget, per-call cap, allowed services)
 
 ## On-chain evidence (Stellar testnet)
 
-Recorded run, 26 Oct 2026 01:23 UTC ([Actions run 40253952685](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40253952685)), settled transactions confirmed on Horizon; the rejected draw was a simulation, not a submitted transaction:
+The public dashboard shows **run 3** (26 Oct 2026 03:21 UTC, [table below](#income-extension-a-sponsor-refills-the-agents-budget-run-3)), which repeats every step of run 2 and adds the sponsor income and the recharge.
+
+Run 2, 26 Oct 2026 01:23 UTC ([Actions run 40253952685](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40253952685)), settled transactions confirmed on Horizon; the rejected draw was a simulation, not a submitted transaction:
 
 | What | Transaction |
 | --- | --- |
@@ -118,8 +120,8 @@ No keys or faucet: `node agent/ci-run.mjs` does everything with throwaway accoun
 
 ## Demo instructions
 
-1. Open the [operator dashboard](https://agenticreality.space/dashboard.html). It displays a **recorded real testnet run**: mandate, treasury allowance, per-agent budget, two payments with transaction links, and the blocked 0.25 USDC call.
-2. Open the [ONE16 twin](https://agenticreality.space/one16), select **Vive la experiencia** and walk to the main stage to inspect the purchased **Morning briefing** card over the backdrop.
+1. Open the [operator dashboard](https://agenticreality.space/dashboard.html). It displays a **recorded real testnet run**: mandate, treasury allowance, the agent credit pool, per-agent budget, two payments with transaction links, the blocked 0.25 USDC call, and a sponsor payment to the treasury that recharges the allowance. When the page loads it checks each transaction live on Horizon testnet.
+2. Open the [ONE16 twin](https://agenticreality.space/one16), select **Vive la experiencia** and walk to the main stage to inspect the purchased **Morning briefing** card over the backdrop, with the "Presented by Demo Sponsor (testnet)" line the sponsor paid for.
 3. Open a payment link in stellar.expert and compare its hash and amount with the dashboard.
 4. To create fresh evidence, a person opens [Actions > Testnet loop](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/workflows/testnet-loop.yml), selects **Run workflow** on **main**, and waits for success (normally about two minutes). Inspect the new `dist/state/*.json` in `ci/testnet-results`; publishing those results needs a reviewed change and deployment before the freeze. The static dashboard does not trigger payments.
 
