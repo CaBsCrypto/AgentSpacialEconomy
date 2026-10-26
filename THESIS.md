@@ -1,10 +1,12 @@
-# THESIS — Spatial Agents · Operating System
+# THESIS — Agentic Realities · Spatial AI for Venues and Events
 
 > Single source of truth. Change the idea **here first**, then update `SPEC.md`, `DESIGN.md`, the README, the landing hero and the pitch.
 
 ## One line
 
-**Your venue's AI operator, on a capped USDC budget.**
+**Your venue's AI operator automating your event AR layer with x402 on a capped USDC budget.**
+
+The official public name was approved on 26 Oct 2026 for the landing and README. The recorded HackMeridian demo, dashboard and submission materials retain their historical name, **Spatial Agents · Operating System**. The current implementation remains a bounded Stellar testnet prototype; physical AR placement is unverified.
 
 ## Who it is for
 

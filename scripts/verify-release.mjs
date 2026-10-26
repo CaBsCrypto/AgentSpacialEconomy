@@ -5,6 +5,7 @@ import { realpathSync } from 'node:fs';
 
 const HASH = /^[a-f0-9]{64}$/i;
 const TESTNET_PASSPHRASE = 'Test SDF Network ; September 2015';
+const EXPECTED_NAME = 'Agentic Realities · Spatial AI for Venues and Events';
 const ROUTES = [
   ['/', /text\/html/i], ['/one16', /text\/html/i], ['/dashboard.html', /text\/html/i],
   ['/state/ledger.json', /application\/json/i], ['/state/stage.json', /application\/json/i],
@@ -71,13 +72,22 @@ export async function verifyRelease(baseURL, { fetchImpl = fetch, integrationOnl
   const text = plain(landing);
   if (!integrationOnly) {
     const hero = [...landing.matchAll(/<h1\b[^>]*>[\s\S]*?<\/h1>/gi)].find(match => attribute(match[0], 'id') === 'hero-title')?.[0] || '';
-    add('Landing preserves Agentic Reality Space identity and hero', text.includes('Agentic Reality Space') && plain(hero).includes('Make your event a place to explore'));
+    add('Landing preserves Agentic Realities identity and hero', text.includes(EXPECTED_NAME) && plain(hero).includes('Spaces that respond to their people') && !/submission-proof|spatial-proof/.test(landing));
     const links = [...landing.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)].map(match => ({ href: attribute(match[0], 'href'), text: plain(match[0]) }));
     add('Landing links to the ONE16 experience', links.some(link => {
       if (!link.href || !/ONE16/i.test(link.text)) return false;
       const destination = new URL(link.href, base);
       return destination.origin === base.origin && destination.pathname === '/one16';
     }));
+    add('Landing links to the recorded operator demo', links.some(link => {
+      if (!link.href) return false;
+      const destination = new URL(link.href, base);
+      return destination.origin === base.origin && destination.pathname === '/dashboard.html';
+    }));
+    const quote = [...landing.matchAll(/<div\b[^>]*>/gi)].find(match => attribute(match[0], 'id') === 'quoteForm')?.[0] || '';
+    const prepare = [...landing.matchAll(/<button\b[^>]*>/gi)].find(match => /\bdata-quote-prepare(?:\s|=|>)/.test(match[0]))?.[0] || '';
+    add('Quote requests are copy-only and cannot submit before JavaScript loads', Boolean(quote) && attribute(quote, 'role') === 'group' && attribute(prepare, 'type') === 'button' && /\sdisabled(?:\s|=|>)/.test(prepare) && /data-quote-copy(?:\s|=|>)/.test(landing) && !/<form\b|type=["']submit["']|mailto:|contact@agenticreality\.space/i.test(landing));
+    add('Landing does not offer unavailable public advertising checkout', !links.some(link => link.href && new URL(link.href, base).pathname === '/ads'));
   }
   add('Dashboard contains on-chain ceiling and recorded-run label', /On-chain budget ceiling/i.test(plain(dashboard)) && /recorded run/i.test(dashboard));
   if (!integrationOnly) add('Sitemap includes twin and dashboard', ['/one16', '/dashboard.html'].every(route => pages.get('/sitemap.xml')?.body.includes(`https://agenticreality.space${route}`)));

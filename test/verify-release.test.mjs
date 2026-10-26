@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { verifyRelease } from '../scripts/verify-release.mjs';
 
+const LANDING = `<title>Agentic Realities · Spatial AI for Venues and Events</title><h1 id="hero-title">Spaces that respond to their people</h1><a href="/one16">Explore ONE16</a><a href="/dashboard.html">Operator dashboard</a><div id="quoteForm" role="group"><button type="button" data-quote-prepare disabled>Prepare</button><button type="button" data-quote-copy>Copy request</button></div>`;
+
 function fixture(override = () => null) {
   const requests = [];
   const fetchImpl = async (url, options) => {
@@ -10,7 +12,7 @@ function fixture(override = () => null) {
     const pathname = new URL(url).pathname;
     const custom = await override(pathname);
     if (custom) return custom;
-    if (pathname === '/') return new Response(`<title>Agentic Reality Space | Events you can explore</title><h1 id="hero-title">Make your event a place to explore</h1><a href="/one16">Explore ONE16</a>`, { headers: { 'content-type': 'text/html' } });
+    if (pathname === '/') return new Response(LANDING, { headers: { 'content-type': 'text/html' } });
     if (pathname === '/one16') return new Response('<script type="module" src="/entry.mjs"></script>', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/dashboard.html') return new Response('On-chain budget ceiling · recorded run', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/sitemap.xml') return new Response('<urlset><url>https://agenticreality.space/one16</url><url>https://agenticreality.space/dashboard.html</url></urlset>', { headers: { 'content-type': 'application/xml' } });
@@ -66,6 +68,15 @@ test('integration-only mode permits an unrelated landing while final QA requires
   const final = await verifyRelease('https://release.example', { fetchImpl });
   assert.equal(final.passed, false);
   assert.equal(final.mode, 'final');
-  assert.equal(final.checks.find(check => check.name === 'Landing preserves Agentic Reality Space identity and hero')?.pass, false);
+  assert.equal(final.checks.find(check => check.name === 'Landing preserves Agentic Realities identity and hero')?.pass, false);
   assert.equal(final.checks.find(check => check.name === 'Landing links to the ONE16 experience')?.pass, false);
+});
+
+
+test('final release verification rejects a native quote submission and an unavailable advertising checkout', async () => {
+  const unsafeLanding = LANDING.replace('<div id="quoteForm" role="group">', '<form id="quoteForm">').replace('</div>', '</form>') + '<a href="/ads">Buy screen time</a>';
+  const { fetchImpl } = fixture(pathname => pathname === '/' ? new Response(unsafeLanding, { headers: { 'content-type': 'text/html' } }) : null);
+  const report = await verifyRelease('https://release.example', { fetchImpl });
+  assert.equal(report.passed, false);
+  for (const name of ['Quote requests are copy-only and cannot submit before JavaScript loads', 'Landing does not offer unavailable public advertising checkout']) assert.equal(report.checks.find(check => check.name === name)?.pass, false, name);
 });

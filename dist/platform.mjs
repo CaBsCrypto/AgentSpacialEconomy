@@ -2,54 +2,122 @@ import { platformContinuationUrl } from './platform-routing.mjs';
 
 export const LANGUAGE_KEY = 'ars-language';
 export const PAGE_TITLES = Object.freeze({
-  en: 'Agentic Reality Space | Events you can explore',
-  es: 'Agentic Reality Space | Eventos para explorar',
+  en: 'Agentic Realities · Spatial AI for Venues and Events',
+  es: 'Agentic Realities · IA espacial para recintos y eventos',
 });
 export const SPANISH_COPY = Object.freeze({
-  metaDescription: 'Experiencias espaciales a medida para eventos. Conecta lugares físicos con exploración 3D, AR y una futura capa de transacciones programables.',
+  metaDescription: 'Agentic Realities: IA espacial para recintos y eventos. Define objetivos y un presupuesto en USDC con tope; los agentes coordinan contenidos, datos, pantallas y AR para las personas de tu espacio, con un comprobante por cada pago.',
   skip: 'Ir al contenido',
-  homeAria: 'Inicio de Agentic Reality Space',
+  homeAria: 'Inicio de Agentic Realities',
   navAria: 'Navegación principal',
-  languageAria: 'Idioma',
-  navIdea: 'La idea',
+  navSpaces: 'Espacios',
+  navServices: 'Servicios',
+  navDemos: 'Demos',
   navHow: 'Cómo funciona',
-  heroEyebrow: 'Una nueva dimensión para tu evento',
-  heroTitle: 'Convierte tu evento en una experiencia para explorar',
-  heroLede: 'Transforma un lugar físico en una experiencia digital conectada. Un espacio para que las personas descubran, las marcas participen y surjan nuevas interacciones.',
-  explore: 'Explorar ONE16',
-  how: 'Cómo funciona',
-  heroNote: 'Empieza por el espacio. Abre la siguiente capa cuando la necesites.',
-  sceneViewsAria: 'Explorar la maqueta',
-  previewActivate: 'Explorar mapa 3D',
-  previewDone: 'Listo',
-  previewZoomIn: 'Acercar',
-  previewZoomOut: 'Alejar',
-  previewReset: 'Restablecer vista',
-  previewRetry: 'Reintentar vista previa',
-  previewInitial: 'La vista interactiva se carga al acercarte.',
+  navQuote: 'Cotizar',
+  languageAria: 'Idioma',
+  heroEyebrow: 'IA espacial para recintos y eventos',
+  heroTitle: 'Espacios que responden a sus personas',
+  heroLede: 'Define objetivos y un presupuesto con tope. Los agentes coordinan contenidos, datos, pantallas y AR para todas las personas de tu espacio, y cada pago queda con su comprobante.',
+  heroQuote: 'Solicitar cotización',
+  heroDemos: 'Probar las demos',
+  heroNote: 'Desde un evento de pocos días hasta un edificio abierto todo el año.',
   systemHeading: 'Un lugar. Una experiencia conectada.',
-  systemTitle: 'Un espacio físico conectado con experiencias digitales',
   systemDescription: 'Arquitectura ilustrativa: un lugar se conecta mediante QR o NFC con experiencias espaciales y una futura capa de servicios autorizados.',
+  systemTitle: 'Un espacio físico conectado con experiencias digitales',
+  sceneViewsAria: 'Explorar la maqueta',
   diagramSpace: 'Espacio',
   diagramEntry: 'Acceso',
   diagramExperience: 'Experiencias',
-  diagramServices: 'OBJETIVOS HUMANOS → ESPACIO → SERVICIOS AUTORIZADOS',
-  systemCaption: 'Concepto de plataforma · arquitectura ilustrativa',
   sceneHint: 'Elige una vista para explorar la maqueta.',
+  systemCaption: 'Concepto de plataforma · arquitectura ilustrativa',
+  diagramServices: 'OBJETIVOS HUMANOS → ESPACIO → SERVICIOS AUTORIZADOS',
   approachAria: 'Propuesta de la plataforma',
-  bridgeOne: 'Un lugar real como punto de partida',
-  bridgeTwo: 'Un espacio digital para explorar',
-  bridgeThree: 'Una capa de interacción que evoluciona',
-  whyEyebrow: 'Para quienes hacen posible el evento',
-  whyTitle: 'Lleva la experiencia más allá del plano.',
-  whyBody: 'Carteles, enlaces, stands y activaciones individuales pueden sentirse desconectados. Los reunimos en una experiencia espacial compartida, construida alrededor del lugar y su propósito.',
+  bridgeOne: 'Objetivos y un presupuesto con tope',
+  bridgeTwo: 'Agentes que coordinan el espacio',
+  bridgeThree: 'Experiencias que las personas ven y usan',
+  whyEyebrow: 'Un nuevo espacio de oportunidades',
+  whyTitle: 'Espacios físicos que trabajan para las personas que los recorren.',
+  whyBody: 'Quien administra un espacio tiene ahora un nuevo tipo de operador: agentes que convierten un presupuesto en experiencias personalizadas, servicios mejor coordinados e indicadores de cómo las personas viven el espacio.',
   visitorLine: 'Para las personas, empieza de forma simple: escanear o acercar el teléfono, entrar al espacio y explorar.',
-  organizersTitle: 'Organizadores',
-  organizersBody: 'Dale a tu evento una puerta de entrada digital: un entorno a medida, diseñado según el lugar, la programación y el recorrido de sus visitantes.',
-  brandsTitle: 'Marcas',
-  brandsBody: 'Crea una presencia que las personas puedan descubrir mediante espacios, historias e interacciones de marca dentro del evento.',
-  developersTitle: 'Desarrolladores',
-  developersBody: 'Construye experiencias alrededor de lugares reales, con una base compartida de acceso espacial y futuras transacciones.',
+  managersTitle: 'Administradores y anfitriones',
+  managersBody: 'Operadores de recintos, anfitriones de eventos, administradores de campus y edificios. Definen el mandato, aprueban lo que requiere aprobación y ven cada pago.',
+  peopleTitle: 'Las personas del espacio',
+  peopleBody: 'Asistentes, estudiantes, trabajadores y visitantes reciben experiencias pensadas para ellos: adónde ir, qué está pasando y a quién conocer.',
+  brandsTitle: 'Marcas y patrocinadores',
+  brandsBody: 'Pagan al espacio por tiempo en pantalla y activaciones, así el espacio gana además de gastar.',
+  valueAria: 'Lo que gana un espacio',
+  valuePersonalTitle: 'Experiencias personalizadas',
+  valuePersonalBody: 'Cada persona encuentra lo que le importa: sesiones, stands, personas y ofertas, en 3D, en pantallas o en AR.',
+  valueEfficiencyTitle: 'Eficiencia',
+  valueEfficiencyBody: 'Los agentes compran datos, IA y contenidos por solicitud con los topes que tú defines. Proveedores y servicios esperan tu aprobación.',
+  valueWellbeingTitle: 'Indicadores de bienestar',
+  valueWellbeingBody: 'Objetivos, participación y uso del espacio, medidos para que puedas mostrar lo que tu espacio devuelve a las personas.',
+  spacesEyebrow: 'Tipos de espacio',
+  spacesTitle: 'Desde un evento de pocos días hasta espacios abiertos todo el año.',
+  spacesBody: 'Un mandato, créditos y el mismo catálogo de recursos, adaptados a cada espacio.',
+  spaceEventTime: 'Unos días',
+  spaceEventTitle: 'Eventos y recintos',
+  spaceEventBody: 'Conferencias, festivales, ferias y demo days. Objetivo de ejemplo: que los asistentes descubran proyectos y sesiones.',
+  spaceYear: 'Todo el año',
+  spaceCampusTitle: 'Universidades y campus',
+  spaceCampusBody: 'Jornadas abiertas, laboratorios y vida estudiantil. Objetivo de ejemplo: conectar a estudiantes con programas, laboratorios y eventos.',
+  spacePublicTitle: 'Edificios públicos',
+  spacePublicBody: 'Centros cívicos, museos y bibliotecas. Objetivo de ejemplo: orientar a los visitantes y medir cómo se usan los servicios.',
+  spaceCorporateTitle: 'Edificios corporativos',
+  spaceCorporateBody: 'Oficinas, hubs de innovación y showrooms. Objetivo de ejemplo: coordinar visitas, salas y eventos internos.',
+  spaceMallTitle: 'Centros comerciales',
+  spaceMallBody: 'Malls y barrios comerciales. Objetivo de ejemplo: convertir pantallas y muros en espacios pagados y medibles.',
+  chipMandate: 'Un mandato',
+  chipCredits: 'Créditos',
+  chipCatalog: 'Mismo catálogo de recursos',
+  chipYear: 'Agentes operando todo el año',
+  servicesEyebrow: 'Servicios',
+  servicesTitle: 'Lo que entregamos en cada espacio.',
+  servicesBody: 'Cada servicio muestra su estado actual: disponible, en piloto sobre Stellar testnet, planeado o a pedido.',
+  phaseCurrent: 'Disponible',
+  svcTwinTitle: 'Gemelo digital y activaciones AR',
+  svcTwinBody: "Una versión 3D de tu espacio con accesos QR y NFC, además de vías experimentales de AR en dispositivos compatibles. La colocación física en AR aún no está verificada.",
+  phaseRecorded: 'Ejecución registrada en testnet',
+  svcAgentsTitle: 'Operación de agentes con mandato',
+  svcAgentsBody: "Objetivos, créditos y un tope por compra registrados. Los agentes compran datos y contenidos mediante x402; las compras sobre el tope se bloquean para revisión del operador.",
+  phasePilot: 'Piloto',
+  svcScreensTitle: 'Tiempo en pantalla y patrocinios',
+  svcScreensBody: "El panel muestra una orden registrada de pantalla por 5 USDC de prueba. El pago con passkey, la revisión de creatividades y la entrega en pantalla forman parte de un piloto controlado separado.",
+  svcWalletTitle: 'Wallet de visitantes y Passport',
+  svcWalletBody: "Una wallet con passkey y USDC de prueba, y una demostración del modelo de Stellar Passport. La sincronización de perfiles sigue planeada. Sin frase semilla.",
+  phasePlanned: 'Planeado',
+  svcIndicatorsTitle: 'Indicadores y reportes',
+  svcIndicatorsBody: 'Avance de cada objetivo, en qué se usó cada crédito, cuánto recaudó el espacio y cómo participaron las personas.',
+  phaseRequest: 'A pedido',
+  svcCustomTitle: 'Entornos e integraciones a medida',
+  svcCustomBody: 'Tu recinto modelado en 3D, tus canales y fuentes de datos conectados, tus proveedores en el catálogo.',
+  plansEyebrow: 'Modelos de trabajo',
+  plansTitle: "Elige un alcance. Prepara tu solicitud.",
+  plansBody: "Modelos de trabajo propuestos: un mandato por evento o mensual, más un margen sobre servicios. La disponibilidad y el alcance del piloto se acuerdan antes de contratar.",
+  planEventTime: 'Unos días · un recinto',
+  planEventTitle: 'Piloto de evento',
+  planEventBody: "Alcance propuesto: gemelo digital, acceso QR y NFC, y una demostración acotada de agentes. La publicidad y los reportes dependen de la validación del piloto.",
+  planQuote: 'Cotizar',
+  planSeasonTime: 'Varios eventos · uno o más recintos',
+  planSeasonTitle: 'Temporada',
+  planSeasonBody: "Alcance propuesto: reutilizar el piloto en varias fechas y evaluar después los patrocinios y el inventario de pantallas recurrentes.",
+  planPermanentTime: 'Todo el año · mandato mensual',
+  planPermanentTitle: 'Espacio permanente',
+  planPermanentBody: "Alcance propuesto: adaptar el piloto a un campus, edificio o centro comercial. La operación continua de agentes y los indicadores siguen planeados.",
+  demosEyebrow: 'Pruébalo',
+  demosTitle: 'Dos demos, dos miradas.',
+  demoVisitorTag: 'B2C · Para visitantes',
+  demoVisitorTitle: 'Recorre el espacio',
+  demoVisitorBody: 'Entra al gemelo digital de ONE16, encuentra cada activación, crea en el tótem una wallet con passkey y USDC de prueba, y abre el Stellar Passport.',
+  demoVisitorMain: 'Entrar a ONE16',
+  demoVisitorAlt: 'Passport espacial',
+  demoHostTag: 'B2B · Para administradores y anfitriones',
+  demoHostTitle: 'Opera el espacio',
+  demoHostBody: "Revisa el mandato registrado, los presupuestos en créditos, los comprobantes de testnet y la compra bloqueada por superar el tope. El panel también muestra una orden registrada de pantalla; aquí no hay pago público de anuncios.",
+  demoHostMain: 'Panel del operador',
+  demoHostAlt: "Evidencia registrada de publicidad",
+  demoNote: 'Ambas demos usan Stellar testnet con activos de prueba. Nada de lo que hagas ahí mueve dinero real.',
   howEyebrow: 'De un punto de contacto físico a un lugar digital',
   howTitle: 'Una forma de entrar.\nMás formas de interactuar.',
   stepOneTitle: 'Escanea. Acerca. Entra.',
@@ -65,23 +133,27 @@ export const SPANISH_COPY = Object.freeze({
   one16Intro: 'Un lugar real se convierte en el punto de partida de una experiencia espacial a la que puedes entrar hoy.',
   one16ImageAria: 'Explorar el espacio 3D de ONE16',
   one16ImageAlt: 'Reconstrucción 3D interpretativa de ONE16, con su pasillo de entrada, el recinto, las zonas de encuentro y el escenario principal',
+  previewActivate: 'Explorar mapa 3D',
+  previewDone: 'Listo',
+  previewZoomIn: 'Acercar',
+  previewZoomOut: 'Alejar',
+  previewReset: 'Restablecer vista',
+  previewRetry: 'Reintentar vista previa',
   one16Preview: 'Entrar al espacio',
+  previewInitial: 'La vista interactiva se carga al acercarte.',
   one16Caption: 'Render real del demo · interpretación independiente del lugar',
   one16Availability: 'Demo 3D disponible',
   one16Body: 'Recorre el pasillo de entrada, las zonas de encuentro, los stands y el escenario principal. Descubre la demostración de Stellar Passport y los próximos pasos del piloto de wallet. Esta interpretación independiente no implica una alianza oficial.',
-  evolutionEyebrow: 'Una experiencia con espacio para evolucionar',
+  explore: 'Explorar ONE16',
+  evolutionEyebrow: 'En qué punto está cada capa',
   evolutionTitle: 'Un espacio puede hacer más que mostrar contenido.',
   evolutionBody: 'Empezamos por un lugar que las personas puedan explorar y añadimos las capacidades que tengan sentido para su propietario, sus colaboradores y sus visitantes.',
-  phaseCurrent: 'Disponible',
-  phasePilot: 'Piloto',
-  phasePlanned: 'Planeado',
-  phaseRecorded: 'Ejecución registrada en testnet',
   currentTitle: 'Una experiencia espacial compartida',
   currentBody: 'El recinto 3D de ONE16, los accesos QR/NFC y la demostración de Passport forman la experiencia actual.',
   pilotTitle: 'Acceso a wallet en Stellar Testnet',
   pilotBody: 'Se están validando wallets con passkey, continuidad de sesión y fondeo con USDC de prueba. Los activos de prueba no tienen valor real.',
   advertisingTitle: 'Publicidad programable',
-  advertisingBody: 'Smart contracts para espacios publicitarios y experiencias de marca, con reglas definidas por el propietario del lugar.',
+  advertisingBody: "Un piloto controlado separado en testnet completó una compra con passkey y cinco pases de pantalla de un minuto. Las compras públicas aún no están disponibles. Revisa la evidencia registrada en testnet.",
   agentsTitle: 'Servicios autorizados de agentes',
   agentsBody: 'La demo registrada compra datos del venue y una tarjeta para el escenario mediante x402, dentro de un presupuesto definido por personas. Abre el dashboard para revisar cada pago de testnet.',
   foundationEyebrow: 'La plataforma que lo conecta',
@@ -90,17 +162,55 @@ export const SPANISH_COPY = Object.freeze({
   browserTitle: 'Descubrir desde el navegador',
   browserBody: 'Web 3D, acceso QR/NFC y opciones de AR en dispositivos compatibles, sin convertir la wallet en el primer paso.',
   stellarTitle: 'Stellar para las transacciones',
-  stellarBody: 'La demo de agentes combina x402 y USDC de prueba con un tope de presupuesto SEP-41. Las wallets de visitantes siguen como piloto independiente; los contratos publicitarios están planeados.',
-  closingEyebrow: 'Conoce el primer espacio',
-  closingTitle: 'Imagina en qué podría\nconvertirse tu evento.',
-  footerLine: 'Lugares físicos. Posibilidades digitales.',
-  footerStatus: 'Prototipo de plataforma independiente · 2026',
+  stellarBody: "La demo de agentes combina x402 y USDC de prueba con un tope de presupuesto SEP-41. El panel muestra una orden de publicidad pagada y registrada en un contrato de Soroban. Las wallets de visitantes siguen como piloto separado.",
+  quoteEyebrow: 'Solicitar cotización',
+  quoteTitle: 'Cuéntanos sobre tu espacio.',
+  quoteBody: "Elige el tipo de espacio, el alcance y lo que quieres lograr. Prepara una solicitud para copiar y compartir por un canal de contacto que ya uses.",
+  quotePrivacy: "Tu solicitud permanece en esta página hasta que la copies. Este sitio no envía ni guarda tus datos. El envío por correo aún no está disponible.",
+  contactTitle: '¿Prefieres conversar primero?',
+  fieldSpace: 'Tipo de espacio',
+  optEvent: 'Evento o recinto',
+  optCampus: 'Universidad o campus',
+  optPublic: 'Edificio público',
+  optCorporate: 'Edificio corporativo',
+  optMall: 'Centro comercial',
+  optOther: 'Otro',
+  fieldScope: 'Alcance',
+  optScopeEvent: 'Piloto de evento (unos días)',
+  optScopeSeason: 'Temporada (varios eventos)',
+  optScopePermanent: 'Espacio permanente (todo el año)',
+  fieldPeople: 'Personas esperadas',
+  optPeopleSmall: 'Hasta 500',
+  optPeopleMedium: 'De 500 a 5.000',
+  optPeopleLarge: 'Más de 5.000',
+  fieldBudget: 'Rango de presupuesto',
+  optBudgetUnknown: 'Aún no lo sé',
+  optBudgetLow: 'Menos de USD 5.000',
+  optBudgetMid: 'De USD 5.000 a 20.000',
+  optBudgetHigh: 'Más de USD 20.000',
+  fieldServices: 'Servicios',
+  fieldGoal: '¿Qué quieres lograr y cuándo?',
+  fieldName: 'Tu nombre',
+  fieldOrg: 'Organización',
+  fieldEmail: 'Correo',
+  fieldCity: 'Ciudad y país',
+  quoteUnavailable: 'Activa JavaScript para preparar una solicitud. No se envía ningún dato ingresado aquí.',
+  quoteSubmit: 'Preparar mi solicitud',
+  quoteError: 'Agrega tu nombre, un correo válido, el tipo de espacio y el alcance.',
+  quoteReady: "Tu solicitud está lista para copiar. Compártela por tu canal de contacto habitual; esta página no la ha enviado.",
+  quoteCopy: 'Copiar solicitud',
+  closingEyebrow: 'Tu espacio, lo que viene',
+  closingTitle: 'Imagina en qué podría\nconvertirse tu espacio.',
+  footerLine: 'IA espacial para recintos y eventos.',
+  footerStatus: 'Prototipo de plataforma independiente · Stellar testnet · 2026',
+  footerDashboard: 'Panel ↗',
+  footerContact: "Preparar solicitud",
   backTop: 'Volver arriba ↑',
 });
 const ENGLISH_LINES = Object.freeze({
   howTitle: 'One way in.\nMore ways to interact.',
   foundationTitle: 'Built around a place.\nOpen to what comes next.',
-  closingTitle: 'Imagine what your\nevent could become.',
+  closingTitle: 'Imagine what your\nspace could become.',
 });
 export const SCENE_VIEWS = Object.freeze(['space', 'entry', 'experiences']);
 export const SCENE_VIEW_COPY = Object.freeze({
@@ -202,6 +312,77 @@ export function deferOne16Preview({
   };
 }
 
+/** Quote requests stay on the visitor's device and can only be copied explicitly. */
+export const QUOTE_SUBJECT = Object.freeze({ en: 'Quote request · Agentic Realities', es: 'Solicitud de cotización · Agentic Realities' });
+const QUOTE_FEEDBACK = Object.freeze({
+  en: { copied: 'Request copied. You can paste it into your usual contact channel.', failed: 'Copy was unavailable. Select the request above and copy it manually.' },
+  es: { copied: 'Solicitud copiada. Puedes pegarla en tu canal de contacto habitual.', failed: 'No se pudo copiar. Selecciona la solicitud de arriba y cópiala manualmente.' },
+});
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export function validateQuote(values = {}) {
+  return Boolean(String(values.name || '').trim() && EMAIL_PATTERN.test(String(values.email || '').trim()) && values.space && values.scope);
+}
+export function buildQuoteRequest(rows = [], { language = 'en' } = {}) {
+  const subject = QUOTE_SUBJECT[language === 'es' ? 'es' : 'en'];
+  const body = rows.filter(([label, value]) => label && value).map(([label, value]) => label + ': ' + value).join('\n');
+  return { subject, body, text: subject + '\n\n' + body };
+}
+export function readQuoteForm(form) {
+  const rows = [], values = {};
+  for (const field of form.querySelectorAll('[data-quote-field]')) {
+    const label = field.querySelector('[data-quote-label]')?.textContent.trim() || '';
+    const select = field.querySelector('select'), checks = [...field.querySelectorAll('input[type="checkbox"]')];
+    let value = '';
+    if (select) { values[select.name] = select.value; value = select.options[select.selectedIndex]?.textContent.trim() || ''; }
+    else if (checks.length) {
+      const chosen = checks.filter(check => check.checked);
+      values[checks[0].name] = chosen.map(check => check.value);
+      value = chosen.map(check => check.closest('label')?.textContent.trim() || check.value).join(', ');
+    } else {
+      const input = field.querySelector('input,textarea');
+      if (input) { values[input.name] = input.value; value = input.value.trim(); }
+    }
+    rows.push([label, value]);
+  }
+  return { rows, values };
+}
+export function mountQuoteForm({ documentRef, getLanguage = () => 'en', clipboard = globalThis.navigator?.clipboard } = {}) {
+  const form = documentRef?.getElementById?.('quoteForm');
+  if (!form) return null;
+  const error = form.querySelector('[data-quote-error]'), result = form.querySelector('[data-quote-result]');
+  const summary = form.querySelector('[data-quote-summary]'), copy = form.querySelector('[data-quote-copy]');
+  const prepare = form.querySelector('[data-quote-prepare]'), unavailable = form.querySelector('[data-quote-unavailable]');
+  const copyStatus = form.querySelector('[data-quote-copy-status]');
+  const bindings = [];
+  const on = (node, type, listener) => { node?.addEventListener(type, listener); bindings.push([node, type, listener]); };
+  const clearResult = () => { if (result) result.hidden = true; if (copyStatus) copyStatus.hidden = true; };
+  on(form, 'input', clearResult);
+  on(form, 'change', clearResult);
+  on(prepare, 'click', () => {
+    const { rows, values } = readQuoteForm(form);
+    if (copyStatus) copyStatus.hidden = true;
+    if (!validateQuote(values)) { if (error) error.hidden = false; if (result) result.hidden = true; return; }
+    if (error) error.hidden = true;
+    const request = buildQuoteRequest(rows, { language: getLanguage() });
+    if (summary) summary.textContent = request.text;
+    if (result) result.hidden = false;
+  });
+  on(copy, 'click', async () => {
+    const feedback = QUOTE_FEEDBACK[getLanguage() === 'es' ? 'es' : 'en'];
+    let message = feedback.failed;
+    try {
+      if (clipboard?.writeText) { await clipboard.writeText(summary?.textContent || ''); message = feedback.copied; }
+    } catch {}
+    if (copyStatus) { copyStatus.textContent = message; copyStatus.hidden = false; }
+  });
+  for (const link of documentRef.querySelectorAll('[data-quote-scope]')) {
+    on(link, 'click', () => { const scope = form.querySelector('#quoteScope'); if (scope) scope.value = link.dataset.quoteScope; clearResult(); });
+  }
+  if (prepare) prepare.disabled = false;
+  if (unavailable) unavailable.hidden = true;
+  return { destroy() { if (prepare) prepare.disabled = true; if (unavailable) unavailable.hidden = false; for (const [node, type, listener] of bindings) node?.removeEventListener(type, listener); } };
+}
+
 export function mountPlatform({
   documentRef = globalThis.document,
   locationRef = globalThis.location,
@@ -234,6 +415,7 @@ export function mountPlatform({
   sceneTask = host ? deferPlatformScene({host,documentRef,onSelectView:setSceneView}) : null;
   const previewHost=documentRef.getElementById?.('one16Preview');
   previewTask=previewHost?deferOne16Preview({host:previewHost,language}):null;
+  const quoteTask=mountQuoteForm({documentRef,getLanguage:()=>language});
   const bindings=[];
   for(const button of documentRef.querySelectorAll('[data-scene-view]')){
     const onClick=()=>setSceneView(button.dataset.sceneView);button.addEventListener('click',onClick);bindings.push([button,onClick]);
@@ -248,7 +430,7 @@ export function mountPlatform({
     get language() { return language; },
     setLanguage: change,
     setView:setSceneView,
-    destroy() { sceneTask?.destroy();previewTask?.destroy(); for (const [button, listener] of bindings) button.removeEventListener('click', listener); },
+    destroy() { sceneTask?.destroy();previewTask?.destroy();quoteTask?.destroy(); for (const [button, listener] of bindings) button.removeEventListener('click', listener); },
   };
 }
 
