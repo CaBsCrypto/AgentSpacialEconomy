@@ -131,6 +131,12 @@ main,section,.grid>*{min-width:0}main{width:100%}h1,.hash,.kv dd,.bar-head>*,.bl
     <p><a href="/one16">Walk the venue →</a></p>
   </section>
 
+  <section aria-labelledby="ads-h" id="ads-section" hidden>
+    <h2 id="ads-h">Paid screen time · ad order on Soroban</h2>
+    <p class="live-status" id="ads-live" aria-live="polite"></p>
+    <div id="ads"></div>
+  </section>
+
   <footer>
     Stellar testnet only — no real money. Independent prototype; not affiliated with Stellar, HackMeridian or ONE16.
   </footer>
@@ -147,7 +153,7 @@ async function getJSON(url) {
   try { const r = await fetch(url, { cache: "no-store" }); return r.ok ? await r.json() : null; } catch { return null; }
 }
 
-const [ledger, stage] = await Promise.all([getJSON("./state/ledger.json"), getJSON("./state/stage.json")]);
+const [ledger, stage, ads] = await Promise.all([getJSON("./state/ledger.json"), getJSON("./state/stage.json"), getJSON("./state/ads.json")]);
 
 if (!ledger) {
   $("run-badge").textContent = "no run yet";
@@ -260,6 +266,44 @@ if (stage?.card) {
     </div>`;
 } else if (ledger) {
   $("screen").textContent = "No card was bought in this run, so the stage keeps its default content.";
+}
+
+// ---- paid screen time: an advertiser paid the treasury; the order is committed on Soroban ----
+const adPaid = ads?.network === "stellar:testnet" ? ads.rows?.find((r) => r.status === "settled" && /^[0-9a-f]{64}$/i.test(r.tx ?? "")) : null;
+const reg = ads?.registry;
+if (adPaid && reg?.contractId && reg.readBack) {
+  const tx = (h, text) => `<a href="https://stellar.expert/explorer/testnet/tx/${esc(h)}" target="_blank" rel="noopener">${text}</a><span class="live" data-ad-tx="${esc(h)}"></span>`;
+  const p = reg.commitment.placements[0];
+  const minutes = Number(ads.offer.durationMs) / 60000;
+  const at = (ms) => new Date(ms).toLocaleTimeString("en-GB", { timeZone: "Europe/Lisbon", hour: "2-digit", minute: "2-digit" });
+  const credits = Math.round(Number(adPaid.priceUsdc) / Number(ledger?.mandate?.creditUsdc ?? "0.01"));
+  $("ads-section").hidden = false;
+  $("ads").innerHTML = `
+    <p><small>Recorded testnet run · ${esc(new Date(ads.runId).toLocaleString("en-GB", { timeZone: "Europe/Lisbon" }))} Lisbon. A separate run from the loop above, with its own throwaway treasury and advertiser wallets.</small></p>
+    <dl class="grid kv">
+      <div><dt>Bought by</dt><dd>${esc(ads.advertiser.name)} · <span class="hash">${esc(ads.advertiser.account.slice(0, 6))}…</span></dd></div>
+      <div><dt>Placement</dt><dd>Main-stage screen · ${esc(minutes)} min · scheduled ${esc(at(p.start))}–${esc(at(p.end))} Lisbon</dd></div>
+      <div><dt>Paid over x402 to the venue treasury</dt><dd>${usdc(adPaid.priceUsdc)} <small>(${esc(credits)} credits)</small> · ${tx(adPaid.tx, "payment tx")}</dd></div>
+      <div><dt>Treasury balance read back</dt><dd>${ads.treasury?.verified ? `+${usdc(Number(ads.treasury.receivedUsdc))} ✓` : "not verified"}</dd></div>
+      <div><dt>AdsRegistry contract (Soroban)</dt><dd><a href="${esc(reg.explorerContract)}" target="_blank" rel="noopener"><span class="hash">${esc(reg.contractId.slice(0, 6))}…${esc(reg.contractId.slice(-4))}</span></a> · ${tx(reg.deployTx, "deploy tx")}</dd></div>
+      <div><dt>Order committed on chain</dt><dd>${tx(reg.commitTx, "commit tx")}<br><small>its <code>payment</code> field is the x402 transaction above</small></dd></div>
+      <div><dt>Read back with <code>get</code></dt><dd><span class="status ${reg.readBack.verified ? "settled" : "failed"}">${reg.readBack.verified ? "✓ " : "• "}${esc(reg.readBack.state)}</span> · delivered ${esc(Number(reg.readBack.deliveredMs) / 1000)} of ${esc(Number(reg.readBack.requiredMs) / 1000)} s</dd></div>
+    </dl>
+    <p><small>The registry is noncustodial: it records the order and never moves funds. No delivery is recorded in this run, so the order stays <strong>Queued</strong>; delivery would need evidence signed by the venue's screen publisher. The ad does not appear in the twin.</small></p>`;
+  const hashes = [...new Set([adPaid.tx, reg.deployTx, reg.commitTx].filter(Boolean).map((h) => h.toLowerCase()))];
+  $("ads-live").textContent = `Checking ${hashes.length} transactions live on Stellar testnet…`;
+  // Not awaited: the main live check below runs at the same time.
+  Promise.all(hashes.map(async (h) => [h, await confirmTx("stellar:testnet", h)])).then((results) => {
+    const byHash = new Map(results);
+    for (const el of document.querySelectorAll(".live[data-ad-tx]")) {
+      const c = byHash.get(el.dataset.adTx.toLowerCase());
+      el.textContent = confirmationLabel(c);
+      el.classList.toggle("confirmed", c?.state === "confirmed");
+    }
+    const ok = results.filter(([, c]) => c.state === "confirmed").length;
+    $("ads-live").textContent = results.every(([, c]) => c.state === "unavailable") ? "Live check unavailable right now; showing the recorded run."
+      : `Live check: ${ok} of ${hashes.length} transactions confirmed on Stellar testnet (Horizon).`;
+  });
 }
 
 // ---- live check: are the recorded transactions on Stellar testnet right now? ----

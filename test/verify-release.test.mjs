@@ -14,7 +14,7 @@ function fixture(override = () => null) {
     if (pathname === '/one16') return new Response('<script type="module" src="/entry.mjs"></script>', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/dashboard.html') return new Response('On-chain budget ceiling · recorded run', { headers: { 'content-type': 'text/html' } });
     if (pathname === '/sitemap.xml') return new Response('<urlset><url>https://agenticreality.space/one16</url><url>https://agenticreality.space/dashboard.html</url></urlset>', { headers: { 'content-type': 'application/xml' } });
-    if (pathname === '/api/wallet/config') return Response.json({ enabled: false, network: 'testnet', networkPassphrase: 'Test SDF Network ; September 2015', rpcUrl: 'https://soroban-testnet.stellar.org' });
+    if (pathname === '/api/wallet/config') return Response.json({ enabled: true, configured: true, network: 'testnet', networkPassphrase: 'Test SDF Network ; September 2015', rpcUrl: 'https://soroban-testnet.stellar.org' });
     try {
       const body = await readFile(new URL('../dist' + pathname, import.meta.url));
       return new Response(body, { headers: { 'content-type': pathname.endsWith('.json') ? 'application/json' : pathname.endsWith('.txt') ? 'text/plain' : 'application/javascript', 'cache-control': 'no-store' } });
@@ -38,7 +38,7 @@ test('an HTML fallback with status 200 cannot masquerade as a released JSON rout
   for (const name of ['GET /state/stage.json', '/state/stage.json parses as JSON', '/state/stage.json is not cached']) assert.equal(report.checks.find(check => check.name === name)?.pass, false, name);
 });
 
-test('verification refuses mixed runs and an enabled wallet without exposing response bodies', async () => {
+test('verification refuses mixed runs and a disabled wallet pilot without exposing response bodies', async () => {
   const sensitivePattern = 'S' + 'A'.repeat(55);
   const { fetchImpl } = fixture(async pathname => {
     if (pathname === '/state/stage.json') {
@@ -46,13 +46,13 @@ test('verification refuses mixed runs and an enabled wallet without exposing res
       stage.runId = 'different-run';
       return Response.json(stage, { headers: { 'cache-control': 'no-store' } });
     }
-    if (pathname === '/api/wallet/config') return Response.json({ enabled: true, network: 'testnet', networkPassphrase: 'Test SDF Network ; September 2015', rpcUrl: 'https://soroban-testnet.stellar.org', unexpected: sensitivePattern });
+    if (pathname === '/api/wallet/config') return Response.json({ enabled: false, configured: true, network: 'testnet', networkPassphrase: 'Test SDF Network ; September 2015', rpcUrl: 'https://soroban-testnet.stellar.org', unexpected: sensitivePattern });
     return null;
   });
   const report = await verifyRelease('https://release.example', { fetchImpl });
   assert.equal(report.passed, false);
   assert.equal(report.checks.find(check => check.name === 'Ledger and stage have the same run')?.pass, false);
-  assert.equal(report.checks.find(check => check.name === 'Wallet pilot remains disabled')?.pass, false);
+  assert.equal(report.checks.find(check => check.name === 'Wallet pilot is enabled and configured')?.pass, false);
   assert.equal(JSON.stringify(report).includes(sensitivePattern), false);
   assert.ok(report.checks.some(check => check.detail?.redacted === true && !check.pass));
 });
