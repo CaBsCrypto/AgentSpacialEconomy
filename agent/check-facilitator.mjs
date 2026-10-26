@@ -2,10 +2,12 @@
 //   node check-facilitator.mjs
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
+import { networkConfig } from "./config/networks.mjs";
 
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
-const url = (process.env.FACILITATOR_URL || "https://x402.org/facilitator").replace(/\/$/, "");
-const network = process.env.STELLAR_NETWORK || "stellar:testnet";
+const net = networkConfig();
+const url = (process.env.FACILITATOR_URL || net.facilitatorUrl).replace(/\/$/, "");
+const network = net.id;
 const headers = process.env.OZ_API_KEY && url.startsWith("https://channels.openzeppelin.com/")
   ? { Authorization: `Bearer ${process.env.OZ_API_KEY}` }
   : {};

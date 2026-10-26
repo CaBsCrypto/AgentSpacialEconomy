@@ -7,13 +7,12 @@
 // the per-call cap and the approval threshold, and the agent has enough available budget.
 // Nothing is ever deleted: blocked, failed and settled attempts all stay as rows.
 import { toUnits, fromUnits } from "./lib/money.mjs";
+import { explorerTx } from "./config/networks.mjs";
 
 export const ROOT_AGENT = "venue-agent";
 
 export function explorerUrl(network, tx) {
-  if (!tx) return null;
-  const net = network === "stellar:pubnet" ? "public" : "testnet";
-  return `https://stellar.expert/explorer/${net}/tx/${tx}`;
+  return explorerTx(network, tx);
 }
 
 export class Ledger {
@@ -55,6 +54,7 @@ export class Ledger {
       ledger.rows.push(r);
       if (r.key) ledger.byKey.set(r.key, r);
     }
+    if (json.onchain) ledger.onchain = json.onchain;
     return ledger;
   }
 
@@ -126,6 +126,18 @@ export class Ledger {
     return row;
   }
 
+  /**
+   * Record something the network did (an allowance draw, a refused draw) without touching the
+   * off-chain budget math. Rows stay append-only like every other attempt.
+   */
+  note({ type, agent, service, priceUsdc, status, tx = null, reason = null, key = null }) {
+    if (!type || !status) throw new Error("note() needs a type and a status");
+    return this.#push({
+      type, agent, service, priceUsdc: priceUsdc === undefined ? undefined : fromUnits(toUnits(priceUsdc)),
+      status, tx, explorer: explorerUrl(this.network, tx), ...(reason && { reason }), ...(key && { key }),
+    });
+  }
+
   toJSON() {
     const totals = {};
     for (const [name, a] of Object.entries(this.agents)) {
@@ -143,6 +155,7 @@ export class Ledger {
       mandate: this.mandate,
       rows: this.rows,
       totals,
+      ...(this.onchain && { onchain: this.onchain }),
       generatedAt: this.clock(),
     };
   }

@@ -11,9 +11,12 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import dotenv from "dotenv";
 import { Ledger, ROOT_AGENT } from "./ledger.mjs";
+import { networkConfig, explorerTx } from "./config/networks.mjs";
 import { findService } from "./catalog.mjs";
 import { nextSession, lisbonTime } from "./lib/plan.mjs";
 import { paymentRequiredFrom, settlementFrom, settlementTx, withinReservation } from "./lib/x402-headers.mjs";
+import { drawPlan, probeAbove, sumAllocations, onchainSummary } from "./lib/allowance.mjs";
+import { toUnits, fromUnits } from "./lib/money.mjs";
 
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
 
@@ -26,7 +29,7 @@ const { values: args } = parseArgs({
   },
 });
 
-const NETWORK = process.env.STELLAR_NETWORK || "stellar:testnet";
+const NETWORK = networkConfig().id; // throws for anything but testnet
 const SERVICES_URL = (process.env.SERVICES_URL || "http://localhost:3001").replace(/\/$/, "");
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
 
@@ -126,7 +129,7 @@ async function buy(step, agent, serviceId, { method = "GET", body } = {}) {
   ledger.settle(key, { tx, payer, note: tx ? null : "paid, but the service sent no settlement header" });
   results[key] = data;
   await save();
-  log(`  ${step}. ${serviceId} (${service.priceUsdc} USDC): SETTLED ${tx ? `https://stellar.expert/explorer/testnet/tx/${tx}` : "(no tx hash returned)"}`);
+  log(`  ${step}. ${serviceId} (${service.priceUsdc} USDC): SETTLED ${tx ? explorerTx(NETWORK, tx) : "(no tx hash returned)"}`);
   return data;
 }
 
@@ -144,6 +147,59 @@ for (const [agent, amount] of Object.entries(mandate.allocations)) {
   const a = ledger.allocate(ROOT_AGENT, agent, amount);
   if (!a.ok) throw new Error(a.reason);
   log(`${ROOT_AGENT} → ${agent}: ${amount} USDC${a.unchanged ? " (already allocated)" : ""}`);
+}
+
+// ---- on-chain budget ceiling (SEP-41 allowance), when the operator's treasury approved this agent ----
+// The treasury approved the venue agent up to the mandate budget, with an expiry. The agent draws only
+// what it allocated; the network refuses any draw above what is left, whatever this code does.
+if (process.env.TREASURY_PUBLIC_KEY && !args.dry) {
+  const net = networkConfig();
+  const { Keypair } = await import("@stellar/stellar-sdk");
+  const { createSac } = await import("./onchain.mjs");
+  const sac = createSac(net);
+  const agentKp = Keypair.fromSecret(process.env.AGENT_SECRET_KEY.trim());
+  const agentPub = agentKp.publicKey();
+  const treasury = process.env.TREASURY_PUBLIC_KEY.trim();
+  const needed = sumAllocations(mandate.allocations);
+  const drawKey = `${runId}#0:allowance-draw`;
+  const label = "budget draw · USDC allowance (SEP-41)";
+
+  const startUnits = await sac.allowanceUnits(treasury, agentPub, agentPub);
+  log(`On-chain ceiling: ${fromUnits(startUnits)} USDC left on the operator's allowance to ${ROOT_AGENT}`);
+  let drawTx = results[drawKey]?.tx ?? null;
+  let drawn = drawTx ? needed : 0n;
+  if (!drawTx) {
+    const plan = drawPlan(startUnits, needed);
+    if (!plan.ok) {
+      ledger.note({ type: "onchain-draw", agent: ROOT_AGENT, service: label, priceUsdc: fromUnits(needed), status: "blocked", reason: "the allowance is below the allocations", key: drawKey });
+      await save();
+      console.error(`The operator's allowance (${fromUnits(startUnits)} USDC) is below the allocations (${fromUnits(needed)} USDC). Nothing was paid.`);
+      process.exit(1);
+    }
+    ({ hash: drawTx } = await sac.drawFrom(agentKp, treasury, agentPub, plan.drawUnits));
+    drawn = plan.drawUnits;
+    results[drawKey] = { tx: drawTx };
+    ledger.note({ type: "onchain-draw", agent: ROOT_AGENT, service: label, priceUsdc: fromUnits(drawn), status: "settled", tx: drawTx, key: drawKey });
+    log(`  0. drew ${fromUnits(drawn)} USDC from the treasury: SETTLED ${explorerTx(NETWORK, drawTx)}`);
+  }
+  const remainingUnits = await sac.allowanceUnits(treasury, agentPub, agentPub);
+  const probeUnits = probeAbove(remainingUnits);
+  const probe = await sac.probeDraw(agentPub, treasury, agentPub, probeUnits);
+  ledger.note({
+    type: "onchain-draw", agent: ROOT_AGENT, service: label, priceUsdc: fromUnits(probeUnits),
+    status: probe.refused ? "blocked" : "not-refused",
+    reason: probe.refused ? "refused by the network before submission: above the remaining allowance" : "the network did not refuse — check the allowance",
+  });
+  log(`  0b. tried to draw ${fromUnits(probeUnits)} USDC: ${probe.refused ? "REFUSED BY THE NETWORK (simulation, nothing submitted)" : "NOT refused — check the allowance"}`);
+  ledger.onchain = onchainSummary({
+    network: NETWORK, sac: net.usdc.sac, treasury, spender: agentPub,
+    approvedUnits: process.env.ALLOWANCE_APPROVED_USDC ? toUnits(process.env.ALLOWANCE_APPROVED_USDC) : startUnits + drawn,
+    liveUntil: process.env.ALLOWANCE_LIVE_UNTIL ? Number(process.env.ALLOWANCE_LIVE_UNTIL) : null,
+    approveTx: process.env.ALLOWANCE_APPROVE_TX || null,
+    drawTx, drawUnits: drawn, remainingUnits,
+    probe: { units: probeUnits, refused: probe.refused, reason: probe.reason },
+  });
+  await save();
 }
 
 const feed = await buy(1, "stage-agent", "venue-feed");

@@ -21,15 +21,18 @@ Without keys or USDC yet: `npm run loop:dry` walks the whole plan and stops befo
 
 `node ci-run.mjs` does everything in one go: throwaway testnet accounts, USDC trustlines, a little testnet USDC bought with XLM on the testnet DEX, the services, the facilitator check and the loop. The workflow `.github/workflows/testnet-loop.yml` runs it on every push to `ci/testnet-run` (or "Run workflow" from the Actions tab once it is on `main`) and publishes `dist/state/*.json` plus the log to the `ci/testnet-results` branch.
 
-Recorded run, 25 Oct 2026 23:22 UTC (Stellar testnet, x402.org facilitator):
+Recorded run, 26 Oct 2026 01:23 UTC (Stellar testnet, x402.org facilitator, allowance mode):
 
-| Step | Price | Result |
+| Step | Amount | Result |
 | --- | --- | --- |
-| `venue-feed` | 0.01 USDC | settled · [tx da69…8da8](https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8) |
-| `screen-card` | 0.05 USDC | settled · [tx 3b65…b9d9](https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9) |
+| treasury `approve` → venue agent | 0.50 USDC, ~24 h | settled · [3add5054…](https://stellar.expert/explorer/testnet/tx/3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa) |
+| venue agent `transfer_from` (its allocations) | 0.20 USDC | settled · [914076fb…](https://stellar.expert/explorer/testnet/tx/914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083) |
+| venue agent draw above what is left | 0.31 USDC | refused by the network (simulation) |
+| `venue-feed` | 0.01 USDC | settled · [bb6d3dfb…](https://stellar.expert/explorer/testnet/tx/bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc) |
+| `screen-card` | 0.05 USDC | settled · [7d3e29ff…](https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0) |
 | `premium-render` | 0.25 USDC | blocked before signing — above the 0.10 per-call cap |
 
-Fees were paid by the facilitator, not the agent; the service wallet received exactly 0.06 USDC.
+x402 fees were paid by the facilitator; the service wallet received exactly 0.06 USDC and the agent kept 0.14.
 
 ## What the run does
 
@@ -57,6 +60,22 @@ Before each payment the agent reads the service's `402 Payment Required` and ref
 | `catalog.mjs` | Services and prices |
 | `lib/` | USDC math (7 decimals, BigInt), x402 header parsing, planning helpers |
 | `setup-testnet.mjs`, `check-facilitator.mjs` | One-time setup and a facilitator check |
+| `config/networks.mjs` | Every network-specific value (passphrase, Horizon, RPC, friendbot, explorer, USDC issuer and SAC, facilitator) |
 | `out/` | Per-run ledgers and results (git-ignored) |
 
 Commit `dist/state/*.json` only after a real testnet run. Never commit `.env`.
+
+## On-chain budget ceiling (SEP-41 allowance)
+
+The operator's treasury holds the USDC and calls `approve(from = treasury, spender = venue agent, amount = mandate budget, live_until_ledger ≈ +24 h)` on the USDC Stellar Asset Contract. The venue agent starts with no USDC: before paying anything it draws exactly its allocations with `transfer_from`, then simulates a draw one cent above what is left — the network refuses it without anything being submitted. Two limits, two layers:
+
+| Layer | Who enforces it | What it limits |
+| --- | --- | --- |
+| SEP-41 allowance | Stellar (the USDC contract) | total the agent can ever draw, and until when |
+| `ledger.mjs` | the agent itself, before signing | per-call cap, approval threshold, allow-list, per-zone allocations |
+
+`ci-run.mjs` does this by default with throwaway accounts (`onchain.mjs` holds the SDK calls; `lib/allowance.mjs` the tested rules). `run.mjs` switches it on when `TREASURY_PUBLIC_KEY` is set; without it, the agent pays from its own balance as before. Signatures: [token interface](https://developers.stellar.org/docs/tokens/token-interface).
+
+## Network config
+
+All testnet values live in `config/networks.mjs`, so the path to mainnet is one reviewed diff of that file instead of a search through the code. Mainnet is listed with its passphrase, Horizon, explorer, USDC and facilitator, but `enabled: false` makes every entry point refuse it; there is no public SDF mainnet RPC, so a provider must be chosen first. `STELLAR_NETWORK` selects the network (default `stellar:testnet`).
