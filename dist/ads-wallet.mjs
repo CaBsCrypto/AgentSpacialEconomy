@@ -10,7 +10,7 @@ export function selectPaymentRuleIds(rules, { credentialId, asset, ledger, crede
 }
 export function validatePaymentRequirements(challenge, expected) {
   const requirements = challenge?.accepts?.find(item => item.network === 'stellar:testnet' && item.scheme === 'exact' && item.asset === ADS_USDC);
-  if (!requirements || requirements.amount !== String(expected.amountUnits) || requirements.payTo !== expected.payTo || requirements.asset !== expected.asset || expected.network !== 'stellar:testnet' || !/^[1-9][0-9]*$/.test(requirements.amount) || !Number.isFinite(requirements.maxTimeoutSeconds) || requirements.maxTimeoutSeconds <= 0 || requirements.maxTimeoutSeconds > 300) throw Error('La solicitud de pago no coincide con la cotización autorizada.');
+  if (!requirements || requirements.amount !== String(expected.amountUnits) || requirements.payTo !== expected.payTo || requirements.asset !== expected.asset || expected.network !== 'stellar:testnet' || !/^[1-9][0-9]*$/.test(requirements.amount) || !Number.isSafeInteger(requirements.maxTimeoutSeconds) || requirements.maxTimeoutSeconds <= 0 || requirements.maxTimeoutSeconds > 300) throw Error('La solicitud de pago no coincide con la cotización autorizada.');
   if (challenge.x402Version !== 2 || requirements.extra?.areFeesSponsored !== true) throw Error('Este pago requiere x402 v2 y comisiones patrocinadas.');
   return requirements;
 }
@@ -40,7 +40,25 @@ export async function createAdsWallet(config, { loadSdk = () => import('./vendor
   };
   const kit = new sdk.SmartAccountKit({ rpcUrl: config.rpcUrl, networkPassphrase: config.networkPassphrase, accountWasmHash: config.accountWasmHash, acceptedWasmHashes: config.acceptedWasmHashes || [config.accountWasmHash], webauthnVerifierAddress: config.webauthnVerifierAddress, relayerUrl: config.relayerUrl || '/api/wallet/relay', rpId: config.rpId, rpName: 'ONE16 Testnet', storage, webAuthn, ...(config.indexerUrl ? { indexerUrl: config.indexerUrl } : {}) });
   const server = new sdk.rpc.Server(config.rpcUrl);
-  let address;
+  let address, signing = false;
+  const preparations = new WeakMap();
+  const transferSnapshot = expected => {
+    if (!address || !kit.credentialId) throw Error('Conecta tu wallet para preparar el pago.');
+    const amount = String(expected?.amountUnits || '');
+    if (expected?.network !== 'stellar:testnet' || expected?.asset !== ADS_USDC || !/^[1-9][0-9]*$/.test(amount) || BigInt(amount) >= 2n ** 127n || !(sdk.StrKey.isValidEd25519PublicKey(expected?.payTo || '') || sdk.StrKey.isValidContract(expected?.payTo || ''))) throw Error('La preparación requiere una transferencia USDC válida de Testnet.');
+    return { address, credentialId: kit.credentialId, amount, asset: expected.asset, payTo: expected.payTo, network: expected.network };
+  };
+  const buildTransfer = (snapshot, timeout) => new sdk.TransactionBuilder(new sdk.Account(SOURCE, '0'), { fee: sdk.BASE_FEE, networkPassphrase: TESTNET_PASSPHRASE }).addOperation(new sdk.Contract(snapshot.asset).call('transfer', new sdk.Address(snapshot.address).toScVal(), new sdk.Address(snapshot.payTo).toScVal(), sdk.nativeToScVal(BigInt(snapshot.amount), { type: 'i128' }))).setTimeout(timeout).build();
+  const preparePayment = async ({ expected }) => {
+    const snapshot = transferSnapshot(expected), transaction = buildTransfer(snapshot, 300);
+    const [simulation, rules] = await Promise.all([server.simulateTransaction(transaction), kit.rules.list()]);
+    if (simulation.error || simulation.restorePreamble || simulation.result?.auth?.length !== 1) throw Error('Stellar no pudo simular la transferencia autorizada.');
+    const entry = simulation.result.auth[0];
+    assertTransferEntry(sdk, entry, snapshot);
+    const token = Object.freeze({});
+    preparations.set(token, { snapshot, entryXdr: entry.toXDR('base64'), rules, createdAt: Date.now() });
+    return token;
+  };
   const post = async (path, body) => {
     const response = await fetchImpl(path, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     const value = await response.json();
@@ -94,29 +112,43 @@ export async function createAdsWallet(config, { loadSdk = () => import('./vendor
       return { address, identity: session.identity, ...(session.purchaseEligibility?{purchaseEligibility:session.purchaseEligibility}:{}) };
 
     },
-    async signPayment({ challenge, expected }) {
-      if (!address || !kit.credentialId) throw Error('Conecta tu wallet para autorizar el pago.');
-      const accepted = validatePaymentRequirements(challenge, expected);
-      const resource = new URL(challenge.resource?.url, browser.location.origin);
-      if (resource.origin !== browser.location.origin || expected.resourceUrl && resource.href !== new URL(expected.resourceUrl, browser.location.origin).href) throw Error('El recurso de pago no corresponde a esta orden.');
-      const latest = await server.getLatestLedger();
-      const contextRuleIds = selectPaymentRuleIds(await kit.rules.list(), { credentialId: kit.credentialId, asset: accepted.asset, ledger: latest.sequence, credentialOf: sdk.getCredentialIdFromSigner, verifierAddress: config.webauthnVerifierAddress });
-      const transfer = new sdk.Contract(accepted.asset).call('transfer', new sdk.Address(address).toScVal(), new sdk.Address(accepted.payTo).toScVal(), sdk.nativeToScVal(BigInt(accepted.amount), { type: 'i128' }));
-      const transaction = new sdk.TransactionBuilder(new sdk.Account(SOURCE, '0'), { fee: sdk.BASE_FEE, networkPassphrase: TESTNET_PASSPHRASE }).addOperation(transfer).setTimeout(accepted.maxTimeoutSeconds).build();
-      const simulation = await server.simulateTransaction(transaction);
-      if (simulation.error || !simulation.result?.auth?.length) throw Error('Stellar no pudo simular la transferencia autorizada.');
-      const entries = simulation.result.auth;
-      if (entries.length !== 1) throw Error('La transferencia requiere una autorización no admitida.');
-      const expiration = latest.sequence + Math.ceil(accepted.maxTimeoutSeconds / 5);
-      const signed = [];
-      for (const entry of entries) {
-        assertTransferEntry(sdk, entry, { address, asset: accepted.asset, payTo: accepted.payTo, amount: accepted.amount });
-        signed.push(await kit.signAuthEntry(entry, { credentialId: kit.credentialId, expiration, contextRuleIds }));
-      }
-      const assembled = sdk.rpc.assembleTransaction(transaction, simulation).build();
-      const envelope = assembled.toEnvelope();
-      envelope.v1().tx().operations()[0].body().invokeHostFunctionOp().auth(signed);
-      return { x402Version: 2, resource: challenge.resource, accepted, payload: { transaction: envelope.toXDR('base64') } };
+    preparePayment,
+    async signPayment({ challenge, expected, prepared }) {
+      if (signing) throw Error('Ya hay una autorización de pago en curso.');
+      signing = true;
+      try {
+        const accepted = validatePaymentRequirements(challenge, expected);
+        const resource = new URL(challenge.resource?.url, browser.location.origin);
+        if (resource.origin !== browser.location.origin || expected.resourceUrl && resource.href !== new URL(expected.resourceUrl, browser.location.origin).href) throw Error('El recurso de pago no corresponde a esta orden.');
+        const snapshot = transferSnapshot(expected);
+        const token = prepared === undefined ? await preparePayment({ expected }) : prepared;
+        const state = token && typeof token === 'object' ? preparations.get(token) : null;
+        if (!state || Date.now() - state.createdAt > 300000 || JSON.stringify(state.snapshot) !== JSON.stringify(snapshot)) throw Error('La preparación del pago venció o no corresponde a esta transferencia.');
+        preparations.delete(token);
+        const entry = sdk.xdr.SorobanAuthorizationEntry.fromXDR(state.entryXdr, 'base64');
+        assertTransferEntry(sdk, entry, snapshot);
+        const rootXdr = entry.rootInvocation().toXDR('base64'), nonce = entry.credentials().value().nonce().toString();
+        // Refresh immediately before WebAuthn: preparation can precede the server challenge.
+        const latest = await server.getLatestLedger();
+        if (!Number.isSafeInteger(latest.sequence) || latest.sequence < 1) throw Error('No se pudo comprobar el ledger antes de firmar.');
+        const contextRuleIds = selectPaymentRuleIds(state.rules, { credentialId: kit.credentialId, asset: accepted.asset, ledger: latest.sequence, credentialOf: sdk.getCredentialIdFromSigner, verifierAddress: config.webauthnVerifierAddress });
+        const expiration = latest.sequence + Math.ceil(accepted.maxTimeoutSeconds / 5);
+        if (expiration > 0xffffffff) throw Error('La expiración de la autorización no es válida.');
+        const signed = await kit.signAuthEntry(entry, { credentialId: kit.credentialId, expiration, contextRuleIds });
+        assertTransferEntry(sdk, signed, snapshot);
+        const credentials = signed.credentials().value(), signature = credentials.signature();
+        if (signed.rootInvocation().toXDR('base64') !== rootXdr || credentials.nonce().toString() !== nonce || credentials.signatureExpirationLedger() !== expiration || signature.switch().name === 'scvVoid' || signature.switch().name === 'scvVec' && !signature.vec()?.length) throw Error('La autorización firmada no conserva la transferencia preparada.');
+        const authXdr = signed.toXDR('base64'), transaction = buildTransfer(snapshot, accepted.maxTimeoutSeconds), envelope = transaction.toEnvelope();
+        envelope.v1().tx().operations()[0].body().invokeHostFunctionOp().auth([signed]);
+        const signedTx = sdk.TransactionBuilder.fromXDR(envelope.toXDR('base64'), TESTNET_PASSPHRASE);
+        // __check_auth and its footprint only exist after the real passkey payload is attached.
+        const simulation = await server.simulateTransaction(signedTx, undefined, 'enforce');
+        if (simulation.error || simulation.restorePreamble || typeof simulation.transactionData?.build !== 'function' || !/^[0-9]+$/.test(simulation.minResourceFee || '') || !simulation.result || Number.isSafeInteger(simulation.latestLedger) && simulation.latestLedger >= expiration) throw Error('Stellar no pudo verificar los recursos de la autorización firmada.');
+        const assembled = sdk.rpc.assembleTransaction(signedTx, simulation).build();
+        const operation = assembled.operations[0];
+        if (assembled.operations.length !== 1 || operation?.type !== 'invokeHostFunction' || operation.source !== signedTx.operations[0].source || operation.func.toXDR('base64') !== signedTx.operations[0].func.toXDR('base64') || operation.auth?.length !== 1 || operation.auth[0].toXDR('base64') !== authXdr || assembled.signatures.length || assembled.source !== signedTx.source || assembled.sequence !== signedTx.sequence || assembled.networkPassphrase !== TESTNET_PASSPHRASE || JSON.stringify(assembled.timeBounds) !== JSON.stringify(signedTx.timeBounds) || BigInt(assembled.fee) < BigInt(simulation.minResourceFee) + BigInt(sdk.BASE_FEE) || assembled.toEnvelope().v1().tx().ext().value()?.toXDR('base64') !== simulation.transactionData.build().toXDR('base64')) throw Error('La preparación final alteró la autorización o la comisión de la transferencia.');
+        return { x402Version: 2, resource: challenge.resource, accepted, payload: { transaction: assembled.toXDR() } };
+      } finally { signing = false; }
     },
   };
 }
