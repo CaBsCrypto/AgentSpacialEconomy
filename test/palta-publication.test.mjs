@@ -161,7 +161,7 @@ test('the unified picker respects Palta occlusion and retains wallet selection b
     THREE, camera, model, renderer: {}, mode: 'walk',
     palta: { root, toggle: () => calls.palta++ },
     canvas: { addEventListener: (_type, handler) => { onPointerUp = handler; }, getBoundingClientRect: () => ({ left: 0, top: 0, width: 100, height: 100 }) },
-    isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
+    isMainStageSign: () => false, isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
   };
   const api = vm.runInNewContext(`let passportTap;${picker};({tap:value=>passportTap=value})`, context);
   const event = { pointerId: 1, clientX: 50, clientY: 50 };
@@ -200,7 +200,7 @@ function stageIntegrationHarness({ hostLoop = null } = {}) {
   const pending = deferred(), adsPending = deferred(), draws = [], mounts = [], fetches = [], cardCalls = [], adsMounts = [];
   const prepared = { name: 'prepared venue' }, controller = fakeController(), frameAcks = [];
   const context = {
-    THREE, gltf: { scene: { name: 'raw venue' } }, model: null, defaultStage: null, adsSpatial: null,
+    THREE, gltf: { scene: { name: 'raw venue' } }, model: null, defaultStage: null, adsSpatial: null, mainStageSign:null, createMainStageSign:()=>null,
     scene: { add: model => draws.push(model) },
     prepareVenueModel: () => prepared,
     createDefaultStageLoop: (_three, model) => { assert.equal(model, prepared); return hostLoop; },
@@ -282,13 +282,13 @@ test('an advertising mount resolving after its model is discarded releases its o
 
 test('discarding the venue releases advertising, the host loop and Palta before scene resources', () => {
   const events = [], resource = name => ({ dispose: () => events.push(name) });
-  const context = { adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, walkFloorNumbers:{}, resourcesPrepared:true,
+  const context = { mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, walkFloorNumbers:{}, resourcesPrepared:true,
     discardPalta:() => events.push('palta'), disposeVenueObject:object => { assert.equal(object,context.scene);events.push('scene'); } };
   const begin = viewer.indexOf('function discardVenueScene()'), end = viewer.indexOf('function applyInitialIntent()',begin);
   assert.ok(begin > 0 && end > begin);
   const discard = vm.runInNewContext(viewer.slice(begin,end)+';discardVenueScene',context);discard();
-  assert.deepEqual(events,['ads','host','palta','orbit','scene','renderer']);
-  for(const key of ['adsSpatial','defaultStage','scene','camera','renderer','model','orbit','walkFloorNumbers'])assert.equal(context[key],null,key);
+  assert.deepEqual(events,['sign','ads','host','palta','orbit','scene','renderer']);
+  for(const key of ['mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','walkFloorNumbers'])assert.equal(context[key],null,key);
   assert.equal(context.resourcesPrepared,false);
 });
 
@@ -297,10 +297,10 @@ test('Palta and advertising update before render and the publisher acknowledgeme
   const context = { active:true, last:0, resourcesPrepared:true, model:{}, mode:'overview', frame:0, contextFailed:false, overviewHotspots:null, venueAttempt:1, venueRenderUntil:0,
     scene:{}, view:{clientWidth:800,clientHeight:600}, pose:{x:0,z:0}, PASSPORT_STAND:{view:{x:0,z:0}}, camera:{}, orbit:{update(){}}, clampOverview(){}, layout:{bounds:{}},
     renderer:{getContext:() => ({isContextLost:() => false}),render:() => events.push('render')},
-    palta:{update:() => events.push('palta')}, adsSpatial:{update:() => events.push('ads'),afterFrame:() => events.push('ack')},
+    mainStageSign:{updatePlayback:() => events.push('sign-time')}, palta:{update:() => events.push('palta')}, adsSpatial:{update:() => events.push('ads'),afterFrame:() => events.push('ack')},
     venueLoading:{state:{phase:'ready',prepared:true},renderFrame:(_attempt,options) => options.render()},
     walletExperience:{afterFirstFrame:() => events.push('wallet-frame')}, $:element, document:{querySelector:element},updateReview(){},requestAnimationFrame:() => 1 };
   const loopSource = viewer.match(/^function loop\(now\).*$/m)?.[0];assert.ok(loopSource);
   const loop = vm.runInNewContext(loopSource+';loop',context);loop(1000);
-  assert.deepEqual(events,['palta','ads','render','ack','wallet-frame']);
+  assert.deepEqual(events,['palta','ads','sign-time','render','ack','wallet-frame']);
 });

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="794" viewBox="0 0 560 794">
+  <rect width="560" height="794" fill="#07121f"/>
+  <g font-family="DM Sans 9pt, DM Sans, sans-serif">
+    <text x="38" y="46" fill="#e8c78a" font-size="17" font-weight="700" letter-spacing="2">AGENTIC REALITY</text>
+    <path d="M38 63H522" stroke="#e8c78a" stroke-width="1"/>
+    <text x="38" y="99" fill="#a7b7ca" font-size="11" letter-spacing="2">PUBLICIDAD DIGITAL / ONE16</text>
+    <text x="38" y="153" fill="#eef4f7" font-size="43" font-weight="700">Tu proyecto.</text>
+    <text x="38" y="203" fill="#eef4f7" font-size="43" font-weight="700">En el main stage.</text>
+    <text x="38" y="246" fill="#e8c78a" font-size="24" font-weight="700">5 USDC de prueba</text>
+    <text x="38" y="271" fill="#eef4f7" font-size="14">Cinco entregas completas de un minuto.</text>
+    <rect x="137" y="298" width="286" height="286" rx="6" fill="#fff"/>
+    {{QR}}
+    <text x="280" y="608" fill="#e8c78a" font-size="12" text-anchor="middle" letter-spacing="1">ESCANEA EL QR O USA LA ETIQUETA NFC</text>
+    <text x="38" y="647" fill="#eef4f7" font-size="13">1. Conecta tu wallet de prueba existente.</text>
+    <text x="38" y="674" fill="#eef4f7" font-size="13">2. Añade logo y texto; revisa y autoriza.</text>
+    <text x="38" y="701" fill="#eef4f7" font-size="13">3. Sigue tus cinco entregas confirmadas.</text>
+    <path d="M38 724H522" stroke="#34485c"/>
+    <text x="38" y="750" fill="#eef4f7" font-size="15">agenticreality.space/ads</text>
+    <text x="38" y="773" fill="#a7b7ca" font-size="9">Stellar Testnet · Sin fondos reales · QR y NFC abren el mismo enlace.</text>
+  </g>
+</svg>

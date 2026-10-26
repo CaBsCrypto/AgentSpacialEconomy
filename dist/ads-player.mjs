@@ -8,11 +8,35 @@ export function safeAdsUrl(value, origin = globalThis.location?.origin || 'https
   if (url.username || url.password) throw Error('El destino contiene credenciales.');
   return url;
 }
+/** Public, non-accounting timing from the canonical publisher. */
+export function validatePlayback(value, { serverTime, validUntil, maxTtlMs = 2000 } = {}) {
+  if (value == null) return null; // Historical manifests have no countdown.
+  if (!['IDLE','STARTING','PLAYING','PAUSED'].includes(value.phase)) throw Error('El tiempo de reproducción no es verificable.');
+  const durationMs = value.durationMs, expiry = stamp(value.validUntil);
+  if (!Number.isSafeInteger(durationMs) || durationMs < 0 || durationMs > 3600000 || !Number.isFinite(expiry) || expiry <= serverTime) throw Error('La reproducción no tiene vigencia verificable.');
+  const timing = { phase:value.phase, passId:value.passId == null ? null : String(value.passId).slice(0,160), durationMs, startedAt:null, confirmedThrough:null, remainingMs:null, validUntil:Math.min(expiry, validUntil, serverTime+maxTtlMs) };
+  if (value.phase !== 'PLAYING') return timing;
+  const startedAt=stamp(value.startedAt),confirmedThrough=stamp(value.confirmedThrough);
+  if (!timing.passId || durationMs <= 0 || !Number.isFinite(startedAt) || !Number.isFinite(confirmedThrough) || startedAt > confirmedThrough || confirmedThrough > serverTime || serverTime-confirmedThrough > maxTtlMs || !Number.isSafeInteger(value.remainingMs) || value.remainingMs < 0 || value.remainingMs > durationMs) throw Error('El pase no tiene confirmación reciente.');
+  return {...timing,startedAt,confirmedThrough,remainingMs:value.remainingMs};
+}
+export function playbackCountdown(playback, serverTime, receivedServerTime = serverTime) {
+  if (!playback || playback.phase !== 'PLAYING' || !Number.isFinite(serverTime) || serverTime >= playback.validUntil) return null;
+  return Math.max(0, playback.remainingMs-Math.max(0,serverTime-receivedServerTime));
+}
+export function playbackLabel(playback) {
+  if (!playback || playback.phase === 'IDLE') return 'Contenido del anfitrión';
+  if (playback.phase === 'STARTING') return 'Preparando anuncio · sin tiempo consumido';
+  if (playback.phase === 'PAUSED') return 'En pausa · el pase sigue pendiente';
+  if (!Number.isFinite(playback.remainingMs)) return 'Verificando el tiempo del pase';
+  const seconds=Math.ceil(playback.remainingMs/1000);
+  return 'Pase en curso · '+Math.floor(seconds/60)+':'+String(seconds%60).padStart(2,'0')+' restantes';
+}
 export function validatePlaylist(value, placementId, { origin = globalThis.location?.origin || 'https://ads.invalid', maxTtlMs = 2_000 } = {}) {
   if (!ADS_PLACEMENTS.includes(placementId)) throw Error('Ubicación publicitaria desconocida.');
   const serverTime = stamp(value?.serverTime), validUntil = stamp(value?.validUntil);
   if (!Number.isFinite(serverTime) || !Number.isFinite(validUntil) || validUntil <= serverTime || !Number.isSafeInteger(value?.version) || value.version < 0) throw Error('La playlist no tiene vigencia verificable.');
-  const playlist = { ...value, serverTime, validUntil: Math.min(validUntil, serverTime + maxTtlMs), placementId, active: null };
+  const playlist = { ...value, serverTime, validUntil: Math.min(validUntil, serverTime + maxTtlMs), placementId, active: null, playback:validatePlayback(value.active==null||value.active.plan==='PASSES'&&value.active.offerVersion===2?value.playback:null,{serverTime,validUntil,maxTtlMs}) };
   if (value.active == null) return playlist;
   const active = value.active, startsAt = stamp(active.startsAt), endsAt = stamp(active.endsAt);
   if (!active.orderId || !active.revisionId || !hashPattern.test(active.manifestHash || '') || !hashPattern.test(active.imageHash || '') || !Number.isFinite(startsAt) || !Number.isFinite(endsAt) || endsAt <= startsAt) throw Error('El anuncio no tiene un manifiesto válido.');
@@ -49,13 +73,14 @@ export function createAdsPlayer({ placementId, fetchImpl = globalThis.fetch, now
     if (changed) onChange(state);
     return state;
   }
-  function neutral(reason = 'Sin anuncio vigente') { return emit({ placementId, status: 'neutral', active: null, version: highestVersion, reason }); }
+  function neutral(reason = 'Sin anuncio vigente', playback = null) { return emit({ placementId, status: 'neutral', active: null, version: highestVersion, reason, playback }); }
   function tick() {
     if (disposed || suspended || !playlist) return neutral();
     const time = serverNow(), active = playlist.active;
     if (time == null || time >= playlist.validUntil) return neutral('La vigencia debe verificarse de nuevo.');
-    if (!active || time < active.startsAt || time >= active.endsAt || !image) return neutral();
-    return emit({ placementId, status: 'active', active, version: playlist.version, serverTime: time, ...image });
+    if (!active || time < active.startsAt || time >= active.endsAt || !image || ['PAUSED','IDLE'].includes(playlist.playback?.phase)) return neutral(playlist.playback?.phase === 'PAUSED' ? 'Publicación en pausa.' : undefined,playlist.playback ? {...playlist.playback,remainingMs:null} : null);
+    const playback=playlist.playback ? {...playlist.playback,remainingMs:playbackCountdown(playlist.playback,time,playlist.serverTime)} : null;
+    return emit({ placementId, status: 'active', active, version: playlist.version, serverTime: time, playback, ...image });
   }
   function refresh() {
     if (disposed || suspended) return Promise.resolve(neutral());

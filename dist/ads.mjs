@@ -1,4 +1,4 @@
-import { ADS_PLACEMENTS, createAdsPlayer } from './ads-player.mjs';
+import { ADS_PLACEMENTS, createAdsPlayer, playbackLabel } from './ads-player.mjs';
 import { createAdsWallet } from './ads-wallet.mjs';
 export const PILOT_PROFILE = 'main-stage-test-5m';
 export function configuredPilotOffer(config) {
@@ -50,6 +50,7 @@ export function exclusiveUnits(startsAt, endsAt, unitMs) {
   if (!Number.isSafeInteger(unitMs) || unitMs <= 0 || !Number.isSafeInteger(duration) || duration <= 0 || duration % unitMs !== 0) throw Error('La ventana debe ser un múltiplo exacto de la unidad exclusiva configurada.');
   return duration / unitMs;
 }
+export function sessionCanPurchase(config,eligibility){return config.enabled===true&&eligibility?.canPurchase!==false;}
 export function fulfillmentRemaining(order, config = {}) {
   return (order?.quote ? order.quote.terms?.refundPolicy : config.terms?.refundPolicy) === 'FULFILL_REMAINING';
 }
@@ -59,6 +60,30 @@ export function deliveryProgress(item, quote = {}) {
   if (!Number.isSafeInteger(required) || required <= 0 || !Number.isSafeInteger(completed) || completed < 0 || completed > required || item.required != null && item.required !== required) return { valid: false };
   return { valid: true, completed, required, owed: required - completed };
 }
+export function availabilitySuggestion(value) {
+  const window=value?.window, startsAt=Date.parse(window?.startsAt),endsAt=Date.parse(window?.endsAt),serverTime=Date.parse(value?.serverTime);
+  if (!Number.isFinite(serverTime)||!Number.isFinite(startsAt)||!Number.isFinite(endsAt)||endsAt<=startsAt||value.estimated!==true||!Array.isArray(value.estimatedPasses)||value.estimatedPasses.length!==5) throw Error('La sugerencia de horarios no está verificada.');
+  const numbers=new Set();
+  for (const pass of value.estimatedPasses) { if(!Number.isSafeInteger(pass.number)||pass.number<1||pass.number>5||numbers.has(pass.number)||!Number.isFinite(Date.parse(pass.estimatedStartsAt))||!Number.isFinite(Date.parse(pass.estimatedEndsAt))||Date.parse(pass.estimatedEndsAt)<=Date.parse(pass.estimatedStartsAt)||Date.parse(pass.estimatedStartsAt)<startsAt||Date.parse(pass.estimatedEndsAt)>endsAt) throw Error('La sugerencia no contiene cinco turnos estimados.'); numbers.add(pass.number); }
+  return {window,passes:[...value.estimatedPasses].sort((a,b)=>a.number-b.number)};
+}
+export function fulfillmentTimeline(order) {
+  const f=order?.fulfillment;if(!f||order.quote?.plan==='TIME'||order.quote?.plan==='EXCLUSIVE')return null;
+  if (!Number.isSafeInteger(f.version)||f.version<0||!Number.isFinite(Date.parse(f.serverTime))||!Array.isArray(f.units)||f.units.length!==5) return {valid:false};
+  const seen=new Set(),units=[...f.units].sort((a,b)=>a.number-b.number);
+  for(const unit of units) {if(!Number.isSafeInteger(unit.number)||unit.number<1||unit.number>5||seen.has(unit.number)||!['PENDING','SCHEDULED','ACTIVE','COMPLETED','DEBT'].includes(unit.status)||unit.status==='COMPLETED'&&(!Number.isFinite(Date.parse(unit.completedAt))||Date.parse(unit.completedAt)>Date.parse(f.serverTime))||unit.estimatedStartsAt!=null&&!Number.isFinite(Date.parse(unit.estimatedStartsAt)))return {valid:false};seen.add(unit.number);}
+  const placement=order.placements?.find(p=>p.placementId==='main_stage_screen');
+  if(placement&&units.filter(u=>u.status==='COMPLETED').length!==placement.delivered)return {valid:false};
+  return {valid:true,version:f.version,units,nextEstimatedAt:Number.isFinite(Date.parse(f.nextEstimatedAt))?f.nextEstimatedAt:null,window:f.window};
+}
+export function consentedReprogramPayload(order, startsAt, endsAt, accept) {
+  if(!accept)throw Error('Confirma que aceptas la nueva ventana sin otro cobro.');
+  const start=Date.parse(startsAt),end=Date.parse(endsAt),timeline=fulfillmentTimeline(order);
+  if(!Number.isFinite(start)||!Number.isFinite(end)||end<=start)throw Error('Indica una nueva ventana válida.');
+  if(!timeline?.valid)throw Error('Actualiza la orden antes de reprogramar sus entregas pendientes.');
+  return {startsAt:new Date(start).toISOString(),endsAt:new Date(end).toISOString(),fulfillmentVersion:timeline.version,accept:true};
+}
+const localDateInput=value=>{const d=new Date(value),pad=v=>String(v).padStart(2,'0');return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds())+'.'+String(d.getMilliseconds()).padStart(3,'0');};
 export function quoteUnitsDescription(quote, config = {}) {
   if (quote.plan === 'TIME') return quote.units + ' unidad(es) de ' + ((quote.timeUnitMs ?? config.units?.timeMs) / 1000) + ' segundos de actividad acumulada.';
   if (quote.plan === 'PASSES') return quote.units + ' entregas completas de ' + ((quote.passMs ?? config.units?.passMs) / 1000) + ' segundos. Una entrega interrumpida no cuenta y sigue pendiente.';
@@ -110,7 +135,7 @@ export async function initAdsPage(documentRef = document) {
   const $ = id => documentRef.getElementById(id), api = createAdsApi(), params = new URLSearchParams(location.search), publisher = params.get('publisher') === '1';
   const form = $('briefForm'), feedback = $('feedback');
   $('timeZoneHint').textContent = 'Fechas en tu zona horaria: ' + Intl.DateTimeFormat().resolvedOptions().timeZone + '. La cotización conserva los instantes exactos.';
-  let config = { enabled: false, missing: [], placements: [] }, pilotOffer = null, wallet, signedIn = false, campaign, quote, order, polling, busy = false, ar = null, operatorRefunds = [];
+  let config = { enabled: false, missing: [], placements: [] }, pilotOffer = null, wallet, signedIn = false, campaign, quote, order, polling, busy = false, ar = null, operatorRefunds = [],consentVersion=null,purchaseEligibility=null;
   const players = new Map(), artUrls = new Map(), rendered = new Map();
   documentRef.body.classList.toggle('publisher', publisher);
   const message = text => { feedback.querySelector('span').textContent = text; feedback.hidden = false; };
@@ -129,13 +154,15 @@ export async function initAdsPage(documentRef = document) {
     return key;
   }
   function controls() {
+    const purchaseAllowed=sessionCanPurchase(config,purchaseEligibility);
     $('preauditButton').disabled = busy || !signedIn;
-    $('quoteButton').disabled = busy || !campaign || !signedIn || !config.enabled;
+    $('quoteButton').disabled = busy || !campaign || !signedIn || !purchaseAllowed;
     $('previewButton').disabled = busy || !campaign || !signedIn;
-    $('reserveButton').disabled = busy || !quote || !config.enabled || Date.parse(quote.expiresAt) <= Date.now();
-    $('payButton').disabled = busy || !order || !signedIn || !config.enabled || ['SETTLED', 'VERIFYING', 'AUTHORIZED', 'SETTLING', 'RECONCILIATION_REQUIRED'].includes(order.payment?.status) || ['BLOCKED', 'QUARANTINED', 'CANCELLED', 'COMPLETED', 'RECONCILIATION_REQUIRED'].includes(order.status);
+    $('reserveButton').disabled = busy || !quote || !purchaseAllowed || Date.parse(quote.expiresAt) <= Date.now();
+    $('payButton').disabled = busy || !order || !signedIn || !purchaseAllowed || ['SETTLED', 'VERIFYING', 'AUTHORIZED', 'SETTLING', 'RECONCILIATION_REQUIRED'].includes(order.payment?.status) || ['BLOCKED', 'QUARANTINED', 'CANCELLED', 'COMPLETED', 'RECONCILIATION_REQUIRED'].includes(order.status);
     $('walletButton').disabled = busy;
     const keepOwed = fulfillmentRemaining(order, config);
+    if($('availabilityButton'))$('availabilityButton').disabled=busy||!signedIn||!campaign||!purchaseAllowed;
     documentRef.querySelectorAll('[data-remedy="refunds"]').forEach(button => { button.hidden = keepOwed; button.disabled = busy || keepOwed; });
     $('fulfillmentNotice').hidden = !keepOwed; $('remedyHelp').textContent = keepOwed ? 'Se conservará la evidencia. Una reclamación o solicitud de cambio de ventana no equivale a entregas confirmadas.' : 'Se conservará la evidencia. Una solicitud no significa que la devolución o el cambio estén confirmados.'; $('remediesSummary').textContent = keepOwed ? 'Reclamación o cambio de ventana' : 'Reclamación, devolución o cambio de ventana';
     $('correctionPanel').hidden = !includedCorrectionEligible(order); $('correctionButton').disabled = busy || !signedIn || !includedCorrectionEligible(order);
@@ -151,6 +178,16 @@ export async function initAdsPage(documentRef = document) {
     for (const item of cta || []) {
       const link = documentRef.createElement('a'); link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = item.label + ' · ' + item.domain + ' ↗'; container.append(link);
     }
+  }
+  function renderPlayback() {
+    const owned=$('ownedPlayback'),current=players.get('main_stage_screen')?.state;if(owned){const complete=fulfillmentTimeline(order)?.units?.every(unit=>unit.status==='COMPLETED');owned.textContent=complete?'Cinco entregas completas confirmadas.':current?.active?.orderId===order?.id?(current.playback?playbackLabel(current.playback):'Tu anuncio está activo.'):current?.playback?.phase==='PAUSED'?'Publicación en pausa; las entregas pendientes se conservan.':'Tu anuncio espera un turno o una programación verificable.';}
+    for(const [placementId,player] of players) { const card=documentRef.querySelector('[data-placement="'+placementId+'"]'),label=card?.querySelector('.playback-time');if(label){const state=player.state;label.textContent=state.playback?playbackLabel(state.playback):state.status==='active'?'Anuncio activo':state.reason||'Contenido del anfitrión';} }
+  }
+  async function suggestAvailability() {
+    if(!campaign||!signedIn)return;
+    const status=$('availabilityStatus');
+    try {const suggestion=availabilitySuggestion(await api('/availability?campaignId='+encodeURIComponent(campaign.id)));quote=null;$('quoteOutput').hidden=true;form.elements.startsAt.value=localDateInput(suggestion.window.startsAt);form.elements.endsAt.value=localDateInput(suggestion.window.endsAt);status.textContent='Ventana sugerida de 60 minutos. Los cinco turnos son estimados y pueden moverse; la capacidad se confirma al reservar.';const list=$('availabilityPasses');list.replaceChildren();for(const pass of suggestion.passes){const li=documentRef.createElement('li');li.textContent='Entrega '+pass.number+' · '+new Date(pass.estimatedStartsAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' estimada';list.append(li);}}
+    catch {status.textContent='La sugerencia no está disponible. Puedes elegir otra ventana; se comprobará su capacidad antes de pagar.';}
   }
   async function renderPlacement(state) {
     const card = documentRef.querySelector('[data-placement="' + state.placementId + '"]'), image = card.querySelector('.active-art');
@@ -170,7 +207,7 @@ export async function initAdsPage(documentRef = document) {
   for (const placementId of ADS_PLACEMENTS) {
     const player = createAdsPlayer({ placementId, onChange: state => { void renderPlacement(state); }, onError: () => {} }); players.set(placementId, player);
   }
-  const ticks = setInterval(() => { for (const player of players.values()) player.tick(); }, 100);
+  const ticks = setInterval(() => { for (const player of players.values()) player.tick();renderPlayback(); }, 100);
   const playlistPoll = setInterval(() => { for (const player of players.values()) void player.refresh(); }, 1_000);
   let publisherFrame = 0;
   if (publisher) {
@@ -199,12 +236,15 @@ export async function initAdsPage(documentRef = document) {
     quote = null; $('quoteOutput').hidden = true; controls();
   });
   documentRef.querySelectorAll('input[name="placement"]').forEach(input => input.addEventListener('change', () => { quote = null; $('quoteOutput').hidden = true; controls(); }));
+  for(const id of ['reprogramStart','reprogramEnd'])$(id)?.addEventListener('input',()=>{$('reprogramAccept').checked=false;});
+  for(const input of [form.elements.startsAt,form.elements.endsAt])input?.addEventListener('input',()=>{quote=null;$('quoteOutput').hidden=true;$('availabilityPasses').replaceChildren();$('availabilityStatus').textContent='Ventana modificada. La capacidad y los horarios se comprobarán al cotizar y reservar.';controls();});
+  $('availabilityButton')?.addEventListener('click',()=>action(suggestAvailability));
   $('walletButton').addEventListener('click', () => action(async () => {
     const response = await fetch('/api/wallet/config', { cache: 'no-store', credentials: 'same-origin' });
     if (!response.ok) throw Error('La configuración de wallet no está disponible.');
     const walletConfig = await response.json();
     wallet ||= await createAdsWallet(walletConfig);
-    const connection = await wallet.connect(); const session = await wallet.authenticate(); signedIn = true;
+    const connection = await wallet.connect(); const session = await wallet.authenticate(); signedIn = true;purchaseEligibility=session.purchaseEligibility??null;if(purchaseEligibility?.canPurchase===false)setNotice(purchaseEligibility.mode==='CONTROLLED'?'Tu wallet está conectada. Esta compra está limitada a cuentas autorizadas del piloto; puedes preparar el brief y consultar tus recibos.':'Las compras están en pausa. Puedes preparar el brief y consultar tus recibos.',true);
     $('operatorPanel').hidden = session.identity?.role !== 'operator'; if (session.identity?.role === 'operator') await loadOperator();
     $('sessionLabel').textContent = 'Sesión autenticada · ' + connection.address.slice(0, 7) + '…' + connection.address.slice(-5);
     $('walletButton').textContent = 'Passkey conectada';
@@ -212,8 +252,9 @@ export async function initAdsPage(documentRef = document) {
     if (previous?.id) { try { order = await api('/orders/' + encodeURIComponent(previous.id)); renderOrder(); } catch { stored.remove('order'); } }
   }));
   const requireSession = () => { if (!signedIn) throw Error('Conecta tu passkey para guardar el brief y consultar tu campaña. Puedes crear tu wallet desde el mapa de ONE16.'); };
+  const requirePurchase=()=>{requireSession();if(!sessionCanPurchase(config,purchaseEligibility))throw Error('Esta wallet todavía no tiene la compra habilitada. Puedes preparar el brief y consultar tus recibos.');};
   form.addEventListener('submit', event => { event.preventDefault(); void action(async () => {
-    requireSession(); if (!form.reportValidity()) return;
+    requireSession(); if (!['name','description','xUrl','websiteUrl','logo','rightsAccepted'].every(name=>form.elements[name].reportValidity())) return;
     const logo = form.elements.logo.files[0];
     if (!logo || !['image/png', 'image/jpeg', 'image/webp'].includes(logo.type)) throw Error('Selecciona un logo PNG, JPEG o WebP.');
     const upload = await api('/uploads', { method: 'POST', body: logo, raw: true, idempotencyKey: await requestKey('upload', logo) });
@@ -222,7 +263,7 @@ export async function initAdsPage(documentRef = document) {
     const audit = await api('/campaigns/' + encodeURIComponent(draft.id) + '/preaudit', { method: 'POST', body: {}, idempotencyKey: await requestKey('preaudit', { campaignId: draft.id, revisionId: draft.revisionId }) });
     const verdict = audit.verdict || audit;
     if (['BLOCKED', 'QUARANTINED', 'REJECTED'].includes(verdict.status || verdict.state) || verdict.allowed === false) { campaign = null; throw Error(verdict.reason || 'El brief requiere correcciones antes de cotizar.'); }
-    campaign = draft; $('briefStatus').textContent = 'Brief admitido por la preauditoría. Ya puedes consultar capacidad y cotizar.'; quote = null; $('quoteOutput').hidden = true;
+    campaign = draft; $('briefStatus').textContent = 'Brief admitido por la preauditoría. Consulta una ventana con capacidad y revisa la cotización.'; quote = null; $('quoteOutput').hidden = true;await suggestAvailability();
   }); });
   $('previewButton').addEventListener('click', () => action(async () => {
     requireSession(); const preview = await api('/campaigns/' + encodeURIComponent(campaign.id) + '/preview', { method: 'POST', body: {}, idempotencyKey: await requestKey('preview', { campaignId: campaign.id, revisionId: campaign.revisionId }) });
@@ -234,7 +275,7 @@ export async function initAdsPage(documentRef = document) {
     }
   }));
   $('quoteButton').addEventListener('click', () => action(async () => {
-    requireSession(); if (!form.reportValidity()) return;
+    requirePurchase(); if (!form.reportValidity()) return;
     const placements = [...documentRef.querySelectorAll('input[name="placement"]:checked')].map(input => input.value);
     if (!placements.length) throw Error('Elige al menos una ubicación digital.');
     const startsAt = new Date(form.elements.startsAt.value), endsAt = new Date(form.elements.endsAt.value);
@@ -247,14 +288,14 @@ export async function initAdsPage(documentRef = document) {
     const network = documentRef.createElement('p'); network.textContent = 'Stellar Testnet · ' + quote.plan + ' · ' + placements.length + ' ubicación(es)'; output.append(network);
     const recipient = documentRef.createElement('p'); recipient.className = 'mono small'; recipient.textContent = 'Beneficiario: ' + config.payTo; output.append(recipient);
     const expiry = documentRef.createElement('p'); expiry.className = 'small'; expiry.textContent = 'Cotización válida hasta ' + new Date(quote.expiresAt).toLocaleString(); output.append(expiry);
-    const units = documentRef.createElement('p'); units.className = 'small'; units.textContent = quoteUnitsDescription(quote, config); output.append(units);
+    const units = documentRef.createElement('p'); units.className = 'small'; units.textContent = quoteUnitsDescription(quote, config); output.append(units);if(Number.isFinite(Date.parse(quote.startsAt))&&Number.isFinite(Date.parse(quote.endsAt))){const windowInfo=documentRef.createElement('p');windowInfo.className='small';windowInfo.textContent='Ventana cotizada: '+new Date(quote.startsAt).toLocaleString()+' → '+new Date(quote.endsAt).toLocaleString();output.append(windowInfo);}
     const terms = documentRef.createElement('div'); terms.className = 'terms';
     if (typeof quote.terms === 'string') terms.textContent = quote.terms;
     else for (const [key, label] of Object.entries({ version: 'Condiciones', interruptions: 'Interrupciones y pausas', refundPolicy: 'Devoluciones', refundDeadlineMs: 'Plazo para devolución en segundos', disputeAuthority: 'Resolución de reclamaciones', includedRevisions: 'Revisiones incluidas', processingMs: 'Plazo de procesamiento en segundos' })) { const value = quote.terms?.[key]; if (value != null) { const text = documentRef.createElement('p'); text.textContent = label + ': ' + (key.endsWith('Ms') ? value / 1000 : value === 'FULL' ? 'Devolución completa según condiciones' : value === 'PRO_RATA' ? 'Devolución proporcional al déficit' : value === 'FULFILL_REMAINING' ? 'Las entregas incompletas siguen pendientes; no se cierran mediante devolución automática' : String(value)); terms.append(text); } }
     const priority = documentRef.createElement('p'); priority.textContent = 'El anfitrión mantiene prioridad sobre el contenido del main stage. Una interrupción detiene las unidades aplicables. La entrega se mide en el publicador digital canónico, sin contar espectadores.'; terms.append(priority); output.append(terms);
   }));
   $('reserveButton').addEventListener('click', () => action(async () => {
-    requireSession(); validatePilotQuote(quote, pilotOffer); order = await api('/orders', { method: 'POST', body: { quoteId: quote.id }, idempotencyKey: 'order:' + quote.id }); stored.set('order', { id: order.id, amountUnits: quote.amountUnits }); const orderUrl = new URL(location.href); orderUrl.searchParams.set('order', order.id); history.replaceState(null, '', orderUrl); renderOrder(); $('orderPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    requirePurchase(); validatePilotQuote(quote, pilotOffer); order = await api('/orders', { method: 'POST', body: { quoteId: quote.id }, idempotencyKey: 'order:' + quote.id }); stored.set('order', { id: order.id, amountUnits: quote.amountUnits }); const orderUrl = new URL(location.href); orderUrl.searchParams.set('order', order.id); history.replaceState(null, '', orderUrl); renderOrder(); $('orderPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }));
   function renderOrder() {
     if (!order) return;
@@ -271,6 +312,8 @@ export async function initAdsPage(documentRef = document) {
       for (const text of ['Ubicación', 'Entregado / contratado', 'Pendiente', 'Estado']) { const cell = documentRef.createElement('th'); cell.textContent = text; cell.scope = 'col'; head.append(cell); } table.append(head);
       for (const item of order.placements) { const row = documentRef.createElement('tr'), passes = deliveryProgress(item, order.quote); const completed = passes ? passes.valid ? passes.completed + ' / ' + passes.required + ' entregas completas' : 'Recuento pendiente de verificación' : String(item.delivered || 0) + ' / ' + String(item.required || 0) + ' ' + (item.unit || ''); const owed = passes ? passes.valid ? passes.owed + ' entrega(s)' : 'Pendiente de verificación' : String(item.deficit ?? Math.max(0, (item.required || 0) - (item.delivered || 0))) + ' ' + (item.unit || ''); if (passes) { const summary = documentRef.createElement('dl'); summary.className = 'delivery-summary'; summary.setAttribute('aria-label', 'Entregas de ' + (item.placementId === 'main_stage_screen' ? 'Main stage' : item.placementId)); for (const [label, value] of [['Entregas completas', passes.valid ? passes.completed + ' / ' + passes.required : 'Sin verificar'], ['Entregas pendientes', passes.valid ? String(passes.owed) : 'Sin verificar']]) { const group = documentRef.createElement('div'), term = documentRef.createElement('dt'), count = documentRef.createElement('dd'); term.textContent = label; count.textContent = value; group.append(term, count); summary.append(group); } delivery.append(summary); } for (const text of [item.placementId, completed, owed, item.status]) { const cell = documentRef.createElement('td'); cell.textContent = text; row.append(cell); } table.append(row); } delivery.append(table);
     }
+    const timeline=fulfillmentTimeline(order),flight=$('fulfillmentTimeline');if(timeline?.valid&&timeline.version!==consentVersion){if($('reprogramAccept'))$('reprogramAccept').checked=false;consentVersion=timeline.version;}
+    if(flight){flight.replaceChildren();flight.hidden=!timeline;if(timeline){const title=documentRef.createElement('h3');title.textContent='Tus cinco entregas';flight.append(title);const ownedClock=documentRef.createElement('p');ownedClock.id='ownedPlayback';ownedClock.className='playback-time';ownedClock.textContent='Consultando el tiempo confirmado del pase…';flight.append(ownedClock);if(!timeline.valid){const warning=documentRef.createElement('p');warning.textContent='El detalle de turnos necesita actualizarse; sólo cuentan las entregas completas verificadas.';flight.append(warning);}else{if(Number.isFinite(Date.parse(timeline.window?.startsAt))&&Number.isFinite(Date.parse(timeline.window?.endsAt))){const windowInfo=documentRef.createElement('p');windowInfo.className='small';windowInfo.textContent='Ventana vigente de entrega: '+new Date(timeline.window.startsAt).toLocaleString()+' → '+new Date(timeline.window.endsAt).toLocaleString();flight.append(windowInfo);}const pips=documentRef.createElement('ol');pips.className='pass-timeline';pips.setAttribute('aria-label','Estado de tus cinco entregas');const names={PENDING:'Pendiente',SCHEDULED:'Programada',ACTIVE:'En curso',COMPLETED:'Completa',DEBT:'Pendiente de otra ventana'};for(const unit of timeline.units){const item=documentRef.createElement('li');item.dataset.passStatus=unit.status;const badge=documentRef.createElement('strong');badge.textContent=String(unit.number);const text=documentRef.createElement('span');text.textContent=names[unit.status];item.append(badge,text);if(unit.estimatedStartsAt&&unit.status!=='COMPLETED'){const estimate=documentRef.createElement('small');estimate.textContent=new Date(unit.estimatedStartsAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' estimada';item.append(estimate);}pips.append(item);}flight.append(pips);const next=documentRef.createElement('p');next.className='small';next.textContent=timeline.nextEstimatedAt?'Próxima entrega estimada: '+new Date(timeline.nextEstimatedAt).toLocaleString()+'. Puede cambiar por pausas o ajustes de capacidad.':'No hay otro turno estimado confirmado. Las entregas pendientes se conservan.';flight.append(next);const remaining=timeline.units.filter(u=>u.status!=='COMPLETED').length;const consent=$('reprogramConsentText');if(consent)consent.textContent='Acepto la nueva ventana para '+remaining+' entrega(s) pendiente(s), sin otro cobro (0 USDC).';}}}
     const receipts = $('receiptOutput'); receipts.replaceChildren();
     const tx = order.receipt?.transaction || order.receipt?.tx || order.payment?.transaction;
     if (typeof tx === 'string' && /^[a-f0-9]{64}$/i.test(tx)) { const link = documentRef.createElement('a'); link.className = 'receipt-link mono'; link.href = 'https://stellar.expert/explorer/testnet/tx/' + tx; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Recibo de liquidación · ' + tx.slice(0, 12) + '… ↗'; receipts.append(link); }
@@ -281,7 +324,7 @@ export async function initAdsPage(documentRef = document) {
   async function updateOrder() { if (!order) return; order = await api('/orders/' + encodeURIComponent(order.id)); renderOrder(); }
   $('refreshOrder').addEventListener('click', () => action(updateOrder));
   $('payButton').addEventListener('click', () => action(async () => {
-    requireSession(); if (!wallet) throw Error('Conecta la wallet para autorizar este importe.');
+    requirePurchase(); if (!wallet) throw Error('Conecta la wallet para autorizar este importe.');
     await updateOrder();
     if (['SETTLED', 'VERIFYING', 'AUTHORIZED', 'SETTLING', 'RECONCILIATION_REQUIRED'].includes(order.payment?.status) || order.status === 'RECONCILIATION_REQUIRED') throw Error('El intento original sigue pendiente de resolución. No se creará una autorización nueva.');
     const orderId = order.id, path = '/orders/' + encodeURIComponent(orderId) + '/pay';
@@ -308,10 +351,10 @@ export async function initAdsPage(documentRef = document) {
   }));
   documentRef.querySelectorAll('[data-remedy]').forEach(button => button.addEventListener('click', () => action(async () => {
     requireSession(); if (!order) return;
-    const reason = $('remedyReason').value.trim(); if (!reason) throw Error('Describe el motivo de la solicitud.');
+    const reason = $('remedyReason').value.trim(); if (!reason && button.dataset.remedy !== 'reprogram') throw Error('Describe el motivo de la solicitud.');
     if (button.dataset.remedy === 'refunds' && fulfillmentRemaining(order, config)) throw Error('Las entregas incompletas siguen pendientes. Puedes abrir una reclamación o solicitar reprogramación.');
-    const body = { reason };
-    if (button.dataset.remedy === 'reprogram') { const start = new Date($('reprogramStart').value), end = new Date($('reprogramEnd').value); if (!(end > start)) throw Error('Indica una nueva ventana válida.'); body.startsAt = start.toISOString(); body.endsAt = end.toISOString(); body.consented = true; }
+    let body = { reason };
+    if (button.dataset.remedy === 'reprogram') { const start = new Date($('reprogramStart').value), end = new Date($('reprogramEnd').value);if(!(end>start))throw Error('Indica una nueva ventana válida.');body=order.fulfillment?consentedReprogramPayload(order,start.toISOString(),end.toISOString(),$('reprogramAccept').checked):{reason,startsAt:start.toISOString(),endsAt:end.toISOString(),consented:true}; }
     await api('/orders/' + encodeURIComponent(order.id) + '/' + button.dataset.remedy, { method: 'POST', body, idempotencyKey: await requestKey('remedy:' + button.dataset.remedy, { orderId: order.id, ...body }) }); message('Solicitud registrada. Consulta el estado para conocer su resolución.'); await updateOrder();
   })));
   function operatorTable(container, rows, columns) {
@@ -358,6 +401,7 @@ export async function initAdsPage(documentRef = document) {
     pilotOffer = configuredPilotOffer(config);
     $('pilotOffer').hidden = !pilotOffer; $('legacyPlans').hidden = !!pilotOffer; $('unitsLabel').hidden = !!pilotOffer;
     if (pilotOffer) {
+      documentRef.querySelector('[data-placement="venue_center_banner"]').hidden=true;documentRef.querySelector('.space-grid').classList.add('single-placement');
       $('heroIntro').textContent = 'Forma parte del espacio digital de ONE16. Prueba tu anuncio en el main stage: 5 USDC de prueba por 5 entregas completas de 1 minuto.';
       $('spacesTitle').textContent = 'Tu anuncio, en el main stage.';
       $('offerPrice').textContent = formatAdsAmount(pilotOffer.amountUnits) + ' USDC de prueba · 5 entregas de 1 minuto';
@@ -381,7 +425,7 @@ export async function initAdsPage(documentRef = document) {
       try {
         const session = await api('/auth/me'); const identity = session.identity;
         if (identity?.address) {
-          signedIn = true; $('sessionLabel').textContent = 'Sesión autenticada · ' + identity.address.slice(0,7) + '…' + identity.address.slice(-5); $('walletButton').textContent = 'Conectar para pagar';
+          signedIn = true;purchaseEligibility=session.purchaseEligibility??null;if(purchaseEligibility?.canPurchase===false)setNotice(purchaseEligibility.mode==='CONTROLLED'?'Tu wallet está conectada. Esta compra está limitada a cuentas autorizadas del piloto; puedes preparar el brief y consultar tus recibos.':'Las compras están en pausa. Puedes preparar el brief y consultar tus recibos.',true); $('sessionLabel').textContent = 'Sesión autenticada · ' + identity.address.slice(0,7) + '…' + identity.address.slice(-5); $('walletButton').textContent = 'Conectar para pagar';
           $('operatorPanel').hidden = identity.role !== 'operator'; if (identity.role === 'operator') await loadOperator();
           const previous = params.get('order') ? { id: params.get('order') } : stored.get('order');
           if (previous?.id) { order = await api('/orders/' + encodeURIComponent(previous.id)); renderOrder(); }

@@ -77,6 +77,7 @@ export async function mountAdsSpatial(THREE, model, { config, fetchImpl = fetch,
   }
   const refreshTimer = timer(() => { for (const player of players) void player.refresh(); }, 1_000);
   return {
+    get playback() { return players.find(player=>player.state.placementId==='main_stage_screen')?.state.playback||null; },
     get state() { return players.map(player => ({ placementId: player.state.placementId, status: player.state.status, reason: player.state.reason || null, version: player.state.version, revisionId: player.state.active?.revisionId || null, visible: !!model.getObjectByName(player.state.placementId)?.visible })); },
     update() { players.forEach(player => player.tick()); },
     afterFrame({ camera } = {}) {

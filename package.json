@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node --test --test-concurrency=2 test/*.test.mjs",
     "build:wallet": "node scripts/build-wallet.mjs",
-    "build": "npm run build:origin && npm run build:wallet && npm run build:ads",
+    "build": "npm run build:origin && npm run build:wallet && npm run build:ads && npm run build:ads-entry",
     "dev": "node --env-file-if-exists=.env.wallet.local --env-file-if-exists=.env.ads.local scripts/serve-wallet.mjs",
     "build:origin": "node scripts/prepare-site-origin.mjs",
     "build:ads": "node scripts/build-ads-wallet.mjs",
@@ -17,7 +17,8 @@
     "ads:keys": "node scripts/ads.mjs keys",
     "test:ads": "node --test --test-concurrency=2 test/ads-*.test.mjs",
     "test:ads:testnet": "node --env-file-if-exists=.env.ads.local scripts/verify-ads-testnet.mjs",
-    "ads:registry": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs registry"
+    "ads:registry": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs registry",
+    "build:ads-entry": "node scripts/build-ads-entry.mjs"
   },
   "dependencies": {
     "@simplewebauthn/browser": "14.0.0",
