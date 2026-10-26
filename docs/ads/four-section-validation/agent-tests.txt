@@ -1,0 +1,448 @@
+TAP version 13
+# Subtest: only explicit valid sections opt in to the new offer
+ok 1 - only explicit valid sections opt in to the new offer
+  ---
+  duration_ms: 24.0483
+  type: 'test'
+  ...
+# Subtest: invalid or absent sections fail before the payment gate is reached
+ok 2 - invalid or absent sections fail before the payment gate is reached
+  ---
+  duration_ms: 1.285
+  type: 'test'
+  ...
+# Subtest: section preflight pins the token, exact amount, recipient and network
+ok 3 - section preflight pins the token, exact amount, recipient and network
+  ---
+  duration_ms: 2.8509
+  type: 'test'
+  ...
+# Subtest: a changed second challenge is rejected at the signing boundary
+ok 4 - a changed second challenge is rejected at the signing boundary
+  ---
+  duration_ms: 3.2663
+  type: 'test'
+  ...
+# Subtest: a signer exception cannot trigger another signature attempt
+ok 5 - a signer exception cannot trigger another signature attempt
+  ---
+  duration_ms: 2.8285
+  type: 'test'
+  ...
+# Subtest: the ad slot is income for the treasury, never something the stage agent can buy
+ok 6 - the ad slot is income for the treasury, never something the stage agent can buy
+  ---
+  duration_ms: 5.8157
+  type: 'test'
+  ...
+# Subtest: an ad needs an advertiser, and its text is plain and short
+ok 7 - an ad needs an advertiser, and its text is plain and short
+  ---
+  duration_ms: 2.6462
+  type: 'test'
+  ...
+# Subtest: hashes are deterministic: same order, same commitment; another run, another order id
+ok 8 - hashes are deterministic: same order, same commitment; another run, another order id
+  ---
+  duration_ms: 9.8824
+  type: 'test'
+  ...
+# Subtest: the commitment follows the contract's rules before anything is signed
+ok 9 - the commitment follows the contract's rules before anything is signed
+  ---
+  duration_ms: 5.2183
+  type: 'test'
+  ...
+# Subtest: contract arguments use explicit XDR types with sorted struct keys
+ok 10 - contract arguments use explicit XDR types with sorted struct keys
+  ---
+  duration_ms: 17.6944
+  type: 'test'
+  ...
+# Subtest: the read-back is verified only when the chain holds this payment, queued and undelivered
+ok 11 - the read-back is verified only when the chain holds this payment, queued and undelivered
+  ---
+  duration_ms: 1.5368
+  type: 'test'
+  ...
+# Subtest: approval stays live for whole days and never below the current ledger
+ok 12 - approval stays live for whole days and never below the current ledger
+  ---
+  duration_ms: 16.6172
+  type: 'test'
+  ...
+# Subtest: the agent draws exactly its allocations and the probe is one cent above what is left
+ok 13 - the agent draws exactly its allocations and the probe is one cent above what is left
+  ---
+  duration_ms: 30.7323
+  type: 'test'
+  ...
+# Subtest: an allowance below the allocations means no draw at all
+ok 14 - an allowance below the allocations means no draw at all
+  ---
+  duration_ms: 0.9769
+  type: 'test'
+  ...
+# Subtest: the on-chain summary the dashboard reads uses decimal USDC strings
+ok 15 - the on-chain summary the dashboard reads uses decimal USDC strings
+  ---
+  duration_ms: 1.2785
+  type: 'test'
+  ...
+# Subtest: network events are recorded as rows without touching the off-chain budget
+ok 16 - network events are recorded as rows without touching the off-chain budget
+  ---
+  duration_ms: 52.8201
+  type: 'test'
+  ...
+# Subtest: testnet is the default and carries every value the agent needs
+ok 17 - testnet is the default and carries every value the agent needs
+  ---
+  duration_ms: 5.2473
+  type: 'test'
+  ...
+# Subtest: mainnet is described for the migration but refused at runtime
+ok 18 - mainnet is described for the migration but refused at runtime
+  ---
+  duration_ms: 1.7193
+  type: 'test'
+  ...
+# Subtest: testnet and mainnet differ in exactly the values a migration must change
+ok 19 - testnet and mainnet differ in exactly the values a migration must change
+  ---
+  duration_ms: 0.407
+  type: 'test'
+  ...
+# Subtest: explorer links come from the config and match the ledger's links
+ok 20 - explorer links come from the config and match the ledger's links
+  ---
+  duration_ms: 0.4617
+  type: 'test'
+  ...
+# Subtest: a sponsor slot needs a name, trims text and never carries markup or control characters
+ok 21 - a sponsor slot needs a name, trims text and never carries markup or control characters
+  ---
+  duration_ms: 9.049
+  type: 'test'
+  ...
+# Subtest: the sponsor signs only for at most its maximum, on testnet, paid to the venue treasury
+ok 22 - the sponsor signs only for at most its maximum, on testnet, paid to the venue treasury
+  ---
+  duration_ms: 3.2489
+  type: 'test'
+  ...
+# Subtest: income counts settled sponsor payments only
+ok 23 - income counts settled sponsor payments only
+  ---
+  duration_ms: 0.5531
+  type: 'test'
+  ...
+# Subtest: SEP-41 approve sets the allowance, so a recharge approves what is left plus the income
+ok 24 - SEP-41 approve sets the allowance, so a recharge approves what is left plus the income
+  ---
+  duration_ms: 7.8883
+  type: 'test'
+  ...
+# Subtest: the recharge summary is verified only when the allowance read back matches
+ok 25 - the recharge summary is verified only when the allowance read back matches
+  ---
+  duration_ms: 12.9004
+  type: 'test'
+  ...
+# Subtest: income rows are append-only notes: they never change any agent's budget
+ok 26 - income rows are append-only notes: they never change any agent's budget
+  ---
+  duration_ms: 2.6944
+  type: 'test'
+  ...
+# Subtest: allocation moves budget from the venue agent to the stage agent
+ok 27 - allocation moves budget from the venue agent to the stage agent
+  ---
+  duration_ms: 6.3507
+  type: 'test'
+  ...
+# Subtest: allocation above the venue budget is refused
+ok 28 - allocation above the venue budget is refused
+  ---
+  duration_ms: 0.5801
+  type: 'test'
+  ...
+# Subtest: an allowed call within cap and budget is reserved, then settled with an explorer link
+ok 29 - an allowed call within cap and budget is reserved, then settled with an explorer link
+  ---
+  duration_ms: 2.6982
+  type: 'test'
+  ...
+# Subtest: a call above the per-call cap is blocked before any reservation and flagged for approval
+ok 30 - a call above the per-call cap is blocked before any reservation and flagged for approval
+  ---
+  duration_ms: 2.4839
+  type: 'test'
+  ...
+# Subtest: a service outside the mandate is blocked
+ok 31 - a service outside the mandate is blocked
+  ---
+  duration_ms: 0.4359
+  type: 'test'
+  ...
+# Subtest: a call larger than what is left in the allocation is blocked
+ok 32 - a call larger than what is left in the allocation is blocked
+  ---
+  duration_ms: 0.3465
+  type: 'test'
+  ...
+# Subtest: a failed payment releases the reservation
+ok 33 - a failed payment releases the reservation
+  ---
+  duration_ms: 0.7586
+  type: 'test'
+  ...
+# Subtest: the same idempotency key is never paid twice, even after a restore
+ok 34 - the same idempotency key is never paid twice, even after a restore
+  ---
+  duration_ms: 1.1753
+  type: 'test'
+  ...
+# Subtest: an interrupted reservation is never retried automatically after a restore
+ok 35 - an interrupted reservation is never retried automatically after a restore
+  ---
+  duration_ms: 1.4344
+  type: 'test'
+  ...
+# Subtest: a blocked key may be tried again later (e.g. after the operator raises the cap)
+ok 36 - a blocked key may be tried again later (e.g. after the operator raises the cap)
+  ---
+  duration_ms: 1.1609
+  type: 'test'
+  ...
+# Subtest: the ledger is append-only: every attempt stays as a row
+ok 37 - the ledger is append-only: every attempt stays as a row
+  ---
+  duration_ms: 1.4211
+  type: 'test'
+  ...
+# Subtest: mandates other than testnet are rejected
+ok 38 - mandates other than testnet are rejected
+  ---
+  duration_ms: 0.6979
+  type: 'test'
+  ...
+# Subtest: explorer links point at testnet and are absent without a hash
+ok 39 - explorer links point at testnet and are absent without a hash
+  ---
+  duration_ms: 0.2966
+  type: 'test'
+  ...
+# Subtest: money: 7-decimal USDC round-trips without floating point
+ok 40 - money: 7-decimal USDC round-trips without floating point
+  ---
+  duration_ms: 6.1983
+  type: 'test'
+  ...
+# Subtest: x402: reads the v2 PAYMENT-REQUIRED header and compares the asked amount
+ok 41 - x402: reads the v2 PAYMENT-REQUIRED header and compares the asked amount
+  ---
+  duration_ms: 109.1608
+  type: 'test'
+  ...
+# Subtest: x402: accepts the v1 body shape and field name
+ok 42 - x402: accepts the v1 body shape and field name
+  ---
+  duration_ms: 0.6557
+  type: 'test'
+  ...
+# Subtest: x402: settlement transaction from PAYMENT-RESPONSE or X-PAYMENT-RESPONSE
+ok 43 - x402: settlement transaction from PAYMENT-RESPONSE or X-PAYMENT-RESPONSE
+  ---
+  duration_ms: 2.4743
+  type: 'test'
+  ...
+# Subtest: plan: next session after now, last one when the event is over
+ok 44 - plan: next session after now, last one when the event is over
+  ---
+  duration_ms: 268.4977
+  type: 'test'
+  ...
+# Subtest: catalog: the demo call that should be blocked is priced above the mandate cap
+ok 45 - catalog: the demo call that should be blocked is priced above the mandate cap
+  ---
+  duration_ms: 38.4587
+  type: 'test'
+  ...
+# Subtest: journal locks a logical run once, independent of output file, and preserves ambiguous attempts
+ok 46 - journal locks a logical run once, independent of output file, and preserves ambiguous attempts
+  ---
+  duration_ms: 132.1219
+  type: 'test'
+  ...
+# Subtest: section offer is separate; legacy whole-screen offer is unchanged
+ok 47 - section offer is separate; legacy whole-screen offer is unchanged
+  ---
+  duration_ms: 5.0089
+  type: 'test'
+  ...
+# Subtest: payment verifier checks successful testnet transfer XDR and returns exact units
+ok 48 - payment verifier checks successful testnet transfer XDR and returns exact units
+  ---
+  duration_ms: 111.7001
+  type: 'test'
+  ...
+# Subtest: wrong payer, destination, asset, amount, network, method or receipt cannot count
+ok 49 - wrong payer, destination, asset, amount, network, method or receipt cannot count
+  ---
+  duration_ms: 56.4325
+  type: 'test'
+  ...
+# Subtest: RPC envelope can independently verify payment when explicitly supplied
+ok 50 - RPC envelope can independently verify payment when explicitly supplied
+  ---
+  duration_ms: 18.5894
+  type: 'test'
+  ...
+# Subtest: six unique verified payments reconcile exact balance; partial, duplicate, stale and bad registry runs fail
+ok 51 - six unique verified payments reconcile exact balance; partial, duplicate, stale and bad registry runs fail
+  ---
+  duration_ms: 40.3266
+  type: 'test'
+  ...
+# Subtest: readBack compares every commitment field and every delivered slot
+ok 52 - readBack compares every commitment field and every delivered slot
+  ---
+  duration_ms: 12.646
+  type: 'test'
+  ...
+# Subtest: a screen run cannot exceed six exact five-USDC purchases
+ok 53 - a screen run cannot exceed six exact five-USDC purchases
+  ---
+  duration_ms: 2.6717
+  type: 'test'
+  ...
+# Subtest: a fresh output directory is claimed once and interrupted runs cannot silently pay again
+ok 54 - a fresh output directory is claimed once and interrupted runs cannot silently pay again
+  ---
+  duration_ms: 32.1882
+  type: 'test'
+  ...
+# Subtest: readiness can take longer than twenty seconds without creating a false startup failure
+ok 55 - readiness can take longer than twenty seconds without creating a false startup failure
+  ---
+  duration_ms: 10.7135
+  type: 'test'
+  ...
+# Subtest: an early child exit interrupts an outstanding health request immediately
+ok 56 - an early child exit interrupts an outstanding health request immediately
+  ---
+  duration_ms: 1.884
+  type: 'test'
+  ...
+# Subtest: spawn errors fail immediately and diagnostics redact secret-shaped text
+ok 57 - spawn errors fail immediately and diagnostics redact secret-shaped text
+  ---
+  duration_ms: 1.6265
+  type: 'test'
+  ...
+# Subtest: an already exited child is rejected before making a health request
+ok 58 - an already exited child is rejected before making a health request
+  ---
+  duration_ms: 0.8913
+  type: 'test'
+  ...
+# Subtest: the absolute deadline includes request and polling time and preserves the last health result
+ok 59 - the absolute deadline includes request and polling time and preserves the last health result
+  ---
+  duration_ms: 0.8118
+  type: 'test'
+  ...
+# Subtest: connection failures stay diagnostic and stop at the default 120-second deadline
+ok 60 - connection failures stay diagnostic and stop at the default 120-second deadline
+  ---
+  duration_ms: 68.4857
+  type: 'test'
+  ...
+# Subtest: a healthy service on the wrong network fails closed before any funding
+ok 61 - a healthy service on the wrong network fails closed before any funding
+  ---
+  duration_ms: 1.0212
+  type: 'test'
+  ...
+# Subtest: run startup verification precedes Friendbot, trustlines, DEX funding and payment attempts
+ok 62 - run startup verification precedes Friendbot, trustlines, DEX funding and payment attempts
+  ---
+  duration_ms: 0.8628
+  type: 'test'
+  ...
+# Subtest: the main-stage screen has four sections of five minutes each
+ok 63 - the main-stage screen has four sections of five minutes each
+  ---
+  duration_ms: 3.868
+  type: 'test'
+  ...
+# Subtest: a paid order starts now if its section is free, or right after the last order there
+ok 64 - a paid order starts now if its section is free, or right after the last order there
+  ---
+  duration_ms: 1.2537
+  type: 'test'
+  ...
+# Subtest: without a chosen section, the order takes the one that is free first
+ok 65 - without a chosen section, the order takes the one that is free first
+  ---
+  duration_ms: 1.9786
+  type: 'test'
+  ...
+# Subtest: scheduling never edits earlier orders and refuses duplicates
+ok 66 - scheduling never edits earlier orders and refuses duplicates
+  ---
+  duration_ms: 0.8478
+  type: 'test'
+  ...
+# Subtest: the screen shows, per section, what plays at a moment and what comes next
+ok 67 - the screen shows, per section, what plays at a moment and what comes next
+  ---
+  duration_ms: 1.2253
+  type: 'test'
+  ...
+# Subtest: live CI cannot pass with zero payments, absent hashes, stale runs or reused transfers
+ok 68 - live CI cannot pass with zero payments, absent hashes, stale runs or reused transfers
+  ---
+  duration_ms: 2.438
+  type: 'test'
+  ...
+# Subtest: fresh distinct receipts are required for each expected paid step
+ok 69 - fresh distinct receipts are required for each expected paid step
+  ---
+  duration_ms: 0.5279
+  type: 'test'
+  ...
+# Subtest: registry receipt binds success, hash, issuer, contract and exact commitment XDR
+ok 70 - registry receipt binds success, hash, issuer, contract and exact commitment XDR
+  ---
+  duration_ms: 46.6555
+  type: 'test'
+  ...
+# Subtest: historical offer cannot be silently reinterpreted as the new section offer
+ok 71 - historical offer cannot be silently reinterpreted as the new section offer
+  ---
+  duration_ms: 25.6509
+  type: 'test'
+  ...
+# Subtest: deployment receipt derives the contract address and checks WASM plus constructor issuer
+ok 72 - deployment receipt derives the contract address and checks WASM plus constructor issuer
+  ---
+  duration_ms: 9.6374
+  type: 'test'
+  ...
+# Subtest: read-only audit rejects provenance mistakes before any chain work
+ok 73 - read-only audit rejects provenance mistakes before any chain work
+  ---
+  duration_ms: 3.1929
+  type: 'test'
+  ...
+1..73
+# tests 73
+# suites 0
+# pass 73
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22089.0022

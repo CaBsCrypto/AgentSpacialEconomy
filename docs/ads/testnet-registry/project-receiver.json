@@ -1,0 +1,23 @@
+{
+  "network": "stellar:testnet",
+  "address": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+  "issuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+  "role": "Project advertising USDC receiver",
+  "createdAt": "2026-10-26T05:21:13.147Z",
+  "funding": {
+    "state": "CONFIRMED",
+    "transaction": "e3d013575f60b74f6ffce4d480065c3202b4cc51a0cfbe8773a42efc40b3717b",
+    "confirmedAt": "2026-10-26T05:21:23.395Z"
+  },
+  "trustline": {
+    "state": "CONFIRMED",
+    "transaction": "9eef6907b90b0ab2c801be8952c2dd3370f3774c2cbdcc0b9f783bb36e21b065",
+    "ledger": 5393700
+  },
+  "available": {
+    "USDC": "0.0000000",
+    "XLM": "9999.9999900"
+  },
+  "receiverReady": true,
+  "verifiedAt": "2026-10-26T05:21:27.521Z"
+}

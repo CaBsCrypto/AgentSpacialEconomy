@@ -1,0 +1,36 @@
+{
+  "codeCommit": "b8aa31a96ff41866fa19891da6a86464740ee94b",
+  "paymentRunCommit": "a5bfe1f58533dc0d17d434a2ed9b82cccdf01436",
+  "runId": "2026-10-26T10:12:02.195Z",
+  "build": {
+    "passed": true
+  },
+  "frontend": {
+    "passed": 771,
+    "failed": 0,
+    "skipped": 2,
+    "total": 773
+  },
+  "agent": {
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0
+  },
+  "database": {
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "note": "Two cutoff cases explicitly use PGlite; one new pg conversion test does not use a database; remaining integration fixtures use PostgreSQL 17.11."
+  },
+  "rust": {
+    "passed": 9,
+    "failed": 0
+  },
+  "freshAudit": {
+    "verified": true,
+    "payments": 6,
+    "totalUsdc": "30",
+    "registryTransactions": 7,
+    "deliveryMs": 0
+  }
+}

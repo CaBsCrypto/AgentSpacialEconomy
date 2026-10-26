@@ -1,0 +1,6 @@
+{
+  "source": "https://get.enterprisedb.com/postgresql/postgresql-17.11-3-windows-x64-binaries.zip",
+  "sha256": "4B8DB0930C38F6EF845DB919551DEDDA3B6B845AEB0927B3D79A6E8E9E4537CF",
+  "checksumSource": "https://github.com/EnterpriseDB/edb-installers/issues/682",
+  "portableRoot": "D:\\Proyectos\\ChatGPT\\AgentSpacialEconomy\\ads-four-sections-validation\\.ads-qa\\postgres-portable"
+}

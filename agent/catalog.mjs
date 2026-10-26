@@ -51,6 +51,15 @@ export const AD_SLOT = {
   description: "Five minutes of the main-stage screen for one advertiser, paid to the venue treasury",
 };
 
+export const AD_SECTION_SLOT = {
+  ...AD_SLOT,
+  id: "ad-section",
+  path: "/ad-section",
+  offerId: "main-stage-section-test-5m",
+  sections: ["A", "B", "C", "D"],
+  description: "Experimental recorded run: five minutes of one main-stage section, paid to its isolated treasury",
+};
+
 export function findService(catalog, id) {
   const s = catalog.find((c) => c.id === id);
   if (!s) throw new Error(`Service ${id} is not in the catalog`);

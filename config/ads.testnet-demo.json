@@ -1,0 +1,116 @@
+{
+  "_instructions": "Approved Testnet pilot: 5 USDC total for five complete sixty-second main-stage deliveries; design included. Interrupted plays remain owed, with no automatic refund closure. Remaining null operational fields block checkout.",
+  "network": "stellar:testnet",
+  "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+  "issuer": "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+  "payTo": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+  "termsVersion": "pilot-5-passes-v2-20261026",
+  "policyVersion": "ads-content-v1",
+  "interruptions": "Cada compra entrega cinco pases completos de 60 segundos. Un pase interrumpido no cuenta y sigue pendiente. Las pausas, las confirmaciones vencidas y los espectadores adicionales no consumen ni multiplican pases.",
+  "refundPolicy": "FULFILL_REMAINING",
+  "refundDesign": "NEVER",
+  "refundDeadlineMs": null,
+  "disputeAuthority": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+  "privacyNotice": "Piloto exclusivamente en Stellar Testnet. Briefs y logos se almacenan de forma privada; el creativo auditado y sus CTA se muestran al publicarse. Retención operativa de 30 días. Los recibos y el progreso se conservan por campaña.",
+  "retentionMs": 2592000000,
+  "timeUnitMs": 300000,
+  "rotationMs": 60000,
+  "passMs": 60000,
+  "exclusiveUnitMs": 60000,
+  "reservationMs": 300000,
+  "processingMs": 180000,
+  "maxUnits": 5,
+  "maxWindowMs": 86400000,
+  "maxCampaignSharePercent": 100,
+  "includedRevisions": 1,
+  "hostWindows": [],
+  "allowedDomains": [
+    "x.com",
+    "agenticreality.space",
+    "github.com"
+  ],
+  "operators": [
+    "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+    "GBLB7YZF6BLWGDNUYAEBZ4I4LVYAGF3K7FIW2IGB7FFIQGSNDN4JOXY5"
+  ],
+  "accountWasmHash": "c514d35ea67eaea9bfc1fb3327854c0c06111bc1ddebd4fe217c504c1004b9e1",
+  "webauthnVerifier": "CC7EKIHQP3TN4CARQDND6CEOY2UXLWWC2X5GHTD5NLAT7BG5GPZIOM3F",
+  "walletCompatibilityVerified": true,
+  "registryEvidenceGraceMs": 86400000,
+  "placements": {
+    "venue_center_banner": {
+      "position": null,
+      "rotation": null,
+      "width": null,
+      "height": null
+    },
+    "main_stage_screen": {
+      "position": [
+        0.5600000023841858,
+        2.3600000739097595,
+        -46.17299999985099
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "width": 4.053333282470703,
+      "height": 2.2799999713897705
+    }
+  },
+  "pricing": {
+    "venue_center_banner": {
+      "TIME": {
+        "unitAmount": null,
+        "designAmount": null
+      },
+      "PASSES": {
+        "unitAmount": null,
+        "designAmount": null
+      },
+      "EXCLUSIVE": {
+        "unitAmount": null,
+        "designAmount": null
+      }
+    },
+    "main_stage_screen": {
+      "TIME": {
+        "unitAmount": null,
+        "designAmount": null
+      },
+      "PASSES": {
+        "unitAmount": "10000000",
+        "designAmount": "0"
+      },
+      "EXCLUSIVE": {
+        "unitAmount": null,
+        "designAmount": null
+      }
+    }
+  },
+  "model": {
+    "id": "google/gemini-2.5-flash-lite",
+    "maxCalls": 3,
+    "maxTokens": 1024,
+    "maxInputTokens": 1000000,
+    "timeoutMs": 20000,
+    "previewPerHour": 2,
+    "preauditPerHour": 3,
+    "maxCostMicrousd": 310000,
+    "inputMicrousdPerMillion": "100000",
+    "outputMicrousdPerMillion": "400000"
+  },
+  "registryIssuer": "GBLB7YZF6BLWGDNUYAEBZ4I4LVYAGF3K7FIW2IGB7FFIQGSNDN4JOXY5",
+  "limits": {
+    "uploadBytes": 2097152,
+    "imagePixels": 262144,
+    "imageWidth": 512,
+    "imageHeight": 512,
+    "nameChars": 80,
+    "descriptionChars": 1000,
+    "textBytes": 4096
+  },
+  "profile": "main-stage-test-5m",
+  "renderLeadMs": 10000
+}

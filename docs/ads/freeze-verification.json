@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-10-26T04:40:39.230613+00:00",
+  "branch": "feature/ads-3d-ar-x402",
+  "freezePolicy": "No new features; unfinished grant and offer/balance UI preserved in ignored local backups, not published.",
+  "tests": {
+    "root": {
+      "total": 449,
+      "passed": 448,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Existing optional WALLET_RPC_SMOKE=1 live read-only wallet simulation not enabled."
+    },
+    "agent": {
+      "passed": 30,
+      "failed": 0,
+      "skipped": 0
+    },
+    "contract": {
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0
+    },
+    "pilotIncludedInRoot": {
+      "passed": 8,
+      "failed": 0
+    },
+    "build": "PASSED"
+  },
+  "pilot": {
+    "offerId": "main-stage-test-5m",
+    "amountUnits": "50000000",
+    "durationMs": 300000,
+    "designAmount": "0",
+    "placement": "main_stage_screen",
+    "oneTime100Grant": "AGREED_NOT_FINISHED",
+    "offerAndBalanceUi": "FROZEN_NOT_CONNECTED",
+    "checkoutEnabled": false
+  },
+  "onChain": {
+    "network": "stellar:testnet",
+    "evidence": "testnet-registry/evidence.json",
+    "verified": "Only disposable contract upload, deployment, synthetic queue write and read. No advertiser USDC payment or ad delivery."
+  },
+  "productionRelease": {
+    "pr": 27,
+    "mergeMethod": "merge",
+    "originalCommits": 5,
+    "mainCommit": "a03aeaf766c009e7e409e8efc302916bdf9388e2",
+    "deployment": "dpl_8tymuDNDNvbdbYMuZiN9UPmUgqDQ",
+    "readyLisbon": "2026-10-26 04:36:05",
+    "sourceBranch": "main",
+    "advertisingBranchDeployed": false,
+    "quickChecks": [
+      "Recorded run 26/10/2026 03:21:08 Lisbon",
+      "Agent credit pool visible",
+      "Live check: 6 of 6 confirmed on Testnet Horizon"
+    ],
+    "physicalMobileTwinAndReleaseVerifier": "Separate Claude review pending"
+  },
+  "secrets": {
+    "stellarPattern": "\\bS[A-Z2-7]{55}\\b",
+    "historyMatches": 0
+  }
+}

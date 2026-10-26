@@ -1,3 +1,4 @@
+import { ECDH } from 'node:crypto';
 import { Address, xdr, hash } from '@stellar/stellar-sdk';
 import { SHARED_DEPLOYER } from './config.mjs';
 import { WalletApiError } from './http.mjs';
@@ -28,6 +29,10 @@ export function validateDeployment(body, config) {
     if (Address.fromScAddress(signer[1].address()).toString() !== config.webauthnVerifierAddress) refuse('El verificador de passkey no está autorizado.');
     const key = signer[2].bytes();
     if (key.length <= 65 || key.length > 256 || key[0] !== 4 || !equal(hash(key.subarray(65)), from.salt())) refuse('La identidad de la passkey no corresponde al despliegue.');
+    // The contract accepts opaque verifier data at construction. Reject invalid
+    // P-256 points here rather than sponsoring an unusable passkey account.
+    try { ECDH.convertKey(key.subarray(0, 65), 'prime256v1', undefined, undefined, 'uncompressed'); }
+    catch { refuse('La clave pública de la passkey no es un punto P-256 válido.'); }
     const credentials = auth.credentials();
     if (credentials.switch().name !== 'sorobanCredentialsAddress' || Address.fromScAddress(credentials.address().address()).toString() !== SHARED_DEPLOYER) refuse('La autorización del desplegador no es válida.');
     const root = auth.rootInvocation();

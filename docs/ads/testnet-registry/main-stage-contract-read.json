@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-26T10:14:30.691Z",
+  "network": "stellar:testnet",
+  "rpc": "https://soroban-testnet.stellar.org",
+  "contractId": "CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD",
+  "orderId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+  "orderHash": "eb35c818b8f2efc5e65d9e4aa0dceca79064145dce092734870393e54435e29a",
+  "reader": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+  "latestLedger": 5397216,
+  "method": "get",
+  "unsigned": true,
+  "submitted": false,
+  "authorizationCount": 0,
+  "state": "Completed",
+  "commitment": {
+    "order": "eb35c818b8f2efc5e65d9e4aa0dceca79064145dce092734870393e54435e29a",
+    "revision": "d26df57198e8c450db6d5b1a85c0a3025e081d8eeb72d5648ef7e5fb2ac75063",
+    "terms": "9533bd26d0bbf3d9cb1b7f28903f3d3206ac5e76c3b40d411a4ccacc7469fe44",
+    "manifest": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8",
+    "payment": "7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2",
+    "claimant": "CCNKDO25M3S33RNDGSHDO2NOKEJE37YNKQHJP4G443CVQUJVLETKOXYM",
+    "deadline": "2026-10-27T10:58:00.000Z"
+  },
+  "placements": [
+    {
+      "slot": "main_stage_screen",
+      "plan": "Passes",
+      "requiredUnits": "5",
+      "deliveredUnits": "5",
+      "passMs": 60000,
+      "startsAt": "2026-10-26T09:58:00.000Z",
+      "endsAt": "2026-10-26T10:58:00.000Z",
+      "lastEnd": "2026-10-26T10:09:51.282Z"
+    }
+  ],
+  "nextNonce": "5",
+  "resolution": null,
+  "returnedScValSha256": "62f60d9da7cf24e2d7d8aa630ea59aa51cd779bcdd16a97ea39a5b06ba6a1960",
+  "validated": true
+}

@@ -457,6 +457,47 @@ mod test {
         assert_eq!(client.get(&c.order).delivered.get(0), Some(2));
     }
     #[test]
+    fn pilot_requires_five_complete_sixty_second_passes() {
+        let (e, id, key, mut c) = setup();
+        let client = AdsRegistryClient::new(&e, &id);
+        let mut slot = c.placements.get(0).unwrap();
+        slot.slot = Symbol::new(&e, "main_stage_screen");
+        slot.plan = Plan::Passes;
+        slot.units = 5;
+        slot.pass_ms = 60000;
+        slot.end = 500000;
+        c.deadline = 600000;
+        c.placements.set(0, slot);
+        client.commit(&c);
+        let mut p = proof(&e, &c);
+        p.units = 1;
+        p.end = 230000;
+        e.ledger().with_mut(|l| l.timestamp = 230);
+        assert!(client
+            .try_record_delivery(&p, &signed(&e, &client, &key, &p))
+            .is_err());
+        assert_eq!(client.get(&c.order).delivered.get(0), Some(0));
+        for i in 0..5u64 {
+            p.nonce = i;
+            p.segment = BytesN::from_array(&e, &[(20 + i) as u8; 32]);
+            p.start = 200000 + i * 60000;
+            p.end = p.start + 60000;
+            e.ledger().with_mut(|l| l.timestamp = p.end / 1000);
+            client.record_delivery(&p, &signed(&e, &client, &key, &p));
+            assert!(client
+                .try_record_delivery(&p, &signed(&e, &client, &key, &p))
+                .is_err());
+            assert_eq!(client.get(&c.order).delivered.get(0), Some(i + 1));
+            if i < 4 {
+                assert!(client.try_complete(&c.order).is_err());
+            }
+        }
+        client.complete(&c.order);
+        assert_eq!(client.get(&c.order).state, Status::Completed);
+        assert_eq!(client.get(&c.order).delivered.get(0), Some(5));
+    }
+
+    #[test]
     fn overlapping_time_never_increases_delivery() {
         let (e, id, key, mut c) = setup();
         let client = AdsRegistryClient::new(&e, &id);

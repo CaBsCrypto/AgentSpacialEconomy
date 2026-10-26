@@ -15,6 +15,21 @@
     },
     "api/wallet/config.js": {
       "maxDuration": 30
+    },
+    "api/wallet/birth-receipt.js": {
+      "maxDuration": 30
+    },
+    "api/ads.js": {
+      "maxDuration": 180,
+      "includeFiles": "{media/fonts/**,server/ads/**}"
+    },
+    "api/ads-runner.js": {
+      "maxDuration": 800,
+      "includeFiles": "{media/fonts/**,server/ads/**,node_modules/@sparticuz/chromium/bin/**,node_modules/playwright-core-vercel/{browsers.json,package.json}}"
+    },
+    "api/ads-worker.js": {
+      "maxDuration": 180,
+      "includeFiles": "{media/fonts/**,server/ads/**}"
     }
   },
   "routes": [
@@ -200,7 +215,25 @@
       "continue": true
     },
     {
+      "src": "^/api/ads(?:/.*)?$",
+      "dest": "/api/ads.js"
+    },
+    {
+      "src": "^/ads$",
+      "dest": "/ads.html"
+    },
+    {
       "handle": "filesystem"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/ads-runner",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/ads-worker",
+      "schedule": "* * * * *"
     }
   ]
 }

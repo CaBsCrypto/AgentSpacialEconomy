@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-10-26T09:20:00.825Z",
+  "network": "stellar:testnet",
+  "facilitator": "https://channels.openzeppelin.com/x402/testnet",
+  "payer": "CCNKDO25M3S33RNDGSHDO2NOKEJE37YNKQHJP4G443CVQUJVLETKOXYM",
+  "payTo": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+  "amountUnits": "50000000",
+  "attemptId": "209c2b6f-c9e5-4778-b629-18ef7c4c071a",
+  "status": "VERIFIED",
+  "configurationHash": "5dd5a9d8ea1aa69236ab3d1af26573316789f00b123f4058b2dde2dcf8243f0b",
+  "authHash": "a3e035f3a1ac4b1da37494b3ea2a553d406ce95c84a7ae78afa5d0ed8000879c",
+  "payloadHash": "4a93e7291df55e1edf831b64452bd21bc9c4cde80721257cbfbd47c6ad5815fe",
+  "verificationHash": "3359a0eefe2e3611b47e89153d4f0b86959f53a89ca4bf646b4ce1ac67f78f80",
+  "settlementRequested": false,
+  "createsOrder": false,
+  "evidenceKind": "REAL_PASSKEY_FACILITATOR_VERIFY_ONLY"
+}

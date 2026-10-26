@@ -16,9 +16,9 @@ class Store {
   async get(key) { return this.entries.has(key) ? structuredClone(this.entries.get(key)) : null; }
   async set(key, value, options) { if (options?.nx && this.entries.has(key)) return null; this.entries.set(key, structuredClone(value)); return 'OK'; }
   async eval(script, keys, args) {
-    if (script.includes("item.state~='failed'")) {
-      const item = this.entries.get(keys[0]);
-      if (!item || item.state !== 'failed' || item.updatedAt !== Number(args[0])) return 0;
+    if (script.includes('wallet:claim:cas:v1')) {
+      const item = this.entries.get(keys[0]), expected = JSON.parse(args[0]);
+      if (!item || ['version','state','attempt','updatedAt'].some(key => item[key] !== expected[key])) return 0;
       this.entries.set(keys[0], JSON.parse(args[1])); return 1;
     }
     return 1;
@@ -33,16 +33,16 @@ function fixture(overrides = {}, sharedStore = new Store()) {
 }
 const stateOf = async response => { assert.equal(response.status, 200); return response.json(); };
 
-function deployment({ verifier = WEBAUTHN_VERIFIER, wasm = ACCOUNT_WASM, salt, nested = false } = {}) {
+function deployment({ verifier = WEBAUTHN_VERIFIER, wasm = ACCOUNT_WASM, salt, nested = false, publicKey = Buffer.from('046b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c2964fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5','hex') } = {}) {
   const credential = Buffer.from('test-credential-0001');
-  const keyData = Buffer.concat([Buffer.from([4]), Buffer.alloc(64, 1), credential]);
+  const keyData = Buffer.concat([publicKey, credential]);
   const create = new xdr.CreateContractArgsV2({
     contractIdPreimage: xdr.ContractIdPreimage.contractIdPreimageFromAddress(new xdr.ContractIdPreimageFromAddress({ address: Address.fromString(SHARED_DEPLOYER).toScAddress(), salt: salt || hash(credential) })),
     executable: xdr.ContractExecutable.contractExecutableWasm(Buffer.from(wasm, 'hex')),
     constructorArgs: [xdr.ScVal.scvVec([xdr.ScVal.scvVec([xdr.ScVal.scvSymbol('External'), new Address(verifier).toScVal(), xdr.ScVal.scvBytes(keyData)])]), xdr.ScVal.scvMap([])],
   });
   const root = new xdr.SorobanAuthorizedInvocation({ function: xdr.SorobanAuthorizedFunction.sorobanAuthorizedFunctionTypeCreateContractV2HostFn(create), subInvocations: [] });
-  if (nested) root.subInvocations([root]);
+  if (nested) root.subInvocations([new xdr.SorobanAuthorizedInvocation({ function: root.function(), subInvocations: [] })]);
   const auth = new xdr.SorobanAuthorizationEntry({ credentials: xdr.SorobanCredentials.sorobanCredentialsAddress(new xdr.SorobanAddressCredentials({ address: Address.fromString(SHARED_DEPLOYER).toScAddress(), nonce: xdr.Int64.fromString('1'), signatureExpirationLedger: 100, signature: nativeToScVal([]) })), rootInvocation: root });
   return { func: xdr.HostFunction.hostFunctionTypeCreateContractV2(create).toXDR('base64'), auth: [auth.toXDR('base64')] };
 }
@@ -143,7 +143,7 @@ test('writes require the exact allowed browser origin and checksum-valid C addre
 
 test('relay accepts only the approved one-passkey deployment and exact authorization tree', () => {
   assert.equal(validateDeployment(deployment(), config).auth.length, 1);
-  for (const body of [{ xdr: 'arbitrary' }, deployment({ verifier: ADDRESS }), deployment({ wasm: 'ff'.repeat(32) }), deployment({ salt: Buffer.alloc(32, 2) })]) {
+  for (const body of [{ xdr: 'arbitrary' }, deployment({ verifier: ADDRESS }), deployment({ wasm: 'ff'.repeat(32) }), deployment({ salt: Buffer.alloc(32, 2) }), deployment({ nested: true }), deployment({ publicKey: Buffer.concat([Buffer.from([4]), Buffer.alloc(64, 1)]) })]) {
     assert.throws(() => validateDeployment(body, config), WalletApiError);
   }
   const body = deployment(); body.auth = [];
@@ -206,4 +206,52 @@ test('API config and financial outcomes are never cached by browser or CDN', asy
     assert.equal(response.headers.get('CDN-Cache-Control'), 'no-store');
     assert.equal(response.headers.get('Vercel-CDN-Cache-Control'), 'no-store');
   }
+});
+
+test('observed prefunding is durably recorded, so spending it cannot enable an automatic top-up',async()=>{
+ const f=fixture();f.funds=1n;
+ assert.equal((await stateOf(await f.handlers.faucet(request()))).state,'confirmed');
+ const record=await f.store.get(`wallet:${config.campaign}:testnet:claim:${ADDRESS}`);assert.equal(record.state,'confirmed');assert.ok(record.version);
+ f.funds=0n;
+ assert.equal((await stateOf(await f.handlers.faucet(request('POST',{address:ADDRESS,retry:true})))).state,'confirmed');assert.equal(f.claims,0);
+});
+
+test('a stale pending reader cannot downgrade a concurrent onchain confirmation to unknown',async()=>{
+ const store=new Store(),latch=deferred(),started=deferred();let balances=0;
+ const key=`wallet:${config.campaign}:testnet:claim:${ADDRESS}`;
+ await store.set(key,{address:ADDRESS,state:'pending',createdAt:1,updatedAt:1,attempt:1,version:'original'});
+ const runtime={redis:store,walletAllowed:async()=>true,balance:async()=>{balances++;if(balances===1){started.resolve();await latch.promise;return 0n;}return 100n;}};
+ const first=createWalletHandlers({env,runtime,now:()=>200000}),second=createWalletHandlers({env,runtime,now:()=>200000});
+ const read=()=>request('GET',undefined,DEFAULT_ORIGIN,`/api/wallet/faucet?address=${ADDRESS}`);
+ const stale=first.faucet(read());await started.promise;
+ assert.equal((await stateOf(await second.faucet(read()))).state,'confirmed');
+ latch.resolve();assert.equal((await stateOf(await stale)).state,'confirmed');assert.equal((await store.get(key)).state,'confirmed');
+});
+
+test('a CLI completion cannot overwrite a confirmation inserted after its final Redis read',async()=>{
+ class ConfirmingStore extends Store {
+  reads=0;
+  async get(key){const previous=await super.get(key);this.reads++;if(this.reads===2&&previous?.state==='pending')await super.set(key,{...previous,state:'confirmed',confirmedAt:1000,version:'concurrent-chain-proof'});return previous;}
+ }
+ const store=new ConfirmingStore();let claims=0;
+ const f=fixture({claim:async()=>{claims++;return{success:true,hash:'f'.repeat(64)};}},store);
+ const result=await stateOf(await f.handlers.faucet(request()));
+ assert.equal(result.state,'confirmed');assert.equal(claims,1);assert.equal((await store.get(`wallet:${config.campaign}:testnet:claim:${ADDRESS}`)).version,'concurrent-chain-proof');
+});
+
+for(const outcome of [{success:false,reason:'payment_failed'},{success:false,reason:'unrecognized_provider_failure'},{success:false,reason:'user_cooldown',hash:'d'.repeat(64)},{}])test(`ambiguous provider outcome ${outcome.reason||'missing result'} never enables a second claim`,async()=>{
+ let claims=0;const f=fixture({claim:async()=>{claims++;return outcome;}});
+ assert.equal((await stateOf(await f.handlers.faucet(request()))).state,'unknown');
+ assert.equal((await stateOf(await f.handlers.faucet(request('POST',{address:ADDRESS,retry:true})))).state,'unknown');assert.equal(claims,1);
+});
+
+test('explicit retries across instances atomically advance one failed revision, even at the same timestamp',async()=>{
+ const store=new Store(),latch=deferred(),started=deferred();let claims=0;
+ await store.set(`wallet:${config.campaign}:testnet:claim:${ADDRESS}`,{address:ADDRESS,state:'failed',reason:'empty_today',attempt:1,createdAt:1000,updatedAt:1000,version:'first-rejection'});
+ const runtime={redis:store,walletAllowed:async()=>true,balance:async()=>0n,claim:async()=>{claims++;started.resolve();await latch.promise;return{success:false,reason:'empty_today'};}};
+ const first=createWalletHandlers({env,runtime,now:()=>1000}),second=createWalletHandlers({env,runtime,now:()=>1000});
+ const retry=()=>request('POST',{address:ADDRESS,retry:true});
+ const running=first.faucet(retry());await started.promise;
+ assert.equal((await stateOf(await second.faucet(retry()))).state,'pending');assert.equal(claims,1);
+ latch.resolve();assert.equal((await stateOf(await running)).state,'failed');const record=await store.get(`wallet:${config.campaign}:testnet:claim:${ADDRESS}`);assert.equal(record.attempt,2);assert.notEqual(record.version,'first-rejection');
 });

@@ -1,0 +1,60 @@
+name: Main-stage screen in four sections (testnet)
+on:
+  workflow_dispatch:
+
+# Evidence is attached to this exact run; this workflow never pushes a results branch.
+permissions:
+  contents: read
+
+concurrency:
+  group: screen-run
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      STELLAR_NETWORK: stellar:testnet
+      FACILITATOR_URL: ${{ vars.FACILITATOR_URL || 'https://x402.org/facilitator' }}
+      SCREEN_RUN_OUT: ${{ runner.temp }}/screen-result-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: agent/package-lock.json
+      - name: Install locked agent dependencies
+        working-directory: agent
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Unit tests
+        working-directory: agent
+        run: npm test
+      - name: Six isolated payments, maximum 30 Testnet USDC
+        id: experiment
+        working-directory: agent
+        shell: bash
+        run: |
+          set -o pipefail
+          node screen-ci.mjs --out "$SCREEN_RUN_OUT" 2>&1 | tee "$RUNNER_TEMP/screen-log.txt"
+      - name: Scan fresh evidence without printing secrets
+        id: scan
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$SCREEN_RUN_OUT"
+          if [ -f "$RUNNER_TEMP/screen-log.txt" ]; then
+            cp "$RUNNER_TEMP/screen-log.txt" "$SCREEN_RUN_OUT/screen-log.txt"
+          fi
+          if grep -rqE '\bS[A-Z2-7]{55}\b' "$SCREEN_RUN_OUT"; then
+            echo "::error::Evidence contains a secret; upload refused."
+            exit 1
+          fi
+      - name: Attach evidence and partial-failure diagnostics
+        if: always() && steps.scan.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: screen-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.SCREEN_RUN_OUT }}
+          if-no-files-found: warn

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head><script data-one16-canonical>(()=>{const u=new URL(location.href),o="https://agenticreality.space",h=["one16-passport-ar.vercel.app","one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site","www.agenticreality.space","agenticreality.space"];if(u.origin!==o&&h.includes(u.hostname))location.replace(o+u.pathname+u.search+u.hash)})();</script><link rel="canonical" href="https://agenticreality.space/wallet.html">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1b28">
+  <meta name="description" content="Acceso directo a tu wallet con passkey para el piloto de ONE16 en Stellar Testnet.">
+  
+  <title>Wallet Testnet · ONE16</title>
+  <link id="walletStyles" rel="stylesheet" href="/wallet.css?v=wallet-direct-1">
+  <style>
+    *{box-sizing:border-box}body{margin:0;min-height:100dvh;padding:24px 18px;background:#0b1b28;color:#eef7fb;font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{width:min(100%,460px);margin:clamp(24px,10vh,100px) auto}h1{font-size:clamp(28px,8vw,38px);line-height:1.16;letter-spacing:-.035em;margin:20px 0 14px}p{color:#b2c7d3}a{color:#a8e8fa;text-underline-offset:4px}button,.direct-continue{display:inline-block;min-height:46px;padding:11px 15px;border:1px solid #365263;border-radius:12px;font:inherit;line-height:1.5;background:#132a3a;color:#eef7fb;cursor:pointer;max-width:100%;overflow-wrap:anywhere}.direct-continue{margin:12px 0;text-decoration:none}button:disabled{opacity:.5;cursor:wait}button:focus-visible,a:focus-visible{outline:3px solid #a6edff;outline-offset:4px}[hidden]{display:none!important}.direct-brand{font-size:12px;letter-spacing:.11em;text-decoration:none}.direct-note{font-size:13px}.direct-links{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+  </style>
+  <script type="module" src="/wallet-direct.mjs?v=1"></script>
+</head>
+<body>
+  <main>
+    <a class="direct-brand" href="/">AGENTIC REALITY SPACE</a>
+    <h1>Tu wallet para ONE16</h1>
+    <p id="walletDirectStatus" role="status" aria-live="polite">Preparando el acceso a tu wallet…</p>
+    <button id="walletDirectRetry" type="button" hidden>Reintentar preparación</button>
+    <p class="direct-note">Stellar Testnet · USDC de prueba sin valor real. Crear o verificar una passkey requiere tu confirmación.</p>
+    <div class="direct-links"><a class="direct-continue" href="/one16?lang=es">Continuar a ONE16 ↗</a><a href="/">Volver a la plataforma</a></div>
+    <noscript><p>Activa JavaScript para preparar la wallet. Los enlaces a ONE16 y a la plataforma siguen disponibles.</p></noscript>
+  </main>
+  <dialog id="activationDialog" aria-label="Wallet de ONE16 en Stellar Testnet"></dialog>
+</body>
+</html>

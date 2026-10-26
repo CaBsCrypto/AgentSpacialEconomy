@@ -29,3 +29,5 @@ await Promise.all([
   path.join(root, 'node_modules', packageName, 'LICENSE'),
   path.join(licensesDir, filename),
 )));
+
+await copyFile(path.join(root, 'node_modules/smart-account-kit/LICENSE'), path.join(walletDir, 'SMART-ACCOUNT-KIT-LICENSE.txt'));

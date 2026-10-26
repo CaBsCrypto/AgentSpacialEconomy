@@ -69,6 +69,10 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
   const retry = element('button', 'Comprobar recepción', 'wallet-secondary');
   retry.id = 'walletRetry';
   retry.type = 'button';
+  const verify = element('button', 'Verificar mi passkey', 'wallet-secondary');
+  verify.id = 'walletVerify'; verify.type = 'button';
+  const verification = element('p', '', 'wallet-note');
+  verification.id = 'walletVerification'; verification.setAttribute('role', 'status'); verification.setAttribute('aria-live', 'polite'); verification.hidden = true;
   const continueButton = element('button', 'Continuar experiencia', 'wallet-secondary');
   continueButton.id = 'walletContinue';
   continueButton.type = 'button';
@@ -76,8 +80,8 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
   const limits = element('p', 'Piloto Testnet · los fondos dependen de la disponibilidad y los límites de Sozu.', 'wallet-note');
   const timings = element('p', '', 'wallet-timings');
   timings.hidden = true;
-  actions.append(create, connect, receive, retry, continueButton);
-  dialog.replaceChildren(close, eyebrow, title, introduction, status, availability, card, actions, notice, limits, timings);
+  actions.append(create, connect, receive, retry, verify, continueButton);
+  dialog.replaceChildren(close, eyebrow, title, introduction, status, availability, card, actions, verification, notice, limits, timings);
 
   let cooldownTimer;
   const clearCooldown = () => { if (cooldownTimer != null) clearTimeout(cooldownTimer); cooldownTimer = null; };
@@ -112,6 +116,10 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
         cooldownTimer?.unref?.();
       }
     }
+    verify.hidden = !state.address; verify.disabled = state.busy || !state.canVerifyPasskey;
+    verify.textContent = state.verificationBusy ? 'Verificando passkey…' : 'Verificar mi passkey';
+    verification.hidden = !state.verificationBusy && !state.verificationError && !state.passkeyProof;
+    verification.textContent = state.verificationBusy ? 'Confirma la passkey de esta misma wallet en tu teléfono.' : state.verificationError ? (state.verificationError.cancelled ? 'La verificación se canceló. Tu wallet sigue conectada.' : state.verificationError.message) : state.passkeyProof ? 'Passkey verificada para esta wallet.' : '';
     continueButton.textContent = state.status === 'ready' ? 'Continuar con mi wallet' : 'Continuar experiencia';
     const activationMs = state.timings.activation;
     timings.hidden = activationMs == null;
@@ -128,6 +136,7 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
   };
   const onCreate = () => { void controller.ensureWalletReady({ create: true }); };
   const onConnect = () => { void controller.connect(); };
+  const onVerify = () => { void controller.verifyPasskey(); };
   const onReceive = () => { void controller.ensureWalletReady({ create: false }); };
   const onRetry = () => {
     const state = controller.state;
@@ -140,6 +149,7 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
   create.addEventListener('click', onCreate);
   connect.addEventListener('click', onConnect);
   receive.addEventListener('click', onReceive);
+  verify.addEventListener('click', onVerify);
   retry.addEventListener('click', onRetry);
   dialog.addEventListener('close', onClosed);
   return {
@@ -153,6 +163,7 @@ export function bindWalletPanel({ dialog, controller, documentRef = dialog.owner
       create.removeEventListener('click', onCreate);
       connect.removeEventListener('click', onConnect);
       receive.removeEventListener('click', onReceive);
+      verify.removeEventListener('click', onVerify);
       retry.removeEventListener('click', onRetry);
       dialog.removeEventListener('close', onClosed);
     },

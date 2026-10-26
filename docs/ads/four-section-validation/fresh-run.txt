@@ -1,0 +1,15 @@
+Fresh run 2026-10-26T10:12:02.195Z at a5bfe1f58533dc0d17d434a2ed9b82cccdf01436; ephemeral treasury GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ
+[services] waiting for health; pid=28436 timeoutMs=120000
+[services] spawn pid=28436
+[services] Venue services on http://localhost:57997 (stellar:testnet)
+Facilitator: https://x402.org/facilitator
+Paying to GCUEFR…HATD
+[services] Sponsor slot pays the venue treasury GA27HQ…F2CJ
+[services] ready after 7920 ms; HTTP 200 network=stellar:testnet
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f
+Advertiser paid 5.00 testnet USDC to the venue treasury: SETTLED https://stellar.expert/explorer/testnet/tx/91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948
+VERIFIED: six unique exact payments, 30 Testnet USDC, six Queued commitments; no delivery claimed. D:\Proyectos\ChatGPT\AgentSpacialEconomy\ads-four-sections-validation\agent\out\validation-2026-10-26-ready\screen.json

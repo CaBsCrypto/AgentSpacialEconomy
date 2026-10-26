@@ -15,6 +15,32 @@ export function assertAddress(value) {
   return value;
 }
 
+export function parseSozuClaimOutput(stdout, address) {
+  try {
+    const result = JSON.parse(stdout);
+    if (!result || typeof result.success !== 'boolean' || result.to !== address || Object.hasOwn(result, 'wallet')) return { unknown: true };
+    const hash = result.txHash || result.hash || result.transactionHash;
+    if (hash !== undefined && (typeof hash !== 'string' || !/^[0-9a-f]{64}$/i.test(hash))) return { unknown: true };
+    return { success: result.success, hash, reason: result.reason, nextAvailableAt: result.nextAvailableAt };
+  } catch { return { unknown: true }; }
+}
+
+/** Invoke the installed official CLI once, never a shell or a wallet-generating mode. */
+export async function runSozuClaim(address, { execute = exec } = {}) {
+  assertAddress(address);
+  if (CIRCLE_USDC_ISSUER !== USDC_ISSUER) throw Error('Unexpected CLI asset');
+  const file = require.resolve('@sozu/faucet/bin/sozu-faucet.js');
+  let stdout;
+  try { ({ stdout } = await execute(process.execPath, [file, 'claim', address], { timeout: 110_000, killSignal: 'SIGKILL', maxBuffer: 262_144, windowsHide: true, env: { PATH: process.env.PATH, SystemRoot: process.env.SystemRoot, SOZU_FAUCET_URL: SOZU_ORIGIN }, shell: false })); }
+  catch (error) {
+    // Timeout/termination can follow submission. No output or diagnostic stderr
+    // proves that a transfer did not happen, so uncertainty stays durable.
+    if (error.killed || error.signal || !error.stdout) return { unknown: true };
+    stdout = error.stdout;
+  }
+  return parseSozuClaimOutput(stdout, address);
+}
+
 export function createRuntime(config, env = process.env) {
   let redis, rpc;
   const getRedis = () => redis ||= new Redis({ url: env.UPSTASH_REDIS_REST_URL || env.KV_REST_API_URL, token: env.UPSTASH_REDIS_REST_TOKEN || env.KV_REST_API_TOKEN });
@@ -52,23 +78,7 @@ export function createRuntime(config, env = process.env) {
       const data = await response.json();
       return { available: data.availability?.available === true && data.faucet?.network === 'testnet', claimAmount: data.faucet?.claimAmount || 100, cooldownMinutes: data.faucet?.cooldownMinutes || 60, ...(typeof data.availability?.reason === 'string' ? { reason: data.availability.reason.slice(0,80) } : {}) };
     },
-    async claim(address) {
-      assertAddress(address);
-      if (CIRCLE_USDC_ISSUER !== USDC_ISSUER) throw Error('Unexpected CLI asset');
-      const file = require.resolve('@sozu/faucet/bin/sozu-faucet.js');
-      let stdout;
-      try { ({ stdout } = await exec(process.execPath, [file, 'claim', address], { timeout: 110_000, killSignal: 'SIGKILL', maxBuffer: 262_144, windowsHide: true, env: { PATH: process.env.PATH, SystemRoot: process.env.SystemRoot, SOZU_FAUCET_URL: SOZU_ORIGIN }, shell: false })); }
-      catch (error) {
-        // A process timeout can happen after submission. Never automatically reclaim.
-        if (error.killed || error.signal || !error.stdout) return { unknown: true };
-        stdout = error.stdout;
-      }
-      try {
-        const result = JSON.parse(stdout);
-        if (typeof result.success !== 'boolean' || result.to !== address || result.wallet) return { unknown: true };
-        return { success: result.success, hash: result.txHash || result.hash || result.transactionHash, reason: result.reason, nextAvailableAt: result.nextAvailableAt };
-      } catch { return { unknown: true }; }
-    },
+    claim: address => runSozuClaim(address),
   };
 }
 

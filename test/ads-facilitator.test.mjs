@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { facilitatorHttpOptions, createConfiguredFacilitatorClient, probeConfiguredFacilitator, OPENZEPPELIN_TESTNET_FACILITATOR as OZ, PUBLIC_TESTNET_FACILITATOR as PUBLIC } from '../server/ads/facilitator.mjs';
+import { createStellarPaymentRuntime, TESTNET_USDC, TESTNET_ISSUER } from '../server/ads/stellar-payments.mjs';
+const config={network:'stellar:testnet',facilitatorUrl:OZ,asset:TESTNET_USDC,issuer:TESTNET_ISSUER},env={CHANNELS_API_KEY:'fixture-only-not-a-real-key'};
+const payer='C'+'A'.repeat(55),requirements={scheme:'exact',network:'stellar:testnet',asset:TESTNET_USDC,amount:'50000000',payTo:'G'+'A'.repeat(55),maxTimeoutSeconds:60,extra:{areFeesSponsored:true}},payload={x402Version:2,accepted:requirements,payload:{transaction:'fixture-not-an-authorization'}};
+const supported={kinds:[{x402Version:2,scheme:'exact',network:'stellar:testnet',extra:{areFeesSponsored:true}}],extensions:[],signers:{'stellar:testnet':['public-signer-must-not-appear-in-probe']}};
+function fixture(){const calls=[];return{calls,fetchImpl:async(url,options)=>{calls.push({url,options});return Response.json(url.endsWith('/supported')?supported:url.endsWith('/verify')?{isValid:true,payer}:{success:true,network:'stellar:testnet',transaction:'a'.repeat(64),payer});}};}
+test('OZ auth callback is path keyed and only the exact canonical Testnet URL receives the existing server credential',async()=>{
+ const options=facilitatorHttpOptions({config,env}),headers=await options.createAuthHeaders();assert.equal(options.url,OZ);assert.equal(options.timeoutMs,20000);assert.deepEqual(Object.keys(headers).sort(),['settle','supported','verify']);for(const path of ['verify','settle','supported'])assert.deepEqual(headers[path],{Authorization:'Bearer '+env.CHANNELS_API_KEY});headers.verify.Authorization='modified';assert.equal((await options.createAuthHeaders()).verify.Authorization,'Bearer '+env.CHANNELS_API_KEY);
+});
+test('public x402.org never reads or transmits the Channels key and no provider fallback is possible',async()=>{
+ const guardedEnv={get CHANNELS_API_KEY(){throw Error('secret must not be read');}},cfg={...config,facilitatorUrl:PUBLIC},options=facilitatorHttpOptions({config:cfg,env:guardedEnv});assert.equal(options.createAuthHeaders,undefined);const f=fixture(),client=createConfiguredFacilitatorClient({config:cfg,env:guardedEnv,fetchImpl:f.fetchImpl});await client.getSupported();await client.verify(payload,requirements);await client.settle(payload,requirements);assert(f.calls.every(call=>call.url.startsWith(PUBLIC+'/')&&call.options.headers.Authorization===undefined));
+});
+test('mainnet, credentials, encoded paths, lookalike hosts, fragments, queries and noncanonical URL spellings fail before network',()=>{
+ for(const url of ['http://channels.openzeppelin.com/x402/testnet','https://channels.openzeppelin.com/x402/mainnet','https://channels.openzeppelin.com/x402/testnet/','https://channels.openzeppelin.com/x402/%74estnet','https://channels.openzeppelin.com/x402/../x402/testnet','https://channels.openzeppelin.com/x402/testnet?x=1','https://channels.openzeppelin.com/x402/testnet#x','https://channels.openzeppelin.com:443/x402/testnet','https://CHANNELS.openzeppelin.com/x402/testnet','https://user:pass@channels.openzeppelin.com/x402/testnet','https://channels.openzeppelin.com.evil.example/x402/testnet','https://channels.openzeppelin.com@evil.example/x402/testnet','https://arbitrary.example/facilitator'])assert.throws(()=>facilitatorHttpOptions({config:{...config,facilitatorUrl:url},env}),error=>error.code==='facilitator_invalid');assert.throws(()=>facilitatorHttpOptions({config:{...config,network:'stellar:pubnet'},env}),error=>error.code==='facilitator_network_invalid');
+ for(const key of [undefined,'','has space','bad\nheader','x'.repeat(4097)])assert.throws(()=>facilitatorHttpOptions({config,env:{CHANNELS_API_KEY:key}}),error=>error.code==='facilitator_credential_missing');
+});
+test('all three transport operations pin URLs, bound body/time and forbid redirects',async()=>{
+ const f=fixture(),client=createConfiguredFacilitatorClient({config,env,fetchImpl:f.fetchImpl});await client.getSupported();await client.verify(payload,requirements);await client.settle(payload,requirements);assert.deepEqual(f.calls.map(call=>call.url),[OZ+'/supported',OZ+'/verify',OZ+'/settle']);for(const call of f.calls){assert.equal(call.options.redirect,'error');assert(call.options.signal instanceof AbortSignal);assert.equal(call.options.headers.Authorization,'Bearer '+env.CHANNELS_API_KEY);}assert.equal(f.calls[0].options.method,'GET');assert.equal(f.calls[0].options.body,undefined);assert.equal(f.calls[1].options.method,'POST');assert.deepEqual(JSON.parse(f.calls[1].options.body),{x402Version:2,paymentPayload:payload,paymentRequirements:requirements});
+ let calls=0;const redirect=createConfiguredFacilitatorClient({config,env,fetchImpl:async()=>{calls++;return new Response('',{status:302,headers:{Location:PUBLIC+'/verify'}});}});await assert.rejects(redirect.verify(payload,requirements),error=>error.code==='facilitator_redirect_rejected');assert.equal(calls,1);
+ await assert.rejects(client.verify({...payload,accepted:{...requirements,network:'stellar:pubnet'}},requirements),error=>error.code==='facilitator_payment_invalid');assert.equal(f.calls.length,3);
+});
+test('probe only discovers v2 exact sponsored Testnet support and returns no signer, URL, key or raw extra',async()=>{
+ const f=fixture(),result=await probeConfiguredFacilitator({config,env,fetchImpl:f.fetchImpl});assert.deepEqual(result,{check:'facilitator',provider:'openzeppelin',network:'stellar:testnet',x402Version:2,scheme:'exact',ok:true,areFeesSponsored:true,supportsTestnet:true});assert.equal(f.calls.length,1);assert.equal(f.calls[0].options.method,'GET');const value=JSON.stringify(result);for(const secret of [env.CHANNELS_API_KEY,'public-signer-must-not-appear-in-probe','https://'])assert(!value.includes(secret));
+ for(const kinds of [[{x402Version:1,scheme:'exact',network:'stellar:testnet',extra:{areFeesSponsored:true}}],[{x402Version:2,scheme:'exact',network:'stellar:pubnet',extra:{areFeesSponsored:true}}],[{x402Version:2,scheme:'exact',network:'stellar:testnet',extra:{areFeesSponsored:false}}],[]])assert.equal((await probeConfiguredFacilitator({config,env,fetchImpl:async()=>Response.json({...supported,kinds})})).ok,false);
+ assert.equal((await probeConfiguredFacilitator({config,env:{},fetchImpl:async()=>{throw Error('must not request');}})).ok,false);
+});
+test('provider failures, oversized responses and malformed results fail closed without leaking response text',async()=>{
+ for(const fetchImpl of [async()=>new Response('echoed-fixture-secret',{status:401}),async()=>new Response('{}',{headers:{'content-length':'1048577'}}),async()=>Response.json({isValid:'yes'}),async()=>new Response('not-json'),async()=>{throw Error('private-network-diagnostic');}]){
+ const result=await probeConfiguredFacilitator({config,env,fetchImpl});assert.equal(result.ok,false);assert(!JSON.stringify(result).includes('secret'));
+ const client=createConfiguredFacilitatorClient({config,env,fetchImpl});await assert.rejects(client.verify(payload,requirements),error=>!error.message.includes('echoed')&&!error.message.includes('private-network'));
+ }
+});
+test('the existing resource-server SDK uses the explicitly selected authenticated facilitator and keeps verify separate from settle',async()=>{
+ const f=fixture(),runtime=createStellarPaymentRuntime({config,env,fetchImpl:f.fetchImpl});assert.deepEqual(await runtime.verify(payload,requirements),{isValid:true,payer});assert.deepEqual(f.calls.map(call=>call.url),[OZ+'/supported',OZ+'/verify']);assert.equal(f.calls.some(call=>call.url.endsWith('/settle')),false);const result=await runtime.settle(payload,requirements);assert.equal(result.success,true);assert.equal(f.calls.filter(call=>call.url.endsWith('/settle')).length,1);
+});
+
+test('non-2xx responses cannot approve verification or settlement; explicit negative verdicts remain observable',async()=>{
+ for(const status of [400,401,500]){
+  const positive=createConfiguredFacilitatorClient({config,env,fetchImpl:async url=>Response.json(url.endsWith('/verify')?{isValid:true,payer}:{success:true,network:'stellar:testnet',transaction:'a'.repeat(64),payer},{status})});
+  await assert.rejects(positive.verify(payload,requirements),error=>error.code==='facilitator_request_rejected');await assert.rejects(positive.settle(payload,requirements),error=>error.code==='facilitator_request_rejected');
+ }
+ const negative=createConfiguredFacilitatorClient({config,env,fetchImpl:async url=>Response.json(url.endsWith('/verify')?{isValid:false,invalidReason:'insufficient_budget'}:{success:false,errorReason:'rejected',network:'stellar:testnet',transaction:''},{status:400})});assert.deepEqual(await negative.verify(payload,requirements),{isValid:false,invalidReason:'insufficient_budget'});assert.equal((await negative.settle(payload,requirements)).success,false);
+});

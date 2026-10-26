@@ -161,7 +161,7 @@ test('the unified picker respects Palta occlusion and retains wallet selection b
     THREE, camera, model, renderer: {}, mode: 'walk', active:true, venueUI:null, football:null, tapPointers:new Set(), $:()=>({open:false}),
     palta: { root, open: () => calls.palta++ },
     canvas: { addEventListener: (_type, handler) => { onPointerUp = handler; }, getBoundingClientRect: () => ({ left: 0, top: 0, width: 100, height: 100 }) },
-    isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
+    isMainStageSign: () => false, isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
   };
   const api = vm.runInNewContext(`let passportTap;${picker};({tap:value=>passportTap=value})`, context);
   const event = { pointerId: 1, clientX: 50, clientY: 50 };
@@ -191,27 +191,34 @@ test('cache revisions reach the optional activation through the existing entry c
   assert.equal(entryVersion, viewerVersion, 'HTML and entry invalidate the same viewer publication');
   assert.ok(paltaVersion);
   assert.equal(paltaVersion, previewVersion, 'both viewers load the same activation module');
-  assert.match(viewer, /scene\.add\(model\);\s+await applyStageCard[\s\S]*?if\(!venueLoading\.isCurrent\(attempt\)\)return;\s+mountVenuePalta\(attempt\);venueLoading\.progress/);
-  assert.match(viewer, /function discardVenueScene\(\)\{discardPalta\(\);/);
   assert.ok(viewer.indexOf('palta?.update(dt);') < viewer.indexOf('venueLoading.renderFrame('));
-  assert.match(viewer, /import \{ applyStageCard \} from '\.\/stage-screen\.mjs\?v=2'/);
+  assert.match(viewer, /import \{ applyStageCard, mountStageSections \} from '\.\/stage-screen\.mjs\?v=3'/);
 });
 
 
-function stageIntegrationHarness() {
-  const pending = deferred(), draws = [], mounts = [], fetches = [];
-  const prepared = { name: 'prepared venue' };
+function stageIntegrationHarness({ hostLoop = null, sectionsPreview = false } = {}) {
+  const pending = deferred(), adsPending = deferred(), sectionsPending = deferred(), draws = [], mounts = [], fetches = [], cardCalls = [], adsMounts = [], sectionMounts = [], hostCalls = [];
+  const prepared = { name: 'prepared venue' }, controller = fakeController(), frameAcks = [];
   const context = {
-    THREE, gltf: { scene: { name: 'raw venue' } }, model: null,
+    THREE, gltf: { scene: { name: 'raw venue' } }, model: null, defaultStage: null, adsSpatial: null, stageSections: null, sectionsPreview, active: true, document: { visibilityState: 'visible' }, mainStageSign:null, createMainStageSign:()=>null,
     scene: { add: model => draws.push(model) },
     prepareVenueModel: () => prepared,
+    createDefaultStageLoop: (_three, model) => { assert.equal(model, prepared); hostCalls.push(model); return hostLoop; },
+    mountStageSections: async (_three, model, options) => {
+      assert.equal(model, prepared); sectionMounts.push({ model, options });
+      await options.fetchImpl("./state/screen.json", { cache: "no-store" });
+      return sectionsPending.promise;
+    },
     controller: new AbortController(), AbortSignal, attempt: 1,
     fetch: async (url, options) => { fetches.push({ url, options }); return { ok: true }; },
     applyStageCard: async (_three, model, options) => {
-      assert.equal(model, prepared, 'the card receives the prepared model');
+      assert.equal(model, prepared, 'the fallback card receives the prepared model');
+      cardCalls.push(model);
       await options.fetchImpl('./state/stage.json', { cache: 'no-store' });
       return pending.promise;
     },
+    attestAdsFrame: ack => frameAcks.push(ack),
+    mountAdsSpatial: (_three, model, options) => { adsMounts.push({ model, options }); return adsPending.promise; },
     mountVenuePalta: attempt => mounts.push(attempt),
   };
   context.venueLoading = { isCurrent: attempt => attempt === context.attempt };
@@ -219,22 +226,28 @@ function stageIntegrationHarness() {
   const end = viewer.indexOf("venueLoading.progress(attempt,'textures');", begin);
   assert.ok(begin > 0 && end > begin);
   const work = vm.runInNewContext(`(async () => {const attempt = 1;${viewer.slice(begin, end)}})()`, context);
-  return { context, pending, draws, mounts, fetches, prepared, work };
+  return { context, pending, adsPending, sectionsPending, draws, mounts, fetches, cardCalls, adsMounts, sectionMounts, hostCalls, prepared, controller, frameAcks, work };
 }
 
-test('the purchased card is awaited on the prepared model before the current Palta mount', async () => {
+test('the recorded card remains an awaited fallback before Palta when there is no host loop', async () => {
   const harness = stageIntegrationHarness();
   await turn();
   assert.deepEqual(harness.draws, [harness.prepared]);
-  assert.deepEqual(harness.mounts, [], 'Palta does not race the stage-card request');
+  assert.deepEqual(harness.cardCalls, [harness.prepared]);
+  assert.deepEqual(harness.mounts, [], 'Palta does not race the fallback card request');
+  assert.equal(harness.adsMounts.length, 0, 'ads do not acquire the stage before the fallback finishes');
   assert.equal(harness.fetches.length, 1);
   assert.equal(harness.fetches[0].options.cache, 'no-store');
   assert.equal(harness.fetches[0].options.signal.aborted, false);
   harness.pending.resolve(true); await harness.work;
   assert.deepEqual(harness.mounts, [1]);
+  assert.equal(harness.adsMounts[0].model, harness.prepared);
+  assert.equal(harness.adsMounts[0].options.defaultLoop, null);
+  harness.adsPending.resolve(harness.controller); await turn();
+  assert.equal(harness.context.adsSpatial, harness.controller);
 });
 
-test('an obsolete attempt aborts the stage request and cannot start a Palta mount', async () => {
+test('an obsolete attempt aborts the fallback and cannot start Palta or acquire advertising ownership', async () => {
   const harness = stageIntegrationHarness();
   await turn();
   harness.context.attempt = 2;
@@ -242,4 +255,133 @@ test('an obsolete attempt aborts the stage request and cannot start a Palta moun
   assert.equal(harness.fetches[0].options.signal.aborted, true, 'stage fetch inherits the scene controller');
   harness.pending.resolve(false); await harness.work;
   assert.deepEqual(harness.mounts, []);
+  assert.equal(harness.adsMounts.length, 0);
+});
+
+test('the host loop owns the prepared stage and prevents a recorded card request or overwrite', async () => {
+  const hostLoop = { name: 'host default loop' }, harness = stageIntegrationHarness({ hostLoop });
+  await harness.work;
+  assert.deepEqual(harness.draws, [harness.prepared]);
+  assert.equal(harness.context.defaultStage, hostLoop);
+  assert.deepEqual(harness.cardCalls, []);
+  assert.deepEqual(harness.fetches, [], 'the historical stage.json is never requested while a host loop exists');
+  assert.deepEqual(harness.mounts, [1], 'the current Palta mount remains after stage ownership is established');
+  assert.equal(harness.adsMounts.length, 1);
+  const mounted = harness.adsMounts[0];
+  assert.equal(mounted.model, harness.prepared);
+  assert.equal(mounted.options.defaultLoop, hostLoop, 'ads receive the same host owner to restore after interruption');
+  assert.equal(mounted.options.onApplied, harness.context.attestAdsFrame);
+  await mounted.options.fetchImpl('/api/ads/config', { cache: 'no-store' });
+  const request = harness.fetches[0];
+  assert.equal(request.url, '/api/ads/config');assert.equal(request.options.cache, 'no-store');
+  harness.context.controller.abort();assert.equal(request.options.signal.aborted, true);
+  harness.adsPending.resolve(harness.controller);await turn();
+  assert.equal(harness.context.adsSpatial, harness.controller);
+});
+
+test('an advertising mount resolving after its model is discarded releases its own controller', async () => {
+  const harness = stageIntegrationHarness({ hostLoop: {} });await harness.work;
+  harness.context.model = null;harness.adsPending.resolve(harness.controller);await turn();
+  assert.equal(harness.context.adsSpatial, null);assert.equal(harness.controller.disposed, 1);
+});
+
+test('discarding the venue releases preview, advertising, the host loop and Palta before scene resources', () => {
+  const events = [], resource = name => ({ dispose: () => events.push(name) });
+  const context = { stageSections:resource('sections'), mainStageSign:resource('sign'), adsSpatial:resource('ads'), defaultStage:resource('host'), orbit:resource('orbit'), scene:{}, renderer:resource('renderer'), model:{}, camera:{}, activationGuide:resource('guide'), football:resource('football'), kickButton:{hidden:false}, arcadeLighting:resource('arcade'), paltaNearButton:{hidden:false}, resourcesPrepared:true,
+    discardPalta:() => events.push('palta'), disposeVenueObject:object => { assert.equal(object,context.scene);events.push('scene'); } };
+  const begin = viewer.indexOf('function discardVenueScene()'), end = viewer.indexOf('function applyInitialIntent()',begin);
+  assert.ok(begin > 0 && end > begin);
+  const discard = vm.runInNewContext(viewer.slice(begin,end)+';discardVenueScene',context);discard();
+  assert.deepEqual(events,['sections','sign','ads','host','palta','guide','football','arcade','orbit','scene','renderer']);
+  for(const key of ['stageSections','mainStageSign','adsSpatial','defaultStage','scene','camera','renderer','model','orbit','activationGuide','football','arcadeLighting'])assert.equal(context[key],null,key);
+  assert.equal(context.resourcesPrepared,false);
+  assert.equal(context.kickButton.hidden,true);assert.equal(context.paltaNearButton.hidden,true);
+});
+
+test('Palta and advertising update before render and the publisher acknowledgement follows the actual frame', () => {
+  const events = [], elements = new Map(), element = id => { if(!elements.has(id))elements.set(id,{ open:false, hidden:false });return elements.get(id); };
+  const context = { active:true, last:0, resourcesPrepared:true, model:{}, mode:'overview', frame:0, contextFailed:false, overviewHotspots:null, venueAttempt:1, venueRenderUntil:0, venueUI:null, paltaNearButton:{}, kickButton:{}, nearPalta:()=>false, activationGuide:null, football:{reset:()=>events.push('football-reset')}, arcadeLighting:{update:()=>events.push('arcade')},
+    scene:{}, view:{clientWidth:800,clientHeight:600}, pose:{x:0,z:0}, PASSPORT_STAND:{view:{x:0,z:0}}, camera:{}, orbit:{update(){}}, clampOverview(){}, layout:{bounds:{}},
+    renderer:{getContext:() => ({isContextLost:() => false}),render:() => events.push('render')},
+    mainStageSign:{updatePlayback:() => events.push('sign-time')}, palta:{update:() => events.push('palta')}, adsSpatial:{update:() => events.push('ads'),afterFrame:() => events.push('ack')},
+    venueLoading:{state:{phase:'ready',prepared:true},renderFrame:(_attempt,options) => options.render()},
+    walletExperience:{afterFirstFrame:() => events.push('wallet-frame')}, $:element, document:{querySelector:element},updateReview(){},requestAnimationFrame:() => 1 };
+  const loopStart = viewer.indexOf('function loop(now)'), loopEnd = viewer.indexOf('\nlet passportTourInteraction=',loopStart);
+  assert.ok(loopStart > 0 && loopEnd > loopStart);const loopSource = viewer.slice(loopStart,loopEnd);
+  const loop = vm.runInNewContext(loopSource+';loop',context);loop(1000);
+  assert.deepEqual(events,['palta','ads','sign-time','arcade','football-reset','render','ack','wallet-frame']);
+});
+
+test('the recorded sections preview owns its surface without acquiring live advertising or replacing Palta', async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true, hostLoop: {} });
+  await turn();
+  assert.equal(harness.sectionMounts.length, 1);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.mounts, []);
+  assert.equal(harness.fetches[0].url, './state/screen.json');
+  assert.equal(harness.fetches[0].options.cache, 'no-store');
+  const preview = { ...fakeController(), suspend() { throw Error('Visible preview should remain active'); } };
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(harness.context.stageSections, preview);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.cardCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.frameAcks, []);
+  assert.deepEqual(harness.mounts, [1], 'Palta still mounts in the prepared scene');
+});
+
+test('missing recorded sections restore the host loop while the preview stays excluded from advertising', async () => {
+  const hostLoop = {}, harness = stageIntegrationHarness({ sectionsPreview: true, hostLoop });
+  harness.sectionsPending.resolve(null); await harness.work;
+  assert.equal(harness.context.defaultStage, hostLoop);
+  assert.equal(harness.context.stageSections, null);
+  assert.deepEqual(harness.hostCalls, [harness.prepared]);
+  assert.deepEqual(harness.cardCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, [1]);
+});
+
+test('an obsolete preview mount releases its controller before it can acquire scene ownership', async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true }), preview = fakeController();
+  await turn();
+  harness.context.attempt = 2; harness.context.controller.abort();
+  assert.equal(harness.fetches[0].options.signal.aborted, true);
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(preview.disposed, 1);
+  assert.equal(harness.context.stageSections, null);
+  assert.deepEqual(harness.hostCalls, []);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, []);
+});
+
+for (const hiddenBy of ['leave', 'hidden tab']) test(`a preview finishing after ${hiddenBy} remains suspended in the cached scene`, async () => {
+  const harness = stageIntegrationHarness({ sectionsPreview: true });
+  const preview = { ...fakeController(), suspended: 0, suspend() { this.suspended++; } };
+  await turn();
+  if (hiddenBy === 'leave') harness.context.active = false;
+  else harness.context.document.visibilityState = 'hidden';
+  harness.sectionsPending.resolve(preview); await harness.work;
+  assert.equal(harness.context.stageSections, preview);
+  assert.equal(preview.suspended, 1);
+  assert.equal(preview.disposed, 0);
+  assert.deepEqual(harness.adsMounts, []);
+  assert.deepEqual(harness.mounts, [1]);
+});
+
+test('publisher acknowledgements remain available normally and are suppressed in the sections preview', async () => {
+  const received = [], source = viewer.match(/^function attestAdsFrame\(ack\).*$/m)?.[0];
+  assert.ok(source);
+  const context = {
+    sectionsPreview: true, URLSearchParams, location: { search: '?sections&publisher=1' },
+    document: { visibilityState: 'visible' }, performance: { now: () => 1000 }, adsAckTimes: new Map(),
+    window: { __adsPublisherAck: ack => received.push(ack) },
+  };
+  const attest = vm.runInNewContext(source + ';attestAdsFrame', context);
+  const ack = { placementId: 'main_stage_screen', version: 1, revisionId: 'r1', manifestHash: 'manifest', imageHash: 'image' };
+  attest(ack); await turn();
+  assert.deepEqual(received, []);
+  assert.equal(context.adsAckTimes.size, 0, 'preview cannot even reserve an acknowledgement timestamp');
+  context.sectionsPreview = false; context.location.search = '?publisher=1';
+  attest(ack); await turn();
+  assert.deepEqual(received, [ack]);
 });

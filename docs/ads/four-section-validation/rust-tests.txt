@@ -1,0 +1,201 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling version_check v0.9.5
+   Compiling typenum v1.20.0
+   Compiling cfg-if v1.0.4
+   Compiling serde_core v1.0.228
+   Compiling serde v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.150
+   Compiling memchr v2.8.0
+   Compiling itoa v1.0.18
+   Compiling generic-array v0.14.9
+   Compiling subtle v2.6.1
+   Compiling autocfg v1.5.1
+   Compiling const-oid v0.9.6
+   Compiling getrandom v0.2.17
+   Compiling rand_core v0.6.4
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.11.1
+   Compiling cpufeatures v0.2.17
+   Compiling zerocopy v0.8.48
+   Compiling num-traits v0.2.19
+   Compiling schemars v0.8.22
+   Compiling syn v1.0.109
+   Compiling semver v1.0.28
+   Compiling syn v2.0.117
+   Compiling dyn-clone v1.0.20
+   Compiling paste v1.0.15
+   Compiling data-encoding v2.11.0
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling num-integer v0.1.46
+   Compiling digest v0.10.7
+   Compiling ethnum v1.5.3
+   Compiling escape-bytes v0.1.1
+   Compiling sha2 v0.10.9
+   Compiling num-bigint v0.4.6
+   Compiling ahash v0.8.12
+   Compiling rustc_version v0.4.1
+   Compiling ff v0.13.1
+   Compiling once_cell v1.21.4
+   Compiling base16ct v0.2.0
+   Compiling hashbrown v0.17.1
+   Compiling either v1.16.0
+   Compiling darling_core v0.23.0
+   Compiling equivalent v1.0.2
+   Compiling itertools v0.10.5
+   Compiling indexmap v2.14.0
+   Compiling group v0.13.0
+   Compiling ppv-lite86 v0.2.21
+   Compiling base64 v0.22.1
+   Compiling libm v0.2.16
+   Compiling wasmparser v0.116.1
+   Compiling rand_chacha v0.3.1
+   Compiling serde_derive v1.0.228
+   Compiling zeroize_derive v1.4.3
+   Compiling cfg_eval v0.1.2
+   Compiling ark-serialize-derive v0.4.2
+   Compiling rand v0.8.6
+   Compiling ark-ff-macros v0.4.2
+   Compiling darling_macro v0.23.0
+   Compiling ark-ff-asm v0.4.2
+   Compiling derivative v2.2.0
+   Compiling zeroize v1.8.2
+   Compiling darling v0.23.0
+   Compiling ark-std v0.4.0
+   Compiling der v0.7.10
+   Compiling crypto-bigint v0.5.5
+   Compiling serde_with_macros v3.20.0
+   Compiling signature v2.2.0
+   Compiling ark-serialize v0.4.2
+   Compiling sec1 v0.7.3
+   Compiling hmac v0.12.1
+   Compiling elliptic-curve v0.13.8
+   Compiling hashbrown v0.13.2
+   Compiling thiserror v1.0.69
+   Compiling rfc6979 v0.4.0
+   Compiling num-derive v0.4.2
+   Compiling derive_arbitrary v1.3.2
+   Compiling thiserror-impl v1.0.69
+   Compiling ark-ff v0.4.2
+   Compiling curve25519-dalek v4.1.3
+   Compiling downcast-rs v1.2.1
+   Compiling static_assertions v1.1.0
+   Compiling indexmap-nostd v0.4.0
+   Compiling arbitrary v1.3.2
+   Compiling wasmi_core v0.13.0
+   Compiling wasmparser-nostd v0.100.2
+   Compiling ecdsa v0.16.9
+   Compiling crate-git-revision v0.0.6
+   Compiling hex v0.4.3
+   Compiling curve25519-dalek-derive v0.1.1
+   Compiling wasmi_arena v0.4.1
+   Compiling stellar-strkey v0.0.13
+   Compiling stellar-xdr v25.0.0
+   Compiling serde_with v3.20.0
+   Compiling soroban-env-common v25.0.1
+   Compiling fnv v1.0.7
+   Compiling smallvec v1.15.1
+   Compiling prettyplease v0.2.37
+   Compiling spin v0.9.8
+   Compiling soroban-wasmi v0.31.1-soroban.20.0.1
+   Compiling darling_core v0.20.11
+   Compiling ark-poly v0.4.2
+   Compiling ark-ec v0.4.2
+   Compiling primeorder v0.13.6
+   Compiling ed25519 v2.2.3
+   Compiling keccak v0.1.6
+   Compiling byteorder v1.5.0
+   Compiling soroban-env-host v25.0.1
+   Compiling heapless v0.8.0
+   Compiling ark-bls12-381 v0.4.0
+   Compiling ark-bn254 v0.4.0
+   Compiling hash32 v0.3.1
+   Compiling sha3 v0.10.9
+   Compiling ed25519-dalek v2.2.0
+   Compiling darling_macro v0.20.11
+   Compiling p256 v0.13.2
+   Compiling stellar-strkey v0.0.16
+   Compiling k256 v0.13.4
+   Compiling soroban-builtin-sdk-macros v25.0.1
+   Compiling dtor-proc-macro v0.0.6
+   Compiling hex-literal v0.4.1
+   Compiling stable_deref_trait v1.2.1
+   Compiling dtor v0.1.1
+   Compiling darling v0.20.11
+   Compiling soroban-sdk v25.3.1
+   Compiling macro-string v0.1.4
+   Compiling ctor-proc-macro v0.0.6
+   Compiling heck v0.5.0
+   Compiling bytes-lit v0.0.5
+   Compiling visibility v0.1.1
+   Compiling ctor v0.5.0
+   Compiling soroban-spec v25.3.1
+   Compiling soroban-env-macros v25.0.1
+   Compiling soroban-spec-rust v25.3.1
+   Compiling soroban-sdk-macros v25.3.1
+   Compiling soroban-ledger-snapshot v25.3.1
+   Compiling ads-registry v0.1.0 (C:\Users\cabs_\OneDrive\Documents\ChatGPT\AgentSpacialEconomy\ads-four-sections-validation\contracts\ads-registry)
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:181:14
+    |
+181 |             .publish((Symbol::new(&e, "queued"), c.order), c.terms);
+    |              ^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:254:20
+    |
+254 |         e.events().publish(
+    |                    ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:272:14
+    |
+272 |             .publish((Symbol::new(&e, "completed"), order), r.commitment.manifest);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:282:14
+    |
+282 |             .publish((Symbol::new(&e, "disputed"), order), r.commitment.claimant);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:297:14
+    |
+297 |             .publish((Symbol::new(&e, "resolved"), order), remedy_hash);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> src\lib.rs:311:14
+    |
+311 |             .publish((Symbol::new(&e, "expired"), order), r.delivered);
+    |              ^^^^^^^
+
+warning: `ads-registry` (lib test) generated 6 warnings (6 duplicates)
+warning: `ads-registry` (lib) generated 6 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4m 18s
+     Running unittests src\lib.rs (D:\Proyectos\ChatGPT\AgentSpacialEconomy\ads-four-sections-validation\.ads-qa\cargo-target\debug\deps\ads_registry-0fe954abec7cffd4.exe)
+
+running 9 tests
+test test::invalid_signer_and_hash_fail_closed ... ok
+test test::dispute_and_expiry_preserve_unfulfilled_units ... ok
+test test::interrupted_exclusive_keeps_deficit_after_expiry ... ok
+test test::queued_is_not_delivery_and_full_attestation_completes ... ok
+test test::explicit_dispute_resolution_preserves_evidence_and_never_completes_a_deficit ... ok
+test test::interrupted_pass_is_zero_and_complete_passes_are_unique ... ok
+test test::overlapping_time_never_increases_delivery ... ok
+test test::pilot_requires_five_complete_sixty_second_passes ... ok
+test test::signature_from_another_registry_cannot_be_replayed ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+   Doc-tests ads_registry
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -1,6 +1,6 @@
 /** Vendor isolated, exact mobile AR runtime without changing the venue's Three.js. */
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
-const root=process.cwd(),toolRoot=path.resolve('.ar-tools');
+const root=process.cwd(),toolRoot=path.resolve(process.env.AR_TOOLS_DIR||'.ar-tools');
 const three=path.join(toolRoot,'three/package'),mindar=path.join(toolRoot,'mind-ar/package');
 for(const [folder,expected] of [[three,'0.160.0'],[mindar,'1.2.5']]){const actual=JSON.parse(fs.readFileSync(path.join(folder,'package.json'))).version;if(actual!==expected)throw Error(`Expected ${expected}, got ${actual}`);}
 const copies=[];

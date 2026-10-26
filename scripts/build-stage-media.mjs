@@ -1,0 +1,10 @@
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
+import {mkdir} from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const input=path.join(root,'media/main-stage-default.gif'),output=path.join(root,'dist/assets/main-stage-default.mp4');
+await mkdir(path.dirname(output),{recursive:true});
+await promisify(execFile)(process.env.FFMPEG_PATH||'ffmpeg',['-hide_banner','-loglevel','error','-y','-ignore_loop','1','-i',input,'-vf','fps=25,scale=800:450:flags=lanczos','-an','-c:v','libx264','-crf','22','-pix_fmt','yuv420p','-movflags','+faststart',output],{windowsHide:true,maxBuffer:1048576});
+console.log('Generated dist/assets/main-stage-default.mp4 from the supplied 10-second GIF.');

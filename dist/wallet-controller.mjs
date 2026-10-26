@@ -19,7 +19,9 @@ export function formatWalletBalance(units, decimals = 7) {
 
 function publicError(error, duringAuthentication = false) {
   const code = error?.reason || error?.code || error?.name || 'wallet_error';
-  const cancelled = Number(code) === 4004 || /^(NotAllowedError|cancelled|passkey_cancelled|WEBAUTHN_CANCELLED)$/i.test(String(code)) || (code === 'AbortError' && duringAuthentication);
+  // SimpleWebAuthn preserves the browser error as a cause while replacing its code.
+  const ceremonyCause = duringAuthentication && /^(ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY|ERROR_CEREMONY_ABORTED)$/.test(String(code)) ? (error?.cause?.name || error?.name) : null;
+  const cancelled = Number(code) === 4004 || /^(NotAllowedError|cancelled|passkey_cancelled|WEBAUTHN_CANCELLED)$/i.test(String(code)) || (code === 'AbortError' && duringAuthentication) || /^(NotAllowedError|AbortError)$/.test(String(ceremonyCause));
   return { code, cancelled, message: cancelled ? 'La confirmación se canceló. Puedes volver a intentarlo.' : (error?.message || 'No se pudo completar la activación. Puedes continuar el recorrido y reintentar.') };
 }
 
@@ -35,10 +37,13 @@ export function createWalletController({
   let provider, preparation, operation, configurationRefresh, queuedConfig, nextConfig;
   let configurationGeneration = 0;
   const listeners = new Set();
-  let current = { status: 'idle', busy: false, prepared: false, address: null, balanceUnits: '0', balance: '0', receipt: null, error: null, requiresAction: false, config: null, availability: null, timings: {} };
-  const snapshot = () => ({ ...current, timings: { ...current.timings } });
+  let current = { status: 'idle', busy: false, prepared: false, address: null, balanceUnits: '0', balance: '0', receipt: null, error: null, requiresAction: false, config: null, availability: null, timings: {}, credentialId: null, credentialKey: null, canVerifyPasskey: false, verificationBusy: false, verificationError: null, passkeyProof: null };
+  const snapshot = () => ({ ...current, timings: { ...current.timings }, passkeyProof: current.passkeyProof ? { ...current.passkeyProof } : null });
+  const walletIdentity = (session = {}) => ({ credentialId: provider?.credentialId || session.credentialId || null, credentialKey: provider?.credentialKey || null, canVerifyPasskey: !!provider?.canVerifyPasskey });
   const emit = patch => {
     current = { ...current, ...patch };
+    const proof = current.passkeyProof;
+    if (proof && (proof.address !== current.address || proof.credentialId !== current.credentialId || proof.credentialKey !== current.credentialKey || proof.configFingerprint !== walletConfigurationFingerprint(current.config))) current.passkeyProof = null;
     const state = snapshot();
     for (const listener of listeners) { try { listener(state); } catch {} }
     return state;
@@ -66,7 +71,7 @@ export function createWalletController({
     if (!chain.deployed) throw Object.assign(new Error('La wallet aún no está confirmada en Testnet.'), { code: 'deployment_pending' });
     const units = BigInt(chain.balanceUnits || 0);
     if (units < 0n) throw new Error('No se pudo verificar el saldo de la wallet.');
-    emit({ balanceUnits: units.toString(), balance: formatWalletBalance(units), deployed: true });
+    emit({ balanceUnits: units.toString(), balance: formatWalletBalance(units), deployed: true, ...walletIdentity({ credentialId: current.credentialId }) });
     return units > 0n;
   };
   const ready = () => emit({ status: 'ready', busy: false, error: null, requiresAction: false });
@@ -122,7 +127,7 @@ export function createWalletController({
     emit({ status: 'idle', busy: false, prepared: false, config: null, address: null,
       balanceUnits: '0', balance: '0', receipt: null, error: null, requiresAction: false,
       pendingDeployment: false, deployed: false, claimState: null, nextAvailableAt: null,
-      availability: null, timings: {}, configurationError: null });
+      availability: null, timings: {}, configurationError: null, credentialId: null, credentialKey: null, canVerifyPasskey: false, verificationBusy: false, verificationError: null, passkeyProof: null });
     // IndexedDB credentials are retained. A new provider may silently restore only valid mappings.
     return controller.prepare();
   };
@@ -151,7 +156,7 @@ export function createWalletController({
         provider = await loadProvider(config);
         const session = await provider.restore();
         const address = session?.address || session?.contractId || null;
-        emit({ prepared: true, address, pendingDeployment: !!session?.pendingDeployment, busy: false, status: 'available', error: null });
+        emit({ prepared: true, address, ...walletIdentity(session || {}), pendingDeployment: !!session?.pendingDeployment, busy: false, status: 'available', error: null });
         if (address) {
           if (await readChain()) ready();
           else emit({ status: 'connected', busy: false });
@@ -192,7 +197,7 @@ export function createWalletController({
         const session = await authentication;
         const address = session?.address || session?.contractId;
         if (!address) throw Object.assign(new Error('No se eligió una wallet.'), { code: 'cancelled' });
-        emit({ address, pendingDeployment: false, status: 'checking' });
+        emit({ address, ...walletIdentity(session), pendingDeployment: false, status: 'checking' });
         metric('wallet', started);
         if (await readChain()) return ready();
         let claim = await claimStatus();
@@ -206,6 +211,26 @@ export function createWalletController({
         metric('activation', started);
         return result;
       })());
+    },
+    /** A fresh proof of the same local passkey, without funding or transaction submission. */
+    verifyPasskey() {
+      if (operation) return operation;
+      if (!current.prepared || !current.address || !provider?.canVerifyPasskey || !provider?.verifyPasskey) return Promise.resolve(emit({ verificationError: { code: 'passkey_verification_unavailable', cancelled: false, message: 'Conecta esta wallet antes de verificar su passkey.' }, passkeyProof: null }));
+      const expected = { address: current.address, credentialId: current.credentialId, credentialKey: current.credentialKey, configFingerprint: walletConfigurationFingerprint(current.config) };
+      emit({ busy: true, verificationBusy: true, verificationError: null, passkeyProof: null });
+      let authentication;
+      try { authentication = provider.verifyPasskey(); }
+      catch (error) { return Promise.resolve(emit({ busy: false, verificationBusy: false, verificationError: publicError(error, true) })); }
+      const pending = Promise.resolve(authentication).then(proof => {
+        if (!proof || proof.address !== expected.address || proof.credentialId !== expected.credentialId || proof.credentialKey !== expected.credentialKey || current.address !== expected.address || walletConfigurationFingerprint(current.config) !== expected.configFingerprint) throw Object.assign(new Error('La wallet cambió durante la verificación. Vuelve a comprobar tu passkey.'), { code: 'passkey_identity_changed' });
+        return emit({ passkeyProof: { ...proof, configFingerprint: expected.configFingerprint }, verificationError: null });
+      }).catch(error => emit({ passkeyProof: null, verificationError: publicError(error, true) })).finally(async () => {
+        if (operation === pending) operation = null;
+        emit({ busy: false, verificationBusy: false });
+        await drainConfiguration();
+      }).then(() => snapshot());
+      operation = pending;
+      return pending;
     },
     retryFunding() { return controller.ensureWalletReady({ create: false, retry: true }); },
     refresh() {

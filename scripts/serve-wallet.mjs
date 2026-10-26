@@ -19,6 +19,8 @@ export function createWalletDevelopmentServer({distRoot=defaultRoot,apiHandlers=
  return createServer(async(req,res)=>{
   try{
    const url=new URL(req.url,'http://localhost');
+   if(url.pathname==='/api/ads'||url.pathname.startsWith('/api/ads/')){await(await import('../server/ads/runtime.mjs')).handleAdsNode(req,res);return;}
+   if(url.pathname==='/ads'){url.pathname='/ads.html';}
    if(apiHandlers.has(url.pathname)){await apiHandlers.get(url.pathname)(req,res);return;}
    if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{'Allow':'GET, HEAD'});res.end();return;}
    const route=resolvePlatformRequest(url.href);

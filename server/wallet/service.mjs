@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readConfig, publicConfig } from './config.mjs';
 import { assertAddress, createRuntime } from './runtime.mjs';
 import { validateDeployment } from './deployment.mjs';
+import { versionClaim, compareAndSetClaim, claimResultState } from './claim-store.mjs';
 import { assertOrigin, assertReady, json, readBody, WalletApiError, withErrors } from './http.mjs';
 
 const PENDING_TIMEOUT = 130_000;
@@ -37,22 +38,33 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
   }
   async function inspect(address) {
     if (!(await runtime.walletAllowed(address))) throw new WalletApiError(409, 'wallet_not_deployed', 'La smart wallet todavía no está desplegada con el código esperado.');
-    const [record, balance] = await Promise.all([runtime.redis.get(keyFor(address)), runtime.balance(address)]);
-    if (balance > 0n) {
-      if (record && record.state !== 'confirmed') {
-        const confirmed = { ...record, state: 'confirmed', updatedAt: now(), confirmedAt: now() };
-        delete confirmed.reason; delete confirmed.nextAvailableAt;
-        await runtime.redis.set(keyFor(address), confirmed);
-        return { record: confirmed, balance };
-      }
-      return { record, balance };
-    }
-    if (record?.state === 'pending' && now() - record.updatedAt > PENDING_TIMEOUT) {
-      const unknown = { ...record, state: 'unknown', updatedAt: now() };
-      await runtime.redis.set(keyFor(address), unknown);
-      return { record: unknown, balance };
+    let [record, balance] = await Promise.all([runtime.redis.get(keyFor(address)), runtime.balance(address)]);
+    for (let attempt = 0; attempt < 3; attempt++) {
+      let next;
+      if (balance > 0n && record?.state !== 'confirmed') {
+        next = versionClaim({ ...record, address, state: 'confirmed', createdAt: record?.createdAt || now(), updatedAt: now(), confirmedAt: now() });
+        delete next.reason; delete next.nextAvailableAt;
+      } else if (record?.state === 'pending' && now() - record.updatedAt > PENDING_TIMEOUT) {
+        next = versionClaim({ ...record, state: 'unknown', updatedAt: now() });
+      } else return { record, balance };
+      const changed = record ? await compareAndSetClaim(runtime.redis, keyFor(address), record, next) : await runtime.redis.set(keyFor(address), next, { nx: true });
+      if (changed) return { record: next, balance };
+      record = await runtime.redis.get(keyFor(address));
     }
     return { record, balance };
+  }
+  async function finishClaim(address, pending, outcome) {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const latest = await runtime.redis.get(keyFor(address));
+      if (latest?.state === 'confirmed') return latest;
+      let next;
+      if (!latest || latest.version === pending.version || outcome.state === 'confirmed') next = versionClaim(outcome);
+      else if (latest.attempt === pending.attempt && latest.state === 'unknown' && outcome.hash) next = versionClaim({ ...latest, hash: outcome.hash, updatedAt: now() });
+      else return latest;
+      const changed = latest ? await compareAndSetClaim(runtime.redis, keyFor(address), latest, next) : await runtime.redis.set(keyFor(address), next, { nx: true });
+      if (changed) return next;
+    }
+    return await runtime.redis.get(keyFor(address)) || { ...pending, state: 'unknown' };
   }
   const onlyGet = request => { if (request.method !== 'GET') throw new WalletApiError(405, 'method_not_allowed', 'Método no permitido.'); };
   return {
@@ -88,18 +100,17 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
         if (!Number.isFinite(retryAt) || retryAt > now()) return json(sendState(address, current.record, current.balance));
       }
       // Keep every initial claim record through the campaign; no TTL can silently re-enable it.
-      const pending = { state: 'pending', address, createdAt: current.record?.createdAt || now(), updatedAt: now(), attempt: (current.record?.attempt || 0) + 1 };
+      const pending = versionClaim({ state: 'pending', address, createdAt: current.record?.createdAt || now(), updatedAt: now(), attempt: (current.record?.attempt || 0) + 1 });
       let acquired;
       if (current.record?.state === 'failed') {
         // Retry only a definite provider failure, through an explicit user action and CAS.
-        const script = "local raw=redis.call('GET',KEYS[1]); if not raw then return 0 end; local item=cjson.decode(raw); if item.state~='failed' or item.updatedAt~=tonumber(ARGV[1]) then return 0 end; redis.call('SET',KEYS[1],ARGV[2]); return 1";
-        acquired = await runtime.redis.eval(script, [keyFor(address)], [current.record.updatedAt, JSON.stringify(pending)]);
+        acquired = await compareAndSetClaim(runtime.redis, keyFor(address), current.record, pending);
       } else acquired = await runtime.redis.set(keyFor(address), pending, { nx: true });
       if (!acquired) { current = await inspect(address); return json(sendState(address, current.record, current.balance)); }
       let result;
       try { result = await runtime.claim(address); }
       catch { result = { unknown: true }; }
-      let record = { ...pending, updatedAt: now(), state: result.unknown ? 'unknown' : result.success ? 'pending' : 'failed',
+      let record = { ...pending, updatedAt: now(), state: claimResultState(result),
         ...(typeof result.hash === 'string' && /^[0-9a-f]{64}$/i.test(result.hash) ? { hash: result.hash } : {}),
         ...(typeof result.reason === 'string' ? { reason: result.reason.slice(0, 80) } : {}),
         ...(typeof result.nextAvailableAt === 'string' ? { nextAvailableAt: result.nextAvailableAt.slice(0, 40) } : {}),
@@ -107,10 +118,8 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
       let balance = 0n;
       try { balance = await runtime.balance(address); if (balance > 0n) { record.state = 'confirmed'; record.confirmedAt = now(); delete record.reason; } }
       catch { if (record.state === 'pending') record.state = 'unknown'; }
-      // A reader can reconcile while the CLI is running. Never downgrade its confirmation.
-      const latest = await runtime.redis.get(keyFor(address));
-      if (latest?.state === 'confirmed') record = latest;
-      await runtime.redis.set(keyFor(address), record);
+      // Every transition is conditional, including a delayed child-process completion.
+      record = await finishClaim(address, pending, record);
       return json(sendState(address, record, balance));
     }),
   };

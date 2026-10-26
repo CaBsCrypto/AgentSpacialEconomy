@@ -1,0 +1,29 @@
+name: Verify authorized advertising testnet evidence
+on:
+  workflow_dispatch:
+    inputs:
+      expected:
+        description: Minimum fresh settlements to verify (must be positive)
+        required: true
+        default: "1"
+      since:
+        description: Earliest receipt timestamp (ISO UTC, optional; defaults to the last hour)
+        required: false
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Verify new payments and durable jobs using live Stellar RPC
+        run: npm run test:ads:testnet
+        env:
+          ADS_DATABASE_URL: ${{ secrets.ADS_EVIDENCE_DATABASE_URL }}
+          ADS_EXPECTED_SETTLEMENTS: ${{ inputs.expected }}
+          ADS_EVIDENCE_SINCE: ${{ inputs.since }}

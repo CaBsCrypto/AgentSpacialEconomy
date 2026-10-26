@@ -1,0 +1,254 @@
+{
+  "observedAt": "2026-10-26T10:14:30.691Z",
+  "branch": "feature/ads-3d-ar-x402",
+  "codeCommit": "104770ec85cf66e933b2da623129d798de8cf83c",
+  "publicDeploymentId": "dpl_96RBMGgJNd5yMGy5EdUapbWc7fgt",
+  "canonicalOrigin": "https://agenticreality.space",
+  "network": "stellar:testnet",
+  "checkout": "CONTROLLED",
+  "allowedBuyerCount": 1,
+  "freezeRevokedByOwner": true,
+  "goPublic": false,
+  "order": {
+    "id": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+    "state": "COMPLETED",
+    "placement": "main_stage_screen",
+    "amountUnits": "50000000",
+    "designAmountUnits": "0",
+    "requiredPasses": 5,
+    "deliveredPasses": 5,
+    "passMs": 60000,
+    "totalDeliveredMs": 300000,
+    "minCampaignGapMs": 60000,
+    "automaticRetryOfUnit": 5,
+    "settledPaymentCount": 1,
+    "paymentHash": "7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2",
+    "payerBalanceUsdc": "95.0000000"
+  },
+  "registry": {
+    "contractId": "CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD",
+    "state": "Completed",
+    "requiredUnits": 5,
+    "deliveredUnits": 5,
+    "nextNonce": 5,
+    "confirmedJobs": 7,
+    "completeTransaction": "2bf5d4c4f1a922acc3cd44763b610bcdb79838bee278270573434addf98692d2",
+    "completeLedger": 5397185,
+    "finalReadLedger": 5397216,
+    "finalReadUnsigned": true
+  },
+  "evidence": {
+    "payment": "testnet-registry/main-stage-payment.json",
+    "fulfillment": "testnet-registry/main-stage-fulfillment.json",
+    "contractRead": "testnet-registry/main-stage-contract-read.json",
+    "completeTransaction": "testnet-registry/main-stage-complete.json",
+    "paidAdScreenshot": "evidence/main-stage-paid-ad.png",
+    "hostLoopScreenshot": "evidence/main-stage-host-loop.png"
+  },
+  "validation": {
+    "realPasskey": true,
+    "openZeppelinVerify": true,
+    "realPreaudit": true,
+    "exactUsdcTransfer": true,
+    "auditedFinalCreative": true,
+    "visibleAdIn3dTwin": true,
+    "hostLoopBetweenPasses": true,
+    "canonicalFivePasses": true,
+    "sorobanCompletion": true,
+    "physicalAndroidIphoneCheckout": false,
+    "physicalNfc": false,
+    "physicalAr": false
+  },
+  "tests": {
+    "ciUrl": "https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40301786694",
+    "ciConclusion": "success",
+    "runtime": "Node 22",
+    "sql": "PostgreSQL 17",
+    "root": {
+      "passed": 752,
+      "failed": 0,
+      "skipped": 1
+    },
+    "agent": {
+      "passed": 42,
+      "failed": 0
+    },
+    "contract": {
+      "passed": 9,
+      "failed": 0
+    },
+    "build": "passed",
+    "localNativeNeonRetry": "NOT_RUN_AFTER_STOPPED_CONNECTIVITY_FAILURE"
+  },
+  "historicalCheckpoints": {
+    "observedAt": "2026-10-26T07:24:00Z",
+    "branch": "feature/ads-3d-ar-x402",
+    "mainIncluded": "0378e01d27dd279adaea7dcf44c3c9af93e808cb",
+    "checkout": "DISABLED",
+    "publicDiagnosticDeploymentId": "dpl_7azPun7M12Ry389bmMveGMv5Pc5r",
+    "publicScope": "baseline plus H1 packaging plus approved main PR28; full pilot Preview pending",
+    "renderer": {
+      "chromium": "153.0.8010.0",
+      "webgl2": true,
+      "pixel": [
+        0,
+        255,
+        0,
+        255
+      ],
+      "advertisementOrDelivery": false
+    },
+    "tests": {
+      "root": {
+        "passed": 677,
+        "failed": 0,
+        "skipped": 2
+      },
+      "agent": {
+        "passed": 42,
+        "failed": 0
+      },
+      "rust": {
+        "passed": 9,
+        "failed": 0
+      },
+      "postgresNativeDirect": {
+        "passed": 18,
+        "statefulSql": 15,
+        "isolatedDatabase": "ads_test",
+        "failed": 0,
+        "skipped": 0
+      },
+      "registryRaceRegression": {
+        "passed": 28,
+        "failed": 0
+      }
+    },
+    "migrations": 13,
+    "humanWalletConnection": "blocked: unverified birth provenance; indexer did not return one complete schema-2 birth claim",
+    "newPilotSettlements": 0,
+    "canonicalFivePassOrdersValidated": 0,
+    "physicalDeviceOrNfcValidation": false,
+    "goPublic": false,
+    "latestCheckpoint": {
+      "observedAt": "2026-10-26T07:59:50.396398+00:00",
+      "commit": "3f600c5",
+      "publicDeployment": "dpl_Fc7NWThdiq5LW8CR9jE7L7G3Q1e4",
+      "publicFullPilotCode": true,
+      "checkout": "DISABLED",
+      "rootTests": {
+        "passed": 690,
+        "failed": 0,
+        "skipped": 2
+      },
+      "releaseChecks": {
+        "passed": 73,
+        "failed": 0
+      },
+      "walletBirthReceiptServerTest": "VERIFIED_REAL_TESTNET_CREATION_NO_SUBMISSION",
+      "humanConnection": "PENDING_VISIBLE_PROMPT",
+      "latestNativeSql": {
+        "observedAt": "2026-10-26T07:59:50.396398+00:00",
+        "backend": "postgres",
+        "database": "ads_test",
+        "tests": 19,
+        "passed": 15,
+        "failed": 4,
+        "skipped": 0,
+        "result": "STOPPED_CONNECTIVITY_FAILURE",
+        "errors": [
+          "read ECONNRESET",
+          "Connection terminated due to connection timeout"
+        ],
+        "retriesAfterRepeatedCause": 0,
+        "externalSubmissions": 0
+      },
+      "goPublic": false
+    },
+    "sponsorshipCheckpoint": {
+      "observedAt": "2026-10-26T08:26:02.283362+00:00",
+      "commit": "0061c14",
+      "deploymentId": "dpl_2uydH3pHnY5GvBbRN1ct6KhNhGR7",
+      "checkout": "DISABLED",
+      "realExistingWalletAuthentication": true,
+      "observedUsdcBalance": "100",
+      "balanceIsGrantProof": false,
+      "firstProviderVerification": {
+        "result": "REJECTED",
+        "reason": "invalid_exact_stellar_payload_fee_exceeds_maximum",
+        "simulatedFeeStroops": 246420,
+        "maximumFeeStroops": 50000,
+        "evidence": "Exact offline hash comparison; no replay",
+        "settlementSubmitted": false
+      },
+      "selectedProvider": "https://channels.openzeppelin.com/x402/testnet",
+      "supportedProbe": {
+        "ok": true,
+        "x402Version": 2,
+        "network": "stellar:testnet",
+        "scheme": "exact",
+        "areFeesSponsored": true
+      },
+      "secondProviderAuthorization": "CHALLENGE_EXPIRED_WITHOUT_SIGNATURE_OR_VERIFY; REQUIRES_FRESH_HUMAN_ACTION",
+      "rootTests": {
+        "passed": 704,
+        "failed": 0,
+        "skipped": 2
+      },
+      "newPilotSettlements": 0,
+      "goPublic": false,
+      "lastObservedAt": "2026-10-26T08:29:06.611937+00:00"
+    },
+    "feeQuotaCheckpoint": {
+      "observedAt": "2026-10-26T09:14:00Z",
+      "commit": "5a482e40b14bee4d0154617eac4997c8074f4c1d",
+      "deploymentId": "dpl_CqzbDz7TyGFa5B3v5GfheBFz2B2v",
+      "canonicalOrigin": "https://agenticreality.space",
+      "checkoutEnabled": false,
+      "checkoutMode": "CONTROLLED",
+      "checkoutUntil": "2026-10-26T09:15:00Z",
+      "rootTests": {
+        "passed": 737,
+        "failed": 0,
+        "skipped": 2
+      },
+      "agentTests": {
+        "passed": 42,
+        "failed": 0
+      },
+      "contractTests": {
+        "passed": 9,
+        "failed": 0
+      },
+      "postgres17Ci": {
+        "conclusion": "success",
+        "url": "https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40296613674"
+      },
+      "facilitatorSupportProbe": "OPENZEPPELIN_TESTNET_SUPPORTED",
+      "newSignedVerification": "NOT_VALIDATED",
+      "newPilotPurchase": "NOT_VALIDATED",
+      "fiveCanonicalPasses": "NOT_VALIDATED",
+      "oneMinuteCampaignGap": "LOCAL_WORK_NOT_DEPLOYED",
+      "goPublic": false
+    },
+    "resumedPilotCheckpoint": {
+      "freezeRevokedByOwner": true,
+      "compatibility": "VERIFIED_REAL_PASSKEY",
+      "compatibilityEvidence": "testnet-registry/passkey-compatibility.json",
+      "campaignGapMs": 60000,
+      "schedulerRecoveryTests": {
+        "passed": 21,
+        "failed": 0
+      },
+      "creativeClientTests": {
+        "passed": 32,
+        "failed": 0
+      },
+      "checkoutEnabled": false,
+      "realPreaudit": "PENDING",
+      "newPilotPurchase": "PENDING",
+      "fiveCanonicalPasses": "PENDING",
+      "goPublic": false
+    }
+  }
+}

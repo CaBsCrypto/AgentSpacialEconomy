@@ -1,3 +1,5 @@
+/*! smart-account-kit@0.9.1 — Apache-2.0. Full license: SMART-ACCOUNT-KIT-LICENSE.txt. Pinned internal verifier export. */
+
 Bundled license information:
 
 ieee754/index.js:

@@ -1,0 +1,22 @@
+
+> one16-lisbon-immersive@0.1.0 build
+> npm run build:origin && npm run build:wallet && npm run build:ads && npm run build:ads-entry
+
+
+> one16-lisbon-immersive@0.1.0 build:origin
+> node scripts/prepare-site-origin.mjs
+
+Canonical HTML entries prepared for https://agenticreality.space
+
+> one16-lisbon-immersive@0.1.0 build:wallet
+> node scripts/build-wallet.mjs
+
+
+> one16-lisbon-immersive@0.1.0 build:ads
+> node scripts/build-ads-wallet.mjs
+
+
+> one16-lisbon-immersive@0.1.0 build:ads-entry
+> node scripts/build-ads-entry.mjs
+
+Generated canonical main-stage QR, NFC record and A5 artwork.

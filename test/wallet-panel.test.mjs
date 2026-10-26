@@ -29,6 +29,7 @@ function fixture() {
     ensureWalletReady(options) { calls.push(['ensure', options]); return Promise.resolve(state); },
     refresh() { calls.push(['refresh']); return Promise.resolve(state); },
     retryFunding() { calls.push(['retry']); return Promise.resolve(state); },
+    verifyPasskey() { calls.push(['verify']); return Promise.resolve(state); },
   };
   const update = patch => { state = { ...state, ...patch }; observer?.(state); };
   return { doc, dialog, controller, calls, update, get: id => doc.getElementById(id) };
@@ -133,6 +134,31 @@ test('reopening refreshes cooldown eligibility without requiring another control
   } finally { Date.now = clock; panel.destroy(); }
 });
 
+
+
+test('a connected main-document wallet exposes a synchronous independent proof action', () => {
+  const f = fixture(), panel = bindWalletPanel({ dialog: f.dialog, controller: f.controller });
+  assert.equal(f.get('walletVerify').hidden, true);
+  f.update({ status: 'ready', address: 'Cwallet', prepared: true, balance: '100', canVerifyPasskey: true });
+  assert.equal(f.get('walletVerify').hidden, false); assert.equal(f.get('walletVerify').disabled, false);
+  const status = f.get('walletStatus').textContent; f.get('walletVerify').click(); assert.deepEqual(f.calls, [['verify']]);
+  f.update({ busy: true, verificationBusy: true });
+  assert.equal(f.get('walletVerify').disabled, true); assert.equal(f.get('walletStatus').textContent, status);
+  assert.match(f.get('walletVerification').textContent, /esta misma wallet/); assert.equal(f.get('walletVerification').attributes['aria-live'], 'polite');
+  const card = f.dialog.children.find(node => node.className === 'wallet-account'); assert.equal(card.children[0].textContent, '100 USDC');
+  f.update({ busy: false, verificationBusy: false, verificationError: { cancelled: true } });
+  assert.match(f.get('walletVerification').textContent, /se canceló/); assert.equal(f.get('walletStatus').textContent, status); assert.equal(card.children[0].textContent, '100 USDC');
+  panel.destroy();
+});
+
+test('a late completed proof updates state without reopening a closed panel', async () => {
+  const f = fixture(), panel = bindWalletPanel({ dialog: f.dialog, controller: f.controller });
+  await panel.open(); f.update({ status: 'ready', address: 'Cwallet', prepared: true, balance: '100', canVerifyPasskey: true });
+  f.get('walletVerify').click(); panel.close(); const shows = f.dialog.shows;
+  f.update({ passkeyProof: { address: 'Cwallet', credentialId: 'same-key', verifiedAt: Date.now() }, verificationBusy: false, busy: false });
+  assert.equal(f.dialog.open, false); assert.equal(f.dialog.shows, shows); assert.match(f.get('walletVerification').textContent, /Passkey verificada/);
+  panel.destroy(); f.get('walletVerify').click(); assert.deepEqual(f.calls.map(call => call[0]), ['prepare', 'verify']);
+});
 
 test('only the explicit Continue button acknowledges the current snapshot before closing', async () => {
  const f = fixture(), continued = [], closed = [];

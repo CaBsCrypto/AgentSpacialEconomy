@@ -7,8 +7,10 @@
   <meta name="description" content="Custom spatial experiences for events. Connect physical places with 3D exploration, AR and a future programmable transaction layer." data-i18n-content="metaDescription">
   <title>Agentic Reality Space | Events you can explore</title>
   <link rel="stylesheet" href="/platform.css?v=premium-1">
+  <link rel="stylesheet" href="/wallet-badge.css?v=1">
   <script type="importmap">{"imports":{"three":"/vendor/three/build/three.module.js"}}</script>
   <script type="module" src="/platform.mjs?v=premium-1"></script>
+  <script type="module" src="/wallet-badge.mjs?v=1"></script>
 </head>
 <body class="ars-platform">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -17,10 +19,14 @@
     <nav class="main-nav" aria-label="Main navigation" data-i18n-aria="navAria">
       <a href="#why" data-i18n="navIdea">The idea</a>
       <a href="#how-it-works" data-i18n="navHow">How it works</a>
+      <a href="/ads">Spatial Ads ↗</a>
       <a href="#one16">ONE16 <span aria-hidden="true">↗</span></a>
     </nav>
+    <div class="header-wallet-controls">
+      <a id="platformWallet" class="platform-wallet" href="/wallet.html" hidden>Wallet</a>
     <div class="language-switch" role="group" aria-label="Language" data-i18n-aria="languageAria">
       <button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="es" aria-pressed="false" lang="es">ES</button>
+    </div>
     </div>
   </header>
 

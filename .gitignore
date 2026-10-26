@@ -43,6 +43,21 @@ model/*-preview.jpg
 .env.*
 !.env.example
 
+# Advertising private storage and local build tools
+.ads-private/
+.ads-tools/
+.ads-npm-cache/
+.ads-*.pem
+config/ads.local.json
+contracts/**/target/
+contracts/**/test_snapshots/
+.ads-browser/
+
+.ads-qa/
+
+.ads-secrets/
+
+.ads-font-cache/
 # Reproducible render tools: Python bytecode is local cache.
 __pycache__/
 *.py[cod]

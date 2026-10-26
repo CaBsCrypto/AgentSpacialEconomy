@@ -34,7 +34,7 @@ jobs:
 
       - name: Install agent dependencies
         working-directory: agent
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Unit tests
         working-directory: agent
@@ -53,13 +53,13 @@ jobs:
         run: |
           mkdir -p ci-results
           cp agent/out/ci-log.txt ci-results/ 2>/dev/null || true
-          if grep -rEn '\bS[A-Z2-7]{55}\b' dist/state ci-results 2>/dev/null; then
+          if grep -rEq '\bS[A-Z2-7]{55}\b' dist/state ci-results 2>/dev/null; then
             echo "A secret key would be published. Aborting."
             exit 1
           fi
 
       - name: Publish results to ci/testnet-results
-        if: always() && steps.scan.outcome == 'success'
+        if: success() && steps.scan.outcome == 'success'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

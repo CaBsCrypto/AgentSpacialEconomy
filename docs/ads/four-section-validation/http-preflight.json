@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-26T10:04:43.600Z",
+  "signed": false,
+  "settled": false,
+  "originalOffer": "main-stage-test-5m",
+  "sectionOffer": "main-stage-section-test-5m",
+  "statuses": {
+    "invalidSection": 400,
+    "missingSection": 400,
+    "wholeScreenPreflight": 402,
+    "sectionPreflight": 402
+  },
+  "exactSectionRequirements": true
+}

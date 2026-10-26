@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "network": "stellar:testnet",
+  "capturedAt": "2026-10-26T10:19:35.889Z",
+  "source": "Single operational PostgreSQL SELECT with a read-only database session. Canonical publisher delivery; not audience measurement.",
+  "orderId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+  "order": {
+    "id": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+    "quote": {
+      "plan": "PASSES",
+      "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+      "payTo": "GBJERBDEX5CLPFP6SBEP3W26TZSWSOOHJSI65H4CUWZF2KGXJGXGN7V5",
+      "endsAt": "2026-10-26T10:58:00.000Z",
+      "passMs": 60000,
+      "network": "stellar:testnet",
+      "offerId": "main-stage-test-5m",
+      "startsAt": "2026-10-26T09:58:00.000Z",
+      "placements": [
+        "main_stage_screen"
+      ],
+      "offerVersion": 2,
+      "renderLeadMs": 10000,
+      "requiredUnits": 5,
+      "minCampaignGapMs": 60000
+    },
+    "state": "COMPLETED",
+    "suspended": false,
+    "termsHash": "9533bd26d0bbf3d9cb1b7f28903f3d3206ac5e76c3b40d411a4ccacc7469fe44",
+    "queueState": null,
+    "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+    "amountUnits": "50000000",
+    "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8",
+    "revisionState": "AUDITED"
+  },
+  "units": [
+    {
+      "number": 1,
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "deliveryId": "e8188ea5-1bd0-482c-876e-b31ee2d04df2",
+      "completedAt": "2026-10-26T09:59:01.641+00:00",
+      "placementId": "main_stage_screen"
+    },
+    {
+      "number": 2,
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "deliveryId": "00172a5c-5c65-4539-9ef8-3f5f9cf06cb9",
+      "completedAt": "2026-10-26T10:01:11.417+00:00",
+      "placementId": "main_stage_screen"
+    },
+    {
+      "number": 3,
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "deliveryId": "0bdf811b-e117-4da1-8f2f-cd59424dfb46",
+      "completedAt": "2026-10-26T10:03:21.535+00:00",
+      "placementId": "main_stage_screen"
+    },
+    {
+      "number": 4,
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "deliveryId": "d5cd021e-9079-4923-8a69-d7fefb2d9163",
+      "completedAt": "2026-10-26T10:05:31.801+00:00",
+      "placementId": "main_stage_screen"
+    },
+    {
+      "number": 5,
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "deliveryId": "b95bf3c3-a268-4882-bcda-4d174b2fb785",
+      "completedAt": "2026-10-26T10:09:51.282+00:00",
+      "placementId": "main_stage_screen"
+    }
+  ],
+  "payments": [
+    {
+      "id": "0671c173-9e95-4dc3-9939-91b6ac19ca7b",
+      "payer": "CCNKDO25M3S33RNDGSHDO2NOKEJE37YNKQHJP4G443CVQUJVLETKOXYM",
+      "state": "SETTLED",
+      "network": "stellar:testnet",
+      "createdAt": "2026-10-26T09:54:48.007321+00:00",
+      "transactionHash": "7b4349d0942b045f606eb5a1195fa4e1e91acd98276bd727e6cc76a9110603b2"
+    }
+  ],
+  "deliveries": [
+    {
+      "id": "e8188ea5-1bd0-482c-876e-b31ee2d04df2",
+      "units": 1,
+      "endsAt": "2026-10-26T09:59:01.641+00:00",
+      "passId": "b8ae0a8f-6f76-4b1c-b87d-1fd03d4e3965",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T09:58:01.641+00:00",
+      "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+      "unitNumber": 1,
+      "placementId": "main_stage_screen",
+      "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8"
+    },
+    {
+      "id": "00172a5c-5c65-4539-9ef8-3f5f9cf06cb9",
+      "units": 1,
+      "endsAt": "2026-10-26T10:01:11.417+00:00",
+      "passId": "844ceed6-37bd-4256-a0b4-9db98064cd3c",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:00:11.417+00:00",
+      "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+      "unitNumber": 2,
+      "placementId": "main_stage_screen",
+      "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8"
+    },
+    {
+      "id": "0bdf811b-e117-4da1-8f2f-cd59424dfb46",
+      "units": 1,
+      "endsAt": "2026-10-26T10:03:21.535+00:00",
+      "passId": "5bd75faa-7834-4f9f-a3b2-2d3c356f5fc8",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:02:21.535+00:00",
+      "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+      "unitNumber": 3,
+      "placementId": "main_stage_screen",
+      "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8"
+    },
+    {
+      "id": "d5cd021e-9079-4923-8a69-d7fefb2d9163",
+      "units": 1,
+      "endsAt": "2026-10-26T10:05:31.801+00:00",
+      "passId": "b511caed-a53b-40c6-b205-b82f2b519105",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:04:31.801+00:00",
+      "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+      "unitNumber": 4,
+      "placementId": "main_stage_screen",
+      "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8"
+    },
+    {
+      "id": "b95bf3c3-a268-4882-bcda-4d174b2fb785",
+      "units": 1,
+      "endsAt": "2026-10-26T10:09:51.282+00:00",
+      "passId": "0d1ffa2e-6275-4d9b-831c-2daf8d8c20e4",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:08:51.282+00:00",
+      "revisionId": "0440eb0c-ba10-4d11-a331-720159a48127",
+      "unitNumber": 5,
+      "placementId": "main_stage_screen",
+      "manifestHash": "bac4603838b651a21e4d7fdf64626d8b786b0dee16451d70e6537b8ecd1765f8"
+    }
+  ],
+  "registryJobs": [
+    {
+      "id": "d32c7f25-5bd8-4ead-8bc5-40b133316022",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 1,
+      "createdAt": "2026-10-26T09:55:52.474486+00:00",
+      "operation": "commit",
+      "updatedAt": "2026-10-26T09:56:48.662442+00:00",
+      "transactionHash": "cb6ddb94209a2073f101c54187b15ec7cf6a8c3c4d591ecefb96f6a2886be8c2"
+    },
+    {
+      "id": "fbc7e0b7-2b4d-4ac3-b9cf-217939fa2b69",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 2,
+      "createdAt": "2026-10-26T09:59:48.547345+00:00",
+      "operation": "record_delivery",
+      "updatedAt": "2026-10-26T10:00:48.530536+00:00",
+      "transactionHash": "dc37c2d41e6a98e7c4c4c053ef337e573d6b25594a8e7201e9dcaf2db71c71ed"
+    },
+    {
+      "id": "988f7065-c6f6-4704-8a1f-933611ff15a1",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 3,
+      "createdAt": "2026-10-26T10:01:48.701408+00:00",
+      "operation": "record_delivery",
+      "updatedAt": "2026-10-26T10:02:48.61449+00:00",
+      "transactionHash": "4736212ef1d29ba273b0ec1d494788ecd0df07906d35803f9e208183453cb49e"
+    },
+    {
+      "id": "89444dc4-09c9-4946-b9ea-e6f0595f2c54",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 4,
+      "createdAt": "2026-10-26T10:03:48.394178+00:00",
+      "operation": "record_delivery",
+      "updatedAt": "2026-10-26T10:04:48.394133+00:00",
+      "transactionHash": "206805588a0bc9d3dd23d4dce7235ade13f4a12a82ff55f8b3cb95173500a526"
+    },
+    {
+      "id": "fe23cea0-71d7-4b15-9d70-f66581f321e1",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 5,
+      "createdAt": "2026-10-26T10:05:48.281748+00:00",
+      "operation": "record_delivery",
+      "updatedAt": "2026-10-26T10:06:48.812537+00:00",
+      "transactionHash": "1995e5afeabc8cab29035191eee5e21457571bf962afd10f48b820623b451a09"
+    },
+    {
+      "id": "9aa4dc7d-3169-48d0-a5ac-81f8a572fe17",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 6,
+      "createdAt": "2026-10-26T10:10:48.326487+00:00",
+      "operation": "record_delivery",
+      "updatedAt": "2026-10-26T10:11:48.571038+00:00",
+      "transactionHash": "873de5a873576cdc075078943fcd0e286be28cd8d8797329bcfa6068f051c533"
+    },
+    {
+      "id": "7726bf30-9f1e-4616-9f50-cfb7b8eac5f6",
+      "state": "CONFIRMED",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "sequence": 7,
+      "createdAt": "2026-10-26T10:10:48.326487+00:00",
+      "operation": "complete",
+      "updatedAt": "2026-10-26T10:12:48.79977+00:00",
+      "transactionHash": "2bf5d4c4f1a922acc3cd44763b610bcdb79838bee278270573434addf98692d2"
+    }
+  ],
+  "reservations": [
+    {
+      "id": "6770fb0c-dd08-4b80-9d0e-a6e8537b61d8",
+      "state": "COMMITTED",
+      "endsAt": "2026-10-26T09:59:10+00:00",
+      "passId": "b8ae0a8f-6f76-4b1c-b87d-1fd03d4e3965",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T09:58:00+00:00",
+      "unitNumber": 1,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    },
+    {
+      "id": "92a67340-5df7-4e99-94b3-f2263bf3f623",
+      "state": "COMMITTED",
+      "endsAt": "2026-10-26T10:01:20+00:00",
+      "passId": "844ceed6-37bd-4256-a0b4-9db98064cd3c",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:00:10+00:00",
+      "unitNumber": 2,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    },
+    {
+      "id": "70b5eda7-2b9c-465b-adb9-0586dd995862",
+      "state": "COMMITTED",
+      "endsAt": "2026-10-26T10:03:30+00:00",
+      "passId": "5bd75faa-7834-4f9f-a3b2-2d3c356f5fc8",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:02:20+00:00",
+      "unitNumber": 3,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    },
+    {
+      "id": "ffb10f25-761f-4ea5-8378-270e044c646a",
+      "state": "COMMITTED",
+      "endsAt": "2026-10-26T10:05:40+00:00",
+      "passId": "b511caed-a53b-40c6-b205-b82f2b519105",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:04:30+00:00",
+      "unitNumber": 4,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    },
+    {
+      "id": "28c74f71-4ca4-44a4-8361-b210e2a0c759",
+      "state": "COMMITTED",
+      "endsAt": "2026-10-26T10:07:50+00:00",
+      "passId": "8f74dfc9-2391-4745-93b5-25fb14ae1ee4",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:06:40+00:00",
+      "unitNumber": 5,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    },
+    {
+      "id": "eb8dd349-12d8-4f63-857d-a8096008c360",
+      "state": "RELEASED",
+      "endsAt": "2026-10-26T10:10:00+00:00",
+      "passId": "0d1ffa2e-6275-4d9b-831c-2daf8d8c20e4",
+      "batchId": "81eaf2a8-61cb-4e5f-9731-8a8db9ba9722",
+      "startsAt": "2026-10-26T10:08:50+00:00",
+      "unitNumber": 5,
+      "placementId": "main_stage_screen",
+      "deliveryUnits": 1
+    }
+  ],
+  "retries": [
+    {
+      "unitNumber": 5,
+      "attempts": [
+        {
+          "reservationId": "28c74f71-4ca4-44a4-8361-b210e2a0c759",
+          "passId": "8f74dfc9-2391-4745-93b5-25fb14ae1ee4",
+          "credited": false,
+          "startsAt": "2026-10-26T10:06:40+00:00",
+          "endsAt": "2026-10-26T10:07:50+00:00"
+        },
+        {
+          "reservationId": "eb8dd349-12d8-4f63-857d-a8096008c360",
+          "passId": "0d1ffa2e-6275-4d9b-831c-2daf8d8c20e4",
+          "credited": true,
+          "startsAt": "2026-10-26T10:08:50+00:00",
+          "endsAt": "2026-10-26T10:10:00+00:00"
+        }
+      ],
+      "creditedPassId": "0d1ffa2e-6275-4d9b-831c-2daf8d8c20e4",
+      "replacementGapMs": 60000,
+      "samePaidOrder": true
+    }
+  ],
+  "assertions": {
+    "orderCompleted": true,
+    "revisionAudited": true,
+    "singlePaymentAttempt": true,
+    "singleSettledPayment": true,
+    "settledOnTestnet": true,
+    "amountUnits": "50000000",
+    "uniqueFiveUsdcPayment": true,
+    "fiveUniquePasses": true,
+    "deliveryDurationsMs": [
+      60000,
+      60000,
+      60000,
+      60000,
+      60000
+    ],
+    "allFiveExactly60000Ms": true,
+    "totalDeliveredMs": 300000,
+    "deliveryGapsMs": [
+      69776,
+      70118,
+      70266,
+      199481
+    ],
+    "allGapsAtLeast60000Ms": true,
+    "frozenCampaignGapMs": 60000,
+    "fiveUniqueUnitsCompleted": true,
+    "sevenRegistryJobsConfirmed": true,
+    "registryOperationCounts": {
+      "commit": 1,
+      "record_delivery": 5,
+      "complete": 1
+    },
+    "retryWithoutAdditionalPayment": true,
+    "allPassed": true
+  }
+}

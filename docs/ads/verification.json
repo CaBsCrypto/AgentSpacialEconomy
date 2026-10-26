@@ -1,0 +1,76 @@
+{
+  "recordedAt": "2026-10-26T04:09:26.905969+00:00",
+  "branch": "feature/ads-3d-ar-x402",
+  "codeRevision": "c6ca7d8674bc075a5d87605ac95747b966190c22",
+  "baselineCommit": "171db5576181ae484dd085316f035a55a71ff99e",
+  "local": {
+    "build": {
+      "command": "npm run build",
+      "status": "PASSED"
+    },
+    "rootTests": {
+      "command": "npm test",
+      "tests": 439,
+      "passed": 438,
+      "failed": 0,
+      "skipped": 1,
+      "skipReason": "Existing wallet RPC integration requires explicit external configuration."
+    },
+    "legacyAgentTests": {
+      "command": "npm test (agent/)",
+      "tests": 30,
+      "passed": 30,
+      "failed": 0
+    },
+    "contractTests": {
+      "command": "cargo test --offline --manifest-path contracts/ads-registry/Cargo.toml",
+      "passed": 8,
+      "failed": 0
+    },
+    "contractWasm": {
+      "command": "cargo build --offline --release --target wasm32v1-none --manifest-path contracts/ads-registry/Cargo.toml",
+      "status": "PASSED",
+      "sdk": "25.3.1"
+    },
+    "database": "PGlite PostgreSQL WASM with btree_gist and unchanged production migrations; Docker daemon was unavailable.",
+    "historySecretScan": {
+      "stellarSecretMatches": 0
+    }
+  },
+  "browser": {
+    "surface": "Desktop Chrome",
+    "real": [
+      "API served locally with checkout disabled",
+      "Actual supplied media converted to silent 10-second MP4",
+      "Loop observed from 8.917s to 0.073s",
+      "No overflow at emulated widths 320px and 390px",
+      "GLB and Three.js renderer loaded"
+    ],
+    "simulated": [
+      "Paid/audited playlist transitions use explicit fixtures",
+      "13 canonical ACKs over the real Three renderer with fixture content",
+      "WebXR session behaviour uses XR mocks"
+    ],
+    "physicalPhones": false,
+    "physicalNfc": false
+  },
+  "external": {
+    "liveAdvertisingSettlements": 0,
+    "liveRefunds": 0,
+    "modelCreditsSpent": false,
+    "walletFacilitatorCompatibility": "NOT_VERIFIED",
+    "registryDeployed": false,
+    "realPostgresCi": "WORKFLOW_ADDED_NOT_RUN",
+    "deploymentsPerformed": false,
+    "pushPerformed": false
+  },
+  "activationGates": [
+    "Complete commercial terms, independent prices, bounded model budget and placement geometry",
+    "Configure PostgreSQL, private storage and restricted operator/publisher signers",
+    "Verify passkey wallet and facilitator compatibility with separately authorized Testnet payments",
+    "Run fresh-settlement and refund evidence checks",
+    "Deploy registry only after separate authorization",
+    "Validate Android/iPhone hardware, real NFC/QR, denied camera and slow networks"
+  ],
+  "accountingTrust": "Signed activity in the leased operator canonical renderer. It does not prove independent human views or shared physical AR alignment."
+}

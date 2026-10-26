@@ -1,0 +1,47 @@
+{
+  "runId": "2026-10-26T09:59:41.097Z",
+  "sourceCommit": "950aa1514662a24a345dc259a77f993febf5db42",
+  "network": "stellar:testnet",
+  "kind": "recorded testnet run",
+  "status": "FAILED",
+  "screen": {
+    "sections": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "slotMs": 300000,
+    "priceUsdc": "5.00",
+    "placement": "main_stage_screen",
+    "offerId": "main-stage-section-test-5m"
+  },
+  "maximumAdvertisingUnits": "300000000",
+  "attempts": [],
+  "treasury": {
+    "account": "GBZGMQHY7R2P7KNBDTKFYD5DLAGONSG6HJUXCJ6Z3FXLQNTJIAH4E4DQ",
+    "usdcBefore": "0.0000000",
+    "usdcAfter": null,
+    "receivedUsdc": null,
+    "verified": false
+  },
+  "orders": [],
+  "registry": null,
+  "verification": null,
+  "recordedAt": "2026-10-26T10:01:38.709Z",
+  "advertisers": [
+    "GCJB2QT7BQVD6UCJY6J4JT6WNA6MTYZH4P5OP4OLC2SSXDQ6M5NCVKBW",
+    "GAXU3J4HKUTVFYXLP64MTDMNSU4DKUM65T4JXRI57UEUINBART3SVV5F",
+    "GBBGGFOWBFWQGQDE4IRRZPB4P5DTD3IGHFEK525R4LSSI6F5ITRWCQCX",
+    "GAKU5AQOE6XWOGLMJ3HDWERBPAM3UYHDJFHLAZQXHE7ZWZB6IY42E4LG",
+    "GBAC4K2JODMBTTMVVHAXEJEX65CZRIAKSHFEEL5MU52VGKZKQGGOV7H6",
+    "GDC4ZWPKZKJ4PGTMU5D3RQQNOID7MH7YG4SD3KPSLZPGFDMNF3LEXFZ5"
+  ],
+  "facilitator": "https://x402.org/facilitator",
+  "funding": {
+    "funder": "GCQOLNSECY6WZVVOU6AFXKZS64YTPFAQKVQNQK2QIQ4SQPX53CDBE5HG",
+    "swapTx": "4490df6bbd6ed6589e80c805b277dd1ed56e4b4000cd44bcd8cd18f7597fe2ab",
+    "distributionTx": "b7d6e6da1052cc4bd9095f54b1af38305787f652f3a69cbbf14452707149fd7f"
+  },
+  "error": "Isolated services did not start."
+}

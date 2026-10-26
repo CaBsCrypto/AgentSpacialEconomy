@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-10-26T09:34:49.042Z",
+  "campaign_id": "afe495b5-3f87-4212-9b54-75852af2c9d1",
+  "revision_id": "44af3392-1c50-41b6-ae0c-8a9d876bf175",
+  "state": "PREAUDITED",
+  "content_hash": "06e4ca052558cd65cc687305dd984d2ad716abc346cf178f90e53743782346af",
+  "verdict": {
+    "cta": [
+      {
+        "url": "https://agenticreality.space/",
+        "kind": "website",
+        "domain": "agenticreality.space"
+      }
+    ],
+    "state": "PREAUDITED",
+    "budget": {
+      "calls": 1,
+      "maxCostMicrousd": 310000,
+      "reservedMicrousd": "100410"
+    },
+    "allowed": true,
+    "reasons": [],
+    "decision": "ALLOW",
+    "contentHash": "06e4ca052558cd65cc687305dd984d2ad716abc346cf178f90e53743782346af",
+    "modelVersion": "google/gemini-2.5-flash-lite",
+    "reviewedHash": "3640c81ee388d22c83ac5bd8a9f4b2cc793cd5c141eb8bca18da4e8b29bb8431",
+    "policyVersion": "ads-content-v1"
+  }
+}

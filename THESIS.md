@@ -68,3 +68,7 @@ Judges rate each criterion 1–10 and weight it into a total out of 100 (HackMer
 | Hackathon progress (10%) | Docs, issues, PRs and the payment loop are built during the event; the submission states exactly what existed before. |
 | Market & ecosystem potential (10%) | Proposed first pilot: One Sixteen Venue, without an agreement; campuses and museums are later target markets. |
 | Product design & UX (10%) | One story and one look across the venue, the dashboard, the deck and the video. |
+
+## Local advertising experiment
+
+PRD v0.2 adds the advertiser as a second user: supply a project brief, authorize a bounded Testnet payment, then inspect separate processing and delivery obligations for a digital placement. The new implementation remains gated locally; it does not establish venue rights, demand, human audience or physical AR alignment.

@@ -1,0 +1,482 @@
+{
+  "runId": "2026-10-26T10:12:02.195Z",
+  "sourceCommit": "a5bfe1f58533dc0d17d434a2ed9b82cccdf01436",
+  "network": "stellar:testnet",
+  "kind": "recorded testnet run",
+  "status": "VERIFIED",
+  "screen": {
+    "sections": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "slotMs": 300000,
+    "priceUsdc": "5.00",
+    "placement": "main_stage_screen",
+    "offerId": "main-stage-section-test-5m"
+  },
+  "maximumAdvertisingUnits": "300000000",
+  "attempts": [
+    {
+      "id": "2026-10-26T10:12:02.195Z#1",
+      "section": "A",
+      "payer": "GCFXW7UWP77KW7HHKHFJYWZN6HZMMY7TPXLWZMA542K3VEDBCOIK6PFW",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb"
+    },
+    {
+      "id": "2026-10-26T10:12:02.195Z#2",
+      "section": "B",
+      "payer": "GALC2QKS55OQVQXTVTVCF4Z57SQ6SCRZWWKIVGPYCNYQIMBTUB7UN2WR",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4"
+    },
+    {
+      "id": "2026-10-26T10:12:02.195Z#3",
+      "section": "C",
+      "payer": "GDVP4VEH25UARY3MGQ2ZNUOFDEDPKJJ7BKWSJKAR37VYL4ZDXWU3VWZK",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7"
+    },
+    {
+      "id": "2026-10-26T10:12:02.195Z#4",
+      "section": "D",
+      "payer": "GBPL2JMCHNSHNRMDOZ6AIWXZKNWDOEL32IUFSVDVSMGYMACPDAAAA5SI",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095"
+    },
+    {
+      "id": "2026-10-26T10:12:02.195Z#5",
+      "section": "A",
+      "payer": "GCNSRFGTM66V5ZLPLH7WBQS3O36THKZMFDXLFHKQLG4P37HA32LABYIT",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f"
+    },
+    {
+      "id": "2026-10-26T10:12:02.195Z#6",
+      "section": "C",
+      "payer": "GCRBS7IXADEKR6T737S5JAEDUR4T2CKXN4EHYRVKIPIU6QEYDEZT2BFN",
+      "maximumUnits": "50000000",
+      "status": "RECEIPT_RECORDED",
+      "tx": "91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948"
+    }
+  ],
+  "treasury": {
+    "account": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+    "usdcBefore": "0.0000000",
+    "usdcAfter": "30.0000000",
+    "receivedUsdc": "30",
+    "verified": true
+  },
+  "orders": [
+    {
+      "advertiser": "Demo Advertiser 1 (testnet)",
+      "headline": "Live demo at table 4",
+      "account": "GCFXW7UWP77KW7HHKHFJYWZN6HZMMY7TPXLWZMA542K3VEDBCOIK6PFW",
+      "priceUsdc": "5.00",
+      "tx": "09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb",
+      "id": "2026-10-26T10:12:02.195Z#1",
+      "quadrant": "A",
+      "paidAt": 1793009647371,
+      "start": 1793009647371,
+      "end": 1793009947371,
+      "commitTx": "13d6250ddf5e8b5f1431f80446ab82083ff60c5b4f65bddfb4f8636dd2353e71",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/13d6250ddf5e8b5f1431f80446ab82083ff60c5b4f65bddfb4f8636dd2353e71",
+      "order": "a1f7a0aa5ee673ff69b684f2619f3f990c417dee01c36b3105b682f958bd0cbf",
+      "commitment": {
+        "order": "a1f7a0aa5ee673ff69b684f2619f3f990c417dee01c36b3105b682f958bd0cbf",
+        "revision": "8748c64f712d5ceee0a413e625b110ef60a18c2fb98c0180587fb10c6eb1c973",
+        "terms": "46fb170ed971bc13a06852499ea0c1e86f2e15017627050ac9e9147e9f6a4eab",
+        "manifest": "b46826265ed81ecbcb339ad6a2ea72e7afc0b034fb9ed354e02d086b3ae98ee1",
+        "payment": "09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb",
+        "claimant": "GCFXW7UWP77KW7HHKHFJYWZN6HZMMY7TPXLWZMA542K3VEDBCOIK6PFW",
+        "deadline": 1793013547371,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009647371,
+            "end": 1793009947371
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 2 (testnet)",
+      "headline": "Workshop at 15:00, room 2",
+      "account": "GALC2QKS55OQVQXTVTVCF4Z57SQ6SCRZWWKIVGPYCNYQIMBTUB7UN2WR",
+      "priceUsdc": "5.00",
+      "tx": "5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4",
+      "id": "2026-10-26T10:12:02.195Z#2",
+      "quadrant": "B",
+      "paidAt": 1793009662689,
+      "start": 1793009662689,
+      "end": 1793009962689,
+      "commitTx": "916f2d9cb2f3a67f7f724ea8426f8c4284304f78be95eca88153788476a955c4",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/916f2d9cb2f3a67f7f724ea8426f8c4284304f78be95eca88153788476a955c4",
+      "order": "b09bef2ae8e512a6b90074ed4c78ffd952d6f7194f53aa1f094f49207bab8ce2",
+      "commitment": {
+        "order": "b09bef2ae8e512a6b90074ed4c78ffd952d6f7194f53aa1f094f49207bab8ce2",
+        "revision": "27df896f10f337d0ab65c1d89ecb18bf8fbbe40adda9bfa1916f824cb9064a4d",
+        "terms": "964916cfb9678471d365c00679a58c0c3bb415db2b2f589de6fd0ec9fc06d90e",
+        "manifest": "c7e2a3db990f3f17d9ce6b8e90cb7c701e4c6b16e9e9b8a7e439e8f0325611b4",
+        "payment": "5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4",
+        "claimant": "GALC2QKS55OQVQXTVTVCF4Z57SQ6SCRZWWKIVGPYCNYQIMBTUB7UN2WR",
+        "deadline": 1793013562689,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009662689,
+            "end": 1793009962689
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 3 (testnet)",
+      "headline": "Ask us about the testnet faucet",
+      "account": "GDVP4VEH25UARY3MGQ2ZNUOFDEDPKJJ7BKWSJKAR37VYL4ZDXWU3VWZK",
+      "priceUsdc": "5.00",
+      "tx": "2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7",
+      "id": "2026-10-26T10:12:02.195Z#3",
+      "quadrant": "C",
+      "paidAt": 1793009672395,
+      "start": 1793009672395,
+      "end": 1793009972395,
+      "commitTx": "63d62ebecc271474dcdf13183e540be05f8509681814a0e3fccba4751ece3296",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/63d62ebecc271474dcdf13183e540be05f8509681814a0e3fccba4751ece3296",
+      "order": "e3e7f2513c9d71a4b047199a138ed877962880a792df25254aee1544baa149cf",
+      "commitment": {
+        "order": "e3e7f2513c9d71a4b047199a138ed877962880a792df25254aee1544baa149cf",
+        "revision": "ed61cd03b5156df2039bef869802ae6b58449da7e744420fc84ba3165f2e4f9f",
+        "terms": "f407fe933aa9a2be5367d8b8415ce461121da2aa6f6543da8597a28c00010083",
+        "manifest": "b8601e3c2b146ab259c574120006d1166de843ca8f6c2b3060456b7e26331d51",
+        "payment": "2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7",
+        "claimant": "GDVP4VEH25UARY3MGQ2ZNUOFDEDPKJJ7BKWSJKAR37VYL4ZDXWU3VWZK",
+        "deadline": 1793013572395,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009672395,
+            "end": 1793009972395
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 4 (testnet)",
+      "headline": "Hiring Soroban developers",
+      "account": "GBPL2JMCHNSHNRMDOZ6AIWXZKNWDOEL32IUFSVDVSMGYMACPDAAAA5SI",
+      "priceUsdc": "5.00",
+      "tx": "ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095",
+      "id": "2026-10-26T10:12:02.195Z#4",
+      "quadrant": "D",
+      "paidAt": 1793009682131,
+      "start": 1793009682131,
+      "end": 1793009982131,
+      "commitTx": "363c9dad19c8cbe57a09fc86191f8b05fe9306be8e15998755f58ac17618d351",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/363c9dad19c8cbe57a09fc86191f8b05fe9306be8e15998755f58ac17618d351",
+      "order": "562ce2772e8dc25f6c4af1a843b664c8438e1b48b5bf431e042de33befc56122",
+      "commitment": {
+        "order": "562ce2772e8dc25f6c4af1a843b664c8438e1b48b5bf431e042de33befc56122",
+        "revision": "b56c09aac9c83f3770241c8c7044d3e9e673856e1047e2c50a51dc9c09308c95",
+        "terms": "00ff78d79f726afcd6fdeca3d1b5fde148fe27d6a2de5a8ef1bce4a854dc9438",
+        "manifest": "76eba991a3066529f5529b009ee2116d469600474f561729d76e1eb204e24b05",
+        "payment": "ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095",
+        "claimant": "GBPL2JMCHNSHNRMDOZ6AIWXZKNWDOEL32IUFSVDVSMGYMACPDAAAA5SI",
+        "deadline": 1793013582131,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009682131,
+            "end": 1793009982131
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 5 (testnet)",
+      "headline": "Free coffee at the merch stand",
+      "account": "GCNSRFGTM66V5ZLPLH7WBQS3O36THKZMFDXLFHKQLG4P37HA32LABYIT",
+      "priceUsdc": "5.00",
+      "tx": "ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f",
+      "id": "2026-10-26T10:12:02.195Z#5",
+      "quadrant": "A",
+      "paidAt": 1793009712725,
+      "start": 1793009947371,
+      "end": 1793010247371,
+      "commitTx": "7d5641c241ecb3ce141f02fb8b0a11842db3b791e416f8d9ea5119af982e60a2",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/7d5641c241ecb3ce141f02fb8b0a11842db3b791e416f8d9ea5119af982e60a2",
+      "order": "011b1c7ab8ff0d671bfb916327a6c9ac53eeed522b2c730317bbf6ce2a89eecc",
+      "commitment": {
+        "order": "011b1c7ab8ff0d671bfb916327a6c9ac53eeed522b2c730317bbf6ce2a89eecc",
+        "revision": "c981e6065473822032414d9559a6f68020dcf6b3e5d6c2f71f4c6c2c1295ded1",
+        "terms": "46fb170ed971bc13a06852499ea0c1e86f2e15017627050ac9e9147e9f6a4eab",
+        "manifest": "44243f437b7522284e7b55f573bbb86209ae22a22af74f4d8c036dc5858f63e9",
+        "payment": "ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f",
+        "claimant": "GCNSRFGTM66V5ZLPLH7WBQS3O36THKZMFDXLFHKQLG4P37HA32LABYIT",
+        "deadline": 1793013847371,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009947371,
+            "end": 1793010247371
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    },
+    {
+      "advertiser": "Demo Advertiser 6 (testnet)",
+      "headline": "Vote for our project",
+      "account": "GCRBS7IXADEKR6T737S5JAEDUR4T2CKXN4EHYRVKIPIU6QEYDEZT2BFN",
+      "priceUsdc": "5.00",
+      "tx": "91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948",
+      "explorer": "https://stellar.expert/explorer/testnet/tx/91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948",
+      "id": "2026-10-26T10:12:02.195Z#6",
+      "quadrant": "C",
+      "paidAt": 1793009727344,
+      "start": 1793009972395,
+      "end": 1793010272395,
+      "commitTx": "c106e6208a5d0fa687f195b11f83604fa6eb676196702bb9a17dfde0567f1709",
+      "commitExplorer": "https://stellar.expert/explorer/testnet/tx/c106e6208a5d0fa687f195b11f83604fa6eb676196702bb9a17dfde0567f1709",
+      "order": "d14b4bdc0550b47de68acba2fd6a09dbc3bce47ffa18179e4c5b70b03cbfb9d3",
+      "commitment": {
+        "order": "d14b4bdc0550b47de68acba2fd6a09dbc3bce47ffa18179e4c5b70b03cbfb9d3",
+        "revision": "ee6ada56d102d140486c381c308862973405da178e6caf765b3ea6911b9e0f32",
+        "terms": "f407fe933aa9a2be5367d8b8415ce461121da2aa6f6543da8597a28c00010083",
+        "manifest": "5e1ad5014072606dc861b74acfe094d8f608d84b77fd034a5c82f8180c8adb07",
+        "payment": "91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948",
+        "claimant": "GCRBS7IXADEKR6T737S5JAEDUR4T2CKXN4EHYRVKIPIU6QEYDEZT2BFN",
+        "deadline": 1793013872395,
+        "placements": [
+          {
+            "slot": "main_stage_screen",
+            "plan": "Time",
+            "units": 300000,
+            "pass_ms": 0,
+            "start": 1793009972395,
+            "end": 1793010272395
+          }
+        ]
+      },
+      "readBack": {
+        "verified": true,
+        "state": "Queued",
+        "deliveredMs": "0",
+        "requiredMs": "300000"
+      }
+    }
+  ],
+  "registry": {
+    "contractId": "CANKOM7W6ZEQA7H32XYQ65YDN3I4WYR6K37EVIF72OIN5ID3TXXL2LW4",
+    "explorerContract": "https://stellar.expert/explorer/testnet/contract/CANKOM7W6ZEQA7H32XYQ65YDN3I4WYR6K37EVIF72OIN5ID3TXXL2LW4",
+    "wasmHash": "d9caf94b2dfb159c7d46bf5779d358d6cced9ee7a94bd69e2bb1fa354b5ee526",
+    "wasmVerified": true,
+    "deployTx": "f67b29bd7c3239e43459949af8e68248a84bc1d2ee1837b63a655b4631dc015c",
+    "deployExplorer": "https://stellar.expert/explorer/testnet/tx/f67b29bd7c3239e43459949af8e68248a84bc1d2ee1837b63a655b4631dc015c"
+  },
+  "verification": {
+    "verified": true,
+    "runId": "2026-10-26T10:12:02.195Z",
+    "sourceCommit": "a5bfe1f58533dc0d17d434a2ed9b82cccdf01436",
+    "checkedAt": "2026-10-26T10:17:10.364Z",
+    "expectedOrders": 6,
+    "verifiedOrders": 6,
+    "totalUnits": "300000000",
+    "totalUsdc": "30",
+    "payments": [
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "09033a1175e64c15810488ba34d7cc81b109e716fbaea2655e22f69ce47ea5eb",
+        "payer": "GCFXW7UWP77KW7HHKHFJYWZN6HZMMY7TPXLWZMA542K3VEDBCOIK6PFW",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397212,
+        "checkedAt": "2026-10-26T10:17:09.910Z",
+        "source": "horizon-xdr"
+      },
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "5e96d9eecc03e169a99191de47709beb3e93c2c0c745299473441414bc7194d4",
+        "payer": "GALC2QKS55OQVQXTVTVCF4Z57SQ6SCRZWWKIVGPYCNYQIMBTUB7UN2WR",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397215,
+        "checkedAt": "2026-10-26T10:17:10.355Z",
+        "source": "horizon-xdr"
+      },
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "2ee97b728bc2ec358e2a5779399e9d9b028b0436e42c99a6e7805c65761b0ca7",
+        "payer": "GDVP4VEH25UARY3MGQ2ZNUOFDEDPKJJ7BKWSJKAR37VYL4ZDXWU3VWZK",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397217,
+        "checkedAt": "2026-10-26T10:17:10.364Z",
+        "source": "horizon-xdr"
+      },
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "ea696a614c7fa60c2e363d09a1a296fdbdaed03583e386e3c9aec083ae506095",
+        "payer": "GBPL2JMCHNSHNRMDOZ6AIWXZKNWDOEL32IUFSVDVSMGYMACPDAAAA5SI",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397219,
+        "checkedAt": "2026-10-26T10:17:10.350Z",
+        "source": "horizon-xdr"
+      },
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "ad714b3fe0bc1cb0f75cb844d3d7f5dc83065ffc68b92bb91e4b38062be6ea4f",
+        "payer": "GCNSRFGTM66V5ZLPLH7WBQS3O36THKZMFDXLFHKQLG4P37HA32LABYIT",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397225,
+        "checkedAt": "2026-10-26T10:17:10.358Z",
+        "source": "horizon-xdr"
+      },
+      {
+        "verified": true,
+        "network": "stellar:testnet",
+        "tx": "91b5a764fe0d2c13a1636931245c3a91d2397fe0dfa4f7159f05539a12f1e948",
+        "payer": "GCRBS7IXADEKR6T737S5JAEDUR4T2CKXN4EHYRVKIPIU6QEYDEZT2BFN",
+        "payTo": "GA27HQJ6GFTA5GENPVAEF634U2GJZ7Q6T7ITPNPBFSHAN4QULMTDF2CJ",
+        "asset": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+        "amountUnits": "50000000",
+        "ledger": 5397228,
+        "checkedAt": "2026-10-26T10:17:10.361Z",
+        "source": "horizon-xdr"
+      }
+    ],
+    "registryTransactions": [
+      {
+        "verified": true,
+        "tx": "f67b29bd7c3239e43459949af8e68248a84bc1d2ee1837b63a655b4631dc015c",
+        "ledger": 5397230,
+        "kind": "deploy"
+      },
+      {
+        "verified": true,
+        "tx": "13d6250ddf5e8b5f1431f80446ab82083ff60c5b4f65bddfb4f8636dd2353e71",
+        "ledger": 5397231,
+        "kind": "commit"
+      },
+      {
+        "verified": true,
+        "tx": "916f2d9cb2f3a67f7f724ea8426f8c4284304f78be95eca88153788476a955c4",
+        "ledger": 5397232,
+        "kind": "commit"
+      },
+      {
+        "verified": true,
+        "tx": "63d62ebecc271474dcdf13183e540be05f8509681814a0e3fccba4751ece3296",
+        "ledger": 5397233,
+        "kind": "commit"
+      },
+      {
+        "verified": true,
+        "tx": "363c9dad19c8cbe57a09fc86191f8b05fe9306be8e15998755f58ac17618d351",
+        "ledger": 5397234,
+        "kind": "commit"
+      },
+      {
+        "verified": true,
+        "tx": "7d5641c241ecb3ce141f02fb8b0a11842db3b791e416f8d9ea5119af982e60a2",
+        "ledger": 5397235,
+        "kind": "commit"
+      },
+      {
+        "verified": true,
+        "tx": "c106e6208a5d0fa687f195b11f83604fa6eb676196702bb9a17dfde0567f1709",
+        "ledger": 5397237,
+        "kind": "commit"
+      }
+    ],
+    "offerId": "main-stage-section-test-5m"
+  },
+  "recordedAt": "2026-10-26T10:16:14.094Z",
+  "advertisers": [
+    "GCFXW7UWP77KW7HHKHFJYWZN6HZMMY7TPXLWZMA542K3VEDBCOIK6PFW",
+    "GALC2QKS55OQVQXTVTVCF4Z57SQ6SCRZWWKIVGPYCNYQIMBTUB7UN2WR",
+    "GDVP4VEH25UARY3MGQ2ZNUOFDEDPKJJ7BKWSJKAR37VYL4ZDXWU3VWZK",
+    "GBPL2JMCHNSHNRMDOZ6AIWXZKNWDOEL32IUFSVDVSMGYMACPDAAAA5SI",
+    "GCNSRFGTM66V5ZLPLH7WBQS3O36THKZMFDXLFHKQLG4P37HA32LABYIT",
+    "GCRBS7IXADEKR6T737S5JAEDUR4T2CKXN4EHYRVKIPIU6QEYDEZT2BFN"
+  ],
+  "facilitator": "https://x402.org/facilitator",
+  "services": {
+    "elapsedMs": 7920,
+    "attempts": 16,
+    "lastHealth": "HTTP 200 network=stellar:testnet"
+  },
+  "funding": {
+    "funder": "GAOP3DV3CIQMXZXD2FTQ6C63HRSQQ3CCXQR5UAWZEEPA2ME46JRE34KH",
+    "swapTx": "bc5caa8aca6a0673bacc685c584500224de90ff52974171f22afeeb04e95cdff",
+    "distributionTx": "86bfb8343e5537dfaffd72cc36c3e89c1a4a209f524b19b344be9c7e1ef11555"
+  }
+}

@@ -21,6 +21,7 @@ Everything else is decoration. If time runs short, protect steps 3, 5 and 7.
 9. **Recharge.** The treasury re-approves the venue agent what is left on the allowance plus the income (SEP-41 `approve` sets, it does not add) and reads it back. Recorded in run 3 (0.30 → 0.40 USDC).
 10. **Credit pool and live reads.** The dashboard shows the allowance as credits (1 credit = `mandate.creditUsdc`, default 0.01 USDC) and checks every recorded transaction and the treasury and agent balances on Horizon testnet when it loads, falling back to the recorded values.
 11. **Paid screen time on Soroban.** An advertiser buys the pilot offer from `feature/ads-3d-ar-x402` (`main-stage-test-5m`: 5 testnet USDC for 5 minutes of `main_stage_screen`): `POST /paid/ad-slot` over x402, paid to the **venue treasury**, after the same 402 preflight as the sponsor. The treasury deploys an AdsRegistry instance from the WASM already on testnet, commits the order with the settlement hash as `payment`, and reads it back with `get` (`Queued`, nothing delivered). The registry never moves funds; no delivery is claimed. Separate run, separate state file (`dist/state/ads.json`), shown on the dashboard.
+12. **Isolated main-stage screen experiment.** Explicit `/paid/ad-section` buys 300000 ms of one section A–D for 5 Testnet USDC; `/paid/ad-slot` and the passkey pilot retain their original offers. Six ephemeral advertisers pay at most 30 Testnet USDC. Fresh receipts and complete registry commitments are independently verified, with failed/ambiguous outcomes stopping purchases. `/one16?sections` and the separate dashboard block replay the recording without delivery acknowledgements or budget credits. New evidence never overwrites the historical fixture automatically. Visitor purchases of sections remain unimplemented.
 
 ## Judges can test it (P1, after every P0)
 
@@ -126,6 +127,13 @@ The owner approved the separate codex/render-textures-ui revision from sponsor r
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
 
+## Authorized advertising extension — PRD v0.2
+
+The revenue-side backlog entry is superseded for this feature branch by docs/ads/PRD-v0.2.md and docs/ads/README.md. Implement the advertiser journey on Stellar Testnet only, with separate payment, queue, audit, scheduling, delivery and remedy states. PostgreSQL and an outbox are the source of truth. New purchases remain disabled until all commercial configuration and wallet/facilitator integration gates pass. The legacy recorded agent run is not evidence for this new flow.
+
+Default main-stage content: the user-supplied HackMeridian Day 1 presentation, converted from GIF to a 10-second silent looping MP4. A paid audited scheduled advertisement temporarily replaces the loop; payment alone never publishes it.
+
+Approved 26 Oct main-stage pilot: implement the owner-approved QR/NFC, five measured passes, suggested scheduling, fulfillment recovery and PM/QA gates in docs/ads/main-stage-pilot.md. This supersedes the former incomplete-pilot freeze only within feature/ads-3d-ar-x402; preserve the recorded demo, wallet identity and main/dashboard.
 
 ## Second venue review authorized on 26 Oct
 

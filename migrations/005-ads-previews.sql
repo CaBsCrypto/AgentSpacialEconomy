@@ -1,0 +1,1 @@
+CREATE TABLE ads_previews(id uuid PRIMARY KEY,revision_id uuid NOT NULL REFERENCES ads_revisions(id),artifacts jsonb NOT NULL,expires_at timestamptz NOT NULL,created_at timestamptz NOT NULL DEFAULT now());

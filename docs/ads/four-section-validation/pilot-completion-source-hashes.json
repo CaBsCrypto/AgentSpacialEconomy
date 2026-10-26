@@ -1,0 +1,90 @@
+{
+  "sourceRoot": "C:/Users/cabs_/OneDrive/Documents/ChatGPT/AgentSpacialEconomy/ads-3d-ar-x402",
+  "targetRoot": "C:/Users/cabs_/OneDrive/Documents/ChatGPT/AgentSpacialEconomy/ads-four-sections-validation",
+  "fromCommit": "104770ec85cf66e933b2da623129d798de8cf83c",
+  "toCommit": "33bbc94a9346ab2e6e3e40216e871691e75a348b",
+  "checkedAt": "2026-10-26T10:27:12.412Z",
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 39837,
+      "originalSha256": "14c404ac92cc1d71f74b67893e500daaeed82957a32e68e957119e98a078cef6",
+      "finalSha256": "14c404ac92cc1d71f74b67893e500daaeed82957a32e68e957119e98a078cef6",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/README.md",
+      "bytes": 18387,
+      "originalSha256": "9b741e75f45c727d76cd5d730cffe62e635effc164ad06ec140bc836d9a8cce1",
+      "finalSha256": "9b741e75f45c727d76cd5d730cffe62e635effc164ad06ec140bc836d9a8cce1",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/evidence/main-stage-host-loop.png",
+      "bytes": 121315,
+      "originalSha256": "77d0121e92ed4512078cd86070b2faf16ffba2b8642543ce1eff3ff329977d8f",
+      "finalSha256": "77d0121e92ed4512078cd86070b2faf16ffba2b8642543ce1eff3ff329977d8f",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/evidence/main-stage-paid-ad.png",
+      "bytes": 117244,
+      "originalSha256": "f1225c99c61f20e05ef9fbdd47cb3e7dd879bdeb0eab299b39e169092e82930e",
+      "finalSha256": "f1225c99c61f20e05ef9fbdd47cb3e7dd879bdeb0eab299b39e169092e82930e",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/evidence/main-stage-receipt.png",
+      "bytes": 33687,
+      "originalSha256": "823d2fa831f1e41087d85e2dc36ca36534eef1c4dcea4de98b61ec97e607ad2a",
+      "finalSha256": "823d2fa831f1e41087d85e2dc36ca36534eef1c4dcea4de98b61ec97e607ad2a",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/main-stage-checkpoint.json",
+      "bytes": 7890,
+      "originalSha256": "12248e80a68e72c46e621ee4ab48ab045c923cc88eab00ac55babdfaf376ae7b",
+      "finalSha256": "12248e80a68e72c46e621ee4ab48ab045c923cc88eab00ac55babdfaf376ae7b",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/testnet-registry/main-stage-complete.json",
+      "bytes": 627,
+      "originalSha256": "c01f682032c916f9a9ffa0326a4d4fb47b863cc4e6ebdc61b30a6934cc29e704",
+      "finalSha256": "c01f682032c916f9a9ffa0326a4d4fb47b863cc4e6ebdc61b30a6934cc29e704",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/testnet-registry/main-stage-contract-read.json",
+      "bytes": 1569,
+      "originalSha256": "e52cd26cc5805aac460b06be2e4c81651b98cd6ada07b5e16af3e859f9832ce7",
+      "finalSha256": "e52cd26cc5805aac460b06be2e4c81651b98cd6ada07b5e16af3e859f9832ce7",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/testnet-registry/main-stage-first-delivery.json",
+      "bytes": 814,
+      "originalSha256": "82a5d6e234f3396ed98b2f86db643f8aa022fa052820a28501fd19494a68eb74",
+      "finalSha256": "82a5d6e234f3396ed98b2f86db643f8aa022fa052820a28501fd19494a68eb74",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/testnet-registry/main-stage-fulfillment.json",
+      "bytes": 12301,
+      "originalSha256": "9e6bd075e87166b7d6c2f618ef6da2b98ae0f6c66c651503bbc85863f1ed7530",
+      "finalSha256": "9e6bd075e87166b7d6c2f618ef6da2b98ae0f6c66c651503bbc85863f1ed7530",
+      "equal": true
+    },
+    {
+      "path": "docs/ads/testnet-registry/main-stage-payment.json",
+      "bytes": 1899,
+      "originalSha256": "f77d5642c5ec4431520aa7ce19abe0f05a95ce9455be144c7fa43c2b88699906",
+      "finalSha256": "f77d5642c5ec4431520aa7ce19abe0f05a95ce9455be144c7fa43c2b88699906",
+      "equal": true
+    }
+  ],
+  "sourceWorkingTreeClean": true,
+  "testsReferenceTheseFiles": false,
+  "testReferenceCheck": "rg exact changed paths plus docs/ads, README, checkpoint, testnet-registry, readdir and glob in test/ and agent/test/: no relevant references (only dist/*.html readdir in site-origin.test.mjs)."
+}

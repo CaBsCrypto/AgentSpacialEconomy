@@ -24,7 +24,7 @@ test('a tap resolves any totem mesh through its model parent without accepting a
 });
 class Element extends EventTarget {
  children=[];dataset={};open=false;attrs={};
- append(...children){this.children.push(...children);}
+ append(...children){for(const child of children){if(child.parentElement)child.parentElement.children=child.parentElement.children.filter(node=>node!==child);child.parentElement=this;this.children.push(child);}}
  replaceChildren(...children){this.children=children;}
  setAttribute(key,value){this.attrs[key]=value;}
  showModal(){this.open=true;}

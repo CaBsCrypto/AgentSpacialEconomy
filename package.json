@@ -4,21 +4,46 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/*.test.mjs",
+    "test": "node --test --test-concurrency=2 test/*.test.mjs",
     "build:wallet": "node scripts/build-wallet.mjs",
-    "build": "npm run build:origin && npm run build:wallet",
-    "dev": "node --env-file-if-exists=.env.wallet.local scripts/serve-wallet.mjs",
-    "build:origin": "node scripts/prepare-site-origin.mjs"
+    "build": "npm run build:origin && npm run build:wallet && npm run build:ads && npm run build:ads-entry",
+    "dev": "node --env-file-if-exists=.env.wallet.local --env-file-if-exists=.env.ads.local scripts/serve-wallet.mjs",
+    "build:origin": "node scripts/prepare-site-origin.mjs",
+    "build:ads": "node scripts/build-ads-wallet.mjs",
+    "build:stage-media": "node scripts/build-stage-media.mjs",
+    "ads:migrate": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs migrate",
+    "ads:worker": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs worker",
+    "ads:publisher": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs publisher",
+    "ads:keys": "node scripts/ads.mjs keys",
+    "test:ads": "node --test --test-concurrency=2 test/ads-*.test.mjs",
+    "test:ads:testnet": "node --env-file-if-exists=.env.ads.local scripts/verify-ads-testnet.mjs",
+    "ads:registry": "node --env-file-if-exists=.env.ads.local scripts/ads.mjs registry",
+    "build:ads-entry": "node scripts/build-ads-entry.mjs"
   },
   "dependencies": {
+    "@simplewebauthn/browser": "14.0.0",
+    "@simplewebauthn/server": "14.0.3",
     "@sozu/faucet": "0.2.0",
+    "@sparticuz/chromium": "153.0.0",
     "@stellar/stellar-sdk": "16.3.0",
     "@upstash/redis": "1.39.0",
+    "@vercel/blob": "2.8.2",
+    "@vercel/oidc": "3.8.10",
+    "@x402/core": "2.28.0",
+    "@x402/stellar": "2.28.0",
+    "ai": "7.0.153",
     "buffer": "6.0.3",
+    "pg": "8.23.1",
+    "playwright": "1.64.1",
+    "playwright-core-vercel": "npm:playwright-core@1.63.0",
+    "sharp": "0.35.5",
     "smart-account-kit": "0.9.1",
-    "three": "0.180.0"
+    "smart-account-kit-bindings": "0.5.0",
+    "three": "0.180.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.11",
     "esbuild": "0.28.2"
   },
   "engines": {

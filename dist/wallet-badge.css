@@ -1,0 +1,11 @@
+/* Public wallet navigation only; the existing landing typography and layout stay scoped. */
+.site-header .header-wallet-controls{display:flex;align-items:center;gap:16px;margin-left:0;flex-shrink:0}
+.site-header .header-wallet-controls .language-switch{margin-left:0}
+#platformWallet{display:inline-flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:3px;min-height:44px;max-width:224px;padding:6px 10px;border:1px solid currentColor;border-radius:5px;color:inherit;background:transparent;text-decoration:none;line-height:1.25;box-sizing:border-box;flex-shrink:0;font-family:inherit}
+#platformWallet[hidden]{display:none!important}
+#platformWallet .wallet-badge-label{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:600}
+#platformWallet .wallet-badge-address{display:block;white-space:nowrap;font:11px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.02em}
+#platformWallet:hover{background:color-mix(in srgb,currentColor 5%,transparent)}
+#platformWallet:focus-visible{outline:3px solid #128f9b;outline-offset:4px}
+@media(max-width:900px){.site-header:has(.header-wallet-controls.has-wallet) .main-nav{display:none}.site-header .header-wallet-controls.has-wallet{margin-left:auto}}
+@media(max-width:600px){.site-header .header-wallet-controls{gap:0;margin-left:auto}.site-header .header-wallet-controls.has-wallet{flex-direction:column;align-items:flex-end;gap:2px;padding-block:8px}.site-header #platformWallet{width:120px;max-width:120px;padding:5px 7px;gap:2px}.site-header #platformWallet .wallet-badge-label{font-size:9px}.site-header #platformWallet .wallet-badge-address{font-size:10px}}

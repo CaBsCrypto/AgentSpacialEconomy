@@ -10,9 +10,13 @@ const hash = 'ab'.repeat(32);
 const config = { networkPassphrase: TESTNET_PASSPHRASE, rpcUrl: 'https://soroban-testnet.stellar.org', accountWasmHash: hash, webauthnVerifierAddress: token, tokenContract: token, rpId: 'one16.example', relayerUrl: '/api/wallet/relay' };
 const browser = { isSecureContext: true, navigator: { credentials: {} }, PublicKeyCredential: function(){}, location: { hostname: 'one16.example' } };
 
-function fixture({ session = null, pending = [], submitSuccess = true, chainHash = hash, simulationError = false } = {}) {
-  const calls = [], sessions = [], listeners = new Map();
-  class Storage { saveSession(value) { sessions.push(value); return Promise.resolve(); } }
+function fixture({ session = null, pending = [], submitSuccess = true, chainHash = hash, simulationError = false, existingContract = false, transactionStatus = 'NOT_FOUND', ledgerError = false } = {}) {
+  const calls = [], sessions = [], listeners = new Map(), credentials = new Map(pending.map(value => [value.credentialId, value]));
+  class Storage {
+    saveSession(value) { sessions.push(value); return Promise.resolve(); }
+    async get(id) { return credentials.get(id); }
+    async update(id, patch) { calls.push(['update', id, patch]); credentials.set(id, { ...credentials.get(id), ...patch }); }
+  }
   class Kit {
     contractId = address;
     constructor(value) { calls.push(['config', value]); }
@@ -21,14 +25,17 @@ function fixture({ session = null, pending = [], submitSuccess = true, chainHash
       getPending: async () => pending,
       deploy: async (id, options) => { calls.push(['deploy', id, options]); return { contractId: address, submitResult: { success: submitSuccess, error: { code: 'relay_failure' } } }; },
     };
-    connectWallet(options) { calls.push(['connect', options]); return Promise.resolve(options?.fresh ? { contractId: address } : session); }
+    connectWallet(options) { calls.push(['connect', options]); return Promise.resolve(options?.fresh || options?.credentialId ? { contractId: address } : session); }
     createWallet(...args) {
       calls.push(['create', ...args]);
-      listeners.get('credentialCreated')?.({ credential: { credentialId: 'new-credential', contractId: address, isPrimary: true, deploymentStatus: 'pending' } });
+      const credential = { credentialId: 'new-credential', contractId: address, isPrimary: true, deploymentStatus: 'pending' };
+      credentials.set(credential.credentialId, credential); listeners.get('credentialCreated')?.({ credential });
       return Promise.resolve({ contractId: address, submitResult: { success: submitSuccess, error: { code: 'relay_failure' } } });
     }
   }
   class Server {
+    async getTransaction(hash) { calls.push(['transaction', hash]); return { status: transactionStatus, ledger: 123 }; }
+    async getLedgerEntries(key) { calls.push(['footprint', key]); if (ledgerError) throw new TypeError('RPC disconnected'); return { entries: existingContract ? [{}] : [] }; }
     async getContractData(id, key) {
       calls.push(['instance', id, key.switch().name]);
       return { val: { contractData: () => ({ val: () => ({ instance: () => ({ executable: () => ({ switch: () => ({ name: 'contractExecutableWasm' }), wasmHash: () => Buffer.from(chainHash, 'hex') }) }) }) }) } };
@@ -38,7 +45,7 @@ function fixture({ session = null, pending = [], submitSuccess = true, chainHash
       return simulationError ? { error: 'offline' } : { result: { retval: sdk.nativeToScVal(1000000000n, { type: 'i128' }) } };
     }
   }
-  return { calls, sessions, options: { browser, loadKit: async () => ({ ...sdk, SmartAccountKit: Kit, IndexedDBStorage: Storage, rpc: { Server } }) } };
+  return { calls, sessions, credentials, options: { browser, loadKit: async () => ({ ...sdk, SmartAccountKit: Kit, IndexedDBStorage: Storage, rpc: { Server } }) } };
 }
 
 test('provider uses IndexedDB, silent restore and no private Stellar deployer secret', async () => {
@@ -137,4 +144,50 @@ test('canonical origin is exact even when a subdomain could technically use the 
     loadKit: async () => { loaded = true; },
   }), error => error.code === 'wrong_origin');
   assert.equal(loaded, false);
+});
+
+
+test('a late confirmed deployment resumes the stored passkey through SDK ownership checks without redeploying', async () => {
+  const credential = { credentialId: 'late', contractId: address, isPrimary: true, deploymentStatus: 'pending', deploymentTransactionHash: 'ab'.repeat(32), birthConstructorArgsHash: 'cd'.repeat(32), createdAt: 1 };
+  const f = fixture({ pending: [credential], transactionStatus: 'SUCCESS' }), provider = await createWalletProvider(config, f.options);
+  await provider.restore(); assert.deepEqual(await provider.create(), { address });
+  assert.equal(provider.hasPendingDeployment, false);
+  assert.equal(f.calls.filter(call => call[0] === 'create' || call[0] === 'deploy').length, 0);
+  assert.deepEqual(f.calls.find(call => call[0] === 'connect' && call[1]?.credentialId)[1], { credentialId: 'late', contractId: address });
+  assert.equal(f.credentials.get('late').creationTransactionHash, credential.deploymentTransactionHash);
+  assert.equal(f.credentials.get('late').creationLedger, 123);
+});
+
+test('an unresolved known deployment hash stays pending without another relay submission', async () => {
+  const f = fixture({ pending: [{ credentialId: 'unknown', contractId: address, isPrimary: true, deploymentStatus: 'pending', deploymentTransactionHash: 'ab'.repeat(32), createdAt: 1 }] });
+  const provider = await createWalletProvider(config, f.options); await provider.restore();
+  await assert.rejects(provider.create(), error => error.code === 'deployment_pending');
+  assert.equal(provider.hasPendingDeployment, true); assert.equal(f.calls.filter(call => call[0] === 'deploy').length, 0);
+});
+
+test('existing occupied chain state reconnects only a local approved constructor and never redeploys', async () => {
+  const credential = { credentialId: 'existing', contractId: address, isPrimary: true, deploymentStatus: 'failed', birthConstructorArgsHash: 'cd'.repeat(32), createdAt: 1 };
+  const f = fixture({ pending: [credential], existingContract: true }), provider = await createWalletProvider(config, f.options);
+  await provider.restore(); assert.deepEqual(await provider.create(), { address });
+  assert.equal(f.calls.filter(call => call[0] === 'deploy').length, 0);
+  assert.ok(f.calls.find(call => call[0] === 'connect' && call[1]?.credentialId === 'existing'));
+  const unverified = fixture({ pending: [{ ...credential, birthConstructorArgsHash: undefined }], existingContract: true });
+  const other = await createWalletProvider(config, unverified.options); await other.restore();
+  await assert.rejects(other.create(), error => error.code === 'wallet_provenance_pending');
+  assert.equal(unverified.calls.filter(call => call[0] === 'deploy' || call[1]?.credentialId).length, 0);
+});
+
+test('resume reads the latest persisted credential and an RPC outage cannot authorize redeployment', async () => {
+  const credential = { credentialId: 'latest', contractId: address, isPrimary: true, deploymentStatus: 'failed', createdAt: 1 };
+  const f = fixture({ pending: [credential] }), provider = await createWalletProvider(config, f.options); await provider.restore();
+  f.credentials.set('latest', { ...credential, deploymentStatus: 'occupied' });
+  await assert.rejects(provider.create(), error => error.code === 'wallet_provenance_pending'); assert.equal(f.calls.filter(call => call[0] === 'deploy').length, 0);
+  const offline = fixture({ pending: [credential], ledgerError: true }), other = await createWalletProvider(config, offline.options); await other.restore();
+  await assert.rejects(other.create(), /RPC disconnected/); assert.equal(offline.calls.filter(call => call[0] === 'deploy').length, 0);
+});
+
+test('a definitely failed transaction with no contract can retry the same credential deployment', async () => {
+  const f = fixture({ pending: [{ credentialId: 'failed', contractId: address, isPrimary: true, deploymentStatus: 'failed', deploymentTransactionHash: 'ab'.repeat(32), createdAt: 1 }], transactionStatus: 'FAILED' });
+  const provider = await createWalletProvider(config, f.options); await provider.restore(); assert.deepEqual(await provider.create(), { address });
+  assert.equal(f.calls.filter(call => call[0] === 'create').length, 0); assert.equal(f.calls.find(call => call[0] === 'deploy')[1], 'failed');
 });
