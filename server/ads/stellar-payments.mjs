@@ -1,3 +1,4 @@
+import {createConfiguredFacilitatorClient} from './facilitator.mjs';
 import {SHARED_DEPLOYER} from '../wallet/config.mjs';
 import { AdsError, canonical, sha256 } from './common.mjs';
 export const TESTNET_USDC = 'CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA';
@@ -36,7 +37,7 @@ const deadline = async (work,ms) => {
 };
 
 /** Explicit x402 resource server; no response-handler middleware can enqueue before settlement. */
-export function createStellarPaymentRuntime({config,rpc,resourceServer,loadSdk=()=>import('@stellar/stellar-sdk')}) {
+export function createStellarPaymentRuntime({config,env=process.env,rpc,resourceServer,fetchImpl=fetch,loadSdk=()=>import('@stellar/stellar-sdk')}) {
  let sdkPromise,serverPromise;
  const sdk=()=>sdkPromise??=loadSdk();
  const check=()=>{
@@ -45,10 +46,8 @@ export function createStellarPaymentRuntime({config,rpc,resourceServer,loadSdk=(
  const rpcClient=async()=>{check();if(rpc)return rpc;const {Server}=await import('@stellar/stellar-sdk/rpc');rpc=new Server(config.rpcUrl??'https://soroban-testnet.stellar.org');return rpc;};
  const server=()=>serverPromise??=(async()=>{
   check();if(resourceServer)return resourceServer;
-  const url=new URL(config.facilitatorUrl??'https://x402.org/facilitator');
-  if(url.protocol!=='https:'||url.username||url.password)throw new AdsError(503,'facilitator_invalid','Facilitador HTTPS inválido.');
-  const [{x402ResourceServer,HTTPFacilitatorClient},{ExactStellarScheme}]=await Promise.all([import('@x402/core/server'),import('@x402/stellar/exact/server')]);
-  const r=new x402ResourceServer(new HTTPFacilitatorClient({url:url.href.replace(/\/$/,'')}));
+  const [{x402ResourceServer},{ExactStellarScheme}]=await Promise.all([import('@x402/core/server'),import('@x402/stellar/exact/server')]);
+  const r=new x402ResourceServer(createConfiguredFacilitatorClient({config,env,fetchImpl}));
   r.register('stellar:testnet',new ExactStellarScheme());await r.initialize();return r;
  })();
  const expectedFor = attempt=>({...attempt.requirements,payer:attempt.payer});

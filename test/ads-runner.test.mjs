@@ -306,3 +306,18 @@ test('private publisher accepts explicit operational readiness with new checkout
  assert.equal((await request(failed,{authorization:'Bearer private'})).status,503);
  await assert.rejects(createVercelRunner({config:{...config,operationalReady:false},publisherFactory:()=>{throw Error('No authority on a technical stop');}}).run(),error=>error.code==='runner_unconfigured');
 });
+
+
+test('private facilitator discovery requires Cron authorization and cannot start a publisher or settle',async()=>{
+ let probes=0;const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private-fixture-key'},getRuntime:async()=>({config:{...config,enabled:false}}),runnerFactory:()=>{throw Error('No publication');},facilitatorProbe:async()=>{probes++;return {ok:true,provider:'openzeppelin',supportsTestnet:true,areFeesSponsored:true,privateKey:'MUST_NOT_SERIALIZE',supported:{raw:'MUST_NOT_SERIALIZE'}};}});
+ assert.equal((await request(handler,{url:'/api/ads-runner?check=facilitator'})).status,401);assert.equal(probes,0);
+ const r=await request(handler,{url:'/api/ads-runner?check=facilitator',authorization:'Bearer private-fixture-key'});assert.equal(r.status,200);assert.equal(probes,1);assert.deepEqual(r.body,{check:'facilitator',ok:true,provider:'openzeppelin',network:'stellar:testnet',x402Version:2,scheme:'exact',areFeesSponsored:true,supportsTestnet:true});assert(!JSON.stringify(r).includes('MUST_NOT_SERIALIZE'));
+ for(const url of ['/api/ads-runner?check=facilitator&url=https://internal.invalid','/api/ads-runner?check=facilitator&check=renderer'])assert.equal((await request(handler,{url,authorization:'Bearer private-fixture-key'})).status,400);assert.equal(probes,1);
+});
+
+test('facilitator discovery fails closed for unknown provider, absent sponsorship and transport error',async()=>{
+ for(const probe of [{ok:true,provider:'foreign',supportsTestnet:true,areFeesSponsored:true},{ok:true,provider:'openzeppelin',supportsTestnet:true,areFeesSponsored:false},{ok:true,provider:'openzeppelin',supportsTestnet:false,areFeesSponsored:true}]){
+  const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>({config}),facilitatorProbe:async()=>probe});const r=await request(handler,{url:'/api/ads-runner?check=facilitator',authorization:'Bearer private'});assert.equal(r.status,503);assert.equal(r.body.ok,false);
+ }
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>({config}),facilitatorProbe:async()=>{throw Error('Bearer private DO_NOT_SERIALIZE');}});const r=await request(handler,{url:'/api/ads-runner?check=facilitator',authorization:'Bearer private'});assert.equal(r.status,503);assert.equal(r.body.error.code,'facilitator_probe_failed');assert(!JSON.stringify(r).includes('DO_NOT_SERIALIZE'));
+});

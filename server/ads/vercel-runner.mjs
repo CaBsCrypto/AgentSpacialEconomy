@@ -1,3 +1,4 @@
+import {probeConfiguredFacilitator} from './facilitator.mjs';
 import {createHash,timingSafeEqual} from 'node:crypto';
 import {access,readFile} from 'node:fs/promises';
 import {constants} from 'node:fs';
@@ -188,6 +189,7 @@ export function createVercelRunnerHandler({
  env=process.env,
  getRuntime=()=>import('./runtime.mjs').then(module=>module.getAdsRuntime()),
  runnerFactory=createVercelRunner,rendererSmoke=runRendererSmoke,bundleProbe=inspectVercelBrowserBundle,
+ facilitatorProbe=options=>probeConfiguredFacilitator({...options,env}),
 }={}){
  return async function adsRunner(req,res){
   if(!['GET','POST'].includes(req.method))return send(res,405,{error:{code:'method_not_allowed'}});
@@ -196,7 +198,15 @@ export function createVercelRunnerHandler({
   if(!cronAuthorized(header,env.CRON_SECRET))return send(res,401,{error:{code:'unauthorized'}});
   let query;try{query=new URL(req.url||'/api/ads-runner','https://runner.invalid').searchParams;}catch{return send(res,400,{error:{code:'invalid_request'}});}
   if(query.has('check')){
-   if(query.size!==1||query.getAll('check').length!==1||!['renderer','bundle'].includes(query.get('check')))return send(res,400,{error:{code:'unsupported_check'}});
+   if(query.size!==1||query.getAll('check').length!==1||!['renderer','bundle','facilitator'].includes(query.get('check')))return send(res,400,{error:{code:'unsupported_check'}});
+   if(query.get('check')==='facilitator'){
+    try{
+     const runtime=await getRuntime(),probe=await facilitatorProbe({config:runtime.config});
+     const provider=['openzeppelin','x402.org'].includes(probe?.provider)?probe.provider:null;
+     const ok=probe?.ok===true&&probe?.supportsTestnet===true&&probe?.areFeesSponsored===true&&provider!==null;
+     return send(res,ok?200:503,{check:'facilitator',ok,provider,network:'stellar:testnet',x402Version:2,scheme:'exact',areFeesSponsored:probe?.areFeesSponsored===true,supportsTestnet:probe?.supportsTestnet===true});
+    }catch{return send(res,503,{check:'facilitator',ok:false,error:{code:'facilitator_probe_failed'}});}
+   }
    if(query.get('check')==='bundle'){
     try{const bundle=safeBrowserBundle(await bundleProbe());return send(res,bundle.readable?200:503,{check:'bundle',ok:bundle.readable,...bundle});}
     catch{return send(res,503,{check:'bundle',ok:false,error:{code:'bundle_probe_failed'}});}

@@ -13,7 +13,7 @@ import {createRegistryService} from './registry.mjs';
 import {createAdsService,confirmPaidOrder} from './service.mjs';
 import {createAdsHandler,adsNodeHandler} from './http.mjs';
 export function createAdsRuntime({env=process.env,config=readAdsConfig(env),db=createDatabase({connectionString:config.databaseUrl}),storage=createStorage({config}),creative=createCreativeService({config:{model:config.model,limits:config.limits,allowedDomains:config.allowedDomains,policyVersion:config.policyVersion},storage,gatewayEnv:env}),auth=createAuthService({config,db}),paymentRuntime,refundRuntime,registryRuntime}={}){
- const paymentAdapter=paymentRuntime||createStellarPaymentRuntime({config});
+ const paymentAdapter=paymentRuntime||createStellarPaymentRuntime({config,env});
  const payments=createPaymentService({db,config,runtime:paymentAdapter,onSettled:(tx,order,receipt)=>confirmPaidOrder(tx,order,receipt,{config})});
  const compatibility=createCompatibilityService({db,config,runtime:paymentAdapter});
  const refunds=createRefundService({db,config,runtime:refundRuntime}),registry=createRegistryService({db,config,runtime:registryRuntime});
