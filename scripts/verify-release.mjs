@@ -5,7 +5,8 @@ import { realpathSync } from 'node:fs';
 
 const HASH = /^[a-f0-9]{64}$/i;
 const TESTNET_PASSPHRASE = 'Test SDF Network ; September 2015';
-const EXPECTED_TAGLINE = "Your venue's AI operator, on a capped USDC budget.";
+const EXPECTED_NAME = 'Agentic Realities · Spatial AI for Venues and Events';
+const EXPECTED_TAGLINE = "Your venue's AI operator automating your event AR layer with x402 on a capped USDC budget.";
 const REPO_URL = 'https://github.com/CaBsCrypto/AgentSpacialEconomy';
 const ROUTES = [
   ['/', /text\/html/i], ['/one16', /text\/html/i], ['/dashboard.html', /text\/html/i],
@@ -72,9 +73,9 @@ export async function verifyRelease(baseURL, { fetchImpl = fetch, integrationOnl
   const landing = pages.get('/')?.body || '', dashboard = pages.get('/dashboard.html')?.body || '';
   const text = plain(landing);
   if (!integrationOnly) {
-  add('Landing preserves project name, brand line and tagline', text.includes('Spatial Agents · Operating System') && text.includes('AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES') && text.includes(EXPECTED_TAGLINE));
+  add('Landing preserves project name, brand line and tagline', text.includes(EXPECTED_NAME) && text.includes('AGENTIC REALITY · AUGMENTED SPATIAL EXPERIENCES') && text.includes(EXPECTED_TAGLINE));
   const links = [...landing.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)].map(match => ({ href: attribute(match[0], 'href'), text: plain(match[0]) }));
-  add('Landing links to live testnet dashboard', links.some(link => link.href && new URL(link.href, base).pathname === '/dashboard.html' && link.text.includes('See the live testnet run')));
+  add('Landing links to live testnet dashboard', links.some(link => link.href && new URL(link.href, base).pathname === '/dashboard.html' && link.text.includes('See the testnet evidence')));
   add('Landing links to public repository', links.some(link => link.href === REPO_URL));
   }
   add('Dashboard contains on-chain ceiling and recorded-run label', /On-chain budget ceiling/i.test(plain(dashboard)) && /recorded run/i.test(dashboard));
