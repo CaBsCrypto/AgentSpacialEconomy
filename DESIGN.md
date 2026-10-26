@@ -49,7 +49,7 @@ The diamond-in-a-circle mark from the cover (the "administrator agent" node), go
 
 ## Screens for the demo
 
-1. **Mandate** — objective, total budget, per-call cap, allowed services, approval threshold. One primary button: "Run".
+1. **Mandate** — objective, total budget, per-call cap, allowed services, approval threshold. The static dashboard displays a clearly labelled recorded run; fresh runs use GitHub Actions.
 2. **Run log** — venue agent → stage agent, each step with price, status and explorer link.
 3. **Budget** — allocated / reserved / spent / available per agent, as a single bar each.
 4. **Blocked** — the refused call as a card: what it wanted, why it was refused, "Approve" and "Decline" (approve is out of scope; the button may be disabled with a note).
@@ -59,8 +59,8 @@ The diamond-in-a-circle mark from the cover (the "administrator agent" node), go
 
 - The one-liner from `THESIS.md` appears in README line 1 (tagline), the dashboard header, deck slide 1 and the first five seconds of the video. Same words.
 - Say what it does. Avoid: "revolutionary", "seamless", "metaverse", "autonomous economy".
-- Language: the app UI is in Spanish today, the README in English. Judges review in English, so submission-facing screens should be English. <!-- TEAM: decide -->
+- Language: use English for the dashboard, deck, video and portal answers. Preserve the twin's existing Spanish navigation labels, including "Vive la experiencia", in the walkthrough instructions.
 
 ## Video
 
-A screen recording of the real testnet run beats an animated explainer. Add two title cards (one-liner at the start, repo link at the end) in the colors above. Keep a recorded backup of the full run in case the live demo fails.
+Record the real testnet evidence and keep a visible "Recorded testnet run" label with the run date whenever showing saved state. Add two title cards (one-liner at the start, repo link at the end) in the colors above. Keep a recorded backup of the full run in case the live demo fails.
