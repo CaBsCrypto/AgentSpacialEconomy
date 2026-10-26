@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-10-26T10:02:17.928Z",
+  "network": "stellar:testnet",
+  "transactionHash": "dc37c2d41e6a98e7c4c4c053ef337e573d6b25594a8e7201e9dcaf2db71c71ed",
+  "rpc": "https://soroban-testnet.stellar.org",
+  "horizon": "https://horizon-testnet.stellar.org/transactions/dc37c2d41e6a98e7c4c4c053ef337e573d6b25594a8e7201e9dcaf2db71c71ed",
+  "rpcStatus": "SUCCESS",
+  "ledger": 5397041,
+  "latestLedgerAtRead": 5397070,
+  "horizonStatus": 200,
+  "horizonSuccessful": true,
+  "horizonLedger": 5397041,
+  "resultCodes": {
+    "transaction": "txSuccess",
+    "operations": [
+      {
+        "operation": "opInner",
+        "type": "invokeHostFunction",
+        "result": "invokeHostFunctionSuccess"
+      }
+    ]
+  },
+  "scope": "Read-only getTransaction and Horizon GET; no simulation, signing or submission"
+}
