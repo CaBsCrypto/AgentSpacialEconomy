@@ -116,5 +116,56 @@
     "newPilotSettlements": 0,
     "goPublic": false,
     "lastObservedAt": "2026-10-26T08:29:06.611937+00:00"
+  },
+  "feeQuotaCheckpoint": {
+    "observedAt": "2026-10-26T09:14:00Z",
+    "commit": "5a482e40b14bee4d0154617eac4997c8074f4c1d",
+    "deploymentId": "dpl_CqzbDz7TyGFa5B3v5GfheBFz2B2v",
+    "canonicalOrigin": "https://agenticreality.space",
+    "checkoutEnabled": false,
+    "checkoutMode": "CONTROLLED",
+    "checkoutUntil": "2026-10-26T09:15:00Z",
+    "rootTests": {
+      "passed": 737,
+      "failed": 0,
+      "skipped": 2
+    },
+    "agentTests": {
+      "passed": 42,
+      "failed": 0
+    },
+    "contractTests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "postgres17Ci": {
+      "conclusion": "success",
+      "url": "https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40296613674"
+    },
+    "facilitatorSupportProbe": "OPENZEPPELIN_TESTNET_SUPPORTED",
+    "newSignedVerification": "NOT_VALIDATED",
+    "newPilotPurchase": "NOT_VALIDATED",
+    "fiveCanonicalPasses": "NOT_VALIDATED",
+    "oneMinuteCampaignGap": "LOCAL_WORK_NOT_DEPLOYED",
+    "goPublic": false
+  },
+  "resumedPilotCheckpoint": {
+    "freezeRevokedByOwner": true,
+    "compatibility": "VERIFIED_REAL_PASSKEY",
+    "compatibilityEvidence": "testnet-registry/passkey-compatibility.json",
+    "campaignGapMs": 60000,
+    "schedulerRecoveryTests": {
+      "passed": 21,
+      "failed": 0
+    },
+    "creativeClientTests": {
+      "passed": 32,
+      "failed": 0
+    },
+    "checkoutEnabled": false,
+    "realPreaudit": "PENDING",
+    "newPilotPurchase": "PENDING",
+    "fiveCanonicalPasses": "PENDING",
+    "goPublic": false
   }
 }
