@@ -48,7 +48,8 @@ export const AD_SLOT = {
   offerId: "main-stage-test-5m",
   placement: "main_stage_screen",
   durationMs: 300000,
-  description: "Five minutes of the main-stage screen for one advertiser, paid to the venue treasury",
+  sections: ["A", "B", "C", "D"], // the screen is split in four; each order buys one section
+  description: "Five minutes of one quarter of the main-stage screen for one advertiser, paid to the venue treasury",
 };
 
 export function findService(catalog, id) {
