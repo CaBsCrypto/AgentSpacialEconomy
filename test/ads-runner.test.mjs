@@ -89,18 +89,7 @@ test('abort during browser startup closes a late browser and removes heartbeat w
  assert.deepEqual(await running,{state:'ABORTED'});resolve(browser);await new Promise(done=>setImmediate(done));
  assert.equal(state.opened,0);assert.equal(state.browsersClosed,1);
 });
-test('real PostgreSQL outbox reclaims a crashed lease once and a later Cron does not repeat it',async t=>{
- const db=await createTestDatabase();t.after(()=>db.close());const id=randomUUID(),orderId=randomUUID();let reconciled=0;
- await db.query("INSERT INTO ads_outbox(id,topic,aggregate_id,payload,dedupe_key) VALUES($1,'payment-reconcile',$2,$3,$4)",[id,orderId,{attemptId:'test-attempt'},'runner-crash']);
- await db.query("UPDATE ads_outbox SET available_at=$2 WHERE id=$1",[id,new Date(Date.now()-120000)]);
- assert.equal((await claimJob(db,'crashed-process',Date.now()-60000)).id,id);
- const runner=createVercelRunner({db,config,seedMaintenance:async()=>{},hasReadyPlacement:async()=>false,payments:{reconcile:async()=>{reconciled++;return {paymentState:'SETTLED'};}}});
- assert.equal((await runner.run()).state,'IDLE');
- assert.equal((await runner.run()).state,'IDLE');
- const row=(await db.query('SELECT status,attempts FROM ads_outbox WHERE id=$1',[id])).rows[0];
- assert.equal(row.status,'DONE');assert.equal(row.attempts,2);assert.equal(reconciled,1);
-});
-test('real SQL readiness requires settled payment, audited revision and unpaused scheduled obligation; launching grants no units',async t=>{
+test('operational publisher with checkout disabled still requires settled payment, audited revision and unpaused scheduled obligation',async t=>{
  const db=await createTestDatabase();t.after(()=>db.close());
  const campaign=randomUUID(),upload=randomUUID(),revision=randomUUID(),quote=randomUUID(),order=randomUUID(),reservation=randomUUID(),hash='a'.repeat(64),clock=Date.now();let renders=0;
  await db.query('INSERT INTO ads_campaigns(id,owner_id,brief) VALUES($1,$2,$3)',[campaign,'owner',{}]);
@@ -111,7 +100,7 @@ test('real SQL readiness requires settled payment, audited revision and unpaused
  await db.query("INSERT INTO ads_orders(id,owner_id,quote_id,revision_id,state,queue_state,amount,pay_to,terms_hash,quote) VALUES($1,'owner',$2,$3,'QUEUED','SCHEDULED',50000000,'recipient',$4,$5)",[order,quote,revision,hash,snapshot]);
  await db.query("INSERT INTO ads_placements(order_id,placement_id,required_units,delivered_units,unit,state) VALUES($1,'main_stage_screen',300000,0,'MILLISECONDS','SCHEDULED')",[order]);
  await db.query("INSERT INTO ads_reservations(id,order_id,placement_id,starts_at,ends_at,expires_at,state,delivery_units) VALUES($1,$2,'main_stage_screen',$3,$4,$4,'COMMITTED',300000)",[reservation,order,new Date(clock-1000),new Date(clock+392000)]);
- const runner=createVercelRunner({db,config,...noWork,maxJobs:0,renderer:async()=>{renders++;}});
+ const runner=createVercelRunner({db,config:{...config,enabled:false,operationalReady:true,missing:['ADS_CHECKOUT_ENABLED','walletCompatibilityVerified']},...noWork,maxJobs:0,renderer:async()=>{renders++;}});
  assert.equal((await runner.run()).state,'IDLE');assert.equal(renders,0);
  await db.query("INSERT INTO ads_payment_attempts(id,order_id,idempotency_key,payload_hash,signed_payload,network,payer,auth_nonce,auth_hash,expires_ledger,start_ledger,state,settlement_tx) VALUES($1,$2,'runner-payment-key',$3,$4,'stellar:testnet','payer','1',$3,100,90,'SETTLED',$3)",[randomUUID(),order,hash,{}]);
  await db.query("UPDATE ads_revisions SET state='PREAUDITED' WHERE id=$1",[revision]);assert.equal((await runner.run()).state,'IDLE');
@@ -125,19 +114,6 @@ test('real SQL readiness requires settled payment, audited revision and unpaused
  assert.equal((await db.query('SELECT * FROM ads_delivery WHERE order_id=$1',[order])).rowCount,0);
 });
 
-test('admission caps each invocation at eight existing jobs and stops at its time budget',async()=>{
- for(const [advance,expected] of [[0,8],[50000,2]]){
-  let clock=Date.now(),calls=0;
-  const runner=createVercelRunner({config,now:()=>clock,maxRunMs:300000,publisherFactory:fakePublisher,seedMaintenance:async()=>{},jobRunnerFactory:()=>({runOnce:async()=>{calls++;clock+=advance;return true;}}),hasReadyPlacement:async()=>false,launchBrowser:()=>{throw Error('No ready obligation');}});
-  assert.equal((await runner.run()).jobs,expected);assert.equal(calls,expected);
- }
-});
-test('registry pending hashes are reconciled before bounded flushing, without submitting a payment',async()=>{
- const calls=[];
- const runner=createVercelRunner({config:{...config,registryContract:'configured-test-registry'},...noWork,publisherFactory:fakePublisher,db:{query:async sql=>{assert.match(sql,/ads_registry_jobs/);return {rows:[{id:'persisted-registry-job'}]};}},registry:{reconcile:async id=>{calls.push(['reconcile',id]);},flush:async value=>{calls.push(['flush',value]);return {processed:calls.length===2?1:0};}},hasReadyPlacement:async()=>false,payments:{settle:()=>{throw Error('Never settle from Cron');}}});
- const result=await runner.run();assert.equal(result.registryProcessed,1);
- assert.deepEqual(calls,[['reconcile','persisted-registry-job'],['flush',{limit:1}],['flush',{limit:1}]]);
-});
 test('concurrent real database Cron invocations share one fenced publisher authority',async t=>{
  const db=await createTestDatabase();t.after(()=>db.close());let entered,release,launched=0;
  const ready=new Promise(resolve=>{entered=resolve;}),wait=new Promise(resolve=>{release=resolve;});
@@ -318,4 +294,15 @@ test('private bundle check fails when Playwright metadata is omitted despite rea
  const response=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'});
  assert.equal(response.status,503);assert.equal(response.body.ok,false);assert.equal(response.body.files.length,4);assert.equal(response.body.metadata.length,2);
  assert.equal(response.body.clientDirectory,'node_modules/playwright-core-vercel');assert(response.body.metadata.every(file=>!file.readable&&!file.valid));
+});
+
+
+test('private publisher accepts explicit operational readiness with new checkout closed and rejects a technical stop',async()=>{
+ let created=0;
+ const settings={...config,enabled:false,operationalReady:true,missing:['ADS_CHECKOUT_ENABLED','walletCompatibilityVerified']};
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>({config:settings}),runnerFactory:runtime=>{assert.equal(runtime.config.enabled,false);created++;return {run:async()=>({state:'IDLE',jobs:0})};}});
+ assert.equal((await request(handler,{authorization:'Bearer private'})).status,200);assert.equal(created,1);
+ const failed=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>({config:{...config,enabled:true,operationalReady:false,missing:['ADS_PUBLISHER_KEYS']}}),runnerFactory:()=>{throw Error('No publisher on a technical stop');}});
+ assert.equal((await request(failed,{authorization:'Bearer private'})).status,503);
+ await assert.rejects(createVercelRunner({config:{...config,operationalReady:false},publisherFactory:()=>{throw Error('No authority on a technical stop');}}).run(),error=>error.code==='runner_unconfigured');
 });

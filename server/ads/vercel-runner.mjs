@@ -2,13 +2,13 @@ import {createHash,timingSafeEqual} from 'node:crypto';
 import {access,readFile} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {resolve} from 'node:path';
-import {createJobRunner} from './jobs.mjs';
 import {createPublisher,runCanonicalRenderer} from './publisher.mjs';
-import {AdsError,enqueue} from './common.mjs';
+import {AdsError} from './common.mjs';
 
 export const MAX_RUN_MS=600000;
 const positive=(value,fallback,ceiling)=>Number.isSafeInteger(value)&&value>0?Math.min(value,ceiling):fallback;
 const unavailable=()=>new AdsError(503,'runner_unconfigured','The private advertising runner is not configured.');
+const operational=config=>config?.operationalReady??(config?.enabled===true&&!config?.missing?.length);
 export function cronAuthorized(header,secret){
  if(typeof secret!=='string'||!secret||typeof header!=='string'||!header.startsWith('Bearer '))return false;
  const digest=value=>createHash('sha256').update(value).digest();
@@ -123,14 +123,6 @@ function privateSmokeDiagnostic(error,secret){
  if(bundle&&Array.isArray(bundle.files))result.bundle=safeBrowserBundle(bundle);
  return result;
 }
-async function maintenance(db,clock){
- await db.transaction(async tx=>{
-  const pending=(await tx.query("SELECT id,order_id FROM ads_payment_attempts WHERE state IN ('VERIFYING','SETTLING','RECONCILIATION_REQUIRED') AND updated_at<$1 ORDER BY updated_at LIMIT 8",[new Date(clock-15000)])).rows;
-  for(const a of pending)await enqueue(tx,'payment-reconcile',a.order_id,'payment-reconcile:'+a.id+':'+Math.floor(clock/60000),{attemptId:a.id});
-  const live=(await tx.query("SELECT o.id FROM ads_orders o JOIN ads_revisions r ON r.id=o.revision_id WHERE o.state IN ('QUEUED','LIVE') AND r.state='AUDITED' AND o.suspended=false ORDER BY o.created_at LIMIT 8")).rows;
-  for(const order of live)await enqueue(tx,'cta-check',order.id,'cta-check:'+order.id+':'+Math.floor(clock/60000),{});
- });
-}
 async function readyPlacement(db,clock,lookaheadMs){
  return (await db.query(`SELECT s.id FROM ads_reservations s
  JOIN ads_orders o ON o.id=s.order_id JOIN ads_revisions r ON r.id=o.revision_id
@@ -143,17 +135,15 @@ async function readyPlacement(db,clock,lookaheadMs){
  LIMIT 1`,[new Date(clock+lookaheadMs),new Date(clock)])).rowCount>0;
 }
 
-/** Cron only wakes existing durable work. PostgreSQL retains attempts, retries and accounting. */
+/** Canonical publication only. The separate worker drains durable jobs concurrently. */
 export function createVercelRunner({
- db,config,creative,payments,registry,
+ db,config,
  publisherFactory=()=>createPublisher({db,config}),
- jobRunnerFactory=()=>createJobRunner({db,config,creative,payments,registry}),
  renderer=runCanonicalRenderer,launchBrowser=createRuntimeBrowserLauncher(),
- now=Date.now,maxRunMs=MAX_RUN_MS,maxJobs=8,jobBudgetMs=90000,lookaheadMs=120000,
- seedMaintenance=maintenance,hasReadyPlacement=readyPlacement,
+ now=Date.now,maxRunMs=MAX_RUN_MS,lookaheadMs=120000,hasReadyPlacement=readyPlacement,
 }={}){
  return {async run({signal}={}){
-  if(!config?.enabled||config.missing?.length||!config.publisherToken||!config.publisherKey||!config.publisherPublicKey)throw unavailable();
+  if(!operational(config)||!config.publisherToken||!config.publisherKey||!config.publisherPublicKey)throw unavailable();
   let origin,publisherOrigin;
   try{origin=new URL(config.origin);publisherOrigin=new URL(config.publisherOrigin);}catch{throw unavailable();}
   if(origin.origin!==publisherOrigin.origin||origin.username||origin.password||!['https:','http:'].includes(origin.protocol)||origin.protocol==='http:'&&!['localhost','127.0.0.1'].includes(origin.hostname))throw unavailable();
@@ -162,7 +152,8 @@ export function createVercelRunner({
   signal?.addEventListener('abort',abort,{once:true});if(signal?.aborted)abort();
   const timeout=setTimeout(()=>controller.abort('deadline'),budget);
   const publisher=publisherFactory();
-  let held=false,heartbeat,pulse,leaseLost=false,jobs=0,registryProcessed=0;
+  let held=false,heartbeat,pulse,leaseLost=false;
+  const jobs=0,registryProcessed=0;
   const stopped=()=>controller.signal.aborted||now()>=deadline;
   const remaining=()=>Math.max(0,deadline-now());
   try{
@@ -175,21 +166,6 @@ export function createVercelRunner({
     heartbeat=Promise.resolve().then(()=>publisher.lease()).then(ok=>{if(!ok){leaseLost=true;controller.abort('lease_lost');}})
      .catch(()=>{leaseLost=true;controller.abort('lease_lost');}).finally(()=>{heartbeat=null;});
    },Math.max(10,config.heartbeatMs||1000));
-   await seedMaintenance(db,now());
-   const jobRunner=jobRunnerFactory();
-   const jobDeadline=Math.min(deadline,now()+positive(jobBudgetMs,90000,120000));
-   const max=Math.min(8,Math.max(0,Number.isSafeInteger(maxJobs)?maxJobs:8));
-   // Reserve the configured model timeout and bounded network/decoder overhead
-   // before starting another job. Running jobs keep their existing PG lease.
-   const jobReserve=Math.max(60000,(config.model?.maxCalls||2)*(config.model?.timeoutMs||15000)+30000);
-   while(jobs<max&&!stopped()&&now()<jobDeadline&&remaining()>jobReserve){
-    if(!await jobRunner.runOnce())break;jobs++;
-   }
-   if(config.registryContract&&registry&&!stopped()&&remaining()>60000){
-    const pending=(await db.query("SELECT id FROM ads_registry_jobs WHERE state IN ('SUBMITTED','RECONCILIATION_REQUIRED') AND transaction_hash IS NOT NULL ORDER BY sequence LIMIT 8")).rows;
-    for(const job of pending){if(stopped()||remaining()<=60000)break;await registry.reconcile(job.id);}
-    for(let i=0;i<8&&!stopped()&&remaining()>60000;i++){const flushed=await registry.flush({limit:1});registryProcessed+=flushed.processed||0;if(!flushed.processed)break;}
-   }
    if(stopped())return {state:leaseLost?'LEASE_LOST':'DEADLINE',jobs,registryProcessed};
    await publisher.schedule();
    if(!await hasReadyPlacement(db,now(),positive(lookaheadMs,120000,180000)))return {state:'IDLE',jobs,registryProcessed};
@@ -230,7 +206,7 @@ export function createVercelRunnerHandler({
   }
   try{
    const runtime=await getRuntime();
-   if(!runtime.config?.enabled||runtime.config.missing?.length)return send(res,503,{error:{code:'runner_unconfigured'}});
+   if(!operational(runtime.config))return send(res,503,{error:{code:'runner_unconfigured'}});
    const result=await runnerFactory(runtime).run();return send(res,200,result);
   }catch(error){return send(res,503,{error:{code:error?.code==='runner_unconfigured'?'runner_unconfigured':'runner_unavailable'}});}
  };

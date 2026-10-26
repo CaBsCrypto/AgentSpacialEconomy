@@ -23,6 +23,10 @@
     "api/ads-runner.js": {
       "maxDuration": 800,
       "includeFiles": "{media/fonts/**,server/ads/**,node_modules/@sparticuz/chromium/bin/**,node_modules/playwright-core-vercel/{browsers.json,package.json}}"
+    },
+    "api/ads-worker.js": {
+      "maxDuration": 180,
+      "includeFiles": "{media/fonts/**,server/ads/**}"
     }
   },
   "routes": [
@@ -222,6 +226,10 @@
   "crons": [
     {
       "path": "/api/ads-runner",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/ads-worker",
       "schedule": "* * * * *"
     }
   ]
