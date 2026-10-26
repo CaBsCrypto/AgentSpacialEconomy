@@ -7,7 +7,7 @@ export async function readBytes(request,max){
  return Buffer.concat(chunks);
 }
 async function readJson(request,max=32768){const bytes=await readBytes(request,max);if(!bytes.length)return {};try{return JSON.parse(bytes.toString('utf8'));}catch{throw new AdsError(400,'invalid_json','Provide a valid JSON request.');}}
-export function createAdsHandler({config,db,auth,service,refunds,corrections}){
+export function createAdsHandler({config,db,auth,service,refunds,corrections,compatibility}){
  return async request=>{
   try{
    const url=new URL(request.url),parts=url.pathname.split('/').filter(Boolean).slice(2).map(decodeURIComponent);
@@ -34,6 +34,11 @@ export function createAdsHandler({config,db,auth,service,refunds,corrections}){
    await db.query("INSERT INTO ads_rate_limits(key,count,expires_at) VALUES($1,1,now()+interval '1 minute') ON CONFLICT(key) DO UPDATE SET count=CASE WHEN ads_rate_limits.expires_at<now() THEN 1 ELSE ads_rate_limits.count+1 END,expires_at=CASE WHEN ads_rate_limits.expires_at<now() THEN EXCLUDED.expires_at ELSE ads_rate_limits.expires_at END",[rateKey]);
    const rate=(await db.query('SELECT count FROM ads_rate_limits WHERE key=$1',[rateKey])).rows[0];assert(rate.count<=(request.method==='GET'?240:60),429,'rate_limited','Wait before making another request.');
    if(parts[0]==='auth'&&parts[1]==='me'&&request.method==='GET')return json({identity});
+   if(parts[0]==='compatibility'&&request.method==='POST'){
+    assert(compatibility,503,'compatibility_unconfigured','Compatibility verification is unavailable.');
+    if(parts.length===2&&parts[1]==='challenge')return json(await compatibility.challenge(identity,await readJson(request,4096),key),201);
+    if(parts.length===3&&parts[2]==='verify'){const result=await compatibility.verify(identity,identifier(parts[1]),await readJson(request,140000),key);return json(result,['VERIFYING','RECONCILIATION_REQUIRED'].includes(result.status)?202:200);}
+   }
    if(parts[0]==='uploads'&&parts.length===1&&request.method==='POST')return json(await service.upload(ownerId,await readBytes(request,config.limits.uploadBytes||1048576),request.headers.get('content-type')?.split(';')[0],key),201);
    if(parts[0]==='campaigns'){
     if(parts.length===1&&request.method==='POST')return json(await service.campaign(ownerId,await readJson(request),key),201);
