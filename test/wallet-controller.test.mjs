@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { identifyRegistrationError } from '../node_modules/@simplewebauthn/browser/esm/helpers/identifyRegistrationError.js';
 import { createWalletController, TESTNET_PASSPHRASE, formatWalletBalance } from '../dist/wallet-controller.mjs';
 
 const address = 'C' + 'A'.repeat(55);
@@ -214,4 +215,87 @@ test('a configuration disabled by the server cannot keep an old signing provider
   assert.equal(f.controller.state.address, null); assert.equal(f.controller.state.balance, '0');
   await f.controller.ensureWalletReady();
   assert.equal(f.state.creates, 0); assert.equal(f.state.connects, 0); assert.equal(f.posts().length, 0);
+});
+
+
+test('real SimpleWebAuthn cancellation wrappers remain retryable before a credential is created', async () => {
+  const f = fixture();
+  const wrapped = identifyRegistrationError({ error: new DOMException('The user cancelled the request', 'NotAllowedError'), options: { publicKey: {} } });
+  assert.equal(wrapped.code, 'ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY');
+  f.provider.create = () => Promise.reject(wrapped);
+  await f.controller.prepare(); await f.controller.ensureWalletReady();
+  assert.equal(f.controller.state.status, 'available');
+  assert.equal(f.controller.state.error.cancelled, true);
+  assert.equal(f.posts().length, 0);
+  assert.equal(f.controller.state.pendingDeployment, false);
+});
+
+test('a wrapped browser denial outside the passkey ceremony remains a service error', async () => {
+  const wrapped = identifyRegistrationError({ error: new DOMException('Request denied', 'NotAllowedError'), options: { publicKey: {} } });
+  const f = fixture({ onPost: () => Promise.reject(wrapped) });
+  await f.controller.prepare(); await f.controller.ensureWalletReady();
+  assert.equal(f.controller.state.status, 'error');
+  assert.equal(f.controller.state.error.cancelled, false);
+  assert.equal(f.posts().length, 1);
+});
+
+
+function enableProof(f, verification) {
+  f.provider.credentialId = 'same-credential'; f.provider.credentialKey = 'same-public-key'; f.provider.canVerifyPasskey = true;
+  f.provider.verifyPasskey = verification;
+}
+const proof = { address, credentialId: 'same-credential', credentialKey: 'same-public-key', origin: 'https://agenticreality.space', rpId: 'agenticreality.space', verifiedAt: 12345 };
+
+test('passkey proof starts in the click task and serializes with other wallet actions without funding', async () => {
+  const grant = deferred(), f = fixture({ restored: { address }, balance: '1000000000' }); let verifications = 0;
+  enableProof(f, () => { verifications++; return grant.promise; });
+  await f.controller.prepare(); const requests = f.calls.length;
+  const first = f.controller.verifyPasskey(), second = f.controller.verifyPasskey();
+  assert.equal(verifications, 1); assert.equal(first, second); assert.equal(first, f.controller.ensureWalletReady()); assert.equal(first, f.controller.refresh());
+  assert.equal(f.controller.state.status, 'ready'); assert.equal(f.controller.state.balance, '100'); assert.equal(f.controller.state.verificationBusy, true);
+  grant.resolve(proof); const result = await first;
+  assert.equal(result.status, 'ready'); assert.equal(result.balance, '100'); assert.equal(result.verificationBusy, false); assert.equal(result.busy, false);
+  assert.equal(result.passkeyProof.credentialId, proof.credentialId); assert.ok(result.passkeyProof.configFingerprint);
+  assert.equal(f.calls.length, requests); assert.equal(f.posts().length, 0); assert.equal(f.state.creates, 0); assert.equal(f.state.connects, 0);
+});
+
+test('cancelled or failed proof preserves the wallet balance and main status in a separate error field', async () => {
+  for (const error of [new DOMException('Cancelled', 'NotAllowedError'), Object.assign(Error('Invalid signature'), { code: 'passkey_signature' })]) {
+    const f = fixture({ restored: { address }, balance: '1000000000' }); enableProof(f, () => Promise.reject(error));
+    await f.controller.prepare(); const result = await f.controller.verifyPasskey();
+    assert.equal(result.status, 'ready'); assert.equal(result.balance, '100'); assert.equal(result.address, address); assert.equal(result.error, null);
+    assert.equal(result.passkeyProof, null); assert.equal(result.verificationError.cancelled, error.name === 'NotAllowedError'); assert.equal(result.busy, false);
+    assert.equal(f.posts().length, 0);
+  }
+});
+
+test('proof cannot certify another wallet, credential or key', async () => {
+  for (const patch of [{ address: 'another-wallet' }, { credentialId: 'another-key-id' }, { credentialKey: 'another-public-key' }]) {
+    const f = fixture({ restored: { address }, balance: '1000000000' }); enableProof(f, () => Promise.resolve({ ...proof, ...patch }));
+    await f.controller.prepare(); await f.controller.verifyPasskey();
+    assert.equal(f.controller.state.passkeyProof, null); assert.equal(f.controller.state.verificationError.code, 'passkey_identity_changed'); assert.equal(f.controller.state.status, 'ready');
+    assert.equal(f.posts().length, 0);
+  }
+});
+
+test('a new public key or configuration invalidates the existing proof while retaining IndexedDB restoration', async () => {
+  const f = fixture({ restored: { address }, balance: '1000000000' }); enableProof(f, () => Promise.resolve(proof));
+  await f.controller.prepare(); await f.controller.verifyPasskey(); assert.ok(f.controller.state.passkeyProof);
+  f.provider.credentialKey = 'changed-public-key'; await f.controller.refresh(); assert.equal(f.controller.state.passkeyProof, null);
+  f.provider.credentialKey = 'same-public-key'; await f.controller.refresh(); await f.controller.verifyPasskey(); assert.ok(f.controller.state.passkeyProof);
+  f.state.config.configFingerprint = 'a-new-configuration'; await f.controller.refreshConfiguration();
+  assert.equal(f.controller.state.passkeyProof, null); assert.equal(f.controller.state.balance, '100'); assert.equal(f.posts().length, 0);
+});
+
+test('configuration changes wait for verification and discard the proof bound to the old configuration', async () => {
+  const grant = deferred(), f = fixture({ restored: { address }, balance: '1000000000' }); enableProof(f, () => grant.promise);
+  f.state.config.configFingerprint = 'old-config'; await f.controller.prepare(); const pending = f.controller.verifyPasskey();
+  f.state.config.configFingerprint = 'new-config'; await f.controller.refreshConfiguration(); assert.equal(f.controller.state.config.configFingerprint, 'old-config');
+  grant.resolve(proof); const result = await pending;
+  assert.equal(result.config.configFingerprint, 'new-config'); assert.equal(result.passkeyProof, null); assert.equal(result.status, 'ready'); assert.equal(f.posts().length, 0);
+});
+
+test('proof before a connected wallet is available never prepares, creates or claims automatically', async () => {
+  const f = fixture(); await f.controller.verifyPasskey();
+  assert.equal(f.controller.state.verificationError.code, 'passkey_verification_unavailable'); assert.equal(f.calls.length, 0); assert.equal(f.state.creates, 0);
 });

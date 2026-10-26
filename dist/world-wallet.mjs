@@ -18,6 +18,44 @@ export function createWorldWallet({
 } = {}) {
   let firstFrame = false, preparation, controller, panel, quickButton, style, opening, dialogRef, subscribed = false, generation = 0;
   const timings = {};
+  let accessLabel, accessAddress, accessGroup, accessState = {status: 'preparing', busy: true};
+  const shortAddress = address => address ? address.slice(0, 5) + '…' + address.slice(-4) : '';
+  function renderAccess(state = accessState) {
+    accessState = state;
+    if (!quickButton) return;
+    const balance = state.balance || '0';
+    accessLabel.textContent = state.address ? 'Mi wallet · ' + balance + ' USDC' : state.status === 'preparing' ? 'Wallet · preparando…' : 'Wallet · Testnet';
+    accessAddress.textContent = shortAddress(state.address); accessAddress.hidden = !state.address;
+    quickButton.setAttribute('aria-busy', String(state.status === 'preparing'));
+    quickButton.setAttribute('aria-label', state.address ? 'Abrir mi wallet, ' + balance + ' USDC de prueba. Dirección ' + shortAddress(state.address) : 'Abrir wallet de Stellar Testnet');
+    quickButton.title = state.address ? state.address + ' · ' + balance + ' USDC de prueba' : 'Preparar o consultar mi wallet de Testnet';
+  }
+  function mountAccess() {
+    if (!quickButton) {
+      quickButton = documentRef.getElementById('walletQuickOpen') || documentRef.createElement('button');
+      quickButton.type = 'button'; quickButton.id = 'walletQuickOpen'; quickButton.dataset.walletOpen = 'true';
+      accessLabel = documentRef.createElement('span'); accessLabel.className = 'wallet-access-label';
+      accessAddress = documentRef.createElement('span'); accessAddress.className = 'wallet-access-address';
+      quickButton.replaceChildren(accessLabel, accessAddress);
+      quickButton.addEventListener('click', () => void open());
+      renderAccess(controller?.state || accessState);
+    }
+    const help = documentRef.getElementById('help'), viewer = documentRef.getElementById('viewer');
+    const toolbar = help?.closest?.('.toolbar') || help?.parentElement;
+    if (toolbar && (!viewer || !viewer.hidden)) {
+      accessGroup ||= documentRef.getElementById('walletHelpControls');
+      if (!accessGroup) {
+        accessGroup = documentRef.createElement('span'); accessGroup.id = 'walletHelpControls'; accessGroup.className = 'wallet-help-controls';
+        toolbar.insertBefore(accessGroup, help); accessGroup.append(help);
+      }
+      if (quickButton.parentElement !== accessGroup) accessGroup.insertBefore(quickButton, help);
+      quickButton.className = 'wallet-toolbar-open'; quickButton.dataset.walletPlacement = 'toolbar';
+      toolbar.classList?.add('has-wallet-access');
+    } else {
+      if (quickButton.parentElement !== documentRef.body) documentRef.body.append(quickButton);
+      quickButton.className = 'wallet-quick-open'; quickButton.dataset.walletPlacement = 'direct';
+    }
+  }
   documentRef.addEventListener('visibilitychange', () => {
     if (documentRef.visibilityState === 'visible' && controller) void controller.refreshConfiguration?.();
   });
@@ -55,10 +93,7 @@ export function createWorldWallet({
     preparation = loadModules().then(async ([wallet, ui]) => {
       controller ??= wallet.createWalletController();
       panel ??= ui.bindWalletPanel({dialog: getDialog(), controller, documentRef});
-      if (!subscribed) {subscribed = true; controller.subscribe(state => {
-        if (quickButton) quickButton.textContent = state.phase === 'ready' || state.status === 'ready'
-          ? 'Mi wallet · Testnet' : 'Wallet · Testnet';
-      });}
+      if (!subscribed) {subscribed = true; controller.subscribe(renderAccess);}
       await controller.prepare();
       timings.prepared = now();
       return controller;
@@ -67,18 +102,14 @@ export function createWorldWallet({
     return preparation;
   }
   function afterFirstFrame() {
-    if (firstFrame || !documentRef.body) return;
+    if (!documentRef.body) return;
+    if (firstFrame && quickButton?.dataset.walletPlacement === 'toolbar' && !documentRef.getElementById('viewer')?.hidden) return;
+    // NFC can reveal its frame before entering the venue: move the same control on return.
+    mountAccess();
+    if (firstFrame) return;
     firstFrame = true;
     timings.firstFrame = now();
     ensureStyles();
-    quickButton = documentRef.createElement('button');
-    quickButton.type = 'button';
-    quickButton.id = 'walletQuickOpen';
-    quickButton.className = 'wallet-quick-open';
-    quickButton.dataset.walletOpen = 'true';
-    quickButton.textContent = 'Wallet · Testnet';
-    quickButton.addEventListener('click', () => void open());
-    documentRef.body.append(quickButton);
     idle(() => {void prepare().catch(() => {});});
   }
   function open() {
