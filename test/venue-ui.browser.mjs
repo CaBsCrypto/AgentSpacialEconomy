@@ -27,15 +27,19 @@ test('venue controls fit desktop, portrait and landscape without overlapping the
     document.documentElement.className='';
     document.querySelectorAll('#venueWelcome,#passportDirect').forEach(e=>e.hidden=true);
     const view=document.querySelector('#viewer');view.hidden=false;view.dataset.mode='walk';
+    document.querySelectorAll('#reviewToggle,#reviewNames,#reviewNumbers').forEach(e=>e.remove());
     document.querySelectorAll('#helpPanel,#fallback,#overviewHotspots,#plan,#reviewTools,#overviewArHint').forEach(e=>e.hidden=true);
-    document.querySelectorAll('#walkMinimap,.touch-controls,#reviewNames').forEach(e=>e.hidden=false);
+    document.querySelectorAll('#walkMinimap,.touch-controls').forEach(e=>e.hidden=false);
     for(const zone of layout.zones){const b=document.createElement('button');b.textContent=zone.label;document.querySelector('#zones').append(b);}
-    document.querySelector('#reviewNames').innerHTML='<details class="review-legend"><summary>Referencias 1, 4–25 · nombres</summary><ol>'+layout.zones.map(z=>'<li>'+z.label+'</li>').join('')+'</ol></details>';
+    const tour=document.createElement('section');tour.id='guidedTourStatus';tour.setAttribute('aria-label','Recorrido guiado');
+    const text=document.createElement('p');text.id='guidedTourText';text.setAttribute('role','status');text.textContent='Sigue los puntos luminosos hasta el tótem · USDC de prueba';
+    const reset=document.createElement('button');reset.id='guidedTourReset';reset.textContent='Reiniciar guía';tour.append(text,reset);view.append(tour);
+    const palta=document.createElement('button');palta.id='paltaNearButton';palta.textContent='Ver palta';view.append(palta);
     const module=await import('data:text/javascript;base64,'+btoa(unescape(encodeURIComponent(uiSource))));
     window.venueTestUI=module.mountVenueUI(document);window.venueTestUI.setMode('walk');
     document.querySelector('#room').textContent='Pasillo amarillo · arrastra para mirar';
    },{layout,uiSource});
-   assert.equal(await page.locator('#reviewToggle').evaluate(e=>e.parentElement.id),'venueActions');
+   assert.equal(await page.locator('#reviewToggle,#reviewNames,#reviewNumbers').count(),0);
    assert(!(await page.locator('#venueActions').textContent()).includes('null'));
    async function noOverlap(ids){
     const pairs=await page.evaluate(ids=>{
@@ -45,10 +49,10 @@ test('venue controls fit desktop, portrait and landscape without overlapping the
     },ids);assert.deepEqual(pairs,[]);
    }
    async function screenshot(name){if(qaDirectory)await page.screenshot({path:path.join(qaDirectory,`${name}-${w}x${h}.png`)});}
-   await noOverlap(['#venueHud','#walkMinimap','.touch-controls']);
+   await noOverlap(['#venueHud','#walkMinimap','.touch-controls','#guidedTourStatus','#paltaNearButton']);
    await screenshot('walk');
    await page.click('#minimapToggle');
-   assert.equal(await page.locator('#minimapToggle').getAttribute('aria-expanded'),h<=500?'true':'false');
+   assert.equal(await page.locator('#minimapToggle').getAttribute('aria-expanded'),h<=500||w<=350?'true':'false');
    await page.click('#minimapToggle');
    await page.click('#toggleZones');
    const panel=await page.evaluate(()=>{
@@ -56,10 +60,9 @@ test('venue controls fit desktop, portrait and landscape without overlapping the
     const buttons=[...document.querySelectorAll('#zones button')].map(e=>e.getBoundingClientRect());
     return{open:!element.hidden,blocks:window.venueTestUI.blocksNavigation,bottom:rect.bottom,
      expanded:document.querySelector('#toggleZones').getAttribute('aria-expanded'),
-     overlap:buttons.some((r,i)=>i&&r.top<buttons[i-1].bottom-1),
-     legendAfterZones:document.querySelector('#reviewNames').getBoundingClientRect().top>=document.querySelector('#zones').getBoundingClientRect().bottom};
+     overlap:buttons.some((r,i)=>i&&r.top<buttons[i-1].bottom-1)};
    });
-   assert(panel.open&&panel.blocks);assert.equal(panel.expanded,'true');assert(panel.bottom<=h+1);assert(!panel.overlap);assert(panel.legendAfterZones);
+   assert(panel.open&&panel.blocks);assert.equal(panel.expanded,'true');assert(panel.bottom<=h+1);assert(!panel.overlap);
    await screenshot('places');
    await page.click('#closePlaces');
    assert.equal(await page.locator('#toggleZones').getAttribute('aria-expanded'),'false');
@@ -69,7 +72,7 @@ test('venue controls fit desktop, portrait and landscape without overlapping the
    assert.equal(await page.evaluate(()=>document.activeElement.id),'toggleZones','selecting a place must restore focus before hiding the panel');
    await page.evaluate(()=>{
     document.querySelector('#viewer').dataset.mode='overview';
-    document.querySelectorAll('#walkMinimap,.touch-controls').forEach(e=>e.hidden=true);
+    document.querySelectorAll('#walkMinimap,.touch-controls,#guidedTourStatus,#paltaNearButton').forEach(e=>e.hidden=true);
     document.querySelectorAll('#reviewTools,#overviewArHint').forEach(e=>e.hidden=false);
     document.querySelector('#room').textContent='Vista general · arrastra para desplazar y pellizca para acercar';
     window.venueTestUI.setMode('overview');
@@ -81,7 +84,7 @@ test('venue controls fit desktop, portrait and landscape without overlapping the
    await screenshot('overview');
    assert.equal(await page.evaluate(()=>window.venueTestUI.closePanels()),true);
    assert.equal(await page.evaluate(()=>window.venueTestUI.closePanels()),false);
-   const small=await page.evaluate(()=>[...document.querySelectorAll('#venueHud button,#overviewGuide>summary')].filter(e=>e.getBoundingClientRect().height).map(e=>({id:e.id,h:e.getBoundingClientRect().height})).filter(e=>e.h<44));
+   const small=await page.evaluate(()=>[...document.querySelectorAll('#venueHud button,#overviewGuide>summary,#guidedTourReset,#paltaNearButton')].filter(e=>e.getBoundingClientRect().height).map(e=>({id:e.id,h:e.getBoundingClientRect().height})).filter(e=>e.h<44));
    assert.deepEqual(small,[]);
    await page.click('#toggleZones');
    await page.evaluate(()=>document.dispatchEvent(new CustomEvent('one16-failed')));

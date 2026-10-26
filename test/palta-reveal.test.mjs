@@ -357,7 +357,7 @@ test("medallion and glow ring ascend together, finish centered above the halves,
   assert.ok(Math.max(...flight.map((sample) => sample.medal.z)) > flight.at(-1).medal.z + 0.03, "the flight has visible depth before settling");
   advance(palta, 0.10);
   const settled = revealMetrics(palta.root);
-  assert.ok(Math.abs(settled.medal.y - 2.105) < 0.015, "medallion settles at approximately 2.1 m above the floor");
+  assert.ok(Math.abs(settled.medal.y - 2.07865) < 0.015, "medallion settles at approximately 2.1 m above the floor");
   assertAboveHalves(settled);
   let minimumGap = settled.gap;
   for (let i = 0; i < 64; i++) {
@@ -451,4 +451,15 @@ test("setLogo fits a wide image and darkens only the medallion face after loadin
   assert.equal(face.material.emissive.getHexString(), "07121f");
   assert.deepEqual(originalFace.color.toArray(), originalColor, "the original GLB material is untouched");
   for (const [node, material] of rim) assert.equal(node.material, material, "the metal rim is untouched");
+});
+
+
+test('only an explicit visible manual reveal completes an interaction, including an already auto-opened fruit',async t=>{
+ const events=[],{palta,camera}=await mountHeadless(true,{onInteract:event=>events.push(event)});t.after(()=>palta.dispose());
+ camera.position.set(0,1.65,2);advance(palta,.3);assert.equal(palta.isOpen,true);assert.equal(events.length,0);
+ palta.open();palta.update(.016);assert.equal(events.length,0);palta.update(.016);assert.equal(events.length,1);assert.equal(events[0].manual,true);assert.equal(events[0].visible,true);
+ advance(palta,.3);assert.equal(events.length,1);
+ palta.close();palta.open();palta.root.visible=false;advance(palta,.3);assert.equal(events.length,1);
+ palta.root.visible=true;advance(palta,.1);assert.equal(events.length,2);
+ palta.close();palta.open();palta.dispose();advance(palta,.3);assert.equal(events.length,2);
 });

@@ -10,6 +10,8 @@ export function shortenLayout(source){
  for(const z of l.zones){z.polygon=poly(z.polygon);z.view.z=corridorZ(z.view.z);}
  l.spawn.z=corridorZ(l.spawn.z);l.bounds.maxZ=corridorZ(l.bounds.maxZ);
  for(const key of ['exteriorRoute','standsRoute','activationRoute'])for(const p of l[key]||[])p.z=corridorZ(p.z);
+ for(const p of l.companyRoutes?.trunk??[])p.z=corridorZ(p.z);
+ for(const branch of l.companyRoutes?.branches??[]){for(const p of branch.points??[])p.z=corridorZ(p.z);if(branch.approach)branch.approach.z=corridorZ(branch.approach.z);}
  return moveMerchBackdropCollision(l);
 }
 export function shortenScene(scene,T){

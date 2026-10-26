@@ -159,7 +159,7 @@ test('the unified picker respects Palta occlusion and retains wallet selection b
   let onPointerUp;
   const context = {
     THREE, camera, model, renderer: {}, mode: 'walk', active:true, venueUI:null, football:null, tapPointers:new Set(), $:()=>({open:false}),
-    palta: { root, toggle: () => calls.palta++ },
+    palta: { root, open: () => calls.palta++ },
     canvas: { addEventListener: (_type, handler) => { onPointerUp = handler; }, getBoundingClientRect: () => ({ left: 0, top: 0, width: 100, height: 100 }) },
     isActivationObject: () => true, openActivation: () => calls.wallet++, isPassportObject: () => false, worldPassport: {},
   };

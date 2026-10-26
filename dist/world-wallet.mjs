@@ -17,13 +17,16 @@ export function createWorldWallet({
   now = () => globalThis.performance?.now?.() ?? Date.now(),
 } = {}) {
   let firstFrame = false, preparation, controller, panel, quickButton, style, opening, dialogRef, subscribed = false, generation = 0;
-  const timings = {};
+  const timings = {}, listeners = new Set();
+  let openSource = 'wallet';
+  const snapshot = state => state == null ? null : structuredClone(state);
+  const currentState = () => snapshot(controller?.state);
   documentRef.addEventListener('visibilitychange', () => {
     if (documentRef.visibilityState === 'visible' && controller) void controller.refreshConfiguration?.();
   });
-  const notify = type => {
+  const notify = (type, detail) => {
     const EventClass = documentRef.defaultView?.CustomEvent || globalThis.CustomEvent;
-    if (EventClass) documentRef.dispatchEvent(new EventClass(type));
+    if (EventClass) documentRef.dispatchEvent(new EventClass(type, {detail}));
   };
   function ensureStyles() {
     if (style || !documentRef.head) return;
@@ -44,7 +47,11 @@ export function createWorldWallet({
     }
     if (dialogRef !== dialog) {
       dialogRef = dialog;
-      dialog.addEventListener('close', () => {++generation; opening = null; notify('one16-wallet-close');});
+      dialog.addEventListener('close', () => {
+        ++generation; opening = null;
+        notify('one16-wallet-close', {source: openSource, state: currentState()});
+        openSource = 'wallet';
+      });
     }
     return dialog;
   }
@@ -54,10 +61,15 @@ export function createWorldWallet({
     ensureStyles();
     preparation = loadModules().then(async ([wallet, ui]) => {
       controller ??= wallet.createWalletController();
-      panel ??= ui.bindWalletPanel({dialog: getDialog(), controller, documentRef});
+      panel ??= ui.bindWalletPanel({dialog: getDialog(), controller, documentRef,
+        // Fires before close, retaining the source of this opening. It is an
+        // acknowledgement, not proof of funding; guided-tour validates state.
+        onContinue: state => notify('one16-wallet-continue', {source: openSource, state: snapshot(state)}),
+      });
       if (!subscribed) {subscribed = true; controller.subscribe(state => {
         if (quickButton) quickButton.textContent = state.phase === 'ready' || state.status === 'ready'
           ? 'Mi wallet · Testnet' : 'Wallet · Testnet';
+        for (const listener of listeners) { try { listener(snapshot(state)); } catch {} }
       });}
       await controller.prepare();
       timings.prepared = now();
@@ -81,11 +93,14 @@ export function createWorldWallet({
     documentRef.body.append(quickButton);
     idle(() => {void prepare().catch(() => {});});
   }
-  function open() {
+  function open({source = 'wallet'} = {}) {
     if (opening) return opening;
+    // A second trigger cannot relabel an already-open wallet as a totem visit.
+    if (dialogRef?.open) return Promise.resolve(controller);
+    openSource = source === 'totem' ? 'totem' : 'wallet';
     const token = ++generation;
     timings.opened = now();
-    notify('one16-wallet-open');
+    notify('one16-wallet-open', {source: openSource, state: currentState()});
     ensureStyles();
     const dialog = getDialog();
     if (!panel && !dialog.open) {
@@ -106,7 +121,17 @@ export function createWorldWallet({
     }).finally(() => {if (token === generation) opening = null;});
     return opening;
   }
-  return {afterFirstFrame, prepare, open, get controller() {return controller;}, get timings() {return {...timings};}};
+  return {
+    afterFirstFrame, prepare, open,
+    // Observing is read-only: it never loads modules or starts preparation.
+    get state() {return currentState();},
+    subscribe(listener) {
+      listeners.add(listener);
+      try { listener(currentState()); } catch {}
+      return () => listeners.delete(listener);
+    },
+    get controller() {return controller;}, get timings() {return {...timings};},
+  };
 }
 
 export function getWorldWallet(documentRef = globalThis.document) {

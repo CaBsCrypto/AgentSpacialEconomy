@@ -33,12 +33,12 @@ function qaGuideData(){
 }
 function qaSummary(){
  if(!qaStartPose&&venueLoading.state.phase==='ready')qaStartPose={...pose};
- model?.updateMatrixWorld(true);const gl=renderer?.getContext(),dbg=gl?.getExtension('WEBGL_debug_renderer_info'),sections=resolveReviewSections(layout);
- const numbers=[];walkFloorNumbers?.traverse(o=>{if([10,12].includes(o.userData?.reviewId))numbers.push({id:o.userData.reviewId,position:o.getWorldPosition(new THREE.Vector3()).toArray()});});
+ model?.updateMatrixWorld(true);const gl=renderer?.getContext(),dbg=gl?.getExtension('WEBGL_debug_renderer_info');
+ const numbers=[];scene?.traverse(o=>{if(o.userData?.reviewId)numbers.push({id:o.userData.reviewId});});
  return{ready:venueLoading.state.phase,active,mode,pose:{...pose},activation:layout.activation,route:layout.activationRoute,
  samples:qaSampleRoute(layout).map(p=>({...p,floor:floorHeight(p.x,p.z,layout)})),guide:qaGuideData(),
  totems:qaTotems().map(o=>({name:o.name,uuid:o.uuid,position:o.getWorldPosition(new THREE.Vector3()).toArray()})),
- reference10:sections.find(s=>s.id===10),reference12:sections.find(s=>s.id===12),numbers,
+ numbers,
  nearButton:{hidden:$('nearActivation').hidden,text:$('nearActivation').textContent},dialogOpen:$('activationDialog').open,
  forbidden:globalThis.__activationForbidden??[],walletOpenEvents:globalThis.__activationWalletOpens??0,
  gpu:dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl?.getParameter(gl.RENDERER)};
@@ -69,7 +69,7 @@ function qaWalkRoute(){
  for(const[index,target]of [...points,{x:approach.x,z:approach.z}].entries()){let n=0;for(;;){const dx=target.x-pose.x,dz=target.z-pose.z,d=Math.hypot(dx,dz);if(d<.025)break;if(++n>5000)throw Error('Route did not reach waypoint '+index);const next=walk({...pose,yaw:Math.atan2(-dx,-dz)},{forward:1,right:0},Math.min(.05,d/2.2),layout);if(Math.hypot(next.x-pose.x,next.z-pose.z)<1e-6)throw Error('Route blocked at waypoint '+index);pose=next;if(!qaCanStand(pose.x,pose.z,layout))throw Error('Route crossed collision');trace.push({x:pose.x,z:pose.z,y:floorHeight(pose.x,pose.z,layout)});}}
  pose={...pose,...approach};setPose();return trace;
 }
-globalThis.__activationQA={summary:qaSummary,view:qaView,projection:qaProjection,point:qaHit,walkRoute:qaWalkRoute,mode(next){chooseMode(next);},review(enabled){reviewEnabled=enabled;updateReview(performance.now()+1000);},async rebuild(){discardVenueScene();await retryVenue('walk');}};
+globalThis.__activationQA={summary:qaSummary,view:qaView,projection:qaProjection,point:qaHit,walkRoute:qaWalkRoute,mode(next){chooseMode(next);},review(){updateReview(performance.now()+1000);},async rebuild(){discardVenueScene();await retryVenue('walk');}};
 `;
 const walletShim=String.raw`
 export function createWalletController(options){const owner=qaOriginalCreateWalletController(options);return new Proxy(owner,{get(target,key){const value=Reflect.get(target,key,target);if(['connect','ensureWalletReady','retryFunding'].includes(key)&&typeof value==='function')return()=>{(globalThis.__activationForbidden??=[]).push({kind:'wallet-action',method:String(key)});throw Error('No creation, redemption or payment in route QA');};return typeof value==='function'?value.bind(target):value;}});}
@@ -119,17 +119,17 @@ try{
    assert.ok(s.guide.layers.every(layer=>layer.count===s.samples.length));
    for(const p of s.samples)assert.ok(near(p.y-(p.surfaceY??p.floor),.025),'A guide point does not follow its visible floor finish');
    const stairs=[...new Set(s.samples.filter(p=>p.stairs).map(p=>Number(p.floor.toFixed(2))))].sort((a,b)=>a-b);assert.deepEqual(stairs,[-.9,-.75,-.6,-.45,-.3,-.15,0]);
-   assert.ok(near(s.totems[0].position[0],2.9)&&near(s.totems[0].position[2],-9.2));
-   assert.ok(near(s.activation.approach.x,2.9)&&near(s.activation.approach.z,-7.9));return{samples:s.samples.length,stairs,activation:s.activation,totem:s.totems[0]};
+   assert.ok(near(s.totems[0].position[0],2.6)&&near(s.totems[0].position[2],-5.6));
+   assert.ok(near(s.activation.approach.x,2.6)&&near(s.activation.approach.z,-4.3));return{samples:s.samples.length,stairs,activation:s.activation,totem:s.totems[0]};
   });
   await check(label+' production walk reaches food-side approach without collision',async()=>{
-   const trace=await page.evaluate(()=>window.__activationQA.walkRoute()),s=await summary(page);assert.ok(Math.hypot(s.pose.x-2.9,s.pose.z+7.9)<.03);
+   const trace=await page.evaluate(()=>window.__activationQA.walkRoute()),s=await summary(page);assert.ok(Math.hypot(s.pose.x-2.6,s.pose.z+4.3)<.03);
    const levels=[...new Set(trace.filter(p=>p.z>=0&&p.z<=2.45).map(p=>Number(p.y.toFixed(2))))];for(const h of [-.9,-.75,-.6,-.45,-.3,-.15,0])assert.ok(levels.includes(h),'Skipped stair '+h);
-   assert.ok(trace.some(p=>p.z>6));assert.ok(trace.some(p=>p.z<-6.8&&p.x>2));return{steps:trace.length,levels,end:s.pose};
+   assert.ok(trace.some(p=>p.z>6));assert.ok(trace.some(p=>p.z<-3.6&&p.x>2));return{steps:trace.length,levels,end:s.pose};
   });
-  await check(label+' reference 10 names USDC beside reference 12',async()=>{
-   const s=await summary(page);assert.match(s.reference10.label,/USDC/i);assert.match(s.activation.purpose,/Testnet/i);assert.ok(near(s.reference10.x,2.9)&&near(s.reference10.z,-9.2));
-   assert.ok(Math.hypot(s.reference10.x-s.reference12.x,s.reference10.z-s.reference12.z)<4);assert.deepEqual(s.numbers.map(p=>p.id).sort((a,b)=>a-b),[10,12]);return{reference10:s.reference10,reference12:s.reference12,numbers:s.numbers};
+  await check(label+' public review references removed',async()=>{
+   const s=await summary(page);assert.deepEqual(s.numbers,[]);assert.match(s.activation.purpose,/Testnet/i);
+   const count=await page.locator('#reviewToggle,#reviewNames,#reviewNumbers,[data-review-number],[data-review-id]').count();assert.equal(count,0);return{numbers:s.numbers,reviewElements:count};
   });
   if(label==='normal'){
    for(const[width,height]of [[320,568],[390,844],[844,390],[1440,900]]){

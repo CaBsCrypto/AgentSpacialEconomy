@@ -10,7 +10,7 @@
 //   inside loop(), before render:     palta?.update(dt);
 
 export const PALTA_DEFAULTS = Object.freeze({
-  url: "./assets/palta-reveal.glb?v=a45b02d836b1",
+  url: "./assets/palta-reveal.glb?v=54860f9c0b90",
   logoUrl: null,                 // official logo file, e.g. "./assets/palta-reveal/logo.png"
   position: [-4.62, 0.795, -31.0], // rear outside corner of the DeFindex / Soroswap desk
   tableId: "booth-defindex-soroswap",
@@ -165,6 +165,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   const turntable = root.getObjectByName(NODE.turntable) ?? root;
   const reduced = prefersReducedMotion();
   let prox = { mode: "closed", armed: true, manual: false }, targetYaw = 0, isOpen = false;
+  let manualPending=false,readyFrames=0;
 
   mixer.addEventListener("finished", (e) => {
     if (!disposed && !reduced && e.action === openAction && openAction.timeScale > 0) idleAction.reset().fadeIn(0.4).play();
@@ -178,7 +179,10 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   }
 
   function open({ manual = false } = {}) {
-    if (disposed || isOpen) return; isOpen = true; prox = { mode: "open", armed: true, manual };
+    if (disposed) return;
+    if(manual){manualPending=true;readyFrames=0;targetYaw=facing();}
+    if(isOpen){if(manual)prox.manual=true;return;}
+    isOpen = true; prox = { mode: "open", armed: true, manual };
     targetYaw = facing();
     openAction.timeScale = 1; openAction.paused = false;
     if (!openAction.isRunning()) openAction.reset();
@@ -187,7 +191,7 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
   }
 
   function close() {
-    if (disposed || !isOpen) return; isOpen = false; prox = { ...prox, mode: "closed" };
+    if (disposed || !isOpen) return; isOpen = false; manualPending=false;readyFrames=0; prox = { ...prox, mode: "closed" };
     idleAction.fadeOut(0.2);
     openAction.paused = false; openAction.timeScale = -1;
     if (openAction.time === 0) openAction.time = openAction.getClip().duration;
@@ -222,6 +226,10 @@ export async function mountPaltaReveal(THREE, scene, options = {}) {
     const cur = turntable.rotation.y;
     turntable.rotation.y = reduced ? targetYaw : cur + angleDelta(cur, targetYaw) * (1 - Math.exp(-6 * step));
     mixer.update(step);
+    if(manualPending&&isOpen&&root.visible&&(!o.isVisible||o.isVisible())&&openAction.time>=openAction.getClip().duration-1e-4){
+      // Wait through a visible frame; approaching alone never emits this signal.
+      if(++readyFrames>=2){manualPending=false;o.onInteract?.({manual:true,visible:true,tableId:o.tableId});}
+    }else readyFrames=0;
   }
 
   // Manual toggle (tap, button, or a call from elsewhere in the app).

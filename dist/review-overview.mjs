@@ -23,31 +23,8 @@ export function separateReviewMarkers(points,width,height,occupied=[]){
   return {...p,displayLeft:best.x,displayTop:best.y};
  });
 }
-export function createReviewOverview(layer,{layout}={}){
- const doc=layer.ownerDocument;layer.replaceChildren();layer.style.pointerEvents='none';
- const entries=resolveReviewSections(layout).map(section=>{
-  const badge=doc.createElement('span'),leader=doc.createElement('span'),anchor=doc.createElement('span');
-  badge.className='review-overview-number';badge.dataset.reviewId=String(section.id);badge.dataset.reviewNumber=String(section.id);badge.textContent=String(section.id);badge.title=`${section.id}. ${section.label}`;badge.setAttribute('aria-label',badge.title);
-  badge.style.cssText='position:absolute;display:grid;place-items:center;width:24px;height:24px;box-sizing:border-box;transform:translate(-50%,-50%);border-radius:50%;background:#f5da72;color:#111b25;border:1.5px solid #132536;font:750 12px/1 system-ui,sans-serif;pointer-events:none;user-select:none;';
-  if(section.provisional){badge.style.background='#18283a';badge.style.color='#f5da72';badge.style.border='1.5px dashed #f5da72';}
-  leader.className='review-overview-leader';anchor.className='review-overview-anchor';
-  for(const e of [leader,anchor]){e.dataset.reviewId=String(section.id);e.setAttribute('aria-hidden','true');}
-  leader.style.cssText='position:absolute;height:1px;background:#f5da72;transform-origin:0 50%;pointer-events:none;';
-  anchor.style.cssText='position:absolute;width:4px;height:4px;border-radius:50%;background:#f5da72;transform:translate(-50%,-50%);pointer-events:none;';
-  layer.append(leader,anchor,badge);return {section,badge,leader,anchor};
- });
- return {entries,update(camera,vector,width,height,visible,occupied=[]){
-  layer.hidden=!visible;if(!visible)return;
-  if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0){layer.hidden=true;return;}
-  camera.updateMatrixWorld();
-  const points=separateReviewMarkers(entries.map(e=>projectReviewPoint(e.section,camera,vector,width,height)),width,height,occupied);
-  entries.forEach(({badge,leader,anchor},i)=>{
-   const p=points[i];badge.hidden=leader.hidden=anchor.hidden=!p.visible;
-   // Inline display must agree with hidden; explicit grid otherwise overrides browser [hidden].
-   badge.style.display=p.visible?'grid':'none';leader.style.display=anchor.style.display=p.visible?'block':'none';
-   if(!p.visible)return;
-   badge.style.left=`${p.displayLeft}px`;badge.style.top=`${p.displayTop}px`;anchor.style.left=leader.style.left=`${p.left}px`;anchor.style.top=leader.style.top=`${p.top}px`;
-   const dx=p.displayLeft-p.left,dy=p.displayTop-p.top;leader.style.width=`${Math.hypot(dx,dy)}px`;leader.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;leader.style.display=anchor.style.display=Math.hypot(dx,dy)>1?'block':'none';
-  });
- }};
+/** Compatibility controller: numeric authoring overlays are retired from the product. */
+export function createReviewOverview(layer){
+ layer.replaceChildren();layer.hidden=true;layer.style.pointerEvents='none';
+ return {entries:[],update(){layer.hidden=true;},dispose(){layer.replaceChildren();layer.hidden=true;}};
 }

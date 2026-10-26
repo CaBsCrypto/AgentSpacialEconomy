@@ -24,40 +24,59 @@ export function resolveReviewSections(layout = {}) {
   return zone&&Number.isFinite(zone.view?.x)&&Number.isFinite(zone.view?.z) ? {...section,x:zone.view.x,z:zone.view.z} : section;
  });
 }
+// The legacy registry above is retained for source/evidence compatibility only.
+// Production maps never render its numeric IDs, even with showNumbers:true.
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 const fmt=n=>Number(n.toFixed(2));
-// Screen offsets affect the badge only; every displaced badge has an anchored leader.
-const offsets={1:[38,0],3:[-38,0],6:[-30,0],7:[30,0],9:[-27,0],10:[36,-22],11:[64,14],15:[-18,0],16:[18,0]};
-export function buildReviewSvg(layout={}, {pose,compact=false,showNumbers=true}={}) {
- const reviewSections=resolveReviewSections(layout);
+const validPoint=p=>p&&finite(p.x)&&finite(p.z);
+const routePoints=points=>Array.isArray(points)&&points.length>1&&points.every(validPoint)?points:[];
+const phases=new Set(['entry','companies','completed']);
+
+export function buildReviewSvg(layout={}, {pose,compact=false,guidedTourState}={}) {
+ const phase=phases.has(guidedTourState?.phase)?guidedTourState.phase:'entry';
+ const milestones=guidedTourState?.milestones??{};
  const polys=(Array.isArray(layout.walkable)?layout.walkable:[]).filter(p=>Array.isArray(p)&&p.length>=3&&p.every(v=>Array.isArray(v)&&finite(v[0])&&finite(v[1])));
- const all=[...reviewSections.map(s=>[s.x,s.z]),...polys.flat()];
+ const bounds=layout.bounds;
+ const authoredBounds=bounds&&['minX','maxX','minZ','maxZ'].every(k=>finite(bounds[k]))&&bounds.maxX>bounds.minX&&bounds.maxZ>bounds.minZ?[[bounds.minX,bounds.minZ],[bounds.maxX,bounds.maxZ]]:[];
+ const all=[...polys.flat(),...authoredBounds];
+ if(!all.length)all.push([-15,-50],[15,27]);
  const minX=Math.min(...all.map(p=>p[0]))-2,maxX=Math.max(...all.map(p=>p[0]))+2;
  const minZ=Math.min(...all.map(p=>p[1]))-3,maxZ=Math.max(...all.map(p=>p[1]))+3;
  const width=800,height=1200,scale=Math.min(600/(maxX-minX),1040/(maxZ-minZ));
  const project=(x,z)=>[fmt(width/2+(x-(minX+maxX)/2)*scale),fmt(80+(z-minZ)*scale)];
  const polygon=p=>p.map(([x,z])=>project(x,z).join(',')).join(' ');
- const floor=polys.map(p=>`<polygon points="${polygon(p)}" fill="#263a48" stroke="#8ca4b3" stroke-width="1.4"/>`).join('');
- const obstacles=(Array.isArray(layout.obstacles)?layout.obstacles:[]).filter(b=>b&&['minX','maxX','minZ','maxZ'].every(k=>finite(b[k]))&&b.maxX>=b.minX&&b.maxZ>=b.minZ).map(b=>{
-  const [x,y]=project(b.minX,b.minZ);return `<rect x="${x}" y="${y}" width="${fmt((b.maxX-b.minX)*scale)}" height="${fmt((b.maxZ-b.minZ)*scale)}" rx="1" fill="#73838b" opacity=".65"/>`;
+ const floor=polys.map(p=>'<polygon points="'+polygon(p)+'" fill="#263a48" stroke="#8ca4b3" stroke-width="1.4"/>').join('');
+ const obstacles=(Array.isArray(layout.obstacles)?layout.obstacles:[]).filter(b=>b&&['minX','maxX','minZ','maxZ'].every(k=>finite(b[k]))&&b.maxX>b.minX&&b.maxZ>b.minZ).map(b=>{
+  const [x,y]=project(b.minX,b.minZ);
+  return '<rect x="'+x+'" y="'+y+'" width="'+fmt((b.maxX-b.minX)*scale)+'" height="'+fmt((b.maxZ-b.minZ)*scale)+'" rx="1" fill="#73838b" opacity=".65"/>';
  }).join('');
- const guidePoints=Array.isArray(layout.activationRoute)&&layout.activationRoute.length>1&&layout.activationRoute.every(p=>finite(p.x)&&finite(p.z))?layout.activationRoute:[];
- const guide=guidePoints.length?`<polyline data-activation-route="true" points="${guidePoints.map(p=>project(p.x,p.z).join(',')).join(' ')}" fill="none" stroke="#53edff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0.1 ${fmt(.55*scale)}" aria-label="Camino luminoso hasta el tótem de USDC de prueba"/>`:'';
- const posePoint=pose&&finite(pose.x)&&finite(pose.z)&&finite(pose.yaw)?project(pose.x,pose.z):null;
- const pins=reviewSections.map(s=>{
-  const [ax,ay]=project(s.x,s.z);let [dx,dy]=offsets[s.id]||[0,0];
-  if(posePoint&&Math.hypot(ax+dx-posePoint[0],ay+dy-posePoint[1])<34)dx+=38;
-  const x=ax+dx,y=ay+dy;
-  const leader=dx||dy?`<path d="M${ax} ${ay} L${x} ${y}" stroke="#f5da72" stroke-width="1.6"/><circle cx="${ax}" cy="${ay}" r="2.7" fill="#f5da72"/>`:'';
-  return `<g data-review-number="${s.id}" data-review-id="${s.id}" data-world-x="${s.x}" data-world-z="${s.z}" aria-label="${esc(`${s.id}. ${s.label}`)}"><title>${esc(`${s.id}. ${s.label}`)}</title>${leader}<circle cx="${x}" cy="${y}" r="14" fill="${s.provisional?'#242e40':'#f5da72'}" stroke="${s.provisional?'#f5da72':'#141e27'}" stroke-width="2"${s.provisional?' stroke-dasharray="3 2"':''}/><text x="${x}" y="${y+5}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="750" fill="${s.provisional?'#f5da72':'#111b25'}">${s.id}</text></g>`;
- }).join('');
- let location='';
- if(pose&&finite(pose.x)&&finite(pose.z)&&finite(pose.yaw)){
-  const [x,y]=project(pose.x,pose.z),angle=fmt(-pose.yaw*180/Math.PI);
-  location=`<g data-review-pose="true" transform="translate(${x} ${y})" aria-label="Tu posición y orientación"><circle r="19" fill="#0b1823" opacity=".80"/><g transform="rotate(${angle})"><path d="M0 -16 L9 10 L0 6 L-9 10 Z" fill="#5ce6eb" stroke="#ffffff" stroke-width="1.5"/></g><circle r="2" fill="#ffffff"/></g>`;
+ function route(points,id,label,{visited=false,endpointLabel=false}={}){
+  points=routePoints(points);if(!points.length)return '';
+  const [x,y]=project(points.at(-1).x,points.at(-1).z),opacity=visited?'.28':'.95';
+  const anchor=id==='passport'?'start':id==='palta'?'end':'middle',labelX=fmt(x+(id==='passport'?10:id==='palta'?-10:0));
+  const line='<polyline data-guidance-route="'+esc(id)+'"'+(id==='entry'?' data-activation-route="true"':'')+' data-route-visited="'+visited+'" points="'+points.map(p=>project(p.x,p.z).join(',')).join(' ')+'" fill="none" stroke="#53edff" stroke-opacity="'+opacity+'" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="0.1 '+fmt(.55*scale)+'" aria-label="'+esc(label+(visited?' · visitado':''))+'"/>';
+  const text=endpointLabel?'<text data-guidance-label="'+esc(id)+'" x="'+labelX+'" y="'+fmt(y-13)+'" text-anchor="'+anchor+'" font-family="system-ui,sans-serif" font-size="'+(compact?'12':'24')+'" font-weight="700" fill="#e9faff" opacity="'+(visited?'.5':'1')+'" stroke="#101d29" stroke-width="4" paint-order="stroke">'+esc(label+(visited?' · visitado':''))+'</text>':'';
+  return line+text;
  }
- const localCenter=posePoint||project(0,19);
- const viewBox=compact?`${fmt(localCenter[0]-12*scale)} ${fmt(localCenter[1]-16*scale)} ${fmt(24*scale)} ${fmt(32*scale)}`:`0 0 ${width} ${height}`;
- return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" role="img" aria-label="Mapa de revisión: ${reviewSections.length} referencias aproximadas" data-review-map="${compact?'compact':'full'}" style="display:block;width:100%;height:auto;overflow:hidden"><title>ONE16 · mapa de revisión numerado</title><desc>Posiciones aproximadas para revisar el recorrido. Números informativos; 10 guía al tótem; 11 identifica la mesa Stellar Passport. La flecha cian indica posición y orientación cuando están disponibles.</desc><rect width="800" height="1200" rx="18" fill="#101d29"/>${compact?'':`<text x="400" y="34" text-anchor="middle" fill="#e9eef1" font-family="system-ui,sans-serif" font-size="18" font-weight="700">ONE16 · ${reviewSections.length} referencias para revisar</text>`}${floor}${obstacles}${guide}${showNumbers?pins:''}${location}${compact?'':`<text x="400" y="1155" text-anchor="middle" fill="#c0cdd5" font-family="system-ui,sans-serif" font-size="${compact?15:16}">Distribución estimada · guía al tótem de USDC de prueba</text><text x="400" y="1180" text-anchor="middle" fill="#8ca4b3" font-family="system-ui,sans-serif" font-size="13">Números de revisión, no nuevas ubicaciones verificadas</text>`}</svg>`;
+ let guides='';
+ if(phase==='entry')guides=route(layout.activationRoute,'entry','USDC de prueba',{endpointLabel:true});
+ else if(phase==='companies'){
+  guides=route(layout.companyRoutes?.trunk,'trunk','Camino hacia las empresas');
+  const seen=new Set();
+  for(const branch of Array.isArray(layout.companyRoutes?.branches)?layout.companyRoutes.branches:[]){
+   if(!['passport','palta'].includes(branch?.id)||seen.has(branch.id))continue;seen.add(branch.id);
+   guides+=route(branch.points,branch.id,branch.label||(branch.id==='passport'?'Stellar Passport':'DeFindex · Soroswap'),{visited:milestones[branch.id]===true,endpointLabel:true});
+  }
+ }
+ let location='';
+ const hasPose=validPoint(pose)&&finite(pose.yaw),posePoint=hasPose?project(pose.x,pose.z):null;
+ if(hasPose){
+  const [x,y]=posePoint,angle=fmt(-pose.yaw*180/Math.PI);
+  location='<g data-map-pose="true" data-review-pose="true" transform="translate('+x+' '+y+')" aria-label="Tu posición y orientación"><circle r="19" fill="#0b1823" opacity=".80"/><g transform="rotate('+angle+')"><path d="M0 -16 L9 10 L0 6 L-9 10 Z" fill="#5ce6eb" stroke="#ffffff" stroke-width="1.5"/></g><circle r="2" fill="#ffffff"/></g>';
+ }
+ const localCenter=posePoint||project(finite(layout.spawn?.x)?layout.spawn.x:0,finite(layout.spawn?.z)?layout.spawn.z:0);
+ const viewBox=compact?[fmt(localCenter[0]-12*scale),fmt(localCenter[1]-16*scale),fmt(24*scale),fmt(32*scale)].join(' '):'0 0 '+width+' '+height;
+ const footer=phase==='completed'?'Recorrido completado':phase==='companies'?'Sigue la guía hacia Stellar Passport y DeFindex · Soroswap':'Sigue la guía luminosa hasta USDC de prueba';
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+viewBox+'" role="img" aria-label="Plano del recinto" data-venue-map="'+(compact?'compact':'full')+'" data-guided-tour-phase="'+phase+'" style="display:block;width:100%;height:auto;overflow:hidden"><title>ONE16 · plano del recinto</title><desc>Distribución aproximada. La flecha cian indica tu posición y orientación. '+esc(footer)+'.</desc><rect width="800" height="1200" rx="18" fill="#101d29"/>'+(compact?'':'<text x="400" y="34" text-anchor="middle" fill="#e9eef1" font-family="system-ui,sans-serif" font-size="18" font-weight="700">ONE16 · plano del recinto</text>')+floor+obstacles+guides+location+(compact?'':'<text x="400" y="1155" text-anchor="middle" fill="#c0cdd5" font-family="system-ui,sans-serif" font-size="16">'+esc(footer)+'</text><text x="400" y="1180" text-anchor="middle" fill="#8ca4b3" font-family="system-ui,sans-serif" font-size="13">Distribución aproximada</text>')+'</svg>';
 }

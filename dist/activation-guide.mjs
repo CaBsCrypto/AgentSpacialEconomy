@@ -18,13 +18,15 @@ function stairSurfaces(layout){
  * never invents a detour, draws through furniture or points onto the kiosk base.
  */
 export function sampleActivationRoute(layout={}){
-  if(!Array.isArray(layout.activationRoute)||layout.activationRoute.length<2||!layout.activationRoute.every(finitePoint))return [];
-  const route=layout.activationRoute.map(({x,z})=>({x,z}));
-  const approach=layout.activation?.approach;
-  if(!finitePoint(approach))return [];
-  // The last waypoint is the visitor approach, even if an author accidentally
-  // supplied the kiosk center there. Earlier authored waypoints are preserved.
-  route[route.length-1]={x:approach.x,z:approach.z};
+  if(!Array.isArray(layout.activationRoute)||!finitePoint(layout.activation?.approach))return [];
+  const route=layout.activationRoute.map(point=>({...point}));
+  if(route.length)route[route.length-1]={...layout.activation.approach};
+  return sampleFloorRoute(layout,route);
+}
+
+export function sampleFloorRoute(layout={},waypoints){
+  if(!Array.isArray(waypoints)||waypoints.length<2||!waypoints.every(finitePoint))return [];
+  const route=waypoints.map(({x,z})=>({x,z}));
   const stairs=stairSurfaces(layout),result=[];
   const base=layout.activation?.position;
   let travelled=0,previous=null;
@@ -88,12 +90,13 @@ export function sampleActivationRoute(layout={}){
 }
 
 /** Two unlit instanced layers; the caller controls walk-mode visibility. */
-export function createActivationGuide(THREE,layout,{reducedMotion={matches:false}}={}){
+export function createActivationGuide(THREE,layout,{reducedMotion={matches:false},route,dimmed=false,distanceOffset=0}={}){
   const root=new THREE.Group();root.name='Activation luminous route';
   root.userData.role='activation-guide';
-  const points=sampleActivationRoute(layout);
+  const points=route?sampleFloorRoute(layout,route):sampleActivationRoute(layout);
   root.userData.pointCount=points.length;
-  root.userData.endpoint='activation.approach';
+  root.userData.endpoint=route?'authored-route':'activation.approach';
+  root.userData.dimmed=dimmed;
   let disposed=false,elapsed=0,lastReduced;
   const geometries=[],materials=[],meshes=[];
   if(points.length){
@@ -123,15 +126,16 @@ export function createActivationGuide(THREE,layout,{reducedMotion={matches:false
     points.forEach((point,index)=>{
       // Positive-distance wave travels from spawn toward the visitor approach.
       // A five-metre repeating train is continuous, slow and gently eased.
-      const wave=still ? .65 : Math.max(0,Math.cos((point.distance-elapsed*1.15)*Math.PI*2/5))**6;
-      core.setColorAt(index,color.copy(white).multiplyScalar(still ? .86 : .45+.55*wave));
-      halo.setColorAt(index,color.copy(cyan).multiplyScalar(still ? .80 : .38+.62*wave));
+      const wave=still ? .65 : Math.max(0,Math.cos((point.distance+distanceOffset-elapsed*1.15)*Math.PI*2/5))**6;
+      const intensity=dimmed?.18:1;
+      core.setColorAt(index,color.copy(white).multiplyScalar((still ? .86 : .45+.55*wave)*intensity));
+      halo.setColorAt(index,color.copy(cyan).multiplyScalar((still ? .80 : .38+.62*wave)*intensity));
     });
     for(const mesh of meshes)if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;
   }
   function update(dt=0){
     if(disposed)return;
-    const still=!!reducedMotion.matches;
+    const still=dimmed||!!reducedMotion.matches;
     if(still&&lastReduced===true)return;
     if(!still&&Number.isFinite(dt)&&dt>0)elapsed=(elapsed+Math.min(dt,.10))%1000;
     paint(still);lastReduced=still;
@@ -145,5 +149,38 @@ export function createActivationGuide(THREE,layout,{reducedMotion={matches:false
       for(const geometry of geometries)geometry.dispose();
       for(const material of materials)material.dispose();
     },
+  };
+}
+
+/** Stable scene owner; progress lives in the tour controller, never in meshes. */
+export function createGuidedRoutes(THREE,layout,{state={phase:'entry'},reducedMotion={matches:false}}={}){
+  const root=new THREE.Group();root.name='Guided luminous routes';root.userData.role='activation-guide';
+  let routes=[],key,disposed=false;
+  function setState(next){
+    if(disposed)return;
+    const signature=JSON.stringify([next.phase,!!next.milestones?.passport,!!next.milestones?.palta]);
+    if(signature===key)return;
+    key=signature;for(const route of routes)route.dispose();routes=[];
+    const add=(id,options={})=>{
+      const guide=createActivationGuide(THREE,layout,{reducedMotion,...options});
+      guide.root.userData.role='floor-route';guide.root.userData.routeId=id;
+      routes.push(guide);root.add(guide.root);return guide;
+    };
+    if(next.phase==='entry')add('entry');
+    else if(next.phase==='companies'){
+      const trunk=add('companies',{route:layout.companyRoutes?.trunk??[]});
+      const offset=trunk.points.at(-1)?.distance??0;
+      for(const branch of layout.companyRoutes?.branches??[]){
+        if(!['passport','palta'].includes(branch.id))continue;
+        add(branch.id,{route:branch.points,dimmed:!!next.milestones?.[branch.id],distanceOffset:offset});
+      }
+    }
+    root.userData.phase=next.phase;
+    root.userData.pointCount=routes.reduce((sum,route)=>sum+route.points.length,0);
+  }
+  setState(state);
+  return{root,setState,get routes(){return routes;},get points(){return routes.flatMap(route=>route.points.map(point=>({...point,routeId:route.root.userData.routeId})));},
+    update(dt){if(!disposed)for(const route of routes)route.update(dt);},
+    dispose(){if(disposed)return;disposed=true;for(const route of routes)route.dispose();routes=[];root.parent?.remove(root);root.clear();}
   };
 }

@@ -1,6 +1,6 @@
 export const HOTSPOTS=[
  {id:'activation',mark:'W',label:'Wallet · Testnet',status:'available',detail:'Tótem · passkey y USDC de prueba'},
- {id:'passport-stand16',mark:'P',label:'Stellar Passport · stand 16',status:'available',detail:'Reverso Trustless Work/Grantfox · escanear gráfica'},
+ {id:'passport-stand16',mark:'P',label:'Stellar Passport · escanear cartel',status:'available',detail:'Reverso Trustless Work/Grantfox · escanear gráfica'},
  {id:'passport',mark:'P',label:'Passport AR',status:'available',detail:'Mesa Stellar Passport · demo AR disponible'},
  {id:'stage',mark:'E',label:'Escenario',status:'soon',detail:'Host del evento · próximamente · contenido AR por definir'},
  {id:'merch',mark:'M',label:'Merch',status:'soon',detail:'Próximamente · contenido AR por definir'},

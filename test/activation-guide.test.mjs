@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import {floorHeight,canStand,insidePolygon} from '../dist/navigation.mjs';
-import {sampleActivationRoute,createActivationGuide} from '../dist/activation-guide.mjs';
+import {sampleActivationRoute,createActivationGuide,sampleFloorRoute,createGuidedRoutes} from '../dist/activation-guide.mjs';
 
 function fixture(){
  const layout={
@@ -140,4 +140,21 @@ test('floor finishes preserve route spacing, all seven steps and rendering point
  guide.dispose();
  const invalid=finishedFixture();invalid.floorFinishes.push({polygon:null,topY:50},{polygon:[[0,NaN],[1,0],[0,1]],topY:3},{polygon:[[-2,-2],[2,-2],[2,2]],topY:NaN});
  assert.deepEqual(sampleActivationRoute(invalid),sampleActivationRoute(finishedFixture()));
+});
+
+
+test('company routes keep their authored endpoints and dim only completed branches',()=>{
+ const layout=fixture();layout.companyRoutes={trunk:[{x:2.9,z:-7.9},{x:0,z:-7.9}],branches:[{id:'passport',points:[{x:0,z:-7.9},{x:-4,z:-7.9}]},{id:'palta',points:[{x:0,z:-7.9},{x:0,z:-10}]}]};
+ const route=sampleFloorRoute(layout,layout.companyRoutes.branches[0].points);
+ assert.deepEqual([route.at(-1).x,route.at(-1).z],[-4,-7.9]);
+ const guide=createGuidedRoutes(THREE,layout,{state:{phase:'entry'}}),id=guide.root.uuid;
+ assert.equal(guide.routes.length,1);assert.equal(guide.routes[0].root.userData.routeId,'entry');
+ guide.setState({phase:'companies',milestones:{passport:true,palta:false}});
+ assert.equal(guide.root.uuid,id);assert.equal(guide.routes.length,3);
+ assert.equal(guide.routes.find(r=>r.root.userData.routeId==='passport').root.userData.dimmed,true);
+ assert.equal(guide.routes.find(r=>r.root.userData.routeId==='palta').root.userData.dimmed,false);
+ const same=guide.routes[0].root.uuid;guide.setState({phase:'companies',milestones:{passport:true,palta:false}});assert.equal(guide.routes[0].root.uuid,same);
+ let disposed=0;guide.root.traverse(o=>o.geometry?.addEventListener('dispose',()=>disposed++));
+ guide.setState({phase:'completed',milestones:{passport:true,palta:true}});assert.equal(disposed,6);assert.equal(guide.points.length,0);assert.equal(guide.root.children.length,0);
+ guide.dispose();guide.dispose();
 });

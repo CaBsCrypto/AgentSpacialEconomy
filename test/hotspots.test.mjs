@@ -17,3 +17,8 @@ test('clickable overview markers avoid the HUD and open panels',()=>{
  for(const p of result.filter(p=>p.visible))for(const r of panels)assert(!(p.displayLeft+24>r.left&&p.displayLeft-24<r.right&&p.displayTop+24>r.top&&p.displayTop-24<r.bottom));
  assert.equal(result[1].left,300);assert.equal(result[1].top,400);
 });
+
+test('public hotspot labels are named experiences and retain compatible destination IDs',()=>{
+ assert(HOTSPOTS.some(spot=>spot.id==='passport-stand16'));
+ for(const spot of HOTSPOTS)assert.doesNotMatch(spot.label+' '+spot.detail,/stand\\s*16|referencia|revisión/i);
+});

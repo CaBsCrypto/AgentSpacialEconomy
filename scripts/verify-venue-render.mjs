@@ -13,7 +13,7 @@ const baseline=process.env.VENUE_BASELINE_DIST;
 const output=process.env.VENUE_RENDER_QA_DIR||path.join(root,'docs/render-review-2026-10-26/verification');
 fs.mkdirSync(output,{recursive:true});
 const shim=
-"let qaEye;const qaSetPose=setPose;setPose=(...a)=>{qaSetPose(...a);if(Number.isFinite(qaEye))camera.position.y=qaEye;};globalThis.__venueQA={summary(){const gl=renderer?.getContext();const dbg=gl?.getExtension('WEBGL_debug_renderer_info');let meshes=0;model?.traverse(o=>{if(o.isMesh)meshes++});return{mode,pose:{...pose},ready:venueLoading.state.phase,zones:layout?.zones.map(z=>({id:z.id,view:z.view,label:z.label})),exhibition:layout?.exhibition,render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,memory:{...renderer.info.memory},pixelRatio:renderer.getPixelRatio(),gpu:dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl?.getParameter(gl.RENDERER)}:null,meshes};},view(p){qaEye=p.eye;pose={...pose,...p};chooseMode('walk');setPose();},select(id){const z=layout.zones.find(z=>z.id===id);if(!z)throw Error('Missing zone '+id);qaEye=undefined;pose={...pose,...z.view,pitch:z.view.pitch??0};chooseMode('walk');setPose();},mode(next){chooseMode(next);},review(enabled){reviewEnabled=enabled;updateReview(performance.now());}};";
+"let qaEye;const qaSetPose=setPose;setPose=(...a)=>{qaSetPose(...a);if(Number.isFinite(qaEye))camera.position.y=qaEye;};globalThis.__venueQA={summary(){const gl=renderer?.getContext();const dbg=gl?.getExtension('WEBGL_debug_renderer_info');let meshes=0;model?.traverse(o=>{if(o.isMesh)meshes++});return{mode,pose:{...pose},ready:venueLoading.state.phase,zones:layout?.zones.map(z=>({id:z.id,view:z.view,label:z.label})),exhibition:layout?.exhibition,render:renderer?{calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,memory:{...renderer.info.memory},pixelRatio:renderer.getPixelRatio(),gpu:dbg?gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL):gl?.getParameter(gl.RENDERER)}:null,meshes};},view(p){qaEye=p.eye;pose={...pose,...p};chooseMode('walk');setPose();},select(id){const z=layout.zones.find(z=>z.id===id);if(!z)throw Error('Missing zone '+id);qaEye=undefined;pose={...pose,...z.view,pitch:z.view.pitch??0};chooseMode('walk');setPose();},mode(next){chooseMode(next);},review(){if(typeof reviewEnabled!=='undefined')reviewEnabled=false;updateReview(performance.now());}};";
 const mime={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.glb':'model/gltf-binary','.gz':'application/octet-stream'};
 const viewpoints=[
  ['arrival',{x:0,z:4,yaw:0,pitch:-.12}],
@@ -69,8 +69,13 @@ try{
   const start=await page.evaluate(()=>({firstFrameMs:window.__venueReady-window.__venueStart,...window.__venueQA.summary()}));
   await page.evaluate(()=>window.__venueQA.review(false));
   const frames=[];
-  const standViews=(start.exhibition?.positions??[]).map((p,i)=>{const x=p.side==='left'?-1.1:1.1,z=p.table.z+(p.face==='stage'?-1:1),dx=p.table.x-x,dz=p.table.z-z;return ['table-'+(i+1)+'-'+p.graphic,p.visitorView??{x,z,yaw:Math.atan2(-dx,-dz),pitch:-Math.atan2(.857,Math.hypot(dx,dz))}];});
-  for(const [label,pose] of (process.env.VENUE_QA_MOBILE_ONLY?[]:[...viewpoints,...standViews])){
+  const standViews=(start.exhibition?.positions??[]).map((p,i)=>{const x=p.side==='left'?-1.1:1.1,z=p.table.z+(p.face==='stage'?-1:1),dx=p.table.x-x,dz=p.table.z-z;return ['table-'+(i+1)+'-'+p.graphic,{x,z,yaw:Math.atan2(-dx,-dz),pitch:-Math.atan2(.857,Math.hypot(dx,dz))}];});
+  const headerViews=(start.exhibition?.positions??[]).map((position,index)=>{
+    const x=position.side==='left'?-1.1:1.1,z=position.table.z+(position.face==='stage'?-1:1),tx=position.graphic==='booth-passport'?3.5:position.table.x;
+    const tz=-(position.row===1?27.8:32),dx=tx-x,dz=tz-z;
+    return ['header-'+(index+1)+'-'+position.graphic,{x,z,yaw:Math.atan2(-dx,-dz),pitch:Math.atan2(2.4-1.65,Math.hypot(dx,dz))}];
+  });
+  for(const [label,pose] of (process.env.VENUE_QA_MOBILE_ONLY?[]:[...viewpoints,...standViews,...headerViews])){
    await page.evaluate(p=>p.zone?window.__venueQA.select(p.zone):window.__venueQA.view(p),pose);
    await page.waitForTimeout(label==='palta-table'?3000:150);
    await page.screenshot({path:path.join(output,name+'-'+label+'.jpg'),type:'jpeg',quality:86});

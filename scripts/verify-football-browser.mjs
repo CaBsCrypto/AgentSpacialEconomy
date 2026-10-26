@@ -81,7 +81,7 @@ globalThis.__footballQA={
  beginTrace(){qaSamples=[];qaRecording=true;requestAnimationFrame(qaSampleFrame);},
  endTrace(){qaRecording=false;return qaSamples.slice();},
  leave(){leave();},
- review(enabled){reviewEnabled=enabled;updateReview(performance.now());}
+ review(){updateReview(performance.now());}
 };
 `;
 

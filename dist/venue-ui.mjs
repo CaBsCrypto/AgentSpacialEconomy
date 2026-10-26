@@ -10,17 +10,17 @@ export function mountVenueUI(documentRef, { onInteract = () => {} } = {}) {
   };
   view.classList.add('venue-ui');
   const hud = make('div', 'venueHud'), actions = make('div', 'venueActions');
-  const toolbar = view.querySelector('.toolbar'), numbers = get('reviewToggle');
+  const toolbar = view.querySelector('.toolbar');
   hud.append(toolbar);
-  actions.append(get('toggleZones'), numbers, get('room'));
+  actions.append(get('toggleZones'), get('room'));
   hud.append(actions); view.append(hud);
   const panel = make('aside', 'venuePlacesPanel');
-  panel.setAttribute('aria-label', 'Lugares y referencias del recorrido');
+  panel.setAttribute('aria-label', 'Lugares del recorrido');
   const heading = make('div'); heading.className = 'venue-panel-heading';
   const close = make('button', 'closePlaces', '×'); close.type = 'button';
   close.setAttribute('aria-label', 'Cerrar lugares');
   heading.append(make('h2', null, 'Lugares del recorrido'), close);
-  panel.append(heading, get('zones'), get('reviewNames')); view.append(panel);
+  panel.append(heading, get('zones')); view.append(panel);
   const places = get('toggleZones');
   places.setAttribute('aria-controls', panel.id);
   const guide = make('details', 'overviewGuide');
@@ -29,7 +29,7 @@ export function mountVenueUI(documentRef, { onInteract = () => {} } = {}) {
   const minimap = get('walkMinimap'), mapToggle = make('button', 'minimapToggle');
   mapToggle.type = 'button'; mapToggle.setAttribute('aria-controls', 'miniMapImage miniMapFull');
   minimap.prepend(mapToggle);
-  let mapExpanded = (windowRef?.innerHeight ?? 800) > 500, placesOpen = false;
+  let mapExpanded = (windowRef?.innerHeight ?? 800) > 500 && (windowRef?.innerWidth ?? 1000) > 350, placesOpen = false;
   let rectangles = [], measuredAt = -Infinity;
   function setMapExpanded(open) {
     mapExpanded = open;
@@ -54,7 +54,7 @@ export function mountVenueUI(documentRef, { onInteract = () => {} } = {}) {
     if (bottom) view.style.setProperty('--venue-hud-bottom', `${Math.ceil(bottom)}px`);
     const mapBounds = minimap.getBoundingClientRect();
     view.style.setProperty('--venue-map-height', `${Math.ceil(mapBounds.height)}px`);
-    rectangles = [hud, panel, guide, get('helpPanel'), get('nearPassport'), get('nearActivation'), get('kickFootball')]
+    rectangles = [hud, panel, guide, get('helpPanel'), get('nearPassport'), get('nearActivation'), get('kickFootball'), get('guidedTourStatus'), get('guidedTourReset'), get('paltaNearButton')]
       .filter(element => element && !element.hidden)
       .map(element => element.getBoundingClientRect())
       .filter(rect => rect.width > 0 && rect.height > 0)
