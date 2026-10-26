@@ -1,0 +1,5 @@
+Official Palta Labs logo
+Source: https://paltalabs.io/images/logo.svg
+Original SVG: logo.svg (unchanged).
+PNG: logo.png, 1624 x 336 RGBA, transparent; faithful SVG rasterization.
+Brand use authorized by the project owner in the integration request.

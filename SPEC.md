@@ -100,6 +100,7 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 
 ## Backlog (logged, not built this weekend)
 
+- Palta Labs activation (palta reveal) in the activation area: dist/palta-reveal.mjs.
 - On-chain cap: OpenZeppelin smart account with a spending-limit policy for the agent wallet.
 - LLM planner that proposes the plan from the objective (still bounded by the ledger).
 - More zones and agents (sponsor stands, check-in, photo lounge).

@@ -1,0 +1,5 @@
+Logo oficial de Palta Labs: logo.png (PNG transparente).
+Fuente original conservada en logo.svg; procedencia en SOURCE.txt.
+El visor y /palta-reveal.html lo cargan automáticamente.
+Para reemplazarlo, usa un PNG oficial transparente en esta misma ruta.
+Si falta, el medallón conserva el marcador neutro.
