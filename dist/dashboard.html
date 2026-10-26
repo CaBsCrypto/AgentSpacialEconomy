@@ -80,6 +80,11 @@
     <div class="legend"><span><i class="seg-spent"></i>spent</span><span><i class="seg-delegated"></i>delegated to sub-agents</span><span><i class="seg-reserved"></i>reserved</span><span>empty = available</span></div>
   </section>
 
+  <section aria-labelledby="onchain-h" id="onchain-section" hidden>
+    <h2 id="onchain-h">On-chain budget ceiling · enforced by Stellar</h2>
+    <div id="onchain"></div>
+  </section>
+
   <section aria-labelledby="ledger-h">
     <h2 id="ledger-h">Ledger · every attempt</h2>
     <div class="scroll"><table>
@@ -150,7 +155,22 @@ if (!ledger) {
       <td class="hide-sm">${r.explorer ? `<a href="${esc(r.explorer)}" target="_blank" rel="noopener">tx <span class="hash">${esc(r.tx.slice(0, 8))}…</span></a>` : "—"}</td>
     </tr>`).join("") || `<tr><td colspan="5" class="empty">No payments in this run.</td></tr>`;
 
-  $("blocked").innerHTML = payments.filter((r) => r.status === "blocked").map((r) => `
+  const oc = ledger.onchain;
+  if (oc) {
+    const txBase = `https://stellar.expert/explorer/${ledger.network === "stellar:pubnet" ? "public" : "testnet"}/tx/`;
+    const link = (tx, text) => (tx ? `<a href="${esc(txBase + tx)}" target="_blank" rel="noopener">${text}</a>` : "—");
+    $("onchain-section").hidden = false;
+    $("onchain").innerHTML = `
+      <dl class="grid kv">
+        <div><dt>Approved by the operator's treasury</dt><dd>${usdc(oc.approvedUsdc)} · ${link(oc.approveTx, "approve tx")}</dd></div>
+        <div><dt>Drawn by venue-agent for its allocations</dt><dd>${usdc(oc.drawnUsdc)} · ${link(oc.drawTx, "transfer_from tx")}</dd></div>
+        <div><dt>Left on the allowance</dt><dd>${usdc(oc.remainingUsdc)}${oc.liveUntilLedger ? ` · expires at ledger ${esc(oc.liveUntilLedger)}` : ""}</dd></div>
+        <div><dt>Draw above what is left</dt><dd>${oc.probe ? `${usdc(oc.probe.amountUsdc)} · <span class="status ${oc.probe.refused ? "blocked" : "failed"}">${oc.probe.refused ? "⛔ refused by the network" : "not refused"}</span>` : "—"}</dd></div>
+      </dl>
+      <p><small>SEP-41 allowance on the USDC Stellar Asset Contract (<span class="hash">${esc(oc.asset?.sac ?? "")}</span>). The network enforces this ceiling and its expiry, whatever the agent's code does; the per-call cap below is the agent's own, stricter rule.</small></p>`;
+  }
+
+  $("blocked").innerHTML = payments.filter((r) => r.status === "blocked" && r.type === "payment").map((r) => `
     <div class="blocked-card">
       <h3>Needs operator approval</h3>
       <div>${esc(r.agent)} wanted <strong>${esc(r.service)}</strong> for ${usdc(r.priceUsdc)}.</div>

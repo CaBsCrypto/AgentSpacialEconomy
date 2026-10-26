@@ -46,21 +46,24 @@ Operator mandate (objective, budget, per-call cap, allowed services)
 | Facilitator | `https://x402.org/facilitator` (testnet, fee-sponsored); OpenZeppelin Channels as fallback |
 | Wallets | Agent wallet (payer, server-side Ed25519 signer, never in the browser) and service wallet (payee). Both need a USDC trustline |
 | APIs | Horizon testnet (accounts, trustlines, DEX path payment used to fund the agent with testnet USDC), Friendbot, Soroban RPC (x402 client), facilitator `/supported`, `/verify`, `/settle` |
-| Contracts | No custom contracts; payments invoke the USDC SAC. On-chain spending limits (OpenZeppelin smart-account policy) are in the backlog |
-| Spend control | `agent/ledger.mjs`: allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
+| Contracts | No custom contracts; payments and the allowance use the USDC SAC (`approve`, `transfer_from`, `allowance`). Per-day caps in a smart account (OpenZeppelin policy or Nido session keys) are in the backlog |
+| Spend control | **On-chain:** the operator's treasury approves the venue agent a SEP-41 allowance on the USDC SAC (amount = mandate budget, expires in ~24 h); the agent draws its allocations with `transfer_from` and the network refuses anything above. **Off-chain, before signing:** `agent/ledger.mjs` — allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
 
 ## On-chain evidence (Stellar testnet)
 
-Recorded run, 25 Oct 2026 23:22 UTC ([Actions run 40244382971](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40244382971)):
+Recorded run, 26 Oct 2026 01:23 UTC ([Actions run 40253952685](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40253952685)), all confirmed on Horizon:
 
 | What | Transaction |
 | --- | --- |
-| Agent wallet funded with testnet USDC (DEX path payment XLM → USDC) | [99ef830d…](https://stellar.expert/explorer/testnet/tx/99ef830d2d4db61a4774b0292710231adbe03f6d1d673c92d0d7c23eb12114b6) |
-| `venue-feed`, 0.01 USDC over x402 | [da696463…](https://stellar.expert/explorer/testnet/tx/da696463d66a67f4c520930a9bf495b5a1752b65a540d8841ce82a5557bb8da8) |
-| `screen-card`, 0.05 USDC over x402 | [3b65769c…](https://stellar.expert/explorer/testnet/tx/3b65769cb937948b2edaec3a5d260b4224ef7cc32520c3c557dfb939cb09b9d9) |
-| `premium-render`, 0.25 USDC | refused before signing (above the 0.10 per-call cap) |
+| Operator treasury funded with testnet USDC (DEX path payment XLM → USDC) | [0815f082…](https://stellar.expert/explorer/testnet/tx/0815f082fab7f628420bf05e68bddb98f5b35dc509f210fc1f93f394e71933ad) |
+| Treasury **approves** the venue agent 0.50 USDC until ledger 5408128 (SEP-41 `approve` on the USDC SAC) | [3add5054…](https://stellar.expert/explorer/testnet/tx/3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa) |
+| Venue agent **draws** its 0.20 USDC allocation (`transfer_from`) | [914076fb…](https://stellar.expert/explorer/testnet/tx/914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083) |
+| Venue agent tries to draw 0.31 USDC (one cent above what is left) | **refused by the network** in simulation, nothing submitted |
+| `venue-feed`, 0.01 USDC over x402 | [bb6d3dfb…](https://stellar.expert/explorer/testnet/tx/bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc) |
+| `screen-card`, 0.05 USDC over x402 | [7d3e29ff…](https://stellar.expert/explorer/testnet/tx/7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0) |
+| `premium-render`, 0.25 USDC | refused by the agent before signing (above the 0.10 per-call cap) |
 
-Agent account [GB4UYQ…NOGI6](https://stellar.expert/explorer/testnet/account/GB4UYQ46C7ZVFAMGDIRWK6PC7IOCPFC774JY3TLP4KQLAXHOL7ZNOGI6) · service account [GAZ7J3…7ECH](https://stellar.expert/explorer/testnet/account/GAZ7J3C6SGNAFEWI6U3YXT2ZWC5CNZTNLXRCRM7T5BBSZWDVMCHF7ECH) (received exactly 0.06 USDC). Fees were paid by the facilitator.
+Treasury [GDNNKS…WCZK](https://stellar.expert/explorer/testnet/account/GDNNKSLTL43WDLRXLRU6HWW6Q6GGL4BWU45WZF5AG3ME4WHPTK6JWCZK) · agent [GCK6CK…6BF6](https://stellar.expert/explorer/testnet/account/GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6) (0.20 drawn − 0.06 paid = 0.14 USDC left) · service [GAL47K…VCRS](https://stellar.expert/explorer/testnet/account/GAL47K4ZRDYUBK3KNMHKVPCALODUU5CRAQOPTGZWK54TWSH267WBVCRS) (received exactly 0.06 USDC). x402 fees were paid by the facilitator. An earlier run without the allowance (25 Oct 23:22 UTC, [Actions run 40244382971](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40244382971)) settled the same two payments.
 
 ## Setup, installation and environment variables
 

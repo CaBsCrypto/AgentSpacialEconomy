@@ -8,11 +8,11 @@
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { Asset, BASE_FEE, Horizon, Keypair, Networks, Operation, TransactionBuilder } from "@stellar/stellar-sdk";
+import { Asset, BASE_FEE, Horizon, Keypair, Operation, TransactionBuilder } from "@stellar/stellar-sdk";
+import { networkConfig, explorerAccount } from "./config/networks.mjs";
 
-// Circle's classic USDC issuer on Stellar testnet (used for trustlines; the SAC address is different).
-const USDC_ISSUER_TESTNET = "GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5";
-const horizon = new Horizon.Server("https://horizon-testnet.stellar.org");
+const net = networkConfig(); // testnet only
+const horizon = new Horizon.Server(net.horizonUrl);
 const envPath = fileURLToPath(new URL("../.env", import.meta.url));
 const examplePath = fileURLToPath(new URL("../.env.example", import.meta.url));
 
@@ -22,14 +22,14 @@ if (existsSync(envPath)) {
 }
 
 async function friendbot(pub) {
-  const r = await fetch(`https://friendbot.stellar.org?addr=${encodeURIComponent(pub)}`);
+  const r = await fetch(`${net.friendbotUrl}?addr=${encodeURIComponent(pub)}`);
   if (!r.ok) throw new Error(`friendbot failed for ${pub.slice(0, 6)}…: HTTP ${r.status}`);
 }
 
 async function addUsdcTrustline(kp) {
   const account = await horizon.loadAccount(kp.publicKey());
-  const tx = new TransactionBuilder(account, { fee: BASE_FEE, networkPassphrase: Networks.TESTNET })
-    .addOperation(Operation.changeTrust({ asset: new Asset("USDC", USDC_ISSUER_TESTNET) }))
+  const tx = new TransactionBuilder(account, { fee: BASE_FEE, networkPassphrase: net.passphrase })
+    .addOperation(Operation.changeTrust({ asset: new Asset(net.usdc.code, net.usdc.issuer) }))
     .setTimeout(60)
     .build();
   tx.sign(kp);
@@ -62,5 +62,5 @@ Done. Wrote .env (git-ignored).
 Last step, by hand: open https://faucet.circle.com, choose Stellar testnet,
 and send USDC to the AGENT wallet above.
 
-Check:   https://stellar.expert/explorer/testnet/account/${agent.publicKey()}
+Check:   ${explorerAccount(net.id, agent.publicKey())}
 `);

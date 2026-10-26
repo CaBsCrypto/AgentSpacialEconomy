@@ -3,7 +3,7 @@
 Submission closes **Mon 26 Oct, 12:00** — no late submissions. We submit at **11:00**. Feature freeze at **09:15**.
 Four levels, in order: **Set up → Harness → Iterate → Promote.**
 
-Official Monday schedule: mentor support **08:00–12:00**, morning briefing **09:00–09:15**, final build sprint 09:15–12:00, submissions close **12:00**, judging **13:00–14:45**, finalist selection **14:45–15:30**, closing ceremony **15:30**. Finalists pitch live at Meridian on **Wed 28 Oct, 13:50**.
+Official Monday schedule: mentor support **08:00–12:00**, morning briefing **09:00–09:15**, final build sprint 09:15–12:00, submissions close **12:00**, judging **13:30–14:45** (kickoff slide; the website said 13:00), finalist selection **14:45–15:30**, closing ceremony **15:30**. Finalists pitch live at Meridian on **Wed 28 Oct, 13:50**.
 
 ## Roles
 

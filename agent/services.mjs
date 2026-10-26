@@ -18,17 +18,21 @@ import { ExactStellarScheme } from "@x402/stellar/exact/server";
 import { StrKey } from "@stellar/stellar-sdk";
 import { CATALOG } from "./catalog.mjs";
 import { toDollarPrice } from "./lib/money.mjs";
+import { networkConfig } from "./config/networks.mjs";
 
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
 
-const NETWORK = process.env.STELLAR_NETWORK || "stellar:testnet";
-const FACILITATOR_URL = process.env.FACILITATOR_URL || "https://x402.org/facilitator";
-const PORT = Number(process.env.SERVICES_PORT || 3001);
-
-if (NETWORK !== "stellar:testnet") {
-  console.error("This MVP only runs on stellar:testnet. Fix STELLAR_NETWORK in .env.");
+let net;
+try {
+  net = networkConfig();
+} catch (e) {
+  console.error(`${e.message} Fix STELLAR_NETWORK in .env.`);
   process.exit(1);
 }
+const NETWORK = net.id;
+const FACILITATOR_URL = process.env.FACILITATOR_URL || net.facilitatorUrl;
+const PORT = Number(process.env.SERVICES_PORT || 3001);
+
 
 function resolveRecipient() {
   const raw = (process.env.SERVICE_RECIPIENT || "").trim().replace(/['"]/g, "");
