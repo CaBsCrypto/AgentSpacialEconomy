@@ -125,6 +125,7 @@ The owner approved the separate codex/render-textures-ui revision from sponsor r
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
+- Landing as a sales, contact and quote channel under the name "Agentic Realities · Spatial AI for Venues and Events" (`feature/landing-agentic-realities`): space types, services with their status, engagement scopes, B2C and B2B demo entry points and a quote request drafted on the visitor's device. Confirm the contact address before deploying.
 
 
 ## Second venue review authorized on 26 Oct
