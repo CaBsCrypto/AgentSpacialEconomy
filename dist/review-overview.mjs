@@ -1,4 +1,4 @@
-import {REVIEW_SECTIONS} from './review-map.mjs';
+import {resolveReviewSections} from './review-map.mjs';
 const floorY=s=>s.id===2?.15:s.id===3?-.45:s.id<=6?-1.05:s.id===7?-.45:0;
 /** Uses the supplied real THREE.Vector3 and camera, never a schematic projection. */
 export function projectReviewPoint(section,camera,vector,width,height){
@@ -11,20 +11,21 @@ export function projectReviewPoint(section,camera,vector,width,height){
  for(let r=1;r<=12;r++){for(let x=-r;x<=r;x++){offsets.push([x*26,-r*26],[x*26,r*26]);}for(let y=-r+1;y<r;y++)offsets.push([-r*26,y*26],[r*26,y*26]);}
  offsets.sort((a,b)=>Math.hypot(...a)-Math.hypot(...b));
 
-export function separateReviewMarkers(points,width,height){
+export function separateReviewMarkers(points,width,height,occupied=[]){
  const placed=[],pad=13,step=26,clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
  return points.map(p=>{
   if(!p.visible)return p;
   let best=null;
-  for(const [dx,dy] of offsets){const x=clamp(p.left+dx,pad,Math.max(pad,width-pad)),y=clamp(p.top+dy,pad,Math.max(pad,height-pad));if(placed.some(q=>Math.hypot(q.x-x,q.y-y)<25))continue;best={x,y};break;}
+  for(const [dx,dy] of offsets){const x=clamp(p.left+dx,pad,Math.max(pad,width-pad)),y=clamp(p.top+dy,pad,Math.max(pad,height-pad));if(occupied.some(r=>x+pad>r.left&&x-pad<r.right&&y+pad>r.top&&y-pad<r.bottom))continue;if(placed.some(q=>Math.hypot(q.x-x,q.y-y)<25))continue;best={x,y};break;}
   // Unavoidably tiny viewports may overlap, but retain numbers rather than disappear.
+  if(!best&&occupied.length)return {...p,visible:false};
   best??={x:clamp(p.left,pad,Math.max(pad,width-pad)),y:clamp(p.top,pad,Math.max(pad,height-pad))};placed.push(best);
   return {...p,displayLeft:best.x,displayTop:best.y};
  });
 }
-export function createReviewOverview(layer){
+export function createReviewOverview(layer,{layout}={}){
  const doc=layer.ownerDocument;layer.replaceChildren();layer.style.pointerEvents='none';
- const entries=REVIEW_SECTIONS.map(section=>{
+ const entries=resolveReviewSections(layout).map(section=>{
   const badge=doc.createElement('span'),leader=doc.createElement('span'),anchor=doc.createElement('span');
   badge.className='review-overview-number';badge.dataset.reviewId=String(section.id);badge.dataset.reviewNumber=String(section.id);badge.textContent=String(section.id);badge.title=`${section.id}. ${section.label}`;badge.setAttribute('aria-label',badge.title);
   badge.style.cssText='position:absolute;display:grid;place-items:center;width:24px;height:24px;box-sizing:border-box;transform:translate(-50%,-50%);border-radius:50%;background:#f5da72;color:#111b25;border:1.5px solid #132536;font:750 12px/1 system-ui,sans-serif;pointer-events:none;user-select:none;';
@@ -35,11 +36,11 @@ export function createReviewOverview(layer){
   anchor.style.cssText='position:absolute;width:4px;height:4px;border-radius:50%;background:#f5da72;transform:translate(-50%,-50%);pointer-events:none;';
   layer.append(leader,anchor,badge);return {section,badge,leader,anchor};
  });
- return {entries,update(camera,vector,width,height,visible){
+ return {entries,update(camera,vector,width,height,visible,occupied=[]){
   layer.hidden=!visible;if(!visible)return;
   if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0){layer.hidden=true;return;}
   camera.updateMatrixWorld();
-  const points=separateReviewMarkers(entries.map(e=>projectReviewPoint(e.section,camera,vector,width,height)),width,height);
+  const points=separateReviewMarkers(entries.map(e=>projectReviewPoint(e.section,camera,vector,width,height)),width,height,occupied);
   entries.forEach(({badge,leader,anchor},i)=>{
    const p=points[i];badge.hidden=leader.hidden=anchor.hidden=!p.visible;
    // Inline display must agree with hidden; explicit grid otherwise overrides browser [hidden].

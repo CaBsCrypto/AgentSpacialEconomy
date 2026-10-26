@@ -1,4 +1,4 @@
-import {REVIEW_SECTIONS} from './review-map.mjs';
+import {resolveReviewSections} from './review-map.mjs';
 import {floorHeight,canStand} from './navigation.mjs';
 // Keep each floor label in its section, moving it out from under furniture when needed.
 export function floorReviewPosition(section,layout){
@@ -9,7 +9,7 @@ export function floorReviewPosition(section,layout){
 }
 export function createWalkFloorNumbers(THREE,layout){
  const group=new THREE.Group();group.name='Walk review floor numbers';
- for(const section of REVIEW_SECTIONS){
+ for(const section of resolveReviewSections(layout)){
   const canvas=document.createElement('canvas');canvas.width=canvas.height=256;
   const ctx=canvas.getContext('2d');ctx.beginPath();ctx.arc(128,128,116,0,Math.PI*2);ctx.fillStyle=section.provisional?'#18283a':'#f5da72';ctx.fill();ctx.strokeStyle='#132536';ctx.lineWidth=10;ctx.stroke();
   ctx.fillStyle=section.provisional?'#f5da72':'#111b25';ctx.font='bold 136px system-ui, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(section.id),128,136);
