@@ -1,3 +1,4 @@
+import {resolveGatewayCredential} from './gateway-auth.mjs';
 import {decodeUpload} from './decoder.mjs';
 import {fileURLToPath} from 'node:url';
 import {readFileSync} from 'node:fs';
@@ -33,10 +34,13 @@ function wrap(value, columns, maxLines) {
   return lines;
 }
 
-export function createGatewayModelRuntime({ config }) {
+export function createGatewayModelRuntime({ config, env=process.env, credential=()=>resolveGatewayCredential({env}), loadAI=()=>import('ai') }) {
   async function generate(kind, input) {
     if (!config.model?.id || !config.model.id.includes('/')) throw new AdsError(503, 'MODEL_UNCONFIGURED', 'Configure an AI Gateway model for automatic review.');
-    const [{ generateText, Output }, { z }] = await Promise.all([import('ai'), import('zod')]);
+    const key=await credential();
+    if(typeof key!=='string'||!key)throw new AdsError(503,'MODEL_GATEWAY_AUTH_UNAVAILABLE','AI Gateway credentials are unavailable for this request.');
+    const [{ generateText, Output, createGateway }, { z }] = await Promise.all([loadAI(), import('zod')]);
+    const gateway=createGateway({apiKey:key});
     const schema = kind === 'compose'
       ? z.object({ headline: z.string().min(1).max(60), tagline: z.string().max(140), alt: z.string().min(1).max(240) }).strict()
       : z.object({ decision: z.enum(['ALLOW', 'BLOCK', 'UNCERTAIN']), reasons: z.array(z.string().min(1).max(200)).max(8), reviewedHash: z.string().regex(/^[a-f0-9]{64}$/u) }).strict();
@@ -47,14 +51,14 @@ export function createGatewayModelRuntime({ config }) {
       ? { brief: input.brief, placements: input.placements }
       : { phase: input.phase, brief: input.brief, manifest: input.manifest, reviewedHash: input.manifestHash, policyVersion: POLICY };
     const content = [{ type: 'text', text: canonical(data) }, ...(input.images ?? []).map(image => ({ type: 'image', image: Buffer.from(image), mediaType: 'image/png' }))];
-    const result = await generateText({ model: config.model.id, system, messages: [{ role: 'user', content }], output: Output.object({ schema }), maxOutputTokens: config.model.maxTokens, maxRetries: 0, abortSignal: input.signal });
+    const result = await generateText({ model: gateway.languageModel(config.model.id), system, messages: [{ role: 'user', content }], output: Output.object({ schema }), maxOutputTokens: config.model.maxTokens, maxRetries: 0, abortSignal: input.signal });
     if (!result.output) throw new AdsError(503, 'MODEL_NO_VERDICT', 'The reviewer returned no structured decision.');
     return result.output;
   }
   return { compose: input => generate('compose', input), audit: input => generate('audit', input) };
 }
 
-export function createCreativeService({ config, storage, model = createGatewayModelRuntime({ config }), urlInspector } = {}) {
+export function createCreativeService({ config, storage, gatewayEnv=process.env, model = createGatewayModelRuntime({ config, env:gatewayEnv }), urlInspector } = {}) {
   const limits = config.limits ?? {};
   const inspect = urlInspector ?? (url => inspectUrl(url, { allowedDomains: config.allowedDomains }));
   const sharpModule = async () => (await import('sharp')).default;

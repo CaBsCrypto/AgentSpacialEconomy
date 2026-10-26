@@ -1,4 +1,7 @@
 import {createHash,timingSafeEqual} from 'node:crypto';
+import {access} from 'node:fs/promises';
+import {constants} from 'node:fs';
+import {resolve} from 'node:path';
 import {createJobRunner} from './jobs.mjs';
 import {createPublisher,runCanonicalRenderer} from './publisher.mjs';
 import {AdsError,enqueue} from './common.mjs';
@@ -11,10 +14,33 @@ export function cronAuthorized(header,secret){
  const digest=value=>createHash('sha256').update(value).digest();
  return timingSafeEqual(digest(header.slice(7)),digest(secret));
 }
-export async function launchVercelBrowser(options={}){
- const [{chromium},module]=await Promise.all([import('playwright-core-vercel'),import('@sparticuz/chromium')]);
+const CHROMIUM_DIRECTORY='node_modules/@sparticuz/chromium/bin';
+const CHROMIUM_FILES=['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'];
+const SMOKE_STAGES=new Set(['bundle-files','module-load','binary-extract','binary-launch','context','content','webgl','metadata','cleanup','complete']);
+export async function inspectVercelBrowserBundle({cwd=process.cwd(),accessFile=access}={}){
+ const directory=resolve(cwd,CHROMIUM_DIRECTORY);
+ const results=await Promise.all(CHROMIUM_FILES.map(async name=>{
+  try{await accessFile(resolve(directory,name),constants.R_OK);return {name,readable:true};}
+  catch{return {name,readable:false};}
+ }));
+ return {directory:CHROMIUM_DIRECTORY,readable:results.every(file=>file.readable),files:results};
+}
+export async function launchVercelBrowser(options={},{
+ loadClient=()=>import('playwright-core-vercel'),loadBinary=()=>import('@sparticuz/chromium'),inspectBundle=inspectVercelBrowserBundle,
+}={}){
+ const {onStage,onBundle,...launchOptions}=options;
+ const mark=stage=>{if(typeof onStage==='function')onStage(stage);};
+ mark('bundle-files');
+ const bundle=await inspectBundle();if(typeof onBundle==='function')onBundle(bundle);
+ if(!bundle.readable){const error=new Error('Bundled Chromium files are unreadable: '+bundle.files.filter(file=>!file.readable).map(file=>file.name).join(', '));error.code='CHROMIUM_BUNDLE_MISSING';throw error;}
+ mark('module-load');
+ const [{chromium},module]=await Promise.all([loadClient(),loadBinary()]);
  const binary=module.default;
- return chromium.launch({...options,args:binary.args,executablePath:await binary.executablePath(),headless:true});
+ mark('binary-extract');
+ // Vercel may relocate bundled JS. includeFiles preserves this explicit path.
+ const executablePath=await binary.executablePath(resolve(process.cwd(),CHROMIUM_DIRECTORY));
+ mark('binary-launch');
+ return chromium.launch({...launchOptions,args:binary.args,executablePath,headless:true});
 }
 // Keep the desktop Playwright browser for local development. The serverless
 // binary/client pair is used only by the Vercel runtime.
@@ -27,17 +53,20 @@ export function createRuntimeBrowserLauncher({
 /** Private technical probe: fixed inline canvas, no application runtime or ledger. */
 export async function runRendererSmoke({launchBrowser=launchVercelBrowser,timeoutMs=55000}={}){
  const started=Date.now(),workMs=positive(timeoutMs,55000,55000);
- let browser,context,workTimer,closeTimer,ended=false;
+ let browser,context,workTimer,closeTimer,ended=false,stage='binary-launch',bundle;
  const failure=()=>new AdsError(503,'renderer_smoke_timeout','The technical renderer probe exceeded its deadline.');
  const deadline=new Promise((_,reject)=>{workTimer=setTimeout(()=>reject(failure()),workMs);});deadline.catch(()=>{});
  const guard=work=>Promise.race([work,deadline]);
  try{
-  const opening=Promise.resolve().then(()=>launchBrowser({headless:true,timeout:30000})).then(async value=>{if(ended)await value.close();return value;});
+  const opening=Promise.resolve().then(()=>launchBrowser({headless:true,timeout:30000,onStage:value=>{if(SMOKE_STAGES.has(value))stage=value;},onBundle:value=>{bundle=value;}})).then(async value=>{if(ended)await value.close();return value;});
   browser=await guard(opening);
+  stage='context';
   context=await guard(browser.newContext({viewport:{width:32,height:32}}));
   await guard(context.route('**/*',route=>route.abort()));
   const page=await guard(context.newPage());
+  stage='content';
   await guard(page.setContent('<!doctype html><html><head><meta charset="utf-8"><title>Private renderer check</title></head><body><canvas id="probe" width="2" height="2"></canvas></body></html>',{timeout:10000}));
+  stage='webgl';
   const result=await guard(page.evaluate(()=>{
    const gl=document.getElementById('probe').getContext('webgl2',{alpha:false,antialias:false,preserveDrawingBuffer:true});
    if(!gl)return {webgl2:false,clearReadPixels:false};
@@ -48,18 +77,43 @@ export async function runRendererSmoke({launchBrowser=launchVercelBrowser,timeou
     pixel:Array.from(pixel),glError:error,webglVersion:String(gl.getParameter(gl.VERSION)).slice(0,200),
     renderer:String(gl.getParameter(debug?debug.UNMASKED_RENDERER_WEBGL:gl.RENDERER)).slice(0,200)};
   }));
-  return {check:'renderer',ok:result.webgl2===true&&result.clearReadPixels===true,browserVersion:browser.version(),
+  stage='metadata';
+  return {check:'renderer',stage:result.webgl2&&result.clearReadPixels?'complete':'webgl',bundle,ok:result.webgl2===true&&result.clearReadPixels===true,browserVersion:browser.version(),
    webgl2:result.webgl2,clearReadPixels:result.clearReadPixels,pixel:result.pixel,glError:result.glError,
    webglVersion:result.webglVersion,renderer:result.renderer,durationMs:Date.now()-started,
    meaning:'Technical browser probe only; no advertisement, acknowledgement or ledger operation.'};
- }finally{
+ }catch(error){throw taggedSmokeError(error,stage,bundle);}
+ finally{
   ended=true;clearTimeout(workTimer);
   if(browser||context){
    const closing=Promise.all([context?.close().catch(()=>{}),browser?.close()]);
    const closeDeadline=new Promise((_,reject)=>{closeTimer=setTimeout(()=>reject(failure()),5000);});
-   try{await Promise.race([closing,closeDeadline]);}finally{clearTimeout(closeTimer);}
+   try{await Promise.race([closing,closeDeadline]);}catch(error){throw taggedSmokeError(error,'cleanup',bundle);}finally{clearTimeout(closeTimer);}
   }
  }
+}
+function taggedSmokeError(error,stage,bundle){
+ const tagged=new Error(typeof error?.message==='string'?error.message:'Technical renderer probe failed.');
+ tagged.name=typeof error?.name==='string'?error.name:'Error';tagged.code=error?.code;
+ tagged.rendererSmokeStage=stage;tagged.rendererSmokeBundle=bundle;return tagged;
+}
+function safeBrowserBundle(bundle){
+ const files=CHROMIUM_FILES.map(name=>({name,readable:Array.isArray(bundle?.files)&&bundle.files.find(file=>file.name===name)?.readable===true}));
+ return {directory:CHROMIUM_DIRECTORY,readable:files.every(file=>file.readable),files};
+}
+function privateSmokeDiagnostic(error,secret){
+ const redact=value=>{
+  let text=typeof value==='string'?value:'';
+  if(secret)text=text.split(secret).join('[REDACTED]');
+  text=text.replace(/S[A-Z2-7]{55}/g,'[REDACTED_STELLAR_KEY]').replace(/Bearer[ \t]+[^\s,;]+/gi,'Bearer [REDACTED]').replace(/[\u0000-\u001f\u007f]/g,' ');
+  return text.length<=800?text:text.slice(0,398)+' ... '+text.slice(-397);
+ };
+ const identifier=(value,fallback)=>{const text=redact(value);return /^[A-Za-z0-9_.-]{1,64}$/.test(text)?text:fallback;};
+ const stage=SMOKE_STAGES.has(error?.rendererSmokeStage)?error.rendererSmokeStage:'unknown';
+ const result={check:'renderer',ok:false,stage,error:{code:identifier(error?.code,'renderer_smoke_failed'),name:identifier(error?.name,'Error'),message:redact(error?.message)||'Technical renderer probe failed.'}};
+ const bundle=error?.rendererSmokeBundle;
+ if(bundle&&Array.isArray(bundle.files))result.bundle=safeBrowserBundle(bundle);
+ return result;
 }
 async function maintenance(db,clock){
  await db.transaction(async tx=>{
@@ -149,7 +203,7 @@ function send(res,status,value){
 export function createVercelRunnerHandler({
  env=process.env,
  getRuntime=()=>import('./runtime.mjs').then(module=>module.getAdsRuntime()),
- runnerFactory=createVercelRunner,rendererSmoke=runRendererSmoke,
+ runnerFactory=createVercelRunner,rendererSmoke=runRendererSmoke,bundleProbe=inspectVercelBrowserBundle,
 }={}){
  return async function adsRunner(req,res){
   if(!['GET','POST'].includes(req.method))return send(res,405,{error:{code:'method_not_allowed'}});
@@ -158,9 +212,13 @@ export function createVercelRunnerHandler({
   if(!cronAuthorized(header,env.CRON_SECRET))return send(res,401,{error:{code:'unauthorized'}});
   let query;try{query=new URL(req.url||'/api/ads-runner','https://runner.invalid').searchParams;}catch{return send(res,400,{error:{code:'invalid_request'}});}
   if(query.has('check')){
-   if(query.size!==1||query.getAll('check').length!==1||query.get('check')!=='renderer')return send(res,400,{error:{code:'unsupported_check'}});
+   if(query.size!==1||query.getAll('check').length!==1||!['renderer','bundle'].includes(query.get('check')))return send(res,400,{error:{code:'unsupported_check'}});
+   if(query.get('check')==='bundle'){
+    try{const bundle=safeBrowserBundle(await bundleProbe());return send(res,bundle.readable?200:503,{check:'bundle',ok:bundle.readable,...bundle});}
+    catch{return send(res,503,{check:'bundle',ok:false,error:{code:'bundle_probe_failed'}});}
+   }
    try{const result=await rendererSmoke();return send(res,result.ok?200:503,result);}
-   catch{return send(res,503,{check:'renderer',ok:false,error:{code:'renderer_smoke_failed'}});}
+   catch(error){return send(res,503,privateSmokeDiagnostic(error,env.CRON_SECRET));}
   }
   try{
    const runtime=await getRuntime();

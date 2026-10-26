@@ -227,9 +227,9 @@ test('unsupported WebGL and browser errors produce truthful failures with cleanu
  const proof=await runRendererSmoke({launchBrowser:async()=>browser});assert.equal(proof.ok,false);assert.equal(state.closed,1);assert.equal(state.browsersClosed,1);
  const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{throw Error('No runtime');},rendererSmoke:async()=>proof});
  assert.equal((await request(handler,{url:'/api/ads-runner?check=renderer',authorization:'Bearer private'})).status,503);
- const failed=createVercelRunnerHandler({env:{CRON_SECRET:'private'},rendererSmoke:async()=>{throw Error('INTERNAL_PRIVATE_DETAILS');}});
+ const failed=createVercelRunnerHandler({env:{CRON_SECRET:'private'},rendererSmoke:async()=>{throw Error('fixture library missing');}});
  const response=await request(failed,{url:'/api/ads-runner?check=renderer',authorization:'Bearer private'});
- assert.equal(response.status,503);assert.equal(response.body.ok,false);assert(!JSON.stringify(response.body).includes('INTERNAL_PRIVATE_DETAILS'));
+ assert.equal(response.status,503);assert.equal(response.body.ok,false);assert.equal(response.body.error.message,'fixture library missing');
 });
 test('technical renderer timeout closes a stalled browser instead of reporting success',async()=>{
  const {state,browser,page}=smokeBrowser();page.evaluate=async()=>new Promise(()=>{});
@@ -243,4 +243,57 @@ test('publisher startup uses 120 seconds lookahead by default with 180 seconds c
   const runner=createVercelRunner({config,...noWork,publisherFactory:fakePublisher,...(value===undefined?{}:{lookaheadMs:value}),hasReadyPlacement:async(_db,_clock,lookahead)=>{observed=lookahead;return false;}});
   assert.equal((await runner.run()).state,'IDLE');assert.equal(observed,expected);
  }
+});
+
+test('serverless launcher supplies the explicit shipped bin directory before browser startup',async()=>{
+ const {resolve}=await import('node:path');const {inspectVercelBrowserBundle,launchVercelBrowser}=await import('../server/ads/vercel-runner.mjs');
+ const readiness=await inspectVercelBrowserBundle();assert.equal(readiness.readable,true);assert.equal(readiness.files.length,4);
+ const stages=[];let suppliedDirectory,options,bundle;
+ const browser=await launchVercelBrowser({timeout:123,onStage:value=>stages.push(value),onBundle:value=>{bundle=value;}},{
+  loadClient:async()=>({chromium:{launch:async value=>{options=value;return 'explicit-test-browser';}}}),
+  loadBinary:async()=>({default:{args:['--fixture-only'],executablePath:async directory=>{suppliedDirectory=directory;return '/tmp/fixture-only-chromium';}}}),
+ });
+ assert.equal(browser,'explicit-test-browser');assert.equal(suppliedDirectory,resolve(process.cwd(),'node_modules/@sparticuz/chromium/bin'));
+ assert.deepEqual(stages,['bundle-files','module-load','binary-extract','binary-launch']);assert.equal(bundle.readable,true);
+ assert.equal(options.executablePath,'/tmp/fixture-only-chromium');assert.equal(options.headless,true);assert(!Object.hasOwn(options,'onStage'));assert(!Object.hasOwn(options,'onBundle'));
+});
+test('unreadable shipped binary is diagnosed before loading or launching Chromium',async()=>{
+ const {inspectVercelBrowserBundle,launchVercelBrowser}=await import('../server/ads/vercel-runner.mjs');let clients=0;
+ const bundle=await inspectVercelBrowserBundle({accessFile:async file=>{if(file.endsWith('chromium.br'))throw Error('fixture unreadable');}});
+ assert.equal(bundle.readable,false);assert.equal(bundle.files.find(file=>file.name==='chromium.br').readable,false);
+ await assert.rejects(launchVercelBrowser({}, {inspectBundle:async()=>bundle,loadClient:async()=>{clients++;},loadBinary:async()=>{clients++;}}),error=>error.code==='CHROMIUM_BUNDLE_MISSING');
+ assert.equal(clients,0);
+});
+test('private smoke diagnostics preserve bounded library failure details and redact credentials',async()=>{
+ const token='explicit-test-cron-token-for-redaction',key='S'+'A'.repeat(55);
+ const error=Object.assign(new Error('Startup '+token+' key='+key+' Bearer another-token '+ 'x'.repeat(3000)+' missing libnspr4.so'),{code:'ENOENT',rendererSmokeStage:'binary-launch',rendererSmokeBundle:{directory:'untrusted-directory',files:[{name:'chromium.br',readable:false}],privateDump:'MUST_NOT_SERIALIZE'}});
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:token},getRuntime:async()=>{throw Error('No runtime');},rendererSmoke:async()=>{throw error;}});
+ const response=await request(handler,{url:'/api/ads-runner?check=renderer',authorization:'Bearer '+token}),serialized=JSON.stringify(response.body);
+ assert.equal(response.status,503);assert.equal(response.body.stage,'binary-launch');assert.equal(response.body.error.code,'ENOENT');
+ assert(response.body.error.message.length<=800);assert(response.body.error.message.includes('libnspr4.so'));
+ assert(!serialized.includes(token));assert(!serialized.includes(key));assert(!serialized.includes('another-token'));assert(!serialized.includes('MUST_NOT_SERIALIZE'));assert(!serialized.includes('stack'));
+ assert.equal(response.body.bundle.directory,'node_modules/@sparticuz/chromium/bin');
+});
+test('private probe failure reports its stage and closes resources on content failure',async()=>{
+ const {state,browser,page}=smokeBrowser();page.setContent=async()=>{throw Object.assign(new Error('fixture content failed'),{code:'CONTENT_FAILED'});};
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{throw Error('No runtime');},rendererSmoke:()=>runRendererSmoke({launchBrowser:async()=>browser})});
+ const response=await request(handler,{url:'/api/ads-runner?check=renderer',authorization:'Bearer private'});
+ assert.equal(response.status,503);assert.equal(response.body.stage,'content');assert.equal(response.body.error.code,'CONTENT_FAILED');
+ assert.equal(state.closed,1);assert.equal(state.browsersClosed,1);
+});
+
+test('private bundle check authenticates before filesystem,browser or database access',async()=>{
+ let reads=0,runtime=0,browsers=0;
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{runtime++;throw Error('No runtime');},rendererSmoke:async()=>{browsers++;},bundleProbe:async()=>{reads++;return {directory:'ignored',files:['chromium.br','al2023.tar.br','fonts.tar.br','swiftshader.tar.br'].map(name=>({name,readable:true}))};}});
+ assert.equal((await request(handler,{url:'/api/ads-runner?check=bundle'})).status,401);assert.equal(reads,0);
+ const result=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'});assert.equal(result.status,200);assert.equal(result.body.check,'bundle');assert.equal(result.body.ok,true);
+ assert.equal(reads,1);assert.equal(runtime,0);assert.equal(browsers,0);
+ for(const url of ['/api/ads-runner?check=bundle&path=/private','/api/ads-runner?check=bundle&check=bundle'])assert.equal((await request(handler,{url,authorization:'Bearer private'})).status,400);
+ assert.equal(reads,1);
+});
+test('private bundle check exposes only the fixed relative file list and truthful readability',async()=>{
+ const handler=createVercelRunnerHandler({env:{CRON_SECRET:'private'},getRuntime:async()=>{throw Error('No runtime');},bundleProbe:async()=>({directory:'/private/root',readable:true,files:[{name:'chromium.br',readable:true},{name:'arbitrary-private-name',readable:true}],privateValue:'MUST_NOT_SERIALIZE'})});
+ const result=await request(handler,{url:'/api/ads-runner?check=bundle',authorization:'Bearer private'}),text=JSON.stringify(result.body);
+ assert.equal(result.status,503);assert.equal(result.body.ok,false);assert.equal(result.body.readable,false);assert.equal(result.body.directory,'node_modules/@sparticuz/chromium/bin');assert.equal(result.body.files.length,4);
+ assert(!text.includes('/private/root'));assert(!text.includes('arbitrary-private-name'));assert(!text.includes('MUST_NOT_SERIALIZE'));
 });

@@ -1,3 +1,4 @@
+import {hasEnvironmentGatewayCredential} from './gateway-auth.mjs';
 import {applyPilotConfig,isPilotConfig,PILOT_OFFER} from './offers.mjs';
 import {readFileSync} from 'node:fs';
 import path from 'node:path';
@@ -36,13 +37,13 @@ export function validateAdsConfig(c){
  need('walletCompatibilityVerified',c.walletCompatibilityVerified===true);need('accountWasmHash',/^[a-f0-9]{64}$/i.test(c.accountWasmHash||''));need('webauthnVerifier',StrKey.isValidContract(c.webauthnVerifier||''));
  return [...new Set(missing)];
 }
-export function readAdsConfig(env=process.env){
+export function readAdsConfig(env=process.env,{gatewayCredentialAvailable}={}){
  let source={};try{source=env.ADS_CONFIG_JSON?JSON.parse(env.ADS_CONFIG_JSON):env.ADS_CONFIG_PATH?JSON.parse(readFileSync(env.ADS_CONFIG_PATH,'utf8')):{};}catch{throw new AdsError(503,'config_invalid','Advertising configuration could not be loaded.');}
  source=applyPilotConfig(source);
  const origin=env.ADS_ORIGIN||env.WALLET_ORIGIN||'http://localhost:4318';
  const c={...source,origin,rpId:new URL(origin).hostname,network:source.network||NETWORK,asset:source.asset||ASSET,issuer:source.issuer||ISSUER,rpcUrl:env.ADS_RPC_URL||'https://soroban-testnet.stellar.org',facilitatorUrl:env.ADS_FACILITATOR_URL||'https://x402.org/facilitator',databaseUrl:env.ADS_DATABASE_URL||'',authChallengeMs:120000,sessionMs:1800000,heartbeatMs:1000,publisherLeaseMs:5000,manifestMs:2000,renderLeadMs:isPilotConfig(source)?10000:2000,operators:source.operators||[],storage:{kind:env.ADS_STORAGE_KIND||'filesystem',root:path.resolve(env.ADS_STORAGE_ROOT||'.ads-private')},limits:source.limits||{},model:source.model||{},payTo:source.payTo||'',publisherOrigin:env.ADS_PUBLISHER_ORIGIN||origin,publisherKey:env.ADS_PUBLISHER_PRIVATE_KEY_FILE?readFileSync(env.ADS_PUBLISHER_PRIVATE_KEY_FILE,'utf8'):(env.ADS_PUBLISHER_PRIVATE_KEY||''),publisherPublicKey:env.ADS_PUBLISHER_PUBLIC_KEY_FILE?readFileSync(env.ADS_PUBLISHER_PUBLIC_KEY_FILE,'utf8'):(env.ADS_PUBLISHER_PUBLIC_KEY||''),registryContract:env.ADS_REGISTRY_CONTRACT||'',registrySignerSecret:env.ADS_REGISTRY_SIGNER_KEY||'',registrySignerSecretFile:env.ADS_REGISTRY_SIGNER_KEY_FILE||'',refundSecretFile:env.ADS_REFUND_SIGNER_KEY_FILE||'',publisherToken:env.ADS_PUBLISHER_TOKEN||'',defaultStageUrl:env.ADS_DEFAULT_STAGE_URL||'/assets/main-stage-default.mp4'};
  if(c.network!==NETWORK||c.asset!==ASSET||c.issuer!==ISSUER)throw new AdsError(503,'testnet_only','Only the allowlisted Stellar Testnet USDC is permitted.');
- c.missing=validateAdsConfig(c);if(!c.databaseUrl)c.missing.push('ADS_DATABASE_URL');if(!env.AI_GATEWAY_API_KEY&&!env.VERCEL_OIDC_TOKEN)c.missing.push('AI_GATEWAY_API_KEY');if(!c.publisherKey||!c.publisherPublicKey)c.missing.push('ADS_PUBLISHER_KEYS');
+ c.missing=validateAdsConfig(c);if(!c.databaseUrl)c.missing.push('ADS_DATABASE_URL');if(!(gatewayCredentialAvailable??hasEnvironmentGatewayCredential(env)))c.missing.push('AI_GATEWAY_API_KEY');if(!c.publisherKey||!c.publisherPublicKey)c.missing.push('ADS_PUBLISHER_KEYS');
  if(!c.publisherToken)c.missing.push('ADS_PUBLISHER_TOKEN');if(!c.refundSecretFile&&c.refundPolicy!=='FULFILL_REMAINING')c.missing.push('ADS_REFUND_SIGNER_KEY_FILE');else if(c.refundSecretFile){try{if(Keypair.fromSecret(readFileSync(c.refundSecretFile,'utf8').trim()).publicKey()!==c.payTo)c.missing.push('ADS_REFUND_SIGNER_KEY_FILE_MISMATCH');}catch{c.missing.push('ADS_REFUND_SIGNER_KEY_FILE_INVALID');}}if(c.registryContract&&(!Number.isSafeInteger(c.registryEvidenceGraceMs)||c.registryEvidenceGraceMs<=0))c.missing.push('registryEvidenceGraceMs');
  if(c.registryContract){if(!c.registrySignerSecret&&!c.registrySignerSecretFile)c.missing.push('ADS_REGISTRY_SIGNER_KEY');if(!StrKey.isValidEd25519PublicKey(c.registryIssuer||'')||!Array.isArray(c.operators)||!c.operators.includes(c.registryIssuer))c.missing.push('registryIssuer');}
  c.enabled=env.ADS_CHECKOUT_ENABLED==='true'&&c.missing.length===0;if(env.ADS_CHECKOUT_ENABLED!=='true')c.missing.push('ADS_CHECKOUT_ENABLED');return c;
