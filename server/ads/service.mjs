@@ -1,3 +1,4 @@
+import {isPilotConfig,applyPilotConfig,resolveQuoteOffer} from './offers.mjs';
 import {AdsError,assert,identifier,integer,sha256,uuid,event,enqueue,idempotent,durableAction} from './common.mjs';
 import {PLACEMENTS,PLANS,requireCheckout} from './config.mjs';
 import {buildDemand,quotePrice,reserveSchedule,lockInventory,lockOrderInventory} from './scheduler.mjs';
@@ -84,31 +85,33 @@ export function createAdsService({db,config,creative,storage,payments,refunds,re
     await tx.query("INSERT INTO ads_rate_limits(key,count,expires_at) VALUES($1,1,$2) ON CONFLICT(key) DO UPDATE SET count=CASE WHEN ads_rate_limits.expires_at<now() THEN 1 ELSE ads_rate_limits.count+1 END,expires_at=CASE WHEN ads_rate_limits.expires_at<now() THEN EXCLUDED.expires_at ELSE ads_rate_limits.expires_at END",[key,new Date(now()+3600000)]);
     const {rows:[limit]}=await tx.query('SELECT count FROM ads_rate_limits WHERE key=$1 FOR UPDATE',[key]);assert(limit.count<=(config.model.previewPerHour||1),429,'preview_quota','The free preview quota is exhausted.');
    });
-   const preview=await creative.generate({brief:revision.brief,logo:logoOf(revision),revisionId:revision.id,placements:PLACEMENTS});
+   const preview=await creative.generate({brief:revision.brief,logo:logoOf(revision),revisionId:revision.id,placements:isPilotConfig(config)?['main_stage_screen']:PLACEMENTS});
    await db.query('INSERT INTO ads_previews(id,revision_id,artifacts,expires_at) VALUES($1,$2,$3,$4)',[uuid(),revision.id,preview.artifacts||[],new Date(now()+3600000)]);
    return {revisionId:revision.id,verdict:preview.verdict,artifacts:preview.artifacts?.map(a=>({...a,imageUrl:'/api/ads/previews/'+revision.id+'/'+a.key}))||[],meaning:'Preview only; no payment or delivery.'};
    });
   },
   async quote(ownerId,payload,key){
    requireCheckout(config);
-   return db.transaction(tx=>idempotent(tx,{ownerId,key,action:'quote',payload},async()=>{
+   const request=payload;payload=resolveQuoteOffer(payload,config);
+   const saleConfig=isPilotConfig(config)?applyPilotConfig(config):config;
+   return db.transaction(tx=>idempotent(tx,{ownerId,key,action:'quote',payload:request},async()=>{
     const campaign=await owned(tx,payload.campaignId,ownerId),revision=await currentRevision(tx,campaign);
     assert(revision.state==='PREAUDITED'&&revision.verdict?.allowed&&revision.verdict?.contentHash===revision.content_hash,409,'preaudit_required','A passing preaudit is required.');
     await lockInventory(tx,payload.placements);
     const startsAt=Date.parse(payload.startsAt),endsAt=Date.parse(payload.endsAt);
     assert(startsAt>=now()+config.processingMs,400,'processing_window','Allow the configured generation and audit lead time.');
-    const demand=buildDemand({...payload,startsAt,endsAt},config),price=quotePrice(payload.placements,payload.plan,payload.units,config);
+    const demand=buildDemand({...payload,startsAt,endsAt},saleConfig),price=quotePrice(payload.placements,payload.plan,payload.units,saleConfig);
     // Each order gets its own immutable generation revision; editing/preauditing the intake draft cannot alter a paid order.
     const quotedRevisionId=uuid();
     await tx.query("INSERT INTO ads_revisions(id,campaign_id,brief,logo_id,content_hash,state,verdict) VALUES($1,$2,$3,$4,$5,'PREAUDITED',$6)",[quotedRevisionId,campaign.id,revision.brief,revision.logo_id,revision.content_hash,revision.verdict]);
     const id=uuid(),orderId=uuid(),expiresAt=date(now()+config.reservationMs);
     const terms={version:config.termsVersion,policyVersion:config.policyVersion,refundPolicy:config.refundPolicy,refundDesign:config.refundDesign,refundDeadlineMs:config.refundDeadlineMs,disputeAuthority:config.disputeAuthority,interruptions:config.interruptions,hostPriority:true,processingMs:config.processingMs,includedRevisions:config.includedRevisions,designDefinition:'Design is fulfilled when the immutable creative and manifest pass final audit; publication units are separate.',measurement:'Canonical publisher activity; never audience or physical views.',correctionsPolicy:'Included corrections require a new passing preaudit, no outstanding hold/refund/dispute and no prepared registry commitment.',reprogramPolicy:'Undelivered obligations may be reprogrammed by consent before registry commitment; partial deficits retain the configured refund remedy.'};
-    const snapshot={timeUnitMs:config.timeUnitMs,rotationMs:config.rotationMs,passMs:config.passMs,exclusiveUnitMs:config.exclusiveUnitMs,renderLeadMs:config.renderLeadMs,schedulerVersion:'rotations-v1',id,orderId,campaignId:campaign.id,sourceRevisionId:revision.id,revisionId:quotedRevisionId,placements:payload.placements,plan:payload.plan,units:payload.units,startsAt:date(startsAt),endsAt:date(endsAt),expiresAt,...price,requiredUnits:demand.requiredUnits,unit:demand.unit,network:config.network,asset:config.asset,issuer:config.issuer,payTo:config.payTo,terms};
+    const snapshot={...(payload.offerId?{offerId:payload.offerId}:{}),timeUnitMs:saleConfig.timeUnitMs,rotationMs:config.rotationMs,passMs:config.passMs,exclusiveUnitMs:config.exclusiveUnitMs,renderLeadMs:config.renderLeadMs,schedulerVersion:'rotations-v1',id,orderId,campaignId:campaign.id,sourceRevisionId:revision.id,revisionId:quotedRevisionId,placements:payload.placements,plan:payload.plan,units:payload.units,startsAt:date(startsAt),endsAt:date(endsAt),expiresAt,...price,requiredUnits:demand.requiredUnits,unit:demand.unit,network:config.network,asset:config.asset,issuer:config.issuer,payTo:config.payTo,terms};
     const termsHash=sha256(snapshot);
     await tx.query('INSERT INTO ads_quotes(id,owner_id,campaign_id,revision_id,snapshot,terms_hash,expires_at) VALUES($1,$2,$3,$4,$5,$6,$7)',[id,ownerId,campaign.id,quotedRevisionId,snapshot,termsHash,new Date(expiresAt)]);
     await tx.query('INSERT INTO ads_orders(id,owner_id,quote_id,revision_id,amount,pay_to,terms_hash,quote) VALUES($1,$2,$3,$4,$5,$6,$7,$8)',[orderId,ownerId,id,quotedRevisionId,price.amountUnits,config.payTo,termsHash,snapshot]);
     for(const placementId of payload.placements)await tx.query('INSERT INTO ads_placements(order_id,placement_id,required_units,unit) VALUES($1,$2,$3,$4)',[orderId,placementId,demand.requiredUnits,demand.unit]);
-    await reserveSchedule(tx,{id:orderId,state:'RESERVED',campaign_id:campaign.id,quote:snapshot},config,now());
+    await reserveSchedule(tx,{id:orderId,state:'RESERVED',campaign_id:campaign.id,quote:snapshot},saleConfig,now());
     await event(tx,orderId,ownerId,'RESERVED',{quoteId:id,termsHash});return {...snapshot,termsHash};
    }));
   },

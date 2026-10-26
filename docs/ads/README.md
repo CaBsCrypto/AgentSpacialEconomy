@@ -1,6 +1,6 @@
 # Advertising MVP — local implementation
 
-Branch: feature/ads-3d-ar-x402. The integrated local starting point was preserved in commit 171db5576181ae484dd085316f035a55a71ff99e. Work moved to an isolated worktree after another operation changed delivery's checkout. No deployment, new payment, wallet funding or on-chain activation was performed.
+Branch: feature/ads-3d-ar-x402. The integrated local starting point was preserved in commit 171db5576181ae484dd085316f035a55a71ff99e. Work moved to an isolated worktree after another operation changed delivery's checkout. The application was not deployed from this branch. A disposable AdsRegistry Testnet deployment and a synthetic queue write were subsequently authorized for the hackathon; see the Estado block in the root README and testnet-registry/. No new advertiser payment or Sozu pilot funding was performed.
 
 The main stage now plays the supplied HackMeridian GIF as a generated, silent, looping 10-second MP4. A current paid, audited and scheduled creative replaces it; expiry, suspension, stale manifests or completion restore the default loop. Payment confirmation alone does not publish an advertisement.
 
@@ -10,7 +10,7 @@ Node 22 is required. Run npm ci, then npm run build and npm run dev. Open /one16
 
 For the backend, start docker compose -f compose.ads.yml up -d and set ADS_DATABASE_URL in the ignored .env.ads.local to the local ads database on port 5441. npm run ads:migrate applies ordered migrations under a database lock. Docker was not running on the development host, so local integration uses the actual PostgreSQL WASM engine PGlite; CI runs the same SQL against PostgreSQL 17.
 
-Copy config/ads.example.json to ignored config/ads.local.json. Its null prices and terms deliberately prevent purchases. Configure prices independently for TIME, PASSES and EXCLUSIVE at each placement. Amounts are integer USDC base units (seven decimals), never floating point. Explicitly configure design and delivery pricing, refundPolicy FULL/PRO_RATA, refundDesign ALWAYS/IF_UNDELIVERED/NEVER, windows, host priority, limits, model quotas/cost ceilings, authority and retention terms.
+Copy config/ads.example.json to ignored config/ads.local.json. The approved pilot fixes main-stage-test-5m at 5 Testnet USDC for 300000 accumulated milliseconds, with design included. Other placements and plans are outside sale. Null operational terms, budgets, geometry and credentials deliberately prevent purchases. The offer/saldo UI and exact one-time 100 USDC grant remain frozen and unfinished. Amounts are integer USDC base units (seven decimals), never floating point. Explicitly configure design and delivery pricing, refundPolicy FULL/PRO_RATA, refundDesign ALWAYS/IF_UNDELIVERED/NEVER, windows, host priority, limits, model quotas/cost ceilings, authority and retention terms.
 
 npm run ads:keys creates local publisher key files and an ignored environment file without printing secret values. It refuses to overwrite files. Complete the configuration before setting ADS_CHECKOUT_ENABLED=true. AI Gateway needs a configured model from the current catalogue and credentials; tests inject a model explicitly and never spend credits.
 
@@ -43,7 +43,7 @@ Operator operations: GET /operator/orders and /operator/refunds; POST /operator/
 
 contracts/ads-registry contains a noncustodial contract and tests. Its state distinguishes receipt, partial delivery, completion, dispute and expiration. Publisher signatures bind domain, network, contract, revision, manifest, intervals and nonce. A keeper explicitly submits expiry/resolution transactions; the contract does not wake itself.
 
-No contract was deployed. Without ADS_REGISTRY_CONTRACT, the API labels it NOT_DEPLOYED. After a separately authorized deployment, set the issuer, evidence grace and restricted signer file; npm run ads:registry prepares/submits durable registry jobs. The issuer/publication signer are separate from the creative model. The registry never transfers or releases advertisement funds.
+A disposable Testnet contract was deployed and tested with one synthetic commit and a read; see testnet-registry/. It is not connected to the application runtime. Without ADS_REGISTRY_CONTRACT, the API still labels its own configured registry NOT_DEPLOYED. After a separately authorized deployment, set the issuer, evidence grace and restricted signer file; npm run ads:registry prepares/submits durable registry jobs. The issuer/publication signer are separate from the creative model. The registry never transfers or releases advertisement funds.
 
 ## Verification
 

@@ -1,3 +1,4 @@
+import {SHARED_DEPLOYER} from '../wallet/config.mjs';
 import { AdsError, canonical, sha256 } from './common.mjs';
 export const TESTNET_USDC = 'CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA';
 export const TESTNET_ISSUER = 'GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5';
@@ -73,6 +74,16 @@ export function createStellarPaymentRuntime({config,rpc,resourceServer,loadSdk=(
   return {state:'CONFIRMED',txHash:hash,payer:parsed.payer,ledger:r.ledger,eventId:event.id,authHash:parsed.authHash,asset:expected.asset,amount:expected.amount,payTo:expected.payTo};
  }
  return {
+  async balance(address){
+   check();const s=await sdk(),client=await rpcClient();
+   const read=new s.TransactionBuilder(new s.Account(SHARED_DEPLOYER,'0'),{fee:s.BASE_FEE,networkPassphrase:s.Networks.TESTNET})
+    .addOperation(new s.Contract(TESTNET_USDC).call('balance',new s.Address(address).toScVal())).setTimeout(30).build();
+   const result=await deadline(client.simulateTransaction(read),config.paymentRequestTimeoutMs??20000);
+   if(!s.rpc.Api.isSimulationSuccess(result)||s.rpc.Api.isSimulationRestore(result)||result.error||!result.result?.retval)throw new AdsError(503,'balance_unavailable','No se pudo leer el saldo de USDC en Testnet.');
+   const balance=BigInt(s.scValToNative(result.result.retval));
+   if(balance<0n)throw new AdsError(503,'balance_invalid','La lectura del saldo no es válida.');
+   return balance;
+  },
   async decodePayment(payload,expected){check();return inspectStellarPayment(payload,expected,await sdk());},
   async latestLedger(){return (await (await rpcClient()).getLatestLedger()).sequence;},
   async verify(payload,requirements){return deadline((await server()).verifyPayment(payload,requirements),config.paymentRequestTimeoutMs??20000);},

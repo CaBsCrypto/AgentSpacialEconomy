@@ -238,3 +238,16 @@ Third-party names, artwork and assets retain their respective rights. Three.js i
 ## Advertising MVP (local branch)
 
 The advertiser workflow is implemented locally under /ads: independent TIME, PASSES and EXCLUSIVE plans, durable x402 settlement/queue recovery, automatic audit, spatial playlists and refund remedies. Purchases stay disabled until explicit configuration and integration gates pass. The main stage defaults to the supplied 10-second looping presentation and returns to it whenever no valid ad is active. See [setup, limitations and evidence](docs/ads/README.md) and [PRD v0.2](docs/ads/PRD-v0.2.md). No new advertising payments or deployments are claimed by this change.
+
+
+## Estado
+
+Cierre del 26 de octubre de 2026. Rama de anuncios: `feature/ads-3d-ar-x402`.
+
+- **Construido localmente:** API de campañas y revisiones, preauditoría, reserva transaccional, settlement x402 recuperable, cola durable, generación/auditoría, publicación canónica, evidencia y remedios. La oferta del servidor `main-stage-test-5m` fija **5 USDC de Testnet por 300000 ms acumulados**, con diseño incluido. El loop del anfitrión se conserva cuando no hay un anuncio válido.
+- **Congelado y pendiente:** el fondeo inicial único de 100 USDC y la interfaz de saldo/oferta del checkout no se terminaron. Los parciales se preservaron fuera del árbol publicable. La disponibilidad comercial continúa deshabilitada por configuración; no se cobró ni fondeó a usuarios del piloto.
+- **Probado on-chain para publicidad:** sólo el contrato Soroban no custodial en **Stellar Testnet**, [CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD](https://stellar.expert/explorer/testnet/contract/CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD). Desplegado el 26/10 a las **04:30:32 Lisboa** con identidad desechable y XLM de Friendbot; no se utilizó ninguna wallet existente ni Mainnet.
+- **Despliegue:** [11a0e3132c480c119d59ec156996a00c0a233c3936592f1b3071b3463bf2ccce](https://stellar.expert/explorer/testnet/tx/11a0e3132c480c119d59ec156996a00c0a233c3936592f1b3071b3463bf2ccce). **Escritura `commit`:** [380dfd78d95b15eee2f39ca0e4e3350aa09a8800fc2b1cd434041d67487bac45](https://stellar.expert/explorer/testnet/tx/380dfd78d95b15eee2f39ca0e4e3350aa09a8800fc2b1cd434041d67487bac45). Ambas verificadas como `SUCCESS` en RPC y exitosas en Horizon.
+- **Lectura `get`:** `Queued`, `delivered=[0]`, obligación `300000` ms y `next_nonce=0`. El campo payment de esta orden es una referencia sintética identificada como prueba: **no acredita transferencia USDC ni entrega publicitaria**. Ver [entrada, lectura y comprobaciones públicas](docs/ads/testnet-registry/).
+- **Sin validar:** fondeo Sozu único y exacto de 100 USDC, compatibilidad real passkey–facilitador del nuevo checkout, compra x402 de 5 USDC del anunciante, devolución real, integración del contrato con el worker y móviles físicos/AR. Las transacciones de las corridas anteriores pertenecen al demo base y no validan estas funciones nuevas.
+- **Producción separada:** PR #27 fusionado con merge commit `a03aeaf766c009e7e409e8efc302916bdf9388e2`, conservando sus 5 commits. Sólo ese `main` se desplegó a las **04:36:05 Lisboa**; la rama de anuncios no se desplegó. Dashboard comprobado con corrida 03:21:08, Agent credit pool y 6/6 confirmaciones en vivo.

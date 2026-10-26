@@ -1,6 +1,6 @@
 import {AdsError,assert,integer,uuid} from './common.mjs';
 import {PLACEMENTS,PLANS} from './config.mjs';
-const time=v=>typeof v==='number'?v:Date.parse(v);
+const time=v=>typeof v==='number'?v:v instanceof Date?v.getTime():Date.parse(v);
 const overlap=(a,b)=>a.start<b.end&&b.start<a.end;
 const capacity=()=>new AdsError(409,'capacity_unavailable','Insufficient capacity within the contracted window.');
 export function buildDemand(order,config){
@@ -52,8 +52,10 @@ export function planRotations(orders,hostBlocks,config){
   if(!progressed)throw capacity();
  }
  for(const o of rotating){
-  const campaignDuration=rotating.filter(x=>(x.campaignId||x.id)===(o.campaignId||o.id)).reduce((n,x)=>n+x.durationMs,0);
-  if(campaignDuration>(o.end-o.start)*config.maxCampaignSharePercent/100)throw capacity();
+  const campaignOrders=new Set(rotating.filter(x=>(x.campaignId||x.id)===(o.campaignId||o.id)).map(x=>x.id));
+  // Capacity share is local to this admission window; unrelated future purchases do not consume it.
+  const occupied=slots.filter(slot=>campaignOrders.has(slot.orderId)).reduce((n,slot)=>n+Math.max(0,Math.min(slot.end,o.end)-Math.max(slot.start,o.start)),0);
+  if(occupied>(o.end-o.start)*config.maxCampaignSharePercent/100)throw capacity();
  }
  return slots.sort((a,b)=>a.start-b.start||a.orderId.localeCompare(b.orderId));
 }

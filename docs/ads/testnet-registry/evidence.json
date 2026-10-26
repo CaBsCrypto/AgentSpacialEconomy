@@ -1,0 +1,45 @@
+{
+  "network": "stellar:testnet",
+  "networkPassphrase": "Test SDF Network ; September 2015",
+  "contractId": "CDYMS23PEXE4WMVSMJAWOFOODEVV2S4IQJQUFTHFKFWAFAEVMFBWQRVD",
+  "wasmHash": "d9caf94b2dfb159c7d46bf5779d358d6cced9ee7a94bd69e2bb1fa354b5ee526",
+  "sourceSha256": "7a74fac5a15a4fb99a2e4621b67d5ace62990b83cdef6a5babbcaceee76f39f7",
+  "issuer": "GBLB7YZF6BLWGDNUYAEBZ4I4LVYAGF3K7FIW2IGB7FFIQGSNDN4JOXY5",
+  "publisherPublicKeyHex": "e15693cd9456cf1b1dfac903e86610f229cd44d9f76af65ff89c9a04d71dbe4d",
+  "funding": {
+    "provider": "Stellar Testnet Friendbot",
+    "transaction": "b6ff18537bdcbea126270ebf80644624a9fb29a9e1b6b3463ffbb528e92e711c",
+    "existingWalletUsed": false
+  },
+  "upload": "fe7bc9e203c34e7bf521712c35090b4d76b3bdcc065fcab59d59c74c6bb49d85",
+  "deployment": "11a0e3132c480c119d59ec156996a00c0a233c3936592f1b3071b3463bf2ccce",
+  "write": {
+    "method": "commit",
+    "transaction": "380dfd78d95b15eee2f39ca0e4e3350aa09a8800fc2b1cd434041d67487bac45",
+    "synthetic": true,
+    "paymentReference": "Synthetic hash. No USDC transfer or advertiser purchase."
+  },
+  "read": {
+    "method": "get",
+    "send": "no",
+    "state": "Queued",
+    "delivered": [
+      0
+    ],
+    "requiredUnits": 300000,
+    "unit": "MILLISECONDS",
+    "nextNonce": 0,
+    "resultFile": "read-result.json"
+  },
+  "validatedBy": [
+    "Stellar RPC getTransaction SUCCESS",
+    "Horizon successful=true",
+    "RPC contract instance WASM hash equals local build",
+    "Read-only get returned the written synthetic commitment"
+  ],
+  "verifiedAt": "2026-10-26T04:40:04.184Z",
+  "applicationRegistryConfigured": false,
+  "advertisingPaymentsExecuted": 0,
+  "sozuPilotFundingExecuted": 0,
+  "adPublicationValidatedOnChain": false
+}

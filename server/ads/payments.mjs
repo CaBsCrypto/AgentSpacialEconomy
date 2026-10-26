@@ -1,3 +1,4 @@
+import {PILOT_PROFILE} from './offers.mjs';
 import {lockOrderInventory} from './scheduler.mjs';
 import { AdsError, canonical, sha256, uuid } from './common.mjs';
 import { createStellarPaymentRuntime } from './stellar-payments.mjs';
@@ -12,6 +13,13 @@ const receipt = (order, attempt) => ({status:attempt?.state==='SETTLED'?200:202,
 
 /** Persist authorization before transmission; only proof of settlement creates a paid job. */
 export function createPaymentService({db,config,runtime=createStellarPaymentRuntime({config}),onSettled,now=Date.now}) {
+ const assertAvailableBalance=async(order,ownerId)=>{
+  if(order.quote?.offerId!==PILOT_PROFILE)return;
+  let balance;
+  try{balance=BigInt(await runtime.balance(ownerId.startsWith('stellar:testnet:')?ownerId.slice(16):ownerId));if(balance<0n)throw Error();}
+  catch{throw new AdsError(503,'balance_unavailable','No se pudo confirmar el saldo disponible de USDC de prueba.');}
+  if(balance<BigInt(order.amount))throw new AdsError(409,'insufficient_balance','Saldo insuficiente: esta compra requiere 5 USDC de prueba.',{balanceUnits:balance.toString(),requiredUnits:String(order.amount)});
+ };
  const requirementsFor = order => {
   if(config.network!=='stellar:testnet'||!config.asset||!config.issuer||!config.payTo||order.pay_to!==config.payTo) fail(503,'payments_not_configured','Compras deshabilitadas: falta configuración de pagos.');
   if(!/^\d+$/.test(String(order.amount))||BigInt(order.amount)<=0n) fail(409,'invalid_quote','La cotización no tiene importe válido.');
@@ -63,11 +71,13 @@ export function createPaymentService({db,config,runtime=createStellarPaymentRunt
    if(!held.length)fail(409,'reservation_expired','The reservation expired; obtain a new quote before signing.');
    if(Array.isArray(order.quote?.placements)&&order.quote.requiredUnits&&order.quote.placements.some(id=>held.filter(r=>r.placement_id===id).reduce((n,r)=>n+BigInt(r.delivery_units??0),0n)<BigInt(order.quote.requiredUnits)))fail(409,'reservation_incomplete','Reserve all selected placements before authorizing a payment.');
   }
+  if(!payload)await assertAvailableBalance(order,ownerId);
   if(!payload) return {status:402,paymentRequired:{x402Version:2,resource:{url:`${config.origin}/api/ads/orders/${orderId}/pay`,description:'Publicidad digital de prueba: recepción durable tras liquidación.',mimeType:'application/json'},accepts:[requirements]}};
   if(typeof idempotencyKey!=='string'||idempotencyKey.length<8||idempotencyKey.length>200) fail(400,'idempotency_required','Incluye una clave idempotente estable.');
   const payloadHash=sha256(canonical(payload));
   const prior=(await db.query('SELECT * FROM ads_payment_attempts WHERE order_id=$1 AND idempotency_key=$2',[orderId,idempotencyKey])).rows[0];
   if(prior){if(prior.payload_hash!==payloadHash) fail(409,'idempotency_conflict','La clave corresponde a otro contenido.');return prior.state==='SETTLED'?receipt(order,prior):reconcile(prior.id);}
+  await assertAvailableBalance(order,ownerId);
   const decoded=await runtime.decodePayment(payload,{...requirements,payer:ownerId.startsWith('stellar:testnet:')?ownerId.slice(16):ownerId,now:now()}),startLedger=await runtime.latestLedger();
   if(!decoded?.payer||!decoded.authHash||decoded.nonce===undefined||!Number.isSafeInteger(Number(decoded.expiresLedger))||Number(decoded.expiresLedger)<Number(startLedger)) fail(422,'authorization_invalid','Autorización inválida o vencida.');
   const attempt=await db.transaction(async tx=>{
