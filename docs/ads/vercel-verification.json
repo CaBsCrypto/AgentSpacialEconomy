@@ -1,0 +1,130 @@
+{
+  "observedAt": "2026-10-26T06:04:34.341Z",
+  "branch": "feature/ads-3d-ar-x402",
+  "codeCommit": "c9020d4",
+  "deployment": {
+    "id": "dpl_B9mueF8s5saT4UFZwn9pJ6XnfFmH",
+    "url": "https://one16-passport-asdp2n18f-cabscryptocontacto-6028s-projects.vercel.app",
+    "state": "READY",
+    "target": "protected preview"
+  },
+  "production": {
+    "changed": false,
+    "mainCommit": "a03aeaf766c009e7e409e8efc302916bdf9388e2",
+    "deploymentId": "dpl_8tymuDNDNvbdbYMuZiN9UPmUgqDQ"
+  },
+  "tests": {
+    "root": {
+      "total": 634,
+      "passed": 632,
+      "failed": 0,
+      "skipped": 2,
+      "skipReasons": [
+        "Optional wallet RPC smoke",
+        "Linux browser test on Windows"
+      ]
+    },
+    "agent": {
+      "passed": 36,
+      "failed": 0
+    },
+    "contract": {
+      "passed": 9,
+      "failed": 0
+    },
+    "build": "PASS",
+    "stellarSecretHistoryMatches": 0
+  },
+  "database": {
+    "migrations": 12,
+    "last": "012-ads-compatibility.sql"
+  },
+  "offer": {
+    "id": "main-stage-test-5m",
+    "offerVersion": 2,
+    "placementId": "main_stage_screen",
+    "plan": "PASSES",
+    "units": 5,
+    "durationMs": 300000,
+    "passMs": 60000,
+    "requiredUnits": 5,
+    "unitAmount": "10000000",
+    "amountUnits": "50000000",
+    "designAmount": "0",
+    "label": "5 USDC de prueba · 5 entregas de 1 minuto"
+  },
+  "checkout": {
+    "enabled": false,
+    "missing": [
+      "walletCompatibilityVerified",
+      "ADS_CHECKOUT_ENABLED"
+    ]
+  },
+  "runtime": {
+    "bundle": {
+      "check": "bundle",
+      "ok": true,
+      "directory": "node_modules/@sparticuz/chromium/bin",
+      "readable": true,
+      "files": [
+        {
+          "name": "chromium.br",
+          "readable": true
+        },
+        {
+          "name": "al2023.tar.br",
+          "readable": true
+        },
+        {
+          "name": "fonts.tar.br",
+          "readable": true
+        },
+        {
+          "name": "swiftshader.tar.br",
+          "readable": true
+        }
+      ]
+    },
+    "renderer": {
+      "check": "renderer",
+      "ok": false,
+      "stage": "module-load",
+      "error": {
+        "code": "MODULE_NOT_FOUND",
+        "name": "Error",
+        "message": "Cannot find module '/var/task/node_modules/playwright-core-vercel/browsers.json' Require stack: - /var/task/node_modules/playwright-core-vercel/lib/coreBundle.js"
+      },
+      "bundle": {
+        "directory": "node_modules/@sparticuz/chromium/bin",
+        "readable": true,
+        "files": [
+          {
+            "name": "chromium.br",
+            "readable": true
+          },
+          {
+            "name": "al2023.tar.br",
+            "readable": true
+          },
+          {
+            "name": "fonts.tar.br",
+            "readable": true
+          },
+          {
+            "name": "swiftshader.tar.br",
+            "readable": true
+          }
+        ]
+      }
+    },
+    "rendererAttempts": 2,
+    "decision": "STOPPED_AFTER_SECOND_RENDERER_FAILURE"
+  },
+  "advertiserIntegration": {
+    "humanPasskeyProbePerformed": false,
+    "settledUsdcPurchases": 0,
+    "actualAdDeliveryValidated": false
+  },
+  "receiverEvidence": "testnet-registry/project-receiver.json",
+  "nextRequiredValidation": "Include the missing playwright-core-vercel/browsers.json in the function bundle, then resume runtime validation before any checkout activation."
+}
