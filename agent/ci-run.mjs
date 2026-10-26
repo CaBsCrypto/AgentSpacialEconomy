@@ -1,3 +1,5 @@
+import {requireSettlementReport} from './lib/verification.mjs';
+import {Server as RpcServer} from '@stellar/stellar-sdk/rpc';
 // One-shot testnet run for CI (GitHub Actions) or any machine with internet access.
 //   1. ephemeral service (payee), agent and operator-treasury accounts (or a faucet-funded
 //      agent from AGENT_SECRET_KEY, which skips the treasury)
@@ -169,4 +171,13 @@ const run = spawnSync(process.execPath, ["run.mjs", "--mandate", "mandates/main-
   env: childEnv,
 });
 services.kill();
-process.exit(run.status ?? 1);
+let status=run.status??1;
+if(status===0){
+ try{
+  const report=JSON.parse(await readFile(new URL('../dist/state/ledger.json',import.meta.url),'utf8'));
+  const receipts=requireSettlementReport(report,{runId});
+  const rpc=new RpcServer('https://soroban-testnet.stellar.org',{timeout:12000});
+  for(const row of receipts)if((await rpc.getTransaction(row.tx)).status!=='SUCCESS')throw Error('Settlement is not confirmed on Stellar Testnet.');
+ }catch{console.error('Live CI requires every expected fresh settlement and successful Stellar RPC confirmation; report/HTTP success alone is insufficient.');status=1;}
+}
+process.exit(status);
