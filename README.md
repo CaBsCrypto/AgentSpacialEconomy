@@ -51,6 +51,8 @@ Operator mandate (objective, budget, per-call cap, allowed services)
 | Wallets | Operator treasury, venue agent (payer, server-side signer) and service wallet (payee), with testnet USDC trustlines. Payment keys stay on the server. |
 | APIs | Horizon testnet (accounts, trustlines, DEX path payment used to fund the treasury with testnet USDC), Friendbot, Soroban RPC (x402 client), facilitator `/supported`, `/verify`, `/settle` |
 | Contracts | No custom contracts; payments and the allowance use the USDC SAC (`approve`, `transfer_from`, `allowance`). Per-day caps in a smart account (OpenZeppelin policy or Nido session keys) are in the backlog |
+| Income | `POST /paid/sponsor-slot` (0.10 testnet USDC) is paid over x402 **to the venue treasury**. The treasury then re-approves the venue agent what is left plus that income (SEP-41 `approve` sets the allowance), so a sponsor refills the agent's capped budget. Income rows never change the agents' budget math |
+| Live reads | The dashboard looks up every recorded transaction on Horizon testnet and reads the treasury and agent USDC balances when it loads (read-only, no keys); it falls back to the recorded values if Horizon is unreachable |
 | Spend control | **On-chain:** the operator's treasury approves the venue agent a SEP-41 allowance on the USDC SAC (amount = mandate budget, approved with a roughly 24-hour ledger window); the agent draws its allocations with `transfer_from`; an excessive draw is refused during simulation, with nothing submitted. **Off-chain, before signing:** `agent/ledger.mjs` — allow-list, per-call cap, approval threshold, allocations, reserve → settle/release, idempotent reruns |
 
 ## On-chain evidence (Stellar testnet)
@@ -68,6 +70,20 @@ Recorded run, 26 Oct 2026 01:23 UTC ([Actions run 40253952685](https://github.co
 | `premium-render`, 0.25 USDC | refused by the agent before signing (above the 0.10 per-call cap) |
 
 Treasury [GDNNKS…WCZK](https://stellar.expert/explorer/testnet/account/GDNNKSLTL43WDLRXLRU6HWW6Q6GGL4BWU45WZF5AG3ME4WHPTK6JWCZK) · agent [GCK6CK…6BF6](https://stellar.expert/explorer/testnet/account/GCK6CKDDDRVGZNHE2LMJSF6YQKJDQVGPCE7TXOWNNGWUSHTRYXPK6BF6) (0.20 drawn − 0.06 paid = 0.14 USDC left) · service [GAL47K…VCRS](https://stellar.expert/explorer/testnet/account/GAL47K4ZRDYUBK3KNMHKVPCALODUU5CRAQOPTGZWK54TWSH267WBVCRS) (received exactly 0.06 USDC). x402 fees were paid by the facilitator. An earlier run without the allowance (25 Oct 23:22 UTC, [Actions run 40244382971](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40244382971)) settled the same two payments.
+
+### Income extension: a sponsor refills the agent's budget (run 3)
+
+Run of 26 Oct 2026 03:21 UTC ([Actions run 40263552583](https://github.com/CaBsCrypto/AgentSpacialEconomy/actions/runs/40263552583)), same mandate and the same seven steps as above, then the income side. Balances checked on Horizon after the run.
+
+| What | Transaction |
+| --- | --- |
+| Treasury **approves** the venue agent 0.50 USDC until ledger 5409535 | [9bcab3db…](https://stellar.expert/explorer/testnet/tx/9bcab3db185200309a3d1bb63ef09c128212d68b8418ffaf2a192206f7ffe62d) |
+| Venue agent **draws** its 0.20 USDC allocation (`transfer_from`); a 0.31 draw is then refused in simulation | [7d9edc0a…](https://stellar.expert/explorer/testnet/tx/7d9edc0a7c3cd8e888dcb5d87e418b671bdd2222dbb709c51896031c428ad3fb) |
+| `venue-feed`, 0.01 USDC · `screen-card`, 0.05 USDC (x402); `premium-render` 0.25 blocked before signing | [ebb69bd4…](https://stellar.expert/explorer/testnet/tx/ebb69bd495625e948fdb1ce6f3e1ee8b21eaea343fe77b086bed4849598c667a) · [a5378f62…](https://stellar.expert/explorer/testnet/tx/a5378f6257a5e21c67d9d9f49c248e3af32f5170ba94fabbb2108ccd01387ac0) |
+| A **sponsor pays the venue treasury** 0.10 USDC over x402 for one line on the stage screen (`POST /paid/sponsor-slot`, payTo = treasury) | [821f7b12…](https://stellar.expert/explorer/testnet/tx/821f7b12035a34dc4bae796e91404a4358cade7626c36d0d18aeb9eda441b5e3) |
+| The treasury **re-approves** the venue agent 0.30 + 0.10 = 0.40 USDC (SEP-41 `approve` sets the allowance); read back: 0.40 | [d954f245…](https://stellar.expert/explorer/testnet/tx/d954f245d335089680cd095e07912efb4c9eab5564862bb4a48b74d49ecc7bc9) |
+
+Treasury [GC6FWZ…TOTO](https://stellar.expert/explorer/testnet/account/GC6FWZPKZZ7PVJ3FKOCKA3VSP4HIVKDYB64RXQLQVU6WWT7XA6CITOTO) (−0.20 drawn, +0.10 sponsor) · agent [GAOQEW…H2O2](https://stellar.expert/explorer/testnet/account/GAOQEWK6M5CFFA4NYY77P3D2ZYLOSY6O5JU667GWCVM3DCNFQ7JGH2O2) (0.14 USDC left) · sponsor [GCRS4T…77XW](https://stellar.expert/explorer/testnet/account/GCRS4TEBW5B6PAV235KP34DROX5BC4WHPOGKKMKLBJPCWRBTWN4Q77XW) (−0.10) · service [GDSRUN…CV5G](https://stellar.expert/explorer/testnet/account/GDSRUNKPVMAJ4P6EIKJ6JZQY2HSVLGRT46BYKNDGAFYCEVH4H4BVCV5G) (+0.06). The sponsor is a throwaway testnet wallet named "Demo Sponsor (testnet)", not a real company.
 
 ## Setup, installation and environment variables
 
@@ -97,6 +113,8 @@ No keys or faucet: `node agent/ci-run.mjs` does everything with throwaway accoun
 | `SERVICE_RECIPIENT` | Public `G…` key that receives USDC (needs a USDC trustline) |
 | `AGENT_SECRET_KEY` | Secret `S…` key of the agent wallet (USDC trustline + testnet USDC). Never commit |
 | `SERVICES_URL`, `SERVICES_PORT` | Where the paid services run (default `http://localhost:3001`) |
+| `TREASURY_PUBLIC_KEY` | Public `G…` key of the operator treasury. Enables the SEP-41 draw in the loop and the sponsor slot, which pays this account; without it `/paid/sponsor-slot` answers 503 |
+| `SPONSOR_SECRET_KEY` | Only for `node agent/sponsor.mjs`: secret `S…` key of a separate testnet wallet with testnet USDC. `ci-run.mjs` creates a throwaway one. Never commit |
 
 ## Demo instructions
 

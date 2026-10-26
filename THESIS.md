@@ -29,6 +29,7 @@ This prototype tests one mechanism for that digital layer: an operator gives age
 | --- | --- |
 | Agents pay per call for data and content | **x402 on Stellar**: the agent signs auth entries only; a facilitator assembles, pays fees and settles in USDC. The facilitator pays the fees for those x402 payments. |
 | A ceiling on what the agent can draw from the treasury | **Implemented on testnet:** a SEP-41 allowance on the USDC Stellar Asset Contract, with an amount and ledger expiry. A 0.50 USDC approval and 0.20 USDC draw settled; a further 0.31 USDC draw was refused during simulation, without submission. The agent's ledger separately enforces per-call limits before signing. Per-day smart-account policies remain future work. |
+| Income that refills the budget | **Recorded on testnet (run 3):** a sponsor pays the venue treasury over x402 for a stage-screen line; the treasury re-approves the agent's SEP-41 allowance by that income. |
 | Money that matches the receipt | Every settled call has a testnet transaction hash the operator can open in an explorer. |
 | An audience that already has an event identity | **Stellar Passport** (a HackMeridian partner) already turns attendance into an on-chain profile. Future, opt-in layer; not part of this MVP. |
 
