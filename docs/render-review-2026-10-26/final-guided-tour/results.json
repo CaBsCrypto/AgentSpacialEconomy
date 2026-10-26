@@ -1,0 +1,87 @@
+{
+  "branch": "codex/render-textures-ui",
+  "baseCommit": "349175e",
+  "model": {
+    "bytes": 10793184,
+    "gzipBytes": 4195606,
+    "gzipBudgetBytes": 5242880,
+    "sha256": "56244c7a01b6641ad6934d0409459a7f63c841ac003d3b2c5d630f50f1a71e7e",
+    "embeddedImages": 32
+  },
+  "palta": {
+    "bytes": 1874556,
+    "sha256": "54860f9c0b90b519a60bfbf42a6f79125f4c10fe19ea4c0abe341f8c83333bbd",
+    "pedestalScale": 0.875,
+    "fruitScale": 1.08
+  },
+  "tests": {
+    "frontend": {
+      "passed": 446,
+      "skipped": 1,
+      "failed": 0
+    },
+    "agent": {
+      "passed": 34,
+      "failed": 0
+    },
+    "ui": {
+      "passed": 5,
+      "failed": 0
+    },
+    "flow": {
+      "passed": 20,
+      "failed": 0
+    },
+    "map": {
+      "passed": 7,
+      "failed": 0
+    },
+    "entry": {
+      "passed": 37,
+      "failed": 0
+    }
+  },
+  "render": {
+    "before": {
+      "firstFrameMs": 2678.1,
+      "medianFrameMs": 16.7,
+      "views": 42,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "errors": [],
+      "missing": []
+    },
+    "after": {
+      "firstFrameMs": 2338.7,
+      "medianFrameMs": 16.7,
+      "views": 42,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "errors": [],
+      "missing": []
+    }
+  },
+  "viewports": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      1440,
+      900
+    ]
+  ],
+  "visualReview": {
+    "companyFacesPassed": 8,
+    "deskWordmarksPassed": 8,
+    "numericReferencesVisible": 0,
+    "blockedFindings": 0
+  },
+  "verificationScope": "Local file-backed HTTP with real GPU. Tour uses real wallet controller/panel and read-only restored-provider fixture: no passkeys, signatures or wallet POST. Real Passport iframe rendered and emitted first frame. Live deployment verification follows separately."
+}

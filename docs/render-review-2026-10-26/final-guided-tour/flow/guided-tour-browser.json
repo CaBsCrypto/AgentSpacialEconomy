@@ -1,0 +1,701 @@
+{
+  "mode": "full-flow",
+  "fixture": "Original local dist + route-only lexical instrumentation. Real wallet controller and panel; restored provider fixture, no signing or POST. Real GPU Passport iframe first frame is delayed, never fabricated.",
+  "hardwareRequired": true,
+  "playwrightModule": "C:/Users/cabs_/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright",
+  "executable": "C:/Users/cabs_/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe",
+  "checks": [
+    {
+      "name": "normal: entry uses one luminous route and maps have no numeric pins",
+      "pass": true,
+      "details": {
+        "pointCount": 66
+      }
+    },
+    {
+      "name": "normal: generic wallet Continue and close never unlock a restored funded wallet",
+      "pass": true,
+      "details": [
+        {
+          "type": "one16-wallet-open",
+          "source": "wallet",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-continue",
+          "source": "wallet",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-close",
+          "source": "wallet",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-open",
+          "source": "totem",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-close",
+          "source": "totem",
+          "status": "ready"
+        }
+      ]
+    },
+    {
+      "name": "normal: error totem Continue remains entry",
+      "pass": true,
+      "details": {
+        "status": "error",
+        "balance": "1000000000"
+      }
+    },
+    {
+      "name": "normal: pending totem Continue remains entry",
+      "pass": true,
+      "details": {
+        "status": "pending",
+        "balance": "0"
+      }
+    },
+    {
+      "name": "normal: zero totem Continue remains entry",
+      "pass": true,
+      "details": {
+        "status": "connected",
+        "balance": "0"
+      }
+    },
+    {
+      "name": "normal: explicit funded totem Continue replaces entry with shared trunk and two branches",
+      "pass": true,
+      "details": {
+        "ids": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          "Stellar Passport",
+          "DeFindex · Soroswap"
+        ]
+      }
+    },
+    {
+      "name": "normal: Passport requires a real iframe GPU frame before completing",
+      "pass": true,
+      "details": {
+        "firstFrames": 1,
+        "held": true,
+        "mode": "inspect",
+        "hasView": true,
+        "calls": 15,
+        "canvasCount": 1
+      }
+    },
+    {
+      "name": "normal: scene rebuild preserves identity and first destination",
+      "pass": true,
+      "details": {
+        "beforeScene": "bf9c2c5f-3502-4ba5-bd1d-72291d34f67a",
+        "afterScene": "7a3e9523-b41f-4227-8f6f-42c75f2079b9"
+      }
+    },
+    {
+      "name": "normal: proximity, drag and two-finger gestures do not complete Palta",
+      "pass": true
+    },
+    {
+      "name": "normal: native Palta tap completes Passport-first order and removes routes",
+      "pass": true,
+      "details": {
+        "phase": "completed",
+        "identity": {
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "fingerprint": "guided-tour-gpu-fixture-v1"
+        },
+        "milestones": {
+          "activated": true,
+          "passport": true,
+          "palta": true
+        }
+      }
+    },
+    {
+      "name": "normal: reset preserves wallet and requires another explicit totem Continue",
+      "pass": true
+    },
+    {
+      "name": "normal: hidden Palta animation cannot complete until visible again",
+      "pass": true
+    },
+    {
+      "name": "normal: Passport after Palta completes the reverse order",
+      "pass": true,
+      "details": {
+        "firstFrames": 1,
+        "held": true,
+        "mode": "inspect",
+        "hasView": true,
+        "calls": 15,
+        "canvasCount": 1
+      }
+    },
+    {
+      "name": "normal: reload restores completed milestones only after verified matching wallet",
+      "pass": true,
+      "details": {
+        "phase": "completed",
+        "identity": {
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "fingerprint": "guided-tour-gpu-fixture-v1"
+        },
+        "milestones": {
+          "activated": true,
+          "passport": true,
+          "palta": true
+        }
+      }
+    },
+    {
+      "name": "normal: no signing, faucet POST, runtime exceptions or missing local resources",
+      "pass": true,
+      "details": {
+        "restores": 1,
+        "reads": 1,
+        "requests": 2
+      }
+    },
+    {
+      "name": "reduced: entry uses one luminous route and maps have no numeric pins",
+      "pass": true,
+      "details": {
+        "pointCount": 66
+      }
+    },
+    {
+      "name": "reduced: explicit funded totem Continue replaces entry with shared trunk and two branches",
+      "pass": true,
+      "details": {
+        "ids": [
+          "trunk",
+          "passport",
+          "palta"
+        ],
+        "labels": [
+          "Stellar Passport",
+          "DeFindex · Soroswap"
+        ]
+      }
+    },
+    {
+      "name": "reduced: luminous dots and open Palta transforms remain static",
+      "pass": true
+    },
+    {
+      "name": "reduced: accessible Enter opens Palta and actual Passport first frame completes",
+      "pass": true
+    },
+    {
+      "name": "reduced: no signing, faucet POST, runtime exceptions or missing local resources",
+      "pass": true,
+      "details": {
+        "restores": 1,
+        "reads": 2,
+        "requests": 3
+      }
+    }
+  ],
+  "contexts": [
+    {
+      "label": "normal",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "hardwareAccelerated": true,
+      "initial": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 25,
+          "yaw": 0,
+          "pitch": 0.14,
+          "mode": "walk"
+        },
+        "sceneId": "bf9c2c5f-3502-4ba5-bd1d-72291d34f67a",
+        "tour": {
+          "phase": "entry",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": false,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 7
+          },
+          "pendingDeployment": false,
+          "deployed": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [
+          {
+            "id": "entry",
+            "points": 66,
+            "dimmed": false
+          }
+        ],
+        "routeVisible": true,
+        "pointCount": 66,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [
+          {
+            "id": "entry",
+            "visited": "false"
+          }
+        ],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Sigue los puntos luminosos hasta el tótem · USDC de prueba",
+        "fixture": {
+          "mode": "funded",
+          "reads": 1,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 7
+            },
+            "pendingDeployment": false,
+            "deployed": true
+          }
+        }
+      },
+      "final": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 25,
+          "yaw": 0,
+          "pitch": 0.14,
+          "mode": "walk"
+        },
+        "sceneId": "9eda909b-810f-4e54-8297-1d0ab80c79f6",
+        "tour": {
+          "phase": "completed",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": true,
+            "palta": true
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 4
+          },
+          "pendingDeployment": false,
+          "deployed": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [],
+        "routeVisible": false,
+        "pointCount": 0,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Recorrido completado",
+        "fixture": {
+          "mode": "funded",
+          "reads": 1,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 4
+            },
+            "pendingDeployment": false,
+            "deployed": true
+          }
+        }
+      },
+      "errors": [],
+      "missing": [],
+      "externalBlocked": [
+        "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      ],
+      "walletApiRequests": [],
+      "events": []
+    },
+    {
+      "label": "reduced",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "hardwareAccelerated": true,
+      "initial": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 0,
+          "z": 25,
+          "yaw": 0,
+          "pitch": 0.14,
+          "mode": "walk"
+        },
+        "sceneId": "0018c2f0-b600-45ef-bf20-ccffc5d377b4",
+        "tour": {
+          "phase": "entry",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": false,
+            "passport": false,
+            "palta": false
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 7
+          },
+          "pendingDeployment": false,
+          "deployed": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [
+          {
+            "id": "entry",
+            "points": 66,
+            "dimmed": false
+          }
+        ],
+        "routeVisible": true,
+        "pointCount": 66,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [
+          {
+            "id": "entry",
+            "visited": "false"
+          }
+        ],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Sigue los puntos luminosos hasta el tótem · USDC de prueba",
+        "fixture": {
+          "mode": "funded",
+          "reads": 1,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 7
+            },
+            "pendingDeployment": false,
+            "deployed": true
+          }
+        }
+      },
+      "final": {
+        "ready": "ready",
+        "active": true,
+        "mode": "walk",
+        "pose": {
+          "x": 4.1,
+          "z": -29.9,
+          "yaw": 3.141592653589793,
+          "pitch": -0.2,
+          "mode": "walk"
+        },
+        "sceneId": "0018c2f0-b600-45ef-bf20-ccffc5d377b4",
+        "tour": {
+          "phase": "completed",
+          "identity": {
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "fingerprint": "guided-tour-gpu-fixture-v1"
+          },
+          "milestones": {
+            "activated": true,
+            "passport": true,
+            "palta": true
+          }
+        },
+        "wallet": {
+          "status": "ready",
+          "busy": false,
+          "prepared": true,
+          "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+          "balanceUnits": "1000000000",
+          "balance": "100",
+          "receipt": null,
+          "error": null,
+          "requiresAction": false,
+          "config": {
+            "enabled": true,
+            "configured": true,
+            "networkPassphrase": "Test SDF Network ; September 2015",
+            "configFingerprint": "guided-tour-gpu-fixture-v1",
+            "origin": "http://one16.test",
+            "rpId": "one16.test"
+          },
+          "availability": {
+            "available": true
+          },
+          "timings": {
+            "prepare": 7
+          },
+          "pendingDeployment": false,
+          "deployed": true,
+          "configurationError": null
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 2060 (0x00001F15) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "routes": [],
+        "routeVisible": false,
+        "pointCount": 0,
+        "paltaOpen": false,
+        "paltaReady": true,
+        "mapRoutes": [],
+        "numericMapText": [],
+        "numericFloorGroups": 0,
+        "text": "Recorrido completado",
+        "fixture": {
+          "mode": "funded",
+          "reads": 2,
+          "restores": 1,
+          "signatures": 0,
+          "requests": [
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/faucet",
+              "method": "GET"
+            },
+            {
+              "url": "/api/wallet/config",
+              "method": "GET"
+            }
+          ],
+          "state": {
+            "status": "ready",
+            "busy": false,
+            "prepared": true,
+            "address": "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "balanceUnits": "1000000000",
+            "balance": "100",
+            "receipt": null,
+            "error": null,
+            "requiresAction": false,
+            "config": {
+              "enabled": true,
+              "configured": true,
+              "networkPassphrase": "Test SDF Network ; September 2015",
+              "configFingerprint": "guided-tour-gpu-fixture-v1",
+              "origin": "http://one16.test",
+              "rpId": "one16.test"
+            },
+            "availability": {
+              "available": true
+            },
+            "timings": {
+              "prepare": 7
+            },
+            "pendingDeployment": false,
+            "deployed": true,
+            "configurationError": null
+          }
+        }
+      },
+      "errors": [],
+      "missing": [],
+      "externalBlocked": [
+        "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      ],
+      "walletApiRequests": [],
+      "events": [
+        {
+          "type": "one16-wallet-open",
+          "source": "totem",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-continue",
+          "source": "totem",
+          "status": "ready"
+        },
+        {
+          "type": "one16-wallet-close",
+          "source": "totem",
+          "status": "ready"
+        }
+      ]
+    }
+  ],
+  "pass": true
+}
