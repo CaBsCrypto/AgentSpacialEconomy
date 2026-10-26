@@ -107,13 +107,14 @@
       "scheme": "exact",
       "areFeesSponsored": true
     },
-    "secondProviderAuthorization": "WAITING_HUMAN",
+    "secondProviderAuthorization": "CHALLENGE_EXPIRED_WITHOUT_SIGNATURE_OR_VERIFY; REQUIRES_FRESH_HUMAN_ACTION",
     "rootTests": {
       "passed": 704,
       "failed": 0,
       "skipped": 2
     },
     "newPilotSettlements": 0,
-    "goPublic": false
+    "goPublic": false,
+    "lastObservedAt": "2026-10-26T08:29:06.611937+00:00"
   }
 }
