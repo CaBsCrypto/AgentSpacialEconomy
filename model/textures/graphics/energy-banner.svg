@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="896" viewBox="0 0 1536 896">
+<rect width="100%" height="100%" fill="#171c1c"/>
+<rect x="0" y="0" width="245" height="896" fill="#f1d41b" stroke="none" stroke-width="1"/>
+<rect x="1291" y="0" width="245" height="896" fill="#f1d41b" stroke="none" stroke-width="1"/>
+<text x="459" y="196.192" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="206.7">COME</text>
+<text x="465" y="427.696" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="206.7">MOVE</text>
+<text x="505" y="659.2" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="206.7">WITH</text>
+<text x="625" y="890.704" fill="#f1d41b" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="206.7">US</text>
+<g transform="translate(210,155) rotate(90)">
+<rect width="100%" height="100%" fill="#f1d41b"/>
+<text x="2.5" y="121.38" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="77">Energy Corner</text>
+</g>
+<polygon points="20,30.6 41.2,42.896 62.4,30.6 62.4,38.656 41.2,51.376 20,38.656" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="20,42.896 33.568,50.952 20,59.856" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="62.4,42.896 48.832,50.952 62.4,59.856" fill="#171c1c" stroke="none" stroke-width="1"/>
+<text x="70.35" y="43.8288" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="22.26">Hack</text>
+<text x="70.35" y="68.76" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="22.26">Meridian</text>
+<text x="23" y="788.64" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="53">Made to</text>
+<text x="55.5" y="848" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="53">Move</text>
+<g transform="translate(1501,155) rotate(90)">
+<rect width="100%" height="100%" fill="#f1d41b"/>
+<text x="2.5" y="121.38" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="77">Energy Corner</text>
+</g>
+<polygon points="1311,30.6 1332.2,42.896 1353.4,30.6 1353.4,38.656 1332.2,51.376 1311,38.656" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1311,42.896 1324.57,50.952 1311,59.856" fill="#171c1c" stroke="none" stroke-width="1"/>
+<polygon points="1353.4,42.896 1339.83,50.952 1353.4,59.856" fill="#171c1c" stroke="none" stroke-width="1"/>
+<text x="1361.35" y="43.8288" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="22.26">Hack</text>
+<text x="1361.35" y="68.76" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="22.26">Meridian</text>
+<text x="1314" y="788.64" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="53">Made to</text>
+<text x="1346.5" y="848" fill="#171c1c" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="53">Move</text>
+</svg>

@@ -2,7 +2,8 @@
 Blender Z up; audience/front is negative Y; no attendee or footage textures.
 """
 import bpy, math
-from mathutils import Vector, Matrix
+from mathutils import Vector
+from appearance import graphic_plane
 
 def build_stage(origin=(0,0,0), width=8, depth=3.4):
     before=set(bpy.data.objects)
@@ -19,7 +20,7 @@ def build_stage(origin=(0,0,0), width=8, depth=3.4):
     blue=mat('Stage • illustrated flank blue',(.09,.25,.46),0,.8)
     silver=mat('Stage • aluminium',(.59,.63,.66),.8,.3)
     pale=mat('Stage • pale motif',(.82,.84,.72),0,.7)
-    glow=mat('Stage • warm uplight',(.8,.9,1),0,.25,2)
+    glow=mat('Stage • green lens',(.38,1,.018),0,.24,2.5)
     def box(name,loc,size,m,bevel=0):
         bpy.ops.mesh.primitive_cube_add(size=1,location=loc);o=bpy.context.object;o.name=name;o.dimensions=size;bpy.ops.object.transform_apply(location=False,rotation=False,scale=True);o.data.materials.append(m)
         if bevel:
@@ -35,23 +36,10 @@ def build_stage(origin=(0,0,0), width=8, depth=3.4):
     box('Platform apron seam',(0,-.007,h*.38),(width,.016,.018),charcoal)
     box('Yellow event backdrop',(flank/2,back,2.17), (width-flank,.07,3.8),yellow,.01)
     box('Illustrated side panel',(-width/2+flank/2,back-.01,2.17),(flank,.075,3.8),blue,.01)
-    text('HackMeridian identity','Hack\nMeridian',(flank/2,back-.05,2.26),.5,charcoal)
-    text('Stellar identity','STELLAR',(flank/2,back-.052,1.52),.14,charcoal)
-    # Observed repeating backdrop marks, represented only by truthful event name,
-    # never invented sponsor logos or blurry extracted personal information.
-    for row in [0,1,2,3]:
-        z=.65+row*.91
-        for col in range(5):
-            x=-width/2+flank+.45+col*(width-flank-.9)/4
-            if abs(x-flank/2)<1.3 and 1.3<z<2.9:continue
-            text('Small event-name repeat','HackMeridian',(x,back-.052,z),.085,charcoal)
-    # Abstract architectural line pattern inspired by visible blue/yellow flank;
-    # intentionally not a claim to reproduce the original illustration artwork.
-    left=-width/2
-    for k in range(6):
-        z=.42+k*.59
-        for a,b in [((left+.08,back-.056,z),(left+flank-.08,back-.056,z)),((left+.1,back-.056,z),(left+flank*.65,back-.056,z+.43)),((left+flank*.65,back-.056,z+.43),(left+flank-.08,back-.056,z+.12))]:rod('Flank abstract yellow strokes',a,b,.018,yellow,6)
-        rod('Flank architectural pale stroke',(left+flank*.2,back-.06,z+.08),(left+flank*.2,back-.06,z+.42),.015,pale,6)
+    # Video 022050141: image-backed event repeat and Lisbon/tram illustration.
+    # Six millimeters forward of the solid backing prevents coplanar z-fighting.
+    graphic_plane('Stage event graphic','stage-backdrop',(flank/2,back-.041,2.17),width-flank,3.8)
+    graphic_plane('Stage illustrated graphic','stage-flank',(-width/2+flank/2,back-.06,2.17),flank,3.8)
     # Square-section lighting trusses with four chords and diagonal webbing.
     tx=width/2+.12;ty=back;g=.22
     for x in [-tx,tx]:
@@ -66,18 +54,42 @@ def build_stage(origin=(0,0,0), width=8, depth=3.4):
         for i in range(n):
             x=-tx+i*2*tx/n;nx=-tx+(i+1)*2*tx/n
             rod('Top truss diagonal',(x,ty+dy,top-g/2),(nx,ty+dy,top+g/2),.012,silver)
-    for i in range(7):
-        x=-width*.43+i*width*.86/6
-        box('Uplight base',(x,back-.4,h+.055),(.19,.21,.1),charcoal,.018)
-        a=(x,back-.38,h+.14);b=(x,back-.31,h+.23)
-        rod('Uplight barrel',a,b,.075,charcoal,12);rod('Uplight lens',b,(x,back-.305,h+.235),.064,glow,12)
-    # Tall black event banner observed beside stage approach.
+    # Four green moving heads are clearly visible in the new reference.
+    # Smaller unlit PAR housings sit between them; counts remain estimated.
+    for i,ratio in enumerate([-.43,-.145,.18,.43]):
+        x=width*ratio
+        box('Green moving head base '+str(i+1),(x,back-.44,h+.065),(.31,.26,.13),charcoal,.025)
+        for dx in [-.12,.12]:
+            rod('Moving head yoke',(x+dx,back-.44,h+.12),(x+dx,back-.44,h+.30),.028,charcoal)
+        a=(x,back-.40,h+.25);b=(x,back-.49,h+.40)
+        rod('Moving green head barrel',a,b,.12,charcoal,16)
+        rod('Green stage lens',b,(x,back-.494,h+.407),.105,glow,16)
+    for ratio in [-.31,-.03,.07,.31]:
+        x=width*ratio
+        box('Small PAR foot',(x,back-.40,h+.025),(.19,.16,.05),charcoal,.012)
+        rod('Small dark PAR housing',(x,back-.39,h+.09),(x,back-.43,h+.19),.077,charcoal,12)
+    # Matching tall Made to Move towers frame both sides of the stage.
+    for side in [-1,1]:
+        bx=side*(width/2+.66)
+        box('Move banner weighted base',(bx,.55,.045),(.8,.6,.09),charcoal,.018)
+        box('Move banner left' if side<0 else 'Move banner right',(bx,.65,1.95),(.74,.05,3.8),charcoal,.012)
+        graphic_plane('Made to Move tower graphic','move-banner',(bx,.618,1.95),.74,3.8)
+    # Transparent lectern at audience-left, as seen in the new stage clip.
+    acrylic=mat('Stage • clear acrylic',(.72,.84,.84),0,.16)
+    shader=acrylic.node_tree.nodes.get('Principled BSDF')
+    shader.inputs['Alpha'].default_value=.28
+    if 'Transmission Weight' in shader.inputs:shader.inputs['Transmission Weight'].default_value=.40
+    acrylic.diffuse_color=(*acrylic.diffuse_color[:3],.28)
+    if hasattr(acrylic,'surface_render_method'):acrylic.surface_render_method='DITHERED'
+    if hasattr(acrylic,'blend_method'):acrylic.blend_method='BLEND'
+    lx=-width*.34;ly=.88
+    box('Lectern foot',(lx,ly,h+.035),(.75,.50,.07),charcoal,.012)
+    for dx in [-.20,.20]:
+        rod('Lectern thin support',(lx+dx,ly,h+.07),(lx+dx,ly,h+1.02),.018,charcoal,8)
+    top_panel=box('Acrylic lectern angled top',(lx,ly,h+1.04),(.78,.53,.018),acrylic,.009)
+    top_panel.rotation_euler.x=-.18
+    # Speaker retained from the earlier observed reconstruction.
     bx=-width/2-.66
-    box('Move banner weighted base',(bx,.55,.045),(.8,.6,.09),charcoal,.018)
-    box('Move banner',(bx,.65,1.95),(.74,.05,3.8),charcoal,.012)
-    move=text('Move banner lettering','Move',(bx,.618,2.15),.55,yellow)
-    move.rotation_euler=(Matrix.Rotation(math.pi/2,4,'X') @ Matrix.Rotation(-math.pi/2,4,'Z')).to_euler()
-    text('Move banner small event','HACKMERIDIAN',(bx,.617,.48),.078,yellow)
     # Loudspeaker visible near banner; recessed grille and slender port seams.
     box('PA loudspeaker cabinet',(bx+.05,-.06,.5),(.55,.42,1),charcoal,.035)
     grille=mat('Stage • speaker grille',(.065,.07,.067),.25,.75)
@@ -86,7 +98,7 @@ def build_stage(origin=(0,0,0), width=8, depth=3.4):
     root=bpy.data.objects.new('HackMeridian stage • estimated dimensions',None);bpy.context.collection.objects.link(root)
     for obj in set(bpy.data.objects)-before:
         if obj!=root:obj.parent=root
-    root.location=origin;root['reference']='Private walkthrough 01:35 and 01:45';root['dimensions_status']='Estimated from video; not field measured';root['estimated_width_m']=width;root['estimated_depth_m']=depth
+    root.location=origin;root['reference']='VID_20261026_022050141.mp4; earlier walkthrough 01:35 and 01:45';root['dimensions_status']='Estimated from video; not field measured';root['estimated_width_m']=width;root['estimated_depth_m']=depth
     return root
 
 if __name__=='__main__':

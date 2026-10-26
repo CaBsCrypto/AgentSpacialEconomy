@@ -1,5 +1,5 @@
 {
-  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m² venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates. Exterior banner and forecourt dimensions estimated. Sections2/3 platform/exteriorstairs removed by user; interior7stairs unchanged.",
+  "scaleStatus": "All local dimensions and inter-zone distances are estimated from imagery; official 3200 m² venue area is not the modeled footprint. Entrance corridor length, width and seven 0.15 m step rises are visual estimates. Exterior banner and forecourt dimensions are estimated; sign text observed in private exterior video. Sections2/3 platform/exteriorstairs removed by user; interiorstairs unchanged. October 26 games, skills, Energy Corner, photobooth, photocall and Content Hub reconstructed from narrated clips; placements and dimensions estimated.",
   "surfaces": [
     {
       "polygon": [
@@ -155,11 +155,11 @@
       "polygon": [
         [
           -0.96,
-          0
+          0.0
         ],
         [
           0.96,
-          0
+          0.0
         ],
         [
           0.96,
@@ -170,7 +170,7 @@
           0.35
         ]
       ],
-      "baseY": 0,
+      "baseY": 0.0,
       "originX": 0,
       "originZ": 0,
       "slopeX": 0,
@@ -522,91 +522,109 @@
     {
       "minX": 9.9,
       "maxX": 10.1,
-      "minZ": -24.7,
-      "maxZ": -11.4
+      "minZ": -12.55,
+      "maxZ": -11.45
+    },
+    {
+      "minX": 9.9,
+      "maxX": 10.1,
+      "minZ": -24.65,
+      "maxZ": -14.75
     },
     {
       "minX": -2.22,
       "maxX": -1.94,
-      "minZ": 6,
-      "maxZ": 32
+      "minZ": 6.0,
+      "maxZ": 32.0
     },
     {
       "minX": 1.94,
       "maxX": 2.22,
-      "minZ": 6,
-      "maxZ": 32
+      "minZ": 6.0,
+      "maxZ": 32.0
     },
     {
-      "minX": -4.9,
-      "maxX": -3.9,
-      "minZ": 4.225,
-      "maxZ": 5.175
+      "minX": -5.44,
+      "maxX": -4.46,
+      "minZ": 2.875,
+      "maxZ": 5.325
     },
     {
-      "minX": -5.59,
-      "maxX": -5.01,
-      "minZ": 3.91,
-      "maxZ": 4.49
+      "minX": -4.905,
+      "maxX": -3.875,
+      "minZ": 2.915,
+      "maxZ": 3.735
     },
     {
-      "minX": -4.9,
-      "maxX": -3.9,
-      "minZ": 2.025,
-      "maxZ": 2.975
+      "minX": -5.44,
+      "maxX": -4.46,
+      "minZ": 0.85,
+      "maxZ": 2.45
     },
     {
-      "minX": -5.59,
-      "maxX": -5.01,
-      "minZ": 1.71,
-      "maxZ": 2.29
+      "minX": -3.58,
+      "maxX": -2.92,
+      "minZ": 4.57,
+      "maxZ": 5.23
     },
     {
-      "minX": 3.9,
-      "maxX": 4.9,
-      "minZ": 4.225,
-      "maxZ": 5.175
+      "minX": -3.58,
+      "maxX": -2.92,
+      "minZ": 1.32,
+      "maxZ": 1.98
     },
     {
-      "minX": 3.21,
-      "maxX": 3.79,
-      "minZ": 3.91,
-      "maxZ": 4.49
+      "minX": 4.46,
+      "maxX": 5.44,
+      "minZ": 2.875,
+      "maxZ": 5.325
     },
     {
-      "minX": 3.9,
-      "maxX": 4.9,
-      "minZ": 2.025,
-      "maxZ": 2.975
+      "minX": 3.875,
+      "maxX": 4.905,
+      "minZ": 4.465,
+      "maxZ": 5.285
     },
     {
-      "minX": 3.21,
-      "maxX": 3.79,
-      "minZ": 1.71,
-      "maxZ": 2.29
+      "minX": 4.46,
+      "maxX": 5.44,
+      "minZ": 0.85,
+      "maxZ": 2.45
     },
     {
-      "minX": -6,
+      "minX": 2.92,
+      "maxX": 3.58,
+      "minZ": 4.57,
+      "maxZ": 5.23
+    },
+    {
+      "minX": 2.92,
+      "maxX": 3.58,
+      "minZ": 1.32,
+      "maxZ": 1.98
+    },
+    {
+      "minX": -6.0,
       "maxX": -1.1,
       "minZ": -0.1,
       "maxZ": 0.1
     },
     {
       "minX": 1.1,
-      "maxX": 6,
+      "maxX": 6.0,
       "minZ": -0.1,
       "maxZ": 0.1
     },
     {
       "minX": -1.1,
       "maxX": -0.98,
-      "minZ": 0,
+      "minZ": 0.0,
       "maxZ": 2.45
     },
     {
       "minX": 0.98,
       "maxX": 1.1,
-      "minZ": 0,
+      "minZ": 0.0,
       "maxZ": 2.45
     },
     {
@@ -662,72 +680,6 @@
       "maxX": 12.75,
       "minZ": -7.45,
       "maxZ": -6.55
-    },
-    {
-      "minX": 12.2,
-      "maxX": 14,
-      "minZ": -28.35,
-      "maxZ": -27.65
-    },
-    {
-      "minX": 12.2,
-      "maxX": 14,
-      "minZ": -31.35,
-      "maxZ": -30.65
-    },
-    {
-      "minX": 12.2,
-      "maxX": 14,
-      "minZ": -34.35,
-      "maxZ": -33.65
-    },
-    {
-      "minX": 7.85,
-      "maxX": 11.15,
-      "minZ": -37.1,
-      "maxZ": -36.9
-    },
-    {
-      "minX": 7.71,
-      "maxX": 8.29,
-      "minZ": -34.99,
-      "maxZ": -34.41
-    },
-    {
-      "minX": 9.71,
-      "maxX": 10.29,
-      "minZ": -34.79,
-      "maxZ": -34.21
-    },
-    {
-      "minX": 11.71,
-      "maxX": 12.29,
-      "minZ": -35.79,
-      "maxZ": -35.21
-    },
-    {
-      "minX": 7.44,
-      "maxX": 8.56,
-      "minZ": -40.6,
-      "maxZ": -39.4
-    },
-    {
-      "minX": 9.44,
-      "maxX": 10.56,
-      "minZ": -41.1,
-      "maxZ": -39.9
-    },
-    {
-      "minX": 11.44,
-      "maxX": 12.56,
-      "minZ": -40.6,
-      "maxZ": -39.4
-    },
-    {
-      "minX": 10.44,
-      "maxX": 11.56,
-      "minZ": -43.6,
-      "maxZ": -42.4
     },
     {
       "minX": -13.2,
@@ -858,14 +810,14 @@
     {
       "minX": -3.95,
       "maxX": -1.55,
-      "minZ": -39.05,
-      "maxZ": -31.55
+      "minZ": -42.05,
+      "maxZ": -34.55
     },
     {
       "minX": 1.55,
       "maxX": 3.95,
-      "minZ": -39.05,
-      "maxZ": -31.55
+      "minZ": -42.05,
+      "maxZ": -34.55
     },
     {
       "minX": -4.5,
@@ -878,6 +830,12 @@
       "maxX": -4.15,
       "minZ": -44.7,
       "maxZ": -42.9
+    },
+    {
+      "minX": 6.4,
+      "maxX": 7.6,
+      "minZ": -4.6,
+      "maxZ": -3.4
     },
     {
       "minX": 2.1,
@@ -904,12 +862,6 @@
       "maxZ": -16.1
     },
     {
-      "minX": 6.4,
-      "maxX": 7.6,
-      "minZ": -4.6,
-      "maxZ": -3.4
-    },
-    {
       "minX": -3.88,
       "maxX": -2.1799999999999997,
       "minZ": 32.15,
@@ -928,76 +880,256 @@
       "maxZ": -2.675
     },
     {
-      "minX": -4.5,
-      "maxX": -1.9000000000000001,
+      "minX": -5.1,
+      "maxX": -2.2,
       "minZ": -27.88,
-      "maxZ": -27.720000000000002
+      "maxZ": -27.72
     },
     {
-      "minX": -4.225,
-      "maxX": -2.1750000000000003,
-      "minZ": -27.05,
-      "maxZ": -26.150000000000002
+      "minX": -4.66,
+      "maxX": -2.64,
+      "minZ": -26.875,
+      "maxZ": -26.125
     },
     {
-      "minX": -4.025,
-      "maxX": -3.475,
-      "minZ": -27.5,
-      "maxZ": -27
+      "minX": -4.435,
+      "maxX": -3.965,
+      "minZ": -27.225,
+      "maxZ": -26.775
     },
     {
-      "minX": -4.5,
-      "maxX": -1.9000000000000001,
-      "minZ": -31.38,
-      "maxZ": -31.220000000000002
+      "minX": -4.66,
+      "maxX": -2.64,
+      "minZ": -30.275,
+      "maxZ": -29.525
     },
     {
-      "minX": -4.225,
-      "maxX": -2.1750000000000003,
-      "minZ": -30.55,
-      "maxZ": -29.650000000000002
+      "minX": -4.435,
+      "maxX": -3.965,
+      "minZ": -29.625,
+      "maxZ": -29.175
     },
     {
-      "minX": -4.025,
-      "maxX": -3.475,
-      "minZ": -31,
-      "maxZ": -30.5
+      "minX": -5.1,
+      "maxX": -2.2,
+      "minZ": -32.08,
+      "maxZ": -31.92
     },
     {
-      "minX": 1.9000000000000001,
-      "maxX": 4.5,
+      "minX": -4.66,
+      "maxX": -2.64,
+      "minZ": -31.075,
+      "maxZ": -30.325
+    },
+    {
+      "minX": -4.435,
+      "maxX": -3.965,
+      "minZ": -31.425,
+      "maxZ": -30.975
+    },
+    {
+      "minX": -4.66,
+      "maxX": -2.64,
+      "minZ": -33.975,
+      "maxZ": -33.225
+    },
+    {
+      "minX": -4.435,
+      "maxX": -3.965,
+      "minZ": -33.325,
+      "maxZ": -32.875
+    },
+    {
+      "minX": 2.2,
+      "maxX": 5.1,
       "minZ": -27.88,
-      "maxZ": -27.720000000000002
+      "maxZ": -27.72
     },
     {
-      "minX": 2.1750000000000003,
-      "maxX": 4.225,
-      "minZ": -27.05,
-      "maxZ": -26.150000000000002
+      "minX": 2.64,
+      "maxX": 4.66,
+      "minZ": -26.875,
+      "maxZ": -26.125
     },
     {
-      "minX": 2.3750000000000004,
-      "maxX": 2.9250000000000003,
-      "minZ": -27.5,
-      "maxZ": -27
+      "minX": 3.965,
+      "maxX": 4.435,
+      "minZ": -27.225,
+      "maxZ": -26.775
     },
     {
-      "minX": 1.9000000000000001,
-      "maxX": 4.5,
-      "minZ": -31.38,
-      "maxZ": -31.220000000000002
+      "minX": 2.64,
+      "maxX": 4.66,
+      "minZ": -30.275,
+      "maxZ": -29.525
     },
     {
-      "minX": 2.1750000000000003,
-      "maxX": 4.225,
-      "minZ": -30.55,
-      "maxZ": -29.650000000000002
+      "minX": 3.965,
+      "maxX": 4.435,
+      "minZ": -29.625,
+      "maxZ": -29.175
     },
     {
-      "minX": 2.3750000000000004,
-      "maxX": 2.9250000000000003,
-      "minZ": -31,
-      "maxZ": -30.5
+      "minX": 2.2,
+      "maxX": 5.1,
+      "minZ": -32.08,
+      "maxZ": -31.92
+    },
+    {
+      "minX": 2.64,
+      "maxX": 4.66,
+      "minZ": -31.075,
+      "maxZ": -30.325
+    },
+    {
+      "minX": 3.965,
+      "maxX": 4.435,
+      "minZ": -31.425,
+      "maxZ": -30.975
+    },
+    {
+      "minX": 2.64,
+      "maxX": 4.66,
+      "minZ": -33.975,
+      "maxZ": -33.225
+    },
+    {
+      "minX": 3.965,
+      "maxX": 4.435,
+      "minZ": -33.325,
+      "maxZ": -32.875
+    },
+    {
+      "minX": -13.325,
+      "maxX": -9.975,
+      "minZ": -10.65,
+      "maxZ": -9.55
+    },
+    {
+      "minX": -12.98,
+      "maxX": -10.32,
+      "minZ": -11.17,
+      "maxZ": -10.93
+    },
+    {
+      "minX": -12.675,
+      "maxX": -10.525,
+      "minZ": -13.74,
+      "maxZ": -12.76
+    },
+    {
+      "minX": -12.255,
+      "maxX": -10.945,
+      "minZ": -14.905,
+      "maxZ": -14.195
+    },
+    {
+      "minX": -14.14,
+      "maxX": -12.96,
+      "minZ": -16.1,
+      "maxZ": -14.9
+    },
+    {
+      "minX": -10.74,
+      "maxX": -9.56,
+      "minZ": -18.25,
+      "maxZ": -17.05
+    },
+    {
+      "minX": -13.03,
+      "maxX": -11.17,
+      "minZ": -17.865,
+      "maxZ": -16.635
+    },
+    {
+      "minX": -14.745,
+      "maxX": -14.495,
+      "minZ": -15.8,
+      "maxZ": -14.0
+    },
+    {
+      "minX": 5.025,
+      "maxX": 6.575,
+      "minZ": -9.91,
+      "maxZ": -9.09
+    },
+    {
+      "minX": 13.645,
+      "maxX": 14.495,
+      "minZ": -29.675,
+      "maxZ": -27.325
+    },
+    {
+      "minX": 11.16,
+      "maxX": 12.14,
+      "minZ": -34.49,
+      "maxZ": -33.51
+    },
+    {
+      "minX": 6.25,
+      "maxX": 14.35,
+      "minZ": -43.24,
+      "maxZ": -43.06
+    },
+    {
+      "minX": 9.71,
+      "maxX": 10.89,
+      "minZ": -41.8,
+      "maxZ": -40.6
+    },
+    {
+      "minX": 7.95,
+      "maxX": 8.65,
+      "minZ": -40.95,
+      "maxZ": -40.25
+    },
+    {
+      "minX": 11.95,
+      "maxX": 12.65,
+      "minZ": -40.95,
+      "maxZ": -40.25
+    },
+    {
+      "minX": 13.385,
+      "maxX": 14.415,
+      "minZ": -18.1,
+      "maxZ": -15.9
+    },
+    {
+      "minX": 11.9,
+      "maxX": 12.5,
+      "minZ": -17.65,
+      "maxZ": -17.05
+    },
+    {
+      "minX": 13.385,
+      "maxX": 14.415,
+      "minZ": -23.1,
+      "maxZ": -20.9
+    },
+    {
+      "minX": 11.9,
+      "maxX": 12.5,
+      "minZ": -22.65,
+      "maxZ": -22.05
+    },
+    {
+      "minX": 11.32,
+      "maxX": 12.68,
+      "minZ": -20.03,
+      "maxZ": -19.27
+    },
+    {
+      "minX": 13.32,
+      "maxX": 14.08,
+      "minZ": -24.355,
+      "maxZ": -23.645
+    },
+    {
+      "minX": 10.53,
+      "maxX": 11.27,
+      "minZ": -21.62,
+      "maxZ": -20.88
     }
   ],
   "bounds": {
@@ -1019,19 +1151,19 @@
       "polygon": [
         [
           -2.2,
-          6
+          6.0
         ],
         [
           2.2,
-          6
+          6.0
         ],
         [
           2.2,
-          32
+          32.0
         ],
         [
           -2.2,
-          32
+          32.0
         ]
       ],
       "view": {
@@ -1046,19 +1178,19 @@
       "polygon": [
         [
           -2.5,
-          -4
+          -4.0
         ],
         [
           2.5,
-          -4
+          -4.0
         ],
         [
           2.5,
-          6
+          6.0
         ],
         [
           -2.5,
-          6
+          6.0
         ]
       ],
       "view": {
@@ -1073,11 +1205,11 @@
       "polygon": [
         [
           -13,
-          -9
+          -7.9
         ],
         [
           -5,
-          -9
+          -7.9
         ],
         [
           -5,
@@ -1099,20 +1231,20 @@
       "label": "Buffet · encuentro",
       "polygon": [
         [
-          -5,
-          -15
+          -4.8,
+          -14.2
         ],
         [
-          5,
-          -15
+          3.3,
+          -14.2
         ],
         [
-          5,
-          -5
+          3.3,
+          -6.5
         ],
         [
-          -5,
-          -5
+          -4.8,
+          -6.5
         ]
       ],
       "view": {
@@ -1123,23 +1255,23 @@
     },
     {
       "id": "river",
-      "label": "Ventanas · sala acristalada",
+      "label": "Ventanas · costado río",
       "polygon": [
         [
-          9.9,
-          -31
+          10.3,
+          -11.3
         ],
         [
-          14.9,
-          -31
+          14.7,
+          -11.3
         ],
         [
-          14.9,
-          -7
+          14.7,
+          -7.4
         ],
         [
-          9.9,
-          -7
+          10.3,
+          -7.4
         ]
       ],
       "view": {
@@ -1150,29 +1282,29 @@
     },
     {
       "id": "photo",
-      "label": "Photo lounge · encuentro",
+      "label": "Photocall · chill zone",
       "polygon": [
         [
-          5.5,
+          6.2,
           -44.5
         ],
         [
-          14.5,
+          14.6,
           -44.5
         ],
         [
-          14.5,
-          -31.5
+          14.6,
+          -37.5
         ],
         [
-          5.5,
-          -31.5
+          6.2,
+          -37.5
         ]
       ],
       "view": {
-        "x": 7,
-        "z": -33,
-        "yaw": -0.5
+        "x": 10,
+        "z": -38,
+        "yaw": 0
       }
     },
     {
@@ -1181,19 +1313,19 @@
       "polygon": [
         [
           -5.5,
-          -49
+          -49.0
         ],
         [
           5.5,
-          -49
+          -49.0
         ],
         [
           5.5,
-          -37
+          -37.0
         ],
         [
           -5.5,
-          -37
+          -37.0
         ]
       ],
       "view": {
@@ -1216,16 +1348,16 @@
         ],
         [
           -5.5,
-          -16.5
+          -19.5
         ],
         [
           -14.5,
-          -16.5
+          -19.5
         ]
       ],
       "view": {
         "x": -6,
-        "z": -19,
+        "z": -21,
         "yaw": 0.5
       }
     },
@@ -1235,24 +1367,24 @@
       "polygon": [
         [
           -5,
-          -40
+          -42
         ],
         [
           5,
-          -40
+          -42
         ],
         [
           5,
-          -31.7
+          -34.15
         ],
         [
           -5,
-          -31.7
+          -34.15
         ]
       ],
       "view": {
         "x": 0,
-        "z": -33,
+        "z": -34.5,
         "yaw": 0
       }
     },
@@ -1261,19 +1393,19 @@
       "label": "Zona central · mesas / builders",
       "polygon": [
         [
-          -6,
+          -6.0,
           -25
         ],
         [
-          6,
+          6.0,
           -25
         ],
         [
-          6,
+          6.0,
           -14.5
         ],
         [
-          -6,
+          -6.0,
           -14.5
         ]
       ],
@@ -1285,7 +1417,7 @@
     },
     {
       "id": "activation",
-      "label": "Wallet · USDC de prueba",
+      "label": "Activación Stellar · concepto Testnet",
       "polygon": [
         [
           5,
@@ -1309,7 +1441,7 @@
         "z": -1.4,
         "yaw": -0.418
       },
-      "status": "Stellar Testnet wallet pilot; physical placement proposed"
+      "status": "Proposed Testnet concept; not installed"
     },
     {
       "id": "exterior",
@@ -1353,11 +1485,11 @@
         ],
         [
           9.5,
-          -1
+          -1.0
         ],
         [
           8,
-          -1
+          -1.0
         ]
       ],
       "view": {
@@ -1369,23 +1501,52 @@
       "status": "Proposed AR demonstration; not an observed installation or account."
     },
     {
-      "id": "stands",
-      "label": "Stands · corredor hacia el escenario",
+      "id": "passport-stand16",
+      "label": "Stellar Passport · stand 16",
       "polygon": [
         [
-          -4.7,
-          -31.6
+          2.4,
+          -29.4
         ],
         [
-          4.7,
-          -31.6
+          4,
+          -29.4
         ],
         [
-          4.7,
+          4,
+          -28.1
+        ],
+        [
+          2.4,
+          -28.1
+        ]
+      ],
+      "view": {
+        "x": 3.2,
+        "z": -29.15,
+        "yaw": 3.141592653589793,
+        "pitch": 0
+      },
+      "status": "Passport image-tracking demo on reverse of Trustless Work / Grantfox."
+    },
+    {
+      "id": "stands",
+      "label": "Exposición · ocho puestos",
+      "polygon": [
+        [
+          -5.2,
+          -34.1
+        ],
+        [
+          5.2,
+          -34.1
+        ],
+        [
+          5.2,
           -25
         ],
         [
-          -4.7,
+          -5.2,
           -25
         ]
       ],
@@ -1394,7 +1555,152 @@
         "z": -25.3,
         "yaw": 0
       },
-      "evidence": "Narrated video: paired black booths between central builders/social area and auditorium. Geometry estimated; GUAVA, Trustless Work/Grantfox and THE AHA COMPANY visually legible. Far right booth left unbranded."
+      "evidence": "VID_20261026_021119922: four double-sided dividers, eight positions, estimated dimensions."
+    },
+    {
+      "id": "games",
+      "label": "Juegos · teclado gigante y arcade",
+      "polygon": [
+        [
+          -14.5,
+          -18.8
+        ],
+        [
+          -6.8,
+          -18.8
+        ],
+        [
+          -6.8,
+          -8.4
+        ],
+        [
+          -14.5,
+          -8.4
+        ]
+      ],
+      "view": {
+        "x": -9.2,
+        "z": -12,
+        "yaw": 0.9
+      },
+      "reviewSection": 21,
+      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+    },
+    {
+      "id": "skills",
+      "label": "Skills board · forma tu equipo",
+      "polygon": [
+        [
+          3.6,
+          -10.4
+        ],
+        [
+          7.2,
+          -10.4
+        ],
+        [
+          7.2,
+          -7.2
+        ],
+        [
+          3.6,
+          -7.2
+        ]
+      ],
+      "view": {
+        "x": 4.3,
+        "z": -8,
+        "yaw": 0
+      },
+      "reviewSection": 22,
+      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+    },
+    {
+      "id": "energy",
+      "label": "Energy Corner · fútbol",
+      "polygon": [
+        [
+          10.4,
+          -31
+        ],
+        [
+          14.6,
+          -31
+        ],
+        [
+          14.6,
+          -25.4
+        ],
+        [
+          10.4,
+          -25.4
+        ]
+      ],
+      "view": {
+        "x": 11,
+        "z": -28.5,
+        "yaw": -1.5707963267948966
+      },
+      "reviewSection": 23,
+      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+    },
+    {
+      "id": "photobooth",
+      "label": "Fotomatón · Made to Move",
+      "polygon": [
+        [
+          9,
+          -36.5
+        ],
+        [
+          14.6,
+          -36.5
+        ],
+        [
+          14.6,
+          -31.5
+        ],
+        [
+          9,
+          -31.5
+        ]
+      ],
+      "view": {
+        "x": 10,
+        "z": -34,
+        "yaw": -1.5707963267948966
+      },
+      "reviewSection": 24,
+      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+    },
+    {
+      "id": "content-hub",
+      "label": "Content Hub · sala acristalada",
+      "polygon": [
+        [
+          10.25,
+          -25
+        ],
+        [
+          14.6,
+          -25
+        ],
+        [
+          14.6,
+          -12
+        ],
+        [
+          10.25,
+          -12
+        ]
+      ],
+      "view": {
+        "x": 11.6,
+        "z": -14,
+        "yaw": -0.25
+      },
+      "reviewSection": 25,
+      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
     }
   ],
   "exteriorRoute": [
@@ -1411,6 +1717,102 @@
       "z": 28
     }
   ],
+  "exhibition": {
+    "dividerCount": 4,
+    "positionCount": 8,
+    "aisleWidth": 4.4,
+    "dimensionsStatus": "Estimated from narrated video",
+    "positions": [
+      {
+        "brand": "DRIPS",
+        "graphic": "booth-drips",
+        "side": "left",
+        "row": 1,
+        "face": "arrival",
+        "table": {
+          "x": -3.65,
+          "z": -26.5
+        }
+      },
+      {
+        "brand": "GUAVA",
+        "graphic": "booth-guava",
+        "side": "left",
+        "row": 1,
+        "face": "stage",
+        "table": {
+          "x": -3.65,
+          "z": -29.9
+        }
+      },
+      {
+        "brand": "DeFindex / Soroswap",
+        "graphic": "booth-defindex-soroswap",
+        "side": "left",
+        "row": 2,
+        "face": "arrival",
+        "table": {
+          "x": -3.65,
+          "z": -30.7
+        }
+      },
+      {
+        "brand": "THE AHA COMPANY",
+        "graphic": "booth-aha",
+        "side": "left",
+        "row": 2,
+        "face": "stage",
+        "table": {
+          "x": -3.65,
+          "z": -33.6
+        }
+      },
+      {
+        "brand": "Trustless Work / Grantfox",
+        "graphic": "booth-grantfox-trustless",
+        "side": "right",
+        "row": 1,
+        "face": "arrival",
+        "table": {
+          "x": 3.65,
+          "z": -26.5
+        }
+      },
+      {
+        "brand": "Stellar Passport",
+        "graphic": "booth-passport",
+        "side": "right",
+        "row": 1,
+        "face": "stage",
+        "table": {
+          "x": 3.65,
+          "z": -29.9
+        }
+      },
+      {
+        "brand": "57BLOCKS",
+        "graphic": "booth-57blocks",
+        "side": "right",
+        "row": 2,
+        "face": "arrival",
+        "table": {
+          "x": 3.65,
+          "z": -30.7
+        }
+      },
+      {
+        "brand": "OpenZeppelin",
+        "graphic": "booth-openzeppelin",
+        "side": "right",
+        "row": 2,
+        "face": "stage",
+        "table": {
+          "x": 3.65,
+          "z": -33.6
+        }
+      }
+    ]
+  },
   "standsRoute": [
     {
       "x": 3,
@@ -1434,11 +1836,17 @@
     },
     {
       "x": 0,
-      "z": -31
+      "z": -34.5
     },
     {
       "x": 0,
       "z": -39
     }
-  ]
+  ],
+  "contentHubEntrance": {
+    "x": 10,
+    "z": -13.65,
+    "width": 2.2,
+    "status": "Approximate doorway; content light is a requested visual addition."
+  }
 }

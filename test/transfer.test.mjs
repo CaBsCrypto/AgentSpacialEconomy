@@ -7,7 +7,8 @@ const gz=await readFile(new URL('../dist/assets/one16.glb.gz',import.meta.url));
 test('compressed runtime stream restores exact original model and reports progress',async()=>{
  const progress=[];let requests=0;
  const result=await fetchModel({fetcher:async url=>{requests++;assert.match(url,/glb.gz/);return new Response(gz)},onProgress:p=>progress.push(p)});
- assert.deepEqual(Buffer.from(result),raw);assert.equal(requests,1);assert.equal(progress.at(-1).loaded,gz.length);assert.ok(gz.length<raw.length*.2);
+ assert.deepEqual(Buffer.from(result),raw);assert.equal(requests,1);assert.equal(progress.at(-1).loaded,gz.length);// Baked JPEG/PNG maps are already compressed; protect the mobile download budget, not a flat-geometry ratio.
+ assert.ok(gz.length<raw.length);assert.ok(gz.length<=5*1024*1024,'Venue download exceeds the 5 MiB texture budget');
 });
 test('browser without gzip streaming support uses original GLB once',async()=>{
  let requests=0;const result=await fetchModel({decompressor:null,fetcher:async url=>{requests++;assert.match(url,/glb\?v=/);return new Response(raw)}});

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1536" viewBox="0 0 1024 1536">
+<rect width="100%" height="100%" fill="#171c1c"/>
+<text x="196.703" y="489.5" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="175">GUAVA</text>
+<polyline points="60,1310 964,1310" fill="none" stroke="#4a4c47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="54,1394 82,1410.24 110,1394 110,1404.64 82,1421.44 54,1404.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="54,1410.24 71.92,1420.88 54,1432.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="110,1410.24 92.08,1420.88 110,1432.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="120.5" y="1411.47" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="29.4">Hack</text>
+<text x="120.5" y="1444.4" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="29.4">Meridian</text>
+<ellipse cx="406.25" cy="1413.95" rx="17.85" ry="17.85" fill="none" stroke="#f3f1df" stroke-width="2.8875"/>
+<polyline points="380,1419.2 432.5,1401.35" fill="none" stroke="#f3f1df" stroke-width="3.9375" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="380,1429.17 432.5,1411.32" fill="none" stroke="#f3f1df" stroke-width="3.9375" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="439.5" y="1431.02" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="36.4">Stellar</text>
+<polygon points="706,1394 734,1410.24 762,1394 762,1404.64 734,1421.44 706,1404.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="706,1410.24 723.92,1420.88 706,1432.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<polygon points="762,1410.24 744.08,1420.88 762,1432.64" fill="#f3f1df" stroke="none" stroke-width="1"/>
+<text x="772.5" y="1411.47" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="29.4">Hack</text>
+<text x="772.5" y="1444.4" fill="#f3f1df" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="29.4">Meridian</text>
+</svg>

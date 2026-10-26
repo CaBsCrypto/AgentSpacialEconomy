@@ -69,3 +69,11 @@ removes exactly43 exterior objects and the associated raised walk surfaces;
 the existing flat forecourt remains. A follow-up removes34 orphanrailway/edgefence objects after uservisualfeedback. Entrance canopy, doors/banner, all24 umbrellas and seven INTERIOR yellow steps are kept.
 Review IDs1,4–20 stay unchanged;2/3 are omitted, not reassigned. This candidate
 was based on livev16 and does NOT include unpublishedv17 Android AR changes.
+
+## October 26 visual revision
+
+The narrated thirteen-video evidence register is in [docs/render-review-2026-10-26](../docs/render-review-2026-10-26/README.md). The source videos stay outside Git. The geometry now includes games, giant keyboard, two-sided exhibition desks, lounge seating, skills board, Energy Corner, photo booth and a furnished Content Hub. Shared PBR surface maps and editable reconstructed graphic SVGs are generated in model/textures. Dimensions remain visual estimates.
+
+Reproduction on Windows: install the pinned Python dependencies with python -m pip install -r scripts/render-requirements.txt, then run powershell -File scripts/rebuild-venue.ps1. The optional -Python and -Blender arguments select existing runtimes. scripts/setup-render-tools.ps1 downloads portable Blender 4.3.2 from the [official archive](https://download.blender.org/release/Blender4.3/) and checks its published SHA-256. Tool binaries live in ignored .tools; they are not committed. Blender 4.3.2 matches the generation family of the previous glTF asset.
+
+The rebuild generates material images and artwork, exports the editable .blend and GLB, creates deterministic gzip transfer and content hashes, updates the embedded layout/static review map, and decodes the GLB images for CPU validation. Browser/GPU verification remains a separate step. Do not run the older static-tour.py after update-review-static.mjs: its older zone numbering would replace the current map.

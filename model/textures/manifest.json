@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "generator": "scripts/generate-venue-appearance.py",
+  "seed": 16026,
+  "provenance": "Authored procedural reconstruction from the owner's narrated venue videos, 2026-10-26. No raw footage, attendee likenesses or workshop writing embedded. Observed venue marks identify signage; no affiliation implied.",
+  "graphicEvidence": {
+    "checkin": [
+      "VID_20261026_021823025.mp4"
+    ],
+    "energy": [
+      "VID_20261026_021930226.mp4"
+    ],
+    "stage": [
+      "VID_20261026_022050141.mp4"
+    ],
+    "photocall": [
+      "VID_20261026_022127885.mp4"
+    ],
+    "booths": [
+      "VID_20261025_210243989.mp4",
+      "VID_20261026_021119922.mp4"
+    ],
+    "skills": [
+      "VID_20261026_021853331.mp4"
+    ]
+  },
+  "graphics": {
+    "checkin-sign": {
+      "color": "graphics/checkin-sign.png",
+      "source": "graphics/checkin-sign.svg",
+      "width": 2048,
+      "height": 422
+    },
+    "checkin-backdrop": {
+      "color": "graphics/checkin-backdrop.png",
+      "source": "graphics/checkin-backdrop.svg",
+      "width": 1536,
+      "height": 1400
+    },
+    "energy-banner": {
+      "color": "graphics/energy-banner.png",
+      "source": "graphics/energy-banner.svg",
+      "width": 1536,
+      "height": 896
+    },
+    "lisbon-mural": {
+      "color": "graphics/lisbon-mural.png",
+      "source": "graphics/lisbon-mural.svg",
+      "width": 1024,
+      "height": 960
+    },
+    "photocall": {
+      "color": "graphics/photocall.png",
+      "source": "graphics/photocall.svg",
+      "width": 2048,
+      "height": 768
+    },
+    "stage-backdrop": {
+      "color": "graphics/stage-backdrop.png",
+      "source": "graphics/stage-backdrop.svg",
+      "width": 2048,
+      "height": 1280
+    },
+    "stage-flank": {
+      "color": "graphics/stage-flank.png",
+      "source": "graphics/stage-flank.svg",
+      "width": 768,
+      "height": 1536
+    },
+    "move-banner": {
+      "color": "graphics/move-banner.png",
+      "source": "graphics/move-banner.svg",
+      "width": 512,
+      "height": 2048
+    },
+    "skills-board": {
+      "color": "graphics/skills-board.png",
+      "source": "graphics/skills-board.svg",
+      "width": 768,
+      "height": 1024
+    },
+    "booth-grantfox-trustless": {
+      "color": "graphics/booth-grantfox-trustless.png",
+      "source": "graphics/booth-grantfox-trustless.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-drips": {
+      "color": "graphics/booth-drips.png",
+      "source": "graphics/booth-drips.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-guava": {
+      "color": "graphics/booth-guava.png",
+      "source": "graphics/booth-guava.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-passport": {
+      "color": "graphics/booth-passport.png",
+      "source": "graphics/booth-passport.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-57blocks": {
+      "color": "graphics/booth-57blocks.png",
+      "source": "graphics/booth-57blocks.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-defindex-soroswap": {
+      "color": "graphics/booth-defindex-soroswap.png",
+      "source": "graphics/booth-defindex-soroswap.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-aha": {
+      "color": "graphics/booth-aha.png",
+      "source": "graphics/booth-aha.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-openzeppelin": {
+      "color": "graphics/booth-openzeppelin.png",
+      "source": "graphics/booth-openzeppelin.svg",
+      "width": 1024,
+      "height": 1536
+    },
+    "booth-footer": {
+      "color": "graphics/booth-footer.png",
+      "source": "graphics/booth-footer.svg",
+      "width": 2048,
+      "height": 256
+    }
+  },
+  "materials": {
+    "wood": {
+      "color": "materials/wood-color.jpg",
+      "roughness": "materials/wood-roughness.png",
+      "normal": "materials/wood-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "masonry": {
+      "color": "materials/masonry-color.jpg",
+      "roughness": "materials/masonry-roughness.png",
+      "normal": "materials/masonry-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "textile": {
+      "color": "materials/textile-color.jpg",
+      "roughness": "materials/textile-roughness.png",
+      "normal": "materials/textile-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    },
+    "painted-metal": {
+      "color": "materials/painted-metal-color.jpg",
+      "roughness": "materials/painted-metal-roughness.png",
+      "normal": "materials/painted-metal-normal.png",
+      "colorSize": 1024,
+      "detailSize": 512
+    }
+  },
+  "sha256": {
+    "graphics/booth-57blocks.png": "1b9ae5490c6fc46d2135ba9c09b8da4b252712f9b32266f2d0eef0323c6758b1",
+    "graphics/booth-aha.png": "59dfaaeebdea53f06204f789d095dcd6d564de84a5e7da79c421904cfe538329",
+    "graphics/booth-defindex-soroswap.png": "55ee7a71956a4ebdc806cee56f6e7cb73c715868e51abded2ae971991c0bc54f",
+    "graphics/booth-drips.png": "b155e53fb9c2a7d28bd76f3340ca181d00ace6735c4f5b3c3ee1d3e51f9ce674",
+    "graphics/booth-footer.png": "8a4a516b085860f979a494721afe5709ed85dec80bf39c96c4d3ee655a85a9f1",
+    "graphics/booth-grantfox-trustless.png": "b07e346ad6426d73f033e7bfc7fbce4c7ab63cdc79ff70e77e8a21f9ae5e92ab",
+    "graphics/booth-guava.png": "b38b99e7e9dd383a2a20090187ec3fc66bfd113abc4a8526987415ee465bdd61",
+    "graphics/booth-openzeppelin.png": "e485aa71b76110ed4c0020448b827e967d8d7517f857ad233ce5426f1bb89095",
+    "graphics/booth-passport.png": "fdb6bd60b21753475331f70a73284c49e64d40d31d5c93c7d255cd8beaee4c46",
+    "graphics/checkin-backdrop.png": "aaeec5fbf32f7d70e20236b3f2b63b3a91508a4a1c3827f5b12ba2c62ed007fb",
+    "graphics/checkin-sign.png": "ed4227262f5323fd293418118d4ec96a7163e5b26bc213ef5ce859919ef90e2d",
+    "graphics/energy-banner.png": "a5c00c3f0e5cd0a1d96bb25dcbb632c6175c239b9d4474dfcfa1c6838e1ae404",
+    "graphics/lisbon-mural.png": "aae0d8225f4e8d03ce9971006760a263dcf81ff0646197f56d7b6686fc05d456",
+    "graphics/move-banner.png": "112d0b943e23a10879130bbd669eaa9b86b81c6a6c2553d02cf8d0edeff6cdfb",
+    "graphics/photocall.png": "205b9b3fdc3c860bd503e09a529133589d69c584d5b185c24d85c3ebf479c08c",
+    "graphics/skills-board.png": "d2838d445fbdcacb6ec9bc424dfc7bce29a5e1f104f170b3330f665bb3268405",
+    "graphics/stage-backdrop.png": "4fe5c9bd2cc2d7f384422c448db40c98bda415f8b6bb45dd2d60c76f6401c948",
+    "graphics/stage-flank.png": "99f3b22ed45d9a345813275f1cf9f8434e9adf42cfacbd6ae804ce961b1a4408",
+    "materials/masonry-normal.png": "0935dac677078ce28ffee2605c349e10e7f09f308bc894e4024465a1cb0a9343",
+    "materials/masonry-roughness.png": "b56a1c3e5f860a6791f5f4119a161a83f78f8573baf24f07d5ac5b98f9434a5c",
+    "materials/painted-metal-normal.png": "227ecd8fb7813471169f937cb284aea064c52ac135d0a7e8c77cb18973ebad66",
+    "materials/painted-metal-roughness.png": "af650122b710de47c0b04ab20413d32ee756f098e28ef783d2ee9892f6ea5194",
+    "materials/textile-normal.png": "963e2fe6ba14250734e89e460824f2346dc0690f1a8e9b8b130eeb5a5c1353df",
+    "materials/textile-roughness.png": "a28bb688ce6882588b9158346cc2c0faf55d7cea846e6bb934a045272501bb8b",
+    "materials/wood-normal.png": "b49e9a07f9ab3b96093ec61a769be258a99de240d43ecbec1e8f5625bd1b2a4a",
+    "materials/wood-roughness.png": "146de46ea13f4ac24ceec1ff4632c2e65bf266d4bd324e65ca5e91ad287c0a4c",
+    "materials/masonry-color.jpg": "25600cec9aff8c8453874ec480f68b9789b07f502cf913978e66bc9b508b826b",
+    "materials/painted-metal-color.jpg": "cf60932a2977263c6c9518e3ff69680ac3844c5dc2bec0e2fb2ff3fa8f6a4689",
+    "materials/textile-color.jpg": "bf9ef9612102ba6732e023f6cbb76c4f43b3c385101482badf3417351682689b",
+    "materials/wood-color.jpg": "70e0aa23f758d6ec722930b0927f555d5f7a13d99ca4b406623948334aec3250",
+    "graphics/booth-57blocks.svg": "9cf78fce048613e91518782b6187fb2aca1a5f52078129dd71f466dd8b34e561",
+    "graphics/booth-aha.svg": "d47cb521aac0537fdd23cd646d492a80d7fc9290cd36da2347a8ab8d124daba7",
+    "graphics/booth-defindex-soroswap.svg": "cd645057a41476f687c2ff1d0a56a4477fb158f35d9219c482d71b522ae4c84d",
+    "graphics/booth-drips.svg": "df9a1be37d4e9157fc132c1c54d381bc03b60452bfaf90c580bb886e43f6f46a",
+    "graphics/booth-footer.svg": "389c04702f820610e8f8cd68273d6594e40b386c76926c6ebdae9caa0f08cfc9",
+    "graphics/booth-grantfox-trustless.svg": "b7f02adaf979f7f008a6d7b5b675a06aeccc23f1ea88f4f0c05bde44f62b004d",
+    "graphics/booth-guava.svg": "63017cbda53f9986d3f154601d2aa3cd857cdc93893a21c9e81468863905de87",
+    "graphics/booth-openzeppelin.svg": "d65fac365f2dffa8c0eddbf6cd78cb2db8e8563f6ab0571c90c0233d9dddcdf3",
+    "graphics/booth-passport.svg": "7f9f831611dad172216d1cb4a8a4ee5ff53486f7a9a9db4f9f6c62e683505fc7",
+    "graphics/checkin-backdrop.svg": "5962c0fa0a7c347682ec335e699ec827f8b8d3ed3a7e4a3c4780c6c8ca898e25",
+    "graphics/checkin-sign.svg": "f0ab6d0ec5822c94250c41f8a2f91fa8745e08c51fdd92a286a89dc3f2fc1631",
+    "graphics/energy-banner.svg": "6f929b850b769af73243bfe15ab202986de2b0c49f05ceeb39bbd9e33dd7a343",
+    "graphics/lisbon-mural.svg": "8e5680f849d3288ccb1b9db24ab7285497c1b30b9f092122207842585ba56b79",
+    "graphics/move-banner.svg": "c170e9e9697681ea73d01171471545288eebebea1e228a211e7e007af81b0cc2",
+    "graphics/photocall.svg": "768bea4be36bdbd280ce59aa4d96a0503787074c24cb9b1d520c988d0e13f14a",
+    "graphics/skills-board.svg": "53b9a2babf3ab332905ce73492a1ea1583deab0aceec0dee280c43f3c785b57a",
+    "graphics/stage-backdrop.svg": "597b7e604140b08babb6dd035a09ac92034825055ba0a2eb99dad287e54e208b",
+    "graphics/stage-flank.svg": "26e29ff3ca6f7cc2fcf61f2b1199e4595e40eb352af02d0823a5d0ac04087a49"
+  }
+}
