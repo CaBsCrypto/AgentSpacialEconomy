@@ -67,15 +67,17 @@ test("the commitment follows the contract's rules before anything is signed", ()
 
 test("contract arguments use explicit XDR types with sorted struct keys", () => {
   const [arg] = registryCommitArgs(order(), sdk);
-  assert.equal(arg.switch().name, "scvMap");
-  const keys = arg.map().map((e) => e.key().sym().toString());
-  assert.deepEqual(keys, [...keys].sort());
-  assert.deepEqual(keys, ["claimant", "deadline", "manifest", "order", "payment", "placements", "revision", "terms"]);
-  const placements = arg.map().find((e) => e.key().sym().toString() === "placements").val().vec();
-  const plan = placements[0].map().find((e) => e.key().sym().toString() === "plan").val();
-  assert.equal(plan.vec()[0].sym().toString(), "Time");
-  const payment = arg.map().find((e) => e.key().sym().toString() === "payment").val();
-  assert.equal(Buffer.from(payment.bytes()).toString("hex"), TX);
+  const back = sdk.xdr.ScVal.fromXDR(arg.toXDR("base64"), "base64"); // survives a real XDR round trip
+  const native = sdk.scValToNative(back); // a map decodes to an object in map order
+  assert.deepEqual(Object.keys(native), ["claimant", "deadline", "manifest", "order", "payment", "placements", "revision", "terms"]);
+  const [p] = native.placements;
+  assert.deepEqual(Object.keys(p), ["end", "pass_ms", "plan", "slot", "start", "units"]);
+  assert.deepEqual(p.plan, ["Time"]);
+  assert.equal(p.slot, "main_stage_screen");
+  assert.equal(p.units, 300000n);
+  assert.equal(Buffer.from(native.payment).toString("hex"), TX);
+  assert.equal(native.claimant, ADVERTISER);
+  assert.equal(typeof native.deadline, "bigint");
 });
 
 test("the read-back is verified only when the chain holds this payment, queued and undelivered", () => {

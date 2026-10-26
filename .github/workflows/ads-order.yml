@@ -32,7 +32,9 @@ jobs:
 
       - name: Install agent dependencies
         working-directory: agent
-        run: npm install --no-audit --no-fund
+        run: |
+          npm install --no-audit --no-fund
+          echo "::notice::stellar-sdk $(node -p "require('@stellar/stellar-sdk/package.json').version")"
 
       - name: Unit tests
         working-directory: agent
