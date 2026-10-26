@@ -6,8 +6,8 @@
 ## The demo path (the only flow that must work)
 
 1. **Mandate.** The operator opens the dashboard and loads a mandate for the main stage: an objective ("show the live agenda and the next session on the stage screen"), a total budget in testnet USDC, a per-call cap and a list of allowed services.
-2. **Delegation.** The **venue agent** allocates part of the budget to the **stage agent** (one sub-zone, one sub-budget).
-3. **Paid call 1.** The stage agent buys the current schedule from `venue-feed` over x402 (≈ $0.01 testnet USDC).
+2. **Treasury ceiling and delegation.** The operator approves a 0.50 USDC SEP-41 allowance with a ledger expiry. The venue agent draws 0.20 USDC; a further 0.31 USDC draw is refused during network simulation without submission. The **venue agent** allocates part of the budget to the **stage agent** (one sub-zone, one sub-budget).
+3. **Paid call 1.** The stage agent buys the schedule fixture from `venue-feed` over x402 (≈ $0.01 testnet USDC).
 4. **Paid call 2.** The stage agent buys a rendered screen card from `screen-card` over x402 (≈ $0.05 testnet USDC).
 5. **Ledger.** The dashboard shows available / reserved / spent per agent and one row per payment with its testnet transaction hash.
 6. **Visible result.** The stage screen inside the ONE16 twin shows the purchased card.
@@ -17,10 +17,10 @@ Everything else is decoration. If time runs short, protect steps 3, 5 and 7.
 
 ## Judges can test it (P1, after every P0)
 
-Judges review asynchronously and use the product like beta testers. Give them one way to see a **live** testnet payment without our laptop:
+Judges review asynchronously and use the product like beta testers. Give them the recorded real testnet evidence and a reproducible path to fresh payments without our laptop:
 
-- **Preferred:** host `services.mjs` and a rate-limited "Run on testnet" endpoint (server-held agent key, tiny allocation, one run per minute). The dashboard calls it and shows the new rows.
-- **Minimum:** the committed real run, clearly labelled "recorded run", plus a README path a judge can follow in 5 minutes with their own testnet keys.
+- **Future work:** host a rate-limited testnet run endpoint. The current static dashboard does not start payments.
+- **Delivered path:** the committed real run, clearly labelled "recorded run", plus the README setup and the **Testnet loop** GitHub Actions workflow. Fresh results go to `ci/testnet-results` and require a reviewed update before they appear on the public site.
 
 ## Components
 
@@ -38,6 +38,7 @@ Judges review asynchronously and use the product like beta testers. Give them on
 
 ## Payments
 
+- Treasury draw ceiling: SEP-41 `approve` / `transfer_from` on the USDC SAC; the allowance decreases when drawn and has a ledger expiry. This bounds access to treasury funds, while the agent ledger separately enforces per-call policy. Reference: [official token interface](https://developers.stellar.org/docs/tokens/token-interface).
 - Network: **`stellar:testnet` only.** USDC (SEP-41 SAC).
 - Facilitator: start with the **x402.org testnet facilitator** (no API key, fees sponsored). Check `GET <facilitator>/supported` lists `stellar:testnet` before writing code. Fallback: OpenZeppelin Channels testnet (needs an API key).
 - Packages: `@x402/express`, `@x402/core`, `@x402/stellar`, `@x402/fetch`, `@stellar/stellar-sdk`, `express`, `dotenv`.
@@ -76,7 +77,9 @@ Judges review asynchronously and use the product like beta testers. Give them on
   "rows": [
     { "agent": "stage-agent", "service": "venue-feed", "priceUsdc": "0.01",
       "status": "settled", "tx": "<hash>", "explorer": "https://stellar.expert/explorer/testnet/tx/<hash>" },
-    { "agent": "stage-agent", "service": "screen-card", "priceUsdc": "0.25",
+    { "agent": "stage-agent", "service": "screen-card", "priceUsdc": "0.05",
+      "status": "settled", "tx": "<hash>", "explorer": "https://stellar.expert/explorer/testnet/tx/<hash>" },
+    { "agent": "stage-agent", "service": "premium-render", "priceUsdc": "0.25",
       "status": "blocked", "reason": "price above per-call cap" }
   ],
   "totals": { "stage-agent": { "allocated": "0.20", "reserved": "0", "spent": "0.06" } }
@@ -89,6 +92,7 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 
 ## Done when
 
+- [ ] The recorded run shows the 0.50 USDC allowance, 0.20 USDC draw and rejected 0.31 USDC simulation, with settled transaction links for approve and draw.
 - [ ] One command runs the full loop on testnet and prints two settled transaction hashes.
 - [ ] The over-cap attempt is refused before signing and appears as `blocked`.
 - [ ] Re-running with the same run id does not pay twice.
@@ -100,8 +104,7 @@ See `.env.example`. Secrets live only in `.env`, which is git-ignored. Never pas
 
 ## Backlog (logged, not built this weekend)
 
-- Palta Labs activation (palta reveal) in the activation area: dist/palta-reveal.mjs.
-- On-chain cap: OpenZeppelin smart account with a spending-limit policy for the agent wallet.
+- Per-day smart-account spending policies (OpenZeppelin policies or Nido session keys), beyond the implemented SEP-41 treasury allowance.
 - LLM planner that proposes the plan from the objective (still bounded by the ledger).
 - More zones and agents (sponsor stands, check-in, photo lounge).
 - Revenue side: charging third parties for screen or AR placement.

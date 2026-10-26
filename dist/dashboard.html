@@ -54,6 +54,24 @@
   .scroll { overflow-x: auto; }
   footer { color: var(--ase-muted); font-size: .8rem; margin-top: 24px; }
   @media (max-width: 560px) { .hide-sm { display: none; } }
+
+/* submission-dashboard-polish */
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/fonts/DMSans-Regular.ttf') format('truetype')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:700;font-display:swap;src:url('/assets/fonts/DMSans-Bold.ttf') format('truetype')}
+main,section,.grid>*{min-width:0}main{width:100%}h1,.hash,.kv dd,.bar-head>*,.blocked-card,.card-preview{overflow-wrap:anywhere}
+.proof-inline{display:none}
+@media(max-width:560px){
+  header{align-items:flex-start}h1{min-width:0}.badge{max-width:100%;white-space:normal}.scroll{overflow:visible}
+  .ledger-table,.ledger-table tbody{display:block;width:100%;max-width:100%}
+  .ledger-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
+  .ledger-table tbody{display:grid;gap:12px}
+  .ledger-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:'agent price' 'service service' 'status status';gap:12px;padding:14px;border:1px solid var(--ase-line);border-radius:10px;background:var(--ase-night)}
+  .ledger-table td{display:block;min-width:0;padding:0;border:0;overflow-wrap:anywhere}
+  .ledger-table td:before{display:block;margin-bottom:4px;content:attr(data-label);color:var(--ase-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+  .ledger-table td[data-label='Agent']{grid-area:agent}.ledger-table td[data-label='Price']{grid-area:price}.ledger-table td[data-label='Service']{grid-area:service}.ledger-table td[data-label='Status']{grid-area:status}
+  .ledger-table td.hide-sm{display:none}.ledger-table td[colspan]{grid-column:1/-1}.status{white-space:normal}
+  .ledger-table .proof-inline{display:block;width:fit-content;max-width:100%;margin-top:8px;min-height:44px;padding-block:10px;line-height:1.5}
+}
 </style>
 </head>
 <body>
@@ -87,7 +105,7 @@
 
   <section aria-labelledby="ledger-h">
     <h2 id="ledger-h">Ledger · every attempt</h2>
-    <div class="scroll"><table>
+    <div class="scroll"><table class="ledger-table">
       <thead><tr><th>Agent</th><th>Service</th><th>Price</th><th>Status</th><th class="hide-sm">Proof</th></tr></thead>
       <tbody id="rows"><tr><td colspan="5" class="empty">Loading…</td></tr></tbody>
     </table></div>
@@ -97,7 +115,7 @@
   <section aria-labelledby="screen-h">
     <h2 id="screen-h">On the stage screen</h2>
     <div id="screen" class="empty">Loading…</div>
-    <p><a href="./">Walk the venue →</a></p>
+    <p><a href="/one16">Walk the venue →</a></p>
   </section>
 
   <footer>
@@ -145,13 +163,14 @@ if (!ledger) {
       </div>
     </div>`).join("");
 
+  const rowReason = (r) => r.type === "onchain-draw" && r.status === "blocked" ? "Rejected during simulation; not submitted to Stellar." : r.service === "premium-render" && r.status === "blocked" ? "Per-call cap exceeded; blocked before signing." : r.reason;
   const payments = ledger.rows.filter((r) => r.type !== "allocation");
   $("rows").innerHTML = payments.map((r) => `
     <tr>
-      <td>${esc(r.agent)}</td>
-      <td>${esc(r.service)}</td>
-      <td>${usdc(r.priceUsdc)}</td>
-      <td><span class="status ${esc(r.status)}">${r.status === "settled" ? "✓ " : r.status === "blocked" ? "⛔ " : "• "}${esc(r.status)}</span>${r.reason ? `<br><small>${esc(r.reason)}</small>` : ""}</td>
+      <td data-label="Agent">${esc(r.agent)}</td>
+      <td data-label="Service">${esc(r.service)}${r.explorer ? `<a class="proof-inline" href="${esc(r.explorer)}" target="_blank" rel="noopener">View testnet transaction <span class="hash">${esc(r.tx?.slice(0, 8) || "tx")}…</span></a>` : ""}</td>
+      <td data-label="Price">${usdc(r.priceUsdc)}</td>
+      <td data-label="Status"><span class="status ${esc(r.status)}">${r.status === "settled" ? "✓ " : r.status === "blocked" ? "⛔ " : "• "}${esc(r.status)}</span>${rowReason(r) ? `<br><small>${esc(rowReason(r))}</small>` : ""}</td>
       <td class="hide-sm">${r.explorer ? `<a href="${esc(r.explorer)}" target="_blank" rel="noopener">tx <span class="hash">${esc(r.tx.slice(0, 8))}…</span></a>` : "—"}</td>
     </tr>`).join("") || `<tr><td colspan="5" class="empty">No payments in this run.</td></tr>`;
 
@@ -165,7 +184,7 @@ if (!ledger) {
         <div><dt>Approved by the operator's treasury</dt><dd>${usdc(oc.approvedUsdc)} · ${link(oc.approveTx, "approve tx")}</dd></div>
         <div><dt>Drawn by venue-agent for its allocations</dt><dd>${usdc(oc.drawnUsdc)} · ${link(oc.drawTx, "transfer_from tx")}</dd></div>
         <div><dt>Left on the allowance</dt><dd>${usdc(oc.remainingUsdc)}${oc.liveUntilLedger ? ` · expires at ledger ${esc(oc.liveUntilLedger)}` : ""}</dd></div>
-        <div><dt>Draw above what is left</dt><dd>${oc.probe ? `${usdc(oc.probe.amountUsdc)} · <span class="status ${oc.probe.refused ? "blocked" : "failed"}">${oc.probe.refused ? "⛔ refused by the network" : "not refused"}</span>` : "—"}</dd></div>
+        <div><dt>Draw above what is left · simulation</dt><dd>${oc.probe ? `${usdc(oc.probe.amountUsdc)} · <span class="status ${oc.probe.refused ? "blocked" : "failed"}">${oc.probe.refused ? "⛔ rejected in simulation · not submitted" : "not refused"}</span>` : "—"}</dd></div>
       </dl>
       <p><small>SEP-41 allowance on the USDC Stellar Asset Contract (<span class="hash">${esc(oc.asset?.sac ?? "")}</span>). The network enforces this ceiling and its expiry, whatever the agent's code does; the per-call cap below is the agent's own, stricter rule.</small></p>`;
   }

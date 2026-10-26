@@ -2,10 +2,14 @@
 
 > Your venue's AI operator, on a capped USDC budget. Built at HackMeridian 2026 (Genesis · Stellar Composed). A venue agent delegates a budget to a stage agent, which pays for data and content per call over x402 in USDC on Stellar testnet; a ledger refuses anything above the per-call cap before signing. The result appears on the stage of a 3D digital twin of ONE16, the HackMeridian venue. Testnet only, no real money.
 
+Last updated: 2026-10-26. The public dashboard displays a recorded Stellar testnet run; no real money.
+
 ## Pages
 
-- [Operator dashboard](dashboard.html): mandate, budget per agent, every payment attempt with its Stellar testnet transaction, refused calls
-- [ONE16 digital twin](index.html): walkable 3D venue; the main stage screen shows the card the stage agent paid for
+- [Platform landing](https://agenticreality.space/): bilingual platform introduction and access to the recorded testnet run
+
+- [Operator dashboard](https://agenticreality.space/dashboard.html): mandate, budget per agent, every payment attempt with its Stellar testnet transaction, refused calls
+- [ONE16 digital twin](https://agenticreality.space/one16): walkable 3D venue; the main stage screen shows the card the stage agent paid for
 - [Stellar Passport AR display](passport.html): 3D asset and native AR launch paths (AR not verified on devices)
 
 ## Data

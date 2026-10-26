@@ -6,7 +6,7 @@ Deadline: **Mon 26 Oct 2026, 12:00 WET**. Required to submit: title, description
 
 **Prizes we can target:** Genesis ranking (4 places across both tracks, 2 finalists per track) and the Smol Wins **Best GTM** and **Best UX** (one prize per team at most). The GTM paragraph below and the dashboard/landing are written with those in mind.
 
-Fill the `TEAM:` gaps before pasting. Same words as the README, the deck and the video.
+The team disclosures below are confirmed. Add the final video URL and deck file only after they are verified. Keep the same words in the README, deck and video.
 
 ---
 
@@ -27,14 +27,14 @@ Your venue's AI operator, on a capped USDC budget.
 **What we built at HackMeridian**
 
 - **A venue agent and a stage agent.** The venue agent allocates part of the operator's budget to the stage agent (one zone, one sub-budget).
-- **Paid venue services over x402.** The stage agent buys the live schedule (0.01 USDC) and then a screen card for the next session (0.05 USDC). Payments use x402 v2 (`exact` scheme) on Stellar testnet through a fee-sponsored facilitator: the agent signs Soroban auth entries only and needs no XLM for fees.
-- **A budget ceiling the network enforces.** The operator's treasury approves the venue agent a SEP-41 allowance on the USDC contract (amount = budget, expires in ~24 h). The agent starts with no USDC, draws exactly its allocations with `transfer_from`, and a draw above what is left is refused by Stellar itself.
+- **Paid venue services over x402.** The stage agent buys the schedule fixture (0.01 USDC) and then a screen card for the next session (0.05 USDC). Payments use x402 v2 (`exact` scheme) on Stellar testnet through a fee-sponsored facilitator: the agent signs Soroban auth entries only and needs no XLM to pay the fees of those x402 payments.
+- **A budget ceiling the network enforces.** The operator's treasury approves the venue agent a SEP-41 allowance on the USDC contract (amount = budget, approved with a roughly 24-hour ledger window). The agent starts with no USDC, draws exactly its allocations with `transfer_from`, and a draw above the remaining allowance is refused during network simulation without being submitted.
 - **A budget ledger that says no before signing.** Allow-list, per-call cap, approval threshold and allocations are checked before any signature. The agent also reads the server's `402 Payment Required` and refuses if it asks for more than it reserved. In the demo, a 0.25 USDC "premium render" is refused by the 0.10 cap and shown as *needs operator approval*. Reruns with the same run id never pay twice.
 - **An operator dashboard.** Mandate, budget per agent, every attempt with its Stellar transaction, and the refused call.
 - **The result in the place.** The card the stage agent paid for appears on the main stage of our 3D digital twin of ONE16, the HackMeridian venue.
-- **A reproducible testnet run.** One command (or a GitHub Actions workflow) creates throwaway testnet accounts, funds the agent with testnet USDC through a DEX path payment, starts the services and runs the loop.
+- **A reproducible testnet run.** One command (or a GitHub Actions workflow) creates throwaway testnet accounts, funds the treasury with testnet USDC through a DEX path payment, approves the allowance, draws the allocation, starts the services and runs the loop.
 
-**On-chain evidence (Stellar testnet, 26 Oct 01:23 UTC):** allowance `approve` 0.50 USDC — tx `3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa`; budget draw 0.20 USDC — tx `914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083`; a 0.31 USDC draw refused by the network; `venue-feed` 0.01 USDC — tx `bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc`; `screen-card` 0.05 USDC — tx `7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator.
+**On-chain evidence (Stellar testnet, 26 Oct 01:23 UTC):** allowance `approve` 0.50 USDC — tx `3add505423f1dbf84cba31ea2c2f607e6e0d40b75a538de81189d22f50c283fa`; budget draw 0.20 USDC — tx `914076fbe1afa6d845ec7d17eb6d875144c91c8c00bf1ce425f2fbcfa0d7f083`; a 0.31 USDC draw refused during network simulation, with nothing submitted; `venue-feed` 0.01 USDC — tx `bb6d3dfbedcf70abf69b5b9cf1a4846604bc08bfcc0e8dcd4cdfb08c25dde2fc`; `screen-card` 0.05 USDC — tx `7d3e29ff665156095f1443838e0cf1ba0164dfbc536ae24f9546ec1f3ee7d3b0`. The service wallet received exactly 0.06 USDC; x402 fees were paid by the facilitator.
 
 **Stellar pieces composed:** x402 (paid APIs) + USDC via its Stellar Asset Contract (payments and a SEP-41 allowance as the on-chain budget ceiling) + Horizon/DEX for funding + a policy ledger in front of the agent wallet. Next: per-day caps in a smart account (OpenZeppelin policies or Nido session keys).
 
@@ -42,7 +42,9 @@ Your venue's AI operator, on a capped USDC budget.
 
 ## Problem solved
 
-Operators of event venues, campuses and museums program their screens and activations by hand, across several vendors. During a live event the schedule changes faster than the stage screen, and spending on content, data and compute is scattered across invoices with no link to what was shown. They would delegate this to an agent only if every payment is capped, logged and tied to an objective. We give them exactly that: one budget, one rule set, one ledger with a transaction per payment, and the result visible in the venue. <!-- TEAM: add one sentence of first-hand evidence from an event you ran -->
+From organizing events ourselves, we have seen a lack of experiences that surprise attendees. We want to help teams plan 3D and AR experiences and communicate those plans more clearly.
+
+This prototype tests one mechanism for that digital layer: an operator gives agents a bounded content and data budget, each purchase is recorded, and the purchased result appears in the venue's digital twin. A venue pilot will test operator demand, coordination benefits and willingness to pay. Physical AR placement remains unverified.
 
 ## Challenges
 
@@ -53,15 +55,15 @@ Operators of event venues, campuses and museums program their screens and activa
 
 ## What's next
 
-- On-chain spending limits: an OpenZeppelin smart account with a spending-limit policy for each agent wallet.
+- Per-day spending policies in a smart account, building on the SEP-41 treasury allowance already demonstrated on testnet.
 - Operator approvals from the dashboard for refused calls.
 - More zones and agents (stands, check-in, sponsor slots) and the revenue side: third parties paying to appear on screens or in AR.
 - Opt-in Stellar Passport profiles for visitors.
-- A pilot in a permanent space (a campus or museum) and an SCF application (SCF #46 closes 8 Nov 2026).
+- A proposed pilot at One Sixteen Venue, followed by research with permanent spaces and a possible SCF application. No pilot agreement or partnership is in place.
 - Operator approval in the operator's own wallet: passkey smart accounts with per-day caps and expiry (Nido, OpenZeppelin smart accounts), and agent-drafted transactions that a human signs.
 - Discovery both ways: our agents finding paid data services through an x402 marketplace, and venues selling screen and AR slots to other agents.
 
-**Go-to-market:** first customers are the organizers and venues of hackathons and tech events, who already run multi-day programs with live schedule changes and sponsor screens; we sell a per-event mandate (budget + rules) and take a margin on the services agents buy. From events we move to permanent spaces (campuses, innovation districts, museums) on a monthly mandate, where the same venue also earns by selling screen and AR placements. <!-- TEAM: name your first pilot venue or event network -->
+**Go-to-market:** Our proposed first pilot is One Sixteen Venue; no agreement or partnership is in place. We would test whether event operators can plan compelling spatial experiences and delegate a small, auditable content budget. A per-event mandate with a service margin is our business-model hypothesis. Campuses, innovation districts and museums are later target markets, subject to pilot results.
 
 ## Repository link *
 
@@ -71,15 +73,15 @@ https://github.com/CaBsCrypto/AgentSpacialEconomy
 
 https://agenticreality.space
 
-Operator dashboard: https://agenticreality.space/dashboard.html · `llms.txt`, `robots.txt` and `sitemap.xml` are served from the site root, as the form suggests.
+Operator dashboard: https://agenticreality.space/dashboard.html · ONE16 twin: https://agenticreality.space/one16. Verify these links and the root discovery files before submission.
 
 ## Demo video link * (YouTube or Vimeo)
 
-<!-- TEAM: upload the 3-minute video (DEMO.md) and paste the link; check it plays logged out -->
+Pending human upload: paste the final YouTube or Vimeo URL here after confirming that the 3-minute video plays without signing in.
 
 ## Deck file *
 
-<!-- TEAM: export the deck (DEMO.md outline, or the portal template) to PDF, under 20 MiB -->
+Attach `docs/submission/spatial-agents-deck.pdf`: the verified final 7-slide PDF (1.401 MiB), with real dashboard/twin screenshots and a linked testnet transaction hash. Upload the PDF file in the portal; its repository copy is https://github.com/CaBsCrypto/AgentSpacialEconomy/blob/main/docs/submission/spatial-agents-deck.pdf.
 
 ## Thematic track
 
@@ -87,19 +89,21 @@ Stellar Composed (builder track: Genesis — already assigned)
 
 ## Tech stack (comma-separated, max 25)
 
-Stellar, Stellar testnet, x402, USDC, Stellar Asset Contract, Soroban auth entries, Horizon, @stellar/stellar-sdk, @x402/express, @x402/fetch, @x402/stellar, Node.js, Express, Three.js, model-viewer, Blender, GitHub Actions, HTML, CSS, JavaScript
+Stellar testnet, x402, USDC, Stellar Asset Contract, SEP-41, Soroban auth entries, Horizon, @stellar/stellar-sdk, @x402/express, @x402/fetch, @x402/stellar, Node.js, Express, Three.js, model-viewer, Blender, GitHub Actions, Vercel, HTML, CSS, JavaScript, smart-account-kit, @sozu/faucet, @upstash/redis, esbuild
 
 ## Prior work disclosure
 
-The repository's first commit is from Sun 25 Oct 2026, 10:30 WET, after hacking opened at 09:00, and its full history is public. Everything in it was built during HackMeridian: the ONE16 3D reconstruction and viewer, the Passport AR display, the planning docs, the x402 services, the budget ledger, the agent loop, the operator dashboard, the stage screen and the CI testnet runner. Before the event we had the concept only. <!-- TEAM: confirm, and list anything else prepared before 09:00 Sun (e.g. the supplied Passport front image, Blender sources, sketches) --> Third-party software is used under its own licenses (Three.js, model-viewer, Express, the x402 packages, the Stellar JavaScript SDK).
+We started this project during HackMeridian; no project work existed before hacking opened at 09:00 WET on Sunday 25 October 2026. Our team created the landing page and ONE16 digital twin during the hackathon, using our own venue photos and videos and AI-assisted development. The agent, paid services, allowance integration, budget ledger, dashboard, stage screen, CI runner and supporting documentation were also built during the event. The repository's first commit is dated 25 October 2026, 10:30 WET; its public history records the work. Third-party software is used under its respective licenses.
 
 ## AI tooling note
 
-OpenAI Codex: 3D venue reconstruction, viewer and site source. Claude (Anthropic): planning docs, x402 paid services, budget ledger, agent loop, operator dashboard, stage screen and the CI testnet runner. Humans chose the problem, the scope and the design, reviewed the output and ran the demos. <!-- TEAM: confirm and add other tools -->
+We used Claude, OpenAI Codex and Dot during the hackathon for AI-assisted development and preparation of project materials. Our team chose the problem, scope and design, reviewed the outputs and tested the prototype.
 
 ## Before pressing Submit
 
 - [ ] Repository is public and the README shows summary, problem, setup, environment variables, demo instructions, the Stellar architecture, on-chain evidence and prior work.
 - [ ] Live URL opens on a phone, logged out, and the dashboard shows the recorded run.
 - [ ] Video link plays logged out; deck PDF opens.
-- [ ] Terms checkbox accepted. Submit at **11:00**, not 11:59.
+- [ ] Our team has reviewed all fields, the video and the attached deck with the person handling the portal.
+- [ ] The person has accepted the terms and saved a draft.
+- [ ] After the final review, press **Submit project once at 11:00 WET on Monday 26 October** and record the confirmation URL. Treat the action as final.
