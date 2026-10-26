@@ -1,0 +1,20 @@
+{
+  "source": {
+    "name": "HackMeridian-Dia1-diapositivas-10s (1).gif",
+    "repositoryPath": "media/main-stage-default.gif",
+    "sha256": "a7f102a976531be59210e1720f5f2b456f3aa997943facfca30489e96d89b123",
+    "width": 800,
+    "height": 450,
+    "frames": 166,
+    "durationMs": 10000,
+    "provenance": "User-supplied animation for the default main stage loop."
+  },
+  "output": {
+    "path": "dist/assets/main-stage-default.mp4",
+    "sha256": "ffa7aed221c07830eabed4a3c9ef90aa3ab437d779c75c291952a4fd7a86098c",
+    "durationMs": 10000,
+    "audio": false,
+    "loop": "Client VideoTexture with muted autoplay and playsInline."
+  },
+  "rebuild": "Set FFMPEG_PATH or install ffmpeg, then npm run build:stage-media. Encoded bytes depend on the ffmpeg version."
+}

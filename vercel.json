@@ -15,6 +15,10 @@
     },
     "api/wallet/config.js": {
       "maxDuration": 30
+    },
+    "api/ads.js": {
+      "maxDuration": 180,
+      "includeFiles": "{media/fonts/**,server/ads/**}"
     }
   },
   "routes": [
@@ -198,6 +202,14 @@
         "Vercel-CDN-Cache-Control": "no-store"
       },
       "continue": true
+    },
+    {
+      "src": "^/api/ads(?:/.*)?$",
+      "dest": "/api/ads.js"
+    },
+    {
+      "src": "^/ads$",
+      "dest": "/ads.html"
     },
     {
       "handle": "filesystem"
