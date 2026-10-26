@@ -35,7 +35,7 @@
   ],
   "accountWasmHash": "c514d35ea67eaea9bfc1fb3327854c0c06111bc1ddebd4fe217c504c1004b9e1",
   "webauthnVerifier": "CC7EKIHQP3TN4CARQDND6CEOY2UXLWWC2X5GHTD5NLAT7BG5GPZIOM3F",
-  "walletCompatibilityVerified": false,
+  "walletCompatibilityVerified": true,
   "registryEvidenceGraceMs": 86400000,
   "placements": {
     "venue_center_banner": {
