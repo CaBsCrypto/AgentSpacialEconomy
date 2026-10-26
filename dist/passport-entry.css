@@ -1,0 +1,29 @@
+/* Direct NFC entry contains only the Passport; the venue is loaded on explicit return. */
+html.passport-direct,html.passport-direct body{margin:0;width:100%;height:100%;overflow:hidden;background:#081523;color-scheme:normal}
+#passportDirect{display:none}
+html.passport-direct:not(.venue-returning) body>:not(#passportDirect):not(#activationDialog):not(#walletQuickOpen){display:none!important}
+html.passport-direct #passportDirect{display:block;position:fixed;inset:0;overflow:hidden;background:#081523}
+#passportDirectFrame{position:absolute;inset:0;z-index:1}
+#passportDirectFrame .passport-embedded-fullscreen{display:block;width:100%;height:100%;border:0;background:transparent;color-scheme:normal}
+#passportDirectCurtain{position:absolute;inset:0;z-index:3;background:#081523;pointer-events:none;opacity:1;transition:opacity 120ms linear}
+#passportDirectCurtain.camera-ready{background:transparent}
+#passportDirectCurtain.is-revealing{opacity:0}
+#passportDirectCover{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);width:min(60vw,280px,48vh);height:auto;opacity:.94;pointer-events:none}
+#passportDirectCover[hidden]{display:none!important}
+#passportDirectStatus{position:absolute;left:50%;top:85%;transform:translateX(-50%);max-width:80vw;width:max-content;margin:0;font:11px/1.6 system-ui,sans-serif;text-align:center;color:rgba(235,243,248,.76)}
+#passportDirectStatus::before{content:'';display:inline-block;width:10px;height:10px;border:1px solid rgba(229,196,126,.25);border-top-color:rgba(229,196,126,.85);border-radius:50%;margin-right:8px;vertical-align:-1px;animation:passport-entry-spin .8s linear infinite}
+#passportDirectRetry{position:absolute;left:50%;top:90%;transform:translateX(-50%);min-height:36px;padding:6px 14px;border:1px solid rgba(235,243,248,.25);border-radius:6px;background:rgba(10,25,42,.18);color:rgba(245,248,251,.9);font:12px system-ui,sans-serif;cursor:pointer;pointer-events:auto}
+#passportDirectRetry[hidden]{display:none!important}
+#passportDirect[data-error=true] #passportDirectStatus::before{display:none}
+@keyframes passport-entry-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#passportDirectCurtain{transition:none}#passportDirectStatus::before{animation:none}}
+
+/* Native AR stays a real top-level link so the visitor's tap reaches the platform viewer. */
+#passportDirect .passport-native-access{position:absolute;left:max(64px,env(safe-area-inset-left));top:max(9px,env(safe-area-inset-top));z-index:2;margin:0}
+#passportDirect .passport-native-access[hidden]{display:none!important}
+#passportDirect .passport-native-link{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:7px 10px;border:1px solid rgba(235,243,248,.22);border-radius:6px;background:rgba(10,25,42,.16);color:rgba(245,248,251,.9);font:11px/1.4 system-ui,sans-serif;text-decoration:none;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+#passportDirect .passport-native-link::after{content:attr(data-label)}
+#passportDirect .passport-native-link img{display:block;width:16px;height:16px;object-fit:contain;opacity:.84}
+#passportDirect .passport-native-link:focus-visible{outline:3px solid rgba(105,227,220,.9);outline-offset:3px}
+@media(max-width:390px){#passportDirect .passport-native-link{font-size:10px;padding:7px 8px;gap:5px}}
+#passportDirect .passport-native-note{width:min(240px,calc(100vw - 88px));margin:6px 0 0;padding:7px 9px;border:1px solid rgba(235,243,248,.18);border-radius:6px;background:rgba(10,25,42,.14);color:rgba(235,243,248,.82);font:10px/1.5 system-ui,sans-serif;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);pointer-events:none}

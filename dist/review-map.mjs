@@ -1,3 +1,4 @@
+import { corridorZ } from './short-corridor.mjs?v=1';
 /** Temporary review coordinates, not a measured venue survey. Informational pins only. */
 const sections = [
  [1,'Exterior · cartel',0,38],
@@ -9,7 +10,7 @@ const sections = [
  [16,'Stands · derecha',3.2,-28.8],[17,'Auditorio',0,-35],[18,'Escenario',0,-43],
  [19,'Photo lounge',10,-38],[20,'Sala acristalada · río',12.4,-19]
 ];
-export const REVIEW_SECTIONS=Object.freeze(sections.map(([id,label,x,z])=>Object.freeze({id,label,x,z,...(id===11?{provisional:true}:{})})));
+export const REVIEW_SECTIONS=Object.freeze(sections.map(([id,label,x,z])=>Object.freeze({id,label,x,z:corridorZ(z),...(id===11?{provisional:true}:{})})));
 const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const finite=n=>typeof n==='number'&&Number.isFinite(n);
 const fmt=n=>Number(n.toFixed(2));

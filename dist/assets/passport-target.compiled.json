@@ -1,0 +1,93 @@
+{
+  "compiler": "mind-ar@1.2.5 OfflineCompiler",
+  "format": 2,
+  "backend": "tensorflowjs-cpu",
+  "input": "dist/assets/passport-target.png",
+  "inputSha256": "121d93ba0f8586a4124df29ee921768e1ded9c72d6826fbc755550e610cb6a5e",
+  "width": 1000,
+  "height": 1200,
+  "output": "dist/assets/passport-target.mind",
+  "bytes": 478629,
+  "sha256": "1df4a319e79f2e5e8404292a99e8b7bea7ff3815128fbeff5e213a551a5f118b",
+  "matching": [
+    {
+      "width": 1000,
+      "height": 1200,
+      "maxima": 212,
+      "minima": 65
+    },
+    {
+      "width": 800,
+      "height": 960,
+      "maxima": 240,
+      "minima": 47
+    },
+    {
+      "width": 635,
+      "height": 762,
+      "maxima": 233,
+      "minima": 48
+    },
+    {
+      "width": 504,
+      "height": 605,
+      "maxima": 200,
+      "minima": 69
+    },
+    {
+      "width": 400,
+      "height": 480,
+      "maxima": 177,
+      "minima": 68
+    },
+    {
+      "width": 317,
+      "height": 381,
+      "maxima": 165,
+      "minima": 54
+    },
+    {
+      "width": 252,
+      "height": 302,
+      "maxima": 138,
+      "minima": 49
+    },
+    {
+      "width": 200,
+      "height": 240,
+      "maxima": 100,
+      "minima": 34
+    },
+    {
+      "width": 159,
+      "height": 190,
+      "maxima": 57,
+      "minima": 26
+    },
+    {
+      "width": 126,
+      "height": 151,
+      "maxima": 35,
+      "minima": 17
+    },
+    {
+      "width": 100,
+      "height": 120,
+      "maxima": 18,
+      "minima": 10
+    }
+  ],
+  "tracking": [
+    {
+      "width": 256,
+      "height": 307,
+      "points": 28
+    },
+    {
+      "width": 128,
+      "height": 154,
+      "points": 10
+    }
+  ],
+  "physicalRecognitionVerified": false
+}

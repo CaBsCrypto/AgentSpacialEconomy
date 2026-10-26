@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head><script data-one16-canonical>(()=>{const u=new URL(location.href),o="https://agenticreality.space",h=["one16-passport-ar.vercel.app","one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site","www.agenticreality.space","agenticreality.space"];if(u.origin!==o&&h.includes(u.hostname))location.replace(o+u.pathname+u.search+u.hash)})();</script><link rel="canonical" href="https://agenticreality.space/passport-station.html">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#091b32">
+  <meta name="description" content="Elige cómo explorar Stellar Passport desde la estación NFC o QR de ONE16.">
+  <title>Stellar Passport · Elige tu experiencia</title>
+  <link rel="stylesheet" href="./passport-station.css?v=1">
+  <script type="module" src="./passport-station.mjs?v=1"></script>
+</head>
+<body>
+  <header class="station-header"><span class="venue">ONE<span>16</span></span><span class="station-label">LISBOA / STAND 16</span></header>
+  <main>
+    <figure class="passport-preview">
+      <div class="preview-frame"><img src="./assets/passport-cover.jpg" alt="Portada azul y dorada de Stellar Passport" width="861" height="1123" fetchpriority="high"></div>
+      <figcaption><span class="marker">16</span> STELLAR PASSPORT</figcaption>
+    </figure>
+    <section class="experience-picker" aria-labelledby="station-title">
+      <p class="eyebrow">TU VISITA EMPIEZA AQUÍ</p>
+      <h1 id="station-title">Un Passport.<br><em>Dos formas de explorar.</em></h1>
+      <p class="intro">Elige cómo quieres vivir la experiencia.</p>
+      <nav class="choices" aria-label="Elige tu experiencia Passport">
+        <a class="choice" data-experience="world" href="./?passport=stand16#recorrido">
+          <span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11.5"/><ellipse cx="16" cy="16" rx="5.2" ry="11.5"/><path d="M4.5 16h23M7 9.5h18M7 22.5h18"/></svg></span>
+          <span class="choice-copy"><strong>Entrar a ONE16</strong><span>Recorre el mundo inmersivo y descubre el Passport en su stand.</span></span><span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="choice" data-experience="ar" href="./passport-space.html">
+          <span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M4 11V4h7M21 4h7v7M28 21v7h-7M11 28H4v-7M16 9l6 3.5v7L16 23l-6-3.5v-7L16 9zM10 12.5l6 3.5 6-3.5M16 16v7"/></svg></span>
+          <span class="choice-copy"><strong>Ver Passport en AR</strong><span>Abre la experiencia con cámara para visualizar el objeto en tu espacio.</span></span><span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </nav>
+      <p id="choiceStatus" class="choice-status" role="status" aria-live="polite"></p>
+      <p class="camera-note">Tú eliges cuándo activar la cámara. No se abre al acercar la tarjeta.</p>
+    </section>
+  </main>
+  <footer><span class="access-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9a4 4 0 010 6M10 6a8 8 0 010 12M14 3a12 12 0 010 18"/></svg></span><p>El QR/NFC abre la estación; no necesitas mantenerlo a la vista.</p></footer>
+</body>
+</html>

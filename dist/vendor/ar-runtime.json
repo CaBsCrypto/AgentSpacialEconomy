@@ -1,0 +1,47 @@
+{
+  "three": "0.160.0",
+  "mindar": "1.2.5",
+  "source": "Exact npm registry tarballs: three@0.160.0 and mind-ar@1.2.5. MindAR distribution retains embedded third-party notices.",
+  "files": [
+    {
+      "file": "dist/vendor/ar-three/build/three.module.js",
+      "sha256": "76dea8151bc9352aef3528b4262e249b2604f62543828328db978d060d61a495"
+    },
+    {
+      "file": "dist/vendor/ar-three/examples/jsm/loaders/GLTFLoader.js",
+      "sha256": "d073b438e6a07e1359741dd5d6c76c953420cc0d4fd84eb1bdde94315540e6a3"
+    },
+    {
+      "file": "dist/vendor/ar-three/examples/jsm/utils/BufferGeometryUtils.js",
+      "sha256": "9be041e96308775d00e2695cc607645b9a9b64fd7c0e759dd8f7c00a8d92becb"
+    },
+    {
+      "file": "dist/vendor/ar-three/examples/jsm/controls/OrbitControls.js",
+      "sha256": "5a44a9e86a2a0fb11933eed69bc2cd33c76a496854c1aed6ed776efa87d7b064"
+    },
+    {
+      "file": "dist/vendor/ar-three/examples/jsm/renderers/CSS3DRenderer.js",
+      "sha256": "e776aad62e4988c78e684a40804cf1c61ccd0a04c9162afaeef5fd1b5f36fded"
+    },
+    {
+      "file": "dist/vendor/ar-three/LICENSE",
+      "sha256": "852e0e8699169bf9f6fdc6bda3e682d078dcbc738b5d33e74df594721bff271d"
+    },
+    {
+      "file": "dist/vendor/mindar/mindar-image-three.prod.js",
+      "sha256": "29c8bd077a2b3777ee48a07575004acd947f18f03bf054ce28a21d454ea26f4f"
+    },
+    {
+      "file": "dist/vendor/mindar/controller-mGt1s8dJ.js",
+      "sha256": "98a90806c01077a46fc5a3daddc6441ac9d61c5b85b3cc09d3f0b2087d228713"
+    },
+    {
+      "file": "dist/vendor/mindar/ui-fBadYuor.js",
+      "sha256": "aed9538fec28fecfb0a564da48fbf053ac2549d3314746e67182d381b3a24c31"
+    },
+    {
+      "file": "dist/vendor/mindar/LICENSE",
+      "sha256": "fa662d0523257f3d10ef3237230fab89ba92e488bf73b402d689c4bdade8a368"
+    }
+  ]
+}

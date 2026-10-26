@@ -18,3 +18,27 @@ model/*-preview.jpg
 
 # Agent run outputs (per-run ledgers and results)
 agent/out/
+
+# Imported venue build and local tooling
+node_modules/
+*.log
+model/*.blend1
+model/stage-preview.png
+model/*preview*.py
+
+model/*-preview.jpg
+model/*-check.jpg
+model/*framing*.py
+model/correct-sign-and-preview.py
+model/*-check.jpg
+model/*-preview.jpg
+.tools/
+.ar-tools/
+.npm-cache/
+/passport-poster-preview.png
+.vercel/
+.vercel
+
+.env
+.env.*
+!.env.example

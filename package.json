@@ -1,1 +1,27 @@
-{"name":"one16-lisbon-immersive","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node --test test/*.test.mjs"},"dependencies":{"three":"0.180.0"}}
+{
+  "name": "one16-lisbon-immersive",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "build:wallet": "node scripts/build-wallet.mjs",
+    "build": "npm run build:origin && npm run build:wallet",
+    "dev": "node --env-file-if-exists=.env.wallet.local scripts/serve-wallet.mjs",
+    "build:origin": "node scripts/prepare-site-origin.mjs"
+  },
+  "dependencies": {
+    "@sozu/faucet": "0.2.0",
+    "@stellar/stellar-sdk": "16.3.0",
+    "@upstash/redis": "1.39.0",
+    "buffer": "6.0.3",
+    "smart-account-kit": "0.9.1",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

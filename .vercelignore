@@ -1,0 +1,17 @@
+.git/
+.vercel/
+node_modules/
+.tools/
+.ar-tools/
+.npm-cache/
+model/
+test/
+docs/
+.openai/
+*.md
+*.log
+dependency-graph.json
+passport-poster-preview.png
+
+.env
+.env.*

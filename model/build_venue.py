@@ -210,14 +210,14 @@ entrance.box((0,2.3,3.65),(3.4,.05,.7),runner)
 # LEFT-of-arrival merch: pale garments on wheeled black racks, dark apparel,
 # mirrored/patterned backdrop, folded stock and tall black/yellow Merch banner.
 for k in range(6):
- xx=-12.3+k*1.12
- entrance.box((xx,8.6,1.5),(1.10,.12,3.0),merchlime if k%2 else mirror)
+ xx=-6.7-k*1.12
+ entrance.box((xx,.45,1.5),(1.10,.12,3.0),merchlime if k%2 else mirror)
  if k%2:
   for row in range(5):
    for col in range(3):
     x=xx-.35+col*.35;z=.3+row*.55
-    entrance.rod((x-.10,8.525,z+.10),(x,8.525,z),.025,black,5);entrance.rod((x,8.525,z),(x+.10,8.525,z+.10),.025,black,5)
-block(-9.5,8.6,6.9,.2)
+    entrance.rod((x-.10,.525,z+.10),(x,.525,z),.025,black,5);entrance.rod((x,.525,z),(x+.10,.525,z+.10),.025,black,5)
+block(-9.5,.45,6.9,.2)
 def garment(x,y,color):
  # T-shirt silhouette, safe generic apparel without copying illegible marks.
  outline=[(-.12,1.65),(-.28,1.60),(-.47,1.40),(-.32,1.26),(-.23,1.38),(-.23,.80),(.23,.80),(.23,1.38),(.32,1.26),(.47,1.40),(.28,1.60),(.12,1.65)]

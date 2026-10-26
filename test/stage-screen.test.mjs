@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import * as THREE from "three";
+import { prepareVenueModel } from "../dist/venue-model.mjs";
 import { GLTFLoader } from "../dist/vendor/three/examples/jsm/loaders/GLTFLoader.js";
 import { cardText, screenPlacement, wrapLines, applyStageCard } from "../dist/stage-screen.mjs";
 
@@ -47,7 +48,8 @@ test("purchased card mounts on the actual venue backdrop after GLTFLoader saniti
   const loader = new GLTFLoader();
   // Node has no image decoder; retain the actual venue geometry and loader naming behavior.
   loader.register(() => ({ name: "headless-textures", loadTexture: () => Promise.resolve(new THREE.Texture()) }));
-  const { scene: model } = await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), "");
+  const { scene: rawModel } = await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), "");
+  const model = prepareVenueModel(rawModel, THREE);
   assert.ok(model.getObjectByName("Yellow_event_backdrop"));
   assert.equal(model.getObjectByName("Yellow event backdrop"), undefined);
 
