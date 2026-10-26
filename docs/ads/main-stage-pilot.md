@@ -45,3 +45,7 @@ Report: 04:30 Santiago / 07:30 Lisbon. Freeze: 06:15 Santiago / 09:15 Lisbon. If
 ## Checkpoint 07:24 UTC / Lisboa
 
 H1 PASS on Vercel Chromium153/WebGL2. H2/H3 implementation and local/native SQL evidence pass; hosted full-build validation in progress. H4 blocked by the existing wallet indexer birth provenance response; no bypass and no charge. H5 NOT VALIDATED. Checkout stays closed. Main/PR28 included by explicit owner approval. Native direct DB18/18; root677 PASS/2 skip; agent42 PASS; Rust9 PASS; reconciliation race fix28 PASS. Physical devices/NFC and real purchase plus five unique passes remain pending.
+
+## Post-promotion checkpoint
+
+Full pilot code deployed as dpl_Fc7NWThdiq5LW8CR9jE7L7G3Q1e4 (3f600c5), checkout DISABLED. Root690 PASS/2 skip; release73/73. Server recovery validates the actual Testnet CreateContractV2 receipt; human connection remains pending. The final native SQL repeat stopped with15/19 passing and4 connectivity failures (read ECONNRESET, connection timeout). No retry after repeated failure. Prior18/18 remains historical evidence, not the final repeat. H4/H5 NOT VALIDATED; no advertiser settlement or canonical five-pass evidence.

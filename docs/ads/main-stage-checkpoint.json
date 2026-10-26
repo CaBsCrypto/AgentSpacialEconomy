@@ -47,5 +47,40 @@
   "newPilotSettlements": 0,
   "canonicalFivePassOrdersValidated": 0,
   "physicalDeviceOrNfcValidation": false,
-  "goPublic": false
+  "goPublic": false,
+  "latestCheckpoint": {
+    "observedAt": "2026-10-26T07:59:50.396398+00:00",
+    "commit": "3f600c5",
+    "publicDeployment": "dpl_Fc7NWThdiq5LW8CR9jE7L7G3Q1e4",
+    "publicFullPilotCode": true,
+    "checkout": "DISABLED",
+    "rootTests": {
+      "passed": 690,
+      "failed": 0,
+      "skipped": 2
+    },
+    "releaseChecks": {
+      "passed": 73,
+      "failed": 0
+    },
+    "walletBirthReceiptServerTest": "VERIFIED_REAL_TESTNET_CREATION_NO_SUBMISSION",
+    "humanConnection": "PENDING_VISIBLE_PROMPT",
+    "latestNativeSql": {
+      "observedAt": "2026-10-26T07:59:50.396398+00:00",
+      "backend": "postgres",
+      "database": "ads_test",
+      "tests": 19,
+      "passed": 15,
+      "failed": 4,
+      "skipped": 0,
+      "result": "STOPPED_CONNECTIVITY_FAILURE",
+      "errors": [
+        "read ECONNRESET",
+        "Connection terminated due to connection timeout"
+      ],
+      "retriesAfterRepeatedCause": 0,
+      "externalSubmissions": 0
+    },
+    "goPublic": false
+  }
 }
