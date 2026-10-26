@@ -1,11 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import * as T from 'three';import{GLTFLoader}from'three/examples/jsm/loaders/GLTFLoader.js';
 import{addPassportStand,isPassportStandObject,PASSPORT_STAND}from'../dist/passport-stand.mjs';
 const loader={load(url,onLoad){assert.equal(url,'./assets/passport-target.png');onLoad(new T.Texture());}};
+function rearRay(){return new T.Raycaster(new T.Vector3(PASSPORT_STAND.view.x,1.45,PASSPORT_STAND.view.z),new T.Vector3(PASSPORT_STAND.x-PASSPORT_STAND.view.x,0,PASSPORT_STAND.z-PASSPORT_STAND.view.z).normalize());}
 test('Passport target faces the reverse of Trustless/Grantfox and is clickable from the rear only',()=>{
  const model=new T.Group(),group=addPassportStand(model,T,{textureLoader:loader});model.updateMatrixWorld(true);
  assert.equal(group.userData.loadState,'ready');assert.equal(group.children.length,1);const panel=group.children[0];assert.equal(panel.geometry.parameters.width,1.2);assert.equal(panel.geometry.parameters.height,1.44);
  const normal=new T.Vector3(0,0,1).transformDirection(panel.matrixWorld);assert.ok(normal.z<-.999);assert.ok(panel.position.z< -27.85,'poster is outside rear surface');
- const rear=new T.Raycaster(new T.Vector3(3.2,1.45,-29.15),new T.Vector3(0,0,1));assert.equal(rear.intersectObject(model,true)[0].object,panel);
+ const rear=rearRay();assert.equal(rear.intersectObject(model,true)[0].object,panel);
  const front=new T.Raycaster(new T.Vector3(3.2,1.45,-26),new T.Vector3(0,0,-1));assert.equal(front.intersectObject(model,true).length,0);
  assert.equal(isPassportStandObject(panel),true);assert.equal(isPassportStandObject({name:'Trustless_Work'}),false);
  assert.equal(addPassportStand(model,T,{textureLoader:loader}),group);assert.equal(model.children.length,1);
@@ -17,7 +18,7 @@ test('adding stand graphic to real GLB leaves original brand and venue geometry 
  const group=addPassportStand(scene,T,{textureLoader:loader});scene.updateMatrixWorld(true);
  for(const b of before){assert.equal(b.o.name,b.name);assert.deepEqual(b.o.position.toArray(),b.position);assert.deepEqual(b.o.quaternion.toArray(),b.quaternion);assert.equal(b.o.geometry,b.geometry);if(b.buffer)assert.deepEqual(b.o.geometry.attributes.position.array,b.buffer);}
  assert.ok(scene.getObjectByName('Stands_label_Trustless_Work'));assert.ok(scene.getObjectByName('Stands_label_Grantfox'));
- const hit=new T.Raycaster(new T.Vector3(PASSPORT_STAND.view.x,1.45,PASSPORT_STAND.view.z),new T.Vector3(0,0,1)).intersectObject(scene,true)[0];assert.ok(isPassportStandObject(hit.object),'rear viewpoint hits poster before original backdrop');assert.equal(group.parent,scene);
+ const hit=rearRay().intersectObject(scene,true)[0];assert.ok(isPassportStandObject(hit.object),'rear viewpoint hits poster before original backdrop');assert.equal(group.parent,scene);
 });
 test('a regenerated source poster is reused without loading a book or duplicating the target',()=>{
  let modelLoads=0,textureLoads=0;
@@ -37,13 +38,23 @@ test('entering stand16 loads only its poster until the Passport experience is ac
  assert.equal(group.children.length,1);assert.equal(group.children[0].name,'PassportStand scan graphic');assert.equal(group.userData.loadState,'ready');
  assert.equal(group.passportMiniReady,undefined);assert.equal(modelLoads,0);assert.equal(textureLoads,1);
  assert.equal(addPassportStand(model,T,options),group);assert.equal(model.children.length,1);assert.equal(group.children.length,1);assert.equal(modelLoads,0);assert.equal(textureLoads,1);
- model.updateMatrixWorld(true);const rear=new T.Raycaster(new T.Vector3(3.2,1.45,-29.15),new T.Vector3(0,0,1));
+ model.updateMatrixWorld(true);const rear=rearRay();
  assert.equal(rear.intersectObject(model,true)[0].object,group.children[0],'poster remains the experience entry point');
 });
 
 test('a failed poster texture keeps a clickable stand target without adding a book',()=>{
  const model=new T.Group(),group=addPassportStand(model,T,{textureLoader:{load(url,onLoad,onProgress,onError){onError(Error('offline'));}}});
  assert.equal(group.userData.loadState,'error');assert.equal(group.children.length,1);assert.equal(isPassportStandObject(group.children[0]),true);
- model.updateMatrixWorld(true);const rear=new T.Raycaster(new T.Vector3(3.2,1.45,-29.15),new T.Vector3(0,0,1));
+ model.updateMatrixWorld(true);const rear=rearRay();
  assert.equal(rear.intersectObject(model,true)[0].object,group.children[0]);
+});
+
+
+test('the lateral approach faces the unchanged stand16 target and clears the desk footprint',()=>{
+ assert.equal(PASSPORT_STAND.view.x,2.25);assert.equal(PASSPORT_STAND.view.z,-29);
+ const dx=PASSPORT_STAND.x-PASSPORT_STAND.view.x,dz=PASSPORT_STAND.z-PASSPORT_STAND.view.z;
+ assert.ok(Math.abs(PASSPORT_STAND.view.yaw-Math.atan2(-dx,-dz))<1e-8);
+ assert.equal(PASSPORT_STAND.x,3.2);assert.equal(PASSPORT_STAND.z,-27.858);
+ assert.equal(PASSPORT_STAND.targetSrc,'./assets/passport-target.png');
+ const leftDeskEdge=3.65-2.02/2;assert.ok(PASSPORT_STAND.view.x+.24<leftDeskEdge);
 });

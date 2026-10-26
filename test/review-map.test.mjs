@@ -7,7 +7,7 @@ test('review registry has stable ordered IDs 1,4–25 and known world coordinate
  assert.equal(REVIEW_SECTIONS[0].z,25);assert.equal(REVIEW_SECTIONS.find(s=>s.id===18).z,-43);assert(Object.isFrozen(REVIEW_SECTIONS));assert(REVIEW_SECTIONS.every(Object.isFrozen));
 });
 test('both full and compact maps include all23 informational pins, actual floor and obstacles',()=>{
- for(const compact of [false,true]){const svg=buildReviewSvg(layout,{compact});assert.equal((svg.match(/data-review-number=/g)||[]).length,23);for(const s of REVIEW_SECTIONS)assert(svg.includes(`data-review-number="${s.id}" data-review-id="${s.id}" data-world-x="${s.x}" data-world-z="${s.z}"`));assert(svg.includes('<polygon'));assert(svg.includes('aria-label="Mapa de revisión'));assert(!svg.includes('<button'));assert(!svg.includes('onclick'));assert(!svg.includes('tabindex'));}
+ for(const compact of [false,true]){const svg=buildReviewSvg(layout,{compact});assert.equal((svg.match(/data-review-number=/g)||[]).length,23);for(const s of resolveReviewSections(layout))assert(svg.includes(`data-review-number="${s.id}" data-review-id="${s.id}" data-world-x="${s.x}" data-world-z="${s.z}"`));assert(svg.includes('<polygon'));assert(svg.includes('aria-label="Mapa de revisión'));assert(!svg.includes('<button'));assert(!svg.includes('onclick'));assert(!svg.includes('tabindex'));}
 });
 test('pose points negative Z/up at yaw0; yawπ/2 rotates left; invalid pose cannot inject markup',()=>{
  assert(buildReviewSvg(layout,{pose:{x:0,z:38,yaw:0}}).includes('rotate(0)'));
@@ -34,6 +34,6 @@ test('new section positions follow their named zone views without changing legac
  assert.equal(sections.find(s=>s.id===25).z,-15);
  assert.deepEqual(sections.find(s=>s.id===11),REVIEW_SECTIONS.find(s=>s.id===11));
  assert.equal(new Set(sections.map(s=>s.id)).size,23);
- assert.deepEqual(sections.filter(s=>s.zone).map(s=>s.zone),['games','skills','energy','photobooth','content-hub']);
+ assert.deepEqual(sections.filter(s=>s.zone).map(s=>s.zone),['buffet','photo','river','games','skills','energy','photobooth','content-hub']);
  const svg=buildReviewSvg(changed);assert.match(svg,/data-review-id="21" data-world-x="-8" data-world-z="-11"/);
 });

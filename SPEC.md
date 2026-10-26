@@ -123,3 +123,8 @@ The owner approved the separate codex/render-textures-ui revision from sponsor r
 - Stellar Passport opt-in profiles for visitors.
 - MPP charge or session mode for high-frequency calls.
 - Verified physical AR on a real Android device; image or geo anchors.
+
+
+## Second venue review authorized on 26 Oct
+
+Continue codex/render-textures-ui from da9b680. Replace lower lounge box seating with rounded padded components, reserve check-in identity areas, add five labeled skills sheets including BACK END, wall-mount the games display with parallel giant keyboard and inward-facing sofa, reconstruct the eighteen-button arcade, and correct all eight white-table horizontal wordmarks and stand gaps. Reduce Content Hub to two bodies (6.6 m), synchronize its entrance/map/collisions, and add four practical fixtures plus two soft shadowless local lights. Separate the football and net for repeatable local tap/accessible-button interaction with reduced motion. Preserve all IDs and approved stage/photo booth designs; label reference 19 Zona de fotos · junto al escenario. Include the owner’s attached food-area screenshot by replacing its centered blocked view with a clear oblique buffet view. Integrate after per-section comparisons, run all existing suites and regressions, verify four agreed viewports on GPU within 5 MiB compressed, and publish one final mobile preview.

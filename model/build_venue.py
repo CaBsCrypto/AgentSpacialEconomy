@@ -6,7 +6,8 @@ from totem import build_totem
 from exterior import build_exterior
 from passport import build_passport_display
 from stands import build_stands
-from experience_zones import build_experience_zones, build_lower_lounge
+from experience_zones import build_experience_zones
+from furniture import build_lower_lounge
 from appearance import apply_appearance, graphic_plane
 random.seed(16)
 ROOT=os.path.dirname(os.path.dirname(__file__)); OUT=os.environ.get('ONE16_BUILD_DIR',ROOT+'/dist/assets');os.makedirs(OUT,exist_ok=True)
@@ -84,14 +85,19 @@ for x in [-10,0,10]:
     roof.face((n,n+1,n+2,n+3),mi);roof.face((n+3,n+2,n+1,n),mi)
   for k in range(1,5):shell.rod((x+side*k,0,6.87-k*.406),(x+side*k,50,6.87-k*.406),.065,structure)
 # Glazed room beside river, partial opening at near end.
-for y in [12+i*1.1 for i in range(12)]:
+for y in [12+i*1.1 for i in range(6)]:
  # Two missing bays form the observed walk-in Content Hub doorway.
  if 12.8<y<14.4:continue
  shell.box((10,y,2.0),(.075,1.06,3.5),glass);shell.box((9.94,y,.5),(.13,1.1,1),structure)
  for z in [1.1,1.8,2.5,3.2,3.75]:shell.box((9.9,y,z),(.12,1.1,.055),structure)
  shell.box((9.9,y-.54,2),(.13,.055,3.6),structure)
-block(10,12,.2,1.1);block(10,19.7,.2,9.9)
-roof.box((12.4,18.4,3.86),(4.85,13.5,.10),structure)
+block(10,12,.2,1.1);block(10,16.4,.2,3.3)
+# End glazing closes the shortened two-body room without changing its doorway.
+shell.box((12.4,18.05,2),(4.85,.075,3.5),glass)
+for xx in [10,11.2,12.4,13.6,14.8]:shell.box((xx,18.05,2),(.055,.13,3.6),structure)
+for zz in [1.1,1.8,2.5,3.2,3.75]:shell.box((12.4,18.05,zz),(4.85,.12,.055),structure)
+block(12.4,18.05,4.85,.20)
+roof.box((12.4,14.75,3.86),(4.85,6.6,.10),structure)
 # Small utility functions for identifiable furniture, not box substitutes.
 def chair(x,y,angle=0,color=black):
  def p(a,b,z):return (x+a*math.cos(angle)-b*math.sin(angle),y+a*math.sin(angle)+b*math.cos(angle),z)
@@ -169,7 +175,7 @@ for yy in [-6,-3,0]:
  entrance.rod((-6,yy,4.45),(6,yy,4.45),.10,structure)
  for xx in [-5.9,5.9]:entrance.rod((xx,yy,2.7),(xx,yy,4.45),.09,structure)
 # Low lounge is OUTSIDE the original main slab; upper hall edge is guarded.
-build_lower_lounge(entrance,block,blue,yellow,low)
+build_lower_lounge(block,M[blue],M[yellow],low)
 for side in [-1,1]:
  # Guarding upper level left/right of stair aperture. Lower lounge not a fallthrough.
  entrance.box((side*3.55,0,-.52),(4.9,.14,1.05),black);block(side*3.55,0,4.9,.2)

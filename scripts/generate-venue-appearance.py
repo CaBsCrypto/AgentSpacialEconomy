@@ -16,8 +16,10 @@ FONTS=[Path("C:/Windows/Fonts/arialbd.ttf"),Path("/usr/share/fonts/truetype/deja
 class Canvas:
     """Draw PNG and editable SVG together, with identical geometry."""
     def __init__(self,w,h,bg=DARK):
-        self.w,self.h=int(w),int(h);self.image=Image.new("RGB",(self.w,self.h),bg);self.draw=ImageDraw.Draw(self.image)
-        self.svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">',f'<rect width="100%" height="100%" fill="{bg}"/>']
+        self.w,self.h=int(w),int(h);self.image=Image.new("RGBA" if bg is None else "RGB",(self.w,self.h),(0,0,0,0) if bg is None else bg);self.draw=ImageDraw.Draw(self.image)
+        self.layout={};self.text_runs=[]
+        self.svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">']
+        if bg is not None:self.svg.append(f'<rect width="100%" height="100%" fill="{bg}"/>')
     def rect(self,box,fill,stroke=None,width=1):
         x,y,xx,yy=map(float,box);self.draw.rectangle((x,y,xx,yy),fill=fill,outline=stroke,width=max(1,int(width)))
         self.svg.append(f'<rect x="{x:g}" y="{y:g}" width="{xx-x:g}" height="{yy-y:g}" fill="{fill or "none"}" stroke="{stroke or "none"}" stroke-width="{width:g}"/>')
@@ -33,21 +35,24 @@ class Canvas:
     def ellipse(self,box,fill,stroke=None,width=1):
         x,y,xx,yy=map(float,box);self.draw.ellipse((x,y,xx,yy),fill=fill,outline=stroke,width=max(1,int(width)))
         self.svg.append(f'<ellipse cx="{(x+xx)/2:g}" cy="{(y+yy)/2:g}" rx="{(xx-x)/2:g}" ry="{(yy-y)/2:g}" fill="{fill or "none"}" stroke="{stroke or "none"}" stroke-width="{width:g}"/>')
-    def text(self,body,box,fill=DARK,size=60,align="center"):
+    def text(self,body,box,fill=DARK,size=60,align="center",stroke=None,stroke_width=0):
         x,y,xx,yy=box;font_path=next((p for p in FONTS if p.exists()),None)
         while True:
             font=ImageFont.truetype(str(font_path),max(7,int(size))) if font_path else ImageFont.load_default(size=max(7,int(size)))
-            bb=self.draw.multiline_textbbox((0,0),body,font=font,spacing=int(size*.12),align=align)
+            bb=self.draw.multiline_textbbox((0,0),body,font=font,spacing=int(size*.12),align=align,stroke_width=stroke_width)
             if size<=7 or (bb[2]-bb[0]<=xx-x-4 and bb[3]-bb[1]<=yy-y-4):break
             size-=1
         tx=x+((xx-x)-(bb[2]-bb[0]))/2-bb[0] if align=="center" else x-bb[0]
         ty=y+((yy-y)-(bb[3]-bb[1]))/2-bb[1]
-        self.draw.multiline_text((tx,ty),body,font=font,fill=fill,spacing=int(size*.12),align=align)
+        self.draw.multiline_text((tx,ty),body,font=font,fill=fill,spacing=int(size*.12),align=align,stroke_fill=stroke,stroke_width=stroke_width)
         lines=body.splitlines();step=size*1.12
         for i,line in enumerate(lines):
             lx=x+(xx-x-self.draw.textlength(line,font=font))/2 if align=="center" else x
             ly=y+(yy-y-len(lines)*step)/2+size+i*step
-            self.svg.append(f'<text x="{lx:g}" y="{ly:g}" fill="{fill}" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="{size:g}">{escape(line)}</text>')
+            outline=f' stroke="{stroke}" stroke-width="{stroke_width*2}" stroke-linejoin="round" paint-order="stroke fill"' if stroke else ""
+            self.svg.append(f'<text x="{lx:g}" y="{ly:g}" fill="{fill}" font-family="Arial,DejaVu Sans,sans-serif" font-weight="700" font-size="{size:g}"{outline}>{escape(line)}</text>')
+        run={"text":body,"box":list(box),"bounds":[tx+bb[0],ty+bb[1],tx+bb[2],ty+bb[3]],"fontSize":size,"font":font_path.name if font_path else "Pillow default"}
+        self.text_runs.append(run);return run
     def vertical(self,body,box,fill=YELLOW,bg=DARK,size=200):
         x,y,xx,yy=map(int,box);part=Canvas(yy-y,xx-x,bg);part.text(body,(0,0,part.w,part.h),fill,size)
         self.image.paste(part.image.rotate(-90,expand=True),(x,y))
@@ -88,20 +93,95 @@ def hack_flower(c,x,y,r,col=DARK):
 def come_move(c,box,col=YELLOW):
     c.text("COME\nMOVE\nWITH\nUS",box,col,(box[3]-box[1])*.26)
 
+def intersects(a,b,padding=0):
+    return a[0]<b[2]+padding and a[2]>b[0]-padding and a[1]<b[3]+padding and a[3]>b[1]-padding
+
+
 def repeated_backdrop(w=2048,h=1280,split=False):
     c=Canvas(w,h,YELLOW)
-    if split:c.rect((0,0,w*.5,h),DARK)
+    reserved=[]
+    if split:
+        c.rect((0,0,w*.5,h),DARK)
+        reserved=[{"id":"made-to-move","box":[w*.02,h*.41,w*.48,h*.64]},
+                  {"id":"event-identity","box":[w*.55,h*.43,w*.97,h*.56]},
+                  {"id":"event-date","box":[w*.68,h*.56,w*.94,h*.60]}]
+    marks=[]
     for row in range(7 if split else 4):
         y=h*(.045+row*.132) if split else h*[.045,.18,.73,.865][row]
         for col in range(6):
-            x=w*(.035+col*.16)
-            brand(c,x,y,w*.135,h*.065,["year","stellar","meridian"][(row+col)%3],YELLOW if split and col<3 else DARK)
+            x=w*(.035+col*.16);box=[x,y,x+w*.135,y+h*.065]
+            if any(intersects(box,item["box"],padding=14) for item in reserved):continue
+            kind=["year","stellar","meridian"][(row+col)%3]
+            brand(c,x,y,w*.135,h*.065,kind,YELLOW if split and col<3 else DARK)
+            marks.append({"kind":kind,"box":box})
     if split:
-        c.text("Made to\nMove",(w*.02,h*.75,w*.48,h*.98),YELLOW,h*.19)
-        brand(c,w*.55,h*.43,w*.42,h*.13);c.text("2026 LISBON",(w*.68,h*.56,w*.94,h*.6),DARK,h*.027)
+        # Keep the principal title above the counter from the frontal approach.
+        title=reserved[0]["box"]
+        reserved[0]["text"]=c.text("Made to\nMove",[title[0]+20,title[1]+16,title[2]-20,title[3]-16],YELLOW,h*.19)
+        brand(c,w*.55,h*.43,w*.42,h*.13)
+        c.text("2026 LISBON",reserved[2]["box"],DARK,h*.027)
     else:
         brand(c,w*.255,h*.405,w*.33,h*.145);c.text("/ 2026\n   LISBON",(w*.595,h*.40,w*.78,h*.56),DARK,h*.065)
+    c.layout={"reserved":reserved,"repeatMarks":marks,"repeatClearancePx":14}
     return c
+
+
+def skills_board():
+    # Five separate sheets; only public category labels, never attendee writing.
+    c=Canvas(1536,1935,"#ecece2");c.rect((10,10,1526,1925),"#f4f4e9",DARK,6)
+    definitions=[
+        ("looking-for-team","LOOKING FOR TEAM","LOOKING\nFOR\nTEAM",[80,90,740,720],12,4),
+        ("data","DATA","DATA",[796,90,1456,720],1,1),
+        ("design","DESIGN","DESIGN",[80,775,740,1375],9,3),
+        ("front-end","FRONT END","FRONT\nEND",[796,775,1456,1375],6,3),
+        ("back-end","BACK END","BACK\nEND",[440,1430,1100,1860],6,3),
+    ]
+    groups=[]
+    for key,label,content,box,count,columns in definitions:
+        x0,y0,x1,y1=box;c.rect(box,WHITE,"#c4c6bd",3)
+        rows=math.ceil(count/columns);diameter=132 if key!="back-end" else 120
+        gap_x=(x1-x0)/(columns+1);gap_y=(y1-y0)/(rows+1);stickers=[]
+        for index in range(count):
+            cx=x0+(index%columns+1)*gap_x;cy=y0+(index//columns+1)*gap_y
+            r=diameter/2;circle=[cx-r,cy-r,cx+r,cy+r]
+            c.ellipse(circle,YELLOW)
+            meridian(c,cx-9,cy-r+11,18,DARK)
+            run=c.text(content,[cx-r+10,cy-r+35,cx+r-10,cy+r-12],DARK,34)
+            stickers.append({"label":label,"circle":circle,"text":run})
+        # A colored note pins the sheet, leaving every category sticker unobscured.
+        c.rect((x1-67,y0+10,x1-14,y0+63),{"looking-for-team":"#4fa5ce","data":"#de8641","design":"#81ba8b","front-end":"#edb836","back-end":"#bd8fd0"}[key])
+        groups.append({"id":key,"label":label,"sheet":box,"normalizedSheet":[x0/c.w,y0/c.h,x1/c.w,y1/c.h],"stickers":stickers})
+    c.layout={"groupCount":5,"groups":groups,"noPersonalData":True}
+    return c
+
+
+def booth_tabletop(key,labels):
+    # The white surface is geometry. Only the cut-out wordmarks are opaque.
+    c=Canvas(2048,712,None)
+    # Fit the observed front-edge decals to the available area at their natural
+    # font aspect. The rear 235 px stay clear for the lamp and monitor.
+    boxes=[[100,270,1948,680]] if len(labels)==1 else [[100,253,1948,455],[100,475,1948,680]]
+    marks=[]
+    for label,box in zip(labels,boxes):
+        run=c.text(label,box,WHITE,1000,stroke=DARK,stroke_width=18 if len(labels)==1 else 16)
+        marks.append({"label":label,"box":box,"text":run})
+    c.layout={"support":"tabletop","physicalSize":[1.84,.64],"readFrom":"visitor",
+              "hardwareReserved":[0,0,2048,235],"wordmarks":marks,"alphaMode":"MASK"}
+    return c
+
+
+def booth_divider_pattern():
+    c=Canvas(2048,1162,DARK)
+    marks=[]
+    for row in range(4):
+        y=65+row*275
+        for col in range(6):
+            x=34+col*338;kind=["meridian","year","stellar"][(row+col)%3]
+            brand(c,x,y,282,118,kind,WHITE)
+            marks.append({"kind":kind,"box":[x,y,x+282,y+118]})
+    c.layout={"support":"divider","physicalSize":[2.82,1.60],"repeatRows":4,"repeatMarks":marks}
+    return c
+
 
 def draw_lisbon(w=1024,h=960,title=True):
     """Authored vector reconstruction of legible illustrated motifs."""
@@ -190,23 +270,12 @@ def write_graphics(folder):
         c.vertical("Energy Corner",(x+35,155,x+210,695),WHITE,YELLOW,100);brand(c,x+20,20,205,53);c.text("Made to\nMove",(x+20,715,x+225,875),DARK,74)
     images["energy-banner"]=c;images["lisbon-mural"]=draw_lisbon();images["photocall"]=draw_photocall();images["stage-backdrop"]=repeated_backdrop();images["stage-flank"]=draw_lisbon(768,1536,False)
     c=Canvas(512,2048,DARK);brand(c,45,35,425,130,col=YELLOW);c.text("Made to",(30,230,482,430),YELLOW,112);c.vertical("Move",(25,450,487,1780),YELLOW,DARK,450);brand(c,80,1860,350,100,"stellar",YELLOW);images["move-banner"]=c
-    c=Canvas(768,1024,"#ecece2");c.rect((8,8,760,1016),"#f4f4e9",DARK,6)
-    # Blank sheets and colored shapes preserve visual appearance, not private writing.
-    for x,y in [(90,120),(420,180),(145,490),(430,570)]:c.rect((x,y,x+220,y+290),WHITE,"#d0d2c7",3)
-    for i in range(21):
-        x=95+(i%7)*82;y=190+(i//7)*262;c.ellipse((x,y,x+34,y+34),YELLOW)
-    for x,y,col in [(75,92,"#4fa5ce"),(575,130,"#de8641"),(160,750,"#81ba8b"),(510,650,"#edb836")]:c.rect((x,y,x+70,y+78),col)
-    images["skills-board"]=c
-    labels={"grantfox-trustless":"Grantfox\nTrustless Work","drips":"DRIPS","guava":"GUAVA","passport":"Stellar\nPassport","57blocks":"57BLOCKS","defindex-soroswap":"DeFindex\nSoroswap","aha":"THE AHA\nCOMPANY","openzeppelin":"OpenZeppelin"}
-    for key,label in labels.items():
-        c=Canvas(1024,1536,DARK);c.text(label,(55,95,969,730),WHITE,175);c.line([(60,1310),(964,1310)],"#4a4c47",2)
-        for j in range(3):brand(c,54+j*326,1380,285,70,"meridian" if j%2==0 else "stellar",WHITE)
-        images["booth-"+key]=c
-    c=Canvas(2048,256,DARK)
-    for i in range(6):brand(c,25+i*340,60,295,110,"stellar" if i%2 else "meridian",WHITE)
-    images["booth-footer"]=c
+    images["skills-board"]=skills_board()
+    labels={"grantfox-trustless":["Grantfox","Trustless Work"],"drips":["DRIPS"],"guava":["GUAVA"],"passport":["Stellar Passport"],"57blocks":["57BLOCKS"],"defindex-soroswap":["DeFindex","Soroswap"],"aha":["THE AHA COMPANY"],"openzeppelin":["OpenZeppelin"]}
+    for key,wordmarks in labels.items():images["booth-"+key]=booth_tabletop(key,wordmarks)
+    images["booth-footer"]=booth_divider_pattern()
     for key,canvas in images.items():canvas.save(folder,key)
-    return {key:{"color":f"graphics/{key}.png","source":f"graphics/{key}.svg","width":canvas.w,"height":canvas.h} for key,canvas in images.items()}
+    return {key:{"color":f"graphics/{key}.png","source":f"graphics/{key}.svg","width":canvas.w,"height":canvas.h,"alphaMode":"MASK" if canvas.image.mode=="RGBA" else "OPAQUE","layout":canvas.layout} for key,canvas in images.items()}
 
 def noise(rng,size,small):
     # Integer-frequency waves repeat exactly at the UV tile boundary.

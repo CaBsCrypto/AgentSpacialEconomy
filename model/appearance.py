@@ -33,31 +33,59 @@ def graphic_material(key):
     if data is None:raise KeyError("Unknown venue graphic: "+key)
     name="Venue graphic • "+key;material=bpy.data.materials.get(name)
     if material:return material
-    material=bpy.data.materials.new(name);material.use_nodes=True
+    material=bpy.data.materials.new(name);material.use_nodes=True;material.use_backface_culling=True
     p=material.node_tree.nodes.get("Principled BSDF");p.inputs["Base Color"].default_value=(1,1,1,1);p.inputs["Roughness"].default_value=.83
     node=material.node_tree.nodes.new("ShaderNodeTexImage");node.image=image(data["color"]);node.interpolation="Linear";node.extension="EXTEND";node.label="Editable source: "+data["source"]
     material.node_tree.links.new(node.outputs["Color"],p.inputs["Base Color"])
+    if data.get("alphaMode")=="MASK":
+        # Blender 4.3's glTF exporter detects the ROUND node as alphaMode MASK.
+        # Eevee's surface_render_method alone would export this as BLEND.
+        clip=material.node_tree.nodes.new("ShaderNodeMath");clip.operation="ROUND";clip.label="glTF alpha cutoff 0.5"
+        material.node_tree.links.new(node.outputs["Alpha"],clip.inputs[0])
+        material.node_tree.links.new(clip.outputs[0],p.inputs["Alpha"])
+        if hasattr(material,"surface_render_method"):material.surface_render_method="DITHERED"
     material["graphic_key"]=key;material["source_svg"]=data["source"]
     return material
 
-def graphic_plane(name,key,center,width,height,facing="-Y"):
-    """Vertical Z-up plane, centered at center. Facing: -Y, +Y, -X or +X."""
-    axes={"-Y":(1,0,0),"+Y":(-1,0,0),"-X":(0,-1,0),"+X":(0,1,0)}
-    if facing not in axes:raise ValueError("facing must be -Y, +Y, -X or +X")
-    right=Vector(axes[facing])*width*.5;up=Vector((0,0,height*.5))
-    mesh=bpy.data.meshes.new(name);mesh.from_pydata([tuple(v) for v in [-right-up,right-up,right+up,-right+up]],[],[(0,1,2,3)]);mesh.update()
+def _graphic_quad(name,key,center,right,up):
+    mesh=bpy.data.meshes.new(name)
+    mesh.from_pydata([tuple(v) for v in [-right-up,right-up,right+up,-right+up]],[],[(0,1,2,3)]);mesh.update()
     obj=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(obj);obj.location=center
     uv=mesh.uv_layers.new(name="UVMap")
     for loop,value in zip(mesh.loops,[(0,0),(1,0),(1,1),(0,1)]):uv.data[loop.index].uv=value
     mesh.materials.append(graphic_material(key));obj["graphic_key"]=key;obj["source_svg"]=manifest()["graphics"][key]["source"]
     return obj
 
+
+def graphic_plane(name,key,center,width,height,facing="-Y"):
+    """Vertical Z-up plane, centered at center. Facing: -Y, +Y, -X or +X."""
+    axes={"-Y":(1,0,0),"+Y":(-1,0,0),"-X":(0,-1,0),"+X":(0,1,0)}
+    if facing not in axes:raise ValueError("facing must be -Y, +Y, -X or +X")
+    obj=_graphic_quad(name,key,center,Vector(axes[facing])*width*.5,Vector((0,0,height*.5)))
+    obj["facing"]=facing
+    return obj
+
+
+def graphic_tabletop(name,key,center,width,depth,read_from="arrival"):
+    """Upward-facing print with metric aspect and an explicit visitor direction."""
+    if read_from not in {"arrival","stage"}:raise ValueError("read_from must be arrival or stage")
+    if width<=0 or depth<=0:raise ValueError("tabletop width and depth must be positive")
+    data=manifest()["graphics"][key]
+    source_aspect=data["width"]/data["height"]
+    if abs(width/depth/source_aspect-1)>.005:
+        raise ValueError("Tabletop graphic aspect must match its physical surface: "+key)
+    direction=1 if read_from=="arrival" else -1
+    obj=_graphic_quad(name,key,center,Vector((direction*width*.5,0,0)),Vector((0,direction*depth*.5,0)))
+    obj["read_from"]=read_from;obj["surface"]="tabletop";obj["physical_width"]=width;obj["physical_depth"]=depth
+    return obj
+
+
 def kind_for_material(name):
     key=name.lower()
     if key.startswith("venue graphic") or any(s in key for s in ["glaz","glass","mirror","emiss","lens","glow","screen","daylight","motif","light furniture"]):return None
     if any(s in key for s in ["painted","graphite","steel","aluminium","metal","oxidised","sliding door","furniture frame"]):return "painted-metal"
     if any(s in key for s in ["masonry","stone","concrete","chalk"]):return "masonry"
-    if any(s in key for s in ["upholstery","textile","fabric","cloth","rug","carpet","runner","beanbag","sofa","lounge stool"]):return "textile"
+    if any(s in key for s in ["upholstery","textile","fabric","cloth","rug","carpet","runner","beanbag","sofa","lounge stool","meridian mustard"]):return "textile"
     if any(s in key for s in ["timber","wood"]):return "wood"
     return None
 

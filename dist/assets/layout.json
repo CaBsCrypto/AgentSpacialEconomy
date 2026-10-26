@@ -528,8 +528,14 @@
     {
       "minX": 9.9,
       "maxX": 10.1,
-      "minZ": -24.65,
+      "minZ": -18.05,
       "maxZ": -14.75
+    },
+    {
+      "minX": 9.975,
+      "maxX": 14.825,
+      "minZ": -18.15,
+      "maxZ": -17.95
     },
     {
       "minX": -2.22,
@@ -544,64 +550,64 @@
       "maxZ": 32.0
     },
     {
-      "minX": -5.44,
-      "maxX": -4.46,
-      "minZ": 2.875,
-      "maxZ": 5.325
+      "minX": -5.635,
+      "maxX": -4.565,
+      "minZ": 2.965,
+      "maxZ": 5.235
     },
     {
-      "minX": -4.905,
-      "maxX": -3.875,
-      "minZ": 2.915,
-      "maxZ": 3.735
+      "minX": -4.635,
+      "maxX": -4.065,
+      "minZ": 4.205,
+      "maxZ": 5.235
     },
     {
-      "minX": -5.44,
-      "maxX": -4.46,
-      "minZ": 0.85,
-      "maxZ": 2.45
+      "minX": -4.335,
+      "maxX": -2.865,
+      "minZ": 0.115,
+      "maxZ": 1.185
     },
     {
-      "minX": -3.58,
-      "maxX": -2.92,
-      "minZ": 4.57,
-      "maxZ": 5.23
+      "minX": -3.605,
+      "maxX": -2.895,
+      "minZ": 4.545,
+      "maxZ": 5.255
     },
     {
-      "minX": -3.58,
-      "maxX": -2.92,
-      "minZ": 1.32,
-      "maxZ": 1.98
+      "minX": -3.605,
+      "maxX": -2.895,
+      "minZ": 1.295,
+      "maxZ": 2.005
     },
     {
-      "minX": 4.46,
-      "maxX": 5.44,
-      "minZ": 2.875,
-      "maxZ": 5.325
+      "minX": 4.565,
+      "maxX": 5.635,
+      "minZ": 2.965,
+      "maxZ": 5.235
     },
     {
-      "minX": 3.875,
-      "maxX": 4.905,
-      "minZ": 4.465,
-      "maxZ": 5.285
+      "minX": 4.065,
+      "maxX": 4.635,
+      "minZ": 4.205,
+      "maxZ": 5.235
     },
     {
-      "minX": 4.46,
-      "maxX": 5.44,
-      "minZ": 0.85,
-      "maxZ": 2.45
+      "minX": 2.865,
+      "maxX": 4.335,
+      "minZ": 0.115,
+      "maxZ": 1.185
     },
     {
-      "minX": 2.92,
-      "maxX": 3.58,
-      "minZ": 4.57,
-      "maxZ": 5.23
+      "minX": 2.895,
+      "maxX": 3.605,
+      "minZ": 4.545,
+      "maxZ": 5.255
     },
     {
-      "minX": 2.92,
-      "maxX": 3.58,
-      "minZ": 1.32,
-      "maxZ": 1.98
+      "minX": 2.895,
+      "maxX": 3.605,
+      "minZ": 1.295,
+      "maxZ": 2.005
     },
     {
       "minX": -6.0,
@@ -900,14 +906,14 @@
     {
       "minX": -4.66,
       "maxX": -2.64,
-      "minZ": -30.275,
-      "maxZ": -29.525
+      "minZ": -29.375,
+      "maxZ": -28.625
     },
     {
       "minX": -4.435,
       "maxX": -3.965,
-      "minZ": -29.625,
-      "maxZ": -29.175
+      "minZ": -28.725,
+      "maxZ": -28.275
     },
     {
       "minX": -5.1,
@@ -918,14 +924,14 @@
     {
       "minX": -4.66,
       "maxX": -2.64,
-      "minZ": -31.075,
-      "maxZ": -30.325
+      "minZ": -31.175,
+      "maxZ": -30.425
     },
     {
       "minX": -4.435,
       "maxX": -3.965,
-      "minZ": -31.425,
-      "maxZ": -30.975
+      "minZ": -31.525,
+      "maxZ": -31.075
     },
     {
       "minX": -4.66,
@@ -960,14 +966,14 @@
     {
       "minX": 2.64,
       "maxX": 4.66,
-      "minZ": -30.275,
-      "maxZ": -29.525
+      "minZ": -29.375,
+      "maxZ": -28.625
     },
     {
       "minX": 3.965,
       "maxX": 4.435,
-      "minZ": -29.625,
-      "maxZ": -29.175
+      "minZ": -28.725,
+      "maxZ": -28.275
     },
     {
       "minX": 2.2,
@@ -978,14 +984,14 @@
     {
       "minX": 2.64,
       "maxX": 4.66,
-      "minZ": -31.075,
-      "maxZ": -30.325
+      "minZ": -31.175,
+      "maxZ": -30.425
     },
     {
       "minX": 3.965,
       "maxX": 4.435,
-      "minZ": -31.425,
-      "maxZ": -30.975
+      "minZ": -31.525,
+      "maxZ": -31.075
     },
     {
       "minX": 2.64,
@@ -1000,52 +1006,60 @@
       "maxZ": -32.875
     },
     {
-      "minX": -13.325,
-      "maxX": -9.975,
-      "minZ": -10.65,
-      "maxZ": -9.55
+      "part": "giant-keyboard",
+      "minX": -14.0,
+      "maxX": -12.9,
+      "minZ": -11.875,
+      "maxZ": -8.525
     },
     {
-      "minX": -12.98,
-      "maxX": -10.32,
-      "minZ": -11.17,
-      "maxZ": -10.93
+      "part": "wall-screen",
+      "minX": -14.905,
+      "maxX": -14.655,
+      "minZ": -11.525,
+      "maxZ": -8.875
     },
     {
-      "minX": -12.675,
-      "maxX": -10.525,
-      "minZ": -13.74,
-      "maxZ": -12.76
+      "part": "wall-facing-sofa",
+      "minX": -12.035,
+      "maxX": -10.965,
+      "minZ": -13.61,
+      "maxZ": -11.49
     },
     {
-      "minX": -12.255,
-      "maxX": -10.945,
-      "minZ": -14.905,
-      "maxZ": -14.195
+      "part": "coffee-table",
+      "minX": -13.23,
+      "maxX": -12.47,
+      "minZ": -14.13,
+      "maxZ": -12.27
     },
     {
-      "minX": -14.14,
-      "maxX": -12.96,
-      "minZ": -16.1,
-      "maxZ": -14.9
+      "part": "black-beanbag",
+      "minX": -14.24,
+      "maxX": -13.06,
+      "minZ": -16.6,
+      "maxZ": -15.4
     },
     {
+      "part": "black-beanbag",
       "minX": -10.74,
       "maxX": -9.56,
       "minZ": -18.25,
       "maxZ": -17.05
     },
     {
-      "minX": -13.03,
-      "maxX": -11.17,
-      "minZ": -17.865,
-      "maxZ": -16.635
-    },
-    {
-      "minX": -14.745,
-      "maxX": -14.495,
+      "part": "patterned-light-grid",
+      "minX": -14.77,
+      "maxX": -14.47,
       "minZ": -15.8,
       "maxZ": -14.0
+    },
+    {
+      "part": "reaction-arcade",
+      "minX": -13.05,
+      "maxX": -11.15,
+      "minZ": -17.87,
+      "maxZ": -16.63
     },
     {
       "minX": 5.025,
@@ -1055,7 +1069,7 @@
     },
     {
       "minX": 13.645,
-      "maxX": 14.495,
+      "maxX": 14.495000000000001,
       "minZ": -29.675,
       "maxZ": -27.325
     },
@@ -1090,46 +1104,34 @@
       "maxZ": -40.25
     },
     {
-      "minX": 13.385,
-      "maxX": 14.415,
-      "minZ": -18.1,
-      "maxZ": -15.9
+      "minX": 13.38,
+      "maxX": 14.42,
+      "minZ": -17.35,
+      "maxZ": -15.15
     },
     {
-      "minX": 11.9,
-      "maxX": 12.5,
-      "minZ": -17.65,
-      "maxZ": -17.05
+      "minX": 11.15,
+      "maxX": 13.35,
+      "minZ": -12.6,
+      "maxZ": -11.56
     },
     {
-      "minX": 13.385,
-      "maxX": 14.415,
-      "minZ": -23.1,
-      "maxZ": -20.9
+      "minX": 13.13,
+      "maxX": 13.77,
+      "minZ": -14.32,
+      "maxZ": -13.68
     },
     {
-      "minX": 11.9,
-      "maxX": 12.5,
-      "minZ": -22.65,
-      "maxZ": -22.05
+      "minX": 11.545,
+      "maxX": 12.755,
+      "minZ": -15.84,
+      "maxZ": -15.16
     },
     {
-      "minX": 11.32,
-      "maxX": 12.68,
-      "minZ": -20.03,
-      "maxZ": -19.27
-    },
-    {
-      "minX": 13.32,
-      "maxX": 14.08,
-      "minZ": -24.355,
-      "maxZ": -23.645
-    },
-    {
-      "minX": 10.53,
-      "maxX": 11.27,
-      "minZ": -21.62,
-      "maxZ": -20.88
+      "minX": 10.5,
+      "maxX": 11.2,
+      "minZ": -17.25,
+      "maxZ": -16.55
     }
   ],
   "bounds": {
@@ -1228,7 +1230,7 @@
     },
     {
       "id": "buffet",
-      "label": "Buffet · encuentro",
+      "label": "Comidas · buffet",
       "polygon": [
         [
           -4.8,
@@ -1248,9 +1250,10 @@
         ]
       ],
       "view": {
-        "x": 3,
-        "z": -7,
-        "yaw": 0.6
+        "x": 3.1,
+        "z": -7.1,
+        "yaw": 1.11,
+        "pitch": -0.16
       }
     },
     {
@@ -1282,7 +1285,7 @@
     },
     {
       "id": "photo",
-      "label": "Photocall · chill zone",
+      "label": "Zona de fotos · junto al escenario",
       "polygon": [
         [
           6.2,
@@ -1505,7 +1508,7 @@
       "label": "Stellar Passport · stand 16",
       "polygon": [
         [
-          2.4,
+          2.0,
           -29.4
         ],
         [
@@ -1517,14 +1520,14 @@
           -28.1
         ],
         [
-          2.4,
+          2.0,
           -28.1
         ]
       ],
       "view": {
-        "x": 3.2,
-        "z": -29.15,
-        "yaw": 3.141592653589793,
+        "x": 2.25,
+        "z": -29.0,
+        "yaw": -2.4477162975382067,
         "pitch": 0
       },
       "status": "Passport image-tracking demo on reverse of Trustless Work / Grantfox."
@@ -1579,12 +1582,13 @@
         ]
       ],
       "view": {
-        "x": -9.2,
-        "z": -12,
-        "yaw": 0.9
+        "x": -7.7,
+        "z": -9.3,
+        "yaw": 1.42,
+        "pitch": -0.12
       },
       "reviewSection": 21,
-      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+      "evidence": "October26 narrated games footage; topology observed, dimensions estimated."
     },
     {
       "id": "skills",
@@ -1600,17 +1604,18 @@
         ],
         [
           7.2,
-          -7.2
+          -6.75
         ],
         [
           3.6,
-          -7.2
+          -6.75
         ]
       ],
       "view": {
-        "x": 4.3,
-        "z": -8,
-        "yaw": 0
+        "x": 5.8,
+        "z": -6.9,
+        "yaw": 0,
+        "pitch": -0.1
       },
       "reviewSection": 22,
       "evidence": "October 26 narrated walkthrough; local scale and position estimated."
@@ -1639,10 +1644,11 @@
       "view": {
         "x": 11,
         "z": -28.5,
-        "yaw": -1.5707963267948966
+        "yaw": -1.5707963267948966,
+        "pitch": -0.35
       },
       "reviewSection": 23,
-      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+      "evidence": "VID_20261026_021930226.mp4; placement estimated from the narrated walkthrough."
     },
     {
       "id": "photobooth",
@@ -1679,28 +1685,29 @@
       "polygon": [
         [
           10.25,
-          -25
+          -18.05
         ],
         [
           14.6,
-          -25
+          -18.05
         ],
         [
           14.6,
-          -12
+          -11.45
         ],
         [
           10.25,
-          -12
+          -11.45
         ]
       ],
       "view": {
         "x": 11.6,
-        "z": -14,
-        "yaw": -0.25
+        "z": -13.9,
+        "yaw": -0.75,
+        "pitch": -0.18
       },
       "reviewSection": 25,
-      "evidence": "October 26 narrated walkthrough; local scale and position estimated."
+      "evidence": "October 26 narrated walkthrough; dimensions estimated; owner requested two bodies."
     }
   ],
   "exteriorRoute": [
@@ -1721,6 +1728,7 @@
     "dividerCount": 4,
     "positionCount": 8,
     "aisleWidth": 4.4,
+    "interRowClearance": 1.05,
     "dimensionsStatus": "Estimated from narrated video",
     "positions": [
       {
@@ -1732,6 +1740,12 @@
         "table": {
           "x": -3.65,
           "z": -26.5
+        },
+        "visitorView": {
+          "x": -1.1,
+          "z": -25.5,
+          "yaw": 1.197069506829343,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1742,7 +1756,13 @@
         "face": "stage",
         "table": {
           "x": -3.65,
-          "z": -29.9
+          "z": -29.0
+        },
+        "visitorView": {
+          "x": -1.1,
+          "z": -30.0,
+          "yaw": 1.94452314676045,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1753,7 +1773,13 @@
         "face": "arrival",
         "table": {
           "x": -3.65,
-          "z": -30.7
+          "z": -30.8
+        },
+        "visitorView": {
+          "x": -1.1,
+          "z": -29.8,
+          "yaw": 1.197069506829343,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1765,6 +1791,12 @@
         "table": {
           "x": -3.65,
           "z": -33.6
+        },
+        "visitorView": {
+          "x": -1.1,
+          "z": -34.6,
+          "yaw": 1.94452314676045,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1776,6 +1808,12 @@
         "table": {
           "x": 3.65,
           "z": -26.5
+        },
+        "visitorView": {
+          "x": 1.1,
+          "z": -25.5,
+          "yaw": -1.197069506829343,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1786,7 +1824,13 @@
         "face": "stage",
         "table": {
           "x": 3.65,
-          "z": -29.9
+          "z": -29.0
+        },
+        "visitorView": {
+          "x": 1.1,
+          "z": -30.0,
+          "yaw": -1.94452314676045,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1797,7 +1841,13 @@
         "face": "arrival",
         "table": {
           "x": 3.65,
-          "z": -30.7
+          "z": -30.8
+        },
+        "visitorView": {
+          "x": 1.1,
+          "z": -29.8,
+          "yaw": -1.197069506829343,
+          "pitch": -0.30323103419302916
         }
       },
       {
@@ -1809,6 +1859,12 @@
         "table": {
           "x": 3.65,
           "z": -33.6
+        },
+        "visitorView": {
+          "x": 1.1,
+          "z": -34.6,
+          "yaw": -1.94452314676045,
+          "pitch": -0.30323103419302916
         }
       }
     ]
@@ -1843,10 +1899,473 @@
       "z": -39
     }
   ],
+  "games": {
+    "coordinateSystem": "Blender Z-up; viewer converts (x,y,z) to (x,z,-y)",
+    "dimensionsStatus": "Estimated from narrated video; not field measured",
+    "referenceClips": [
+      "VID_20261026_021305476.mp4",
+      "VID_20261026_021331223.mp4",
+      "VID_20261026_021339259.mp4"
+    ],
+    "screen": {
+      "center": [
+        -14.78,
+        10.2,
+        1.9
+      ],
+      "size": [
+        0.12,
+        2.55,
+        1.42
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "mountedTo": "left masonry wall",
+      "floorStand": false
+    },
+    "keyboard": {
+      "center": [
+        -13.45,
+        10.2,
+        0.76
+      ],
+      "width": 3.25,
+      "depth": 0.99,
+      "angle": 1.5707963267948966
+    },
+    "sofa": {
+      "center": [
+        -11.5,
+        12.55,
+        0
+      ],
+      "width": 2.05,
+      "angle": -1.5707963267948966,
+      "front": [
+        -1,
+        0,
+        0
+      ],
+      "looksToward": [
+        -14.78,
+        12.55,
+        0.7
+      ]
+    },
+    "table": {
+      "center": [
+        -12.85,
+        13.2,
+        0.44
+      ],
+      "size": [
+        0.7,
+        1.8,
+        0.055
+      ]
+    },
+    "grid": {
+      "center": [
+        -14.67,
+        14.9,
+        1.48
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "columns": 4,
+      "rows": 3,
+      "patterns": [
+        "diagonal-weave",
+        "cross-lattice",
+        "diamonds",
+        "scallops",
+        "chevrons",
+        "petals",
+        "honeycomb",
+        "concentric-arcs",
+        "diagonal-bands",
+        "starburst",
+        "waves",
+        "stone-cells"
+      ],
+      "patternStatus": "Twelve distinct reconstructed motifs; exact individual designs estimated"
+    },
+    "arcade": {
+      "center": [
+        -12.1,
+        17.25,
+        0.45
+      ],
+      "topHeight": 0.94,
+      "topSize": [
+        1.8,
+        1.12
+      ],
+      "buttons": [
+        {
+          "id": "blue-1-1",
+          "player": "blue",
+          "row": 1,
+          "rowCount": 1,
+          "center": [
+            -12.8,
+            17.25,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-2-1",
+          "player": "blue",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -12.6,
+            17.073,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-2-2",
+          "player": "blue",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -12.6,
+            17.25,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-2-3",
+          "player": "blue",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -12.6,
+            17.427,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-3-1",
+          "player": "blue",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -12.4,
+            16.896,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-3-2",
+          "player": "blue",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -12.4,
+            17.073,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-3-3",
+          "player": "blue",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -12.4,
+            17.25,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-3-4",
+          "player": "blue",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -12.4,
+            17.427,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "blue-3-5",
+          "player": "blue",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -12.4,
+            17.604,
+            1.015
+          ],
+          "color": "blue"
+        },
+        {
+          "id": "red-1-1",
+          "player": "red",
+          "row": 1,
+          "rowCount": 1,
+          "center": [
+            -11.4,
+            17.25,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-2-1",
+          "player": "red",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -11.6,
+            17.073,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-2-2",
+          "player": "red",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -11.6,
+            17.25,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-2-3",
+          "player": "red",
+          "row": 2,
+          "rowCount": 3,
+          "center": [
+            -11.6,
+            17.427,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-3-1",
+          "player": "red",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -11.8,
+            16.896,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-3-2",
+          "player": "red",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -11.8,
+            17.073,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-3-3",
+          "player": "red",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -11.8,
+            17.25,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-3-4",
+          "player": "red",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -11.8,
+            17.427,
+            1.015
+          ],
+          "color": "red"
+        },
+        {
+          "id": "red-3-5",
+          "player": "red",
+          "row": 3,
+          "rowCount": 5,
+          "center": [
+            -11.8,
+            17.604,
+            1.015
+          ],
+          "color": "red"
+        }
+      ],
+      "buttonType": "short illuminated plunger",
+      "joystickCount": 0,
+      "start": {
+        "center": [
+          -12.1,
+          17.25,
+          1.015
+        ],
+        "label": "START",
+        "color": "amber"
+      },
+      "scoreLocation": "horizontal tabletop along the same long edge",
+      "scores": [
+        {
+          "player": "blue",
+          "value": "654",
+          "center": [
+            -12.23,
+            17.706,
+            0.948
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        {
+          "player": "red",
+          "value": "255",
+          "center": [
+            -11.969999999999999,
+            17.706,
+            0.948
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      ],
+      "scoreStatus": "Recorded visual reference from 021339259 at 8.5 s; not live scoring",
+      "ledBars": [
+        {
+          "center": [
+            -12.26,
+            17.25,
+            0.952
+          ],
+          "player": "blue"
+        },
+        {
+          "center": [
+            -11.94,
+            17.25,
+            0.952
+          ],
+          "player": "red"
+        }
+      ],
+      "topView": {
+        "camera": [
+          -12.1,
+          17.25,
+          4.8
+        ],
+        "target": [
+          -12.1,
+          17.25,
+          0.94
+        ],
+        "orthographicSpan": 2.2
+      }
+    },
+    "zone": {
+      "id": "games",
+      "label": "Juegos · teclado gigante y arcade",
+      "polygon": [
+        [
+          -14.5,
+          -18.8
+        ],
+        [
+          -6.8,
+          -18.8
+        ],
+        [
+          -6.8,
+          -8.4
+        ],
+        [
+          -14.5,
+          -8.4
+        ]
+      ],
+      "view": {
+        "x": -7.7,
+        "z": -9.3,
+        "yaw": 1.42,
+        "pitch": -0.12
+      },
+      "reviewSection": 21
+    }
+  },
+  "football": {
+    "home": {
+      "x": 12.65,
+      "y": 0.15,
+      "z": -28.1
+    },
+    "target": {
+      "x": 14.08,
+      "y": 0.15,
+      "z": -28.5
+    }
+  },
   "contentHubEntrance": {
     "x": 10,
     "z": -13.65,
     "width": 2.2,
-    "status": "Approximate doorway; content light is a requested visual addition."
+    "status": "Estimated doorway retained; four bodies reduced to two."
+  },
+  "contentHub": {
+    "bodies": 2,
+    "length": 6.6,
+    "width": 4.85,
+    "minY": 11.45,
+    "maxY": 18.05,
+    "linearLuminaires": 4,
+    "softLights": [
+      {
+        "x": 11.6,
+        "y": 2.75,
+        "z": -13.3
+      },
+      {
+        "x": 12.9,
+        "y": 2.75,
+        "z": -16.3
+      }
+    ]
   }
 }

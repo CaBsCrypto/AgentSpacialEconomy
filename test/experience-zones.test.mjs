@@ -46,9 +46,9 @@ test('the multipane Content Hub has a reversible walking entrance',()=>{
 
 test('physical games, skills board, goal, camera and sofas are collision obstacles',()=>{
   for(const [name,x,z] of [
-    ['giant keyboard',-11.65,-10.1],['arcade',-12.1,-17.25],
+    ['giant keyboard',-13.45,-10.2],['arcade',-12.1,-17.25],
     ['skills board',5.8,-9.5],['goal',14.07,-28.5],
-    ['photobooth tripod',11.65,-34],['Content Hub sofa',13.9,-17],
+    ['photobooth tripod',11.65,-34],['Content Hub sofa',13.9,-16.25],
   ])assert.equal(canStand(x,z,layout),false,`${name} allows walking through it`);
 });
 
@@ -77,4 +77,26 @@ test('every zone remains connected to the entrance on a 0.25m collision and elev
     const nearby=[[0,0],[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dz])=>visited.has(key(ix+dx,iz+dz)));
     assert.ok(nearby,`${zone.id} cannot be reached from the entrance`);
   }
+});
+
+test('two-body Content Hub frees the former room and retains four practical fixtures',()=>{
+  assert.equal(layout.contentHub.bodies,2);
+  assert.equal(layout.contentHub.length,6.6);
+  assert.equal(layout.contentHub.linearLuminaires,4);
+  assert.equal(layout.contentHub.softLights.length,2);
+  assert.ok(canStand(12.3,-22,layout),'Former far furniture must be removed');
+  assert.notEqual(roomAt({x:12.3,z:-22},layout.zones),'content-hub');
+});
+test('food viewpoint and photo reference use the reviewed perspectives and labels',()=>{
+  const food=layout.zones.find(z=>z.id==='buffet');
+  assert.ok(food.view.z < -6.7,'Food view must move past the central check-in panel');
+  assert.ok(food.view.yaw > .8,'Oblique food view must expose the counters');
+  assert.equal(layout.zones.find(z=>z.id==='photo').label,'Zona de fotos · junto al escenario');
+});
+
+test('skills preset centers its board in a portrait-width field of view',()=>{
+ const view=layout.zones.find(z=>z.id==='skills').view;
+ assert.equal(view.x,5.8);assert.equal(view.yaw,0);
+ assert.ok(Math.abs(view.z+9.5)>2.5,'Portrait view must fit the 1.45m board');
+ assert.ok(view.pitch<0);
 });

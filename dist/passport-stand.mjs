@@ -2,7 +2,7 @@
 export const PASSPORT_STAND = Object.freeze({
  id:'passport-stand16',name:'PassportStand target panel',x:3.2,y:1.45,z:-27.858,
  width:1.2,height:1.44,targetSrc:'./assets/passport-target.png',
- view:Object.freeze({x:3.2,z:-29.15,yaw:Math.PI,pitch:0})
+ view:Object.freeze({x:2.25,z:-29.0,yaw:Math.atan2(-.95,-1.142),pitch:0})
 });
 export function isPassportStandObject(object){
  for(let o=object;o;o=o.parent)if(/^PassportStand/.test(o.name||''))return true;
