@@ -82,5 +82,38 @@
       "externalSubmissions": 0
     },
     "goPublic": false
+  },
+  "sponsorshipCheckpoint": {
+    "observedAt": "2026-10-26T08:26:02.283362+00:00",
+    "commit": "0061c14",
+    "deploymentId": "dpl_2uydH3pHnY5GvBbRN1ct6KhNhGR7",
+    "checkout": "DISABLED",
+    "realExistingWalletAuthentication": true,
+    "observedUsdcBalance": "100",
+    "balanceIsGrantProof": false,
+    "firstProviderVerification": {
+      "result": "REJECTED",
+      "reason": "invalid_exact_stellar_payload_fee_exceeds_maximum",
+      "simulatedFeeStroops": 246420,
+      "maximumFeeStroops": 50000,
+      "evidence": "Exact offline hash comparison; no replay",
+      "settlementSubmitted": false
+    },
+    "selectedProvider": "https://channels.openzeppelin.com/x402/testnet",
+    "supportedProbe": {
+      "ok": true,
+      "x402Version": 2,
+      "network": "stellar:testnet",
+      "scheme": "exact",
+      "areFeesSponsored": true
+    },
+    "secondProviderAuthorization": "WAITING_HUMAN",
+    "rootTests": {
+      "passed": 704,
+      "failed": 0,
+      "skipped": 2
+    },
+    "newPilotSettlements": 0,
+    "goPublic": false
   }
 }

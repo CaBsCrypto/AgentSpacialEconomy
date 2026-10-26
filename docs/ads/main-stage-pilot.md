@@ -49,3 +49,7 @@ H1 PASS on Vercel Chromium153/WebGL2. H2/H3 implementation and local/native SQL 
 ## Post-promotion checkpoint
 
 Full pilot code deployed as dpl_Fc7NWThdiq5LW8CR9jE7L7G3Q1e4 (3f600c5), checkout DISABLED. Root690 PASS/2 skip; release73/73. Server recovery validates the actual Testnet CreateContractV2 receipt; human connection remains pending. The final native SQL repeat stopped with15/19 passing and4 connectivity failures (read ECONNRESET, connection timeout). No retry after repeated failure. Prior18/18 remains historical evidence, not the final repeat. H4/H5 NOT VALIDATED; no advertiser settlement or canonical five-pass evidence.
+
+## Sponsorship checkpoint
+
+Real existing-wallet recovery and WebAuthn authentication PASS in IAB. First facilitator rejected the real verify-only payload at its 50000-stroop ceiling (fresh simulation fee246420); exact verdict hash verified offline without replay. Explicit OZ Testnet provider now deployed, supported2/exact/Testnet/sponsored PASS. New human signature pending, checkout DISABLED, no settlement. Root704 PASS/2 skip. Native SQL final-repeat connectivity stop remains open; no retries. PUBLIC stays NO-GO.
