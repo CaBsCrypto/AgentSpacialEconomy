@@ -202,8 +202,8 @@ mod test {
         let first = Address::generate(&env);
         let second = Address::generate(&env);
         client.reserve(&offer, &first);
-        assert_eq!(client.try_reserve(&offer, &second), Err(Ok(Error::AlreadyReserved)));
-        assert_eq!(client.try_reserve(&offer, &first), Err(Ok(Error::AlreadyReserved)));
+        assert_eq!(client.try_reserve(&offer, &second), Err(Ok(soroban_sdk::Error::from_contract_error(Error::AlreadyReserved as u32))));
+        assert_eq!(client.try_reserve(&offer, &first), Err(Ok(soroban_sdk::Error::from_contract_error(Error::AlreadyReserved as u32))));
         assert_eq!(client.get(&offer).unwrap().holder, Some(first));
     }
 
@@ -216,7 +216,7 @@ mod test {
         client.publish(&project, &offer, &id(&env, 9));
         assert_eq!(
             client.try_publish(&project, &offer, &id(&env, 10)),
-            Err(Ok(Error::DuplicateOffer))
+            Err(Ok(soroban_sdk::Error::from_contract_error(Error::DuplicateOffer as u32)))
         );
         assert_eq!(client.get(&offer).unwrap().space, id(&env, 9));
     }
@@ -228,11 +228,11 @@ mod test {
         let (client, _, _) = setup(&env);
         assert_eq!(
             client.try_publish(&id(&env, 2), &id(&env, 7), &id(&env, 9)),
-            Err(Ok(Error::WrongProject))
+            Err(Ok(soroban_sdk::Error::from_contract_error(Error::WrongProject as u32)))
         );
         assert_eq!(client.get(&id(&env, 42)), None);
         let brand = Address::generate(&env);
-        assert_eq!(client.try_reserve(&id(&env, 42), &brand), Err(Ok(Error::UnknownOffer)));
+        assert_eq!(client.try_reserve(&id(&env, 42), &brand), Err(Ok(soroban_sdk::Error::from_contract_error(Error::UnknownOffer as u32))));
     }
 
     #[test]
