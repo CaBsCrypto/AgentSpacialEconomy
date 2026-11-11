@@ -1,0 +1,32 @@
+name: Soroban contracts
+
+on:
+  push:
+    paths: ["contracts/**", ".github/workflows/contracts.yml"]
+  pull_request:
+    paths: ["contracts/**", ".github/workflows/contracts.yml"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        contract: [ads-registry, reservation]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts/${{ matrix.contract }}
+      - name: Test
+        run: cargo test --manifest-path contracts/${{ matrix.contract }}/Cargo.toml
+      - name: Build WASM
+        run: cargo build --release --target wasm32v1-none --manifest-path contracts/${{ matrix.contract }}/Cargo.toml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.contract }}.wasm
+          path: contracts/${{ matrix.contract }}/target/wasm32v1-none/release/*.wasm
