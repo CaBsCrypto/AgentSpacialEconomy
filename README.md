@@ -259,6 +259,7 @@ The Passport interaction belongs inside the ONE16 experience. The standalone Pas
 | Agents and economy | **Implemented on Stellar testnet (one bounded loop):** mandate, venue agent → stage agent allocation, SEP-41 treasury allowance, budget ledger with per-call cap, x402 payments in testnet USDC, operator dashboard. Planned: more zones and agents, operator approvals and per-day smart-account policies. No real money. |
 | Stage screen | Implemented: the card bought by the stage agent is drawn on the stage backdrop; no change if no run is published. Placement in WebGL still to be checked on devices. |
 | Builder profiles | Planned: consent-based Stellar Passport/profile integration; no live profile synchronization. |
+| Reservation contract (Instawards sprint) | Week-1 skeleton in `contracts/reservation`: one host, one project, one holder per offer, with tests and CI; not yet deployed. Scope: `docs/instawards/SOW-v0.7.txt`. |
 | Landing as sales channel | Value proposition, types of space, services with status, engagement models, B2C/B2B demo entry points and a quote request drafted on the visitor's device ([PR #34](https://github.com/CaBsCrypto/AgentSpacialEconomy/pull/34)). |
 
 ### Source and release checks
@@ -321,4 +322,4 @@ This is an interpretive reconstruction, not a measured architectural survey. Geo
 
 This is an independent prototype. Use of Stellar, Stellar Passport, HackMeridian and venue names or visual references does **not** imply official sponsorship, endorsement or affiliation. “Sponsor” describes a proposed experience category, not a confirmed commercial relationship.
 
-Third-party names, artwork and assets retain their respective rights. Three.js includes its license in `dist/vendor/three/LICENSE` after vendoring. Public source availability does not itself grant a blanket license to project code or third-party assets; check applicable licenses and obtain permission before reuse. Raw reference recordings, personal information and credentials do not belong in public commits.
+Project source code, including the Soroban contracts in `contracts/`, is released under the MIT License (`LICENSE`). Third-party names, artwork and assets retain their respective rights and are not covered by that license. Three.js includes its license in `dist/vendor/three/LICENSE` after vendoring. Check applicable licenses and obtain permission before reusing third-party assets. Raw reference recordings, personal information and credentials do not belong in public commits.

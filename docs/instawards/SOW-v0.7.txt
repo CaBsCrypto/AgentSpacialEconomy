@@ -1,0 +1,134 @@
+Instawards Statement of Work (SOW)
+30-Day Scoped Engagement
+1. Project & Team Information
+Field
+Value
+Project Name
+Agentic Reality Space
+Builder / Team
+Gonzalo Camps / agenticreality
+Primary Contact
+Gonzalo Camps · gonzalocampsv@gmail.com
+Ambassador Chapter
+Chile
+Ambassador Chapter Lead
+Bastian Koh
+Suggested Sprint Start Date
+To be agreed · 30 days from approved start
+
+2. Instawards Overview & Intent
+2.1 Purpose
+Deliver the first verifiable host setup and exclusive reservation flow for Agentic Reality Space on Stellar Testnet.
+A host describes a venue or event in a mobile web conversation, defines its spaces, reviews a manual map and publishes an approved offer. A test brand reserves it with a wallet; a second brand demonstrates rejection. The host decides space quantity, names and purposes and confirms publication.
+The test unit is one host, one project, host-defined spaces and one exclusive offer. Agreed demo limits are conditional, not a fixed maximum or a promise of unlimited capacity. Authorized test material creates no commercial commitment. AR remains a future ambition.
+3. Problem Statement & Objective
+3.1 Problem Being Addressed
+Conversation, spatial representation and reservation must become one persistent, authorized flow. The reviewed website is an agent and advertising prototype with historical activity and receipts, not this host flow. Its quote form says it does not save or send data; AdsRegistry records commitments and delivery, not AVAILABLE → RESERVED. The reviewed agent plan is deterministic, not conversational onboarding.
+Stellar must make host and brand authorization and the sole reserving account independently verifiable. It cannot certify venue rights, physical availability or advertising delivery. Review main and open PRs before reuse; the required capabilities remain to be built and validated.
+3.2 Objective
+Within 30 days, deliver a mobile flow that restores confirmed spaces and a manual map, publishes one approved offer and proves a single authorized reservation on Testnet. A compact demo package will distinguish off-chain steps, simulations and confirmed transactions.
+4. Scope of Work
+Deliverable 1
+Reservation Contract Tested and Deployed
+Build:
+Project authorization: initialize one proposed contract instance with the project and host through a controlled, one-time operation. Reject takeover and repeated initialization. Confirm the mechanism in week 1; an open multihost registry is not included.
+Publication: require the authorized host signature and matching project. Create a unique, opaque offerID linked to the project and reference space, with the host account and AVAILABLE state. Reject reused IDs without overwriting records. Another account’s signature cannot authorize the named host.
+Reservation: require the brand’s authorization for an existing AVAILABLE offer. Atomically record that account and change the state to RESERVED. Reject every later attempt, including a same-account retry, without changing the first holder. Recover an already confirmed result instead of submitting another reservation.
+Queries and events: expose offer identity, project, host, state and holder when present. Unknown IDs return explicit absence, never availability. Publish identifiable publication and reservation events linked to transactions. Read confirmed contract state rather than cached local availability.
+Tests and deployment: deliver source, test instructions/results, Contract ID and deployment receipt. Cover valid signatures, missing authorization, wrong project, repeated initialization, duplicate IDs, missing offers, retries and competing reservations. Label mocked authorization; it does not replace real Testnet signing validation.
+Why this matters
+Two requests for the same offerID must not create two holders, regardless of interface buttons. This does not detect different IDs describing the same physical space. The demo excludes calendars, time slots and overlap detection. RESERVED is final; document technical storage retention without adding commercial expiry.
+Implementation architecture
+Keep conversations, working projects, media, map relationships and approved card snapshots off-chain with account/project access control. On-chain data is limited to opaque IDs, accounts, states and events. Wallets sign operations; private keys never go to the backend or assistant. offerID links a published snapshot but does not cryptographically prove its content or venue rights.
+Deliverable 2
+Mobile Host and Brand Interface
+Build:
+Conversational onboarding: collect venue/event context and suggest spaces. The host adds or removes spaces and changes names and purposes within agreed demo limits, then reviews a summary and confirms. Assistance may propose structure, but cannot publish or sign.
+Persistence and review: save project, spaces and confirmation state under the authenticated account and restore on re-entry. Relevant edits return the card to review. Publication stores an approved snapshot linked to offerID so later edits cannot silently change the published offer.
+Manual map and card: upload an authorized image or plan; place, move and link manual points to defined spaces. Save media and relationships. Show the approved name, purpose, context and representation without inferred measurements, 3D reconstruction or certified coordinates.
+Publication and reservation: the host explicitly publishes the approved card by wallet. The brand queries availability and signs reserve. Distinguish available, pending, confirmed and error; show success only after transaction confirmation and a contract read, with holder and verifiable transaction link.
+Privacy and usability: restrict working projects, conversations and files by account/project. The brand sees only the approved demo card. Test isolation, direct URLs, absent/expired sessions, file/field validation, loading/empty states, rejected signatures, network failure and safe retries. Verify one agreed mobile browser/wallet and the same flow on desktop.
+Why this matters
+The host must organize the venue without a terminal. Human review prevents an incorrect proposal becoming an offer; the brand must distinguish a submitted request from a confirmed reservation. Native apps and universal compatibility are not promised.
+Deliverable 3
+End-to-End Integration & Recorded Demo
+Build:
+Run authenticated host → conversation → space edits/confirmation → manual map → approved card → signed publication → signed reservation → RESERVED query. Repeat with the same brand and a competing account; both attempts must preserve the first holder.
+Deliver one demo package: the working app and final commit, a short narrated video and one concise README. The README combines test results, reproduction steps, transaction links matched to video timestamps, configuration and limits. Use authorized test material; distinguish private steps, simulations and confirmed transactions.
+Why this matters
+The reviewer can trace the same version through interface, contract and receipts and reproduce its result. A success screen or disconnected components do not prove the complete flow.
+4.1 Out of Scope
+This sprint runs only on Stellar Testnet. Test XLM may cover technical transaction fees; no commercial or test payment flow is included.
+Mainnet, commercial reservations, payments, escrow, revenue sharing, settlement and refunds.
+Cancellation, reopening, holder transfer, commercial expiry, time slots and overlap detection across offers or venues; guarantees against duplicate descriptions of physical spaces.
+Native apps, production AR, glasses, sensors, CCTV, automatic mapping and 3D reconstruction.
+Impression measurement, attribution, ad delivery, legal-rights verification, independent security certification, production scaling and ongoing commercial support.
+4.2 Deliverable-Aligned Budget Request
+Requested Budget: USD $5,000
+Portal and guided conversation: USD $1,500. D2 structure, edits, confirmation and persistence.
+Manual map and offer card: USD $1,000. D2 image, points, space links and approved card.
+Soroban contract and integration: USD $1,500. D1/D3 tests, Testnet and wallet integration.
+QA and documentation: USD $1,000. D1–D3 regression, video, evidence and reproduction guide.
+The estimate assumes direct founder participation and verified reuse of interface, configuration and components. It does not assume existing onboarding or AdsRegistry solves this scope. Confirm technical capacity and time commitment before the start.
+Demo hosting, storage, conversation calls and tools fit within the total and their workstreams. Set quotas in week 1; indefinite subscriptions and operation after review are not included. If foundations or dependencies are inadequate, agree on revised scope or timing. Do not silently remove privacy, authorization or single-reservation controls.
+4.3 Implementation Decisions & Baseline
+Before starting, confirm technical owner, availability, access and date. Week 1 closes reuse from main/open PRs, host initialization and card-linked IDs, authentication/storage, conversation service if needed, wallet/browser, file/space/call limits, costs and reviewer access. Limits must permit host-defined spaces and a repeatable demo within budget.
+Baseline: static review of main commit abef964d003596b1671153150bcab3aaaecfea17, including package.json, dist/platform.mjs, contracts/ads-registry/src/lib.rs and server/wallet/config.mjs. No tests or deployments were run. Read-only website inspection on November 9, 2026 did not repeat payments or wallet creation and was not an audit.
+The dashboard showed recorded October 26 activity: an advertising order was Queued at 0/300 seconds. Receipts do not prove ad delivery. References: agenticreality.space and github.com/CaBsCrypto/AgentSpacialEconomy; TrustLeaf SOW 1/2 provide structure, not Agentic implementation evidence.
+5. 30-Day Execution Plan
+Each week has one primary output. Tests are quality checks within that output; evidence is collected as work progresses and consolidated at closeout. Days run from the approved start, with days 29–30 included in week 4.
+Week 1 · Contract Foundation · Days 1–7
+Implement the smallest contract for one authorized host/project and one exclusive offer, with a basic project, space and offer schema. Check existing code, access, cost limits and the chosen mobile wallet before committing to reuse.
+Quality checks: validate authorization, initialization, publication and the single-holder state transition locally, including wrong-project and duplicate-ID rejection. Confirm that the chosen wallet can sign; deployment and full app integration follow in week 3.
+Expected Output: A small tested reservation contract with its basic data schema.
+Week 2 · Host Prepared Offer · Days 8–14
+Build one mobile path from guided conversation to a host-reviewed offer card. The host defines space quantity, names and purposes, links manual points on an authorized image or plan, and confirms the result. Save and restore this working project.
+Quality checks: verify re-entry, point-to-space links, required review after edits, file validation and account/session isolation, including direct access. The prepared card remains off-chain until the host explicitly publishes it in week 3.
+Expected Output: One persistent, host-confirmed offer ready for publication.
+Week 3 · Testnet Reservation · Days 15–21
+Deploy the contract to Testnet and connect the approved card to host-signed publication and a brand-signed reservation. Use one stable offerID; show success only after transaction confirmation and a contract-state read.
+Quality checks: reject missing or invalid authorization, unknown offers, same-brand retries and competing reservations while preserving the first holder. Check pending, rejected and uncertain transaction responses, and reconcile state before retrying.
+Expected Output: One end-to-end Testnet reservation with a single confirmed holder.
+Week 4 · Validated Demo · Days 22–30
+Days 22–28: stabilize the same flow, fix blockers and rerun affected checks on the agreed mobile setup and desktop. Include persistence, permissions, maps and network/storage failures. Record a short walkthrough and consolidate existing evidence in the README.
+Days 29–30: verify D1–D3 against A1–A5, reconcile the app, commit, video and receipts, and complete reviewer handover. Document limits, Testnet dependencies and reproduction without secrets; a listed test is not a passed test.
+Expected Output: One validated demo package with its video and concise evidence README.
+6. Evidence of Completion
+Submit D1–D3 as one demo package. The README connects tests, reproduction, the final commit, video timestamps and Testnet receipts; label private steps and simulations.
+Evidence Verification Checklist
+Deliverable
+Evidence Present
+Partial
+Missing
+Reservation Contract
+☐
+☐
+☐
+Host & Brand Interface
+☐
+☐
+☐
+Integrated Flow & Demo
+☐
+☐
+☐
+
+The reviewer marks evidence availability; “present” does not mean accepted.
+Acceptance criteria
+A1. Host edits/confirms spaces, recovers them on re-entry and restores point-to-space links. Relevant edits require card review.
+A2. Only the authorized host publishes. Reject wrong project, absent/invalid authorization, repeat initialization and duplicate IDs without changing valid records.
+A3. A signed reservation changes AVAILABLE → RESERVED with one holder. Reject unknown offers and later same/competing-account attempts; preserve the first holder.
+A4. Account/project isolation and absent/expired-session tests protect private data, including direct URLs. Only required IDs, accounts, state and events are public.
+A5. Rejected signatures, failures and uncertain responses never show false success. Query before retrying; app, commit, video, network, contract and receipts match.
+Acceptance requires D1–D3 and A1–A5 to pass. Unauthorized publication, data exposure, two holders or false confirmation are blockers. Declare other limits and their impact for reviewer confirmation.
+7. Next-Step Alignment
+Further Instawards depend on current rules and this sprint’s results. Payments, scale and spatial experiences require separate scope and funding. A possible USD 150,000 SCF request over 12 months remains aspirational and subject to its call and independent review, not approved funding.
+8. Instawards Constraints Acknowledgement
+Verify current Instawards rules before submission; these checks do not establish eligibility or acceptance.
+☐ 30 days or less.  ☐ Defined execution, not open exploration.
+☐ Maximum two follow-on Instawards.  ☐ USD $5,000 per award.
+☐ USD $15,000 cumulative limit.  ☐ Chapter, reviewer, start and required licensing.
+DRAFT v0.7: scope review pending; no signature, funding approval or disbursement account.
+Contact
+Gonzalo Camps · gonzalocampsv@gmail.com
+Agentic Reality Space · agenticreality.space
