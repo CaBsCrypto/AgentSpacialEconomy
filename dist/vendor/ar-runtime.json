@@ -1,7 +1,7 @@
 {
   "three": "0.160.0",
   "mindar": "1.2.5",
-  "source": "Exact npm registry tarballs: three@0.160.0 and mind-ar@1.2.5. MindAR distribution retains embedded third-party notices.",
+  "source": "Exact npm registry tarballs: three@0.160.0 and mind-ar@1.2.5. MindAR distribution retains embedded third-party notices. The separately supplied MindAR LICENSE uses LF line endings.",
   "files": [
     {
       "file": "dist/vendor/ar-three/build/three.module.js",
@@ -41,7 +41,7 @@
     },
     {
       "file": "dist/vendor/mindar/LICENSE",
-      "sha256": "fa662d0523257f3d10ef3237230fab89ba92e488bf73b402d689c4bdade8a368"
+      "sha256": "d01c3d2bb87a9219c4a41f68028494d58713d6294cccafdccc8b125ac216cb5d"
     }
   ]
 }
