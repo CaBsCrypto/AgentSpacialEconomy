@@ -1,5 +1,21 @@
 # SPEC — the MVP for HackMeridian 2026
 
+## Current execution scope approved 13 November 2026
+
+The owner approved implementing the milestone plan in `docs/milestones/implementation-plan.md`.
+The historical hackathon sections below remain evidence, not a release-readiness claim.
+The current order is stabilization, public Testnet reservations, then public Testnet advertising.
+Only one authorized host/project is supported. Reservations move an opaque offer from AVAILABLE
+to RESERVED with one holder and no payment. The application permits one available offer per
+project. A later demo offer has a new ID and never resets a prior reservation.
+The host reviews AI proposals, defines up to twenty spaces, maps them manually and approves an
+immutable snapshot before signing publication. Brands can reserve with a compatible passkey wallet.
+Advertising remains a separate five-USDC-Testnet offer for five complete sixty-second full-screen
+passes. Quadrants and additional plans are excluded. New sales must not erase delivery obligations.
+There is no authorization for additional spending: use only verified existing credits and quotas;
+otherwise the affected capability stays disabled. No mainnet, new paid plans or automatic top-ups.
+The full milestone gates, tests and external dependencies are tracked in the execution plan.
+
 > Scope is this file. Anything not listed here goes to the **Backlog** at the bottom, not into the code.
 > Derived from `THESIS.md`. If the thesis changes, update this file next.
 

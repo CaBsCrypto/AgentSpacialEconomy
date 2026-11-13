@@ -1,5 +1,11 @@
 # THESIS — Agentic Realities · Spatial AI for Venues and Events
 
+The owner-approved November increment connects one host's reviewed spatial offer to an exclusive
+Testnet reservation by a brand, then separately integrates the demonstrated advertising pilot.
+Implementation is gated by privacy, authorization, confirmed state and zero additional spend.
+See `docs/milestones/implementation-plan.md`. This is an implementation objective, not a claim that
+public reservations or advertising are already live.
+
 > Single source of truth. Change the idea **here first**, then update `SPEC.md`, `DESIGN.md`, the README, the landing hero and the pitch.
 
 ## One line

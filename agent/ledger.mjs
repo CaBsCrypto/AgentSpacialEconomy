@@ -44,13 +44,15 @@ export class Ledger {
     }
     for (const row of json.rows) {
       const r = { ...row };
-      // A reservation without an outcome means we crashed mid-payment. We cannot know whether the
-      // facilitator settled it, so we never retry it automatically.
-      if (r.status === "reserved") {
+      // Older failed rows did not distinguish a preflight error from a timeout after payment.
+      // Preserve their budget until reconciliation, too. Existing legacy reconciliation rows
+      // already counted their amount in spent; the new budgetHold marker avoids double counting.
+      if (r.type === "payment" && (["reserved", "payment-pending"].includes(r.status) || (r.status === "failed" && r.retrySafe !== true))) {
         r.status = "needs-reconciliation";
         r.reason = "interrupted during payment; check the payer account before retrying";
-        ledger.agents[r.agent].spent += toUnits(r.priceUsdc);
+        r.budgetHold = "reserved";
       }
+      if (r.status === "needs-reconciliation" && r.budgetHold === "reserved") ledger.agents[r.agent].reserved += toUnits(r.priceUsdc);
       ledger.rows.push(r);
       if (r.key) ledger.byKey.set(r.key, r);
     }
@@ -85,7 +87,7 @@ export class Ledger {
   authorize({ agent, service, priceUsdc, key }) {
     if (!key) throw new Error("An idempotency key is required");
     const prior = this.byKey.get(key);
-    if (prior && prior.status !== "failed" && prior.status !== "blocked") {
+    if (prior && prior.status !== "blocked" && !(prior.status === "failed" && prior.retrySafe === true)) {
       return { ok: false, duplicate: true, reason: `already ${prior.status}`, row: prior };
     }
     const price = toUnits(priceUsdc);
@@ -109,7 +111,7 @@ export class Ledger {
   }
 
   settle(key, { tx = null, payer = null, note = null } = {}) {
-    const row = this.#reserved(key);
+    const row = this.#openPayment(key);
     const a = this.agents[row.agent];
     const price = toUnits(row.priceUsdc);
     a.reserved -= price;
@@ -120,9 +122,22 @@ export class Ledger {
   }
 
   release(key, reason) {
+    // Only a reservation that has not entered the payment transport can be released.
     const row = this.#reserved(key);
     this.agents[row.agent].reserved -= toUnits(row.priceUsdc);
-    Object.assign(row, { status: "failed", reason, releasedAt: this.clock() });
+    Object.assign(row, { status: "failed", reason, retrySafe: true, releasedAt: this.clock() });
+    return row;
+  }
+
+  beginPayment(key) {
+    const row = this.#reserved(key);
+    Object.assign(row, { status: "payment-pending", paymentStartedAt: this.clock() });
+    return row;
+  }
+
+  uncertain(key, reason, { tx = null, payer = null } = {}) {
+    const row = this.#openPayment(key);
+    Object.assign(row, { status: "needs-reconciliation", budgetHold: "reserved", reason, tx, payer, explorer: explorerUrl(this.network, tx) });
     return row;
   }
 
@@ -169,6 +184,12 @@ export class Ledger {
   #reserved(key) {
     const row = this.byKey.get(key);
     if (!row || row.status !== "reserved") throw new Error(`No open reservation for ${key}`);
+    return row;
+  }
+
+  #openPayment(key) {
+    const row = this.byKey.get(key);
+    if (!row || !["reserved", "payment-pending"].includes(row.status)) throw new Error(`No open payment for ${key}`);
     return row;
   }
 
