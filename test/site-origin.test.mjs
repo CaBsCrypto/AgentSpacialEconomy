@@ -20,7 +20,7 @@ test('inline guard uses replace before storage/modules and preserves the browser
 test('every standalone entry has the same early canonical guard and its own canonical URL',()=>{
  const dir=new URL('../dist/',import.meta.url);for(const filename of fs.readdirSync(dir).filter(name=>name.endsWith('.html'))){
   const html=fs.readFileSync(new URL(filename,dir),'utf8');assert.equal((html.match(/data-one16-canonical/g)||[]).length,1,filename);
-  assert.ok(html.includes('href="'+CANONICAL_ORIGIN+(filename==='index.html'?'/one16':filename==='platform.html'?'/':'/'+filename)+'"'),filename);
+  assert.ok(html.includes('href="'+CANONICAL_ORIGIN+(filename==='index.html'?'/one16':filename==='platform.html'?'/':filename==='reservations.html'?'/reservas':'/'+filename)+'"'),filename);
  }
 });
 test('host redirects keep old NFC routes; wallet APIs and access metadata cannot be cached',()=>{

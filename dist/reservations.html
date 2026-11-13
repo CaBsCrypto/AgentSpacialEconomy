@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head><script data-one16-canonical>(()=>{const u=new URL(location.href),o="https://agenticreality.space",h=["one16-passport-ar.vercel.app","one16-lisbon-hackmeridian-3d.cabscryptocontacto.chatgpt.site","www.agenticreality.space","agenticreality.space"];if(u.origin!==o&&h.includes(u.hostname))location.replace(o+u.pathname+u.search+u.hash)})();</script><link rel="canonical" href="https://agenticreality.space/reservas">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0e2635">
+  <meta name="description" content="Revisa y reserva una oferta de prueba en Stellar Testnet con Agentic Realities.">
+  <title>Reservas de prueba · Agentic Realities</title>
+  <link rel="stylesheet" href="/reservations.css?v=1">
+  <script type="module" src="/reservations.mjs?v=1"></script>
+</head>
+<body data-reservations>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="/" aria-label="Agentic Realities, inicio">AGENTIC<br>REALITIES <span aria-hidden="true">↗</span></a>
+    <nav aria-label="Navegación principal"><a href="/one16">Explorar ONE16 ↗</a><a href="#ofertas">Ofertas</a></nav>
+    <span class="network-badge">STELLAR TESTNET</span>
+  </header>
+  <main id="contenido" class="wrap">
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">UN ESPACIO · UNA VERSIÓN REVISADA</p>
+      <h1 id="title">Reservas<br><span>de prueba.</span></h1>
+      <p class="intro-copy">Revisa una oferta publicada y reserva su identificador en Stellar Testnet. Este flujo no transfiere USDC ni confirma disponibilidad comercial del espacio.</p>
+    </section>
+    <section class="session-bar" aria-label="Acceso a reservas">
+      <div><p class="eyebrow">TU ACCESO</p><p id="session-label">Consultando disponibilidad del servicio…</p><p id="session-detail" class="small muted"></p></div>
+      <div class="actions"><button id="retry-session" type="button" hidden>Volver a consultar mi sesión</button><button id="connect" type="button" disabled>Conectar mi wallet</button><button id="authenticate" type="button" hidden>Verificar acceso</button><button id="logout" type="button" class="secondary" hidden>Cerrar sesión</button></div>
+    </section>
+    <p id="global-status" role="status" aria-live="polite" class="status"></p>
+    <p id="global-error" role="alert" class="error" hidden></p>
+    <div id="capabilities" class="notice" hidden></div>
+    <nav class="section-nav" aria-label="Secciones de reservas"><a href="#ofertas">Ofertas publicadas</a><a id="host-link" href="#mi-espacio" hidden>Mi espacio</a></nav>
+    <section id="attempt-section" class="panel attempt" hidden aria-labelledby="attempt-heading">
+      <p class="eyebrow">TU OPERACIÓN</p><h2 id="attempt-heading">Consulta de estado</h2>
+      <div id="attempt-content"></div>
+      <div class="actions"><button id="check-attempt" type="button" class="secondary">Consultar estado</button><button id="recover-attempt" type="button" hidden>Revisar intención pendiente</button><button id="sign-attempt" type="button" hidden>Firmar operación</button></div>
+    </section>
+    <section id="ofertas" class="catalog" aria-labelledby="offers-heading">
+      <div class="section-heading"><div><p class="eyebrow">CATÁLOGO PÚBLICO</p><h2 id="offers-heading">Ofertas publicadas</h2></div><button id="refresh-offers" type="button" class="secondary">Actualizar catálogo</button></div>
+      <p class="muted">Cada ficha conserva la versión aprobada. La reserva corresponde a un identificador de oferta, sin calendario, cancelación ni cambio de titular.</p>
+      <div id="offers-list" class="offer-grid"><p>Consultando ofertas…</p></div>
+      <section id="reserve-review" class="panel review" hidden aria-labelledby="reserve-heading"><h3 id="reserve-heading">Revisa tu reserva</h3><div id="reserve-content"></div><label class="check"><input id="reserve-consent" type="checkbox">Revisé esta versión y entiendo el alcance de la reserva de prueba.</label><div class="actions"><button id="prepare-reserve" type="button" disabled>Preparar reserva</button><button id="cancel-reserve" type="button" class="secondary">Volver al catálogo</button></div></section>
+    </section>
+    <section id="mi-espacio" class="host-section" hidden aria-labelledby="host-heading">
+      <div class="section-heading"><div><p class="eyebrow">SOLO PARA TU CUENTA DE ANFITRIÓN</p><h2 id="host-heading">Mi espacio</h2></div><button id="reload-project" type="button" class="secondary">Consultar versión guardada</button></div>
+      <ol class="steps" aria-label="Pasos del proyecto"><li><a href="#contexto">01 Contexto</a></li><li><a href="#espacios">02 Espacios</a></li><li><a href="#mapa">03 Mapa</a></li><li><a href="#revision">04 Revisión</a></li><li><a href="#publicacion">05 Publicación</a></li></ol>
+      <div id="project-loading" class="notice">Restaurando el proyecto…</div>
+      <div id="project-workspace" hidden>
+        <form id="project-form">
+          <section id="contexto" class="panel"><p class="eyebrow">01 · CONTEXTO</p><h3>Describe tu proyecto</h3>
+            <label for="project-title">Nombre del proyecto</label><input id="project-title" maxlength="120" required>
+            <label for="project-context">Contexto del espacio o evento</label><textarea id="project-context" maxlength="4000" rows="4" aria-describedby="context-help"></textarea><p id="context-help" class="small muted">Describe qué quieres organizar y para quién. Evita guardar información privada innecesaria.</p>
+          </section>
+          <section id="espacios" class="panel"><div class="section-heading"><div><p class="eyebrow">02 · ESPACIOS</p><h3>Define tus espacios</h3></div><span id="space-count" class="pill"></span></div><div id="spaces-list"></div><button id="add-space" type="button" class="secondary">Añadir espacio</button></section>
+          <section id="mapa" class="panel"><p class="eyebrow">03 · MAPA MANUAL</p><h3>Ubica los espacios</h3><p class="muted">PNG, JPEG o WebP; máximo 2 MiB y 2048 píxeles por lado. Las posiciones son manuales, sin dimensiones ni ubicación geográfica inferidas.</p>
+            <label class="check"><input id="media-rights" type="checkbox">Tengo autorización para utilizar esta imagen en la oferta de prueba.</label>
+            <label for="map-file">Añadir imagen o plano</label><input id="map-file" type="file" accept="image/png,image/jpeg,image/webp" aria-describedby="map-replace-help"><p id="map-replace-help" class="small muted">Sustituir el plano conserva los espacios y elimina sus posiciones para que las revises sobre la nueva imagen.</p>
+            <button id="upload-map" type="button" class="secondary">Subir imagen seleccionada</button>
+            <div id="map-editor" hidden><label for="map-space">Espacio que quieres ubicar</label><select id="map-space"></select><p class="small muted">Guarda los espacios nuevos primero. Puedes tocar el plano o usar «Añadir punto» y editar sus coordenadas con el teclado.</p><div id="map-canvas" class="map-canvas"><img id="map-image" alt="Plano privado del proyecto"><div id="map-markers" class="map-markers"></div></div><button id="add-point" type="button" class="secondary">Añadir punto en 50%, 50%</button><div id="points-list"></div></div>
+          </section>
+          <div class="save-bar"><div><strong id="save-state">Guardado</strong><p class="small muted">Los cambios se guardan sólo al pulsar el botón.</p><p class="small muted">Los borradores inactivos durante 30 días pueden eliminarse mediante mantenimiento. Las versiones ligadas a ofertas y los recibos se conservan.</p></div><button id="save-project" type="submit">Guardar cambios</button></div>
+        </form>
+        <section id="project-conflict" class="panel conflict" hidden><h3>Compara antes de continuar</h3><p>Tus cambios locales no se sobrescribieron. Revisa la versión guardada y vuelve a editar sobre ella.</p><div id="conflict-comparison" class="compare-grid"></div><button id="use-server-project" type="button" class="secondary">Usar versión guardada y descartar cambios locales</button></section>
+        <section class="panel assistant" aria-labelledby="assistant-heading"><p class="eyebrow">AYUDA OPCIONAL</p><h3 id="assistant-heading">Organiza tus espacios con ayuda</h3><p class="muted">El asistente propone. Tú decides qué incorporar; no publica ni firma por ti.</p><div id="conversation" class="conversation"></div><label for="assistant-message">Tu mensaje</label><textarea id="assistant-message" rows="3" maxlength="4000"></textarea><p id="assistant-capability" class="small muted"></p><button id="ask-assistant" type="button">Solicitar propuesta</button><div id="proposal" class="proposal" hidden></div></section>
+        <section id="revision" class="panel review"><p class="eyebrow">04 · REVISIÓN</p><h3>Esto verá la marca</h3><label for="review-space">Espacio para la oferta</label><select id="review-space"></select><div id="review-preview"></div><p>La imagen completa de esta revisión podrá verse en la oferta publicada. Revisa también los textos que contiene la propia imagen.</p><label class="check"><input id="approve-consent" type="checkbox">Revisé esta versión y autorizo su publicación de prueba.</label><p class="small muted">Aprobar crea una versión guardada. Todavía no publica ni reserva.</p><button id="approve-project" type="button" disabled>Aprobar esta versión</button></section>
+        <section id="publicacion" class="panel"><p class="eyebrow">05 · PUBLICACIÓN</p><h3>Versión aprobada</h3><div id="approved-preview"><p>Todavía no hay una versión aprobada.</p></div><p id="publication-capability" class="small muted"></p><button id="prepare-publish" type="button" disabled>Preparar publicación</button></section>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap"><span>Agentic Realities · Prototipo independiente</span><a href="/">Volver al inicio ↗</a><p>Stellar Testnet. Una reserva de prueba no acredita derechos sobre un recinto.</p></footer>
+  <noscript><p class="wrap notice">Esta página necesita JavaScript para consultar las ofertas y verificar tu sesión. No se ha iniciado ninguna operación.</p></noscript>
+</body>
+</html>

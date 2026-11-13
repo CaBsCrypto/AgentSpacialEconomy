@@ -15,6 +15,9 @@
     },
     "api/wallet/config.js": {
       "maxDuration": 30
+    },
+    "api/reservations.js": {
+      "maxDuration": 180
     }
   },
   "routes": [
@@ -198,6 +201,19 @@
         "Vercel-CDN-Cache-Control": "no-store"
       },
       "continue": true
+    },
+    {
+      "src": "^/reservations\\.html$",
+      "headers": { "Location": "/reservas" },
+      "status": 308
+    },
+    {
+      "src": "^/reservas$",
+      "dest": "/reservations.html"
+    },
+    {
+      "src": "^/api/reservations(?:/.*)?$",
+      "dest": "/api/reservations.js"
     },
     {
       "handle": "filesystem"

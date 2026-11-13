@@ -4,6 +4,10 @@
 
 Graphics tests use the pinned Python dependencies in `scripts/render-requirements.txt`. `WALLET_RPC_SMOKE` is disabled in this general workflow. The separate manually triggered testnet workflows retain their existing scope; passing this workflow does not provide new payment or mobile-device evidence.
 
+Reservations also run against an ephemeral PostgreSQL 17 service on a standard Ubuntu runner. Its credentials belong only to that disposable job. The test helper requires `NODE_ENV=test` and the exact `reservations_test` database, creates a random isolated schema, applies the actual migrations, and drops only that checked schema after the test. The suite includes 100 rounds of twenty concurrent contenders using independent PostgreSQL sessions; wallet, chain and external providers remain local adapters. A successful PGlite run is not substituted for this job. The new reservation candidate must pass its own remote run before its native-database gate is accepted.
+
+The optional browser fixture verifier is `node scripts/verify-reservations-ui.mjs`, using an already installed Chromium selected through `PLAYWRIGHT_CHROMIUM_EXECUTABLE` when needed. It does not download a browser or call live providers. Its API/wallet fixtures verify the page behavior, not deployed authorization; independent integration and real-device gates remain separate.
+
 Before a deployment, reconcile the configured Vercel runtime with `package.json`'s Node 22.x requirement. The November inspection reported Node 24.x in the project settings; this change does not alter cloud configuration.
 
 ## AR runtime bytes

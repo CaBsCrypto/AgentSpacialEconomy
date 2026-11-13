@@ -27,6 +27,8 @@ export function resolvePlatformRequest(href) {
   const url = webUrl(href);
   if (!url) return null;
   const suffix = url.search + url.hash;
+  if (url.pathname === '/reservas/' || url.pathname === '/reservations.html') return { type: 'redirect', status: 308, destination: '/reservas' + suffix };
+  if (url.pathname === '/reservas') return { type: 'file', pathname: '/reservations.html' };
   if (url.pathname === '/one16/' || url.pathname === '/index.html') return { type: 'redirect', status: 308, destination: ONE16_PATH + suffix };
   if (url.pathname === '/platform.html') return { type: 'redirect', status: 308, destination: '/' + suffix };
   if (url.pathname === ONE16_PATH) return { type: 'file', pathname: '/index.html' };
@@ -37,5 +39,5 @@ export function resolvePlatformRequest(href) {
 }
 
 export function platformCanonicalPath(filename) {
-  return filename === 'index.html' ? ONE16_PATH : filename === 'platform.html' ? '/' : '/' + filename;
+  return filename === 'index.html' ? ONE16_PATH : filename === 'platform.html' ? '/' : filename === 'reservations.html' ? '/reservas' : '/' + filename;
 }

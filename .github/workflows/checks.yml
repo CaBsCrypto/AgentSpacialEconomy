@@ -55,6 +55,41 @@ jobs:
         working-directory: agent
         run: npm test
 
+  reservations-postgres:
+    name: Reservations on native PostgreSQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: reservations_test
+          POSTGRES_USER: reservations_ci
+          POSTGRES_PASSWORD: local_ci_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U reservations_ci -d reservations_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: test
+      RESERVATIONS_TEST_DATABASE_URL: postgresql://reservations_ci:local_ci_only@localhost:5432/reservations_test
+      WALLET_RPC_SMOKE: "0"
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.20.0
+          cache: npm
+      - name: Install dependencies without provider credentials
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Exercise actual PostgreSQL transactions and concurrent contenders
+        run: node --test --test-concurrency=1 test/reservations-*.test.mjs
+
   contracts:
     name: Contract tests and WASM
     runs-on: ubuntu-latest
@@ -73,3 +108,7 @@ jobs:
             cargo +1.95.0 test --locked --manifest-path "$manifest"
             cargo +1.95.0 build --locked --release --target wasm32v1-none --manifest-path "$manifest"
           done
+      - name: Reservation WASM host authorization tests
+        env:
+          RESERVATION_TEST_WASM: ${{ github.workspace }}/contracts/reservation/target/wasm32v1-none/release/reservation.wasm
+        run: cargo +1.95.0 test --locked --manifest-path contracts/reservation/Cargo.toml --features wasm-tests --test wasm
