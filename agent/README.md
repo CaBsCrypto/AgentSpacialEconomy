@@ -55,6 +55,17 @@ node ads-ci.mjs                                                # or everything w
 
 `advertiser.mjs` checks the 402 before signing (price ≤ `--max`, testnet, payTo = treasury), raises the x402 client's per-payment cap to exactly that maximum, and writes `dist/state/ads.json`. `ads-ci.mjs` then has the treasury deploy an AdsRegistry instance from the WASM already on testnet (`registry.mjs`), commit the order with the settlement hash as `payment` (`lib/ads.mjs` builds and checks the commitment) and read it back with `get`. Nothing is delivered, so the order stays `Queued`. In GitHub Actions: push to `ci/ads-run` (workflow **Paid screen time (testnet)**); results land on `ci/ads-results`.
 
+### Main-stage screen in four sections
+
+`POST /paid/ad-slot` takes an optional `section` (A, B, C or D). Each order still costs 5 testnet USDC for five minutes; `lib/screen.mjs` starts it at payment time if its section is free, or right after the last order there, so a section rotates through its orders. Without a section, the order takes the one that frees up first.
+
+```bash
+node advertiser.mjs --run-id <id> --section B --out /tmp/order-b.json   # one order (ADVERTISER_SECRET_KEY, TREASURY_PUBLIC_KEY)
+node screen-ci.mjs                                                       # six throwaway advertisers, all on testnet
+```
+
+`screen-ci.mjs` writes `dist/state/screen.json`; the twin's stage screen and the dashboard read it and replay the recorded rotation. In GitHub Actions: push to `ci/screen-run` (workflow **Main-stage screen in four sections (testnet)**); results land on `ci/screen-results`.
+
 ## What the run does
 
 1. `venue-agent` gives `stage-agent` its allocation from the mandate (`mandates/main-stage.json`).
