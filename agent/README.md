@@ -68,8 +68,18 @@ Before each payment the agent reads the service's `402 Payment Required` and ref
 ## Rules the ledger enforces (see `ledger.mjs`, tested in `test/`)
 
 - Service must be in the mandate; price within the per-call cap and the approval threshold; enough budget left in the allocation.
-- Reserve → settle with the transaction hash, or release on failure. Nothing is deleted.
+- Reserve → persist intent → settle with the transaction hash. Only a failure before signing releases the reservation; an uncertain payment keeps its budget held. Nothing is deleted.
 - Idempotency: `npm run loop -- --run-id <same id>` reuses settled steps and never pays twice. An interrupted payment is marked `needs-reconciliation` and is not retried automatically.
+
+### Durable run state and interrupted payments
+
+The loop acquires `agent/out/run-<id>.lock` before reading or changing its state. Only one process may own a run in that directory. The canonical `run-<id>.json` snapshot contains the ledger and results together; replacement uses a flushed temporary file and an atomic rename. `ledger-<id>.json` and `results-<id>.json` remain compatibility views. Once a canonical snapshot exists, those views never override it. Use one canonical working directory for a wallet/run; independent clones do not share a lock.
+
+Before the paid transport or treasury draw can submit, the loop saves a durable intent. A timeout, HTTP failure after payment, missing settlement receipt or unreadable paid result retains the budget and requires reconciliation. It never frees that budget or silently signs again. Only an explicitly recorded failure before entering the payment transport is safe to retry. Legacy `failed` payment rows have no such proof and are conservatively imported as `needs-reconciliation`; old settled results remain reusable. The dry run still stops before signing and never writes `dist/state`.
+
+A killed process deliberately leaves its lock. Before removing that specific lock, an operator must confirm its process is no longer running, preserve the snapshot and inspect the payer history and any recorded transaction hash. Removing the lock does **not** clear a pending payment: restarting the same run still refuses it. Do not delete the state or choose a new run ID to bypass uncertainty. There is no automatic reconciliation or unlock command in this release; a reviewed recovery must establish the outcome first. A `NOT_FOUND` RPC response alone is not evidence of failure; see the [official transaction confirmation guidance](https://developers.stellar.org/docs/build/guides/transactions/submit-transaction-wait).
+
+Offline recovery tests use the importable executor and real temporary files, including a subprocess killed immediately after a simulated submission. Run `node --test test/payment-executor.test.mjs test/ledger.test.mjs`. These tests perform no network calls, signing or payments.
 
 ## Files
 

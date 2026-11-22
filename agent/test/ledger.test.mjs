@@ -71,12 +71,13 @@ test("a call larger than what is left in the allocation is blocked", () => {
   assert.match(a.reason, /not enough budget/);
 });
 
-test("a failed payment releases the reservation", () => {
+test("a pre-signing failure releases the reservation and permits a retry", () => {
   const l = fresh();
   l.authorize({ agent: "stage-agent", service: "screen-card", priceUsdc: "0.05", key: "r1#2" });
   assert.equal(l.available("stage-agent"), 1_500_000n);
-  const row = l.release("r1#2", "HTTP 500");
+  const row = l.release("r1#2", "preflight HTTP 500");
   assert.equal(row.status, "failed");
+  assert.equal(row.retrySafe, true);
   assert.equal(l.available("stage-agent"), 2_000_000n);
 });
 
@@ -100,8 +101,20 @@ test("an interrupted reservation is never retried automatically after a restore"
   const row = restored.rows.find((r) => r.key === "r1#2");
   assert.equal(row.status, "needs-reconciliation");
   assert.equal(restored.authorize({ agent: "stage-agent", service: "screen-card", priceUsdc: "0.05", key: "r1#2" }).duplicate, true);
-  // counted as spent until someone checks the payer account
+  // held out of the available budget until someone checks the payer account
   assert.equal(restored.available("stage-agent"), 1_500_000n);
+});
+
+test("a dispatched payment cannot release its budget and remains held across repeated restores", () => {
+  const l = fresh();
+  l.authorize({ agent: "stage-agent", service: "screen-card", priceUsdc: "0.05", key: "k" });
+  l.beginPayment("k");
+  assert.throws(() => l.release("k", "timeout"), /No open reservation/);
+  l.uncertain("k", "timeout after possible settlement");
+  let restored = Ledger.restore(mandate, l.toJSON(), { clock });
+  restored = Ledger.restore(mandate, restored.toJSON(), { clock });
+  assert.deepEqual(restored.toJSON().totals["stage-agent"], { allocated: "0.2", delegated: "0", reserved: "0.05", spent: "0", available: "0.15" });
+  assert.equal(restored.authorize({ agent: "stage-agent", service: "screen-card", priceUsdc: "0.05", key: "k" }).duplicate, true);
 });
 
 test("a blocked key may be tried again later (e.g. after the operator raises the cap)", () => {

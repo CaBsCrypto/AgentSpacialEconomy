@@ -4,7 +4,7 @@ import { Address, StrKey, hash, nativeToScVal, xdr } from '@stellar/stellar-sdk'
 import { ACCOUNT_WASM, DEFAULT_ORIGIN, SHARED_DEPLOYER, USDC_TOKEN, WEBAUTHN_VERIFIER, readConfig } from '../server/wallet/config.mjs';
 import { createWalletHandlers } from '../server/wallet/service.mjs';
 import { validateDeployment } from '../server/wallet/deployment.mjs';
-import { readBody, WalletApiError } from '../server/wallet/http.mjs';
+import { clientAddress, json, nodeHandler, readBody, WalletApiError } from '../server/wallet/http.mjs';
 
 const ADDRESS = StrKey.encodeContract(Buffer.alloc(32, 7));
 const env = { WALLET_ENABLED: 'true', CHANNELS_API_KEY: 'test-secret-not-returned', KV_REST_API_URL: 'https://redis.example', KV_REST_API_TOKEN: 'redis-secret-not-returned' };
@@ -13,15 +13,22 @@ const request = (method = 'POST', body = { address: ADDRESS }, origin = DEFAULT_
 const deferred = () => { let resolve; const promise = new Promise(done => resolve = done); return { promise, resolve }; };
 class Store {
   entries = new Map();
-  async get(key) { return this.entries.has(key) ? structuredClone(this.entries.get(key)) : null; }
-  async set(key, value, options) { if (options?.nx && this.entries.has(key)) return null; this.entries.set(key, structuredClone(value)); return 'OK'; }
+  expires = new Map();
+  constructor(now = Date.now) { this.now = now; }
+  prune(key) { if (this.expires.has(key) && this.expires.get(key) <= this.now()) { this.entries.delete(key); this.expires.delete(key); } }
+  async get(key) { this.prune(key); return this.entries.has(key) ? structuredClone(this.entries.get(key)) : null; }
+  async set(key, value, options) { this.prune(key); if (options?.nx && this.entries.has(key)) return null; this.entries.set(key, structuredClone(value)); if (options?.ex) this.expires.set(key, this.now() + options.ex * 1000); return 'OK'; }
   async eval(script, keys, args) {
     if (script.includes("item.state~='failed'")) {
       const item = this.entries.get(keys[0]);
       if (!item || item.state !== 'failed' || item.updatedAt !== Number(args[0])) return 0;
       this.entries.set(keys[0], JSON.parse(args[1])); return 1;
     }
-    return 1;
+    this.prune(keys[0]);
+    const count = (this.entries.get(keys[0]) || 0) + 1;
+    this.entries.set(keys[0], count);
+    if (count === 1) this.expires.set(keys[0], this.now() + Number(args[0]) * 1000);
+    return count;
   }
 }
 function fixture(overrides = {}, sharedStore = new Store()) {
@@ -64,7 +71,97 @@ test('config is testnet-only, accepts actual Marketplace aliases, and never retu
 test('prewarming availability neither creates wallets nor requests funds', async () => {
   const f = fixture();
   assert.deepEqual(await stateOf(await f.handlers.faucet(request('GET'))), { available: true, claimAmount: 100, cooldownMinutes: 60 });
-  assert.equal(f.claims, 0); assert.equal(f.store.entries.size, 0);
+  assert.equal(f.claims, 0); assert.ok([...f.store.entries.keys()].every(key => !key.includes(':claim:')));
+});
+
+test('availability checks readiness before Redis or the provider', async () => {
+  let upstream = 0, limits = 0;
+  const runtime = { availability: async () => { upstream++; }, redis: { eval: async () => { limits++; } } };
+  for (const settings of [{}, { ...env, WALLET_ENABLED: 'false' }, { ...env, KV_REST_API_TOKEN: '' }]) {
+    const handlers = createWalletHandlers({ env: settings, runtime });
+    const response = await handlers.faucet(request('GET'));
+    assert.equal(response.status, 503); assert.equal((await response.json()).reason, 'setup_required');
+  }
+  assert.equal(upstream, 0); assert.equal(limits, 0);
+});
+
+test('availability is cached across instances and refreshed after its short TTL', async () => {
+  let clock = 100_000, calls = 0;
+  const f = fixture({ availability: async () => { calls++; return { available: false, claimAmount: 100, cooldownMinutes: 60 }; } }, new Store(() => clock));
+  const first = createWalletHandlers({ env, runtime: f.runtime, now: () => clock });
+  const second = createWalletHandlers({ env, runtime: f.runtime, now: () => clock });
+  assert.equal((await stateOf(await first.faucet(request('GET')))).available, false);
+  await stateOf(await second.faucet(request('GET'))); assert.equal(calls, 1);
+  clock += 16_000;
+  await stateOf(await second.faucet(request('GET'))); assert.equal(calls, 2);
+  assert.equal(f.claims, 0);
+});
+
+test('concurrent uncached availability requests admit one provider call', async () => {
+  const started = deferred(), release = deferred(); let calls = 0;
+  const f = fixture({ availability: async () => { calls++; started.resolve(); await release.promise; return { available: true }; } });
+  const second = createWalletHandlers({ env, runtime: f.runtime });
+  const first = f.handlers.faucet(request('GET')); await started.promise;
+  const waiting = await second.faucet(request('GET'));
+  assert.equal(waiting.status, 503); assert.equal((await waiting.json()).reason, 'availability_pending');
+  release.resolve(); await stateOf(await first); await stateOf(await second.faucet(request('GET')));
+  assert.equal(calls, 1);
+});
+
+test('request N plus one is limited before any upstream work despite forged forwarding headers', async () => {
+  let calls = 0;
+  const f = fixture({ availability: async () => { calls++; return { available: true }; } });
+  for (let i = 0; i < 90; i++) {
+    const incoming = request('GET'); incoming.headers.set('x-forwarded-for', `192.0.2.${i}`); incoming.headers.set('x-vercel-forwarded-for', `198.51.100.${i}`);
+    await stateOf(await f.handlers.faucet(incoming));
+  }
+  const blocked = await f.handlers.faucet(request('GET'));
+  assert.equal(blocked.status, 429); assert.equal((await blocked.json()).reason, 'rate_limited');
+  assert.equal(calls, 1); assert.equal(f.claims, 0);
+});
+
+test('unavailable or malformed Redis limits never reach availability, RPC, relay or subsidy providers', async () => {
+  for (const fail of [async () => { throw Error('redis-private-error'); }, async () => null, async () => 'not-a-count']) {
+    const touched = [];
+    const f = fixture({ redis: { eval: fail }, availability: async () => touched.push('availability'), walletAllowed: async () => touched.push('wallet'), balance: async () => touched.push('balance'), simulateDeployment: async () => touched.push('simulate'), relay: async () => touched.push('relay'), claim: async () => touched.push('claim') });
+    for (const response of [await f.handlers.faucet(request('GET')), await f.handlers.faucet(request()), await f.handlers.relay(request('POST', deployment(), DEFAULT_ORIGIN, '/api/wallet/relay'))]) {
+      assert.equal(response.status, 503); assert.doesNotMatch(await response.text(), /redis-private-error/);
+    }
+    assert.deepEqual(touched, []);
+  }
+});
+
+test('relay and claim limits stop request N plus one before simulation or subsidy', async () => {
+  let simulated = 0, relayed = 0;
+  const relay = fixture({ simulateDeployment: async () => { simulated++; }, relay: async () => { relayed++; return { success: true }; } });
+  for (let i = 0; i < 5; i++) await stateOf(await relay.handlers.relay(request('POST', deployment(), DEFAULT_ORIGIN, '/api/wallet/relay')));
+  assert.equal((await relay.handlers.relay(request('POST', deployment(), DEFAULT_ORIGIN, '/api/wallet/relay'))).status, 429);
+  assert.equal(simulated, 5); assert.equal(relayed, 5);
+
+  let checked = 0, claimed = 0;
+  const faucet = fixture({ walletAllowed: async () => { checked++; return true; }, balance: async () => 0n, claim: async () => { claimed++; return { unknown: true }; } });
+  for (let i = 0; i < 8; i++) await stateOf(await faucet.handlers.faucet(request('POST', { address: StrKey.encodeContract(Buffer.alloc(32, i)) })));
+  assert.equal((await faucet.handlers.faucet(request('POST', { address: StrKey.encodeContract(Buffer.alloc(32, 9)) }))).status, 429);
+  assert.equal(checked, 8); assert.equal(claimed, 8);
+});
+
+test('availability cache failure fails closed before contacting its provider', async () => {
+  let calls = 0;
+  const f = fixture({ redis: { eval: async () => 1, get: async () => { throw Error('cache offline'); } }, availability: async () => { calls++; } });
+  assert.equal((await f.handlers.faucet(request('GET'))).status, 503); assert.equal(calls, 0);
+});
+
+test('Node adapter trusts the Vercel boundary only on Vercel and otherwise uses its socket', async () => {
+  async function address({ vercel, headers = {}, socket = '192.0.2.10' }) {
+    let body;
+    await nodeHandler({ method: 'GET', url: '/api/wallet/faucet', headers: { host: 'example.test', ...headers }, socket: { remoteAddress: socket } }, { setHeader() {}, end(value) { body = value; } }, incoming => json({ address: clientAddress(incoming) }), { vercel });
+    return JSON.parse(body).address;
+  }
+  const forged = { 'x-forwarded-for': '203.0.113.22', 'x-real-ip': '203.0.113.23', 'x-vercel-forwarded-for': '198.51.100.7' };
+  assert.equal(await address({ vercel: false, headers: forged }), '192.0.2.10');
+  assert.equal(await address({ vercel: true, headers: forged }), '198.51.100.7');
+  for (const value of ['', 'garbage', '198.51.100.7, 203.0.113.22', 'fe80::1%eth0']) assert.equal(await address({ vercel: true, headers: { ...forged, 'x-vercel-forwarded-for': value } }), 'unknown');
+  assert.equal(await address({ vercel: false, socket: '2001:db8:0:0:0:0:0:1' }), '2001:db8::1');
 });
 
 test('two instances share durable claim ownership; double taps cannot fund twice', async () => {

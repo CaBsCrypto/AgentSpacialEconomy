@@ -2,9 +2,10 @@ import { createHash } from 'node:crypto';
 import { readConfig, publicConfig } from './config.mjs';
 import { assertAddress, createRuntime } from './runtime.mjs';
 import { validateDeployment } from './deployment.mjs';
-import { assertOrigin, assertReady, json, readBody, WalletApiError, withErrors } from './http.mjs';
+import { assertOrigin, assertReady, clientAddress, json, readBody, WalletApiError, withErrors } from './http.mjs';
 
 const PENDING_TIMEOUT = 130_000;
+const AVAILABILITY_TTL_SECONDS = 15;
 const RATE_SCRIPT = "local n=redis.call('INCR',KEYS[1]); if n==1 then redis.call('EXPIRE',KEYS[1],ARGV[1]) end; return n";
 const friendlyReason = reason => ({
   user_cooldown: 'La wallet está en el período de espera del faucet.',
@@ -25,7 +26,7 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
     message: balance > 0n ? 'USDC de prueba confirmado en Stellar Testnet.' : record?.state === 'unknown' ? 'La solicitud puede haberse enviado. Estamos verificando su resultado; no solicitaremos fondos otra vez.' : record?.state === 'failed' ? friendlyReason(record.reason) : 'Verificando la recepción de USDC de prueba.',
   });
   async function limit(request, action) {
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const ip = clientAddress(request);
     const client = createHash('sha256').update(`${config.campaign}:${ip}`).digest('hex');
     const perIp = action === 'read' ? 90 : action === 'relay' ? 5 : 8;
     const globalLimit = action === 'read' ? 300 : action === 'relay' ? 15 : 25;
@@ -33,7 +34,21 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
       runtime.redis.eval(RATE_SCRIPT, [`wallet:${config.campaign}:rate:${action}:${client}`], [60]),
       runtime.redis.eval(RATE_SCRIPT, [`wallet:${config.campaign}:rate:${action}:global`], [60]),
     ]);
+    if (!counts.every(count => Number.isSafeInteger(Number(count)) && Number(count) >= 1)) throw new WalletApiError(503, 'rate_limit_unavailable', 'No se pudo verificar el límite del piloto.');
     if (Number(counts[0]) > perIp || Number(counts[1]) > globalLimit) throw new WalletApiError(429, 'rate_limited', 'Demasiadas solicitudes. Espera un minuto antes de volver a comprobar.');
+  }
+  async function availability() {
+    const key = `wallet:${config.campaign}:testnet:availability`;
+    const cached = await runtime.redis.get(key);
+    if (cached && Number.isFinite(cached.checkedAt) && now() >= cached.checkedAt && now() - cached.checkedAt < AVAILABILITY_TTL_SECONDS * 1000
+      && typeof cached.value?.available === 'boolean') return cached.value;
+    // Bound an uncached burst across function instances. The provider has an
+    // eight-second timeout; its ten-second lease expires without cleanup work.
+    const acquired = await runtime.redis.set(`${key}:refresh`, true, { nx: true, ex: 10 });
+    if (!acquired) throw new WalletApiError(503, 'availability_pending', 'La disponibilidad se está verificando. Vuelve a comprobar en unos segundos.');
+    const value = await runtime.availability();
+    await runtime.redis.set(key, { checkedAt: now(), value }, { ex: AVAILABILITY_TTL_SECONDS });
+    return value;
   }
   async function inspect(address) {
     if (!(await runtime.walletAllowed(address))) throw new WalletApiError(409, 'wallet_not_deployed', 'La smart wallet todavía no está desplegada con el código esperado.');
@@ -69,8 +84,9 @@ export function createWalletHandlers({ env = process.env, config = readConfig(en
       if (!['GET', 'POST'].includes(request.method)) throw new WalletApiError(405, 'method_not_allowed', 'Método no permitido.');
       const url = new URL(request.url);
       if (request.method === 'GET' && !url.searchParams.has('address')) {
-        const availability = await runtime.availability();
-        return json(availability);
+        assertReady(config);
+        await limit(request, 'read');
+        return json(await availability());
       }
       if (request.method === 'POST') assertOrigin(request, config);
       assertReady(config);

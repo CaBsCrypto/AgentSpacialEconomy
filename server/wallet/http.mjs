@@ -1,3 +1,17 @@
+import { isIP } from 'node:net';
+
+const requestAddresses = new WeakMap();
+const normalizedIp = value => {
+  if (typeof value !== 'string' || !isIP(value.trim())) return null;
+  const ip = value.trim();
+  if (isIP(ip) !== 6) return ip;
+  try { return new URL(`http://[${ip}]/`).hostname.slice(1, -1); }
+  catch { return null; }
+};
+
+/** Set only by the Node adapter; caller-supplied forwarding headers are not identity. */
+export const clientAddress = request => requestAddresses.get(request) || 'unknown';
+
 export class WalletApiError extends Error {
   constructor(status, reason, message) { super(message); this.status = status; this.reason = reason; }
 }
@@ -14,7 +28,7 @@ export function assertOrigin(request, config) {
 }
 
 export function assertReady(config) {
-  if (!config.enabled) throw new WalletApiError(503, 'setup_required', 'La conexión de wallet está pendiente de configuración.');
+  if (!config.enabled || !config.configured) throw new WalletApiError(503, 'setup_required', 'La conexión de wallet está pendiente de configuración.');
 }
 
 export async function readBody(request, limit = 24_000) {
@@ -52,7 +66,7 @@ export async function withErrors(action) {
 }
 
 /** Vercel's plain Node handler, with a Web Request core that is also testable. */
-export async function nodeHandler(req, res, handle) {
+export async function nodeHandler(req, res, handle, { vercel = process.env.VERCEL === '1' } = {}) {
   const headers = new Headers();
   for (const [key, value] of Object.entries(req.headers || {})) if (value !== undefined) headers.set(key, Array.isArray(value) ? value.join(', ') : String(value));
   const method = req.method || 'GET';
@@ -70,6 +84,12 @@ export async function nodeHandler(req, res, handle) {
     }
   }
   const request = new Request(`https://${headers.get('host') || 'localhost'}${req.url || '/'}`, { method, headers, ...(body === undefined ? {} : { body }) });
+  // Vercel overwrites this header at its boundary. Other servers use the socket
+  // peer and ignore every forwarded header. Invalid or absent identity shares a
+  // conservative bucket; never fall back to a caller-controlled X-Forwarded-For.
+  // https://vercel.com/docs/headers/request-headers#x-vercel-forwarded-for
+  const address = vercel ? normalizedIp(headers.get('x-vercel-forwarded-for')) : normalizedIp(req.socket?.remoteAddress);
+  requestAddresses.set(request, address || 'unknown');
   const response = await handle(request);
   res.statusCode = response.status;
   for (const [key, value] of response.headers) res.setHeader(key, value);

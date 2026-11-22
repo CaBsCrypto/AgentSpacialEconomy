@@ -1,3 +1,4 @@
 *.pdf binary
 dist/vendor/** -diff -text
+dist/vendor/mindar/LICENSE text eol=lf -diff
 dist/assets/fonts/OFL.txt -whitespace
