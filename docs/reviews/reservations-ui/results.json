@@ -1,0 +1,120 @@
+{
+  "recordedAt": "2026-11-13T14:37:35.990Z",
+  "evidence": "LOCAL HTTP AND WALLET FIXTURES; NOT A LIVE ACCEPTANCE RESULT",
+  "checks": [
+    "restores private host project and conversation",
+    "page load never mutates or requests funds",
+    "explicit save persists revision and restores on reload",
+    "keyboard coordinate edits persist normalized map position",
+    "oversized image is rejected before upload and preserves the existing map",
+    "decoded image dimensions are checked before upload",
+    "failed media upload preserves existing positions",
+    "409 keeps local draft and exposes server comparison",
+    "AI proposal neither edits project nor renders untrusted HTML",
+    "structured assistant history survives reload as readable text without HTML execution",
+    "historical proposal can be reopened for review without applying or requesting AI",
+    "explicit proposal application replaces spaces and clears points",
+    "approval returns exact immutable snapshot and does not publish",
+    "no horizontal overflow at 360",
+    "no horizontal overflow at 390",
+    "no horizontal overflow at 768",
+    "preparation does not submit or sign automatically",
+    "editing after preparation invalidates the local signing token",
+    "lost submission remains uncertain and cannot sign again",
+    "session 429 on reload is temporary uncertainty, not a logged-out session",
+    "session 503 retains recovery navigation and blocks new signing",
+    "session retry restores pending intent without reconnecting or resubmitting",
+    "confirmation requires a receipt and recovers without a signature",
+    "confirmed receipt replaces the global in-progress message",
+    "logout clears private DOM while leaving public catalogue",
+    "brand sees catalogue without host controls",
+    "connecting a passkey does not authenticate automatically",
+    "explicit authentication establishes a separate brand session",
+    "missing snapshot image blocks preparation instead of approving an unseen review",
+    "lost prepare blocks new preparation and discovers durable intent",
+    "temporary session failure preserves an already visible uncertain attempt and disables signatures",
+    "recovered PREPARED requires fresh explicit review, not automatic signature",
+    "brand signs and submits only after explicit review",
+    "removed brand admission blocks new reservations but retains pending recovery",
+    "disallowed brand still reconciles without resubmitting",
+    "paused intake preserves pending recovery",
+    "only confirmed session expiry clears the visible attempt and permits reconnecting",
+    "catalogue error is distinct from an empty catalogue",
+    "zero faucet, deploy, relay or advertising calls",
+    "no unhandled browser JavaScript errors"
+  ],
+  "errors": [],
+  "mutations": [
+    {
+      "method": "PUT",
+      "path": "/api/reservations/project"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/reservations/project"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/media"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/reservations/project"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/conversation"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/reservations/project"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/reservations/project"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/approval"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/prepare"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/prepare"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/1111111111111111111111111111111111111111111111111111111111111111/submit"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/auth/logout"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/auth/challenge"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/auth/verify"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/prepare"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/prepare"
+    },
+    {
+      "method": "POST",
+      "path": "/api/reservations/attempts/2222222222222222222222222222222222222222222222222222222222222222/submit"
+    }
+  ],
+  "prepareCalls": 4,
+  "submitCalls": 2,
+  "externalProvidersCalled": false
+}

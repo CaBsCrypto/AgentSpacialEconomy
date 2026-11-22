@@ -1,0 +1,15 @@
+Bundled license information:
+
+ieee754/index.js:
+  /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+buffer/index.js:
+  /*!
+   * The buffer module from node.js, for the browser.
+   *
+   * @author   Feross Aboukhadijeh <https://feross.org>
+   * @license  MIT
+   */
+
+@noble/ed25519/index.js:
+  /*! noble-ed25519 - MIT License (c) 2019 Paul Miller (paulmillr.com) */

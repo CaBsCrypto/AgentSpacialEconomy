@@ -29,7 +29,7 @@ Approved 13 November 2026. This document records scope and acceptance, not compl
 - Ads: five complete sixty-second main-stage passes, minimum sixty-second campaign gap, 5 testnet USDC.
 - One outstanding ad order per wallet, ten accepted/day and ten global pending obligations maximum.
 - Automatic moderation with human review of exceptions before purchase; no override of technical checks.
-- Inactive unpublished drafts and unreferenced media may expire after thirty days. Preserve live offers,
+- Delete inactive unpublished drafts and unreferenced media after thirty days through the reviewed retention procedure. Preserve live offers,
   receipts and unpaid delivery obligations. Chain state is not deleted by this cleanup.
 - H5 implementation waits for H4 acceptance. Other unblocked stabilization/reservation work can continue
   when resources or signatures are unavailable.

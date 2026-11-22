@@ -1,0 +1,56 @@
+{
+  "schema": "reservation-release/v1",
+  "status": "BLOCKED_CONFIGURATION",
+  "observedAt": null,
+  "sourceSha": null,
+  "deploymentBuildSha": null,
+  "wasm": {
+    "sha256": "df9a9dc25bdb38cc538ef48522350d8fed06d3d63f06b421d3fffdd80536cd07",
+    "bytes": 21366,
+    "rustVersion": "1.95.0",
+    "sdkVersion": "25.3.1",
+    "uploadReceipt": null
+  },
+  "binding": {
+    "network": "stellar:testnet",
+    "origin": "https://agenticreality.space",
+    "rpId": "agenticreality.space",
+    "hostAddress": null,
+    "projectId": null,
+    "contractId": null,
+    "configFingerprint": null,
+    "operatorPolicyDigest": null,
+    "observedLedger": null
+  },
+  "activation": { "mode": "DISABLED", "intakeEnabled": false, "operatorSigningEnabled": false },
+  "deploymentReceipt": null,
+  "attempts": [],
+  "coverage": {
+    "id": null,
+    "verifiedUntil": null,
+    "zeroAdditionalSpend": false,
+    "platformHardCapsVerified": false,
+    "resources": {},
+    "approvedQuotas": {},
+    "consumed": {},
+    "reservedOrUnknown": {},
+    "operatorUsage": {},
+    "dedicatedRecoveryAllowance": {},
+    "evidenceRefs": []
+  },
+  "retention": { "latestLedger": null, "codeLiveUntilLedger": null, "instanceLiveUntilLedger": null, "offers": [], "restorationRequired": null },
+  "data": { "schemaVersion": null, "backupEvidenceRef": null, "mediaVerificationRef": null },
+  "gates": {
+    "hostPasskeySelected": false,
+    "candidateReviewed": false,
+    "resourceCoverageVerified": false,
+    "ciAndNativePostgresqlPassed": false,
+    "realPasskeyDevicesPassed": false,
+    "creationTransactionConfirmed": false,
+    "codeAndBindingReadBack": false,
+    "restorationProcedureVerified": false,
+    "privacyAndRecoveryPassed": false
+  },
+  "evidenceRefs": [],
+  "limitations": ["Template only; no deployment or provider readiness is asserted.", "Never include secrets, signed authorization, passkey identifiers or private media in a public manifest."]
+}

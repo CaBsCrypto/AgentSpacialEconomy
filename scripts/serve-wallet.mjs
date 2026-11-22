@@ -10,6 +10,7 @@ const defaultApis=new Map([
  ['/api/wallet/config',async(req,res)=>(await import('../api/wallet/config.js')).default(req,res)],
  ['/api/wallet/relay',async(req,res)=>(await import('../api/wallet/relay.js')).default(req,res)],
  ['/api/wallet/faucet',async(req,res)=>(await import('../api/wallet/faucet.js')).default(req,res)],
+ ['/api/reservations',async(req,res)=>(await import('../api/reservations.js')).default(req,res)],
 ]);
 const types={'.html':'text/html; charset=utf-8','.mjs':'application/javascript; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.txt':'text/plain; charset=utf-8','.xml':'application/xml; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.glb':'model/gltf-binary','.usdz':'model/vnd.usdz+zip','.gz':'application/gzip','.mp4':'video/mp4'};
 
@@ -19,6 +20,7 @@ export function createWalletDevelopmentServer({distRoot=defaultRoot,apiHandlers=
  return createServer(async(req,res)=>{
   try{
    const url=new URL(req.url,'http://localhost');
+   if((url.pathname==='/api/reservations'||url.pathname.startsWith('/api/reservations/'))&&apiHandlers.has('/api/reservations')){await apiHandlers.get('/api/reservations')(req,res);return;}
    if(apiHandlers.has(url.pathname)){await apiHandlers.get(url.pathname)(req,res);return;}
    if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{'Allow':'GET, HEAD'});res.end();return;}
    const route=resolvePlatformRequest(url.href);
