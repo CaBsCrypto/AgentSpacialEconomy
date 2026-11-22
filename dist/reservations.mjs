@@ -94,6 +94,10 @@ export function mountReservations({ documentRef = document, windowRef = window, 
     $('capabilities').replaceChildren(...items.map(text => node('p', text)));
     $('capabilities').hidden = !items.length;
   }
+  async function refreshConfig() {
+    state.config = await request('/config');
+    renderCapabilities();
+  }
   function details(fields) {
     const element = node('details', undefined, 'snapshot-details'); element.append(node('summary', 'Detalles de la versión'));
     const list = node('dl');
@@ -469,6 +473,12 @@ export function mountReservations({ documentRef = document, windowRef = window, 
     const token = state.token, id = state.result?.attempt?.id;
     if (state.sessionUncertain || !token || !id) return;
     if (state.result.attempt.operation === 'reserve' && state.session?.identity.mayReserve !== true) return;
+    const { operation } = state.result.attempt;
+    await refreshConfig();
+    if (!can(operation === 'publish' ? 'publication' : 'reservation')) {
+      status('Las operaciones nuevas están pausadas. Puedes consultar el estado de este intento.');
+      return;
+    }
     state.token = null; state.preparation = null; renderAttempt();
     let payload;
     try { payload = await wallet.sign(token); }
@@ -520,7 +530,7 @@ export function mountReservations({ documentRef = document, windowRef = window, 
   $('connect').addEventListener('click', () => run('Conectando tu wallet…', connect));
   $('authenticate').addEventListener('click', () => run('Verifica tu passkey…', authenticate));
   $('logout').addEventListener('click', logout);
-  $('refresh-offers').addEventListener('click', () => run('Consultando ofertas…', async () => { await refreshOffers(); status('Catálogo consultado.'); }));
+  $('refresh-offers').addEventListener('click', () => run('Consultando ofertas…', async () => { await refreshConfig(); await refreshOffers(); status('Catálogo consultado.'); }));
   $('reload-project').addEventListener('click', () => run('Consultando la versión guardada…', () => loadProject({ preserveDraft: true })));
   $('use-server-project').addEventListener('click', () => { if (state.serverProject && windowRef.confirm('Se descartarán los cambios sin guardar de esta pestaña.')) { setProject(state.serverProject); status('Versión guardada restaurada.'); } });
   $('project-title').addEventListener('input', event => { if (state.draft) { state.draft.title = event.target.value; draftEdited(); } });
@@ -544,7 +554,7 @@ export function mountReservations({ documentRef = document, windowRef = window, 
   $('recover-attempt').addEventListener('click', () => run('Recuperando la misma intención…', recoverPreparation));
   documentRef.addEventListener('visibilitychange', onVisibility); windowRef.addEventListener('beforeunload', beforeUnload); windowRef.addEventListener('pagehide', pageHide); windowRef.addEventListener('pageshow', pageShow);
   const ready = run('Consultando disponibilidad del servicio…', async () => {
-    state.config = await request('/config'); renderCapabilities(); renderSession();
+    await refreshConfig(); renderSession();
     try {
       await restoreAccess();
     } catch (error) { if (error.status !== 401 && error.code !== 'STALE_RESPONSE') showError(errorMessage(error)); }

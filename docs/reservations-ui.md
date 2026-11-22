@@ -10,6 +10,8 @@ La ayuda de acceso dirige a «Wallet · Testnet» en ONE16 para comprobar una wa
 
 Las capacidades del servidor controlan cada acción. `mode=CONTROLLED` muestra el alcance del piloto; `identity.mayReserve` habilita nuevas reservas de marca. La interfaz nunca recibe una allowlist. Pausar admisión o retirar una marca bloquea preparación y firma nuevas, conservando la consulta de intentos y recibos. El servidor vuelve a verificar todos los permisos. Un 401, pérdida de rol, cierre de sesión o cambio de cuenta limpia los datos privados y cancela respuestas pendientes de la identidad anterior.
 
+La página consulta la configuración al actualizar el catálogo y antes de abrir una firma. Una pausa posterior a la preparación conserva el intento y evita un nuevo aviso de passkey si ya se observa al verificar la configuración. Si la pausa sucede durante la firma, el servidor decide si admite el envío y la página conserva el acceso a la consulta del intento.
+
 Un fallo temporal al consultar la sesión (incluidos 429 y 503) muestra «Consulta de sesión pendiente» y el mensaje correspondiente, conservando datos e intención conocidos. «Volver a consultar mi sesión» reintenta lecturas sin reconectar, preparar o firmar automáticamente. Un 401 confirma que no hay sesión activa; un fallo temporal no se presenta como cierre de sesión. Las firmas pendientes locales se invalidan mientras el acceso sea incierto.
 
 La conexión real del SDK necesita la credencial existente y su procedencia verificable. Estas pruebas no demuestran recuperación de una wallet en otro dispositivo, disponibilidad de un indexador ni compatibilidad de un autenticador físico; esas comprobaciones corresponden a H4.
@@ -59,5 +61,7 @@ node scripts/verify-reservations-ui.mjs
 ```
 
 El script intercepta API y wallet mediante adaptadores de prueba, bloquea orígenes externos y genera un plano sintético. No contiene un fallback de producción. Sus capturas y resultados se escriben en `docs/reviews/reservations-ui/`, marcados **FIXTURE LOCAL · SIN FIRMAS NI RED**. Cubren acceso/restauración, edición, conflictos, propuesta explícita, cargas fallidas, límites de mapa, revisión, incertidumbre de prepare/submit, caducidad, permiso retirado, pausa y tamaños 360/390/768 px. Las comprobaciones XDR usan objetos de SDK locales; las del navegador no prueban una passkey real.
+
+Configura `RESERVATIONS_UI_EVIDENCE_DIR` para guardar un ensayo nuevo fuera de las capturas versionadas.
 
 Esta evidencia permite revisar H3 y no sustituye H4. Todavía se requieren pruebas autorizadas con autenticadores físicos, dos cuentas y aislamiento, backend y PostgreSQL integrados, el contrato desplegado, recursos verificados y recibos reales en Testnet. Las pruebas con adaptadores no establecen disponibilidad ni cobertura económica de los proveedores reales. Mantener el modo deshabilitado o controlado según el gate del proyecto.

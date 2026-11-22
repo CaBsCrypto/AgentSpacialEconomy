@@ -9,7 +9,10 @@ import { StrKey } from '@stellar/stellar-sdk';
 import { createWalletDevelopmentServer } from './serve-wallet.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const output = path.join(root, 'docs/reviews/reservations-ui'); await fs.mkdir(output, { recursive: true });
+const output = process.env.RESERVATIONS_UI_EVIDENCE_DIR
+  ? path.resolve(process.env.RESERVATIONS_UI_EVIDENCE_DIR)
+  : path.join(root, 'docs/reviews/reservations-ui');
+await fs.mkdir(output, { recursive: true });
 const id = value => value.repeat(64), address = value => StrKey.encodeContract(Buffer.alloc(32, value));
 const hostAddress = address(1), brandAddress = address(2), contract = address(3);
 const server = createWalletDevelopmentServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -32,7 +35,7 @@ await context.route('**/*', async route => {
   const request = route.request(), url = new URL(request.url());
   requests.push({ method: request.method(), path: url.pathname });
   if (url.origin !== origin) return route.abort();
-  if (url.pathname === '/reservations-wallet.mjs') return route.fulfill({ contentType: 'application/javascript', body: `export async function createReservationsWallet(config,{api}){let account=null;return{get address(){return account},async connect(){account=${JSON.stringify(identity().address)};return{address:account,credentialId:'fixture'}},async prepareAuthentication(){return api.request('/auth/challenge',{method:'POST',body:{address:account,credentialId:'fixture'}})},async authenticate(){return api.request('/auth/verify',{method:'POST',body:{challengeId:'FIXTURE',response:{id:'fixture'}}})},prepare(){return{}},async sign(){return{func:'FIXTURE_ONLY',auth:['FIXTURE_ONLY']}}}}` });
+  if (url.pathname === '/reservations-wallet.mjs') return route.fulfill({ contentType: 'application/javascript', body: `export async function createReservationsWallet(config,{api}){let account=null;return{get address(){return account},async connect(){account=${JSON.stringify(identity().address)};return{address:account,credentialId:'fixture'}},async prepareAuthentication(){return api.request('/auth/challenge',{method:'POST',body:{address:account,credentialId:'fixture'}})},async authenticate(){return api.request('/auth/verify',{method:'POST',body:{challengeId:'FIXTURE',response:{id:'fixture'}}})},prepare(){return{}},async sign(){globalThis.fixtureSignCalls=(globalThis.fixtureSignCalls??0)+1;return{func:'FIXTURE_ONLY',auth:['FIXTURE_ONLY']}}}}` });
   if (!url.pathname.startsWith('/api/reservations/')) return route.continue();
   const endpoint = url.pathname.slice('/api/reservations'.length), method = request.method();
   const body = request.headers()['content-type']?.includes('application/json') ? request.postDataJSON() : null;
@@ -116,6 +119,15 @@ try {
   await screenshot('host-mobile-fixture');
   await page.locator('#connect').click(); await idle();
   await page.locator('#prepare-publish').click(); await idle(); check('preparation does not submit or sign automatically', prepareCalls === 1 && submitCalls === 0 && await page.locator('#sign-attempt').isVisible());
+  paused = true;
+  await page.locator('#sign-attempt').click(); await idle();
+  check('pause received after preparation prevents a new prompt and retains the attempt',
+    submitCalls === 0 && await page.evaluate(() => !globalThis.fixtureSignCalls)
+    && await page.locator('#sign-attempt').isDisabled() && await page.locator('#check-attempt').isEnabled());
+  paused = false;
+  await page.locator('#refresh-offers').click(); await idle();
+  check('refresh after resuming makes the same reviewed attempt available',
+    prepareCalls === 1 && submitCalls === 0 && await page.locator('#sign-attempt').isEnabled());
   await page.locator('#project-title').fill('Cambio después de revisar'); check('editing after preparation invalidates the local signing token', await page.locator('#sign-attempt').isHidden() && submitCalls === 0);
   await page.locator('#project-title').fill(project.title); await page.locator('#recover-attempt').click(); await idle();
   failSubmit = true; await page.locator('#sign-attempt').click(); await idle();

@@ -42,6 +42,8 @@ const messages = {
   ACTIVE_OFFER: 'Ya existe una oferta activa para este proyecto.',
   ACTIVE_ATTEMPT: 'Hay un intento pendiente. Consulta su estado antes de continuar.',
   PREPARATION_PENDING: 'La preparación aún no está lista. Consulta el intento; no vuelvas a firmar.',
+  INTAKE_PAUSED: 'Las operaciones nuevas están pausadas. Consulta el estado del intento antes de continuar.',
+  INTAKE_UNAVAILABLE: 'No pudimos comprobar si se admiten nuevas operaciones. Consulta el estado del intento cuando vuelva el servicio.',
   UPLOAD_SIZE: 'La imagen supera el límite de 2 MiB.',
   IMAGE_SIZE: 'La imagen normalizada supera el tamaño permitido.',
   IMAGE_DIMENSIONS: 'La imagen debe tener como máximo 2048 píxeles por lado y un solo fotograma.',
