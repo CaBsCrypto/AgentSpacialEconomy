@@ -6,16 +6,17 @@ import { createAuthService,IDENTITY_SESSION_COOKIE } from '../server/identity/au
 import { validateAuthority } from '../server/identity/wallet-authority.mjs';
 import { createResourceBudget } from '../server/reservations/resources.mjs';
 import { createApi } from '../server/reservations/http.mjs';
-import { testDatabase,testConfig,address } from './reservations-support.test.mjs';
+import { testDatabase,testConfig,address,fixture,approved } from './reservations-support.test.mjs';
 import { ServiceError } from '../server/identity/common.mjs';
-async function setup(t) {
+async function setup(t,{metered=false}={}) {
   const db=await testDatabase();t.after(()=>db.close());const config=testConfig();let time=Date.now(),calls=0,counter=1;
   const jwk=generateKeyPairSync('ec',{namedCurve:'prime256v1'}).publicKey.export({format:'jwk'}),publicKey=Buffer.concat([Buffer.from([4]),Buffer.from(jwk.x,'base64url'),Buffer.from(jwk.y,'base64url')]).toString('base64url');
   const snapshot={publicKey,authorityHash:'a'.repeat(64),ruleId:0};
-  const authority={async read(){calls++;return {...snapshot};}};
+  const authority={async read(){if(metered)await resources.reserve([{resource:'rpcCalls'}]);calls++;return {...snapshot};}};
+  const recoveryAuthority={async read(){if(metered)await resources.reserve([{resource:'rpcAuthCalls'}]);calls++;return {...snapshot};}};
   const resources=createResourceBudget({db,config,now:()=>time});
   const verifier={async generateAuthenticationOptions(value){return{...value,challenge:Buffer.from(value.challenge).toString('base64url')};},async verifyAuthenticationResponse(value){assert.equal(value.expectedOrigin,config.origin);assert.equal(value.expectedRPID,config.rpId);assert.equal(value.requireUserVerification,true);return{verified:true,authenticationInfo:{userVerified:true,newCounter:counter}};}};
-  const auth=createAuthService({db,config,authority,verifier,now:()=>time,beforeAuthority:context=>resources.auth(context)});
+  const auth=createAuthService({db,config,authority,recoveryAuthority,verifier,now:()=>time,beforeAuthority:context=>resources.auth(context)});
   return{db,config,auth,snapshot,resources,get calls(){return calls;},tick(ms){time+=ms;},counter(value){counter=value;}};
 }
 test('authentication limits reserve 10/IP and 60 global before any authority RPC',async t=>{
@@ -24,6 +25,30 @@ test('authentication limits reserve 10/IP and 60 global before any authority RPC
   assert.equal(f.calls,10);await assert.rejects(f.auth.challenge({address:address(25),credentialId:'YQ'},{ip:'ip-1'}),error=>error.code==='RATE_LIMIT');assert.equal(f.calls,10);
   for(let group=2;group<=6;group++)for(let i=0;i<10;i++)await f.auth.challenge({address:address(group*10+i),credentialId:'YQ'},{ip:'ip-'+group});
   assert.equal(f.calls,60);await assert.rejects(f.auth.challenge({address:address(100),credentialId:'YQ'},{ip:'fresh-ip'}),error=>error.code==='RATE_LIMIT');assert.equal(f.calls,60);
+});
+
+test('anonymous login and polling exhaust only ordinary allowances; a paused owner still recovers',async t=>{
+  const f=await setup(t,{metered:true}),challenge=await f.auth.challenge({address:f.config.hostAddress,credentialId:'YQ'},{ip:'owner'});
+  const session=await f.auth.verify({challengeId:challenge.challengeId,response:{id:'YQ',type:'public-key'}},{ip:'owner'});
+  const flow=await fixture({db:f.db,config:f.config}),snapshot=await approved(flow),prepared=await flow.transactions.prepare(flow.host,{operation:'publish',snapshotId:snapshot.id});
+  flow.chain.unknown=true;await flow.transactions.submit(flow.host,prepared.attempt.id,{func:prepared.signing.func,auth:prepared.signing.auth});await flow.intake.change(true,{dryRun:false});
+  const handle=createApi({...flow,auth:f.auth,resources:f.resources}),base=f.config.origin+'/api/reservations/';
+  f.config.coverage.quotas.functionRequests=8;f.config.coverage.quotas.rpcCalls=3;
+  const get=path=>handle(new Request(base+path),{ip:'anonymous'});
+  const post=(path,body)=>handle(new Request(base+path,{method:'POST',headers:{Origin:f.config.origin,'Content-Type':'application/json'},body:JSON.stringify(body)}),{ip:'anonymous'});
+  assert.equal((await get('auth/session')).status,401);
+  assert.equal((await get('attempts/'+prepared.attempt.id)).status,401);
+  await post('auth/challenge',{});await post('auth/verify',{challengeId:'absent',response:{}});
+  assert.equal((await post('auth/challenge',{address:address(5),credentialId:'YQ'})).status,200);
+  const calls=f.calls;assert.equal((await post('auth/challenge',{address:address(6),credentialId:'YQ'})).status,429);assert.equal(f.calls,calls);
+  await get('auth/session');await get('auth/session');assert.equal((await get('auth/session')).status,429);
+  const used=async resource=>Number((await f.db.query('SELECT used FROM resource_limits WHERE key=$1',['coverage:'+f.config.coverage.id+':'+resource])).rows[0]?.used??0);
+  for(const resource of ['recoveryRequests','recoveryTransferBytes','rpcAuthCalls','rpcRecoveryCalls'])assert.equal(await used(resource),0,resource);
+  const configuration=await get('config');assert.equal(configuration.status,200);const state=await configuration.json();assert.equal(state.capabilities.publication,false);assert.equal(state.capabilities.recovery,true);assert.equal(state.admission.state,'UNAVAILABLE');
+  const ownerGet=path=>handle(new Request(base+path,{headers:{Cookie:IDENTITY_SESSION_COOKIE+'='+session.token}}),{ip:'owner'});
+  const response=await ownerGet('auth/session');assert.equal(response.status,200);assert.equal((await response.json()).pendingAttempt.id,prepared.attempt.id);
+  flow.chain.unknown=false;const recovered=await ownerGet('attempts/'+prepared.attempt.id);assert.equal(recovered.status,200);assert.equal((await recovered.json()).attempt.state,'CONFIRMED');
+  assert.equal(await used('recoveryRequests'),2);assert.equal(await used('rpcAuthCalls'),2);assert.equal(flow.chain.sends,1);
 });
 test('one-use 120s challenge and 30min cookie, role derived from configured wallet',async t=>{
   const f=await setup(t),challenge=await f.auth.challenge({address:f.config.hostAddress,credentialId:'YQ'},{ip:'one'});
@@ -36,6 +61,18 @@ test('one-use 120s challenge and 30min cookie, role derived from configured wall
   const expiring=await f.auth.challenge({address:address(5),credentialId:'YQ'},{ip:'two'});f.tick(120001);
   await assert.rejects(f.auth.verify({challengeId:expiring.challengeId,response:{id:'YQ',type:'public-key'}},{ip:'two'}),error=>error.code==='AUTH_CHALLENGE_EXPIRED');
   f.tick(1800001);await assert.rejects(f.auth.authenticate(request,{ip:'one'}),error=>error.code==='SESSION_EXPIRED');
+});
+
+test('a valid session cannot spend dedicated recovery allowance on another owner or project',async t=>{
+  const f=await setup(t,{metered:true}),flow=await fixture({db:f.db,config:f.config}),snapshot=await approved(flow),prepared=await flow.transactions.prepare(flow.host,{operation:'publish',snapshotId:snapshot.id});
+  const other=await fixture({db:f.db}),otherSnapshot=await approved(other),foreign=await other.transactions.prepare(other.host,{operation:'publish',snapshotId:otherSnapshot.id});
+  const login=async wallet=>{const challenge=await f.auth.challenge({address:wallet,credentialId:'YQ'},{ip:'owner'});return f.auth.verify({challengeId:challenge.challengeId,response:{id:'YQ',type:'public-key'}},{ip:'owner'});};
+  const host=await login(f.config.hostAddress),brand=await login(address(3)),handle=createApi({...flow,auth:f.auth,resources:f.resources});
+  const get=(session,path)=>handle(new Request(f.config.origin+'/api/reservations/'+path,{headers:{Cookie:IDENTITY_SESSION_COOKIE+'='+session.token}}),{ip:'owner'});
+  assert.equal((await get(brand,'project')).status,403);assert.equal((await get(brand,'attempts/'+prepared.attempt.id)).status,404);assert.equal((await get(host,'attempts/'+foreign.attempt.id)).status,404);
+  const used=async resource=>Number((await f.db.query('SELECT used FROM resource_limits WHERE key=$1',['coverage:'+f.config.coverage.id+':'+resource])).rows[0]?.used??0);
+  assert.equal(await used('recoveryRequests'),0);assert.equal(await used('rpcAuthCalls'),0);
+  assert.equal((await get(host,'attempts/'+prepared.attempt.id)).status,200);assert.equal(await used('recoveryRequests'),1);assert.equal(await used('rpcAuthCalls'),1);
 });
 test('changed authority consumes challenge and invalidates old sessions; wrong origin is rejected',async t=>{
   const f=await setup(t),challenge=await f.auth.challenge({address:address(4),credentialId:'YQ'},{ip:'one'});

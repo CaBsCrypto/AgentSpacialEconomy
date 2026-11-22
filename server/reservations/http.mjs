@@ -1,6 +1,7 @@
 import { ServiceError,fail,exactKeys } from '../identity/common.mjs';
-import { publicConfig,requireCapability,mayReserve } from './config.mjs';
+import { publicConfig,requireCapability,mayReserve,capabilityReason } from './config.mjs';
 import { sessionCookie } from '../identity/auth.mjs';
+import { createIntakeService } from './intake.mjs';
 const HEADERS={'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; frame-ancestors 'none'",'Referrer-Policy':'no-referrer'};
 function json(value,status=200,extra={}) { return new Response(JSON.stringify(value),{status,headers:{...HEADERS,'Content-Type':'application/json; charset=utf-8',...extra}}); }
 async function readBytes(request,limit) {
@@ -18,6 +19,28 @@ async function readJson(request) {
 const identityView=(identity,config)=>({ownerId:identity.ownerId,address:identity.address,role:identity.role,mayReserve:mayReserve(config,identity)});
 export function createApi(runtime) {
   const {config,resources,auth,projects,transactions,offers,conversation}=runtime;
+  const intake=runtime.intake??createIntakeService({db:runtime.db,config});
+  function closedConfiguration(){
+    const value=publicConfig({...config,intakeEnabled:false});
+    if(config.enabled&&config.intakeEnabled&&config.mode!=='DISABLED')for(const reason of value.reasons)if(reason.code==='DISABLED'){reason.code='INTAKE_UNAVAILABLE';reason.message='New admission is unavailable. Sign in to recover an existing attempt.';}
+    return{...value,admission:{state:'UNAVAILABLE',paused:true,revision:null,updatedAt:null}};
+  }
+  async function configuration({charge=false}={}){
+    // Disabled/uncovered deployments must not open a DB connection just to tell
+    // visitors that signing is unavailable. A live public poll uses ordinary
+    // allowance; authenticated session responses already reserved their request.
+    if(capabilityReason(config,'project'))return closedConfiguration();
+    if(charge){try{await resources.reserve([{resource:'functionRequests'},{resource:'transferBytes',amount:config.limits.uploadBytes}]);}catch{return closedConfiguration();}}
+    let admission;try{admission=await intake.status();}catch{admission={state:'UNAVAILABLE',paused:true,revision:null,updatedAt:null};}
+    const effective={...config,intakeEnabled:config.intakeEnabled&&!admission.paused},value=publicConfig(effective);
+    if(config.enabled&&config.intakeEnabled&&config.mode!=='DISABLED'&&admission.paused){
+      for(const reason of value.reasons)if(reason.code==='DISABLED'){reason.code=admission.state==='UNAVAILABLE'?'INTAKE_UNAVAILABLE':'INTAKE_PAUSED';reason.message='New reservation work is paused. Existing receipts and recovery remain available.';}
+    }
+    return{...value,admission};
+  }
+  // Wallet eligibility is separate from current admission. /config controls the
+  // signing capability; a recovery response never spends public-poll allowance.
+  const identityState=identity=>identityView(identity,config);
   return async function handle(request,context={}) {
     let clearingSession=false;
     try {
@@ -25,26 +48,33 @@ export function createApi(runtime) {
       const method=request.method.toUpperCase(),origin=request.headers.get('origin');
       if (origin && origin!==config.origin || !['GET','HEAD'].includes(method)&&origin!==config.origin) fail(403,'ORIGIN_REJECTED','The request origin does not match this application.');
       clearingSession=method==='POST'&&path==='auth/logout';
-      if (method==='GET'&&path==='config') return json(publicConfig(config));
+      if (method==='GET'&&path==='config') return json(await configuration({charge:true}));
       requireCapability(config,'reading');
       // Reserve the bounded response before any downstream provider. Failed requests
       // retain their allowance; provider hard caps remain an external release gate.
-      const recovering=path.startsWith('auth/') || method==='GET'&&(/^(project|attempts\/[a-f0-9]{64})$/.test(path));
+      // A path is not authentication. Anonymous login/polling cannot consume the
+      // dedicated recovery pool; a locally valid session only selects its budget.
+      // Full wallet-authority verification still follows, before any private data.
+      const recoveryPath=method==='GET'&&/^(auth\/session|project|attempts\/[a-f0-9]{64})$/.test(path);
+      const candidate=recoveryPath&&typeof auth.sessionCandidate==='function'?await auth.sessionCandidate(request):null;
+      const recovering=Boolean(candidate&&(path==='auth/session'||path==='project'&&candidate.role==='host'||path.startsWith('attempts/')&&await transactions.owns(candidate,path.slice('attempts/'.length))));
       await resources.reserve([{resource:recovering?'recoveryRequests':'functionRequests'},{resource:recovering?'recoveryTransferBytes':'transferBytes',amount:config.limits.uploadBytes}]);
+      const newWrite=(method==='PUT'&&path==='project')||(method==='POST'&&['approval','conversation','media','attempts/prepare'].includes(path));
+      if(newWrite)await intake.requireOpen();
       if (clearingSession) {const value=await auth.logout(request);return json({ok:true},200,{'Set-Cookie':value.cookie});}
       if (method==='POST'&&path==='auth/challenge') {
         requireCapability(config,'authentication'); const input=await readJson(request);exactKeys(input,['address','credentialId']);return json(await auth.challenge(input,context));
       }
       if (method==='POST'&&path==='auth/verify') {
         requireCapability(config,'authentication');const input=await readJson(request);exactKeys(input,['challengeId','response']);
-        const value=await auth.verify(input,context);return json({identity:identityView(value.identity,config),expiresAt:value.expiresAt,pendingAttempt:await transactions.pending(value.identity)},200,{'Set-Cookie':value.cookie});
+        const value=await auth.verify(input,context);return json({identity:await identityState(value.identity),expiresAt:value.expiresAt,pendingAttempt:await transactions.pending(value.identity)},200,{'Set-Cookie':value.cookie});
       }
       if (method==='GET'&&path==='offers') return json({offers:await offers.list()});
       let match=/^offers\/([a-f0-9]{64})(\/media)?$/.exec(path);
       if (method==='GET'&&match) return match[2]?new Response(await offers.media(match[1]),{headers:{...HEADERS,'Content-Type':'image/png'}}):json({offer:await offers.get(match[1])});
       requireCapability(config,'authentication');
-      const identity=await auth.authenticate(request,context);
-      if (method==='GET'&&path==='auth/session') return json({identity:identityView(identity,config),expiresAt:null,pendingAttempt:await transactions.pending(identity)});
+      const identity=await auth.authenticate(request,{...context,recovery:recovering});
+      if (method==='GET'&&path==='auth/session') return json({identity:await identityState(identity),expiresAt:null,pendingAttempt:await transactions.pending(identity)});
       if (path==='project'&&method==='GET') return json({project:await projects.get(identity)});
       if (path==='project'&&method==='PUT') return json({project:await projects.update(identity,await readJson(request))});
       if (path==='approval'&&method==='POST') return json({snapshot:await projects.approve(identity,await readJson(request))});

@@ -1,8 +1,10 @@
 import { canonical,exactKeys,fail,sha256,uuid } from '../identity/common.mjs';
 import { requireCapability } from './config.mjs';
 import { lock } from './db.mjs';
+import { createIntakeService } from './intake.mjs';
 const MAX_BYTES=64*1024*1024;
 const COLUMNS={
+  reservation_intake:['project_id','paused','revision','updated_at'],
   identity_identities:['owner_id','address','credential_id','authority_hash','sign_count','updated_at'],
   identity_challenges:['id','address','credential_id','challenge_hash','authority_hash','expires_at','consumed_at'],
   identity_sessions:['token_hash','owner_id','authority_hash','expires_at','revoked_at'],
@@ -18,15 +20,16 @@ const COLUMNS={
 };
 const normalize=value=>JSON.parse(JSON.stringify(value,(_key,item)=>typeof item==='bigint'?item.toString():item));
 function paused(config){if(config.enabled!==false||config.intakeEnabled!==false)fail(409,'BACKUP_REQUIRES_PAUSE','Pause new operations on every instance before backup or restoration.');}
-export function createBackupService({db,config,storage,resources,now=Date.now}) {
+export function createBackupService({db,config,storage,resources,now=Date.now,intake=createIntakeService({db,config,now})}) {
   async function exportBackup({includeMedia=true}={}) {
     paused(config);requireCapability(config,'reading',now());
     const tables=await db.transaction(async tx=>{
       await tx.query('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+      await intake.requirePaused(tx);
       await lock(tx,'project:'+config.projectId);
       const project=(await tx.query('SELECT * FROM reservation_projects WHERE id=$1',[config.projectId])).rows[0];
       if(!project||project.owner_address!==config.hostAddress)fail(404,'PROJECT_NOT_FOUND','The configured host project was not found.');
-      const result={reservation_projects:[project]};
+      const result={reservation_projects:[project],reservation_intake:(await tx.query('SELECT * FROM reservation_intake WHERE project_id=$1',[config.projectId])).rows};
       for(const table of ['reservation_media','reservation_snapshots','reservation_offers','reservation_messages','reservation_operations'])result[table]=(await tx.query(`SELECT * FROM ${table} WHERE project_id=$1`,[config.projectId])).rows;
       result.reservation_attempts=(await tx.query('SELECT a.* FROM reservation_attempts a JOIN reservation_offers o ON o.id=a.offer_id WHERE o.project_id=$1',[config.projectId])).rows;
       const addresses=[...new Set([config.hostAddress,...result.reservation_attempts.map(row=>row.actor_address)])];
@@ -50,18 +53,20 @@ export function createBackupService({db,config,storage,resources,now=Date.now}) 
       // counters from before these private Blob reads.
       tables.resource_limits=normalize((await db.query('SELECT * FROM resource_limits')).rows);
     }
-    const payload={formatVersion:1,createdAt:new Date(now()).toISOString(),network:config.network,projectId:config.projectId,hostAddress:config.hostAddress,contractId:config.contractId,contractWasmHash:config.contractWasmHash,requiresFreshCoverage:true,mediaIncluded:includeMedia,tables,blobs};
+    const payload={formatVersion:2,createdAt:new Date(now()).toISOString(),network:config.network,projectId:config.projectId,hostAddress:config.hostAddress,contractId:config.contractId,contractWasmHash:config.contractWasmHash,requiresFreshCoverage:true,mediaIncluded:includeMedia,tables,blobs};
     const result={payload,checksum:sha256(canonical(payload))};validate(result);return result;
   }
   function validate(bundle){
     exactKeys(bundle,['payload','checksum']);const payload=bundle.payload;
     if(Buffer.byteLength(JSON.stringify(bundle))>MAX_BYTES)fail(413,'BACKUP_LIMIT','The backup exceeds the bounded import size.');
-    if(!payload||payload.formatVersion!==1||payload.network!=='stellar:testnet'||payload.projectId!==config.projectId||payload.hostAddress!==config.hostAddress||payload.contractId!==config.contractId||payload.contractWasmHash!==config.contractWasmHash||sha256(canonical(payload))!==bundle.checksum)fail(422,'BACKUP_MISMATCH','The backup integrity or configured project binding does not match.');
-    exactKeys(payload.tables,Object.keys(COLUMNS));
+    if(!payload||![1,2].includes(payload.formatVersion)||payload.network!=='stellar:testnet'||payload.projectId!==config.projectId||payload.hostAddress!==config.hostAddress||payload.contractId!==config.contractId||payload.contractWasmHash!==config.contractWasmHash||sha256(canonical(payload))!==bundle.checksum)fail(422,'BACKUP_MISMATCH','The backup integrity or configured project binding does not match.');
+    exactKeys(payload.tables,Object.keys(COLUMNS).filter(table=>payload.formatVersion===2||table!=='reservation_intake'));
     for(const [table,columns] of Object.entries(COLUMNS)){
+      if(table==='reservation_intake'&&payload.formatVersion===1)continue;
       const rows=payload.tables[table];if(!Array.isArray(rows)||rows.length>10000)fail(422,'BACKUP_TABLE','The backup table is invalid or too large.');
       for(const row of rows){exactKeys(row,columns);if('project_id'in row&&row.project_id!==config.projectId)fail(422,'BACKUP_PROJECT','The backup contains another project.');}
     }
+    if(payload.tables.reservation_intake?.length>1||payload.tables.reservation_intake?.some(row=>typeof row.paused!=='boolean'||!Number.isSafeInteger(Number(row.revision))||Number(row.revision)<1||!Number.isSafeInteger(Number(row.revision)+1)))fail(422,'BACKUP_INTAKE','The admission record is invalid.');
     if(payload.tables.reservation_projects.length!==1||payload.tables.reservation_projects[0].id!==config.projectId||payload.tables.reservation_projects[0].owner_address!==config.hostAddress)fail(422,'BACKUP_PROJECT','The backup project does not match.');
     const media=new Map(payload.tables.reservation_media.map(row=>[row.id,row])),seen=new Set();
     if(!Array.isArray(payload.blobs))fail(422,'BACKUP_MEDIA','The backup media manifest is invalid.');
@@ -73,13 +78,17 @@ export function createBackupService({db,config,storage,resources,now=Date.now}) 
   }
   async function restore(bundle,{dryRun=true}={}) {
     paused(config);requireCapability(config,'reading',now());const payload=validate(bundle);
-    const counts=Object.fromEntries(Object.entries(payload.tables).map(([table,rows])=>[table,rows.length]));
+    // V1 archives predate shared admission. Both versions always restore CLOSED;
+    // preserved budgets and attempts never authorize reopening by themselves.
+    const tables={...payload.tables,reservation_intake:[{project_id:config.projectId,paused:true,revision:Number(payload.tables.reservation_intake?.[0]?.revision??0)+1,updated_at:new Date(now()).toISOString()}]};
+    const counts=Object.fromEntries(Object.entries(tables).map(([table,rows])=>[table,rows.length]));
     if(dryRun)return{dryRun:true,projectId:config.projectId,counts,mediaCount:payload.blobs.length,requiresFreshCoverage:true};
     const operationId=uuid();
     await db.transaction(async tx=>{
       await lock(tx,'reservation-restore');
+      await intake.requirePaused(tx);
       for(const table of Object.keys(COLUMNS))if(Number((await tx.query(`SELECT count(*)::int AS count FROM ${table}`)).rows[0].count)!==0)fail(409,'RESTORE_TARGET_NOT_EMPTY','Restore only into an empty migrated schema; never merge or overwrite live state.');
-      for(const [table,columns] of Object.entries(COLUMNS))for(const original of payload.tables[table]){
+      for(const [table,columns] of Object.entries(COLUMNS))for(const original of tables[table]){
         const row={...original};
         if(table==='identity_sessions')row.revoked_at=new Date(now()).toISOString();
         if(table==='identity_challenges')row.consumed_at=row.consumed_at||new Date(now()).toISOString();
@@ -95,6 +104,7 @@ export function createBackupService({db,config,storage,resources,now=Date.now}) 
   }
   async function verifyRestoredMedia(bundle,operationId,{dryRun=true}={}) {
     paused(config);const payload=validate(bundle);requireCapability(config,dryRun?'reading':'mediaRead',now());
+    await intake.requirePaused();
     const operation=(await db.query("SELECT * FROM reservation_operations WHERE id=$1 AND project_id=$2 AND kind='RESTORE' AND manifest_hash=$3",[operationId,config.projectId,bundle.checksum])).rows[0];
     if(!operation)fail(404,'RESTORE_OPERATION_NOT_FOUND','The matching restore operation was not found.');
     if(dryRun)return{dryRun:true,operationId,mediaCount:payload.blobs.length};

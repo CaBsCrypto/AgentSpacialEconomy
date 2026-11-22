@@ -54,7 +54,7 @@ test('logical export/import preserves IDs, relationships, counters and private B
   for(const identity of [f.host,f.brand])await f.db.query('INSERT INTO identity_identities(owner_id,address,credential_id,authority_hash,sign_count) VALUES($1,$2,$3,$4,5)',[identity.ownerId,identity.address,'YQ','a'.repeat(64)]);
   await f.db.query('INSERT INTO identity_sessions(token_hash,owner_id,authority_hash,expires_at) VALUES($1,$2,$3,$4)',['a'.repeat(64),f.host.ownerId,'a'.repeat(64),'2099-01-01']);
   const exporter=createBackupService({...f,now:()=>NOW});await assert.rejects(exporter.exportBackup(),error=>error.code==='BACKUP_REQUIRES_PAUSE');
-  f.config.enabled=false;f.config.intakeEnabled=false;const bundle=await exporter.exportBackup();assert.equal(bundle.payload.blobs.length,1);assert.equal(bundle.payload.tables.reservation_projects[0].id,f.config.projectId);
+  await f.intake.change(true,{dryRun:false});f.config.enabled=false;f.config.intakeEnabled=false;const bundle=await exporter.exportBackup();assert.equal(bundle.payload.blobs.length,1);assert.equal(bundle.payload.tables.reservation_projects[0].id,f.config.projectId);
   const targetDb=await testDatabase();t.after(()=>targetDb.close());const restored=await fixture({db:targetDb,config:structuredClone(f.config),now:()=>NOW}),importer=createBackupService({...restored,now:()=>NOW});
   assert.equal((await importer.restore(bundle)).dryRun,true);assert.equal((await targetDb.query('SELECT count(*)::int AS count FROM reservation_projects')).rows[0].count,0);
   const applied=await importer.restore(bundle,{dryRun:false});assert.equal(applied.mediaVerified,false);
@@ -72,7 +72,7 @@ test('logical export/import preserves IDs, relationships, counters and private B
   await assert.rejects(importer.restore(bundle,{dryRun:false}),error=>error.code==='RESTORE_TARGET_NOT_EMPTY');
 });
 test('backup rejects corruption and cross-project rows before import; malformed source never reports a successful restore',async t=>{
-  const f=await setup(t);await approved(f);f.config.enabled=false;f.config.intakeEnabled=false;const service=createBackupService({...f,now:()=>NOW}),bundle=await service.exportBackup();
+  const f=await setup(t);await approved(f);await f.intake.change(true,{dryRun:false});f.config.enabled=false;f.config.intakeEnabled=false;const service=createBackupService({...f,now:()=>NOW}),bundle=await service.exportBackup();
   const changed=structuredClone(bundle);changed.payload.tables.reservation_projects[0].data.title='tampered';assert.throws(()=>service.validate(changed),error=>error.code==='BACKUP_MISMATCH');
   const crossed=structuredClone(bundle);crossed.payload.tables.reservation_media[0].project_id='f'.repeat(64);crossed.checksum=sha256(canonical(crossed.payload));assert.throws(()=>service.validate(crossed),error=>error.code==='BACKUP_PROJECT');
   assert.equal(typeof createRuntime({}).storage.remove,'function');
@@ -85,7 +85,7 @@ test('private storage distinguishes definite absence from failed reads and abort
   await assert.rejects(large.get(key,10),error=>error.code==='MEDIA_SIZE_MISMATCH');assert.equal(canceled,true);
 });
 test('restore media reserves transfer and Blob read atomically before GET; exhausted transfer leaves STAGED',async t=>{
-  const source=await setup(t);await approved(source);source.config.enabled=false;source.config.intakeEnabled=false;
+  const source=await setup(t);await approved(source);await source.intake.change(true,{dryRun:false});source.config.enabled=false;source.config.intakeEnabled=false;
   const bundle=await createBackupService({...source,now:()=>NOW}).exportBackup();
   const targetDb=await testDatabase();t.after(()=>targetDb.close());const target=await fixture({db:targetDb,config:structuredClone(source.config),now:()=>NOW});
   let gets=0;const importer=createBackupService({...target,now:()=>NOW,storage:{...target.storage,async get(){gets++;return Buffer.from(bundle.payload.blobs[0].bytes,'base64');}}});

@@ -7,6 +7,7 @@ import { createProjectService } from '../server/reservations/project.mjs';
 import { createTransactionService } from '../server/reservations/transactions.mjs';
 import { createOfferService } from '../server/reservations/offers.mjs';
 import { createConversationService } from '../server/reservations/conversation.mjs';
+import { createIntakeService } from '../server/reservations/intake.mjs';
 import { uuid,ServiceError } from '../server/identity/common.mjs';
 export const address=n=>StrKey.encodeContract(Buffer.alloc(32,n));
 export function validateTestDatabaseUrl(value,env=process.env) {
@@ -37,14 +38,18 @@ export function testConfig() {
 }
 export function actor(config,n=1){const value=n===1?config.hostAddress:address(n);return{address:value,ownerId:'stellar:testnet:'+value,role:n===1?'host':'brand',credentialId:'test-credential',authorityHash:'test-authority',ruleId:0};}
 export const proposal={summary:'A proposal for review.',title:'Reviewed venue',context:'Host supplied facts',spaces:[{name:'Stage',purpose:'One exclusive display'}]};
-export async function fixture({db:provided,config=testConfig(),chain:suppliedChain,model:suppliedModel,now=Date.now}={}) {
+export async function fixture({db:provided,config=testConfig(),chain:suppliedChain,model:suppliedModel,now=Date.now,admit=true}={}) {
   const db=provided||await testDatabase(),resources=createResourceBudget({db,config,now}),images=new Map();
+  const intake=createIntakeService({db,config,now});
+  if(admit&&config.enabled&&config.intakeEnabled&&(await intake.status()).state==='MISSING'){
+    const paused=await intake.change(true,{dryRun:false});await intake.change(false,{dryRun:false,expectedRevision:paused.revision});
+  }
   const storage={async put(bytes,id){const key='reservations/'+id+'.png';images.set(key,Buffer.from(bytes));return{key};},async get(key){if(!images.has(key))throw new ServiceError(404,'MEDIA_NOT_FOUND','Missing test image');return images.get(key);},async remove(key){images.delete(key);}};
   const projects=createProjectService({db,config,storage,resources,now});
   const chain=suppliedChain||fakeChain(config),transactions=createTransactionService({db,config,chain,projects,now}),offers=createOfferService({db,config,chain,projects,now});
   const model=suppliedModel||{calls:0,inspections:0,async inspect(){this.inspections++;return{balance:'5',pricing:{input:config.model.inputUsdPerToken,output:config.model.outputUsdPerToken}};},async generate(){this.calls++;return{proposal,usage:{inputTokens:100,outputTokens:100}};}};
   const conversation=createConversationService({db,config,projects,model,now});
-  return{db,config,resources,storage,images,projects,chain,transactions,offers,model,conversation,host:actor(config),brand:actor(config,3)};
+  return{db,config,resources,intake,storage,images,projects,chain,transactions,offers,model,conversation,host:actor(config),brand:actor(config,3)};
 }
 export function fakeChain(config) {
   const states=new Map(),intents=new Map(),receipts=new Map();

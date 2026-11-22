@@ -1,8 +1,9 @@
 import { canonical, exactKeys, fail, hexId, requireHost, uuid } from '../identity/common.mjs';
 import { requireCapability,requireBrandAdmission } from './config.mjs';
 import { lock } from './db.mjs';
+import { createIntakeService } from './intake.mjs';
 const ACTIVE = ['PREPARED','SUBMITTING','PENDING','NEEDS_RECONCILIATION'];
-export function createTransactionService({ db,config,chain,projects,now = Date.now }) {
+export function createTransactionService({ db,config,chain,projects,now = Date.now,intake=createIntakeService({db,config,now}) }) {
   async function load(id,tx=db) {
     return (await tx.query('SELECT a.*,o.snapshot_id,o.project_id,o.state AS offer_state,o.holder AS offer_holder,s.data AS snapshot FROM reservation_attempts a JOIN reservation_offers o ON o.id=a.offer_id JOIN reservation_snapshots s ON s.id=o.snapshot_id WHERE a.id=$1 AND o.project_id=$2',[id,config.projectId])).rows[0];
   }
@@ -33,7 +34,9 @@ export function createTransactionService({ db,config,chain,projects,now = Date.n
     else fail(422,'INVALID_OPERATION','Only publication or reservation is allowed.');
     requireCapability(config,input.operation==='publish'?'publication':'reservation',now());
     if (input.operation==='reserve') requireBrandAdmission(config,identity);
+    await intake.requireOpen(undefined,input.operation==='publish'?'publication':'reservation');
     const created=await db.transaction(async tx=>{
+      await intake.requireOpen(tx,input.operation==='publish'?'publication':'reservation');
       await lock(tx,'project:'+config.projectId);
       let offer;
       if (input.operation==='publish') {
@@ -64,6 +67,7 @@ export function createTransactionService({ db,config,chain,projects,now = Date.n
       return response(created.row,true);
     }
     try {
+      await intake.requireOpen(undefined,input.operation==='publish'?'publication':'reservation');
       const preparation=await chain.prepare(intent(created.row),identity);
       await db.query("UPDATE reservation_attempts SET preparation=$2,updated_at=now() WHERE id=$1 AND state='PREPARED' AND signed_payload IS NULL",[created.row.id,preparation]);
       return response(await load(created.row.id),true);
@@ -104,12 +108,16 @@ export function createTransactionService({ db,config,chain,projects,now = Date.n
     if (row.state!=='PREPARED') return reconcile(identity,id);
     requireCapability(config,row.operation==='publish'?'publication':'reservation',now());
     if (row.operation==='reserve') requireBrandAdmission(config,identity);
+    await intake.requireOpen(undefined,row.operation==='publish'?'publication':'reservation');
     if (!row.preparation) fail(409,'PREPARATION_PENDING','The signing preparation is not yet available.');
     if (new Date(row.expires_at).getTime()<=now()) { await rejectUnsent(row); fail(409,'PREPARATION_EXPIRED','The unsigned preparation expired.'); }
     chain.validate(body,row.preparation,intent(row));
     // Preflight cannot transmit. Failure leaves this unsigned intent safely reviewable.
     await chain.preflight(body,row.preparation,intent(row));
     const claimed=await db.transaction(async tx=>{
+      // The shared pause and this claim serialize on the same admission row.
+      // Once committed, the admitted send may finish even if pause wins later.
+      await intake.requireOpen(tx,row.operation==='publish'?'publication':'reservation');
       await lock(tx,'project:'+config.projectId);
       await lock(tx,'attempt:'+id); const current=await load(id,tx);
       if (current.state!=='PREPARED') return false;
@@ -137,5 +145,7 @@ export function createTransactionService({ db,config,chain,projects,now = Date.n
     const row=(await db.query("SELECT a.id FROM reservation_attempts a JOIN reservation_offers o ON o.id=a.offer_id WHERE a.actor_address=$1 AND o.project_id=$2 AND a.state IN ('PREPARED','SUBMITTING','PENDING','NEEDS_RECONCILIATION') ORDER BY a.created_at DESC LIMIT 1",[identity.address,config.projectId])).rows[0];
     if (!row) return null; const value=summary(await load(row.id)); delete value.actorAddress; delete value.expiresAt; return value;
   }
-  return { prepare,submit,reconcile,pending };
+  // Budget selection only; reconcile still checks the authenticated actor again.
+  async function owns(identity,id){return Boolean((await db.query('SELECT a.id FROM reservation_attempts a JOIN reservation_offers o ON o.id=a.offer_id WHERE a.id=$1 AND a.actor_address=$2 AND o.project_id=$3',[id,identity.address,config.projectId])).rows.length);}
+  return { prepare,submit,reconcile,pending,owns };
 }

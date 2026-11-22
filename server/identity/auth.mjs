@@ -18,7 +18,7 @@ function equalHash(value, expected) {
   return a.length === b.length && timingSafeEqual(a, b);
 }
 
-export function createAuthService({ db, config, authority = createWalletAuthority({ config }), verifier, beforeAuthority, now = Date.now }) {
+export function createAuthService({ db, config, authority = createWalletAuthority({ config }), recoveryAuthority=authority, verifier, beforeAuthority, now = Date.now }) {
   let verifierPromise;
   const webauthn = () => verifier ? Promise.resolve(verifier) : verifierPromise ??= import('@simplewebauthn/server');
   function configured() {
@@ -103,6 +103,15 @@ export function createAuthService({ db, config, authority = createWalletAuthorit
       return { token, identity: owner, expiresAt: expiresAt.toISOString(), cookie: sessionCookie(token, Math.floor(config.sessionMs / 1000)) };
     });
   }
+  async function localSession(request) {
+    const token=cookieToken(request);
+    if(!token)return null;
+    const row=(await db.query('SELECT s.*,i.address,i.credential_id FROM identity_sessions s JOIN identity_identities i ON i.owner_id=s.owner_id WHERE s.token_hash=$1',[sha256(token)])).rows[0];
+    return row&&!row.revoked_at&&new Date(row.expires_at).getTime()>now()?row:null;
+  }
+  // This only selects a budget; it never substitutes for authority verification.
+  async function hasSession(request){configured();return Boolean(await localSession(request));}
+  async function sessionCandidate(request){configured();const row=await localSession(request);return row?identity(row.address):null;}
   async function authenticate(request, context = {}) {
     configured();
     const origin = header(request, 'origin');
@@ -110,10 +119,10 @@ export function createAuthService({ db, config, authority = createWalletAuthorit
     if ((unsafe && origin !== config.origin) || (origin && origin !== config.origin)) throw new ServiceError(403, 'ORIGIN_REJECTED', 'The request origin does not match this application.');
     const token = cookieToken(request);
     if (!token) throw new ServiceError(401, 'AUTH_REQUIRED', 'Sign in with your wallet passkey.');
-    const row = (await db.query('SELECT s.*,i.address,i.credential_id FROM identity_sessions s JOIN identity_identities i ON i.owner_id=s.owner_id WHERE s.token_hash=$1', [sha256(token)])).rows[0];
-    if (!row || row.revoked_at || new Date(row.expires_at).getTime() <= now()) throw new ServiceError(401, 'SESSION_EXPIRED', 'The wallet session has expired.');
+    const row = await localSession(request);
+    if (!row) throw new ServiceError(401, 'SESSION_EXPIRED', 'The wallet session has expired.');
     await gate({ ...context, kind: 'session', ownerId: row.owner_id });
-    const snapshot = await authority.read({ address: row.address, credentialId: row.credential_id });
+    const snapshot = await (context.recovery===true?recoveryAuthority:authority).read({ address: row.address, credentialId: row.credential_id });
     if (snapshot.authorityHash !== row.authority_hash) {
       await db.query('UPDATE identity_sessions SET revoked_at=$2 WHERE token_hash=$1', [sha256(token), new Date(now())]);
       throw new ServiceError(401, 'WALLET_AUTHORITY_CHANGED', 'The wallet authority changed. Sign in again.');
@@ -125,5 +134,5 @@ export function createAuthService({ db, config, authority = createWalletAuthorit
     if (token) await db.query('UPDATE identity_sessions SET revoked_at=$2 WHERE token_hash=$1', [sha256(token), new Date(now())]);
     return { cookie: sessionCookie('', 0) };
   }
-  return Object.freeze({ challenge, verify, authenticate, logout });
+  return Object.freeze({ challenge, verify, authenticate, hasSession, sessionCandidate, logout });
 }

@@ -1,24 +1,32 @@
 import { canonical, exactKeys, fail, hexId, requireHost, sha256, text, uuid } from '../identity/common.mjs';
 import { requireCapability } from './config.mjs';
 import { lock } from './db.mjs';
-export function createProjectService({ db, config, storage, resources, now = Date.now, decode = decodeImage }) {
-  async function row(tx = db) {
+import { createIntakeService } from './intake.mjs';
+export function createProjectService({ db, config, storage, resources, now = Date.now, decode = decodeImage, intake=createIntakeService({db,config,now}) }) {
+  async function row(tx = db,{create=true}={}) {
     const initial = { title:'', context:'', spaces:[], map:null };
-    await tx.query('INSERT INTO reservation_projects(id,owner_address,data) VALUES($1,$2,$3) ON CONFLICT(id) DO NOTHING',[config.projectId,config.hostAddress,initial]);
-    const value = (await tx.query('SELECT * FROM reservation_projects WHERE id=$1',[config.projectId])).rows[0];
+    let value = (await tx.query('SELECT * FROM reservation_projects WHERE id=$1',[config.projectId])).rows[0];
+    if(!value&&create){
+      // All creating callers already hold the intake lock in their short write
+      // transaction. A read must never initialize a new draft during a pause.
+      await tx.query('INSERT INTO reservation_projects(id,owner_address,data) VALUES($1,$2,$3) ON CONFLICT(id) DO NOTHING',[config.projectId,config.hostAddress,initial]);
+      value=(await tx.query('SELECT * FROM reservation_projects WHERE id=$1',[config.projectId])).rows[0];
+    }
+    value??={id:config.projectId,owner_address:config.hostAddress,revision:0,data:initial,approved_snapshot_id:null};
     if (value.owner_address !== config.hostAddress) fail(503,'PROJECT_OWNER_MISMATCH','The configured host does not own this project.');
     return value;
   }
   function host(identity, capability = 'project') { requireHost(identity,config); requireCapability(config,capability,now()); }
   async function get(identity) {
-    host(identity,'reading'); const value = await row();
+    host(identity,'reading'); const value = await row(db,{create:false});
     const messages = (await db.query('SELECT id,role,content,created_at FROM reservation_messages WHERE project_id=$1 ORDER BY created_at DESC,id DESC LIMIT 60',[config.projectId])).rows.reverse();
     const snapshot=value.approved_snapshot_id ? (await db.query('SELECT data FROM reservation_snapshots WHERE id=$1',[value.approved_snapshot_id])).rows[0]?.data : null;
     return { id:value.id, revision:value.revision, ...value.data, editorialState:value.approved_snapshot_id ? 'APPROVED':'DRAFT', approvedSnapshotId:value.approved_snapshot_id, approvedSnapshot:snapshot??null, conversation:messages.map(message => ({ id:message.id, role:message.role, content:message.content, createdAt:new Date(message.created_at).toISOString() })) };
   }
   async function update(identity,input) {
-    host(identity); exactKeys(input,['expectedRevision','title','context','spaces','map']);
+    host(identity); await intake.requireOpen(); exactKeys(input,['expectedRevision','title','context','spaces','map']);
     return db.transaction(async tx => {
+      await intake.requireOpen(tx);
       await lock(tx,'project:'+config.projectId); const old = await row(tx);
       if (!Number.isSafeInteger(input.expectedRevision) || input.expectedRevision !== old.revision) fail(409,'REVISION_CONFLICT','The project changed. Reload before applying edits.');
       if (!Array.isArray(input.spaces) || input.spaces.length > config.limits.spaces) fail(422,'SPACES_LIMIT','Use at most twenty spaces.');
@@ -49,8 +57,9 @@ export function createProjectService({ db, config, storage, resources, now = Dat
     });
   }
   async function approve(identity,input) {
-    host(identity); exactKeys(input,['expectedRevision','spaceId']); hexId(input.spaceId);
+    host(identity); await intake.requireOpen(); exactKeys(input,['expectedRevision','spaceId']); hexId(input.spaceId);
     return db.transaction(async tx => {
+      await intake.requireOpen(tx);
       await lock(tx,'project:'+config.projectId); const project = await row(tx);
       if (input.expectedRevision !== project.revision) fail(409,'REVISION_CONFLICT','Reload the project before approval.');
       const space = project.data.spaces.find(value => value.id === input.spaceId);
@@ -65,13 +74,16 @@ export function createProjectService({ db, config, storage, resources, now = Dat
     });
   }
   async function upload(identity,bytes,mime) {
-    host(identity,'media'); await row();
-    await db.transaction(async tx=>{await lock(tx,'project:'+config.projectId);await tx.query('UPDATE reservation_projects SET updated_at=now() WHERE id=$1',[config.projectId]);});
+    host(identity,'media'); await intake.requireOpen(undefined,'media');
     if (!Buffer.isBuffer(bytes) || !bytes.length || bytes.length>config.limits.uploadBytes) fail(413,'UPLOAD_SIZE','Upload at most 2 MiB.');
     const decoded = await decode(bytes,mime,config.limits);
     await resources.reserve([{resource:'blobWriteBytes',amount:decoded.bytes.length}]);
     const id = uuid(), key='reservations/'+id+'.png';
-    await db.query("INSERT INTO reservation_media(id,project_id,owner_address,storage_key,content_hash,byte_size,state,width,height) VALUES($1,$2,$3,$4,$5,$6,'STAGED',$7,$8)",[id,config.projectId,identity.address,key,sha256(decoded.bytes),decoded.bytes.length,decoded.width,decoded.height]);
+    await db.transaction(async tx=>{
+      await intake.requireOpen(tx,'media');await lock(tx,'project:'+config.projectId);await row(tx);
+      await tx.query('UPDATE reservation_projects SET updated_at=now() WHERE id=$1',[config.projectId]);
+      await tx.query("INSERT INTO reservation_media(id,project_id,owner_address,storage_key,content_hash,byte_size,state,width,height) VALUES($1,$2,$3,$4,$5,$6,'STAGED',$7,$8)",[id,config.projectId,identity.address,key,sha256(decoded.bytes),decoded.bytes.length,decoded.width,decoded.height]);
+    });
     const stored = await storage.put(decoded.bytes,id);
     if (stored.key!==key) fail(503,'MEDIA_STORAGE_MISMATCH','The private storage returned a different asset reference.');
     await db.query("UPDATE reservation_media SET state='READY' WHERE id=$1 AND state='STAGED'",[id]);
