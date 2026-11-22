@@ -6,6 +6,8 @@
 
 La página consulta configuración, sesión y ofertas sin iniciar mutaciones. Conectar una wallet existente y verificar el acceso son acciones separadas. La integración usa `SmartAccountKit 0.9.1`, `IndexedDBStorage` con su configuración existente y el mismo origen/RP ID; el cierre de la sesión de reservas limpia el estado privado del documento sin borrar la passkey ni sus registros de ONE16. No hay creación de wallet, solicitud de saldo, faucet o deployment en este adaptador.
 
+La ayuda de acceso dirige a «Wallet · Testnet» en ONE16 para comprobar una wallet existente. La aceptación de H4 verifica el regreso a `/reservas` y la conexión con la misma passkey en cada navegador del piloto. Consultar el catálogo no requiere una wallet. Reservar no requiere saldo USDC.
+
 Las capacidades del servidor controlan cada acción. `mode=CONTROLLED` muestra el alcance del piloto; `identity.mayReserve` habilita nuevas reservas de marca. La interfaz nunca recibe una allowlist. Pausar admisión o retirar una marca bloquea preparación y firma nuevas, conservando la consulta de intentos y recibos. El servidor vuelve a verificar todos los permisos. Un 401, pérdida de rol, cierre de sesión o cambio de cuenta limpia los datos privados y cancela respuestas pendientes de la identidad anterior.
 
 Un fallo temporal al consultar la sesión (incluidos 429 y 503) muestra «Consulta de sesión pendiente» y el mensaje correspondiente, conservando datos e intención conocidos. «Volver a consultar mi sesión» reintenta lecturas sin reconectar, preparar o firmar automáticamente. Un 401 confirma que no hay sesión activa; un fallo temporal no se presenta como cierre de sesión. Las firmas pendientes locales se invalidan mientras el acceso sea incierto.
