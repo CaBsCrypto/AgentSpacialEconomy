@@ -41,10 +41,11 @@ export function adCreative(body) {
 }
 
 /** The terms both sides agreed to; their hash goes on chain. */
-export function adTerms({ slot, payTo, network }) {
+export function adTerms({ slot, payTo, network, section = null }) {
   return {
     offer: slot.offerId,
     placement: slot.placement,
+    ...(section ? { section } : {}),
     plan: "Time",
     durationMs: slot.durationMs,
     priceUsdc: slot.priceUsdc,

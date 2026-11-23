@@ -20,6 +20,7 @@ import { StrKey } from "@stellar/stellar-sdk";
 import { CATALOG, SPONSOR_SLOT, AD_SLOT } from "./catalog.mjs";
 import { sponsorSlot } from "./lib/income.mjs";
 import { adCreative } from "./lib/ads.mjs";
+import { parseQuadrant } from "./lib/screen.mjs";
 import { toDollarPrice } from "./lib/money.mjs";
 import { networkConfig } from "./config/networks.mjs";
 
@@ -141,8 +142,10 @@ app.post(`/paid${SPONSOR_SLOT.path}`, (req, res) => {
 app.post(`/paid${AD_SLOT.path}`, (req, res) => {
   const creative = adCreative(req.body);
   if (!creative) return res.status(400).json({ error: "advertiser is required" });
+  let section;
+  try { section = parseQuadrant(req.body?.section); } catch (e) { return res.status(400).json({ error: e.message }); }
   res.json({
-    ...creative, offerId: AD_SLOT.offerId, placement: AD_SLOT.placement, durationMs: AD_SLOT.durationMs,
+    ...creative, section, offerId: AD_SLOT.offerId, placement: AD_SLOT.placement, durationMs: AD_SLOT.durationMs,
     priceUsdc: AD_SLOT.priceUsdc, payTo: TREASURY, issuedAt: new Date().toISOString(),
   });
 });
