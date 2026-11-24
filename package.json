@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@sozu/faucet": "0.2.0",
-    "@stellar/stellar-sdk": "16.3.0",
+    "@stellar/stellar-sdk": "16.4.1",
     "@upstash/redis": "1.39.0",
     "buffer": "6.0.3",
     "smart-account-kit": "0.9.1",
